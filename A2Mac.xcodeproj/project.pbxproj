@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
+		32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
 		32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
@@ -33,6 +35,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "A2Mac-Bridging-Header.h"; sourceTree = "<group>"; };
+		32439F7322ECD8AD0077AAE0 /* Apple2_mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio.h; sourceTree = "<group>"; };
+		32439F7422ECD8AD0077AAE0 /* 6502.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502.c; sourceTree = "<group>"; };
+		32439F7622ECD8AD0077AAE0 /* 6502_instr_set_clr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_set_clr.h; sourceTree = "<group>"; };
+		32439F7722ECD8AD0077AAE0 /* 6502_instr_stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_stack.h; sourceTree = "<group>"; };
+		32439F7822ECD8AD0077AAE0 /* 6502_instr_logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_logic.h; sourceTree = "<group>"; };
+		32439F7922ECD8AD0077AAE0 /* 6502_instr_shift_rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_shift_rotate.h; sourceTree = "<group>"; };
+		32439F7A22ECD8AD0077AAE0 /* 6502_instr_inc_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_inc_dec.h; sourceTree = "<group>"; };
+		32439F7B22ECD8AD0077AAE0 /* 6502_instr_compare_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_compare_test.h; sourceTree = "<group>"; };
+		32439F7C22ECD8AD0077AAE0 /* 6502_instr_branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_branch.h; sourceTree = "<group>"; };
+		32439F7D22ECD8AD0077AAE0 /* 6502_instr_misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_misc.h; sourceTree = "<group>"; };
+		32439F7E22ECD8AD0077AAE0 /* 6502_instr_arithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_arithmetic.h; sourceTree = "<group>"; };
+		32439F7F22ECD8AD0077AAE0 /* 6502_instr_transfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_transfer.h; sourceTree = "<group>"; };
+		32439F8022ECD8AD0077AAE0 /* 6502_instr_load_store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_load_store.h; sourceTree = "<group>"; };
+		32439F8122ECD8AD0077AAE0 /* 6502_instr_BACKUP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_BACKUP.h; sourceTree = "<group>"; };
+		32439F8222ECD8AD0077AAE0 /* 6502_instr_call_ret_jump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_call_ret_jump.h; sourceTree = "<group>"; };
+		32439F8322ECD8AD0077AAE0 /* 6502_instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instructions.h; sourceTree = "<group>"; };
+		32439F8422ECD8AD0077AAE0 /* apple.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple.rom; sourceTree = "<group>"; };
+		32439F8522ECD8AD0077AAE0 /* 6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502.h; sourceTree = "<group>"; };
+		32439F8622ECD8AD0077AAE0 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		32BFFB5722EACC630003B53F /* A2Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A2Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BFFB5A22EACC630003B53F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32BFFB5C22EACC630003B53F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +95,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		32439F7522ECD8AD0077AAE0 /* instructions */ = {
+			isa = PBXGroup;
+			children = (
+				32439F8022ECD8AD0077AAE0 /* 6502_instr_load_store.h */,
+				32439F7622ECD8AD0077AAE0 /* 6502_instr_set_clr.h */,
+				32439F7722ECD8AD0077AAE0 /* 6502_instr_stack.h */,
+				32439F7822ECD8AD0077AAE0 /* 6502_instr_logic.h */,
+				32439F7922ECD8AD0077AAE0 /* 6502_instr_shift_rotate.h */,
+				32439F7A22ECD8AD0077AAE0 /* 6502_instr_inc_dec.h */,
+				32439F7B22ECD8AD0077AAE0 /* 6502_instr_compare_test.h */,
+				32439F7C22ECD8AD0077AAE0 /* 6502_instr_branch.h */,
+				32439F7D22ECD8AD0077AAE0 /* 6502_instr_misc.h */,
+				32439F7E22ECD8AD0077AAE0 /* 6502_instr_arithmetic.h */,
+				32439F7F22ECD8AD0077AAE0 /* 6502_instr_transfer.h */,
+				32439F8122ECD8AD0077AAE0 /* 6502_instr_BACKUP.h */,
+				32439F8222ECD8AD0077AAE0 /* 6502_instr_call_ret_jump.h */,
+				32439F8322ECD8AD0077AAE0 /* 6502_instructions.h */,
+			);
+			path = instructions;
+			sourceTree = "<group>";
+		};
 		32BFFB4E22EACC630003B53F = {
 			isa = PBXGroup;
 			children = (
@@ -96,12 +139,19 @@
 		32BFFB5922EACC630003B53F /* A2Mac */ = {
 			isa = PBXGroup;
 			children = (
+				32439F7522ECD8AD0077AAE0 /* instructions */,
+				32439F7422ECD8AD0077AAE0 /* 6502.c */,
+				32439F8522ECD8AD0077AAE0 /* 6502.h */,
+				32439F8422ECD8AD0077AAE0 /* apple.rom */,
+				32439F7322ECD8AD0077AAE0 /* Apple2_mmio.h */,
+				32439F8622ECD8AD0077AAE0 /* common.h */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				32BFFB6022EACC660003B53F /* Main.storyboard */,
 				32BFFB6322EACC660003B53F /* Info.plist */,
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
+				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -192,6 +242,7 @@
 				TargetAttributes = {
 					32BFFB5622EACC630003B53F = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1020;
 					};
 					32BFFB6822EACC660003B53F = {
 						CreatedOnToolsVersion = 10.2.1;
@@ -229,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
+				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
 				32BFFB6222EACC660003B53F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -254,6 +306,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
 			);
@@ -421,6 +474,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -432,6 +486,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -440,6 +496,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -451,6 +508,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;

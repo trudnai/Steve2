@@ -17,8 +17,6 @@
 #define dbgPrintf(format, ...)
 #endif
 
-#warning "HHH"
-
 
 typedef struct m6502_s {
     uint8_t  A;             // Accumulator
@@ -51,7 +49,7 @@ typedef struct m6502_s {
 
 
 extern m6502_s m6502;
-//extern uint8_t RAM[ 64 * 1024 ];
+extern uint8_t RAM[ 64 * 1024 ];
 
 extern void tst6502();
 

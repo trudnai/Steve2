@@ -92,13 +92,13 @@ char * charConv =
 static inline void STR( uint8_t * dst, uint8_t imm ) {
     *dst = imm;
 
-    uint16_t v = dst - RAM;
+//    uint16_t v = dst - RAM;
     
-    if ( ( v >= 0x400 ) && ( v < 0x800 ) ) {
-        char c = charConv[imm];
+//    if ( ( v >= 0x400 ) && ( v < 0x800 ) ) {
+//        char c = charConv[imm];
 //        if (( imm > ' ' ) && ( c < 0x7F ))
-        dbgPrintf("%04X: t:%02X '%c'\n", v, imm, isprint(c) ? c : ' ');
-    }
+//            printf("%04X: t:%02X '%c'\n", v, imm, isprint(c) ? c : ' ');
+//    }
 }
 
 /**

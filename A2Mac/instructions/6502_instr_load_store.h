@@ -93,7 +93,6 @@ static inline void STR( uint8_t * dst, uint8_t imm ) {
     *dst = imm;
 
 //    uint16_t v = dst - RAM;
-    
 //    if ( ( v >= 0x400 ) && ( v < 0x800 ) ) {
 //        char c = charConv[imm];
 //        if (( imm > ' ' ) && ( c < 0x7F ))

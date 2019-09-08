@@ -13,9 +13,13 @@ class ViewController: NSViewController {
     @IBOutlet weak var display: NSTextFieldCell!
     
     func check() {
-        let ram = UnsafeRawBufferPointer(start: &RAM+0x400, count: 0x400)
-        let string = String(bytes: ram, encoding: .utf8)
-        print(string)
+        let textBufferPointer = UnsafeRawBufferPointer(start: &RAM+0x400, count: 0x400)
+//        let string = String(bytes: ram, encoding: .utf8)
+//        print(string)
+        
+        for (index, byte) in textBufferPointer.enumerated() {
+            print("byte \(index): \(byte)")
+        }
     }
     
     
@@ -63,9 +67,9 @@ class ViewController: NSViewController {
 //        }
 
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-            self.check()
-        })
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
+//            self.check()
+//        })
         
     }
 

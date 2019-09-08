@@ -65,7 +65,7 @@ static inline void set_flags_NVZ( uint8_t test ) {
 
 static inline void set_flags_NZC( int test ) {
     set_flags_NZ(test);
-    m6502.flags.C = (unsigned)test  > 0xFF;
+    m6502.flags.C = test >= 0;
 }
 
 static inline void set_flags_NZCV( int test ) {

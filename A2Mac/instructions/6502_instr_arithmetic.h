@@ -53,10 +53,7 @@ static inline void ADC( uint8_t imm ) {
  (indirect),Y  SBC (oper),Y  F1    2     5*
 **/
 static inline void SBC( uint8_t imm ) {
-    int tmp = (int)m6502.A - imm - m6502.flags.C;
-    dbgPrintf("SBC A:%02X - i:%02X - C:%u = %02X", m6502.A, imm, m6502.flags.C, tmp);
-    m6502.A = (uint8_t)tmp;
-    set_flags_NZCV( tmp );
+    ADC( ~imm );
 }
 
 #endif // __6502_INSTR_ARITHMETIC_H__

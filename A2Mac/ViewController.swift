@@ -12,14 +12,54 @@ class ViewController: NSViewController {
 
     @IBOutlet weak var display: NSTextFieldCell!
     
-    func check() {
-        let textBufferPointer = UnsafeRawBufferPointer(start: &RAM+0x400, count: 0x400)
-//        let string = String(bytes: ram, encoding: .utf8)
-//        print(string)
+    static let charConvStr : String =
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
+    
+    static let charConvTbl = Array( charConvStr )
+
+    let textLineOfs : [Int] = [
+        0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
+        0x228, 0x2A8, 0x328, 0x3A8, 0x050, 0x0D0, 0x150, 0x1D0, 0x250, 0x2D0, 0x350, 0x3D0
+    ]
+    
+    func update() {
         
-        for (index, byte) in textBufferPointer.enumerated() {
-            print("byte \(index): \(byte)")
+        while true {
+            usleep(33333) // 1/30 sec
+
+            let textBaseAddr = 0x400
+            let textLines = 24
+            let textCols = 40
+            
+            var txt : String = "|"
+
+            for y in 0...textLines-1 {
+                let textAddr = textBaseAddr + textLineOfs[y]
+                let textBufferPointer = UnsafeRawBufferPointer(start: &RAM + textAddr, count: textCols)
+
+                for (index, byte) in textBufferPointer.enumerated() {
+                    let idx = Int(byte);
+                    let chr = ViewController.charConvTbl[idx]
+        //            print("byte \(index): \(chr)")
+                    txt = txt + [chr]
+                }
+                
+                txt = txt + "|\n|"
+            }
+            
+            
+            DispatchQueue.main.async {
+                self.display.stringValue = txt;
+            }
         }
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1/30, execute: {
+//            self.update()
+//        })
+
     }
     
     
@@ -67,10 +107,14 @@ class ViewController: NSViewController {
 //        }
 
 
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
-//            self.check()
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1/30, execute: {
+//            self.update()
 //        })
         
+        DispatchQueue.global(qos: .background).async {
+            self.update()
+        }
+
     }
 
     override var representedObject: Any? {

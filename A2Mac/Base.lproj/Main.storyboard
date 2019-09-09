@@ -686,7 +686,7 @@
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="480" height="440"/>
+                        <rect key="contentRect" x="196" y="240" width="810" height="440"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
@@ -705,19 +705,60 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="A2Mac" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="440"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <rect key="frame" x="0.0" y="0.0" width="810" height="440"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uza-t6-XSw">
-                                <rect key="frame" x="10" y="10" width="460" height="420"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="border" alignment="center" placeholderString="Apple ][ Emulator Virtual Monitor" drawsBackground="YES" allowsEditingTextAttributes="YES" id="5AO-Gd-Lzo">
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uza-t6-XSw">
+                                <rect key="frame" x="10" y="10" width="700" height="420"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="700" id="YGY-gy-pSn"/>
+                                    <constraint firstAttribute="height" constant="420" id="dWL-EL-ab7"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="border" alignment="center" placeholderString="Apple ][ Emulator Virtual Monitor" drawsBackground="YES" id="5AO-Gd-Lzo">
                                     <font key="font" size="14" name="Courier-Bold"/>
                                     <color key="textColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" red="0.12549019607843137" green="0.17933968321917809" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </textFieldCell>
                             </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mfd-12-bcR">
+                                <rect key="frame" x="714" y="402" width="92" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="t2i-0h-wau"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hmD-vF-EXJ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="Power:" target="XfG-lQ-9wD" id="IvK-jh-tRI"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rR3-9T-NFu">
+                                <rect key="frame" x="714" y="371" width="92" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="sbX-nh-SV3"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LHj-7W-LwD">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <action selector="Reset:" target="XfG-lQ-9wD" id="1Q2-mr-CEh"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mfd-12-bcR" secondAttribute="trailing" constant="10" id="3NC-0i-OPC"/>
+                            <constraint firstAttribute="trailing" secondItem="rR3-9T-NFu" secondAttribute="trailing" constant="10" id="68s-0C-BVZ"/>
+                            <constraint firstItem="mfd-12-bcR" firstAttribute="leading" secondItem="Uza-t6-XSw" secondAttribute="trailing" constant="10" id="CFN-hq-O5V"/>
+                            <constraint firstItem="Uza-t6-XSw" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="10" id="Dmb-dB-rhg"/>
+                            <constraint firstAttribute="trailing" secondItem="Uza-t6-XSw" secondAttribute="trailing" constant="100" id="UBG-e6-psp"/>
+                            <constraint firstAttribute="bottom" secondItem="Uza-t6-XSw" secondAttribute="bottom" constant="10" id="agC-TV-DPy"/>
+                            <constraint firstItem="Uza-t6-XSw" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="10" id="kDF-dq-M0E"/>
+                            <constraint firstItem="rR3-9T-NFu" firstAttribute="leading" secondItem="Uza-t6-XSw" secondAttribute="trailing" constant="10" id="kOZ-D6-JaQ"/>
+                            <constraint firstItem="rR3-9T-NFu" firstAttribute="top" secondItem="mfd-12-bcR" secondAttribute="bottom" constant="10" id="ycb-iY-X4I"/>
+                            <constraint firstItem="mfd-12-bcR" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="10" id="zDl-Cs-xmz"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="display" destination="5AO-Gd-Lzo" id="Khc-vv-2HB"/>

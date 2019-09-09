@@ -14,51 +14,51 @@
 
 
 enum mmio {
-    ioSomething = 0xC000,
+    io_KBD = 0xC000,
+    io_KBDSTRB = 0xC010,
 };
 
 
 uint8_t RAM[ 64 * KB ] = {0};
 
-
 #define PAGESIZE 256
 #define PAGES 16
 
-uint8_t ram_0[PAGESIZE];
-uint8_t ram_1[PAGESIZE];
-uint8_t ram_2[PAGESIZE];
-uint8_t ram_3[PAGESIZE];
-uint8_t ram_4[PAGESIZE];
-uint8_t ram_5[PAGESIZE];
-uint8_t ram_6[PAGESIZE];
-uint8_t ram_7[PAGESIZE];
-uint8_t ram_8[PAGESIZE];
-uint8_t ram_9[PAGESIZE];
-uint8_t ram_A[PAGESIZE];
-uint8_t ram_B[PAGESIZE];
-uint8_t aui_C[PAGESIZE];
-uint8_t rom_D[PAGESIZE];
-uint8_t rom_E[PAGESIZE];
-uint8_t rom_F[PAGESIZE];
-
-uint8_t * ram[PAGES] = {
-    ram_0,
-    ram_1,
-    ram_2,
-    ram_3,
-    ram_4,
-    ram_5,
-    ram_6,
-    ram_7,
-    ram_8,
-    ram_9,
-    ram_A,
-    ram_B,
-    aui_C,
-    rom_D,
-    rom_E,
-    rom_F,
-};
+//uint8_t ram_0[PAGESIZE];
+//uint8_t ram_1[PAGESIZE];
+//uint8_t ram_2[PAGESIZE];
+//uint8_t ram_3[PAGESIZE];
+//uint8_t ram_4[PAGESIZE];
+//uint8_t ram_5[PAGESIZE];
+//uint8_t ram_6[PAGESIZE];
+//uint8_t ram_7[PAGESIZE];
+//uint8_t ram_8[PAGESIZE];
+//uint8_t ram_9[PAGESIZE];
+//uint8_t ram_A[PAGESIZE];
+//uint8_t ram_B[PAGESIZE];
+//uint8_t aui_C[PAGESIZE];
+//uint8_t rom_D[PAGESIZE];
+//uint8_t rom_E[PAGESIZE];
+//uint8_t rom_F[PAGESIZE];
+//
+//uint8_t * ram[PAGES] = {
+//    ram_0,
+//    ram_1,
+//    ram_2,
+//    ram_3,
+//    ram_4,
+//    ram_5,
+//    ram_6,
+//    ram_7,
+//    ram_8,
+//    ram_9,
+//    ram_A,
+//    ram_B,
+//    aui_C,
+//    rom_D,
+//    rom_E,
+//    rom_F,
+//};
 
 //uint8_t ( * mmio_read [ 64 * KB ] )( uint16_t addr );
 
@@ -74,9 +74,12 @@ typedef union address16_u {
 static inline uint8_t ioRead( uint16_t addr ) {
 //    printf("mmio:%04X\n", addr);
     switch (addr) {
-        case ioSomething:
-            return 123;
+        case io_KBD:
+            return RAM[addr];
             
+        case io_KBDSTRB:
+            return RAM[io_KBD] &= 0x7F;
+
         default:
             break;
     }
@@ -86,7 +89,7 @@ static inline uint8_t ioRead( uint16_t addr ) {
 static inline void ioWrite( uint16_t addr ) {
     //    printf("mmio:%04X\n", addr);
     switch (addr) {
-        case ioSomething:
+        case io_KBD:
             return;
             
         default:

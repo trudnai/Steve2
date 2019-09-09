@@ -13,6 +13,9 @@
 #include "common.h"
 #include "Apple2_mmio.h"
 
+
+#define SOFTRESET_VECTOR 0x3F2
+
 /**
  Instruction Implementations
  !!!! `his has to be here!!!
@@ -25,7 +28,7 @@
 /////
 unsigned long long int clktime = 0;
 
-m6502_s m6502 = {0};
+m6502_t m6502 = {0};
 
 
 static inline int m6502_step() {
@@ -327,8 +330,28 @@ static inline void m6502_run() {
 //    unsigned long long s = rdtsc();
     unsigned long long e = (unsigned long long)-1LL;
 
-    for ( unsigned long long int i = 0; i < iterations ; i++ ) {
+//    for ( unsigned long long int i = 0; i < iterations ; i++ ) {
 //    for ( ; m6502.pc ; ) {
+    for ( ; ; ) {
+        if ( m6502.interrupt_flag ) {
+            switch (m6502.interrupt) {
+                case NMI:
+                    break;
+                    
+                case HARDRESET:
+                    break;
+                    
+                case SOFTRESET:
+                    m6502.pc = memread16(SOFTRESET_VECTOR);
+                    break;
+                    
+                default:
+                    break;
+            }
+            
+            m6502.interrupt_flag = 0;
+        }
+        
         dbgPrintf("%04u %04X: ", clktime, m6502.pc);
         clk = m6502_step();
         clktime += clk;

@@ -17,6 +17,11 @@
 #define dbgPrintf(format, ...)
 #endif
 
+typedef enum {
+    NMI,
+    HARDRESET,
+    SOFTRESET,
+} interrupt_t;
 
 typedef struct m6502_s {
     uint8_t  A;             // Accumulator
@@ -45,10 +50,15 @@ typedef struct m6502_s {
     uint16_t pc;            // Program Counter
     uint16_t sp;            // Stack Pointer
     unsigned clk;           // Clock Counter
-} m6502_s;
+    
+    union {
+        int interrupt_flag;
+        interrupt_t interrupt;
+    };
+} m6502_t;
 
 
-extern m6502_s m6502;
+extern m6502_t m6502;
 extern uint8_t RAM[ 64 * 1024 ];
 
 extern void tst6502();

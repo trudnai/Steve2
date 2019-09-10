@@ -30,9 +30,10 @@
  (indirect),Y  ADC (oper),Y  71    2     5*
 **/
 static inline void ADC( uint8_t imm ) {
-    dbgPrintf("ADC ");
+    dbgPrintf("ADC(%02X) A:%02X + %02X ", imm, m6502.A, imm);
     m6502.A += imm + m6502.flags.C;
     set_flags_NZCV( m6502.A );
+    dbgPrintf("-> A:%02X ", m6502.A);
 }
 
 /**
@@ -53,6 +54,7 @@ static inline void ADC( uint8_t imm ) {
  (indirect),Y  SBC (oper),Y  F1    2     5*
 **/
 static inline void SBC( uint8_t imm ) {
+    dbgPrintf("SBC(%02X) ", imm);
     ADC( ~imm );
 }
 

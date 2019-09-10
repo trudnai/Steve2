@@ -26,7 +26,7 @@
 **/
 static inline void ASL( uint8_t * dst ) {
     dbgPrintf("ASL ");
-    m6502.flags.C = (*dst & (1<<7)) >> 7;
+    m6502.flags.C = *dst >> 7;
     *dst <<= 1;
     set_flags_NZ( *dst );
 }
@@ -69,7 +69,7 @@ static inline void LSR( uint8_t * dst ) {
 static inline void ROL( uint8_t * dst ) {
     dbgPrintf("ROL ");
     uint8_t C = m6502.flags.C;
-    m6502.flags.C = (*dst & (1<<7)) >> 7;
+    m6502.flags.C = *dst >> 7;
     *dst <<= 1;
     *dst |= C;
     set_flags_NZ( *dst );
@@ -92,7 +92,7 @@ static inline void ROL( uint8_t * dst ) {
 static inline void ROR( uint8_t * dst ) {
     dbgPrintf("ROR ");
     uint8_t C = m6502.flags.C << 7;
-    m6502.flags.C = *dst;
+    m6502.flags.C = *dst & 1;
     *dst >>= 1;
     *dst |= C;
     set_flags_NZ( *dst );

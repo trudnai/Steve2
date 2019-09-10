@@ -217,6 +217,12 @@ static inline uint16_t addr_zp_ind( uint8_t addr ) {
 static inline uint16_t addr_X_ind() {
     return addr_zp_ind( fetch() + m6502.X );
 }
+static inline uint8_t src_X_ind() {
+    return memread( addr_X_ind() );
+}
+static inline uint8_t * dest_X_ind() {
+    return & RAM[ addr_X_ind() ];
+}
 
 /**
  ind,Y        ....    indirect, Y-indexed         OPC ($LL),Y
@@ -236,6 +242,17 @@ static inline uint16_t addr_ind_Y() {
 static inline uint16_t addr_abs_X() {
     return fetch16() + m6502.X;
 }
+static inline uint8_t src_abs_X() {
+    return memread( addr_abs_X() );
+}
+static inline uint8_t * dest_abs_X() {
+    return & RAM[ addr_abs_X() ];
+}
+
+
+static inline uint16_t abs_addr() {
+    return fetch16();
+}
 
 /**
  abs,Y        ....    absolute, Y-indexed         OPC $LLHH,Y
@@ -244,6 +261,12 @@ static inline uint16_t addr_abs_X() {
 static inline uint16_t addr_abs_Y() {
     return fetch16() + m6502.Y;
 }
+static inline uint8_t src_abs_Y() {
+    return memread(addr_abs_Y());
+}
+static inline uint8_t * dest_abs_Y() {
+    return & RAM[ addr_abs_Y() ];
+}
 
 /**
  zpg        ....    zeropage         OPC $LL
@@ -251,6 +274,12 @@ static inline uint16_t addr_abs_Y() {
  **/
 static inline uint16_t addr_zp() {
     return fetch();
+}
+static inline uint8_t src_zp() {
+    return memread_zp(addr_zp());
+}
+static inline uint8_t * dest_zp() {
+    return & RAM[ addr_zp() ];
 }
 
 /**

@@ -70,7 +70,7 @@ static inline void LDX( uint8_t imm ) {
  absolute,X    LDY oper,X    BC    3     4*
 **/
 static inline void LDY( uint8_t imm ) {
-    dbgPrintf("LDY ");
+    dbgPrintf("LDY(%02X) ", imm);
     m6502.Y = imm;
     set_flags_NZ(imm);
 }
@@ -95,6 +95,10 @@ static inline void STR( uint8_t * dst, uint8_t imm ) {
 //    uint16_t v = dst - RAM;
 //    if ( ( v >= 0x400 ) && ( v < 0x800 ) ) {
 //        char c = charConv[imm];
+//        if ( c == '?' ) {
+//            printf("? SYNTAX ERROR\n");
+//        }
+
 //        if (( imm > ' ' ) && ( c < 0x7F ))
 //            printf("%04X: t:%02X '%c'\n", v, imm, isprint(c) ? c : ' ');
 //    }

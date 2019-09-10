@@ -15,6 +15,7 @@
 		32BFFB6222EACC660003B53F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32BFFB6E22EACC660003B53F /* A2MacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB6D22EACC660003B53F /* A2MacTests.swift */; };
 		32BFFB7922EACC660003B53F /* A2MacUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB7822EACC660003B53F /* A2MacUITests.swift */; };
+		32EDB7A223272CA80073AF2D /* fail1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32EDB7A123272CA80073AF2D /* fail1.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		32BFFB7422EACC660003B53F /* A2MacUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = A2MacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BFFB7822EACC660003B53F /* A2MacUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A2MacUITests.swift; sourceTree = "<group>"; };
 		32BFFB7A22EACC660003B53F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		32EDB7A123272CA80073AF2D /* fail1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = fail1.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
+				32EDB7A123272CA80073AF2D /* fail1.txt */,
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				32BFFB6022EACC660003B53F /* Main.storyboard */,
 				32BFFB6322EACC660003B53F /* Info.plist */,
@@ -279,6 +282,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32EDB7A223272CA80073AF2D /* fail1.txt in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
 				32BFFB6222EACC660003B53F /* Main.storyboard in Resources */,

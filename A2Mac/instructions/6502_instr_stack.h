@@ -11,11 +11,11 @@
 
 
 static inline void PUSH( uint8_t n ) {
-    memwrite( m6502.sp--, n );
+    RAM[ 0x100 + m6502.sp-- ] = n;
 }
 
 static inline uint8_t POP() {
-    return memread( ++m6502.sp );
+    return RAM[ 0x100 + (++m6502.sp) ];
 }
 
 static inline void PUSH_addr( uint16_t addr ) {
@@ -56,6 +56,7 @@ static inline void PHA() {
 static inline void PLA() {
     dbgPrintf("PLA ");
     m6502.A = POP();
+    set_flags_NZ(m6502.A);
 }
 
 /**

@@ -47,7 +47,7 @@ static inline void JSR( uint16_t addr ) {
  RTS  Return from Subroutine
  
  pull PC, PC+1 -> PC              N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------

@@ -14,7 +14,7 @@
  TAX  Transfer Accumulator to Index X
  
  A -> X                           N Z C I D V
- + + - - - -
+                                  + + - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -30,7 +30,7 @@ static inline void TAX() {
  TXA  Transfer Index X to Accumulator
  
  X -> A                           N Z C I D V
- + + - - - -
+                                  + + - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -47,7 +47,7 @@ static inline void TXA() {
  TAY  Transfer Accumulator to Index Y
  
  A -> Y                           N Z C I D V
- + + - - - -
+                                  + + - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -63,7 +63,7 @@ static inline void TAY() {
  TYA  Transfer Index Y to Accumulator
  
  Y -> A                           N Z C I D V
- + + - - - -
+                                  + + - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -79,7 +79,7 @@ static inline void TYA() {
  TSX  Transfer Stack Pointer to Index X
  
  SP -> X                          N Z C I D V
- + + - - - -
+                                  + + - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -95,7 +95,7 @@ static inline void TSX() {
  TXS  Transfer Index X to Stack Register
  
  X -> SP                          N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------

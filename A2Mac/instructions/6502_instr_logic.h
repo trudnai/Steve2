@@ -28,7 +28,7 @@
  (indirect),Y  ORA (oper),Y  11    2     5*
 **/
 static inline void ORA( uint8_t imm ) {
-    dbgPrintf("ORA ");
+    dbgPrintf("ORA(%02X) ", imm);
     m6502.A |= imm;
     set_flags_NZ( m6502.A );
 }
@@ -51,7 +51,7 @@ static inline void ORA( uint8_t imm ) {
  (indirect),Y  AND (oper),Y  31    2     5*
  **/
 static inline void AND( uint8_t imm ) {
-    dbgPrintf("AND ");
+    dbgPrintf("AND(%02X) ", imm);
     m6502.A &= imm;
     set_flags_NZ( m6502.A );
 }
@@ -74,7 +74,7 @@ static inline void AND( uint8_t imm ) {
  (indirect),Y  EOR (oper),Y  51    2     5*
 **/
 static inline void EOR( uint8_t imm ) {
-    dbgPrintf("EOR ");
+    dbgPrintf("EOR(%02X) ", imm);
     m6502.A ^= imm;
     set_flags_NZ( m6502.A );
 }

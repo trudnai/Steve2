@@ -43,14 +43,22 @@ union {
 
 static inline void set_flags_N( uint8_t test ) {
     m6502.flags.N = BITTEST(test, 7);
+    dbgPrintf("%c", m6502.flags.N ? 'N' : 'n');
 }
 
 static inline void set_flags_V( uint8_t test ) {
     m6502.flags.V = BITTEST(test, 6);
+    dbgPrintf("%c", m6502.flags.V ? 'V' : 'v');
 }
 
 static inline void set_flags_Z( uint8_t test ) {
     m6502.flags.Z = test == 0;
+    dbgPrintf("%c", m6502.flags.Z ? 'Z' : 'z');
+}
+
+static inline void set_flags_C( int test ) {
+    m6502.flags.C = test >= 0;
+    dbgPrintf("%c", m6502.flags.C ? 'C' : 'c');
 }
 
 static inline void set_flags_NZ( uint8_t test ) {
@@ -65,7 +73,7 @@ static inline void set_flags_NVZ( uint8_t test ) {
 
 static inline void set_flags_NZC( int test ) {
     set_flags_NZ(test);
-    m6502.flags.C = test >= 0;
+    set_flags_C(test);
 }
 
 static inline void set_flags_NZCV( int test ) {

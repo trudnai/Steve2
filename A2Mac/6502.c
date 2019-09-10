@@ -73,15 +73,15 @@ static inline int m6502_step() {
 //        case 0x1A: // NOP* (undocumented)
 //        case 0x1B: // SLO* (undocumented)
 //        case 0x1C: // NOP* (undocumented)
-        case 0x1D: ORA( memread( fetch16() + m6502.X ) ); return 4;    // ORA abs,X
-        case 0x1E: ASL( & RAM[ fetch16() + m6502.X ] ); return 7;      // ASL abs,X
+        case 0x1D: ORA( src_abs_X() ); return 4;                       // ORA abs,X
+        case 0x1E: ASL( dest_abs_X() ); return 7;                      // ASL abs,X
 //        case 0x1F: // SLO* (undocumented)
-        case 0x20: JSR( fetch16() ); return 6;                         // JSR abs
-        case 0x21: AND( memread( addr_X_ind() ) ); return 6;           // AND X,ind
+        case 0x20: JSR( abs_addr() ); return 6;                        // JSR abs
+        case 0x21: AND( src_X_ind() ); return 6;                       // AND X,ind
 //        case 0x22:
 //        case 0x23:
-        case 0x24: BIT( memread_zp( fetch() ) ); return 3;             // BIT zpg
-        case 0x25: AND( memread_zp( fetch() ) ); return 3;             // AND zpg
+        case 0x24: BIT( src_zp() ); return 3;                          // BIT zpg
+        case 0x25: AND( src_zp() ); return 3;                          // AND zpg
         case 0x26: ROL( & RAM[ fetch() ] ); return 5;                  // ROL zpg
 //        case 0x27:
         case 0x28: PLP(); return 4;                                    // PLP
@@ -89,7 +89,7 @@ static inline int m6502_step() {
         case 0x2A: ROL( & m6502.A ); return 2;                         // ROL A
 //        case 0x2B:
         case 0x2C: BIT( memread( fetch16() ) ); return 4;              // BIT abs
-        case 0x2D: AND( fetch16() ); return 4;                         // AND abs
+        case 0x2D: AND( memread( fetch16() ) ); return 4;              // AND abs
         case 0x2E: ROL( & RAM[ fetch16() ] ); return 6;                // ROL abs
 //        case 0x2F:
         case 0x30: BMI( (int8_t)fetch() ); return 2;                   // BMI rel
@@ -121,7 +121,7 @@ static inline int m6502_step() {
         case 0x4A: LSR( & m6502.A ); return 2;                         // LSR A
 //        case 0x4B:
         case 0x4C: JMP( fetch16() ); return 3;                         // JMP abs
-        case 0x4D: EOR( fetch16() ); return 4;                         // EOR abs
+        case 0x4D: EOR( memread( fetch16() ) ); return 4;              // EOR abs
         case 0x4E: LSR( & RAM[ fetch16() ] ); return 6;                // LSR abs
 //        case 0x4F:
         case 0x50: BVC( (int8_t)fetch() ); return 2;                   // BVC rel
@@ -234,7 +234,7 @@ static inline int m6502_step() {
 //        case 0xBB:
         case 0xBC: LDY( memread( addr_abs_X() ) ); return 4;           // LDY abs,X
         case 0xBD: LDA( memread( addr_abs_X() ) ); return 4;           // LDA abs,X
-        case 0xBE: LDX( memread( addr_abs_X() ) ); return 4;           // LDX abs,Y
+        case 0xBE: LDX( memread( addr_abs_Y() ) ); return 4;           // LDX abs,Y
 //        case 0xBF:
         case 0xC0: CPY( fetch() ); break;                              // CPY imm
         case 0xC1: CMP( memread( addr_X_ind() ) ) ; break;             // LDA X,ind
@@ -249,7 +249,7 @@ static inline int m6502_step() {
         case 0xCA: DEX(); return 2;                                    // DEX
 //        case 0xCB:
         case 0xCC: CPY( memread( fetch16() ) ); return 4;              // CPY abs
-        case 0xCD: CMP( fetch16() ); return 4;                         // CMP abs
+        case 0xCD: CMP( memread( fetch16() ) ); return 4;              // CMP abs
         case 0xCE: DEC( & RAM[ fetch16() ] ); return 4;                // DEC abs
 //        case 0xCF:
         case 0xD0: BNE( (int8_t)fetch() ); return 2;                   // BNE rel
@@ -269,7 +269,7 @@ static inline int m6502_step() {
         case 0xDE: DEC( & RAM[ addr_abs_X() ] ); return 7;             // DEC abs,X
 //        case 0xDF:
         case 0xE0: CPX( fetch() ); return 2;                           // CPX imm
-        case 0xE1: SBC( memread( addr_X_ind() ) ) ; return 6;          // SBC (ind,X)
+        case 0xE1: SBC( memread( addr_X_ind() ) ) ; return 6;          // SBC (X,ind)
 //        case 0xE2:
 //        case 0xE3:
         case 0xE4: CPX( memread_zp( fetch() ) ); return 3;             // CPX zpg
@@ -330,9 +330,9 @@ static inline void m6502_run() {
 //    unsigned long long s = rdtsc();
     unsigned long long e = (unsigned long long)-1LL;
 
-//    for ( unsigned long long int i = 0; i < iterations ; i++ ) {
+    for ( unsigned long long int i = 0; i < iterations ; i++ ) {
 //    for ( ; m6502.pc ; ) {
-    for ( ; ; ) {
+//    for ( ; ; ) {
         if ( m6502.interrupt_flag ) {
             switch (m6502.interrupt) {
                 case NMI:
@@ -395,7 +395,7 @@ void init() {
     
     // reset vector
     m6502.pc = memread16( 0xFFFC );
-    m6502.sp = 0x01FF;
+    m6502.sp = 0xFF;
     
     
     uint8_t counter[] = {

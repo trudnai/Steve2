@@ -24,9 +24,9 @@
  absolute,X    INC oper,X    FE    3     7
 **/
 static inline void INC( uint8_t * dst ) {
-    dbgPrintf("INC ");
-    (*dst)++;
-    set_flags_NZ(*dst);
+    dbgPrintf("INC %02X -> ", *dst);
+    set_flags_NZ( ++(*dst) );
+    dbgPrintf("%02X ", *dst);
 }
 
 /**
@@ -40,9 +40,9 @@ static inline void INC( uint8_t * dst ) {
  implied       INX           E8    1     2
 **/
 static inline void INX() {
-    dbgPrintf("INX ");
-    m6502.X++;
-    set_flags_NZ(m6502.X);
+    dbgPrintf("INX %02X -> ", m6502.X);
+    set_flags_NZ( ++m6502.X );
+    dbgPrintf("%02X ", m6502.X);
 }
 
 /**
@@ -57,7 +57,7 @@ static inline void INX() {
 **/
 static inline void INY() {
     dbgPrintf("INY %02X -> ", m6502.Y);
-    set_flags_NZ(++m6502.Y);
+    set_flags_NZ( ++m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
 }
 
@@ -75,9 +75,9 @@ static inline void INY() {
  absolute,X    DEC oper,X    DE    3     7
 **/
 static inline void DEC( uint8_t * dst ) {
-    dbgPrintf("DEC ");
-    (*dst)--;
-    set_flags_NZ(*dst);
+    dbgPrintf("DEC %02X -> ", *dst);
+    set_flags_NZ( --(*dst) );
+    dbgPrintf("%02X ", *dst);
 }
 
 /**
@@ -91,9 +91,9 @@ static inline void DEC( uint8_t * dst ) {
  implied       DEC           CA    1     2
 **/
 static inline void DEX() {
-    dbgPrintf("DEX ");
-    m6502.X--;
-    set_flags_NZ(m6502.X);
+    dbgPrintf("DEX %02X -> ", m6502.X);
+    set_flags_NZ( --m6502.X );
+    dbgPrintf("%02X ", m6502.X);
 }
 
 /**
@@ -107,9 +107,9 @@ static inline void DEX() {
  implied       DEC           88    1     2
  **/
 static inline void DEY() {
-    dbgPrintf("DEY ");
-    m6502.Y--;
-    set_flags_NZ(m6502.Y);
+    dbgPrintf("DEY %02X -> ", m6502.Y);
+    set_flags_NZ( --m6502.Y );
+    dbgPrintf("%02X ", m6502.Y);
 }
 
 #endif // __6502_INSTR_INC_DEC_H__

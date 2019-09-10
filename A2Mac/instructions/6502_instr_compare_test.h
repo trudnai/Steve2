@@ -16,7 +16,7 @@
  the zeroflag is set to the result of operand AND accumulator.
  
  A AND M, M7 -> N, M6 -> V        N Z C I D V
- M7 + - - - M6
+                                 M7 + - - - M6
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -25,17 +25,18 @@
  
  **/
 static inline void BIT( uint8_t imm ) {
-    dbgPrintf("BIT ");
-    m6502.flags.N = BITTEST(imm, 7);
-    m6502.flags.V = BITTEST(imm, 6);
-    m6502.flags.Z = ( m6502.A & imm ) == 0;
+    dbgPrintf("BIT(%02X) ", imm);
+    uint8_t m = m6502.A & imm;
+    m6502.flags.N = BITTEST(m, 7);
+    m6502.flags.V = BITTEST(m, 6);
+    m6502.flags.Z = m == 0;
 }
 
 /**
  CMP  Compare Memory with Accumulator
  
  A - M                            N Z C I D V
- + + + - - -
+                                  + + + - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -49,7 +50,7 @@ static inline void BIT( uint8_t imm ) {
  (indirect),Y  CMP (oper),Y  D1    2     5*
  **/
 static inline void CMP( uint8_t imm ) {
-    dbgPrintf("CMP ");
+    dbgPrintf("CMP(%02X) ", imm);
     set_flags_NZC( (int)m6502.A - imm );
 }
 
@@ -57,7 +58,7 @@ static inline void CMP( uint8_t imm ) {
  CPX  Compare Memory and Index X
  
  X - M                            N Z C I D V
- + + + - - -
+                                  + + + - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -66,7 +67,7 @@ static inline void CMP( uint8_t imm ) {
  absolute      CPX oper      EC    3     4
  **/
 static inline void CPX( uint8_t imm ) {
-    dbgPrintf("CPX ");
+    dbgPrintf("CPX(%02X) ", imm);
     set_flags_NZC( (int)m6502.X - imm );
 }
 
@@ -83,7 +84,7 @@ static inline void CPX( uint8_t imm ) {
  absolute      CPY oper      CC    3     4
  **/
 static inline void CPY( uint8_t imm ) {
-    dbgPrintf("CPY ");
+    dbgPrintf("CPY(%02X) ", imm);
     set_flags_NZC( (int)m6502.Y - imm );
 }
 

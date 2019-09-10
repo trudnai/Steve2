@@ -48,7 +48,7 @@ typedef struct m6502_s {
         } flags;            // Status Register
     };
     uint16_t pc;            // Program Counter
-    uint16_t sp;            // Stack Pointer
+    uint8_t sp;             // Stack Pointer ( stack addr = 0x01 + sp )
     unsigned clk;           // Clock Counter
     
     union {

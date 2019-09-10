@@ -9,7 +9,7 @@
 #ifndef __6502_INSTR_BRANCH_H__
 #define __6502_INSTR_BRANCH_H__
 
-static inline void BR( int8_t reladdr ) {
+static inline void BRA( int8_t reladdr ) {
     m6502.pc += reladdr;
 }
 
@@ -17,7 +17,7 @@ static inline void BR( int8_t reladdr ) {
  BCC  Branch on Carry Clear
  
  branch on C = 0                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -26,14 +26,14 @@ static inline void BR( int8_t reladdr ) {
 static inline void BCC( int8_t reladdr ) {
     dbgPrintf("BCC ");
     if ( m6502.flags.C == 0 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 /**
  BCS  Branch on Carry Set
  
  branch on C = 1                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -42,14 +42,14 @@ static inline void BCC( int8_t reladdr ) {
 static inline void BCS( int8_t reladdr ) {
     dbgPrintf("BCS ");
     if ( m6502.flags.C == 1 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 /**
  BNE  Branch on Result not Zero
  
  branch on Z = 0                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -58,14 +58,14 @@ static inline void BCS( int8_t reladdr ) {
 static inline void BNE( int8_t reladdr ) {
     dbgPrintf("BNE ");
     if ( m6502.flags.Z == 0 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 /**
  BEQ  Branch on Result Zero
  
  branch on Z = 1                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -74,14 +74,14 @@ static inline void BNE( int8_t reladdr ) {
 static inline void BEQ( int8_t reladdr ) {
     dbgPrintf("BEQ ");
     if ( m6502.flags.Z == 1 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 /**
  BPL  Branch on Result Plus
  
  branch on N = 0                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -90,14 +90,14 @@ static inline void BEQ( int8_t reladdr ) {
 static inline void BPL( int8_t reladdr ) {
     dbgPrintf("BPL ");
     if ( m6502.flags.N == 0 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 /**
  BMI  Branch on Result Minus
  
  branch on N = 1                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -106,14 +106,14 @@ static inline void BPL( int8_t reladdr ) {
 static inline void BMI( int8_t reladdr ) {
     dbgPrintf("BMI ");
     if ( m6502.flags.N == 1 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 /**
  BVC  Branch on Overflow Clear
  
  branch on V = 0                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -122,14 +122,14 @@ static inline void BMI( int8_t reladdr ) {
 static inline void BVC( int8_t reladdr ) {
     dbgPrintf("BVC ");
     if ( m6502.flags.V == 0 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 /**
  BVS  Branch on Overflow Set
  
  branch on V = 1                  N Z C I D V
- - - - - - -
+                                  - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -138,7 +138,7 @@ static inline void BVC( int8_t reladdr ) {
 static inline void BVS( int8_t reladdr ) {
     dbgPrintf("BVS ");
     if ( m6502.flags.V == 1 )
-        BR( reladdr );
+        BRA( reladdr );
 }
 
 #endif // __6502_INSTR_BRANCH_H__

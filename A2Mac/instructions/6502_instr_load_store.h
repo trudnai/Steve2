@@ -30,7 +30,7 @@
  (indirect),Y  LDA (oper),Y  B1    2     5*
 **/
 static inline void LDA( uint8_t imm ) {
-    dbgPrintf("LDA ");
+    dbgPrintf("LDA(%02X) ", imm);
     m6502.A = imm;
     set_flags_NZ(imm);
 }
@@ -50,7 +50,7 @@ static inline void LDA( uint8_t imm ) {
  absolute,Y    LDX oper,Y    BE    3     4*
 **/
 static inline void LDX( uint8_t imm ) {
-    dbgPrintf("LDX ");
+    dbgPrintf("LDX(%02X) ", imm);
     m6502.X = imm;
     set_flags_NZ(imm);
 }
@@ -95,14 +95,29 @@ static inline void STR( uint8_t * dst, uint8_t imm ) {
 //    uint16_t v = dst - RAM;
 //    if ( ( v >= 0x400 ) && ( v < 0x800 ) ) {
 //        char c = charConv[imm];
-//        if ( c == '?' ) {
-//            printf("? SYNTAX ERROR\n");
-//        }
-
+////        if ( c == '?' ) {
+////            printf("? SYNTAX ERROR\n");
+////        }
+//
 //        if (( imm > ' ' ) && ( c < 0x7F ))
-//            printf("%04X: t:%02X '%c'\n", v, imm, isprint(c) ? c : ' ');
+//            printf("*** PRINT: %04X: t:%02X '%c'\n", v, imm, isprint(c) ? c : ' ');
 //    }
-
+//
+//
+//    else switch ( v ) {
+//        case 0x36:
+//        case 0x37:
+//            dbgPrintf("*** OUTROUT %04X: %02X\n", v, imm);
+//            break;
+//
+//        case 0x9B:
+//        case 0x9C:
+//            dbgPrintf("*** LOWTR %04X: %02X\n", v, imm);
+//            break;
+//
+//        default:
+//            break;
+//    }
 }
 
 /**

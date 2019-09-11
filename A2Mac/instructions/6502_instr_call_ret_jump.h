@@ -22,7 +22,7 @@
  indirect      JMP (oper)    6C    3     5
  **/
 static inline void JMP( uint16_t addr ) {
-    dbgPrintf("JMP ");
+    dbgPrintf("JMP %04X ", addr);
     m6502.pc = addr;
 }
 

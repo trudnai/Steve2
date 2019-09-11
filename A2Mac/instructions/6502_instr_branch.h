@@ -11,6 +11,7 @@
 
 static inline void BRA( int8_t reladdr ) {
     m6502.pc += reladdr;
+    dbgPrintf("BRA %04X ", m6502.pc);
 }
 
 /**
@@ -25,8 +26,12 @@ static inline void BRA( int8_t reladdr ) {
  **/
 static inline void BCC( int8_t reladdr ) {
     dbgPrintf("BCC ");
-    if ( m6502.flags.C == 0 )
+    if ( m6502.flags.C == 0 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 /**
@@ -41,8 +46,12 @@ static inline void BCC( int8_t reladdr ) {
  **/
 static inline void BCS( int8_t reladdr ) {
     dbgPrintf("BCS ");
-    if ( m6502.flags.C == 1 )
+    if ( m6502.flags.C == 1 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 /**
@@ -57,8 +66,12 @@ static inline void BCS( int8_t reladdr ) {
  **/
 static inline void BNE( int8_t reladdr ) {
     dbgPrintf("BNE ");
-    if ( m6502.flags.Z == 0 )
+    if ( m6502.flags.Z == 0 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 /**
@@ -73,8 +86,12 @@ static inline void BNE( int8_t reladdr ) {
  **/
 static inline void BEQ( int8_t reladdr ) {
     dbgPrintf("BEQ ");
-    if ( m6502.flags.Z == 1 )
+    if ( m6502.flags.Z == 1 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 /**
@@ -89,8 +106,12 @@ static inline void BEQ( int8_t reladdr ) {
  **/
 static inline void BPL( int8_t reladdr ) {
     dbgPrintf("BPL ");
-    if ( m6502.flags.N == 0 )
+    if ( m6502.flags.N == 0 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 /**
@@ -105,8 +126,12 @@ static inline void BPL( int8_t reladdr ) {
  **/
 static inline void BMI( int8_t reladdr ) {
     dbgPrintf("BMI ");
-    if ( m6502.flags.N == 1 )
+    if ( m6502.flags.N == 1 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 /**
@@ -121,8 +146,12 @@ static inline void BMI( int8_t reladdr ) {
  **/
 static inline void BVC( int8_t reladdr ) {
     dbgPrintf("BVC ");
-    if ( m6502.flags.V == 0 )
+    if ( m6502.flags.V == 0 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 /**
@@ -137,8 +166,12 @@ static inline void BVC( int8_t reladdr ) {
  **/
 static inline void BVS( int8_t reladdr ) {
     dbgPrintf("BVS ");
-    if ( m6502.flags.V == 1 )
+    if ( m6502.flags.V == 1 ) {
         BRA( reladdr );
+    }
+    else {
+        dbgPrintf("-no-");
+    }
 }
 
 #endif // __6502_INSTR_BRANCH_H__

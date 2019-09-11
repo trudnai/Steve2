@@ -27,8 +27,14 @@
 static inline void ASL( uint8_t * dst ) {
     dbgPrintf("ASL ");
     m6502.flags.C = *dst >> 7;
-    *dst <<= 1;
-    set_flags_NZ( *dst );
+    ;
+    set_flags_NZ( *dst <<= 1 );
+}
+static inline void ASLA() {
+    dbgPrintf("ASL ");
+    m6502.flags.C = m6502.A >> 7;
+    ;
+    set_flags_NZ( m6502.A <<= 1 );
 }
 
 /**
@@ -48,8 +54,14 @@ static inline void ASL( uint8_t * dst ) {
 static inline void LSR( uint8_t * dst ) {
     dbgPrintf("LSR ");
     m6502.flags.C = *dst & 1;
-    *dst >>= 1;
-    set_flags_NZ( *dst );
+    ;
+    set_flags_NZ( *dst >>= 1 );
+}
+static inline void LSRA() {
+    dbgPrintf("LSR ");
+    m6502.flags.C = m6502.A & 1;
+    ;
+    set_flags_NZ( m6502.A >>= 1 );
 }
 
 /**
@@ -71,8 +83,16 @@ static inline void ROL( uint8_t * dst ) {
     uint8_t C = m6502.flags.C;
     m6502.flags.C = *dst >> 7;
     *dst <<= 1;
-    *dst |= C;
-    set_flags_NZ( *dst );
+    ;
+    set_flags_NZ( *dst |= C );
+}
+static inline void ROLA() {
+    dbgPrintf("ROL ");
+    uint8_t C = m6502.flags.C;
+    m6502.flags.C = m6502.A >> 7;
+    m6502.A <<= 1;
+    ;
+    set_flags_NZ( m6502.A |= C );
 }
 
 /**
@@ -94,8 +114,16 @@ static inline void ROR( uint8_t * dst ) {
     uint8_t C = m6502.flags.C << 7;
     m6502.flags.C = *dst & 1;
     *dst >>= 1;
-    *dst |= C;
-    set_flags_NZ( *dst );
+    ;
+    set_flags_NZ( *dst |= C );
+}
+static inline void RORA() {
+    dbgPrintf("ROR ");
+    uint8_t C = m6502.flags.C << 7;
+    m6502.flags.C = m6502.A & 1;
+    m6502.A >>= 1;
+    ;
+    set_flags_NZ( m6502.A |= C );
 }
 
 

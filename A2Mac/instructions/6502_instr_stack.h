@@ -9,22 +9,24 @@
 #ifndef __6502_INSTR_STACK_H__
 #define __6502_INSTR_STACK_H__
 
+static const uint16_t stack_base_addr = 0x100;
 
-static inline void PUSH( uint8_t n ) {
-    RAM[ 0x100 + m6502.sp-- ] = n;
+
+static inline void PUSH( uint8_t imm ) {
+    RAM[ stack_base_addr + m6502.sp-- ] = imm;
 }
 
 static inline uint8_t POP() {
-    return RAM[ 0x100 + (++m6502.sp) ];
+    return RAM[ ++m6502.sp + stack_base_addr ];
 }
 
 static inline void PUSH_addr( uint16_t addr ) {
-    PUSH( (uint8_t)addr );
     PUSH( (uint8_t)(addr >> 8) );
+    PUSH( (uint8_t)addr );
 }
 
 static inline uint16_t POP_addr() {
-    return ( POP() << 8 ) + POP();
+    return  POP() + ( POP() << 8 );
 }
 
 

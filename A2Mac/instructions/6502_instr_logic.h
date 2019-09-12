@@ -29,8 +29,7 @@
 **/
 static inline void ORA( uint8_t imm ) {
     dbgPrintf("ORA(%02X) ", imm);
-    m6502.A |= imm;
-    set_flags_NZ( m6502.A );
+    set_flags_NZ( m6502.A |= imm );
 }
 
 /**
@@ -52,8 +51,7 @@ static inline void ORA( uint8_t imm ) {
  **/
 static inline void AND( uint8_t imm ) {
     dbgPrintf("AND(%02X) ", imm);
-    m6502.A &= imm;
-    set_flags_NZ( m6502.A );
+    set_flags_NZ( m6502.A &= imm );
 }
 
 /**
@@ -75,8 +73,7 @@ static inline void AND( uint8_t imm ) {
 **/
 static inline void EOR( uint8_t imm ) {
     dbgPrintf("EOR(%02X) ", imm);
-    m6502.A ^= imm;
-    set_flags_NZ( m6502.A );
+    set_flags_NZ( m6502.A ^= imm );
 }
 
 #endif // __6502_INSTR_LOGIC_H__

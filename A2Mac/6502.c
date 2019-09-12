@@ -330,9 +330,9 @@ static inline void m6502_run() {
 //    unsigned long long s = rdtsc();
     unsigned long long e = (unsigned long long)-1LL;
 
-    for ( unsigned long long int i = 0; i < iterations ; i++ ) {
+//    for ( unsigned long long int i = 0; i < iterations ; i++ ) {
 //    for ( ; m6502.pc ; ) {
-//    for ( ; ; ) {
+    for ( ; ; ) {
         if ( m6502.interrupt_flag ) {
             switch (m6502.interrupt) {
                 case NMI:

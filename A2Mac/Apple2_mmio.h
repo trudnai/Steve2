@@ -205,45 +205,6 @@ static inline uint16_t fetch16() {
 }
 
 /**
- get a 16 bit address from the zp:zp+1
- **/
-static inline uint16_t addr_zp_ind( uint8_t addr ) {
-    return memread16(addr);
-}
-
-/**
- X,ind        ....    X-indexed, indirect         OPC ($LL,X)
- operand is zeropage address;
- effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
- **/
-static inline uint16_t addr_X_ind() {
-    return addr_zp_ind( fetch() + m6502.X );
-}
-static inline uint8_t src_X_ind() {
-    return memread( addr_X_ind() );
-}
-static inline uint8_t * dest_X_ind() {
-    return & RAM[ addr_X_ind() ];
-}
-
-/**
- ind,Y        ....    indirect, Y-indexed         OPC ($LL),Y
- operand is zeropage address;
- effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
- **/
-static inline uint16_t addr_ind_Y() {
-//    uint8_t a = fetch();
-//    dbgPrintf("addr_ind_Y: %04X + %02X = %04X ", addr_zpg_ind( a ), m6502.Y, addr_zpg_ind( a ) + m6502.Y);
-    return addr_zp_ind( fetch() ) + m6502.Y;
-}
-static inline uint8_t src_ind_Y() {
-    return memread( addr_ind_Y() );
-}
-static inline uint8_t * dest_ind_Y() {
-    return & RAM[ addr_ind_Y() ];
-}
-
-/**
  abs        ....    absolute         OPC $LLHH,X
  operand is address; effective address is address incremented by X with carry **
  **/
@@ -306,7 +267,7 @@ static inline uint16_t imm() {
  zpg        ....    zeropage         OPC $LL
  operand is zeropage address (hi-byte is zero, address = $00LL)
  **/
-static inline uint16_t addr_zp() {
+static inline uint8_t addr_zp() {
     return fetch();
 }
 static inline uint8_t src_zp() {
@@ -317,11 +278,50 @@ static inline uint8_t * dest_zp() {
 }
 
 /**
+ get a 16 bit address from the zp:zp+1
+ **/
+static inline uint16_t addr_zp_ind( uint8_t addr ) {
+    return memread16(addr);
+}
+
+/**
+ X,ind        ....    X-indexed, indirect         OPC ($LL,X)
+ operand is zeropage address;
+ effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
+ **/
+static inline uint16_t addr_X_ind() {
+    return addr_zp_ind( addr_zp() + m6502.X );
+}
+static inline uint8_t src_X_ind() {
+    return memread( addr_X_ind() );
+}
+static inline uint8_t * dest_X_ind() {
+    return & RAM[ addr_X_ind() ];
+}
+
+/**
+ ind,Y        ....    indirect, Y-indexed         OPC ($LL),Y
+ operand is zeropage address;
+ effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
+ **/
+static inline uint16_t addr_ind_Y() {
+    //    uint8_t a = fetch();
+    //    dbgPrintf("addr_ind_Y: %04X + %02X = %04X ", addr_zpg_ind( a ), m6502.Y, addr_zpg_ind( a ) + m6502.Y);
+    return addr_zp_ind( addr_zp() ) + m6502.Y;
+}
+static inline uint8_t src_ind_Y() {
+    return memread( addr_ind_Y() );
+}
+static inline uint8_t * dest_ind_Y() {
+    return & RAM[ addr_ind_Y() ];
+}
+
+/**
  zpg,X        ....    zeropage, X-indexed         OPC $LL,X
  operand is zeropage address;
  effective address is address incremented by X without carry **
  **/
-static inline uint16_t addr_zp_X() {
+static inline uint8_t addr_zp_X() {
     return addr_zp() + m6502.X;
 }
 static inline uint8_t src_zp_X() {
@@ -336,7 +336,7 @@ static inline uint8_t * dest_zp_X() {
  operand is zeropage address;
  effective address is address incremented by Y without carry **
  **/
-static inline uint16_t addr_zp_Y() {
+static inline uint8_t addr_zp_Y() {
     return addr_zp() + m6502.Y;
 }
 static inline uint8_t src_zp_Y() {

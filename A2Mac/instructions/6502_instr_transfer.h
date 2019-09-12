@@ -22,8 +22,7 @@
  **/
 static inline void TAX() {
     dbgPrintf("TAX ");
-    m6502.X = m6502.A;
-    set_flags_NZ(m6502.X);
+    set_flags_NZ(m6502.X = m6502.A);
 }
 
 /**
@@ -38,8 +37,7 @@ static inline void TAX() {
  **/
 static inline void TXA() {
     dbgPrintf("TXA ");
-    m6502.A = m6502.X;
-    set_flags_NZ(m6502.A);
+    set_flags_NZ(m6502.A = m6502.X);
 }
 
 
@@ -55,8 +53,7 @@ static inline void TXA() {
  **/
 static inline void TAY() {
     dbgPrintf("TAY ");
-    m6502.Y = m6502.A;
-    set_flags_NZ(m6502.Y);
+    set_flags_NZ(m6502.Y = m6502.A);
 }
 
 /**
@@ -71,8 +68,7 @@ static inline void TAY() {
  **/
 static inline void TYA() {
     dbgPrintf("TYA ");
-    m6502.A = m6502.Y;
-    set_flags_NZ(m6502.A);
+    set_flags_NZ(m6502.A = m6502.Y);
 }
 
 /**
@@ -87,8 +83,7 @@ static inline void TYA() {
  **/
 static inline void TSX() {
     dbgPrintf("TSX ");
-    m6502.X = m6502.sp;
-    set_flags_NZ(m6502.X);
+    set_flags_NZ(m6502.X = m6502.sp);
 }
 
 /**

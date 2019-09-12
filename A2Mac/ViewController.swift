@@ -31,9 +31,19 @@ class ViewController: NSViewController {
         0x228, 0x2A8, 0x328, 0x3A8, 0x050, 0x0D0, 0x150, 0x1D0, 0x250, 0x2D0, 0x350, 0x3D0
     ]
     
+    var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            tst6502()
+        if ( workItem != nil ) {
+            workItem!.cancel();
+            workItem = nil;
+        }
+        else {
+            workItem = DispatchWorkItem {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    tst6502()
+                }
+            }
+            DispatchQueue.global().async(execute: workItem!);
         }
     }
     

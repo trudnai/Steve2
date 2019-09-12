@@ -26,9 +26,8 @@
  **/
 static inline void BIT( uint8_t imm ) {
     dbgPrintf("BIT(%02X) ", imm);
-    m6502.flags.N = BITTEST(imm, 7);
-    m6502.flags.V = BITTEST(imm, 6);
-    m6502.flags.Z = (imm & m6502.A) == 0;
+    set_flags_NV(imm);
+    set_flags_Z(m6502.A & imm);
 }
 
 /**

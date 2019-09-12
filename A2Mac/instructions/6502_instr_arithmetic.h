@@ -31,8 +31,7 @@
 **/
 static inline void ADC( uint8_t imm ) {
     dbgPrintf("ADC(%02X) A:%02X + %02X ", imm, m6502.A, imm);
-    m6502.A += imm + m6502.flags.C;
-    set_flags_NZCV( m6502.A );
+    set_flags_NZCV( m6502.A += imm + m6502.flags.C );
     dbgPrintf("-> A:%02X ", m6502.A);
 }
 

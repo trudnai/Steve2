@@ -142,12 +142,13 @@ static inline uint8_t memread( uint16_t addr ) {
 /**
  Naive implementation of RAM read from address
  **/
+static inline uint8_t memread8( uint16_t addr ) {
+    return RAM[ addr ];
+}
+/**
+ Naive implementation of RAM read from address
+ **/
 static inline uint16_t memread16( uint16_t addr ) {
-//    if ( ( addr >= 0xC000 ) && ( addr < 0xD000 ) ) {
-//        return mmioRead(addr);
-//    }
-
-//    dbgPrintf("%04X ", * (uint16_t*) (& RAM[ addr ]));
     return * (uint16_t*) (& RAM[ addr ]);
 }
 
@@ -237,7 +238,7 @@ static inline uint16_t addr_abs_X() {
     return fetch16() + m6502.X;
 }
 static inline uint8_t src_abs_X() {
-    return memread( addr_abs_X() );
+    return memread8( addr_abs_X() );
 }
 static inline uint8_t * dest_abs_X() {
     return & RAM[ addr_abs_X() ];
@@ -252,7 +253,7 @@ static inline uint16_t addr_abs_Y() {
     return abs_addr() + m6502.Y;
 }
 static inline uint8_t src_abs_Y() {
-    return memread(addr_abs_Y());
+    return memread8(addr_abs_Y());
 }
 static inline uint8_t * dest_abs_Y() {
     return & RAM[ addr_abs_Y() ];
@@ -293,7 +294,7 @@ static inline uint16_t addr_X_ind() {
     return addr_zp_ind( addr_zp() + m6502.X );
 }
 static inline uint8_t src_X_ind() {
-    return memread( addr_X_ind() );
+    return memread8( addr_X_ind() );
 }
 static inline uint8_t * dest_X_ind() {
     return & RAM[ addr_X_ind() ];
@@ -310,7 +311,7 @@ static inline uint16_t addr_ind_Y() {
     return addr_zp_ind( addr_zp() ) + m6502.Y;
 }
 static inline uint8_t src_ind_Y() {
-    return memread( addr_ind_Y() );
+    return memread8( addr_ind_Y() );
 }
 static inline uint8_t * dest_ind_Y() {
     return & RAM[ addr_ind_Y() ];

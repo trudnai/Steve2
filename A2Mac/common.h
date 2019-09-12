@@ -56,7 +56,7 @@ static inline void set_flags_Z( const uint8_t test ) {
     dbgPrintf("%c", m6502.flags.Z ? 'Z' : 'z');
 }
 
-static inline void set_flags_C( const int test ) {
+static inline void set_flags_C( const int16_t test ) {
     m6502.flags.C = test >= 0;
     dbgPrintf("%c", m6502.flags.C ? 'C' : 'c');
 }
@@ -76,7 +76,7 @@ static inline void set_flags_NVZ( const uint8_t test ) {
     set_flags_V(test);
 }
 
-static inline void set_flags_NZC( const int test ) {
+static inline void set_flags_NZC( const int16_t test ) {
     set_flags_NZ(test);
     set_flags_C(test);
 }

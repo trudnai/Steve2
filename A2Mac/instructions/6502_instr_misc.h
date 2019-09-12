@@ -28,7 +28,7 @@ static inline void BRK() {
  NOP  No Operation
  
  ---                              N Z C I D V
- - - - - - -
+                                 - - - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------

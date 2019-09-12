@@ -33,7 +33,7 @@ static inline void INC( uint8_t * dst ) {
  INX  Increment Index X by One
  
  X + 1 -> X                       N Z C I D V
- + + - - - -
+                                  + + - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------
@@ -49,7 +49,7 @@ static inline void INX() {
  INY  Increment Index Y by One
  
  Y + 1 -> Y                       N Z C I D V
- + + - - - -
+                                  + + - - - -
  
  addressing    assembler    opc  bytes  cyles
  --------------------------------------------

@@ -49,7 +49,7 @@ static inline void BIT( uint8_t imm ) {
  **/
 static inline void CMP( uint8_t imm ) {
     dbgPrintf("CMP(%02X) ", imm);
-    set_flags_NZC( (int)m6502.A - imm );
+    set_flags_NZC( (int16_t)m6502.A - imm );
 }
 
 /**
@@ -66,7 +66,7 @@ static inline void CMP( uint8_t imm ) {
  **/
 static inline void CPX( uint8_t imm ) {
     dbgPrintf("CPX(%02X) ", imm);
-    set_flags_NZC( (int)m6502.X - imm );
+    set_flags_NZC( (int16_t)m6502.X - imm );
 }
 
 /**
@@ -83,7 +83,7 @@ static inline void CPX( uint8_t imm ) {
  **/
 static inline void CPY( uint8_t imm ) {
     dbgPrintf("CPY(%02X) ", imm);
-    set_flags_NZC( (int)m6502.Y - imm );
+    set_flags_NZC( (int16_t)m6502.Y - imm );
 }
 
 #endif // __6502_INSTR_COMPARE_TEST_H__

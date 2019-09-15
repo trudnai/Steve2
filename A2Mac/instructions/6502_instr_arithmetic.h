@@ -29,12 +29,13 @@
  (indirect,X)  ADC (oper,X)  61    2     6
  (indirect),Y  ADC (oper),Y  71    2     5*
 **/
-static inline void ADC( uint8_t imm ) {
-    dbgPrintf("ADC(%02X) A:%02X + %02X ", imm, m6502.A, imm);
+INLINE void ADC( uint8_t src ) {
+    dbgPrintf("ADC(%02X) A:%02X + %02X ", src, m6502.A, src);
     
-    int16_t tmp;
-    set_flags_NVZ( m6502.A = tmp = (int16_t)m6502.A + imm + m6502.flags.C );
-    m6502.flags.C = tmp > 0xFF;
+    uint16_t tmp;
+    set_flags_NZ( m6502.A = tmp = (uint16_t)m6502.A + src + m6502.C );
+    m6502.V = (!((m6502.A ^ src) & 0x80)) && ((m6502.A ^ tmp) & 0x80);
+    m6502.C = tmp > 0xFF;
     
     dbgPrintf("-> A:%02X ", m6502.A);
 }
@@ -56,9 +57,9 @@ static inline void ADC( uint8_t imm ) {
  (indirect,X)  SBC (oper,X)  E1    2     6
  (indirect),Y  SBC (oper),Y  F1    2     5*
 **/
-static inline void SBC( uint8_t imm ) {
-    dbgPrintf("SBC(%02X) ", imm);
-    ADC( ~imm );
+INLINE void SBC( uint8_t src ) {
+    dbgPrintf("SBC(%02X) ", src);
+    ADC( ~src );
 }
 
 #endif // __6502_INSTR_ARITHMETIC_H__

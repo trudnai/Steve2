@@ -27,32 +27,33 @@ typedef struct m6502_s {
     uint8_t  A;             // Accumulator
     uint8_t  X;             // X index register
     uint8_t  Y;             // Y index register
+//    union {
+//        uint8_t  instr;         // Instruction
+//        struct {
+//            uint8_t cc:2;
+//            uint8_t bbb:3;
+//            uint8_t aaa:3;
+//        };
+//    };
     union {
-        uint8_t  instr;         // Instruction
+        uint8_t SR;         // Status Register
         struct {
-            uint8_t aaa:3;
-            uint8_t bbb:3;
-            uint8_t cc:2;
+            uint8_t C:1;    // Carry Flag
+            uint8_t Z:1;    // Zero Flag
+            uint8_t I:1;    // Interrupt Flag
+            uint8_t D:1;    // Decimal Flag
+            uint8_t B:1;    // B Flag
+            uint8_t res:1;  // reserved -- should be always 1
+            uint8_t V:1;    // Overflow Flag ???
+            uint8_t N:1;    // Negative Flag
         };
     };
-    union {
-        uint8_t sr;         // Status Register as 1 byte
-        struct {
-            uint8_t N:1;    // Negative Flag
-            uint8_t V:1;    // Overflow Flag ???
-            uint8_t B:2;    // B Flag
-            uint8_t D:1;    // Decimal Flag
-            uint8_t I:1;    // Interrupt Flag
-            uint8_t Z:1;    // Zero Flag
-            uint8_t C:1;    // Carry Flag
-        } flags;            // Status Register
-    };
-    uint16_t pc;            // Program Counter
-    uint8_t sp;             // Stack Pointer ( stack addr = 0x01 + sp )
+    uint16_t PC;            // Program Counter
+    uint8_t SP;             // Stack Pointer ( stack addr = 0x01 + sp )
     unsigned clk;           // Clock Counter
     
     union {
-        int interrupt_flag;
+        int IF;             // interrut flag
         interrupt_t interrupt;
     };
 } m6502_t;

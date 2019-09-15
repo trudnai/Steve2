@@ -71,7 +71,7 @@ typedef union address16_u {
 } address16_t;
 
 
-static inline uint8_t ioRead( uint16_t addr ) {
+INLINE uint8_t ioRead( uint16_t addr ) {
 //    printf("mmio:%04X\n", addr);
     
     // C0xx
@@ -362,7 +362,7 @@ static inline uint8_t ioRead( uint16_t addr ) {
     return 0;
 }
 
-static inline void ioWrite( uint16_t addr ) {
+INLINE void ioWrite( uint16_t addr ) {
     //    printf("mmio:%04X\n", addr);
     switch (addr) {
         case io_KBD:
@@ -378,11 +378,11 @@ static inline void ioWrite( uint16_t addr ) {
  Naive implementation of RAM read from address
  **/
 
-static inline uint8_t memread_zp( uint8_t addr ) {
+INLINE uint8_t memread_zp( uint8_t addr ) {
     return RAM[ addr ];
 }
 
-static inline uint8_t memread( uint16_t addr ) {
+INLINE uint8_t memread( uint16_t addr ) {
 //    switch ( ((address16_t)addr).page ) {
 //        case 0xC0:
 //        case 0xC1:
@@ -416,7 +416,7 @@ static inline uint8_t memread( uint16_t addr ) {
 /**
  Naive implementation of RAM read from address
  **/
-static inline uint16_t memread16( uint16_t addr ) {
+INLINE uint16_t memread16( uint16_t addr ) {
 //    if ( ( addr >= 0xC000 ) && ( addr < 0xD000 ) ) {
 //        return mmioRead(addr);
 //    }
@@ -428,7 +428,7 @@ static inline uint16_t memread16( uint16_t addr ) {
 /**
  Naive implementation of RAM read from address
  **/
-//static inline uint16_t memioread16( uint16_t addr ) {
+//INLINE uint16_t memioread16( uint16_t addr ) {
 //    return (uint16_t)mmio_read[ addr ](addr);
 //}
 
@@ -462,7 +462,7 @@ static  void memwrite( uint16_t addr, uint8_t byte ) {
  Fetching 1 byte from memory address pc (program counter)
  increase pc by one
  **/
-static inline uint8_t fetch() {
+INLINE uint8_t fetch() {
     dbgPrintf("%02X ", RAM[m6502.pc]);
     return memread( m6502.pc++ );
 }
@@ -471,7 +471,7 @@ static inline uint8_t fetch() {
  Fetching 2 bytes as a 16 bit number from memory address pc (program counter)
  increase pc by one
  **/
-static inline uint16_t fetch16() {
+INLINE uint16_t fetch16() {
     dbgPrintf("%04X ", memread16(m6502.pc));
     uint16_t word = memread16( m6502.pc );
     m6502.pc += 2;
@@ -481,7 +481,7 @@ static inline uint16_t fetch16() {
 /**
  get a 16 bit address from the zp:zp+1
  **/
-static inline uint16_t addr_zp_ind( uint8_t addr ) {
+INLINE uint16_t addr_zp_ind( uint8_t addr ) {
     return memread16(addr);
 }
 
@@ -490,13 +490,13 @@ static inline uint16_t addr_zp_ind( uint8_t addr ) {
  operand is zeropage address;
  effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
  **/
-static inline uint16_t addr_X_ind() {
+INLINE uint16_t addr_X_ind() {
     return addr_zp_ind( fetch() + m6502.X );
 }
-static inline uint8_t src_X_ind() {
+INLINE uint8_t src_X_ind() {
     return memread( addr_X_ind() );
 }
-static inline uint8_t * dest_X_ind() {
+INLINE uint8_t * dest_X_ind() {
     return & RAM[ addr_X_ind() ];
 }
 
@@ -505,7 +505,7 @@ static inline uint8_t * dest_X_ind() {
  operand is zeropage address;
  effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
  **/
-static inline uint16_t addr_ind_Y() {
+INLINE uint16_t addr_ind_Y() {
     uint8_t a = fetch();
 //    dbgPrintf("addr_ind_Y: %04X + %02X = %04X ", addr_zpg_ind( a ), m6502.Y, addr_zpg_ind( a ) + m6502.Y);
     return addr_zp_ind( a ) + m6502.Y;
@@ -515,18 +515,18 @@ static inline uint16_t addr_ind_Y() {
  abs,X        ....    absolute, X-indexed         OPC $LLHH,X
  operand is address; effective address is address incremented by X with carry **
  **/
-static inline uint16_t addr_abs_X() {
+INLINE uint16_t addr_abs_X() {
     return fetch16() + m6502.X;
 }
-static inline uint8_t src_abs_X() {
+INLINE uint8_t src_abs_X() {
     return memread( addr_abs_X() );
 }
-static inline uint8_t * dest_abs_X() {
+INLINE uint8_t * dest_abs_X() {
     return & RAM[ addr_abs_X() ];
 }
 
 
-static inline uint16_t abs_addr() {
+INLINE uint16_t abs_addr() {
     return fetch16();
 }
 
@@ -534,13 +534,13 @@ static inline uint16_t abs_addr() {
  abs,Y        ....    absolute, Y-indexed         OPC $LLHH,Y
  operand is address; effective address is address incremented by Y with carry **
  **/
-static inline uint16_t addr_abs_Y() {
+INLINE uint16_t addr_abs_Y() {
     return fetch16() + m6502.Y;
 }
-static inline uint8_t src_abs_Y() {
+INLINE uint8_t src_abs_Y() {
     return memread(addr_abs_Y());
 }
-static inline uint8_t * dest_abs_Y() {
+INLINE uint8_t * dest_abs_Y() {
     return & RAM[ addr_abs_Y() ];
 }
 
@@ -548,13 +548,13 @@ static inline uint8_t * dest_abs_Y() {
  zpg        ....    zeropage         OPC $LL
  operand is zeropage address (hi-byte is zero, address = $00LL)
  **/
-static inline uint16_t addr_zp() {
+INLINE uint16_t addr_zp() {
     return fetch();
 }
-static inline uint8_t src_zp() {
+INLINE uint8_t src_zp() {
     return memread_zp(addr_zp());
 }
-static inline uint8_t * dest_zp() {
+INLINE uint8_t * dest_zp() {
     return & RAM[ addr_zp() ];
 }
 
@@ -563,7 +563,7 @@ static inline uint8_t * dest_zp() {
  operand is zeropage address;
  effective address is address incremented by X without carry **
  **/
-static inline uint16_t addr_zp_X() {
+INLINE uint16_t addr_zp_X() {
     return addr_zp() + m6502.X;
 }
 
@@ -572,7 +572,7 @@ static inline uint16_t addr_zp_X() {
  operand is zeropage address;
  effective address is address incremented by Y without carry **
  **/
-static inline uint16_t addr_zp_Y() {
+INLINE uint16_t addr_zp_Y() {
     return addr_zp() + m6502.Y;
 }
 

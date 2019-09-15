@@ -9,9 +9,14 @@
 #ifndef __6502_INSTR_BRANCH_H__
 #define __6502_INSTR_BRANCH_H__
 
-static inline void BRA( int8_t reladdr ) {
-    m6502.pc += reladdr;
-    dbgPrintf("BRA %04X ", m6502.pc);
+INLINE void BRA( int8_t reladdr ) {
+    m6502.PC += reladdr;
+#ifdef DEBUG
+    if ( reladdr == -2 ) {
+        dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);
+    }
+#endif
+    dbgPrintf("BRA %04X ", m6502.PC);
 }
 
 /**
@@ -24,9 +29,9 @@ static inline void BRA( int8_t reladdr ) {
  --------------------------------------------
  relative      BCC oper      90    2     2**
  **/
-static inline void BCC( int8_t reladdr ) {
+INLINE void BCC( int8_t reladdr ) {
     dbgPrintf("BCC ");
-    if ( m6502.flags.C == 0 ) {
+    if ( m6502.C == 0 ) {
         BRA( reladdr );
     }
     else {
@@ -44,9 +49,9 @@ static inline void BCC( int8_t reladdr ) {
  --------------------------------------------
  relative      BCS oper      B0    2     2**
  **/
-static inline void BCS( int8_t reladdr ) {
+INLINE void BCS( int8_t reladdr ) {
     dbgPrintf("BCS ");
-    if ( m6502.flags.C == 1 ) {
+    if ( m6502.C == 1 ) {
         BRA( reladdr );
     }
     else {
@@ -64,9 +69,9 @@ static inline void BCS( int8_t reladdr ) {
  --------------------------------------------
  relative      BNE oper      D0    2     2**
  **/
-static inline void BNE( int8_t reladdr ) {
+INLINE void BNE( int8_t reladdr ) {
     dbgPrintf("BNE ");
-    if ( m6502.flags.Z == 0 ) {
+    if ( m6502.Z == 0 ) {
         BRA( reladdr );
     }
     else {
@@ -84,9 +89,9 @@ static inline void BNE( int8_t reladdr ) {
  --------------------------------------------
  relative      BEQ oper      F0    2     2**
  **/
-static inline void BEQ( int8_t reladdr ) {
+INLINE void BEQ( int8_t reladdr ) {
     dbgPrintf("BEQ ");
-    if ( m6502.flags.Z == 1 ) {
+    if ( m6502.Z == 1 ) {
         BRA( reladdr );
     }
     else {
@@ -104,9 +109,9 @@ static inline void BEQ( int8_t reladdr ) {
  --------------------------------------------
  relative      BPL oper      10    2     2**
  **/
-static inline void BPL( int8_t reladdr ) {
+INLINE void BPL( int8_t reladdr ) {
     dbgPrintf("BPL ");
-    if ( m6502.flags.N == 0 ) {
+    if ( m6502.N == 0 ) {
         BRA( reladdr );
     }
     else {
@@ -124,9 +129,9 @@ static inline void BPL( int8_t reladdr ) {
  --------------------------------------------
  relative      BMI oper      30    2     2**
  **/
-static inline void BMI( int8_t reladdr ) {
+INLINE void BMI( int8_t reladdr ) {
     dbgPrintf("BMI ");
-    if ( m6502.flags.N == 1 ) {
+    if ( m6502.N == 1 ) {
         BRA( reladdr );
     }
     else {
@@ -144,9 +149,9 @@ static inline void BMI( int8_t reladdr ) {
  --------------------------------------------
  relative      BVC oper      50    2     2**
  **/
-static inline void BVC( int8_t reladdr ) {
+INLINE void BVC( int8_t reladdr ) {
     dbgPrintf("BVC ");
-    if ( m6502.flags.V == 0 ) {
+    if ( m6502.V == 0 ) {
         BRA( reladdr );
     }
     else {
@@ -164,9 +169,9 @@ static inline void BVC( int8_t reladdr ) {
  --------------------------------------------
  relative      BVC oper      70    2     2**
  **/
-static inline void BVS( int8_t reladdr ) {
+INLINE void BVS( int8_t reladdr ) {
     dbgPrintf("BVS ");
-    if ( m6502.flags.V == 1 ) {
+    if ( m6502.V == 1 ) {
         BRA( reladdr );
     }
     else {

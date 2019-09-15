@@ -6,20 +6,35 @@
 //  Copyright © 2019 GameAlloy. All rights reserved.
 //
 
+#define CLK_WAIT
+#define NO_SPEED_TEST
+
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
+
+#ifdef DEBUG
+#define INLINE
+#else
+#define INLINE static __attribute__((always_inline))
+#endif
 
 #include "common.h"
 #include "Apple2_mmio.h"
 
 
-#define SOFTRESET_VECTOR 0x3F2
+#define SOFTRESET_VECTOR    0x3F2
+
+#define NMI_VECTOR          0xFFFA
+#define RESET_VECTOR        0xFFFC
+#define IRQ_VECTOR          0xFFFE
+
 
 /**
  Instruction Implementations
  !!!! `his has to be here!!!
- This idea is that "static inline" would work only if it is
+ This idea is that "INLINE" would work only if it is
  located in the same source file -- hence the include...
 **/
 #include "6502_instructions.h"
@@ -31,7 +46,7 @@ unsigned long long int clktime = 0;
 m6502_t m6502 = {0};
 
 
-static inline int m6502_step() {
+INLINE int m6502_step() {
     
 //    switch ( fetch16() ) {
 //        case 0xFCD0: // D0 FC BNE
@@ -43,6 +58,26 @@ static inline int m6502_step() {
 //        default:
 //            m6502.pc -= 2;
 //
+    
+#ifdef DEBUG
+    switch ( m6502.PC ) {
+        case 0x400:
+            dbgPrintf("START...\n");
+            break;
+        
+        case 0x9D1:
+            dbgPrintf("BREAK POINT...\n");
+            break;
+
+        case 0x35BD:
+            if ( ( m6502.A == 0x35 ) && ( m6502.C ) )
+            dbgPrintf("BREAK POINT...\n");
+            break;
+            
+        default:
+            break;
+    }
+#endif
     switch ( fetch() ) {
         case 0x00: BRK(); return 2;                                    // BRK
         case 0x01: ORA( src_X_ind() ); return 6;                       // ORA X,ind
@@ -78,84 +113,84 @@ static inline int m6502_step() {
 //        case 0x1F: // SLO* (undocumented)
         case 0x20: JSR( abs_addr() ); return 6;                        // JSR abs
         case 0x21: AND( src_X_ind() ); return 6;                       // AND X,ind
-//        case 0x22:
-//        case 0x23:
+//        case 0x22: KIL
+//        case 0x23: RLA izx 8
         case 0x24: BIT( src_zp() ); return 3;                          // BIT zpg
         case 0x25: AND( src_zp() ); return 3;                          // AND zpg
         case 0x26: ROL( dest_zp() ); return 5;                         // ROL zpg
-//        case 0x27:
+//        case 0x27: RLA zp 5
         case 0x28: PLP(); return 4;                                    // PLP
         case 0x29: AND( imm() ); return 2;                             // AND imm
         case 0x2A: ROLA(); return 2;                                   // ROL A
-//        case 0x2B:
+//        case 0x2B: ANC imm 2
         case 0x2C: BIT( src_abs() ); return 4;                         // BIT abs
         case 0x2D: AND( src_abs() ); return 4;                         // AND abs
         case 0x2E: ROL( dest_abs() ); return 6;                        // ROL abs
-//        case 0x2F:
+//        case 0x2F: RLA abs 6
         case 0x30: BMI( rel_addr() ); return 2;                        // BMI rel
         case 0x31: AND( src_ind_Y() ); return 5;                       // AND ind,Y
-//        case 0x32:
-//        case 0x33:
-//        case 0x34:
+//        case 0x32: KIL
+//        case 0x33: RLA izy 8
+//        case 0x34: NOP zpx 4
         case 0x35: AND( src_zp_X() ); return 4;                        // AND zpg,X
         case 0x36: ROL( dest_zp_X() ); return 6;                       // ROL zpg,X
-//        case 0x37:
+//        case 0x37: RLA zpx 6
         case 0x38: SEC(); return 2;                                    // SEC
         case 0x39: AND( src_abs_Y() ); return 4;                       // AND abs,Y
-//        case 0x3A:
-//        case 0x3B:
-//        case 0x3C:
+//        case 0x3A: NOP 2
+//        case 0x3B: RLA aby 7
+//        case 0x3C: NOP abx 4
         case 0x3D: AND( src_abs_X() ); return 4;                       // AND abs,X
         case 0x3E: ROL( dest_abs_X() ); return 7;                      // ROL abs,X
-//            case 0x3F:
+//            case 0x3F: RLA abx 7
         case 0x40: RTI(); return 6;                                    // RTI
         case 0x41: EOR( src_X_ind() ); return 6;                       // EOR X,ind
-//        case 0x42:
-//        case 0x43:
-//        case 0x44:
+//        case 0x42: KIL
+//        case 0x43: SRE izx 8
+//        case 0x44: NOP zp 3
         case 0x45: EOR( src_zp() ); return 3;                          // EOR zpg
         case 0x46: LSR( dest_zp() ); return 5;                         // LSR zpg
-//        case 0x47:
+//        case 0x47: SRE zp 5
         case 0x48: PHA(); return 3;                                    // PHA
         case 0x49: EOR( imm() ); return 2;                             // EOR imm
         case 0x4A: LSRA(); return 2;                                   // LSR A
-//        case 0x4B:
+//        case 0x4B: ALR imm 2
         case 0x4C: JMP( abs_addr() ); return 3;                        // JMP abs
         case 0x4D: EOR( src_abs() ); return 4;                         // EOR abs
         case 0x4E: LSR( dest_abs() ); return 6;                        // LSR abs
-//        case 0x4F:
+//        case 0x4F: SRE abs 6
         case 0x50: BVC( rel_addr() ); return 2;                        // BVC rel
         case 0x51: EOR( src_ind_Y() ); return 5;                       // EOR ind,Y
-//        case 0x52:
-//        case 0x53:
-//        case 0x54:
+//        case 0x52: KIL
+//        case 0x53: SRE izy 8
+//        case 0x54: NOP zpx 4
         case 0x55: EOR( src_zp_X() ); return 4;                        // AND zpg,X
         case 0x56: LSR( dest_zp_X() ); return 6;                       // LSR zpg,X
-//            case 0x57:
+//            case 0x57: SRE zpx 6
         case 0x58: CLI(); return 2;                                    // CLI
         case 0x59: EOR( src_abs_Y() ); return 4;                       // EOR abs,Y
-//        case 0x5A:
-//        case 0x5B:
-//        case 0x5C:
+//        case 0x5A: NOP 2
+//        case 0x5B: SRE aby 7
+//        case 0x5C: NOP abx 4
         case 0x5D: EOR( src_abs_X() ); return 4;                       // EOR abs,X
         case 0x5E: LSR( dest_abs_X() ); return 7;                      // LSR abs,X
-//            case 0x5F:
+//            case 0x5F: SRE abx 7
         case 0x60: RTS(); return 6;                                    // RTS
         case 0x61: ADC( src_X_ind() ); return 6;                       // ADC X,ind
-//        case 0x62:
-//        case 0x63:
-//        case 0x64:
+//        case 0x62: KIL
+//        case 0x63: RRA izx 8
+//        case 0x64: NOP zp 3
         case 0x65: ADC( src_zp() ); return 3;                          // ADC zpg
         case 0x66: ROR( dest_zp() ); return 5;                         // ROR zpg
-//        case 0x67:
+//        case 0x67: RRA zp 5
         case 0x68: PLA(); break;                                       // PLA
         case 0x69: ADC( imm() ); return 2;                             // ADC imm
         case 0x6A: RORA(); return 2;                                   // ROR A
-//        case 0x6B:
+//        case 0x6B: ARR imm 2
         case 0x6C: JMP( ind_addr() ); return 5;                        // JMP ind
         case 0x6D: ADC( src_abs() ); return 4;                         // ADC abs
         case 0x6E: ROR( dest_abs() ); return 6;                        // ROR abs
-//        case 0x6F:
+//        case 0x6F: RRA abs 6
         case 0x70: BVS( rel_addr() ); break;                           // BVS rel
         case 0x71: ADC( src_ind_Y() ); return 5;                       // ADC ind,Y
 //        case 0x72:
@@ -181,7 +216,7 @@ static inline int m6502_step() {
         case 0x86: STX( dest_zp() ); return 3;                         // STX zpg
 //        case 0x87:
         case 0x88: DEY(); return 2;                                    // DEY
-//        case 0x89:
+//        case 0x89: NOP(); imm(); return 4;                             // NOP imm
         case 0x8A: TXA(); return 2;                                    // TXA
 //        case 0x8B:
         case 0x8C: STY( dest_abs() ); return 4;                        // STY abs
@@ -194,7 +229,7 @@ static inline int m6502_step() {
 //        case 0x93:
         case 0x94: STY( dest_zp_X() ); return 4;                       // STY zpg,X
         case 0x95: STA( dest_zp_X() ); return 4;                       // STA zpg,X
-        case 0x96: STX( dest_zp_X() ); return 4;                       // STX zpg,Y
+        case 0x96: STX( dest_zp_Y() ); return 4;                       // STX zpg,Y
 //        case 0x97:
         case 0x98: TYA(); return 2;                                    // TYA
         case 0x99: STA( dest_abs_Y() ); return 5;                      // STA abs,Y
@@ -302,7 +337,7 @@ static inline int m6502_step() {
 //            case 0xFF:
 
         default:
-            printf("Unimplemented Instruction 0x%02X\n", memread( m6502.pc -1 ));
+            printf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
             break;
     }
 //    } // fetch16
@@ -312,28 +347,39 @@ static inline int m6502_step() {
 
 const unsigned long long int iterations = G;
 
-unsigned long long TICK_PER_SEC = G;
-unsigned long long TICK_6502_PER_SEC = 0;
+unsigned long long tick_per_sec = G;
+unsigned long long tick_6502_per_sec = 0;
 unsigned long long MHz_6502 = 1.023 * M;
 
-static __inline__ unsigned long long rdtsc(void)
+static __attribute__((always_inline)) unsigned long long rdtsc(void)
 {
     unsigned hi, lo;
     __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi) );
     return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
 }
 
+// nanosec does not work very well for some reason
+struct timespec tim, tim2;
 
-static inline void m6502_run() {
-    uint8_t clk = 0;
+INLINE void m6502_run() {
     // init time
-//    unsigned long long s = rdtsc();
+#ifdef CLK_WAIT
+    unsigned long long s = rdtsc();
     unsigned long long e = (unsigned long long)-1LL;
+#endif
 
-//    for ( unsigned long long int i = 0; i < iterations ; i++ ) {
-//    for ( ; m6502.pc ; ) {
-    for ( ; ; ) {
-        if ( m6502.interrupt_flag ) {
+#ifdef SPEED_TEST
+    for ( unsigned long long int i = 0; i < iterations ; i++ )
+#else
+//    for ( ; m6502.pc ; )
+    
+    tim.tv_sec = 0;
+    tim.tv_nsec = 500L;
+    
+    for ( ; ; )
+#endif
+    {
+        if ( m6502.IF ) {
             switch (m6502.interrupt) {
                 case NMI:
                     break;
@@ -342,25 +388,31 @@ static inline void m6502_run() {
                     break;
                     
                 case SOFTRESET:
-                    m6502.pc = memread16(SOFTRESET_VECTOR);
+                    m6502.PC = memread16(SOFTRESET_VECTOR);
                     break;
                     
                 default:
                     break;
             }
             
-            m6502.interrupt_flag = 0;
+            m6502.IF = 0;
         }
         
-        dbgPrintf("%04u %04X: ", clktime, m6502.pc);
-        clk = m6502_step();
-        clktime += clk;
-        e = TICK_6502_PER_SEC * clktime;
+        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
+        clktime += m6502_step();
+
+#ifdef CLK_WAIT
+        e = tick_6502_per_sec * clktime;
         // query time + wait
-//        usleep(1);
+
+        // TODO: We should use nanosleep
+        usleep(1); // this is good enough for debugging
+
+//        nanosleep(&tim, &tim2);
 
         // tight loop gives us the most precise wait time
 //        while ( rdtsc() - s < e ) {}
+#endif
         
         dbgPrintf("\n");
     }
@@ -370,11 +422,11 @@ void init() {
     unsigned long long s = rdtsc();
     sleep(1);
     unsigned long long e = rdtsc();
-    TICK_PER_SEC = e - s;
-    TICK_6502_PER_SEC = TICK_PER_SEC / MHz_6502;
+    tick_per_sec = e - s;
+    tick_6502_per_sec = tick_per_sec / MHz_6502;
     
     memset( RAM, 0, sizeof(RAM) );
-    
+
     
 //    RAM[ 0 ] = 0x4C;
 //    RAM[ 1 ] = 0;
@@ -384,6 +436,29 @@ void init() {
 //    RAM[ 0xBFFE ] = 0;
 //    RAM[ 0xBFFF ] = 0;
     
+    m6502.A = m6502.X = m6502.Y = 0xFF;
+    // reset vector
+    m6502.SP = 0xFF -3;
+    m6502.SR = 0x30;
+
+    // memory size
+    *((uint16_t*)(&RAM[0x73])) = 0xC000;
+    
+#define NO_FUNCTIONTEST
+    
+#ifdef FUNCTIONTEST
+    FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/6502_functional_test.bin", "rb");
+    if (f == NULL) {
+        perror("Failed: ");
+        return;
+    }
+    
+    fread( RAM, 1, 65536, f);
+    fclose(f);
+    
+    m6502.PC = 0x400;
+
+#else
     FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/apple.rom", "rb");
     if (f == NULL) {
         perror("Failed: ");
@@ -392,10 +467,9 @@ void init() {
     
     fread( RAM + 0xD000, 1, 0x3000, f);
     fclose(f);
-    
-    // reset vector
-    m6502.pc = memread16( 0xFFFC );
-    m6502.sp = 0xFF;
+
+    m6502.PC = memread16( RESET_VECTOR );
+#endif
     
     
     uint8_t counter[] = {
@@ -517,11 +591,11 @@ void tst6502() {
     //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
     unsigned long long e = rdtsc();
     unsigned long long t = e - s;
-    double execution_time = (double)t / TICK_PER_SEC;
+    double execution_time = (double)t / tick_per_sec;
     
     double mips = iterations / (execution_time * M);
     double mhz = clktime / (execution_time * M);
-    printf("clk:%llu Elpased time: (%llu / %llu / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", clktime, TICK_PER_SEC, MHz_6502, TICK_6502_PER_SEC, execution_time, mips, mhz);
+    printf("clk:%llu Elpased time: (%llu / %llu / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", clktime, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
 }
 
 int ___main(int argc, const char * argv[]) {

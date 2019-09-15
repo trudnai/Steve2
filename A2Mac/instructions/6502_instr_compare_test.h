@@ -24,10 +24,10 @@
  absolute      BIT oper      2C    3     4
  
  **/
-static inline void BIT( uint8_t imm ) {
-    dbgPrintf("BIT(%02X) ", imm);
-    set_flags_NV(imm);
-    set_flags_Z(m6502.A & imm);
+INLINE void BIT( uint8_t src ) {
+    dbgPrintf("BIT(%02X) ", src);
+    set_flags_NV(src);
+    set_flags_Z(m6502.A & src);
 }
 
 /**
@@ -47,9 +47,9 @@ static inline void BIT( uint8_t imm ) {
  (indirect,X)  CMP (oper,X)  C1    2     6
  (indirect),Y  CMP (oper),Y  D1    2     5*
  **/
-static inline void CMP( uint8_t imm ) {
-    dbgPrintf("CMP(%02X) ", imm);
-    set_flags_NZC( (int16_t)m6502.A - imm );
+INLINE void CMP( uint8_t src ) {
+    dbgPrintf("CMP(%02X) ", src);
+    set_flags_NZC( (int16_t)m6502.A - src );
 }
 
 /**
@@ -64,9 +64,9 @@ static inline void CMP( uint8_t imm ) {
  zeropage      CPX oper      E4    2     3
  absolute      CPX oper      EC    3     4
  **/
-static inline void CPX( uint8_t imm ) {
-    dbgPrintf("CPX(%02X) ", imm);
-    set_flags_NZC( (int16_t)m6502.X - imm );
+INLINE void CPX( uint8_t src ) {
+    dbgPrintf("CPX(%02X) ", src);
+    set_flags_NZC( (int16_t)m6502.X - src );
 }
 
 /**
@@ -81,9 +81,9 @@ static inline void CPX( uint8_t imm ) {
  zeropage      CPY oper      C4    2     3
  absolute      CPY oper      CC    3     4
  **/
-static inline void CPY( uint8_t imm ) {
-    dbgPrintf("CPY(%02X) ", imm);
-    set_flags_NZC( (int16_t)m6502.Y - imm );
+INLINE void CPY( uint8_t src ) {
+    dbgPrintf("CPY(%02X) ", src);
+    set_flags_NZC( (int16_t)m6502.Y - src );
 }
 
 #endif // __6502_INSTR_COMPARE_TEST_H__

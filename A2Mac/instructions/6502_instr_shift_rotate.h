@@ -24,16 +24,14 @@
  absolute      ASL oper      0E    3     6
  absolute,X    ASL oper,X    1E    3     7
 **/
-static inline void ASL( uint8_t * dst ) {
+INLINE void ASL( uint8_t * dst ) {
     dbgPrintf("ASL ");
-    m6502.flags.C = *dst >> 7;
-    ;
+    m6502.C = *dst >> 7;
     set_flags_NZ( *dst <<= 1 );
 }
-static inline void ASLA() {
+INLINE void ASLA() {
     dbgPrintf("ASL ");
-    m6502.flags.C = m6502.A >> 7;
-    ;
+    m6502.C = m6502.A >> 7;
     set_flags_NZ( m6502.A <<= 1 );
 }
 
@@ -51,14 +49,14 @@ static inline void ASLA() {
  absolute      LSR oper      4E    3     6
  absolute,X    LSR oper,X    5E    3     7
 **/
-static inline void LSR( uint8_t * dst ) {
+INLINE void LSR( uint8_t * dst ) {
     dbgPrintf("LSR ");
-    m6502.flags.C = *dst & 1;
+    m6502.C = *dst & 1;
     set_flags_NZ( *dst >>= 1 );
 }
-static inline void LSRA() {
+INLINE void LSRA() {
     dbgPrintf("LSR ");
-    m6502.flags.C = m6502.A & 1;
+    m6502.C = m6502.A & 1;
     set_flags_NZ( m6502.A >>= 1 );
 }
 
@@ -76,17 +74,17 @@ static inline void LSRA() {
  absolute      ROL oper      2E    3     6
  absolute,X    ROL oper,X    3E    3     7
 **/
-static inline void ROL( uint8_t * dst ) {
+INLINE void ROL( uint8_t * dst ) {
     dbgPrintf("ROL ");
-    uint8_t C = m6502.flags.C;
-    m6502.flags.C = *dst >> 7;
+    uint8_t C = m6502.C;
+    m6502.C = *dst >> 7;
     *dst <<= 1;
     set_flags_NZ( *dst |= C );
 }
-static inline void ROLA() {
+INLINE void ROLA() {
     dbgPrintf("ROL ");
-    uint8_t C = m6502.flags.C;
-    m6502.flags.C = m6502.A >> 7;
+    uint8_t C = m6502.C;
+    m6502.C = m6502.A >> 7;
     m6502.A <<= 1;
     set_flags_NZ( m6502.A |= C );
 }
@@ -105,17 +103,17 @@ static inline void ROLA() {
  absolute      ROR oper      6E    3     6
  absolute,X    ROR oper,X    7E    3     7
 **/
-static inline void ROR( uint8_t * dst ) {
+INLINE void ROR( uint8_t * dst ) {
     dbgPrintf("ROR ");
-    uint8_t C = m6502.flags.C << 7;
-    m6502.flags.C = *dst & 1;
+    uint8_t C = m6502.C << 7;
+    m6502.C = *dst & 1;
     *dst >>= 1;
     set_flags_NZ( *dst |= C );
 }
-static inline void RORA() {
+INLINE void RORA() {
     dbgPrintf("ROR ");
-    uint8_t C = m6502.flags.C << 7;
-    m6502.flags.C = m6502.A & 1;
+    uint8_t C = m6502.C << 7;
+    m6502.C = m6502.A & 1;
     m6502.A >>= 1;
     set_flags_NZ( m6502.A |= C );
 }

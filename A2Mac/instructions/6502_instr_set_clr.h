@@ -19,9 +19,9 @@
  --------------------------------------------
  implied       CLC           18    1     2
  **/
-static inline void CLC() {
+INLINE void CLC() {
     dbgPrintf("CLC ");
-    m6502.flags.C = 0;
+    m6502.C = 0;
 }
 
 /**
@@ -34,9 +34,9 @@ static inline void CLC() {
  --------------------------------------------
  implied       CLD           D8    1     2
  **/
-static inline void CLD() {
+INLINE void CLD() {
     dbgPrintf("CLD ");
-    m6502.flags.D = 0;
+    m6502.D = 0;
 }
 
 /**
@@ -49,9 +49,9 @@ static inline void CLD() {
  --------------------------------------------
  implied       CLI           58    1     2
  **/
-static inline void CLI() {
+INLINE void CLI() {
     dbgPrintf("CLI ");
-    m6502.flags.I = 0;
+    m6502.I = 0;
 }
 
 /**
@@ -64,9 +64,9 @@ static inline void CLI() {
  --------------------------------------------
  implied       CLV           B8    1     2
  **/
-static inline void CLV() {
+INLINE void CLV() {
     dbgPrintf("CLV ");
-    m6502.flags.V = 0;
+    m6502.V = 0;
 }
 
 /**
@@ -79,9 +79,9 @@ static inline void CLV() {
  --------------------------------------------
  implied       SEC           38    1     2
  **/
-static inline void SEC() {
+INLINE void SEC() {
     dbgPrintf("SEC ");
-    m6502.flags.C = 1;
+    m6502.C = 1;
 }
 
 /**
@@ -94,9 +94,9 @@ static inline void SEC() {
  --------------------------------------------
  implied       SED           F8    1     2
  **/
-static inline void SED() {
+INLINE void SED() {
     dbgPrintf("SED ");
-    m6502.flags.D = 1;
+    m6502.D = 1;
 }
 
 /**
@@ -109,9 +109,9 @@ static inline void SED() {
  --------------------------------------------
  implied       SEI           78    1     2
  **/
-static inline void SEI() {
+INLINE void SEI() {
     dbgPrintf("SEI ");
-    m6502.flags.I = 1;
+    m6502.I = 1;
 }
 
 #endif // __6502_INSTR_SET_CLR_H__

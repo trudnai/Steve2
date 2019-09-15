@@ -714,7 +714,7 @@
                                     <constraint firstAttribute="width" constant="700" id="YGY-gy-pSn"/>
                                     <constraint firstAttribute="height" constant="420" id="dWL-EL-ab7"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="border" alignment="center" placeholderString="Apple ][ Emulator Virtual Monitor" drawsBackground="YES" id="5AO-Gd-Lzo">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" enabled="NO" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="border" alignment="justified" placeholderString="Apple ][ Emulator Virtual Monitor" drawsBackground="YES" id="5AO-Gd-Lzo">
                                     <font key="font" size="14" name="Courier-Bold"/>
                                     <color key="textColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" red="0.12549019607843137" green="0.17933968321917809" blue="0.12549019607843137" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

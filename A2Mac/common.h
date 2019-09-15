@@ -41,50 +41,50 @@ union {
 
 #define BITTEST(n,x) ((bits_t)(n)).b##x
 
-static inline void set_flags_N( const uint8_t test ) {
-    m6502.flags.N = BITTEST(test, 7);
-    dbgPrintf("%c", m6502.flags.N ? 'N' : 'n');
+INLINE void set_flags_N( const uint8_t test ) {
+    m6502.N = BITTEST(test, 7);
+    dbgPrintf("%c", m6502.N ? 'N' : 'n');
 }
 
-static inline void set_flags_V( const uint8_t test ) {
-    m6502.flags.V = BITTEST(test, 6);
-    dbgPrintf("%c", m6502.flags.V ? 'V' : 'v');
+INLINE void set_flags_V( const uint8_t test ) {
+    m6502.V = BITTEST(test, 6);
+    dbgPrintf("%c", m6502.V ? 'V' : 'v');
 }
 
-static inline void set_flags_Z( const uint8_t test ) {
-    m6502.flags.Z = test == 0;
-    dbgPrintf("%c", m6502.flags.Z ? 'Z' : 'z');
+INLINE void set_flags_Z( const uint8_t test ) {
+    m6502.Z = test == 0;
+    dbgPrintf("%c", m6502.Z ? 'Z' : 'z');
 }
 
-static inline void set_flags_C( const int16_t test ) {
-    m6502.flags.C = test >= 0;
-    dbgPrintf("%c", m6502.flags.C ? 'C' : 'c');
+INLINE void set_flags_C( const int16_t test ) {
+    m6502.C = test >= 0;
+    dbgPrintf("%c", m6502.C ? 'C' : 'c');
 }
 
-static inline void set_flags_NZ( const uint8_t test ) {
+INLINE void set_flags_NZ( const uint8_t test ) {
     set_flags_N(test);
     set_flags_Z(test);
 }
 
-static inline void set_flags_NV( const uint8_t test ) {
+INLINE void set_flags_NV( const uint8_t test ) {
     set_flags_N(test);
     set_flags_V(test);
 }
 
-static inline void set_flags_NVZ( const uint8_t test ) {
+INLINE void set_flags_NVZ( const uint8_t test ) {
     set_flags_NZ(test);
     set_flags_V(test);
 }
 
-static inline void set_flags_NZC( const int16_t test ) {
+INLINE void set_flags_NZC( const int16_t test ) {
     set_flags_NZ(test);
     set_flags_C(test);
 }
 
-static inline void set_flags_NZCV( int test ) {
-    set_flags_NZC(test);
-    set_flags_V(test);
-}
+//INLINE void set_flags_NZCV( int test ) {
+//    set_flags_NZC(test);
+//    set_flags_V(test);
+//}
 
 
 

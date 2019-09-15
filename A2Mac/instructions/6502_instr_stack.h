@@ -12,20 +12,20 @@
 static const uint16_t stack_base_addr = 0x100;
 
 
-static inline void PUSH( uint8_t imm ) {
-    RAM[ stack_base_addr + m6502.sp-- ] = imm;
+INLINE void PUSH( uint8_t src ) {
+    RAM[ stack_base_addr | m6502.SP-- ] = src;
 }
 
-static inline uint8_t POP() {
-    return RAM[ ++m6502.sp + stack_base_addr ];
+INLINE uint8_t POP() {
+    return RAM[ stack_base_addr | ++m6502.SP ];
 }
 
-static inline void PUSH_addr( uint16_t addr ) {
+INLINE void PUSH_addr( uint16_t addr ) {
     PUSH( (uint8_t)(addr >> 8) );
     PUSH( (uint8_t)addr );
 }
 
-static inline uint16_t POP_addr() {
+INLINE uint16_t POP_addr() {
     return  POP() + ( POP() << 8 );
 }
 
@@ -40,8 +40,8 @@ static inline uint16_t POP_addr() {
  --------------------------------------------
  implied       PHA           48    1     3
  **/
-static inline void PHA() {
-    dbgPrintf("PHA ");
+INLINE void PHA() {
+    dbgPrintf("PHA %02X ", m6502.A);
     PUSH( m6502.A );
 }
 
@@ -55,10 +55,10 @@ static inline void PHA() {
  --------------------------------------------
  implied       PLA           68    1     4
  **/
-static inline void PLA() {
-    dbgPrintf("PLA ");
+INLINE void PLA() {
     m6502.A = POP();
-    set_flags_NZ(m6502.A);
+    dbgPrintf("PLA %02X ", m6502.A);
+    set_flags_NZ( m6502.A );
 }
 
 /**
@@ -71,9 +71,9 @@ static inline void PLA() {
  --------------------------------------------
  implied       PHP           08    1     3
  **/
-static inline void PHP() {
-    dbgPrintf("PHP ");
-    PUSH( m6502.sr );
+INLINE void PHP() {
+    dbgPrintf("PHP %02X ", m6502.SR);
+    PUSH( m6502.SR ); // res and B flag should be set
 }
 
 /**
@@ -86,9 +86,9 @@ static inline void PHP() {
  --------------------------------------------
  implied       PLP           28    1     4
  **/
-static inline void PLP() {
-    dbgPrintf("PLP ");
-    m6502.sr = POP();
+INLINE void PLP() {
+    m6502.SR = POP() | 0x30; // res and B flag should be set
+    dbgPrintf("PLP %02X ", m6502.SR);
 }
 
 #endif // __6502_INSTR_STACK_H__

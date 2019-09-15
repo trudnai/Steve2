@@ -21,9 +21,14 @@
  absolute      JMP oper      4C    3     3
  indirect      JMP (oper)    6C    3     5
  **/
-static inline void JMP( uint16_t addr ) {
+INLINE void JMP( uint16_t addr ) {
     dbgPrintf("JMP %04X ", addr);
-    m6502.pc = addr;
+#ifdef DEBUG
+    if ( addr == m6502.PC - 3 ) {
+        dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);
+    }
+#endif
+    m6502.PC = addr;
 }
 
 /**
@@ -37,9 +42,9 @@ static inline void JMP( uint16_t addr ) {
  --------------------------------------------
  absolute      JSR oper      20    3     6
  **/
-static inline void JSR( uint16_t addr ) {
+INLINE void JSR( uint16_t addr ) {
     dbgPrintf("JSR ");
-    PUSH_addr(m6502.pc);
+    PUSH_addr(m6502.PC -1);
     JMP( addr );
 }
 
@@ -53,9 +58,9 @@ static inline void JSR( uint16_t addr ) {
  --------------------------------------------
  implied       RTS           60    1     6
  **/
-static inline void RTS() {
+INLINE void RTS() {
     dbgPrintf("RTS ");
-    JMP( POP_addr() );
+    JMP( POP_addr() +1);
 }
 
 /**
@@ -68,10 +73,11 @@ static inline void RTS() {
  --------------------------------------------
  implied       RTI           40    1     6
  **/
-static inline void RTI() {
+INLINE void RTI() {
     dbgPrintf("RTI ");
-    m6502.sr = POP();
-    RTS();
+    m6502.SR = POP();
+//    m6502.I = 0;
+    JMP( POP_addr() );
 }
 
 

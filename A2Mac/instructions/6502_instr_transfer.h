@@ -20,8 +20,8 @@
  --------------------------------------------
  implied       TAX           AA    1     2
  **/
-static inline void TAX() {
-    dbgPrintf("TAX ");
+INLINE void TAX() {
+    dbgPrintf("TAX(%02X) ", m6502.A);
     set_flags_NZ(m6502.X = m6502.A);
 }
 
@@ -35,8 +35,8 @@ static inline void TAX() {
  --------------------------------------------
  implied       TXA           8A    1     2
  **/
-static inline void TXA() {
-    dbgPrintf("TXA ");
+INLINE void TXA() {
+    dbgPrintf("TXA(%02X) ", m6502.X);
     set_flags_NZ(m6502.A = m6502.X);
 }
 
@@ -51,7 +51,7 @@ static inline void TXA() {
  --------------------------------------------
  implied       TAY           A8    1     2
  **/
-static inline void TAY() {
+INLINE void TAY() {
     dbgPrintf("TAY ");
     set_flags_NZ(m6502.Y = m6502.A);
 }
@@ -66,8 +66,8 @@ static inline void TAY() {
  --------------------------------------------
  implied       TYA           98    1     2
  **/
-static inline void TYA() {
-    dbgPrintf("TYA ");
+INLINE void TYA() {
+    dbgPrintf("TYA(%02X) ", m6502.Y);
     set_flags_NZ(m6502.A = m6502.Y);
 }
 
@@ -81,9 +81,9 @@ static inline void TYA() {
  --------------------------------------------
  implied       TSX           BA    1     2
  **/
-static inline void TSX() {
-    dbgPrintf("TSX ");
-    set_flags_NZ(m6502.X = m6502.sp);
+INLINE void TSX() {
+    dbgPrintf("TSX(%02X) ", m6502.SP);
+    set_flags_NZ(m6502.X = m6502.SP);
 }
 
 /**
@@ -96,9 +96,9 @@ static inline void TSX() {
  --------------------------------------------
  implied       TXS           9A    1     2
  **/
-static inline void TXS() {
-    dbgPrintf("TXS ");
-    m6502.sp = m6502.X;
+INLINE void TXS() {
+    dbgPrintf("TXS(%02X) ", m6502.X);
+    m6502.SP = m6502.X;
 }
 
 #endif // __6502_INSTR_TRANSFER_H__

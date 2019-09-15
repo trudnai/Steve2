@@ -27,9 +27,9 @@
  (indirect,X)  ORA (oper,X)  01    2     6
  (indirect),Y  ORA (oper),Y  11    2     5*
 **/
-static inline void ORA( uint8_t imm ) {
-    dbgPrintf("ORA(%02X) ", imm);
-    set_flags_NZ( m6502.A |= imm );
+INLINE void ORA( uint8_t src ) {
+    dbgPrintf("ORA(%02X) ", src);
+    set_flags_NZ( m6502.A |= src );
 }
 
 /**
@@ -49,9 +49,9 @@ static inline void ORA( uint8_t imm ) {
  (indirect,X)  AND (oper,X)  21    2     6
  (indirect),Y  AND (oper),Y  31    2     5*
  **/
-static inline void AND( uint8_t imm ) {
-    dbgPrintf("AND(%02X) ", imm);
-    set_flags_NZ( m6502.A &= imm );
+INLINE void AND( uint8_t src ) {
+    dbgPrintf("AND(%02X) ", src);
+    set_flags_NZ( m6502.A &= src );
 }
 
 /**
@@ -71,9 +71,9 @@ static inline void AND( uint8_t imm ) {
  (indirect,X)  EOR (oper,X)  41    2     6
  (indirect),Y  EOR (oper),Y  51    2     5*
 **/
-static inline void EOR( uint8_t imm ) {
-    dbgPrintf("EOR(%02X) ", imm);
-    set_flags_NZ( m6502.A ^= imm );
+INLINE void EOR( uint8_t src ) {
+    dbgPrintf("EOR(%02X) ", src);
+    set_flags_NZ( m6502.A ^= src );
 }
 
 #endif // __6502_INSTR_LOGIC_H__

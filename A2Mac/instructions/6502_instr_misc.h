@@ -20,8 +20,12 @@
  --------------------------------------------
  implied       BRK           00    1     7
  **/
-static inline void BRK() {
+INLINE void BRK() {
     dbgPrintf("BRK ");
+    PUSH_addr(m6502.PC +1); // PC +2, however, fetch already incremented it by 1
+    PUSH(m6502.SR);
+    m6502.I = 1;
+    JMP(memread16(IRQ_VECTOR));
 }
 
 /**
@@ -34,8 +38,8 @@ static inline void BRK() {
  --------------------------------------------
  implied       NOP           EA    1     2
  **/
-static inline void NOP() {
-    dbgPrintf("STA ");
+INLINE void NOP() {
+    dbgPrintf("NOP ");
 }
 
 #endif // __6502_INSTR_MISC_H__

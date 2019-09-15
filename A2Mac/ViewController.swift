@@ -39,7 +39,9 @@ class ViewController: NSViewController {
         }
         else {
             workItem = DispatchWorkItem {
-                DispatchQueue.global(qos: .userInitiated).async {
+//                DispatchQueue.global(qos: .userInteractive).async {
+//                DispatchQueue.global(qos: .userInitiated).async {
+                DispatchQueue.global(qos: .background).async {
                     tst6502()
                 }
             }
@@ -62,75 +64,83 @@ class ViewController: NSViewController {
     
     
     override func keyDown(with event: NSEvent) {
-        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
-        case [.command] where event.characters == "l",
-             [.command, .shift] where event.characters == "l":
-            print("command-l or command-shift-l")
-        default:
-            break
-        }
-        print( "key = " + (event.charactersIgnoringModifiers ?? ""))
-        print( "\ncharacter = " + (event.characters ?? ""))
+//        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+//        case [.command] where event.characters == "l",
+//             [.command, .shift] where event.characters == "l":
+//            print("command-l or command-shift-l")
+//        default:
+//            break
+//        }
+//        print( "key = " + (event.charactersIgnoringModifiers ?? ""))
+//        print( "\ncharacter = " + (event.characters ?? ""))
         
+        #if FUNCTIONTEST
+        #else
         if let chars = event.characters {
             let char = chars.uppercased()[chars.startIndex]
             if let code = char.asciiValue {
                 var A2code = code | 0x80
                 
-                if ( code == 13 ) {
+                switch ( code ) {
+                case 13:
                     A2code = 141
+                    break
+                    
+                default:
+                    break
                 }
                 print("keycode: \(code) --> \(A2code)")
                 
-                let resetPointer = UnsafeMutableRawBufferPointer(start: &RAM + 0xC000, count: 1)
-                resetPointer[0] = A2code
+                let kbdPointer = UnsafeMutableRawBufferPointer(start: &RAM + 0xC000, count: 1)
+                kbdPointer[0] = A2code
             }
         }
+        #endif
         
     }
     
     override func flagsChanged(with event: NSEvent) {
-        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
-        case [.shift]:
-            print("shift key is pressed")
-        case [.control]:
-            print("control key is pressed")
-        case [.option] :
-            print("option key is pressed")
-        case [.command]:
-            print("Command key is pressed")
-        case [.control, .shift]:
-            print("control-shift keys are pressed")
-        case [.option, .shift]:
-            print("option-shift keys are pressed")
-        case [.command, .shift]:
-            print("command-shift keys are pressed")
-        case [.control, .option]:
-            print("control-option keys are pressed")
-        case [.control, .command]:
-            print("control-command keys are pressed")
-        case [.option, .command]:
-            print("option-command keys are pressed")
-        case [.shift, .control, .option]:
-            print("shift-control-option keys are pressed")
-        case [.shift, .control, .command]:
-            print("shift-control-command keys are pressed")
-        case [.control, .option, .command]:
-            print("control-option-command keys are pressed")
-        case [.shift, .command, .option]:
-            print("shift-command-option keys are pressed")
-        case [.shift, .control, .option, .command]:
-            print("shift-control-option-command keys are pressed")
-        default:
-            print("no modifier keys are pressed")
-        }
+//        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+//        case [.shift]:
+//            print("shift key is pressed")
+//        case [.control]:
+//            print("control key is pressed")
+//        case [.option] :
+//            print("option key is pressed")
+//        case [.command]:
+//            print("Command key is pressed")
+//        case [.control, .shift]:
+//            print("control-shift keys are pressed")
+//        case [.option, .shift]:
+//            print("option-shift keys are pressed")
+//        case [.command, .shift]:
+//            print("command-shift keys are pressed")
+//        case [.control, .option]:
+//            print("control-option keys are pressed")
+//        case [.control, .command]:
+//            print("control-command keys are pressed")
+//        case [.option, .command]:
+//            print("option-command keys are pressed")
+//        case [.shift, .control, .option]:
+//            print("shift-control-option keys are pressed")
+//        case [.shift, .control, .command]:
+//            print("shift-control-command keys are pressed")
+//        case [.control, .option, .command]:
+//            print("control-option-command keys are pressed")
+//        case [.shift, .command, .option]:
+//            print("shift-command-option keys are pressed")
+//        case [.shift, .control, .option, .command]:
+//            print("shift-control-option-command keys are pressed")
+//        default:
+//            print("no modifier keys are pressed")
+//        }
     }
 
     
     func update() {
         
-        while true {
-            usleep(33333) // 1/30 sec
+//        while true {
+//            usleep(33333) // 1/30 sec
 
             let textBaseAddr = 0x400
             let textLines = 24
@@ -142,28 +152,24 @@ class ViewController: NSViewController {
                 let textAddr = textBaseAddr + textLineOfs[y]
                 let textBufferPointer = UnsafeRawBufferPointer(start: &RAM + textAddr, count: textCols)
 
-                for (index, byte) in textBufferPointer.enumerated() {
+                for (_, byte) in textBufferPointer.enumerated() {
                     let idx = Int(byte);
                     let chr = ViewController.charConvTbl[idx]
         //            print("byte \(index): \(chr)")
-                    txt = txt + " \(chr)"
+                    txt = txt + "\(chr)"
                 }
                 
-                txt = txt + " |\n"
+                txt = txt + "\n"
             }
             
             
             DispatchQueue.main.async {
                 self.display.stringValue = txt;
             }
-        }
+//        }
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1/30, execute: {
-//            self.update()
-//        })
-
     }
-    
+
     
 //    func FromBuf(ptr: UnsafeMutablePointer<UInt8>, length len: Int) -> String? {
 //        // convert the bytes using the UTF8 encoding
@@ -174,17 +180,27 @@ class ViewController: NSViewController {
 //        }
 //    }
 
+    
+    let upd = RepeatingTimer(timeInterval: 1/30)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1/30, execute: {
 //            self.update()
 //        })
+
+        #if FUNCTIONTEST
+        #else
+//        DispatchQueue.global(qos: .background).async {
+//            self.update()
+//        }
         
-        DispatchQueue.global(qos: .background).async {
+        upd.eventHandler = {
             self.update()
         }
-
+        upd.resume()
+        #endif
     }
 
     override var representedObject: Any? {

@@ -29,10 +29,10 @@
  (indirect,X)  LDA (oper,X)  A1    2     6
  (indirect),Y  LDA (oper),Y  B1    2     5*
 **/
-static inline void LDA( uint8_t imm ) {
-    dbgPrintf("LDA(%02X) ", imm);
-    m6502.A = imm;
-    set_flags_NZ(imm);
+INLINE void LDA( uint8_t src ) {
+    dbgPrintf("LDA(%02X) ", src);
+    m6502.A = src;
+    set_flags_NZ(src);
 }
 
 /**
@@ -49,10 +49,10 @@ static inline void LDA( uint8_t imm ) {
  absolute      LDX oper      AE    3     4
  absolute,Y    LDX oper,Y    BE    3     4*
 **/
-static inline void LDX( uint8_t imm ) {
-    dbgPrintf("LDX(%02X) ", imm);
-    m6502.X = imm;
-    set_flags_NZ(imm);
+INLINE void LDX( uint8_t src ) {
+    dbgPrintf("LDX(%02X) ", src);
+    m6502.X = src;
+    set_flags_NZ(src);
 }
 
 /**
@@ -69,10 +69,10 @@ static inline void LDX( uint8_t imm ) {
  absolute      LDY oper      AC    3     4
  absolute,X    LDY oper,X    BC    3     4*
 **/
-static inline void LDY( uint8_t imm ) {
-    dbgPrintf("LDY(%02X) ", imm);
-    m6502.Y = imm;
-    set_flags_NZ(imm);
+INLINE void LDY( uint8_t src ) {
+    dbgPrintf("LDY(%02X) ", src);
+    m6502.Y = src;
+    set_flags_NZ(src);
 }
 
 
@@ -89,32 +89,50 @@ char * charConv =
  
  (not a real instruction, only a helper function)
 **/
-static inline void STR( uint8_t * dst, uint8_t imm ) {
-    *dst = imm;
+INLINE void STR( uint8_t * dst, uint8_t src ) {
+    dbgPrintf("STR %02X -> %04X ", src, (int)(dst - RAM));
+    *dst = src;
 
-//    uint16_t v = dst - RAM;
-//    if ( ( v >= 0x400 ) && ( v < 0x800 ) ) {
-//        char c = charConv[imm];
+//    uint16_t addr = dst - RAM;
+//    if ( ( addr >= 0x400 ) && ( addr < 0x800 ) ) {
+//        char c = charConv[src];
 ////        if ( c == '?' ) {
 ////            printf("? SYNTAX ERROR\n");
 ////        }
 //
-//        if (( imm > ' ' ) && ( c < 0x7F ))
-//            printf("*** PRINT: %04X: t:%02X '%c'\n", v, imm, isprint(c) ? c : ' ');
+//        if (( src > ' ' ) && ( c < 0x7F ))
+//            printf("*** PRINT: %04X: t:%02X '%c'\n", addr, src, isprint(c) ? c : ' ');
+//    }
+//    else if ( ( addr >= 0xC000 ) && ( addr < 0xD000 ) ) {
+//        printf("mmio write:[%04X] = %02X\n", addr, src);
 //    }
 //
 //
-//    else switch ( v ) {
+//    else switch ( addr ) {
 //        case 0x36:
 //        case 0x37:
-//            dbgPrintf("*** OUTROUT %04X: %02X\n", v, imm);
+//            dbgPrintf("*** OUTROUT %04X: %02X\n", addr, src);
 //            break;
 //
 //        case 0x9B:
 //        case 0x9C:
-//            dbgPrintf("*** LOWTR %04X: %02X\n", v, imm);
+//            dbgPrintf("*** LOWTR %04X: %02X\n", addr, src);
 //            break;
 //
+//        case 0x6F: // FRETOP
+//        case 0x70:
+//            dbgPrintf("*** FRETOP %04X: %02X\n", addr, src);
+//            break;
+//
+//        case 0x73: // MEMSIZ
+//        case 0x74:
+//            dbgPrintf("*** MEMSIZ %04X: %02X\n", addr, src);
+//            break;
+//
+//        case 0x5E:
+//            dbgPrintf("*** ??? %04X: %02X\n", addr, src);
+//            break;
+//            
 //        default:
 //            break;
 //    }
@@ -136,7 +154,7 @@ static inline void STR( uint8_t * dst, uint8_t imm ) {
  (indirect,X)  STA (oper,X)  81    2     6
  (indirect),Y  STA (oper),Y  91    2     6
 **/
-static inline void STA( uint8_t * dst ) {
+INLINE void STA( uint8_t * dst ) {
     dbgPrintf("STA ");
     STR(dst, m6502.A);
 }
@@ -153,7 +171,7 @@ static inline void STA( uint8_t * dst ) {
  zeropage,Y    STX oper,Y    96    2     4
  absolute      STX oper      8E    3     4
  **/
-static inline void STX( uint8_t * dst ) {
+INLINE void STX( uint8_t * dst ) {
     dbgPrintf("STX ");
     STR(dst, m6502.X);
 }
@@ -170,7 +188,7 @@ static inline void STX( uint8_t * dst ) {
  zeropage,X    STY oper,X    94    2     4
  absolute      STY oper      8C    3     4
  **/
-static inline void STY( uint8_t * dst ) {
+INLINE void STY( uint8_t * dst ) {
     dbgPrintf("STY ");
     STR(dst, m6502.Y);
 }

@@ -43,21 +43,10 @@
 /////
 unsigned long long int clktime = 0;
 
-m6502_t m6502 = {0};
+m6502_t m6502 = { 0, 0, 0, 0, 0, 0, 0, HLT };
 
 
-INLINE int m6502_step() {
-    
-//    switch ( fetch16() ) {
-//        case 0xFCD0: // D0 FC BNE
-//            BNE( 0xFC ); return 2;
-//
-//        case 0x01E9: // E9 01 SBC
-//            SBC( 0x01 ) ; return 6;
-//
-//        default:
-//            m6502.pc -= 2;
-//
+INLINE int m6502_Step() {
     
 #ifdef DEBUG
     switch ( m6502.PC ) {
@@ -65,13 +54,180 @@ INLINE int m6502_step() {
             dbgPrintf("START...\n");
             break;
         
-        case 0x9D1:
-            dbgPrintf("BREAK POINT...\n");
+        case 0x0438:
+            dbgPrintf2("*** TEST 1 (%04X)\n", m6502.PC);
             break;
-
-        case 0x35BD:
-            if ( ( m6502.A == 0x35 ) && ( m6502.C ) )
-            dbgPrintf("BREAK POINT...\n");
+            
+        case 0x0581:
+            dbgPrintf2("*** TEST 2 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x05C8:
+            dbgPrintf2("*** TEST 3 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x05FC:
+            dbgPrintf2("*** TEST 4 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0776:
+            dbgPrintf2("*** TEST 5 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0872:
+            dbgPrintf2("*** TEST 6 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x08A6:
+            dbgPrintf2("*** TEST 7 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x08F0:
+            dbgPrintf2("*** TEST 8 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0946:
+            dbgPrintf2("*** TEST 9 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0982:
+            dbgPrintf2("*** TEST 10 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x09B9:
+            dbgPrintf2("*** TEST 11 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0A11:
+            dbgPrintf2("*** TEST 12 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0AB7:
+            dbgPrintf2("*** TEST 13 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0D7D:
+            dbgPrintf2("*** TEST 14 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0E46:
+            dbgPrintf2("*** TEST 15 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0F01:
+            dbgPrintf2("*** TEST 16 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0F43:
+            dbgPrintf2("*** TEST 17 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x0FFA:
+            dbgPrintf2("*** TEST 18 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x103A:
+            dbgPrintf2("*** TEST 19 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x1330:
+            dbgPrintf2("*** TEST 20 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x162A:
+            dbgPrintf2("*** TEST 21 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x16DB:
+            dbgPrintf2("*** TEST 22 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x17FA:
+            dbgPrintf2("*** TEST 23 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x1899:
+            dbgPrintf2("*** TEST 24 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x1B63:
+            dbgPrintf2("*** TEST 25 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x1CB7:
+            dbgPrintf2("*** TEST 26 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x1DC5:
+            dbgPrintf("*** TEST 27 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x1ED3:
+            dbgPrintf2("*** TEST 28 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x22B7:
+            dbgPrintf2("*** TEST 29 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x23FB:
+            dbgPrintf2("*** TEST 30 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x257B:
+            dbgPrintf2("*** TEST 31 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x271F:
+            dbgPrintf2("*** TEST 32 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x289F:
+            dbgPrintf2("*** TEST 33 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x2A43:
+            dbgPrintf2("*** TEST 34 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x2AED:
+            dbgPrintf2("*** TEST 35 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x2BA7:
+            dbgPrintf2("*** TEST 36 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x2C55:
+            dbgPrintf2("*** TEST 37 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x2D13:
+            dbgPrintf2("*** TEST 38 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x3103:
+            dbgPrintf2("*** TEST 40 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x32FC:
+            dbgPrintf2("*** TEST 41 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x3361:
+            dbgPrintf2("*** TEST 42 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x3405:
+            dbgPrintf2("*** TEST 43 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x345D:
+            dbgPrintf2("*** TEST 44 (%04X)\n", m6502.PC);
+            break;
+            
+        case 0x3469:
+            dbgPrintf2("*** TEST PASSED (%04X)\n", m6502.PC);
             break;
             
         default:
@@ -346,41 +502,56 @@ INLINE int m6502_step() {
 }
 
 const unsigned long long int iterations = G;
+unsigned long long int inst_cnt = 0;
+
+const unsigned int fps = 30;
+const unsigned int MHz_6502 = 1.023 * M;
+const unsigned int clk_6502_per_frm = MHz_6502 / fps;
 
 unsigned long long tick_per_sec = G;
 unsigned long long tick_6502_per_sec = 0;
-unsigned long long MHz_6502 = 1.023 * M;
 
-static __attribute__((always_inline)) unsigned long long rdtsc(void)
+INLINE unsigned long long rdtsc(void)
 {
     unsigned hi, lo;
     __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi) );
     return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
 }
 
-// nanosec does not work very well for some reason
-struct timespec tim, tim2;
+unsigned long long ee = 0;
+unsigned long long dd = 0;
 
-INLINE void m6502_run() {
+// nanosec does not work very well for some reason
+struct timespec tim = { 0, 400L };
+
+double mips = 0;
+double mhz = 0;
+unsigned long long epoch = 0;
+
+void m6502_Run() {
+    unsigned int clk = 0;
+    unsigned int clkfrm = 0;
+    
     // init time
 #ifdef CLK_WAIT
-    unsigned long long s = rdtsc();
-    unsigned long long e = (unsigned long long)-1LL;
+    unsigned long long elpased = (unsigned long long)-1LL;
 #endif
 
 #ifdef SPEED_TEST
     for ( unsigned long long int i = 0; i < iterations ; i++ )
+#elif defined( CLK_WAIT )
+    for ( clkfrm = 0; clkfrm < clk_6502_per_frm ; clkfrm += clk )
 #else
 //    for ( ; m6502.pc ; )
-    
-    tim.tv_sec = 0;
-    tim.tv_nsec = 500L;
-    
     for ( ; ; )
 #endif
     {
         if ( m6502.IF ) {
             switch (m6502.interrupt) {
+                case HLT:
+                    // CPU is haletd, nothing to do here...
+                    return;
+                    
                 case NMI:
                     break;
                     
@@ -397,54 +568,83 @@ INLINE void m6502_run() {
             
             m6502.IF = 0;
         }
-        
-        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
-        clktime += m6502_step();
 
+        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
+        clktime += clk = m6502_Step();
+
+        dbgPrintf("\nA:%02X X:%02X Y:%02X SP:%02X %c%c%c%c%c%c%c%c\n",
+                  m6502.A,
+                  m6502.X,
+                  m6502.Y,
+                  m6502.SP,
+                  m6502.N ? 'N' : 'n',
+                  m6502.V ? 'V' : 'v',
+                  m6502.res ? 'R' : 'r',
+                  m6502.B ? 'B' : 'b',
+                  m6502.D ? 'D' : 'd',
+                  m6502.I ? 'I' : 'i',
+                  m6502.Z ? 'Z' : 'z',
+                  m6502.C ? 'C' : 'c'
+                  );
+        
 #ifdef CLK_WAIT
-        e = tick_6502_per_sec * clktime;
+//        ee += tick_6502_per_sec * clk;
+//        ee /= 2;
+//        dd += rdtsc() - epoch - elpased;
+//        dd /= 2;
+        
+        // get the new time in ticks needed to simulate exact 6502 clock
+        elpased = tick_6502_per_sec * clktime;
+
         // query time + wait
 
         // TODO: We should use nanosleep
-        usleep(1); // this is good enough for debugging
+//        usleep(1); // this is good enough for debugging
 
-//        nanosleep(&tim, &tim2);
+//        nanosleep(&tim, NULL);
+        
+//        printf("  tps:%llu  s:%llu  t:%llu  d:%llu  e:%llu  n:%llu\n", tick_6502_per_sec, s, t, t - s, e, e - (t - s));
 
         // tight loop gives us the most precise wait time
-//        while ( rdtsc() - s < e ) {}
+//        while ( rdtsc() - epoch < elpased ) {}
 #endif
         
-        dbgPrintf("\n");
     }
+    
+    //    clock_t end = clock();
+    //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+//    unsigned long long e = rdtsc();
+//    unsigned long long t = e - epoch;
+//    double execution_time = (double)t / tick_per_sec;
+//
+//    mips = inst_cnt / (execution_time * M);
+//    mhz = clktime / (execution_time * M);
 }
 
-void init() {
-    unsigned long long s = rdtsc();
+void m6502_Reset() {
+    inst_cnt = 0;
+    mhz = (double)MHz_6502 / M;
+
+    epoch = rdtsc();
     sleep(1);
     unsigned long long e = rdtsc();
-    tick_per_sec = e - s;
+    tick_per_sec = e - epoch;
     tick_6502_per_sec = tick_per_sec / MHz_6502;
     
     memset( RAM, 0, sizeof(RAM) );
-
-    
-//    RAM[ 0 ] = 0x4C;
-//    RAM[ 1 ] = 0;
-//    RAM[ 2 ] = 0;
-//
-//    RAM[ 0xBFFD ] = 0x4C;
-//    RAM[ 0xBFFE ] = 0;
-//    RAM[ 0xBFFF ] = 0;
     
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
     m6502.SP = 0xFF -3;
-    m6502.SR = 0x30;
+    
+    // N V - B D I Z C
+    // 0 0 1 1 0 1 0 0
+    m6502.SR = 0x34;
+    
+    m6502.IF = 0;
 
     // memory size
     *((uint16_t*)(&RAM[0x73])) = 0xC000;
-    
-#define NO_FUNCTIONTEST
     
 #ifdef FUNCTIONTEST
     FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/6502_functional_test.bin", "rb");
@@ -582,20 +782,22 @@ void tst6502() {
     // insert code here...
     printf("6502\n");
     
-    init();
+    m6502_Reset();
     
     //    clock_t start = clock();
-    unsigned long long s = rdtsc();
-    m6502_run();
+    epoch = rdtsc();
+    m6502_Run();
     //    clock_t end = clock();
     //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
     unsigned long long e = rdtsc();
-    unsigned long long t = e - s;
+    unsigned long long t = e - epoch;
     double execution_time = (double)t / tick_per_sec;
     
-    double mips = iterations / (execution_time * M);
+    double mips = inst_cnt / (execution_time * M);
     double mhz = clktime / (execution_time * M);
     printf("clk:%llu Elpased time: (%llu / %llu / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", clktime, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
+//    printf("  dd:%llu  ee:%llu  nn:%llu\n", dd, ee, ee - dd);
+
 }
 
 int ___main(int argc, const char * argv[]) {

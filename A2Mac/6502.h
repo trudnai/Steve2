@@ -12,12 +12,16 @@
 #import "stdint.h"
 
 #ifdef DEBUG
-#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
+#define dbgPrintf(format, ...)
+#define dbgPrintf2(format, ...) printf (format, ## __VA_ARGS__)
 #else
 #define dbgPrintf(format, ...)
+#define dbgPrintf2(format, ...)
 #endif
 
 typedef enum {
+    NO_INT,
+    HLT,
     NMI,
     HARDRESET,
     SOFTRESET,
@@ -53,7 +57,7 @@ typedef struct m6502_s {
     unsigned clk;           // Clock Counter
     
     union {
-        int IF;             // interrut flag
+        unsigned int IF;             // interrut flag
         interrupt_t interrupt;
     };
 } m6502_t;
@@ -62,7 +66,11 @@ typedef struct m6502_s {
 extern m6502_t m6502;
 extern uint8_t RAM[ 64 * 1024 ];
 
-extern void tst6502();
+extern double mips;
+extern double mhz;
 
+extern void tst6502();
+extern void m6502_Reset();
+extern void m6502_Run();
 
 #endif /* __6502_H__ */

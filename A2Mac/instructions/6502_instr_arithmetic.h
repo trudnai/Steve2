@@ -30,14 +30,50 @@
  (indirect),Y  ADC (oper),Y  71    2     5*
 **/
 INLINE void ADC( uint8_t src ) {
-    dbgPrintf("ADC(%02X) A:%02X + %02X ", src, m6502.A, src);
-    
+    dbgPrintf("ADC(%02X) ", src);
+
     uint16_t tmp;
-    set_flags_NZ( m6502.A = tmp = (uint16_t)m6502.A + src + m6502.C );
-    m6502.V = (!((m6502.A ^ src) & 0x80)) && ((m6502.A ^ tmp) & 0x80);
-    m6502.C = tmp > 0xFF;
+
+    // V = C7 != C6
+    m6502.V = ((m6502.A & 0x7F) + (src & 0x7F) + m6502.C) > 0x7F;
+
+    if ( m6502.D ) {
+        if ( (tmp = (m6502.A & 0x0F) + (src & 0x0F) + m6502.C) > 0x09 ) {
+            tmp += 0x06;
+        }
+        if ( (tmp += (m6502.A & 0xF0) + (src & 0xF0)) > 0x99 ) {
+            tmp += 0x60;
+        }
+        
+//        tmp = m6502.A + src + m6502.C;
+//
+//        if ( (tmp & 0x0F) > 0x09 ) {
+//            tmp += 0x06;
+//        }
+//        if ( tmp > 0x99 ) {
+//            tmp += 0x60;
+//        }
+    }
+    else {
+        tmp = (uint16_t)m6502.A + src + m6502.C;
+    }
     
-    dbgPrintf("-> A:%02X ", m6502.A);
+    set_flags_NZ( m6502.A = tmp );
+    m6502.C = tmp > 0xFF;
+    m6502.V ^= m6502.C;
+
+//    // this is good but slow:
+//    uint16_t tmp = (uint16_t)m6502.A + src + m6502.C;
+//    m6502.V = ( !((m6502.A ^ src) & 0x80)) && ( (m6502.A ^ tmp) & 0x80);
+//    m6502.C = tmp > 0xFF;
+//    set_flags_NZ( m6502.A = tmp );
+
+//    // this is good but slow:
+//    uint16_t tmp = (uint16_t)m6502.A + src + m6502.C;
+//    m6502.V = ( ((m6502.A ^ src) ^ (m6502.A ^ tmp)) & 0x80 ) != 0;
+//    m6502.C = tmp > 0xFF;
+//    set_flags_NZ( m6502.A = tmp );
+    
 }
 
 /**
@@ -59,7 +95,32 @@ INLINE void ADC( uint8_t src ) {
 **/
 INLINE void SBC( uint8_t src ) {
     dbgPrintf("SBC(%02X) ", src);
-    ADC( ~src );
+//    ADC( ~src );
+    
+    uint16_t tmp;
+    
+    if( m6502.D ) {
+        tmp = (m6502.A & 0x0F) - ( src & 0x0F ) - !m6502.C;
+        if( (tmp & 0x10) != 0) {
+            tmp = ( (tmp - 0x06 ) & 0x0F ) | ( (m6502.A & 0xF0) - (src & 0xF0) - 0x10 );
+        }
+        else {
+            tmp = (tmp & 0x0F) | ( (m6502.A & 0xF0) - (src & 0xF0) );
+        }
+        
+        if(( tmp & 0x100 ) != 0) {
+            tmp -= 0x60;
+        }
+    }
+    else
+    {
+        tmp = m6502.A - src - !m6502.C;
+    }
+    
+    m6502.C = tmp < 0x100;
+    
+    m6502.V = ( (m6502.A ^ tmp) & 0x80 ) && ( (m6502.A ^ src) & 0x80 );
+    set_flags_NZ( m6502.A = tmp );
 }
 
 #endif // __6502_INSTR_ARITHMETIC_H__

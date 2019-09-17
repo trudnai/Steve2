@@ -13,7 +13,7 @@ INLINE void BRA( int8_t reladdr ) {
     m6502.PC += reladdr;
 #ifdef DEBUG
     if ( reladdr == -2 ) {
-        dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);
+        dbgPrintf2("Infinite Loop at %04X!\n", m6502.PC);
     }
 #endif
     dbgPrintf("BRA %04X ", m6502.PC);

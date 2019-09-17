@@ -43,22 +43,18 @@ union {
 
 INLINE void set_flags_N( const uint8_t test ) {
     m6502.N = BITTEST(test, 7);
-    dbgPrintf("%c", m6502.N ? 'N' : 'n');
 }
 
 INLINE void set_flags_V( const uint8_t test ) {
     m6502.V = BITTEST(test, 6);
-    dbgPrintf("%c", m6502.V ? 'V' : 'v');
 }
 
 INLINE void set_flags_Z( const uint8_t test ) {
     m6502.Z = test == 0;
-    dbgPrintf("%c", m6502.Z ? 'Z' : 'z');
 }
 
 INLINE void set_flags_C( const int16_t test ) {
     m6502.C = test >= 0;
-    dbgPrintf("%c", m6502.C ? 'C' : 'c');
 }
 
 INLINE void set_flags_NZ( const uint8_t test ) {

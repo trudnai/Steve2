@@ -11,7 +11,8 @@ import Cocoa
 class ViewController: NSViewController {
 
     @IBOutlet weak var display: NSTextFieldCell!
-
+    @IBOutlet weak var speedometer: NSTextFieldCell!
+    
 //    static let charConvStr : String =
 //        "@🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
 //        "@🅰🅱🅲🅳🅴🅵🅶🅷🅸🅹🅺🅻🅼🅽🅾🅿🆀🆁🆂🆃🆄🆅🆆🆇🆈🆉[\\]^_⬛︎!\"#$%&'()*+,-./0123456789:;<=>?" + // FL
@@ -33,20 +34,22 @@ class ViewController: NSViewController {
     
     var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
-        if ( workItem != nil ) {
-            workItem!.cancel();
-            workItem = nil;
-        }
-        else {
-            workItem = DispatchWorkItem {
+//        if ( workItem != nil ) {
+//            workItem!.cancel();
+//            workItem = nil;
+//        }
+//        else {
+//            workItem = DispatchWorkItem {
 //                DispatchQueue.global(qos: .userInteractive).async {
-//                DispatchQueue.global(qos: .userInitiated).async {
-                DispatchQueue.global(qos: .background).async {
-                    tst6502()
-                }
-            }
-            DispatchQueue.global().async(execute: workItem!);
-        }
+////                DispatchQueue.global(qos: .userInitiated).async {
+////                DispatchQueue.global(qos: .background).async {
+//                    tst6502()
+//                }
+//            }
+//            DispatchQueue.global().async(execute: workItem!);
+//        }
+        
+        m6502_Reset()
     }
     
     @IBAction func Reset(_ sender: Any) {
@@ -89,7 +92,7 @@ class ViewController: NSViewController {
                 default:
                     break
                 }
-                print("keycode: \(code) --> \(A2code)")
+//                print("keycode: \(code) --> \(A2code)")
                 
                 let kbdPointer = UnsafeMutableRawBufferPointer(start: &RAM + 0xC000, count: 1)
                 kbdPointer[0] = A2code
@@ -137,37 +140,74 @@ class ViewController: NSViewController {
     }
 
     
-    func update() {
+    let textBaseAddr = 0x400
+    let textBufferSize = 0x400
+    let textLines = 24
+    let textCols = 40
+    
+    var frameCnt = 0
+    let spaceChar : Character = " "
+    let blockChar : Character = "░"
+    var flashingSpace : Character = " "
+    
+    let textBufferPointer = UnsafeRawBufferPointer(start: &RAM + 0x400, count: 0x400)
+    var txtArr = [Character](repeating: " ", count: 0x400)
+    
+    var s = String()
+    
+    func Update() {
         
-//        while true {
-//            usleep(33333) // 1/30 sec
+        m6502_Run()
+        
+        frameCnt += 1
+        if ( frameCnt == 15 ) {
+            flashingSpace = blockChar
+        }
+        else if ( frameCnt >= 30 ) {
+            flashingSpace = spaceChar
+            frameCnt = 0
+        }
+        
+        var txt : String = ""
 
-            let textBaseAddr = 0x400
-            let textLines = 24
-            let textCols = 40
-            
-            var txt : String = ""
-
-            for y in 0...textLines-1 {
-                let textAddr = textBaseAddr + textLineOfs[y]
-                let textBufferPointer = UnsafeRawBufferPointer(start: &RAM + textAddr, count: textCols)
-
-                for (_, byte) in textBufferPointer.enumerated() {
-                    let idx = Int(byte);
-                    let chr = ViewController.charConvTbl[idx]
-        //            print("byte \(index): \(chr)")
-                    txt = txt + "\(chr)"
+        for y in 0...textLines-1 {
+//            let textAddr = textBaseAddr + textLineOfs[y]
+            for x in 0...textCols-1 {
+                let byte = textBufferPointer[ textLineOfs[y] + x ]
+                let idx = Int(byte);
+                var chr = ViewController.charConvTbl[idx]
+                // is it a cursor? (slashing space)
+                if ( chr == blockChar ) {
+                    chr = flashingSpace
                 }
-                
-                txt = txt + "\n"
+    //            print("byte \(index): \(chr)")
+//                txt = txt + "\(chr)"
+                txtArr[ y * (textCols+1) + x ] = chr
             }
             
+
+//            for (_, byte) in textBufferPointer.enumerated() {
+//                let idx = Int(byte);
+//                var chr = ViewController.charConvTbl[idx]
+//                // is it a cursor? (slashing space)
+//                if ( chr == blockChar ) {
+//                    chr = flashingSpace
+//                }
+//    //            print("byte \(index): \(chr)")
+//                txt = txt + "\(chr)"
+//            }
             
-            DispatchQueue.main.async {
-                self.display.stringValue = txt;
-            }
-//        }
+//            txt = txt + "\n"
+            txtArr[ y * (textCols+1) + textCols ] = "\n"
+        }
+//        txtArr[ textLines * (textCols+1) + textCols ] = "\0"
+        txt = String(txtArr)
+
         
+        DispatchQueue.main.async {
+            self.display.stringValue = txt;
+            self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+        }
     }
 
     
@@ -190,17 +230,17 @@ class ViewController: NSViewController {
 //            self.update()
 //        })
 
-        #if FUNCTIONTEST
-        #else
+//        #if FUNCTIONTEST
+//        #else
 //        DispatchQueue.global(qos: .background).async {
 //            self.update()
 //        }
         
         upd.eventHandler = {
-            self.update()
+            self.Update()
         }
         upd.resume()
-        #endif
+//        #endif
     }
 
     override var representedObject: Any? {

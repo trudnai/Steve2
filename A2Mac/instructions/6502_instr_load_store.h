@@ -31,8 +31,7 @@
 **/
 INLINE void LDA( uint8_t src ) {
     dbgPrintf("LDA(%02X) ", src);
-    m6502.A = src;
-    set_flags_NZ(src);
+    set_flags_NZ(m6502.A = src);
 }
 
 /**
@@ -51,8 +50,7 @@ INLINE void LDA( uint8_t src ) {
 **/
 INLINE void LDX( uint8_t src ) {
     dbgPrintf("LDX(%02X) ", src);
-    m6502.X = src;
-    set_flags_NZ(src);
+    set_flags_NZ(m6502.X = src);
 }
 
 /**
@@ -71,8 +69,7 @@ INLINE void LDX( uint8_t src ) {
 **/
 INLINE void LDY( uint8_t src ) {
     dbgPrintf("LDY(%02X) ", src);
-    m6502.Y = src;
-    set_flags_NZ(src);
+    set_flags_NZ(m6502.Y = src);
 }
 
 
@@ -90,7 +87,7 @@ char * charConv =
  (not a real instruction, only a helper function)
 **/
 INLINE void STR( uint8_t * dst, uint8_t src ) {
-    dbgPrintf("STR %02X -> %04X ", src, (int)(dst - RAM));
+    dbgPrintf("STR [%04X], %02X ", (int)(dst - RAM), src );
     *dst = src;
 
 //    uint16_t addr = dst - RAM;

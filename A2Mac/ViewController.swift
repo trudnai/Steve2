@@ -10,6 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController {
 
+    @IBOutlet weak var displayField: NSTextField!
     @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
     
@@ -19,13 +20,31 @@ class ViewController: NSViewController {
 //        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
 //        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
 
-    static let charConvStr : String =
-        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
-        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_░!\"#$%&'()*+,-./0123456789:;<=>?" + // FL
-        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
-        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
+//    static let charConvStr : String =
+//        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+//        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_░!\"#$%&'()*+,-./0123456789:;<=>?" + // FL
+//        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
+//        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
     
-    static let charConvTbl = Array( charConvStr )
+//    static let charConvStr : String =
+//    "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+//        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_░!\"#$%&'()*+,-./0123456789:;<=>?" + // FL
+//        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
+//        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
+    
+    static let charConvStrFlashOff : String =
+        "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" + // FL
+            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
+    "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
+
+    static let charConvStrFlashOn : String =
+        "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+        "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
+    "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
+
+    static var charConvTbl = Array( charConvStrFlashOff )
 
     let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
@@ -34,22 +53,24 @@ class ViewController: NSViewController {
     
     var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
-//        if ( workItem != nil ) {
-//            workItem!.cancel();
-//            workItem = nil;
-//        }
-//        else {
-//            workItem = DispatchWorkItem {
-//                DispatchQueue.global(qos: .userInteractive).async {
-////                DispatchQueue.global(qos: .userInitiated).async {
-////                DispatchQueue.global(qos: .background).async {
-//                    tst6502()
-//                }
-//            }
-//            DispatchQueue.global().async(execute: workItem!);
-//        }
-        
+        #if SPEEDTEST
+        if ( workItem != nil ) {
+            workItem!.cancel();
+            workItem = nil;
+        }
+        else {
+            workItem = DispatchWorkItem {
+                DispatchQueue.global(qos: .userInteractive).async {
+//                DispatchQueue.global(qos: .userInitiated).async {
+//                DispatchQueue.global(qos: .background).async {
+                    tst6502()
+                }
+            }
+            DispatchQueue.global().async(execute: workItem!);
+        }
+        #else
         m6502_Reset()
+        #endif
     }
     
     @IBAction func Reset(_ sender: Any) {
@@ -140,49 +161,85 @@ class ViewController: NSViewController {
     }
 
     
-    let textBaseAddr = 0x400
-    let textBufferSize = 0x400
+    static let textBaseAddr = 0x400
+    static let textBufferSize = 0x400
     let textLines = 24
     let textCols = 40
+    let lineEndChars = 1
     
     var frameCnt = 0
+//    let spaceChar : Character = "\u{E17F}"
+//    let blockChar : Character = "\u{E07F}"
     let spaceChar : Character = " "
     let blockChar : Character = "░"
     var flashingSpace : Character = " "
     
-    let textBufferPointer = UnsafeRawBufferPointer(start: &RAM + 0x400, count: 0x400)
-    var txtArr = [Character](repeating: " ", count: 0x400)
+    let ramBufferPointer = UnsafeRawBufferPointer(start: &RAM, count: 64 * 1024)
+    let textBufferPointer = UnsafeRawBufferPointer(start: &RAM + textBaseAddr, count: textBufferSize)
+    var txtArr = [Character](repeating: " ", count: textBufferSize)
     
     var s = String()
     
-    func Update() {
+    func HexDump() {
+        var txt : String = ""
         
+        for y in 0...textLines - 1 {
+            txt += String(format: "%04X: ", y * 16)
+            for x in 0...15 {
+                let byte = ramBufferPointer[ y * 16 + x ]
+                let chr = String(format: "%02X ", byte)
+                txt += chr
+            }
+            txt += "\n"
+        }
+        
+        DispatchQueue.main.async {
+            self.display.stringValue = txt;
+            self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+        }
+    }
+    
+    func Update() {
+
+        #if SPEEDTEST
+        #else
         m6502_Run()
+        #endif
+        
+//        HexDump()
+//        return
         
         frameCnt += 1
         if ( frameCnt == 15 ) {
-            flashingSpace = blockChar
+//            flashingSpace = blockChar
+            ViewController.charConvTbl = Array( ViewController.charConvStrFlashOn )
         }
         else if ( frameCnt >= 30 ) {
-            flashingSpace = spaceChar
+//            flashingSpace = spaceChar
+            ViewController.charConvTbl = Array( ViewController.charConvStrFlashOff )
             frameCnt = 0
         }
         
         var txt : String = ""
-
+        
         for y in 0...textLines-1 {
 //            let textAddr = textBaseAddr + textLineOfs[y]
+            
+//            let linePointer = UnsafeMutableRawPointer( mutating: &RAM + textBaseAddr + y * textCols ) //( start: &RAM + 0x400, count: 0x400)
+//            let lineStr = String(bytesNoCopy: linePointer, length: textCols, encoding: .ascii, freeWhenDone: false)!
+//            txt += lineStr + "\n"
+
             for x in 0...textCols-1 {
                 let byte = textBufferPointer[ textLineOfs[y] + x ]
                 let idx = Int(byte);
-                var chr = ViewController.charConvTbl[idx]
+                let chr = ViewController.charConvTbl[idx]
                 // is it a cursor? (slashing space)
-                if ( chr == blockChar ) {
-                    chr = flashingSpace
-                }
+//                if ( chr == "blockChar" ) {
+//                    chr = flashingSpace
+//                }
     //            print("byte \(index): \(chr)")
 //                txt = txt + "\(chr)"
-                txtArr[ y * (textCols+1) + x ] = chr
+                txtArr[ y * (textCols + lineEndChars) + x ] = chr
             }
             
 
@@ -198,7 +255,7 @@ class ViewController: NSViewController {
 //            }
             
 //            txt = txt + "\n"
-            txtArr[ y * (textCols+1) + textCols ] = "\n"
+            txtArr[ y * (textCols + lineEndChars) + textCols ] = "\n"
         }
 //        txtArr[ textLines * (textCols+1) + textCols ] = "\0"
         txt = String(txtArr)
@@ -225,6 +282,18 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
+            self.flagsChanged(with: $0)
+            return $0
+        }
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+            self.keyDown(with: $0)
+            return $0
+        }
+        
+        displayField.maximumNumberOfLines = textLines
+        displayField.preferredMaxLayoutWidth = displayField.frame.width
 
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1/30, execute: {
 //            self.update()

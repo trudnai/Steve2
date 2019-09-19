@@ -14,6 +14,16 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Function Test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Speedtest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -28,6 +38,16 @@
 			<true/>
 		</dict>
 		<key>32BFFB7322EACC660003B53F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>32C453092331F7220000EBA1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>32C4531B2331FED90000EBA1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

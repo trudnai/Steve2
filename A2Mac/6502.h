@@ -12,7 +12,7 @@
 #import "stdint.h"
 
 #ifdef DEBUG
-#define dbgPrintf(format, ...)
+#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
 #define dbgPrintf2(format, ...) printf (format, ## __VA_ARGS__)
 #else
 #define dbgPrintf(format, ...)

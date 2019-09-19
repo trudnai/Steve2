@@ -7,7 +7,6 @@
 //
 
 #define CLK_WAIT
-#define NO_SPEED_TEST
 
 #include <stdio.h>
 #include <unistd.h>
@@ -30,6 +29,24 @@
 #define RESET_VECTOR        0xFFFC
 #define IRQ_VECTOR          0xFFFE
 
+const unsigned long long int iterations = 100*G;
+unsigned long long int inst_cnt = 0;
+
+const unsigned int fps = 30;
+const unsigned int MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
+const unsigned int clk_6502_per_frm = MHz_6502 / fps;
+
+unsigned long long tick_per_sec = G;
+unsigned long long tick_6502_per_sec = 0;
+
+INLINE unsigned long long rdtsc(void)
+{
+    unsigned hi, lo;
+    __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi) );
+    return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
+}
+
+
 
 /**
  Instruction Implementations
@@ -47,8 +64,31 @@ m6502_t m6502 = { 0, 0, 0, 0, 0, 0, 0, HLT };
 
 
 INLINE int m6502_Step() {
-    
+
 #ifdef DEBUG
+    switch ( m6502.PC ) {
+        case 0xE000:
+            dbgPrintf("START...\n");
+            break;
+            
+        case 0xF168:
+            dbgPrintf("START...\n");
+            break;
+            
+        case 0xF16B:
+            dbgPrintf("START...\n");
+            break;
+            
+        case 0xF195: // RAM size init
+            dbgPrintf("START...\n");
+            break;
+            
+        default:
+            break;
+    }
+#endif
+    
+#ifdef FUNCTIONTEST
     switch ( m6502.PC ) {
         case 0x400:
             dbgPrintf("START...\n");
@@ -494,28 +534,11 @@ INLINE int m6502_Step() {
 
         default:
             printf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
-            break;
+            return 2;
     }
 //    } // fetch16
     
     return 4;
-}
-
-const unsigned long long int iterations = G;
-unsigned long long int inst_cnt = 0;
-
-const unsigned int fps = 30;
-const unsigned int MHz_6502 = 1.023 * M;
-const unsigned int clk_6502_per_frm = MHz_6502 / fps;
-
-unsigned long long tick_per_sec = G;
-unsigned long long tick_6502_per_sec = 0;
-
-INLINE unsigned long long rdtsc(void)
-{
-    unsigned hi, lo;
-    __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi) );
-    return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
 }
 
 unsigned long long ee = 0;
@@ -533,11 +556,11 @@ void m6502_Run() {
     unsigned int clkfrm = 0;
     
     // init time
-#ifdef CLK_WAIT
-    unsigned long long elpased = (unsigned long long)-1LL;
-#endif
+//#ifdef CLK_WAIT
+//    unsigned long long elpased = (unsigned long long)-1LL;
+//#endif
 
-#ifdef SPEED_TEST
+#ifdef SPEEDTEST
     for ( unsigned long long int i = 0; i < iterations ; i++ )
 #elif defined( CLK_WAIT )
     for ( clkfrm = 0; clkfrm < clk_6502_per_frm ; clkfrm += clk )
@@ -594,7 +617,7 @@ void m6502_Run() {
 //        dd /= 2;
         
         // get the new time in ticks needed to simulate exact 6502 clock
-        elpased = tick_6502_per_sec * clktime;
+ //       elpased = tick_6502_per_sec * clktime;
 
         // query time + wait
 
@@ -631,8 +654,9 @@ void m6502_Reset() {
     tick_per_sec = e - epoch;
     tick_6502_per_sec = tick_per_sec / MHz_6502;
     
-    memset( RAM, 0, sizeof(RAM) );
-    
+    memset( RAM, 0xFF, sizeof(RAM) );
+    memset( RAM + 0xC000, 0, 0x1000 ); // I/O area should be 0
+
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
     m6502.SP = 0xFF -3;
@@ -644,7 +668,7 @@ void m6502_Reset() {
     m6502.IF = 0;
 
     // memory size
-    *((uint16_t*)(&RAM[0x73])) = 0xC000;
+//    *((uint16_t*)(&RAM[0x73])) = 0xC000;
     
 #ifdef FUNCTIONTEST
     FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/6502_functional_test.bin", "rb");
@@ -659,7 +683,7 @@ void m6502_Reset() {
     m6502.PC = 0x400;
 
 #else
-    FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/apple.rom", "rb");
+    FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", "rb");
     if (f == NULL) {
         perror("Failed: ");
         return;
@@ -789,13 +813,13 @@ void tst6502() {
     m6502_Run();
     //    clock_t end = clock();
     //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
-    unsigned long long e = rdtsc();
-    unsigned long long t = e - epoch;
-    double execution_time = (double)t / tick_per_sec;
+    unsigned long long end = rdtsc();
+    unsigned long long elapsed = end - epoch;
+    double execution_time = (double)elapsed / tick_per_sec;
     
     double mips = inst_cnt / (execution_time * M);
     double mhz = clktime / (execution_time * M);
-    printf("clk:%llu Elpased time: (%llu / %llu / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", clktime, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
+    printf("clk:%llu Elpased time: (%llu / %u / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", clktime, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
 //    printf("  dd:%llu  ee:%llu  nn:%llu\n", dd, ee, ee - dd);
 
 }

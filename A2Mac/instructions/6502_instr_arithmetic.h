@@ -118,7 +118,6 @@ INLINE void SBC( uint8_t src ) {
     }
     
     m6502.C = tmp < 0x100;
-    
     m6502.V = ( (m6502.A ^ tmp) & 0x80 ) && ( (m6502.A ^ src) & 0x80 );
     set_flags_NZ( m6502.A = tmp );
 }

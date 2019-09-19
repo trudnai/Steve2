@@ -325,7 +325,13 @@ INLINE uint8_t src_ind_Y() {
     return memread8( addr_ind_Y() );
 }
 INLINE uint8_t * dest_ind_Y() {
-    return & RAM[ addr_ind_Y() ];
+    uint16_t addr = addr_ind_Y();
+    if ( (addr >= 0xC000) && (addr <= 0xC0FF) ) {
+        addr = 0xC111;
+    }
+    //    return & RAM[ addr_abs_Y() ];
+    return & RAM[ addr ];
+//    return & RAM[ addr_ind_Y() ];
 }
 
 /**

@@ -13,10 +13,31 @@
 		32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
-		32BFFB6222EACC660003B53F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32BFFB6E22EACC660003B53F /* A2MacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB6D22EACC660003B53F /* A2MacTests.swift */; };
 		32BFFB7922EACC660003B53F /* A2MacUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB7822EACC660003B53F /* A2MacUITests.swift */; };
 		32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */; };
+		32C4530B2331F7220000EBA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
+		32C4530C2331F7220000EBA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
+		32C4530D2331F7220000EBA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
+		32C4530E2331F7220000EBA1 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */; };
+		32C453112331F7220000EBA1 /* fail1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32EDB7A123272CA80073AF2D /* fail1.txt */; };
+		32C453122331F7220000EBA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
+		32C453132331F7220000EBA1 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
+		32C453152331F7220000EBA1 /* 6502_functional_test.bin in Resources */ = {isa = PBXBuildFile; fileRef = 326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */; };
+		32C4531D2331FED90000EBA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
+		32C4531E2331FED90000EBA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
+		32C4531F2331FED90000EBA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
+		32C453202331FED90000EBA1 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */; };
+		32C453232331FED90000EBA1 /* fail1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32EDB7A123272CA80073AF2D /* fail1.txt */; };
+		32C453242331FED90000EBA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
+		32C453252331FED90000EBA1 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
+		32C453272331FED90000EBA1 /* 6502_functional_test.bin in Resources */ = {isa = PBXBuildFile; fileRef = 326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */; };
+		32C4532E233345430000EBA1 /* QuietView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* QuietView.swift */; };
+		32C4532F233345820000EBA1 /* QuietView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* QuietView.swift */; };
+		32C45330233345820000EBA1 /* QuietView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* QuietView.swift */; };
+		32C4533123335E560000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		32C4533223335E570000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		32C4533323335E570000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32EDB7A223272CA80073AF2D /* fail1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32EDB7A123272CA80073AF2D /* fail1.txt */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +96,12 @@
 		32BFFB7822EACC660003B53F /* A2MacUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A2MacUITests.swift; sourceTree = "<group>"; };
 		32BFFB7A22EACC660003B53F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatingTimer.swift; sourceTree = "<group>"; };
+		32C453072331C0910000EBA1 /* NSLayoutManager-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSLayoutManager-Extension.swift"; sourceTree = "<group>"; };
+		32C453192331F7220000EBA1 /* Speedtest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Speedtest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32C4531A2331F7220000EBA1 /* A2Mac copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "A2Mac copy-Info.plist"; path = "/Users/trudnai/Projects/A2Mac/A2Mac copy-Info.plist"; sourceTree = "<absolute>"; };
+		32C4532B2331FED90000EBA1 /* Functiontest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Functiontest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32C4532C2331FEDA0000EBA1 /* A2Mac copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "A2Mac copy2-Info.plist"; path = "/Users/trudnai/Projects/A2Mac/A2Mac copy2-Info.plist"; sourceTree = "<absolute>"; };
+		32C4532D233345420000EBA1 /* QuietView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietView.swift; sourceTree = "<group>"; };
 		32EDB7A123272CA80073AF2D /* fail1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = fail1.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +121,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		32BFFB7122EACC660003B53F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32C4530F2331F7220000EBA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32C453212331FED90000EBA1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -132,6 +173,8 @@
 				32BFFB6C22EACC660003B53F /* A2MacTests */,
 				32BFFB7722EACC660003B53F /* A2MacUITests */,
 				32BFFB5822EACC630003B53F /* Products */,
+				32C4531A2331F7220000EBA1 /* A2Mac copy-Info.plist */,
+				32C4532C2331FEDA0000EBA1 /* A2Mac copy2-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -141,6 +184,8 @@
 				32BFFB5722EACC630003B53F /* A2Mac.app */,
 				32BFFB6922EACC660003B53F /* A2MacTests.xctest */,
 				32BFFB7422EACC660003B53F /* A2MacUITests.xctest */,
+				32C453192331F7220000EBA1 /* Speedtest.app */,
+				32C4532B2331FED90000EBA1 /* Functiontest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,6 +203,8 @@
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
+				32C4532D233345420000EBA1 /* QuietView.swift */,
+				32C453072331C0910000EBA1 /* NSLayoutManager-Extension.swift */,
 				32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */,
 				32EDB7A123272CA80073AF2D /* fail1.txt */,
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
@@ -243,6 +290,40 @@
 			productReference = 32BFFB7422EACC660003B53F /* A2MacUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		32C453092331F7220000EBA1 /* Speedtest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32C453162331F7220000EBA1 /* Build configuration list for PBXNativeTarget "Speedtest" */;
+			buildPhases = (
+				32C4530A2331F7220000EBA1 /* Sources */,
+				32C4530F2331F7220000EBA1 /* Frameworks */,
+				32C453102331F7220000EBA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Speedtest;
+			productName = A2Mac;
+			productReference = 32C453192331F7220000EBA1 /* Speedtest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		32C4531B2331FED90000EBA1 /* Functiontest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32C453282331FED90000EBA1 /* Build configuration list for PBXNativeTarget "Functiontest" */;
+			buildPhases = (
+				32C4531C2331FED90000EBA1 /* Sources */,
+				32C453212331FED90000EBA1 /* Frameworks */,
+				32C453222331FED90000EBA1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Functiontest;
+			productName = A2Mac;
+			productReference = 32C4532B2331FED90000EBA1 /* Functiontest.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -283,6 +364,8 @@
 				32BFFB5622EACC630003B53F /* A2Mac */,
 				32BFFB6822EACC660003B53F /* A2MacTests */,
 				32BFFB7322EACC660003B53F /* A2MacUITests */,
+				32C453092331F7220000EBA1 /* Speedtest */,
+				32C4531B2331FED90000EBA1 /* Functiontest */,
 			);
 		};
 /* End PBXProject section */
@@ -293,9 +376,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				32EDB7A223272CA80073AF2D /* fail1.txt in Resources */,
+				32C4533123335E560000EBA1 /* Main.storyboard in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
-				32BFFB6222EACC660003B53F /* Main.storyboard in Resources */,
 				326ED2EF232D7A0000A41337 /* 6502_functional_test.bin in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,6 +397,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32C453102331F7220000EBA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32C453112331F7220000EBA1 /* fail1.txt in Resources */,
+				32C4533223335E570000EBA1 /* Main.storyboard in Resources */,
+				32C453122331F7220000EBA1 /* Assets.xcassets in Resources */,
+				32C453132331F7220000EBA1 /* apple.rom in Resources */,
+				32C453152331F7220000EBA1 /* 6502_functional_test.bin in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32C453222331FED90000EBA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32C453232331FED90000EBA1 /* fail1.txt in Resources */,
+				32C4533323335E570000EBA1 /* Main.storyboard in Resources */,
+				32C453242331FED90000EBA1 /* Assets.xcassets in Resources */,
+				32C453252331FED90000EBA1 /* apple.rom in Resources */,
+				32C453272331FED90000EBA1 /* 6502_functional_test.bin in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -323,6 +430,7 @@
 			files = (
 				32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
+				32C4532E233345430000EBA1 /* QuietView.swift in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
 			);
@@ -341,6 +449,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BFFB7922EACC660003B53F /* A2MacUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32C4530A2331F7220000EBA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32C4530B2331F7220000EBA1 /* 6502.c in Sources */,
+				32C4530C2331F7220000EBA1 /* ViewController.swift in Sources */,
+				32C4532F233345820000EBA1 /* QuietView.swift in Sources */,
+				32C4530D2331F7220000EBA1 /* AppDelegate.swift in Sources */,
+				32C4530E2331F7220000EBA1 /* RepeatingTimer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32C4531C2331FED90000EBA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32C4531D2331FED90000EBA1 /* 6502.c in Sources */,
+				32C4531E2331FED90000EBA1 /* ViewController.swift in Sources */,
+				32C45330233345820000EBA1 /* QuietView.swift in Sources */,
+				32C4531F2331FED90000EBA1 /* AppDelegate.swift in Sources */,
+				32C453202331FED90000EBA1 /* RepeatingTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,8 +633,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				OTHER_CFLAGS = "-DFUNCTIONTEST";
-				OTHER_SWIFT_FLAGS = "-DFUNCTIONTEST";
+				OTHER_CFLAGS = "";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -618,6 +750,107 @@
 			};
 			name = Release;
 		};
+		32C453172331F7220000EBA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_FAST_MATH = YES;
+				INFOPLIST_FILE = "A2Mac copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CFLAGS = "-DFUNCTIONTEST";
+				OTHER_SWIFT_FLAGS = "-DFUNCTIONTEST";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		32C453182331F7220000EBA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				INFOPLIST_FILE = "A2Mac copy-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CFLAGS = "-DSPEEDTEST";
+				OTHER_SWIFT_FLAGS = "-DSPEEDTEST";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		32C453292331FED90000EBA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_FAST_MATH = YES;
+				INFOPLIST_FILE = "A2Mac copy2-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CFLAGS = "-DFUNCTIONTEST";
+				OTHER_SWIFT_FLAGS = "-DFUNCTIONTEST";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		32C4532A2331FED90000EBA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				INFOPLIST_FILE = "A2Mac copy2-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				OTHER_CFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -653,6 +886,24 @@
 			buildConfigurations = (
 				32BFFB8422EACC660003B53F /* Debug */,
 				32BFFB8522EACC660003B53F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32C453162331F7220000EBA1 /* Build configuration list for PBXNativeTarget "Speedtest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32C453172331F7220000EBA1 /* Debug */,
+				32C453182331F7220000EBA1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32C453282331FED90000EBA1 /* Build configuration list for PBXNativeTarget "Functiontest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32C453292331FED90000EBA1 /* Debug */,
+				32C4532A2331FED90000EBA1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

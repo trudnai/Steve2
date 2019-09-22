@@ -26,11 +26,13 @@
 **/
 INLINE void ASL( uint8_t * dst ) {
     dbgPrintf("ASL ");
+    disPrintf(disassembly.inst, "ASL");
     m6502.C = *dst >> 7;
     set_flags_NZ( *dst <<= 1 );
 }
 INLINE void ASLA() {
     dbgPrintf("ASL ");
+    disPrintf(disassembly.inst, "ASL");
     m6502.C = m6502.A >> 7;
     set_flags_NZ( m6502.A <<= 1 );
 }
@@ -51,11 +53,13 @@ INLINE void ASLA() {
 **/
 INLINE void LSR( uint8_t * dst ) {
     dbgPrintf("LSR ");
+    disPrintf(disassembly.inst, "LSR");
     m6502.C = *dst & 1;
     set_flags_NZ( *dst >>= 1 );
 }
 INLINE void LSRA() {
     dbgPrintf("LSR ");
+    disPrintf(disassembly.inst, "LSR");
     m6502.C = m6502.A & 1;
     set_flags_NZ( m6502.A >>= 1 );
 }
@@ -76,6 +80,7 @@ INLINE void LSRA() {
 **/
 INLINE void ROL( uint8_t * dst ) {
     dbgPrintf("ROL ");
+    disPrintf(disassembly.inst, "ROL");
     uint8_t C = m6502.C;
     m6502.C = *dst >> 7;
     *dst <<= 1;
@@ -83,6 +88,7 @@ INLINE void ROL( uint8_t * dst ) {
 }
 INLINE void ROLA() {
     dbgPrintf("ROL ");
+    disPrintf(disassembly.inst, "ROL");
     uint8_t C = m6502.C;
     m6502.C = m6502.A >> 7;
     m6502.A <<= 1;
@@ -105,6 +111,7 @@ INLINE void ROLA() {
 **/
 INLINE void ROR( uint8_t * dst ) {
     dbgPrintf("ROR ");
+    disPrintf(disassembly.inst, "ROR");
     uint8_t C = m6502.C << 7;
     m6502.C = *dst & 1;
     *dst >>= 1;
@@ -112,6 +119,7 @@ INLINE void ROR( uint8_t * dst ) {
 }
 INLINE void RORA() {
     dbgPrintf("ROR ");
+    disPrintf(disassembly.inst, "ROR");
     uint8_t C = m6502.C << 7;
     m6502.C = m6502.A & 1;
     m6502.A >>= 1;

@@ -22,6 +22,7 @@
  **/
 INLINE void BRK() {
     dbgPrintf("BRK ");
+    disPrintf(disassembly.inst, "BRK");
     PUSH_addr(m6502.PC +1); // PC +2, however, fetch already incremented it by 1
     // B flag should be set before pushing flags onto the stack
     m6502.B = 1;
@@ -42,6 +43,7 @@ INLINE void BRK() {
  **/
 INLINE void NOP() {
     dbgPrintf("NOP ");
+    disPrintf(disassembly.inst, "NOP");
 }
 
 #endif // __6502_INSTR_MISC_H__

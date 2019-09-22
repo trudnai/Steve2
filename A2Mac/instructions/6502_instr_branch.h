@@ -31,6 +31,7 @@ INLINE void BRA( int8_t reladdr ) {
  **/
 INLINE void BCC( int8_t reladdr ) {
     dbgPrintf("BCC ");
+    disPrintf(disassembly.inst, "BCC");
     if ( m6502.C == 0 ) {
         BRA( reladdr );
     }
@@ -51,6 +52,7 @@ INLINE void BCC( int8_t reladdr ) {
  **/
 INLINE void BCS( int8_t reladdr ) {
     dbgPrintf("BCS ");
+    disPrintf(disassembly.inst, "RCS");
     if ( m6502.C == 1 ) {
         BRA( reladdr );
     }
@@ -71,6 +73,7 @@ INLINE void BCS( int8_t reladdr ) {
  **/
 INLINE void BNE( int8_t reladdr ) {
     dbgPrintf("BNE ");
+    disPrintf(disassembly.inst, "BNE");
     if ( m6502.Z == 0 ) {
         BRA( reladdr );
     }
@@ -91,6 +94,7 @@ INLINE void BNE( int8_t reladdr ) {
  **/
 INLINE void BEQ( int8_t reladdr ) {
     dbgPrintf("BEQ ");
+    disPrintf(disassembly.inst, "BEQ");
     if ( m6502.Z == 1 ) {
         BRA( reladdr );
     }
@@ -111,6 +115,7 @@ INLINE void BEQ( int8_t reladdr ) {
  **/
 INLINE void BPL( int8_t reladdr ) {
     dbgPrintf("BPL ");
+    disPrintf(disassembly.inst, "BPL");
     if ( m6502.N == 0 ) {
         BRA( reladdr );
     }
@@ -131,6 +136,7 @@ INLINE void BPL( int8_t reladdr ) {
  **/
 INLINE void BMI( int8_t reladdr ) {
     dbgPrintf("BMI ");
+    disPrintf(disassembly.inst, "BMI");
     if ( m6502.N == 1 ) {
         BRA( reladdr );
     }
@@ -151,6 +157,7 @@ INLINE void BMI( int8_t reladdr ) {
  **/
 INLINE void BVC( int8_t reladdr ) {
     dbgPrintf("BVC ");
+    disPrintf(disassembly.inst, "BVC");
     if ( m6502.V == 0 ) {
         BRA( reladdr );
     }
@@ -171,6 +178,7 @@ INLINE void BVC( int8_t reladdr ) {
  **/
 INLINE void BVS( int8_t reladdr ) {
     dbgPrintf("BVS ");
+    disPrintf(disassembly.inst, "BVS");
     if ( m6502.V == 1 ) {
         BRA( reladdr );
     }

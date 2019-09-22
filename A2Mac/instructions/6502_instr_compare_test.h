@@ -26,6 +26,7 @@
  **/
 INLINE void BIT( uint8_t src ) {
     dbgPrintf("BIT(%02X) ", src);
+    disPrintf(disassembly.inst, "BIT");
     set_flags_NV(src);
     set_flags_Z(m6502.A & src);
 }
@@ -49,6 +50,7 @@ INLINE void BIT( uint8_t src ) {
  **/
 INLINE void CMP( uint8_t src ) {
     dbgPrintf("CMP(%02X) ", src);
+    disPrintf(disassembly.inst, "CMP");
     set_flags_NZC( (int16_t)m6502.A - src );
 }
 
@@ -66,6 +68,7 @@ INLINE void CMP( uint8_t src ) {
  **/
 INLINE void CPX( uint8_t src ) {
     dbgPrintf("CPX(%02X) ", src);
+    disPrintf(disassembly.inst, "CPX");
     set_flags_NZC( (int16_t)m6502.X - src );
 }
 
@@ -83,6 +86,7 @@ INLINE void CPX( uint8_t src ) {
  **/
 INLINE void CPY( uint8_t src ) {
     dbgPrintf("CPY(%02X) ", src);
+    disPrintf(disassembly.inst, "CPY");
     set_flags_NZC( (int16_t)m6502.Y - src );
 }
 

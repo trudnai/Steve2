@@ -31,6 +31,7 @@
 **/
 INLINE void LDA( uint8_t src ) {
     dbgPrintf("LDA(%02X) ", src);
+    disPrintf(disassembly.inst, "LDA");
     set_flags_NZ(m6502.A = src);
 }
 
@@ -50,6 +51,7 @@ INLINE void LDA( uint8_t src ) {
 **/
 INLINE void LDX( uint8_t src ) {
     dbgPrintf("LDX(%02X) ", src);
+    disPrintf(disassembly.inst, "LDX");
     set_flags_NZ(m6502.X = src);
 }
 
@@ -69,6 +71,7 @@ INLINE void LDX( uint8_t src ) {
 **/
 INLINE void LDY( uint8_t src ) {
     dbgPrintf("LDY(%02X) ", src);
+    disPrintf(disassembly.inst, "LDY");
     set_flags_NZ(m6502.Y = src);
 }
 
@@ -153,6 +156,7 @@ INLINE void STR( uint8_t * dst, uint8_t src ) {
 **/
 INLINE void STA( uint8_t * dst ) {
     dbgPrintf("STA ");
+    disPrintf(disassembly.inst, "STA");
     STR(dst, m6502.A);
 }
 
@@ -170,6 +174,7 @@ INLINE void STA( uint8_t * dst ) {
  **/
 INLINE void STX( uint8_t * dst ) {
     dbgPrintf("STX ");
+    disPrintf(disassembly.inst, "STX");
     STR(dst, m6502.X);
 }
 
@@ -187,6 +192,7 @@ INLINE void STX( uint8_t * dst ) {
  **/
 INLINE void STY( uint8_t * dst ) {
     dbgPrintf("STY ");
+    disPrintf(disassembly.inst, "STY");
     STR(dst, m6502.Y);
 }
 

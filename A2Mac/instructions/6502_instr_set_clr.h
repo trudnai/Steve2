@@ -21,6 +21,7 @@
  **/
 INLINE void CLC() {
     dbgPrintf("CLC ");
+    disPrintf(disassembly.inst, "CLC");
     m6502.C = 0;
 }
 
@@ -36,6 +37,7 @@ INLINE void CLC() {
  **/
 INLINE void CLD() {
     dbgPrintf("CLD ");
+    disPrintf(disassembly.inst, "CLD");
     m6502.D = 0;
 }
 
@@ -51,6 +53,7 @@ INLINE void CLD() {
  **/
 INLINE void CLI() {
     dbgPrintf("CLI ");
+    disPrintf(disassembly.inst, "CLI");
     m6502.I = 0;
 }
 
@@ -66,6 +69,7 @@ INLINE void CLI() {
  **/
 INLINE void CLV() {
     dbgPrintf("CLV ");
+    disPrintf(disassembly.inst, "CLV");
     m6502.V = 0;
 }
 
@@ -81,6 +85,7 @@ INLINE void CLV() {
  **/
 INLINE void SEC() {
     dbgPrintf("SEC ");
+    disPrintf(disassembly.inst, "SEC");
     m6502.C = 1;
 }
 
@@ -96,6 +101,7 @@ INLINE void SEC() {
  **/
 INLINE void SED() {
     dbgPrintf("SED ");
+    disPrintf(disassembly.inst, "SED");
     m6502.D = 1;
 }
 
@@ -111,6 +117,7 @@ INLINE void SED() {
  **/
 INLINE void SEI() {
     dbgPrintf("SEI ");
+    disPrintf(disassembly.inst, "SEI");
     m6502.I = 1;
 }
 

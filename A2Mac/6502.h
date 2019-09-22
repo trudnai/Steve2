@@ -12,7 +12,8 @@
 #import "stdint.h"
 
 #ifdef DEBUG
-#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
+//#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
+#define dbgPrintf(format, ...)
 #define dbgPrintf2(format, ...) printf (format, ## __VA_ARGS__)
 #else
 #define dbgPrintf(format, ...)
@@ -26,6 +27,13 @@ typedef enum {
     HARDRESET,
     SOFTRESET,
 } interrupt_t;
+
+typedef enum {
+    NO_DEBUG,
+    DISASSEMBLY,
+    DEBUGBRK,
+    STEPBYSTEP,
+} debugLevel_t;
 
 typedef struct m6502_s {
     uint8_t  A;             // Accumulator
@@ -55,6 +63,7 @@ typedef struct m6502_s {
     uint16_t PC;            // Program Counter
     uint8_t SP;             // Stack Pointer ( stack addr = 0x01 + sp )
     unsigned clk;           // Clock Counter
+    debugLevel_t dbgLevel;  // 0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
     
     union {
         unsigned int IF;             // interrut flag
@@ -63,14 +72,26 @@ typedef struct m6502_s {
 } m6502_t;
 
 
+typedef struct disassembly_s {
+    char codeAddr[5];                // 4 digits + \0
+    char hex[4 * 3 + 1];             // max 4 bytes * (2 digits + 1 space) + \0
+    char * pHex;
+    char inst[6 + 1];                // 3 char (unknown instr? -- give it 6 chars) + \0
+    char addr[4 + 2 + 1 + 1 + 1];    // 4 digits + 2 brackets + 1 comma + 1 index + \0
+    char comment[256];               // to be able to add some comments
+} disassembly_t;
+
+
 extern m6502_t m6502;
 extern uint8_t RAM[ 64 * 1024 ];
 
 extern double mips;
 extern double mhz;
+extern const unsigned int fps;
 
 extern void tst6502();
 extern void m6502_Reset();
 extern void m6502_Run();
+extern void kbdInput ( uint8_t code );
 
 #endif /* __6502_H__ */

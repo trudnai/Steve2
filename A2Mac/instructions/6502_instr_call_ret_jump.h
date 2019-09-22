@@ -23,6 +23,7 @@
  **/
 INLINE void JMP( uint16_t addr ) {
     dbgPrintf("JMP %04X ", addr);
+    disPrintf(disassembly.inst, "JMP");
 #ifdef DEBUG
     if ( addr == m6502.PC - 3 ) {
         dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);
@@ -44,8 +45,9 @@ INLINE void JMP( uint16_t addr ) {
  **/
 INLINE void JSR( uint16_t addr ) {
     dbgPrintf("JSR ");
+    disPrintf(disassembly.inst, "JSR");
     PUSH_addr(m6502.PC -1);
-    JMP( addr );
+    m6502.PC = addr;
 }
 
 /**
@@ -60,7 +62,8 @@ INLINE void JSR( uint16_t addr ) {
  **/
 INLINE void RTS() {
     dbgPrintf("RTS ");
-    JMP( POP_addr() +1);
+    disPrintf(disassembly.inst, "RTS");
+    m6502.PC = POP_addr() +1;
 }
 
 /**
@@ -75,9 +78,10 @@ INLINE void RTS() {
  **/
 INLINE void RTI() {
     dbgPrintf("RTI ");
+    disPrintf(disassembly.inst, "RTI");
     m6502.SR = POP();
 //    m6502.I = 0;
-    JMP( POP_addr() );
+    m6502.PC = POP_addr();
 }
 
 

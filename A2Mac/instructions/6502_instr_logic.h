@@ -29,6 +29,7 @@
 **/
 INLINE void ORA( uint8_t src ) {
     dbgPrintf("ORA(%02X) ", src);
+    disPrintf(disassembly.inst, "ORA");
     set_flags_NZ( m6502.A |= src );
 }
 
@@ -51,6 +52,7 @@ INLINE void ORA( uint8_t src ) {
  **/
 INLINE void AND( uint8_t src ) {
     dbgPrintf("AND(%02X) ", src);
+    disPrintf(disassembly.inst, "AND");
     set_flags_NZ( m6502.A &= src );
 }
 
@@ -73,6 +75,7 @@ INLINE void AND( uint8_t src ) {
 **/
 INLINE void EOR( uint8_t src ) {
     dbgPrintf("EOR(%02X) ", src);
+    disPrintf(disassembly.inst, "EOR");
     set_flags_NZ( m6502.A ^= src );
 }
 

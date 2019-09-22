@@ -13,6 +13,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var displayField: NSTextField!
     @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
+    @IBOutlet weak var HiRes: HiRes!
     
 //    static let charConvStr : String =
 //        "@🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
@@ -35,16 +36,19 @@ class ViewController: NSViewController {
     static let charConvStrFlashOff : String =
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
             "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" + // FL
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
+            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
     "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
 
     static let charConvStrFlashOn : String =
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
+            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
     "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
 
-    static var charConvTbl = Array( charConvStrFlashOff )
+    static let charConvTblFlashOn  = Array( charConvStrFlashOn  )
+    static let charConvTblFlashOff = Array( charConvStrFlashOff )
+    
+    static var charConvTbl = charConvTblFlashOn
 
     let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
@@ -87,7 +91,14 @@ class ViewController: NSViewController {
     }
     
     
+    // AppleScript Keycodes
+    let leftArrowKey = 123
+    let rightArrowKey = 124
+    let upArrowKey = 126
+    let downArrowKey = 125
+
     override func keyDown(with event: NSEvent) {
+//        print("KBD Event")
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.command] where event.characters == "l",
 //             [.command, .shift] where event.characters == "l":
@@ -100,30 +111,30 @@ class ViewController: NSViewController {
         
         #if FUNCTIONTEST
         #else
-        if let chars = event.characters {
-            let char = chars.uppercased()[chars.startIndex]
-            if let code = char.asciiValue {
-                var A2code = code | 0x80
-                
-                switch ( code ) {
-                case 13:
-                    A2code = 141
-                    break
-                    
-                default:
-                    break
+        let keyCode = Int(event.keyCode)
+        switch keyCode {
+        case leftArrowKey:
+            kbdInput(0x08)
+        case rightArrowKey:
+            kbdInput(0x15)
+        case leftArrowKey:
+            kbdInput(0x0B)
+        case rightArrowKey:
+            kbdInput(0x0A)
+        default:
+//            print("keycode: %d", keyCode)
+            if let chars = event.characters {
+                let char = chars.uppercased()[chars.startIndex]
+                if let ascii = char.asciiValue {
+                    kbdInput(ascii)
                 }
-//                print("keycode: \(code) --> \(A2code)")
-                
-                let kbdPointer = UnsafeMutableRawBufferPointer(start: &RAM + 0xC000, count: 1)
-                kbdPointer[0] = A2code
             }
         }
         #endif
         
     }
     
-    override func flagsChanged(with event: NSEvent) {
+//    override func flagsChanged(with event: NSEvent) {
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.shift]:
 //            print("shift key is pressed")
@@ -158,7 +169,7 @@ class ViewController: NSViewController {
 //        default:
 //            print("no modifier keys are pressed")
 //        }
-    }
+//    }
 
     
     static let textBaseAddr = 0x400
@@ -194,7 +205,7 @@ class ViewController: NSViewController {
         }
         
         DispatchQueue.main.async {
-            self.display.stringValue = txt;
+            self.display.stringValue = txt
             self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
         }
     }
@@ -212,11 +223,11 @@ class ViewController: NSViewController {
         frameCnt += 1
         if ( frameCnt == 15 ) {
 //            flashingSpace = blockChar
-            ViewController.charConvTbl = Array( ViewController.charConvStrFlashOn )
+            ViewController.charConvTbl = ViewController.charConvTblFlashOn
         }
-        else if ( frameCnt >= 30 ) {
+        else if ( frameCnt >= fps ) {
 //            flashingSpace = spaceChar
-            ViewController.charConvTbl = Array( ViewController.charConvStrFlashOff )
+            ViewController.charConvTbl = ViewController.charConvTblFlashOff
             frameCnt = 0
         }
         
@@ -260,10 +271,18 @@ class ViewController: NSViewController {
 //        txtArr[ textLines * (textCols+1) + textCols ] = "\0"
         txt = String(txtArr)
 
-        
         DispatchQueue.main.async {
-            self.display.stringValue = txt;
-            self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+            self.display.stringValue = txt
+            if ( mhz < 10 ) {
+                self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+            }
+            else {
+                self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
+            }
+//            self.HiRes.setNeedsDisplay(self.HiRes.frame)
+//            self.HiRes.setNeedsDisplay(CGRect(x: 0, y: 191-50, width: 50, height: 50))
+            
+//            self.HiRes.needsDisplay = true
         }
     }
 
@@ -278,16 +297,21 @@ class ViewController: NSViewController {
 //    }
 
     
-    let upd = RepeatingTimer(timeInterval: 1/30)
+    let upd = RepeatingTimer(timeInterval: 1/Double(fps))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
-            self.flagsChanged(with: $0)
-            return $0
-        }
+        self.displayField.scaleUnitSquare(to: NSSize(width: 1, height: 1))
+        
+//        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
+//        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
+//            self.flagsChanged(with: $0)
+//            return $0
+//        }
+//        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+//            print("keyDown event")
             self.keyDown(with: $0)
             return $0
         }
@@ -295,7 +319,7 @@ class ViewController: NSViewController {
         displayField.maximumNumberOfLines = textLines
         displayField.preferredMaxLayoutWidth = displayField.frame.width
 
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1/30, execute: {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1/fps, execute: {
 //            self.update()
 //        })
 

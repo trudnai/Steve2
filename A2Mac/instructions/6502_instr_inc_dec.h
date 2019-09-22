@@ -25,6 +25,7 @@
 **/
 INLINE void INC( uint8_t * dst ) {
     dbgPrintf("INC %02X -> ", *dst);
+    disPrintf(disassembly.inst, "INC");
     set_flags_NZ( ++(*dst) );
     dbgPrintf("%02X ", *dst);
 }
@@ -41,6 +42,7 @@ INLINE void INC( uint8_t * dst ) {
 **/
 INLINE void INX() {
     dbgPrintf("INX %02X -> ", m6502.X);
+    disPrintf(disassembly.inst, "INX");
     set_flags_NZ( ++m6502.X );
     dbgPrintf("%02X ", m6502.X);
 }
@@ -57,6 +59,7 @@ INLINE void INX() {
 **/
 INLINE void INY() {
     dbgPrintf("INY %02X -> ", m6502.Y);
+    disPrintf(disassembly.inst, "INY");
     set_flags_NZ( ++m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
 }
@@ -76,6 +79,7 @@ INLINE void INY() {
 **/
 INLINE void DEC( uint8_t * dst ) {
     dbgPrintf("DEC %02X -> ", *dst);
+    disPrintf(disassembly.inst, "DEC");
     set_flags_NZ( --(*dst) );
     dbgPrintf("%02X ", *dst);
 }
@@ -92,6 +96,7 @@ INLINE void DEC( uint8_t * dst ) {
 **/
 INLINE void DEX() {
     dbgPrintf("DEX %02X -> ", m6502.X);
+    disPrintf(disassembly.inst, "DEX");
     set_flags_NZ( --m6502.X );
     dbgPrintf("%02X ", m6502.X);
 }
@@ -108,6 +113,7 @@ INLINE void DEX() {
  **/
 INLINE void DEY() {
     dbgPrintf("DEY %02X -> ", m6502.Y);
+    disPrintf(disassembly.inst, "DEY");
     set_flags_NZ( --m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
 }

@@ -32,12 +32,15 @@
 		32C453242331FED90000EBA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
 		32C453252331FED90000EBA1 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
 		32C453272331FED90000EBA1 /* 6502_functional_test.bin in Resources */ = {isa = PBXBuildFile; fileRef = 326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */; };
-		32C4532E233345430000EBA1 /* QuietView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* QuietView.swift */; };
-		32C4532F233345820000EBA1 /* QuietView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* QuietView.swift */; };
-		32C45330233345820000EBA1 /* QuietView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* QuietView.swift */; };
+		32C4532E233345430000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
+		32C4532F233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
+		32C45330233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C4533123335E560000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32C4533223335E570000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32C4533323335E570000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		32DBF7642334657900DD50E7 /* HiRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DBF7632334657900DD50E7 /* HiRes.swift */; };
+		32DBF7652334657900DD50E7 /* HiRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DBF7632334657900DD50E7 /* HiRes.swift */; };
+		32DBF7662334657900DD50E7 /* HiRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DBF7632334657900DD50E7 /* HiRes.swift */; };
 		32EDB7A223272CA80073AF2D /* fail1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32EDB7A123272CA80073AF2D /* fail1.txt */; };
 /* End PBXBuildFile section */
 
@@ -101,7 +104,9 @@
 		32C4531A2331F7220000EBA1 /* A2Mac copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "A2Mac copy-Info.plist"; path = "/Users/trudnai/Projects/A2Mac/A2Mac copy-Info.plist"; sourceTree = "<absolute>"; };
 		32C4532B2331FED90000EBA1 /* Functiontest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Functiontest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4532C2331FEDA0000EBA1 /* A2Mac copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "A2Mac copy2-Info.plist"; path = "/Users/trudnai/Projects/A2Mac/A2Mac copy2-Info.plist"; sourceTree = "<absolute>"; };
-		32C4532D233345420000EBA1 /* QuietView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietView.swift; sourceTree = "<group>"; };
+		32C4532D233345420000EBA1 /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
+		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
+		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32EDB7A123272CA80073AF2D /* fail1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = fail1.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -194,8 +199,9 @@
 			isa = PBXGroup;
 			children = (
 				32439F7522ECD8AD0077AAE0 /* instructions */,
-				32439F7422ECD8AD0077AAE0 /* 6502.c */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
+				32439F7422ECD8AD0077AAE0 /* 6502.c */,
+				32DBF76723373FB400DD50E7 /* disassembler.h */,
 				32439F8422ECD8AD0077AAE0 /* apple.rom */,
 				326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */,
 				32439F7322ECD8AD0077AAE0 /* Apple2_mmio.h */,
@@ -203,7 +209,8 @@
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
-				32C4532D233345420000EBA1 /* QuietView.swift */,
+				32C4532D233345420000EBA1 /* MonitorView.swift */,
+				32DBF7632334657900DD50E7 /* HiRes.swift */,
 				32C453072331C0910000EBA1 /* NSLayoutManager-Extension.swift */,
 				32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */,
 				32EDB7A123272CA80073AF2D /* fail1.txt */,
@@ -429,8 +436,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */,
+				32DBF7642334657900DD50E7 /* HiRes.swift in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
-				32C4532E233345430000EBA1 /* QuietView.swift in Sources */,
+				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
 			);
@@ -457,8 +465,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C4530B2331F7220000EBA1 /* 6502.c in Sources */,
+				32DBF7652334657900DD50E7 /* HiRes.swift in Sources */,
 				32C4530C2331F7220000EBA1 /* ViewController.swift in Sources */,
-				32C4532F233345820000EBA1 /* QuietView.swift in Sources */,
+				32C4532F233345820000EBA1 /* MonitorView.swift in Sources */,
 				32C4530D2331F7220000EBA1 /* AppDelegate.swift in Sources */,
 				32C4530E2331F7220000EBA1 /* RepeatingTimer.swift in Sources */,
 			);
@@ -469,8 +478,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C4531D2331FED90000EBA1 /* 6502.c in Sources */,
+				32DBF7662334657900DD50E7 /* HiRes.swift in Sources */,
 				32C4531E2331FED90000EBA1 /* ViewController.swift in Sources */,
-				32C45330233345820000EBA1 /* QuietView.swift in Sources */,
+				32C45330233345820000EBA1 /* MonitorView.swift in Sources */,
 				32C4531F2331FED90000EBA1 /* AppDelegate.swift in Sources */,
 				32C453202331FED90000EBA1 /* RepeatingTimer.swift in Sources */,
 			);

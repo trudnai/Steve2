@@ -20,7 +20,6 @@
 #endif
 
 #include "common.h"
-#include "Apple2_mmio.h"
 
 
 #define SOFTRESET_VECTOR    0x3F2
@@ -47,6 +46,13 @@ INLINE unsigned long long rdtsc(void)
 }
 
 
+m6502_t m6502 = { 0, 0, 0, 0, 0, 0, 0, NO_DEBUG, HLT };
+
+disassembly_t disassembly;
+
+#include "disassembler.h"
+#include "Apple2_mmio.h"
+
 
 /**
  Instruction Implementations
@@ -56,11 +62,8 @@ INLINE unsigned long long rdtsc(void)
 **/
 #include "6502_instructions.h"
 
-
 /////
 unsigned long long int clktime = 0;
-
-m6502_t m6502 = { 0, 0, 0, 0, 0, 0, 0, HLT };
 
 
 INLINE int m6502_Step() {
@@ -274,8 +277,11 @@ INLINE int m6502_Step() {
             break;
     }
 #endif
+    
+    disNewInstruction();
+    
     switch ( fetch() ) {
-        case 0x00: BRK(); return 2;                                    // BRK
+        case 0x00: BRK(); return 7;                                    // BRK
         case 0x01: ORA( src_X_ind() ); return 6;                       // ORA X,ind
 //        case 0x02: // t jams
 //        case 0x03: // SLO* (undocumented)
@@ -387,7 +393,7 @@ INLINE int m6502_Step() {
         case 0x6D: ADC( src_abs() ); return 4;                         // ADC abs
         case 0x6E: ROR( dest_abs() ); return 6;                        // ROR abs
 //        case 0x6F: RRA abs 6
-        case 0x70: BVS( rel_addr() ); break;                           // BVS rel
+        case 0x70: BVS( rel_addr() ); return 2;                        // BVS rel
         case 0x71: ADC( src_ind_Y() ); return 5;                       // ADC ind,Y
 //        case 0x72:
 //        case 0x73:
@@ -523,7 +529,7 @@ INLINE int m6502_Step() {
         case 0xF5: SBC( src_zp_X() ); return 4;                        // SBC zpg,X
         case 0xF6: INC( dest_zp_X() ); return 6;                       // INC zpg,X
 //        case 0xF7:
-        case 0xF8: SED(); break;                                       // SED
+        case 0xF8: SED(); return 2;                                    // SED
         case 0xF9: SBC( src_abs_Y() ); return 4;                       // SBC abs,Y
 //        case 0xFA:
 //        case 0xFB:
@@ -538,7 +544,7 @@ INLINE int m6502_Step() {
     }
 //    } // fetch16
     
-    return 4;
+    return 2;
 }
 
 unsigned long long ee = 0;
@@ -594,7 +600,8 @@ void m6502_Run() {
 
         dbgPrintf("%llu %04X: ", clktime, m6502.PC);
         clktime += clk = m6502_Step();
-
+        printDisassembly();
+        
         dbgPrintf("\nA:%02X X:%02X Y:%02X SP:%02X %c%c%c%c%c%c%c%c\n",
                   m6502.A,
                   m6502.X,
@@ -796,8 +803,7 @@ void m6502_Reset() {
 
     
 //    memcpy( RAM + 0x1000, counter_fast, sizeof(counter));
-    
-//    m6502.pc = 0x1000;
+//    m6502.PC = 0x1000;
 
 }
 

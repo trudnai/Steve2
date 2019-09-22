@@ -31,6 +31,7 @@
 **/
 INLINE void ADC( uint8_t src ) {
     dbgPrintf("ADC(%02X) ", src);
+    disPrintf(disassembly.inst, "ADC");
 
     uint16_t tmp;
 
@@ -95,6 +96,7 @@ INLINE void ADC( uint8_t src ) {
 **/
 INLINE void SBC( uint8_t src ) {
     dbgPrintf("SBC(%02X) ", src);
+    disPrintf(disassembly.inst, "SBC");
 //    ADC( ~src );
     
     uint16_t tmp;

@@ -42,6 +42,7 @@ INLINE uint16_t POP_addr() {
  **/
 INLINE void PHA() {
     dbgPrintf("PHA %02X ", m6502.A);
+    disPrintf(disassembly.inst, "PHA");
     PUSH( m6502.A );
 }
 
@@ -58,6 +59,7 @@ INLINE void PHA() {
 INLINE void PLA() {
     m6502.A = POP();
     dbgPrintf("PLA %02X ", m6502.A);
+    disPrintf(disassembly.inst, "PLA");
     set_flags_NZ( m6502.A );
 }
 
@@ -73,6 +75,7 @@ INLINE void PLA() {
  **/
 INLINE void PHP() {
     dbgPrintf("PHP %02X ", m6502.SR);
+    disPrintf(disassembly.inst, "PHP");
     PUSH( m6502.SR ); // res and B flag should be set
 }
 
@@ -89,6 +92,7 @@ INLINE void PHP() {
 INLINE void PLP() {
     m6502.SR = POP() | 0x30; // res and B flag should be set
     dbgPrintf("PLP %02X ", m6502.SR);
+    disPrintf(disassembly.inst, "PLP");
 }
 
 #endif // __6502_INSTR_STACK_H__

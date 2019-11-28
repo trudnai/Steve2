@@ -8,12 +8,17 @@
 
 import Cocoa
 
+#if METAL_YES
+import Metal
+#endif
+
 class ViewController: NSViewController {
 
     @IBOutlet weak var displayField: NSTextField!
     @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
-    @IBOutlet weak var HiRes: HiRes!
+    @IBOutlet weak var hires: HiRes!
+    
     
 //    static let charConvStr : String =
 //        "@🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
@@ -73,7 +78,7 @@ class ViewController: NSViewController {
             DispatchQueue.global().async(execute: workItem!);
         }
         #else
-        m6502_Reset()
+        m6502_ColdReset()
         #endif
     }
     
@@ -171,7 +176,6 @@ class ViewController: NSViewController {
 //        }
 //    }
 
-    
     static let textBaseAddr = 0x400
     static let textBufferSize = 0x400
     let textLines = 24
@@ -185,8 +189,8 @@ class ViewController: NSViewController {
     let blockChar : Character = "░"
     var flashingSpace : Character = " "
     
-    let ramBufferPointer = UnsafeRawBufferPointer(start: &RAM, count: 64 * 1024)
-    let textBufferPointer = UnsafeRawBufferPointer(start: &RAM + textBaseAddr, count: textBufferSize)
+    let ramBufferPointer = UnsafeRawBufferPointer(start: RAM, count: 64 * 1024)
+    let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize)
     var txtArr = [Character](repeating: " ", count: textBufferSize)
     
     var s = String()
@@ -210,12 +214,18 @@ class ViewController: NSViewController {
         }
     }
     
+    
+    var was = 0;
+    
     func Update() {
 
         #if SPEEDTEST
         #else
         m6502_Run()
         #endif
+        
+//        render()
+//        hires.compute()
         
 //        HexDump()
 //        return
@@ -273,16 +283,31 @@ class ViewController: NSViewController {
 
         DispatchQueue.main.async {
             self.display.stringValue = txt
+//            self.display.stringValue = "testing\nit\nout"
+
             if ( mhz < 10 ) {
                 self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
             }
             else {
                 self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
             }
-//            self.HiRes.setNeedsDisplay(self.HiRes.frame)
-//            self.HiRes.setNeedsDisplay(CGRect(x: 0, y: 191-50, width: 50, height: 50))
             
-//            self.HiRes.needsDisplay = true
+            #if HIRES
+//            if ( self.was < 300 ) {
+//                self.was += 1
+//
+//                for x in stride(from: 0, to: 280, by: 7) {
+//                    for y in stride(from: 0, to: 192, by: 8) {
+//                        self.hires.setNeedsDisplay( CGRect(x: x, y: y, width: 7, height: 8) )
+//                    }
+//                }
+//            }
+            
+//                self.HiRes.setNeedsDisplay(self.HiRes.frame)
+//            self.hires.setNeedsDisplay( CGRect(x: 0, y: 191-50, width: 50, height: 50) )
+            self.hires.needsDisplay = true
+//            }
+            #endif
         }
     }
 
@@ -295,12 +320,16 @@ class ViewController: NSViewController {
 //            return nil // the bytes aren't valid UTF8
 //        }
 //    }
-
+    
     
     let upd = RepeatingTimer(timeInterval: 1/Double(fps))
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //view.frame = CGRect(origin: CGPoint(), size: NSScreen.main!.visibleFrame.size)
+                
+//        createHiRes()
         
         self.displayField.scaleUnitSquare(to: NSSize(width: 1, height: 1))
         
@@ -309,12 +338,13 @@ class ViewController: NSViewController {
 //            self.flagsChanged(with: $0)
 //            return $0
 //        }
-//        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
-//            print("keyDown event")
-            self.keyDown(with: $0)
-            return $0
-        }
+
+//        //        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
+//        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+////            print("keyDown event")
+//            self.keyDown(with: $0)
+//            return $0
+//        }
         
         displayField.maximumNumberOfLines = textLines
         displayField.preferredMaxLayoutWidth = displayField.frame.width

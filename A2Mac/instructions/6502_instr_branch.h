@@ -52,7 +52,7 @@ INLINE void BCC( int8_t reladdr ) {
  **/
 INLINE void BCS( int8_t reladdr ) {
     dbgPrintf("BCS ");
-    disPrintf(disassembly.inst, "RCS");
+    disPrintf(disassembly.inst, "BCS");
     if ( m6502.C == 1 ) {
         BRA( reladdr );
     }

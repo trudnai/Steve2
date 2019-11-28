@@ -12,6 +12,21 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
+#include "woz.h"
+
+#define WOZ1_MAGIC  0x315A4F57
+#define WOZ2_MAGIC  0x325A4F57
+#define WOZ_INFO_CHUNK_ID  0x4F464E49
+#define WOZ_TMAP_CHUNK_ID  0x50414D54
+#define WOZ_TRKS_CHUNK_ID  0x534B5254
+#define WOZ_META_CHUNK_ID  0x4154454D
+
+woz_header_t woz_header;
+woz_chunk_header_t woz_chunk_header;
+woz_tmap_t woz_tmap;
+woz_trks_t woz_trks;
+
+uint16_t trackOffset = 0;
 
 #ifdef DEBUG
 #define INLINE
@@ -28,7 +43,7 @@
 #define RESET_VECTOR        0xFFFC
 #define IRQ_VECTOR          0xFFFE
 
-const unsigned long long int iterations = 100*G;
+const unsigned long long int iterations = G;
 unsigned long long int inst_cnt = 0;
 
 const unsigned int fps = 30;
@@ -46,13 +61,86 @@ INLINE unsigned long long rdtsc(void)
 }
 
 
-m6502_t m6502 = { 0, 0, 0, 0, 0, 0, 0, NO_DEBUG, HLT };
+m6502_t m6502 = {
+    0,      // A
+    0,      // X
+    0,      // Y
+    0,      // SR
+    0,      // PC
+    0,      // SP
+    0,      // clk
+    0,      // trace
+    0,      // step
+    0,      // brk
+    0,      // rts
+    0,      // bra
+    0,      // bra_true
+    0,      // bra_false
+    0,      // compile
+    HLT     // IF
+};
 
 disassembly_t disassembly;
 
 #include "disassembler.h"
 #include "Apple2_mmio.h"
 
+
+uint16_t videoShadow [0x1000];
+uint32_t videoMem [0x2000];
+uint32_t * videoMemPtr = videoMem;
+
+uint16_t HiResLineAddrTbl [0x2000];
+
+void initHiResLineAddresses() {
+    uint16_t i = 0;
+    for ( uint16_t x = 0; x <= 0x50; x+= 0x28 ) {
+        for ( uint16_t y = 0; y <= 0x380; y += 0x80 ) {
+            for ( uint16_t z = 0; z <= 0x1C00; z += 0x400) {
+                HiResLineAddrTbl[i++] = x + y + z;
+            }
+        }
+    }
+}
+
+
+typedef struct {
+    uint8_t L;
+    uint8_t H;
+} bytes_t;
+
+void hires_Update () {
+    // lines
+    int videoMemIndex = 0;
+    for( int y = 0; y < 192; y++ ) {
+        // 16 bit blocks of columns
+        for ( int x = 0; x < 20; x++ ) {
+            // odd
+            bytes_t block = * (bytes_t*)(& RAM[ HiResLineAddrTbl[y * 20] + x * 2 ]);
+            for ( uint8_t bit = 0; bit < 7; bit++ ) {
+                uint8_t bitMask = 1 << bit;
+                
+                if (block.L & bitMask) {
+                    videoMem[videoMemIndex++] = 0x7F12A208;
+                }
+                else { // 28CD41
+                    videoMem[videoMemIndex++] = 0x00000000;
+                }
+            }
+            // even
+            for ( uint8_t bit = 0; bit < 7; bit++ ) {
+                uint8_t bitMask = 1 << bit;
+                
+                if (block.H & bitMask) {
+                    videoMem[videoMemIndex++] = 0x7F12A208;
+                }
+                else { // 28CD41
+                    videoMem[videoMemIndex++] = 0x00000000;
+                }
+            }
+        }
+    }
+}
 
 /**
  Instruction Implementations
@@ -63,12 +151,28 @@ disassembly_t disassembly;
 #include "6502_instructions.h"
 
 /////
+#ifdef SPEEDTEST
 unsigned long long int clktime = 0;
-
+#endif
 
 INLINE int m6502_Step() {
 
-#ifdef DEBUG
+    
+#ifdef DEBUG___
+    switch ( m6502.PC ) {
+        case 0xC600:
+            printf("DISK...\n");
+            break;
+            
+        case 0xC62F:
+            printf("DISK IO...\n");
+            break;
+            
+        default:
+            break;
+    }
+
+    
     switch ( m6502.PC ) {
         case 0xE000:
             dbgPrintf("START...\n");
@@ -539,7 +643,7 @@ INLINE int m6502_Step() {
 //            case 0xFF:
 
         default:
-            printf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
+            dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
             return 2;
     }
 //    } // fetch16
@@ -558,8 +662,8 @@ double mhz = 0;
 unsigned long long epoch = 0;
 
 void m6502_Run() {
-    unsigned int clk = 0;
-    unsigned int clkfrm = 0;
+    static unsigned int clk = 0;
+    static unsigned int clkfrm = 0;
     
     // init time
 //#ifdef CLK_WAIT
@@ -567,28 +671,52 @@ void m6502_Run() {
 //#endif
 
 #ifdef SPEEDTEST
-    for ( unsigned long long int i = 0; i < iterations ; i++ )
+    for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
 #elif defined( CLK_WAIT )
-    for ( clkfrm = 0; clkfrm < clk_6502_per_frm ; clkfrm += clk )
+        for ( clkfrm = 0; clkfrm < clk_6502_per_frm ; clkfrm += clk )
 #else
 //    for ( ; m6502.pc ; )
     for ( ; ; )
 #endif
     {
+        
+#ifdef INTERRUPR_CHECK_PER_STEP
         if ( m6502.IF ) {
             switch (m6502.interrupt) {
                 case HLT:
                     // CPU is haletd, nothing to do here...
                     return;
                     
+                case IRQ:
+                    m6502.PC = memread16(IRQ_VECTOR);
+                    // TODO: PUSH things onto stack?
+                    break;
+                    
                 case NMI:
+                    m6502.PC = memread16(NMI_VECTOR);
+                    // TODO: PUSH things onto stack?
                     break;
                     
                 case HARDRESET:
+                    m6502.PC = memread16(RESET_VECTOR);
+                    // make sure it will be a cold reset...
+                    memwrite(0x3F4, 0);
+                    m6502.SP = 0xFF;
+                    // N V - B D I Z C
+                    // 0 0 1 0 0 1 0 1
+                    m6502.SR = 0x25;
+                    
                     break;
                     
                 case SOFTRESET:
-                    m6502.PC = memread16(SOFTRESET_VECTOR);
+//                    m6502.PC = memread16(SOFTRESET_VECTOR);
+                    m6502.PC = memread16( RESET_VECTOR );
+
+                    m6502.SP = 0xFF;
+                    // N V - B D I Z C
+                    // 0 0 1 0 0 1 0 1
+                    m6502.SR = 0x25;
+
                     break;
                     
                 default:
@@ -597,12 +725,16 @@ void m6502_Run() {
             
             m6502.IF = 0;
         }
-
-        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
-        clktime += clk = m6502_Step();
+#endif // INTERRUPR_CHECK_PER_STEP
+        
+//        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
+#ifdef SPEEDTEST
+        clktime +=
+#endif
+        clk = m6502_Step();
         printDisassembly();
         
-        dbgPrintf("\nA:%02X X:%02X Y:%02X SP:%02X %c%c%c%c%c%c%c%c\n",
+        dbgPrintf2("A:%02X X:%02X Y:%02X SP:%02X %c%c%c%c%c%c%c%c\n\n",
                   m6502.A,
                   m6502.X,
                   m6502.Y,
@@ -651,7 +783,82 @@ void m6502_Run() {
 //    mhz = clktime / (execution_time * M);
 }
 
-void m6502_Reset() {
+void read_rom( const char * filename, const uint16_t addr ) {
+    FILE * f = fopen(filename, "rb");
+    if (f == NULL) {
+        perror("Failed: ");
+        return;
+    }
+    
+    fseek(f, 0L, SEEK_END);
+    uint16_t flen = ftell(f);
+    fseek(f, 0L, SEEK_SET);
+
+    fread( RAM + addr, 1, flen, f);
+    fclose(f);
+
+}
+
+
+void read_woz( const char * filename ) {
+    FILE * f = fopen(filename, "rb");
+    if (f == NULL) {
+        perror("Failed: ");
+        return;
+    }
+    
+    fread( &woz_header, 1, sizeof(woz_header_t), f);
+    if ( woz_header.magic != WOZ1_MAGIC ) {
+        return;
+    }
+    
+    while ( ! feof(f) ) {
+        // beginning of the chunk, so we can skip it later
+        
+        long r = fread( &woz_chunk_header, 1, sizeof(woz_chunk_header_t), f);
+        if ( r != sizeof(woz_chunk_header_t) ) {
+            break;
+        }
+        long foffs = ftell(f);
+        
+        void * buf = NULL;
+
+        switch ( woz_chunk_header.magic ) {
+            case WOZ_INFO_CHUNK_ID:
+                break;
+
+            case WOZ_TMAP_CHUNK_ID:
+                buf = &woz_tmap;
+                break;
+
+            case WOZ_TRKS_CHUNK_ID:
+                buf = woz_trks;
+                break;
+
+            case WOZ_META_CHUNK_ID:
+                break;
+
+            default:
+                break;
+        }
+        
+        if (buf) {
+            r = fread( buf, 1, woz_chunk_header.size, f);
+            if ( r != woz_chunk_header.size ) {
+                break;
+            }
+        }
+
+        // make sure we are skipping unhandled chunks correctly
+        fseek(f, foffs + woz_chunk_header.size, SEEK_SET);
+    }
+    
+    fclose(f);
+
+
+}
+
+void m6502_ColdReset() {
     inst_cnt = 0;
     mhz = (double)MHz_6502 / M;
 
@@ -661,12 +868,12 @@ void m6502_Reset() {
     tick_per_sec = e - epoch;
     tick_6502_per_sec = tick_per_sec / MHz_6502;
     
-    memset( RAM, 0xFF, sizeof(RAM) );
+    memset( RAM, 0xFF, sizeof(Apple2_64K_RAM) );
     memset( RAM + 0xC000, 0, 0x1000 ); // I/O area should be 0
 
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
-    m6502.SP = 0xFF -3;
+    m6502.SP = 0xFF; //-3;
     
     // N V - B D I Z C
     // 0 0 1 1 0 1 0 0
@@ -690,15 +897,16 @@ void m6502_Reset() {
     m6502.PC = 0x400;
 
 #else
-    FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", "rb");
-    if (f == NULL) {
-        perror("Failed: ");
-        return;
-    }
+    // Apple ][e ROM
+    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", 0xD000);
+    // Disk ][ ROM in Slot 6
+//    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DISK_II_C600.ROM", 0xC600);
     
-    fread( RAM + 0xD000, 1, 0x3000, f);
-    fclose(f);
+    // WOZ DISK
+//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS 3.3 System Master.woz");
+//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Hard Hat Mack - Disk 1, Side A.woz");
 
+    
     m6502.PC = memread16( RESET_VECTOR );
 #endif
     
@@ -812,22 +1020,24 @@ void tst6502() {
     // insert code here...
     printf("6502\n");
     
-    m6502_Reset();
+    m6502_ColdReset();
     
     //    clock_t start = clock();
     epoch = rdtsc();
     m6502_Run();
     //    clock_t end = clock();
     //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
+    
+#ifdef SPEEDTEST
     unsigned long long end = rdtsc();
     unsigned long long elapsed = end - epoch;
     double execution_time = (double)elapsed / tick_per_sec;
     
     double mips = inst_cnt / (execution_time * M);
     double mhz = clktime / (execution_time * M);
-    printf("clk:%llu Elpased time: (%llu / %u / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", clktime, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
+    printf("clk:%llu Elpased time: (%llu / %u / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", iterations *3, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
 //    printf("  dd:%llu  ee:%llu  nn:%llu\n", dd, ee, ee - dd);
-
+#endif
 }
 
 int ___main(int argc, const char * argv[]) {

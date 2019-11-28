@@ -9,7 +9,7 @@
 #ifndef __6502_H__
 #define __6502_H__
 
-#import "stdint.h"
+#import <stdint.h>
 
 #ifdef DEBUG
 //#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
@@ -23,16 +23,21 @@
 typedef enum {
     NO_INT,
     HLT,
+    IRQ,
     NMI,
     HARDRESET,
     SOFTRESET,
 } interrupt_t;
 
-typedef enum {
-    NO_DEBUG,
-    DISASSEMBLY,
-    DEBUGBRK,
-    STEPBYSTEP,
+typedef struct debugLevel_s {
+    uint8_t trace       : 1;
+    uint8_t step        : 1;
+    uint8_t brk         : 1;
+    uint8_t rts         : 1;
+    uint8_t bra         : 1;
+    uint8_t bra_true    : 1;
+    uint8_t bra_false   : 1;
+    uint8_t compile     : 1;
 } debugLevel_t;
 
 typedef struct m6502_s {
@@ -73,25 +78,28 @@ typedef struct m6502_s {
 
 
 typedef struct disassembly_s {
-    char codeAddr[5];                // 4 digits + \0
-    char hex[4 * 3 + 1];             // max 4 bytes * (2 digits + 1 space) + \0
-    char * pHex;
-    char inst[6 + 1];                // 3 char (unknown instr? -- give it 6 chars) + \0
-    char addr[4 + 2 + 1 + 1 + 1];    // 4 digits + 2 brackets + 1 comma + 1 index + \0
-    char comment[256];               // to be able to add some comments
+    char addr[5];                   // 4 digits + \0
+    char opcode[4 * 3 + 1];         // max 4 bytes * (2 digits + 1 space) + \0
+    char * pOpcode;                 // pointer for opcode string builder
+    char inst[6 + 1];               // 3 char (unknown instr? -- give it 6 chars) + \0
+    char oper[14 + 2 + 1 + 1 + 1];   // 4 digits + 2 brackets + 1 comma + 1 index + \0
+    char comment[256];              // to be able to add some comments
 } disassembly_t;
 
 
 extern m6502_t m6502;
-extern uint8_t RAM[ 64 * 1024 ];
+extern uint8_t * RAM;
+extern uint32_t * videoMemPtr;
+
+extern void hires_Update(void);
 
 extern double mips;
 extern double mhz;
 extern const unsigned int fps;
 
-extern void tst6502();
-extern void m6502_Reset();
-extern void m6502_Run();
+extern void tst6502(void);
+extern void m6502_ColdReset(void);
+extern void m6502_Run(void);
 extern void kbdInput ( uint8_t code );
 
 #endif /* __6502_H__ */

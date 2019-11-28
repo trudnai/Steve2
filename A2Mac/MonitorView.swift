@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class QuietView: NSView {
+class MonitorView: NSView {
     override func performKeyEquivalent(with event: NSEvent) -> Bool {
         return true
     }

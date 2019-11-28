@@ -13,13 +13,44 @@
 #include "6502.h"
 
 
-enum mmio {
-    io_KBD = 0xC000,
-    io_KBDSTRB = 0xC010,
+uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};
+uint8_t * RAM = Apple2_64K_RAM;
+
+enum slot {
+    SLOT0   = 0x00,
+    SLOT1   = 0x10,
+    SLOT2   = 0x20,
+    SLOT3   = 0x30,
+    SLOT4   = 0x40,
+    SLOT5   = 0x50,
+    SLOT6   = 0x60,
+    SLOT7   = 0x70,
 };
 
 
-uint8_t RAM[ 64 * KB ] = {0};
+enum mmio {
+    io_KBD              = 0xC000,
+    io_KBDSTRB          = 0xC010,
+    
+    io_DISK_PHASE0_OFF  = 0xC080,
+    io_DISK_PHASE0_ON   = 0xC081,
+    io_DISK_PHASE1_OFF  = 0xC082,
+    io_DISK_PHASE1_ON   = 0xC083,
+    io_DISK_PHASE2_OFF  = 0xC084,
+    io_DISK_PHASE2_ON   = 0xC085,
+    io_DISK_PHASE3_OFF  = 0xC086,
+    io_DISK_PHASE3_ON   = 0xC087,
+    io_DISK_POWER_OFF   = 0xC088,
+    io_DISK_POWER_ON    = 0xC089,
+    io_DISK_SELECT_1    = 0xC08A,
+    io_DISK_SELECT_2    = 0xC08B,
+    io_DISK_READ        = 0xC08C,
+    io_DISK_WRITE       = 0xC08D,
+    io_DISK_CLEAR       = 0xC08E,
+    io_DISK_SHIFT       = 0xC08F,
+    
+};
+
 
 #define PAGESIZE 256
 #define PAGES 16
@@ -71,8 +102,79 @@ typedef union address16_u {
 } address16_t;
 
 
+#define CASE_DISKII(x) \
+    case io_DISK_PHASE0_OFF + SLOT##x: \
+        printf("io_DISK_PHASE0_OFF (S%u)\n", x); \
+        return 0; \
+    case io_DISK_PHASE0_ON + SLOT##x: \
+        printf("io_DISK_PHASE0_ON (S%u)\n", x); \
+        return 0; \
+    case io_DISK_PHASE1_OFF + SLOT##x: \
+        printf("io_DISK_PHASE1_OFF (S%u)\n", x); \
+        return 0; \
+    case io_DISK_PHASE1_ON + SLOT##x: \
+        printf("io_DISK_PHASE1_ON (S%u)\n", x); \
+        return 0; \
+    case io_DISK_PHASE2_OFF + SLOT##x: \
+        printf("io_DISK_PHASE2_OFF (S%u)\n", x); \
+        return 0; \
+    case io_DISK_PHASE2_ON + SLOT##x: \
+        printf("io_DISK_PHASE2_ON (S%u)\n", x); \
+        return 0; \
+    case io_DISK_PHASE3_OFF + SLOT##x: \
+        printf("io_DISK_PHASE3_OFF (S%u)\n", x); \
+        return 0; \
+    case io_DISK_PHASE3_ON + SLOT##x: \
+        printf("io_DISK_PHASE3_ON (S%u)\n", x); \
+        return 0; \
+    case io_DISK_POWER_OFF + SLOT##x: \
+        printf("io_DISK_POWER_OFF (S%u)\n", x); \
+        return 0; \
+    case io_DISK_POWER_ON + SLOT##x: \
+        printf("io_DISK_POWER_ON (S%u)\n", x); \
+        return 0; \
+    case io_DISK_SELECT_1 + SLOT##x: \
+        printf("io_DISK_SELECT_1 (S%u)\n", x); \
+        return 0; \
+    case io_DISK_SELECT_2 + SLOT##x: \
+        printf("io_DISK_SELECT_2 (S%u)\n", x); \
+        return 0; \
+    case io_DISK_READ + SLOT##x: \
+        printf("io_DISK_READ (S%u)\n", x); \
+        return 0; \
+    case io_DISK_WRITE + SLOT##x: \
+        printf("io_DISK_WRITE (S%u)\n", x); \
+        return 0; \
+    case io_DISK_CLEAR + SLOT##x: \
+        printf("io_DISK_CLEAR (S%u)\n", x); \
+        return 0; \
+    case io_DISK_SHIFT + SLOT##x: \
+        printf("io_DISK_SHIFT (S%u)\n", x); \
+        return 0;
+
+
+static const minDiskPhaseNum = 0;
+static const maxDiskPhaseNum = 80;
+static int trackPhase = maxDiskPhaseNum;
+
+struct phase_t {
+    uint8_t current : 2;
+    uint8_t last    : 2;
+} phase = {0};
+
+static const int8_t phaseTransition[4][4] = {
+    {  0, -1,  0, +1 },
+    { +1,  0, -1,  0 },
+    {  0, +1,  0, -1 },
+    { -1,  0, +1,  0 },
+};
+
+
+
+
 INLINE uint8_t ioRead( uint16_t addr ) {
-//    printf("mmio read:%04X\n", addr);
+    dbgPrintf("mmio read:%04X\n", addr);
+    
     switch (addr) {
         case io_KBD:
 //            if ( RAM[io_KBD] > 0x7F ) printf("io_KBD:%04X\n", addr);
@@ -83,10 +185,68 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //            printf("io_KBDSTRB\n");
             return RAM[io_KBD] &= 0x7F;
 
+//        CASE_DISKII(6)
+
+        // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
+        case io_DISK_PHASE0_OFF + SLOT6:
+        case io_DISK_PHASE1_OFF + SLOT6:
+        case io_DISK_PHASE2_OFF + SLOT6:
+        case io_DISK_PHASE3_OFF + SLOT6:
+            dbgPrintf2("io_DISK_PHASE%u_OFF (S%u)\n", phase.current, 6);
+            phase.last = phase.current;
+            return 0;
+            
+        case io_DISK_PHASE0_ON + SLOT6:
+        case io_DISK_PHASE1_ON + SLOT6:
+        case io_DISK_PHASE2_ON + SLOT6:
+        case io_DISK_PHASE3_ON + SLOT6: {
+            phase.current = (addr - io_DISK_PHASE0_ON - SLOT6) / 2;
+            trackPhase += phaseTransition[phase.current][phase.last];
+            if ( trackPhase < minDiskPhaseNum ) {
+                trackPhase = minDiskPhaseNum;
+            }
+            if ( trackPhase > maxDiskPhaseNum ) {
+                trackPhase = maxDiskPhaseNum;
+            }
+            dbgPrintf2("io_DISK_PHASE%u_ON (S%u, trk:%u)\n", phase.current, 6, trackPhase);
+            return 0;
+        }
+        case io_DISK_POWER_OFF + SLOT6:
+            dbgPrintf2("io_DISK_POWER_OFF (S%u)\n", 6);
+            return 0;
+        case io_DISK_POWER_ON + SLOT6:
+            dbgPrintf2("io_DISK_POWER_ON (S%u)\n", 6);
+            return 0;
+        case io_DISK_SELECT_1 + SLOT6:
+            dbgPrintf2("io_DISK_SELECT_1 (S%u)\n", 6);
+            return 0;
+        case io_DISK_SELECT_2 + SLOT6:
+            dbgPrintf2("io_DISK_SELECT_2 (S%u)\n", 6);
+            return 0;
+        case io_DISK_READ + SLOT6:
+            dbgPrintf("io_DISK_READ (S%u)\n", 6);
+            int track = woz_tmap.phase[trackPhase];
+            if (trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
+                trackOffset = 0;
+            }
+            printf("offs:%u\n", trackOffset);
+            return woz_trks[track].data[trackOffset++];
+        case io_DISK_WRITE + SLOT6:
+            dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
+            return 0;
+        case io_DISK_CLEAR + SLOT6:
+            dbgPrintf2("io_DISK_CLEAR (S%u)\n", 6);
+            return 0;
+        case io_DISK_SHIFT + SLOT6:
+            dbgPrintf2("io_DISK_SHIFT (S%u)\n", 6);
+            return 0;
+
+            
+            
         default:
-            break;
+            return RAM[addr];
     }
-    return 0;
+    
 }
 
 
@@ -135,6 +295,24 @@ INLINE uint8_t memread_zp( uint8_t addr ) {
     return RAM[ addr ];
 }
 
+/**
+ Naive implementation of RAM read from address
+ **/
+INLINE uint8_t memread8( uint16_t addr ) {
+//    if ( addr == 0xD2AD ) {
+//        dbgPrintf("OUT OF MEMORY!\n");
+//    }
+    
+
+    return RAM[ addr ];
+}
+/**
+ Naive implementation of RAM read from address
+ **/
+INLINE uint16_t memread16( uint16_t addr ) {
+    return * (uint16_t*) (& RAM[ addr ]);
+}
+
 INLINE uint8_t memread( uint16_t addr ) {
 //    switch ( ((address16_t)addr).page ) {
 //        case 0xC0:
@@ -159,29 +337,11 @@ INLINE uint8_t memread( uint16_t addr ) {
 //            break;
 //    }
 
-    if ( (addr >= 0xC000) && (addr < 0xD000) ) {
+    if ( (addr >= 0xC000) && (addr < 0xC0FF) ) {
         return ioRead(addr);
     }
     
-    return RAM[ addr ];
-}
-
-/**
- Naive implementation of RAM read from address
- **/
-INLINE uint8_t memread8( uint16_t addr ) {
-//    if ( addr == 0xD2AD ) {
-//        dbgPrintf("OUT OF MEMORY!\n");
-//    }
-    
-
-    return RAM[ addr ];
-}
-/**
- Naive implementation of RAM read from address
- **/
-INLINE uint16_t memread16( uint16_t addr ) {
-    return * (uint16_t*) (& RAM[ addr ]);
+    return memread8(addr);
 }
 
 /**
@@ -222,7 +382,7 @@ static  void memwrite( uint16_t addr, uint8_t byte ) {
  increase pc by one
  **/
 INLINE uint8_t fetch() {
-    disHexB( disassembly.pHex, RAM[m6502.PC] );
+    disHexB( disassembly.pOpcode, RAM[m6502.PC] );
     return memread( m6502.PC++ );
 }
 
@@ -233,7 +393,7 @@ INLINE uint8_t fetch() {
 INLINE uint16_t fetch16() {
     uint16_t word = memread16( m6502.PC );
     m6502.PC += 2;
-    disHexW( disassembly.pHex, word );
+    disHexW( disassembly.pOpcode, word );
     return word;
 }
 
@@ -243,7 +403,7 @@ INLINE uint16_t fetch16() {
  **/
 INLINE uint16_t addr_abs() {
     dbgPrintf("abs:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.addr, "$%04X", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC))
     return fetch16();
 }
 INLINE uint8_t src_abs() {
@@ -255,15 +415,15 @@ INLINE uint8_t * dest_abs() {
 
 
 INLINE int8_t rel_addr() {
-    disPrintf(disassembly.addr, "$%04X", m6502.PC + 1 + (int)memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X", m6502.PC + 1 + (int8_t)memread8(m6502.PC))
     return fetch();
 }
 INLINE uint16_t abs_addr() {
-    disPrintf(disassembly.addr, "$%04X", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC))
     return fetch16();
 }
 INLINE uint16_t ind_addr() {
-    disPrintf(disassembly.addr, "($%04X)", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "($%04X)", memread16(m6502.PC))
     return memread16( fetch16() );
 }
 
@@ -273,11 +433,11 @@ INLINE uint16_t ind_addr() {
  **/
 INLINE uint16_t addr_abs_X() {
     dbgPrintf("abs,X:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
-    disPrintf(disassembly.addr, "$%04X,X", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X,X", memread16(m6502.PC))
     return fetch16() + m6502.X;
 }
 INLINE uint8_t src_abs_X() {
-    return memread8( addr_abs_X() );
+    return memread( addr_abs_X() );
 }
 INLINE uint8_t * dest_abs_X() {
     return & RAM[ addr_abs_X() ];
@@ -290,18 +450,18 @@ INLINE uint8_t * dest_abs_X() {
  **/
 INLINE uint16_t addr_abs_Y() {
     dbgPrintf("abs,Y:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]) + m6502.Y, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.Y]);
-    disPrintf(disassembly.addr, "$%04X,Y", memread16(m6502.PC))
-    return abs_addr() + m6502.Y;
+    disPrintf(disassembly.oper, "$%04X,Y", memread16(m6502.PC))
+    return fetch16() + m6502.Y;
 }
 INLINE uint8_t src_abs_Y() {
-    return memread8(addr_abs_Y());
+    return memread(addr_abs_Y());
 }
 INLINE uint8_t * dest_abs_Y() {
     return & RAM[ addr_abs_Y() ];
 }
 
 INLINE uint16_t imm() {
-    disPrintf(disassembly.addr, "#$%02X", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "#$%02X", memread8(m6502.PC))
     return fetch();
 }
 
@@ -312,7 +472,7 @@ INLINE uint16_t imm() {
  **/
 INLINE uint8_t addr_zp() {
     dbgPrintf("zp:%02X(%02X) ", RAM[m6502.PC], RAM[ RAM[m6502.PC]] );
-    disPrintf(disassembly.addr, "$%02X", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%02X", memread8(m6502.PC))
     return fetch();
 }
 INLINE uint8_t src_zp() {
@@ -327,7 +487,7 @@ INLINE uint8_t * dest_zp() {
  **/
 INLINE uint16_t addr_zp_ind( uint8_t addr ) {
     dbgPrintf("zpi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.addr, "($%02X)", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "($%02X) {$%04X}", memread8(m6502.PC), memread16( memread8(m6502.PC) ) )
     return memread16(addr);
 }
 
@@ -338,11 +498,11 @@ INLINE uint16_t addr_zp_ind( uint8_t addr ) {
  **/
 INLINE uint16_t addr_X_ind() {
     dbgPrintf("zpXi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
-    disPrintf(disassembly.addr, "($%02X,X)", memread8(m6502.PC))
-    return addr_zp_ind( fetch() + m6502.X );
+    disPrintf(disassembly.oper, "($%02X,X) {$%04X}", memread8(m6502.PC), memread16( memread8(m6502.PC) + m6502.X) )
+    return memread16( fetch() + m6502.X );
 }
 INLINE uint8_t src_X_ind() {
-    return memread8( addr_X_ind() );
+    return memread( addr_X_ind() );
 }
 INLINE uint8_t * dest_X_ind() {
     return & RAM[ addr_X_ind() ];
@@ -356,17 +516,17 @@ INLINE uint8_t * dest_X_ind() {
 INLINE uint16_t addr_ind_Y() {
     //    uint8_t a = fetch();
     //    dbgPrintf("addr_ind_Y: %04X + %02X = %04X ", addr_zpg_ind( a ), m6502.Y, addr_zpg_ind( a ) + m6502.Y);
-    disPrintf(disassembly.addr, "($%02X),Y", memread8(m6502.PC))
-    return addr_zp_ind( fetch() ) + m6502.Y;
+    disPrintf(disassembly.oper, "($%02X),Y {$%04X}", memread8(m6502.PC), memread16( memread8(m6502.PC) ) + m6502.Y)
+    return memread16( fetch() ) + m6502.Y;
 }
 INLINE uint8_t src_ind_Y() {
-    return memread8( addr_ind_Y() );
+    return memread( addr_ind_Y() );
 }
 INLINE uint8_t * dest_ind_Y() {
     uint16_t addr = addr_ind_Y();
-    if ( (addr >= 0xC000) && (addr <= 0xC0FF) ) {
-        addr = 0xC111;
-    }
+//    if ( (addr >= 0xC000) && (addr <= 0xC0FF) ) {
+//        addr = 0xC111;
+//    }
     //    return & RAM[ addr_abs_Y() ];
     return & RAM[ addr ];
 //    return & RAM[ addr_ind_Y() ];
@@ -378,7 +538,7 @@ INLINE uint8_t * dest_ind_Y() {
  effective address is address incremented by X without carry **
  **/
 INLINE uint8_t addr_zp_X() {
-    disPrintf(disassembly.addr, "$%02X,X", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%02X,X", memread8(m6502.PC))
     return fetch() + m6502.X;
 }
 INLINE uint8_t src_zp_X() {
@@ -394,7 +554,7 @@ INLINE uint8_t * dest_zp_X() {
  effective address is address incremented by Y without carry **
  **/
 INLINE uint8_t addr_zp_Y() {
-    disPrintf(disassembly.addr, "$%02X,Y", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%02X,Y", memread8(m6502.PC))
     return fetch() + m6502.Y;
 }
 INLINE uint8_t src_zp_Y() {

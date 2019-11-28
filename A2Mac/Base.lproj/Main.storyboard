@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
-        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14868"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -705,7 +705,7 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="A2Mac" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl" customClass="QuietView" customModule="A2Mac" customModuleProvider="target">
+                    <view key="view" id="m2S-Jp-Qdl" customClass="MonitorView" customModule="A2Mac" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="680" height="400"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -720,13 +720,13 @@
                                     </allowedInputSourceLocales>
                                 </textFieldCell>
                             </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEL-hl-0c0">
+                            <textField canDrawConcurrently="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEL-hl-0c0">
                                 <rect key="frame" x="14" y="8" width="572" height="384"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="568" id="uez-Mi-0Sh"/>
                                     <constraint firstAttribute="height" constant="384" id="zl6-au-oZj"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" id="pIk-RC-s5g">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" id="pIk-RC-s5g">
                                     <font key="font" size="16" name="PrintChar21"/>
                                     <string key="title">1234567890123456789012345678901234567890
 @@@@@@@@@1@@@@@@@@@2@@@@@@@@@3@@@@@@@@@4
@@ -753,10 +753,7 @@
 @@@@@@@@@@@@@@@@@@23@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@24@@@@@@@@@@@@@@@@@@@@</string>
                                     <color key="textColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="alternatingContentBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    <allowedInputSourceLocales>
-                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
-                                    </allowedInputSourceLocales>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mfd-12-bcR">
@@ -796,7 +793,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <customView hidden="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="8" width="568" height="384"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </customView>
@@ -820,9 +817,9 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="HiRes" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>
                         <outlet property="display" destination="pIk-RC-s5g" id="Hvd-DI-h6z"/>
                         <outlet property="displayField" destination="SEL-hl-0c0" id="4Pc-hG-qQf"/>
+                        <outlet property="hires" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>
                         <outlet property="speedometer" destination="FBZ-dh-6Fs" id="L0v-RY-xwB"/>
                     </connections>
                 </viewController>

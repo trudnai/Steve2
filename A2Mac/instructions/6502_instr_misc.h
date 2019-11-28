@@ -28,7 +28,7 @@ INLINE void BRK() {
     m6502.B = 1;
     PUSH(m6502.SR);
     m6502.I = 1;
-    JMP(memread16(IRQ_VECTOR));
+    m6502.PC = memread16(IRQ_VECTOR);
 }
 
 /**

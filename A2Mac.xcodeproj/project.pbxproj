@@ -84,7 +84,10 @@
 		32439F8622ECD8AD0077AAE0 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
 		3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio_8bit_ioaddr.h; sourceTree = "<group>"; };
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
+		326C50802383CC0B00A05420 /* woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = woz.h; sourceTree = "<group>"; };
 		326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 6502_functional_test.bin; sourceTree = SOURCE_ROOT; };
+		32B18435233F10BC00DBB4AB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
+		32B18438233FAB3900DBB4AB /* verticies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verticies.swift; sourceTree = "<group>"; };
 		32BFFB5722EACC630003B53F /* A2Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A2Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BFFB5A22EACC630003B53F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32BFFB5C22EACC630003B53F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -204,11 +207,13 @@
 				32DBF76723373FB400DD50E7 /* disassembler.h */,
 				32439F8422ECD8AD0077AAE0 /* apple.rom */,
 				326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */,
+				32B18438233FAB3900DBB4AB /* verticies.swift */,
 				32439F7322ECD8AD0077AAE0 /* Apple2_mmio.h */,
 				3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */,
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
+				32B18435233F10BC00DBB4AB /* Shaders.metal */,
 				32C4532D233345420000EBA1 /* MonitorView.swift */,
 				32DBF7632334657900DD50E7 /* HiRes.swift */,
 				32C453072331C0910000EBA1 /* NSLayoutManager-Extension.swift */,
@@ -219,6 +224,7 @@
 				32BFFB6322EACC660003B53F /* Info.plist */,
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
 				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
+				326C50802383CC0B00A05420 /* woz.h */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -338,7 +344,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1100;
 				ORGANIZATIONNAME = GameAlloy;
 				TargetAttributes = {
 					32BFFB5622EACC630003B53F = {
@@ -634,6 +640,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
@@ -643,8 +650,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				OTHER_CFLAGS = "";
-				OTHER_SWIFT_FLAGS = "";
+				OTHER_CFLAGS = (
+					"-DDISASSEMBLER",
+					"-DINTERRUPR_CHECK_PER_STEP",
+				);
+				OTHER_SWIFT_FLAGS = "-D_NO_HIRES -D_NO_HIRESDRAW -D_NO_HIRESLOW";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -660,6 +670,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
@@ -670,7 +681,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				OTHER_CFLAGS = "";
+				OTHER_CFLAGS = (
+					"-DDISASSEMBLER",
+					"-DINTERRUPR_CHECK_PER_STEP",
+				);
+				OTHER_SWIFT_FLAGS = "-D_NO_HIRES -D_NO_HIRESDRAW -D_NO_HIRESLOW";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2Mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
@@ -766,6 +781,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
@@ -792,6 +808,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
@@ -817,6 +834,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
@@ -843,6 +861,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;

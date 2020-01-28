@@ -9,6 +9,12 @@
 #ifndef woz_h
 #define woz_h
 
+#define DISKII_MAXTRACKS 80
+#define DISKII_PHASES 4
+
+
+#pragma pack(push)
+#pragma pack(1)
 
 typedef struct woz_header_s {
     uint32_t    magic;
@@ -34,11 +40,12 @@ typedef struct woz_info_s {
 
 // chunk data only
 typedef struct woz_tmap_s {
-    uint8_t     phase [80 * 4];
+    uint8_t     phase [DISKII_MAXTRACKS * DISKII_PHASES];
 } woz_tmap_t;
 
 #define WOZ_TRACK_BYTE_COUNT 6646
 // chunk data only
+
 typedef struct woz_track_s {
     uint8_t     data [WOZ_TRACK_BYTE_COUNT];
     uint16_t    bytes_used;
@@ -49,8 +56,10 @@ typedef struct woz_track_s {
     uint16_t    reserved;
 } woz_track_t;
 
-// chunk data only
-typedef woz_track_t woz_trks_t[80];
 
+// chunk data only
+typedef woz_track_t woz_trks_t[DISKII_MAXTRACKS];
+
+#pragma pack(pop)
 
 #endif /* woz_h */

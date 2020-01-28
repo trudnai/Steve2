@@ -9,6 +9,7 @@
 #define CLK_WAIT
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
@@ -27,6 +28,10 @@ woz_tmap_t woz_tmap;
 woz_trks_t woz_trks;
 
 uint16_t trackOffset = 0;
+uint8_t  bitOffset = 0;
+
+FILE * outdev = NULL;
+
 
 #ifdef DEBUG
 #define INLINE
@@ -47,8 +52,9 @@ const unsigned long long int iterations = G;
 unsigned long long int inst_cnt = 0;
 
 const unsigned int fps = 30;
-const unsigned int MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
-const unsigned int clk_6502_per_frm = MHz_6502 / fps;
+const unsigned long long default_MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
+unsigned long long MHz_6502 = default_MHz_6502;
+unsigned long long clk_6502_per_frm = default_MHz_6502 / fps;
 
 unsigned long long tick_per_sec = G;
 unsigned long long tick_6502_per_sec = 0;
@@ -151,9 +157,9 @@ void hires_Update () {
 #include "6502_instructions.h"
 
 /////
-#ifdef SPEEDTEST
+//#ifdef SPEEDTEST
 unsigned long long int clktime = 0;
-#endif
+//#endif
 
 INLINE int m6502_Step() {
 
@@ -680,7 +686,7 @@ void m6502_Run() {
 #endif
     {
         
-#ifdef INTERRUPR_CHECK_PER_STEP
+#ifdef INTERRUPT_CHECK_PER_STEP
         if ( m6502.IF ) {
             switch (m6502.interrupt) {
                 case HLT:
@@ -725,29 +731,29 @@ void m6502_Run() {
             
             m6502.IF = 0;
         }
-#endif // INTERRUPR_CHECK_PER_STEP
+#endif // INTERRUPT_CHECK_PER_STEP
         
 //        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
-#ifdef SPEEDTEST
+//#ifdef SPEEDTEST
         clktime +=
-#endif
+//#endif
         clk = m6502_Step();
-        printDisassembly();
+        printDisassembly( outdev );
         
-        dbgPrintf2("A:%02X X:%02X Y:%02X SP:%02X %c%c%c%c%c%c%c%c\n\n",
-                  m6502.A,
-                  m6502.X,
-                  m6502.Y,
-                  m6502.SP,
-                  m6502.N ? 'N' : 'n',
-                  m6502.V ? 'V' : 'v',
-                  m6502.res ? 'R' : 'r',
-                  m6502.B ? 'B' : 'b',
-                  m6502.D ? 'D' : 'd',
-                  m6502.I ? 'I' : 'i',
-                  m6502.Z ? 'Z' : 'z',
-                  m6502.C ? 'C' : 'c'
-                  );
+//        dbgPrintf2("A:%02X X:%02X Y:%02X SP:%02X %c%c%c%c%c%c%c%c\n\n",
+//                  m6502.A,
+//                  m6502.X,
+//                  m6502.Y,
+//                  m6502.SP,
+//                  m6502.N ? 'N' : 'n',
+//                  m6502.V ? 'V' : 'v',
+//                  m6502.res ? 'R' : 'r',
+//                  m6502.B ? 'B' : 'b',
+//                  m6502.D ? 'D' : 'd',
+//                  m6502.I ? 'I' : 'i',
+//                  m6502.Z ? 'Z' : 'z',
+//                  m6502.C ? 'C' : 'c'
+//                  );
         
 #ifdef CLK_WAIT
 //        ee += tick_6502_per_sec * clk;
@@ -868,21 +874,15 @@ void m6502_ColdReset() {
     tick_per_sec = e - epoch;
     tick_6502_per_sec = tick_per_sec / MHz_6502;
     
-    memset( RAM, 0xFF, sizeof(Apple2_64K_RAM) );
+    memset( RAM, 0, sizeof(Apple2_64K_RAM) );
     memset( RAM + 0xC000, 0, 0x1000 ); // I/O area should be 0
 
-    m6502.A = m6502.X = m6502.Y = 0xFF;
-    // reset vector
-    m6502.SP = 0xFF; //-3;
-    
-    // N V - B D I Z C
-    // 0 0 1 1 0 1 0 0
-    m6502.SR = 0x34;
-    
-    m6502.IF = 0;
+    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
+    if (outdev == NULL) {
+        outdev = stdout;
+    }
 
-    // memory size
-//    *((uint16_t*)(&RAM[0x73])) = 0xC000;
+
     
 #ifdef FUNCTIONTEST
     FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/6502_functional_test.bin", "rb");
@@ -900,13 +900,29 @@ void m6502_ColdReset() {
     // Apple ][e ROM
     read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", 0xD000);
     // Disk ][ ROM in Slot 6
-//    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DISK_II_C600.ROM", 0xC600);
+    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DISK_II_C600.ROM", 0xC600);
     
     // WOZ DISK
 //    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS 3.3 System Master.woz");
 //    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Hard Hat Mack - Disk 1, Side A.woz");
 
+//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Merlin-8 v2.48 (DOS 3.3).woz");
+//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS3.3.Launcher.2.2.woz");
+    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple DOS 3.3 January 1983.woz");
+
+    m6502.A = m6502.X = m6502.Y = 0xFF;
+    // reset vector
+    m6502.SP = 0xFF; //-3;
     
+    // N V - B D I Z C
+    // 0 0 1 0 0 1 0 0
+    m6502.SR = 0x24;
+    
+    m6502.IF = 0;
+    
+    // memory size
+    //*((uint16_t*)(&RAM[0x73])) = 0xC000;
+
     m6502.PC = memread16( RESET_VECTOR );
 #endif
     

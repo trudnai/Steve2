@@ -11,10 +11,14 @@
 
 #import <stdint.h>
 
+extern unsigned long long MHz_6502;
+extern unsigned long long clk_6502_per_frm;
+
+
 #ifdef DEBUG
 //#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
 #define dbgPrintf(format, ...)
-#define dbgPrintf2(format, ...) printf (format, ## __VA_ARGS__)
+#define dbgPrintf2(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)
 #else
 #define dbgPrintf(format, ...)
 #define dbgPrintf2(format, ...)

@@ -137,7 +137,7 @@ class HiRes: NSView {
         scaleUnitSquare(to: NSSize(width: scaleSizeW, height: scaleSizeH))
         
         // create smaller box views for draw optimization
-//        createHiRes()
+        //createHiRes()
         
         #if METAL_YES
         initMetal()

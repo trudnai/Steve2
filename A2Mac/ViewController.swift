@@ -6,7 +6,19 @@
 //  Copyright © 2019 GameAlloy. All rights reserved.
 //
 
+
 import Cocoa
+
+let K : Double = 1000.0
+let M : Double = (K * K)
+let G : Double = (M * K)
+let T : Double = (G * K)
+
+let KB : Double = 1024.0
+let MB : Double = (KB * KB)
+let GB : Double = (MB * KB)
+let TB : Double = (GB * KB)
+
 
 #if METAL_YES
 import Metal
@@ -285,7 +297,7 @@ class ViewController: NSViewController {
             self.display.stringValue = txt
 //            self.display.stringValue = "testing\nit\nout"
 
-            if ( mhz < 10 ) {
+            if ( (mhz < 10) && (mhz != floor(mhz)) ) {
                 self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
             }
             else {
@@ -366,11 +378,23 @@ class ViewController: NSViewController {
 //        #endif
     }
 
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
+
+    
+    func setCPUClockSpeed( freq : Double ) {
+        mhz = freq
+        MHz_6502 = UInt64(mhz * M)
+        clk_6502_per_frm = MHz_6502 / UInt64(fps)
     }
 
+    @IBAction func speedSelected(_ sender: NSButton) {
+        if ( sender.title == "Max" ) {
+            clk_6502_per_frm = UINT64_MAX
+        }
+        else if let freq = Double( sender.title ) {
+            setCPUClockSpeed(freq: freq)
+        }
+    }
+    
+    
 }
 

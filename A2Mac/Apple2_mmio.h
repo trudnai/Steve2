@@ -12,9 +12,22 @@
 #include "common.h"
 #include "6502.h"
 
+typedef union {
+    struct {
+        uint8_t latch;
+        uint8_t shift;
+    };
+    struct {
+        uint16_t lower15 : 15;
+        uint16_t valid : 1;
+    };
+    uint16_t shift16;
+} WOZread_t;
 
 uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};
 uint8_t * RAM = Apple2_64K_RAM;
+WOZread_t WOZread = {0};
+
 
 enum slot {
     SLOT0   = 0x00,
@@ -153,27 +166,105 @@ typedef union address16_u {
         return 0;
 
 
-static const minDiskPhaseNum = 0;
-static const maxDiskPhaseNum = 80;
-static int trackPhase = maxDiskPhaseNum;
+static const int minDiskPhaseNum = 0;
+static const int maxDiskPhaseNum = 79;
 
 struct phase_t {
-    uint8_t current : 2;
-    uint8_t last    : 2;
-} phase = {0};
+    uint8_t lastMagnet  : 4;
+    uint8_t magnet      : 4;
+    int     count;
+} phase = { 0, 0, 0 };
 
-static const int8_t phaseTransition[4][4] = {
-    {  0, -1,  0, +1 },
-    { +1,  0, -1,  0 },
-    {  0, +1,  0, -1 },
-    { -1,  0, +1,  0 },
+//static const int8_t phaseTransition[4][4] = {
+//    {  0, -1,  0, +1 },
+//    { +1,  0, -1,  0 },
+//    {  0, +1,  0, -1 },
+//    { -1,  0, +1,  0 },
+//};
+
+//static const int phaseTransition[16][16] = {
+////   0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0000
+//    {   0,   0,  -2,  -1,   0,   0,   0,   0,  +2,  +1,   0,   0,   0,   0,   0,   0 }, // 0001
+//    {   0,  +2,   0,  +1,  -2,   0,  -1,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0010
+//    {   0,  +1,  -1,   0,   0,   0,  -2,   0,   0,  +2,   0,   0,   0,   0,   0,   0 }, // 0011
+//    {   0,   0,  +2,   0,   0,   0,  +1,   0,  -2,   0,   0,   0,  -1,   0,   0,   0 }, // 0100
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0101
+//    {   0,   0,  +1,  +2,  -1,   0,   0,   0,   0,   0,   0,   0,  -2,   0,   0,   0 }, // 0110
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0111
+//    {   0,  -2,   0,   0,  +2,   0,   0,   0,   0,  -1,   0,   0,  +1,   0,   0,   0 }, // 1000
+//    {   0,  -1,   0,  -2,   0,   0,   0,   0,  +1,   0,   0,   0,  +2,   0,   0,   0 }, // 1001
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1010
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1011
+//    {   0,   0,   0,   0,  +1,   0,  +2,   0,  -1,  -2,   0,   0,   0,   0,   0,   0 }, // 1100
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1101
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1110
+//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1111
+//};
+
+
+// Magnet States --> Stepper Motor Position
+//
+//                N
+//               0001
+//        NW      |      NE
+//       1001     |     0011
+//                |
+// W 1000 ------- o ------- 0010 E
+//                |
+//       1100     |    0110
+//        SW      |     SE
+//               0100
+//                S
+
+// motor position from the magnet state
+// -1 means invalid, not supported
+static const int magnet_to_Poistion[16] = {
+//   0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
+       -1,   0,   2,   1,   4,  -1,   3,  -1,   6,   7,  -1,  -1,   5,  -1,  -1,  -1
+};
+
+static const int position_to_direction[8][8] = {
+//     N  NE   E  SE   S  SW   W  NW
+//     0   1   2   3   4   5   6   7
+    {  0,  1,  2,  3,  0, -3, -2, -1 }, // 0 N
+    { -1,  0,  1,  2,  3,  0, -3, -2 }, // 1 NE
+    { -2, -1,  0,  1,  2,  3,  0, -3 }, // 2 E
+    { -3, -2, -1,  0,  1,  2,  3,  0 }, // 3 SE
+    {  0, -3, -2, -1,  0,  1,  2,  3 }, // 4 S
+    {  3,  0, -3, -2, -1,  0,  1,  2 }, // 5 SW
+    {  2,  3,  0, -3, -2, -1,  0,  1 }, // 6 W
+    {  1,  2,  3,  0, -3, -2, -1,  0 }, // 7 NW
 };
 
 
+INLINE void diskII_phase() {
+
+    int position = magnet_to_Poistion[phase.magnet];
+    if ( position >= 0 ) {
+        int lastPosition = phase.count & 7;
+        int direction = position_to_direction[lastPosition][position];
+    
+        phase.count += direction;
+        if ( phase.count < minDiskPhaseNum ) {
+            phase.count = minDiskPhaseNum;
+        }
+        else if ( phase.count > maxDiskPhaseNum ) {
+            phase.count = maxDiskPhaseNum;
+        }
+        
+        printf(", p:%d d:%d l:%d: ph:%u trk:%u)", position, direction, lastPosition, phase.count, woz_tmap.phase[phase.count]);
+                
+    }
+    
+    printf("\n");
+}
 
 
 INLINE uint8_t ioRead( uint16_t addr ) {
     dbgPrintf("mmio read:%04X\n", addr);
+    
+    uint8_t currentMagnet = 0;
     
     switch (addr) {
         case io_KBD:
@@ -192,51 +283,80 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case io_DISK_PHASE1_OFF + SLOT6:
         case io_DISK_PHASE2_OFF + SLOT6:
         case io_DISK_PHASE3_OFF + SLOT6:
-            dbgPrintf2("io_DISK_PHASE%u_OFF (S%u)\n", phase.current, 6);
-            phase.last = phase.current;
+            currentMagnet = (addr - io_DISK_PHASE0_OFF - SLOT6) / 2;
+            phase.magnet &= ~(1 << currentMagnet);
+            printf("io_DISK_PHASE%u_OFF (S%u, ps:%X) ", currentMagnet, 6, phase.magnet);
+
+            diskII_phase();
             return 0;
-            
+
         case io_DISK_PHASE0_ON + SLOT6:
         case io_DISK_PHASE1_ON + SLOT6:
         case io_DISK_PHASE2_ON + SLOT6:
         case io_DISK_PHASE3_ON + SLOT6: {
-            phase.current = (addr - io_DISK_PHASE0_ON - SLOT6) / 2;
-            trackPhase += phaseTransition[phase.current][phase.last];
-            if ( trackPhase < minDiskPhaseNum ) {
-                trackPhase = minDiskPhaseNum;
-            }
-            if ( trackPhase > maxDiskPhaseNum ) {
-                trackPhase = maxDiskPhaseNum;
-            }
-            dbgPrintf2("io_DISK_PHASE%u_ON (S%u, trk:%u)\n", phase.current, 6, trackPhase);
+            currentMagnet = (addr - io_DISK_PHASE0_ON - SLOT6) / 2;
+            phase.magnet |= 1 << currentMagnet;
+            printf("io_DISK_PHASE%u_ON (S%u, ps:%X) ", currentMagnet, 6, phase.magnet);
+
+            diskII_phase();
             return 0;
         }
+
         case io_DISK_POWER_OFF + SLOT6:
             dbgPrintf2("io_DISK_POWER_OFF (S%u)\n", 6);
             return 0;
+
         case io_DISK_POWER_ON + SLOT6:
             dbgPrintf2("io_DISK_POWER_ON (S%u)\n", 6);
             return 0;
+
         case io_DISK_SELECT_1 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_1 (S%u)\n", 6);
             return 0;
+
         case io_DISK_SELECT_2 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_2 (S%u)\n", 6);
             return 0;
+
         case io_DISK_READ + SLOT6:
             dbgPrintf("io_DISK_READ (S%u)\n", 6);
-            int track = woz_tmap.phase[trackPhase];
-            if (trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
-                trackOffset = 0;
+            int track = woz_tmap.phase[phase.count];
+            if (outdev) fprintf(outdev, "track: %d (%d) ", track, phase.count);
+            if ( track >= 40 ) {
+                printf("TRCK TOO HIGH!\n");
+                return rand();
             }
-            printf("offs:%u\n", trackOffset);
-            return woz_trks[track].data[trackOffset++];
+            // to avoid infinite loop and to search for bit 7 high
+            for ( int i = 0; i < WOZ_TRACK_BYTE_COUNT * 8; i++ ) {
+                if ( ++bitOffset >= 8 ) {
+                    bitOffset = 0;
+                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
+                        trackOffset = 0;
+                    }
+//                    printf("offs:%u\n", trackOffset);
+                    WOZread.latch = woz_trks[track].data[trackOffset];
+                }
+                
+                WOZread.shift16 <<= 1;
+                if ( WOZread.valid ) {
+                    uint8_t byte = WOZread.shift;
+//                    printf("%02X ", byte);
+                    WOZread.shift = 0;
+                    if (outdev) fprintf(outdev, "byte: %02X\n", byte);
+                    return byte;
+                }
+            }
+            if (outdev) fprintf(outdev, "TIME OUT!\n");
+            return rand();
+
         case io_DISK_WRITE + SLOT6:
             dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
             return 0;
+
         case io_DISK_CLEAR + SLOT6:
             dbgPrintf2("io_DISK_CLEAR (S%u)\n", 6);
             return 0;
+
         case io_DISK_SHIFT + SLOT6:
             dbgPrintf2("io_DISK_SHIFT (S%u)\n", 6);
             return 0;
@@ -392,6 +512,7 @@ INLINE uint8_t fetch() {
  **/
 INLINE uint16_t fetch16() {
     uint16_t word = memread16( m6502.PC );
+    // disPrintf(disassembly.comment, "fetch16:%04X", word);
     m6502.PC += 2;
     disHexW( disassembly.pOpcode, word );
     return word;
@@ -424,6 +545,7 @@ INLINE uint16_t abs_addr() {
 }
 INLINE uint16_t ind_addr() {
     disPrintf(disassembly.oper, "($%04X)", memread16(m6502.PC))
+    disPrintf(disassembly.comment, "ind_addr:%04X", memread16(memread16(m6502.PC)))
     return memread16( fetch16() );
 }
 
@@ -433,7 +555,7 @@ INLINE uint16_t ind_addr() {
  **/
 INLINE uint16_t addr_abs_X() {
     dbgPrintf("abs,X:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
-    disPrintf(disassembly.oper, "$%04X,X", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X,X", memread16(m6502.PC));
     return fetch16() + m6502.X;
 }
 INLINE uint8_t src_abs_X() {
@@ -487,7 +609,8 @@ INLINE uint8_t * dest_zp() {
  **/
 INLINE uint16_t addr_zp_ind( uint8_t addr ) {
     dbgPrintf("zpi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.oper, "($%02X) {$%04X}", memread8(m6502.PC), memread16( memread8(m6502.PC) ) )
+    disPrintf(disassembly.oper, "($%02X)", memread8(m6502.PC) );
+    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) ) );
     return memread16(addr);
 }
 
@@ -498,7 +621,8 @@ INLINE uint16_t addr_zp_ind( uint8_t addr ) {
  **/
 INLINE uint16_t addr_X_ind() {
     dbgPrintf("zpXi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
-    disPrintf(disassembly.oper, "($%02X,X) {$%04X}", memread8(m6502.PC), memread16( memread8(m6502.PC) + m6502.X) )
+    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) )
+    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) + m6502.X) );
     return memread16( fetch() + m6502.X );
 }
 INLINE uint8_t src_X_ind() {
@@ -516,7 +640,8 @@ INLINE uint8_t * dest_X_ind() {
 INLINE uint16_t addr_ind_Y() {
     //    uint8_t a = fetch();
     //    dbgPrintf("addr_ind_Y: %04X + %02X = %04X ", addr_zpg_ind( a ), m6502.Y, addr_zpg_ind( a ) + m6502.Y);
-    disPrintf(disassembly.oper, "($%02X),Y {$%04X}", memread8(m6502.PC), memread16( memread8(m6502.PC) ) + m6502.Y)
+    disPrintf(disassembly.oper, "($%02X),Y", memread8(m6502.PC) )
+    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) ) + m6502.Y );
     return memread16( fetch() ) + m6502.Y;
 }
 INLINE uint8_t src_ind_Y() {

@@ -24,6 +24,7 @@
 INLINE void JMP( uint16_t addr ) {
     dbgPrintf("JMP %04X ", addr);
     disPrintf(disassembly.inst, "JMP");
+//    disPrintf(disassembly.comment, "to:%04X", addr)
 #ifdef DEBUG
     if ( addr == m6502.PC - 3 ) {
         dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);

@@ -166,8 +166,11 @@ typedef union address16_u {
         return 0;
 
 
+static const int minDiskTrackNum = 0;
+static const int maxDiskTrackNum = 39;
+static const int minDiskPhaseStates = 8; // 4 quarters * 2 because of two neighbouring magnets can be activated at the same time which gets you a half quarter movement
 static const int minDiskPhaseNum = 0;
-static const int maxDiskPhaseNum = 79;
+static const int maxDiskPhaseNum = minDiskPhaseStates * maxDiskTrackNum;
 
 struct phase_t {
     uint8_t lastMagnet  : 4;

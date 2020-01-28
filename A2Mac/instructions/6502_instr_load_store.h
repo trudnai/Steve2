@@ -104,7 +104,7 @@ INLINE void STR( uint8_t * dst, uint8_t src ) {
 //    }
 //    else
     if ( ( addr >= 0xC000 ) && ( addr < 0xD000 ) ) {
-//        printf("mmio write:[%04X] = %02X\n", addr, src);
+    //    printf("mmio write:[%04X] = %02X\n", addr, src);
     }
     // Need to protect ROM!!!
     else if ( ( addr >= 0xE000 ) && ( addr < 0xF000 ) ) {

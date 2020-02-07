@@ -27,10 +27,15 @@ woz_chunk_header_t woz_chunk_header;
 woz_tmap_t woz_tmap;
 woz_trks_t woz_trks;
 
+uint64_t clklast = 0;
+uint64_t clkelpased = 0;
 uint16_t trackOffset = 0;
 uint8_t  bitOffset = 0;
 
 FILE * outdev = NULL;
+
+void ViewController_spk_up_play(void);
+void ViewController_spk_dn_play(void);
 
 
 #ifdef DEBUG
@@ -66,15 +71,18 @@ INLINE unsigned long long rdtsc(void)
     return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
 }
 
-
 m6502_t m6502 = {
     0,      // A
     0,      // X
     0,      // Y
+    
     0,      // SR
     0,      // PC
     0,      // SP
-    0,      // clk
+    
+//    0,      // clk
+    0,      // clktime
+    
     0,      // trace
     0,      // step
     0,      // brk
@@ -156,10 +164,6 @@ void hires_Update () {
 **/
 #include "6502_instructions.h"
 
-/////
-//#ifdef SPEEDTEST
-unsigned long long int clktime = 0;
-//#endif
 
 INLINE int m6502_Step() {
 
@@ -734,9 +738,7 @@ void m6502_Run() {
 #endif // INTERRUPT_CHECK_PER_STEP
         
 //        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
-//#ifdef SPEEDTEST
-        clktime +=
-//#endif
+        m6502.clktime +=
         clk = m6502_Step();
         printDisassembly( outdev );
         
@@ -789,7 +791,7 @@ void m6502_Run() {
 //    mhz = clktime / (execution_time * M);
 }
 
-void read_rom( const char * filename, const uint16_t addr ) {
+void read_rom( const char * filename, const uint8_t * rom, const uint16_t addr ) {
     FILE * f = fopen(filename, "rb");
     if (f == NULL) {
         perror("Failed: ");
@@ -800,7 +802,7 @@ void read_rom( const char * filename, const uint16_t addr ) {
     uint16_t flen = ftell(f);
     fseek(f, 0L, SEEK_SET);
 
-    fread( RAM + addr, 1, flen, f);
+    fread( rom + addr, 1, flen, f);
     fclose(f);
 
 }
@@ -897,10 +899,11 @@ void m6502_ColdReset() {
     m6502.PC = 0x400;
 
 #else
-    // Apple ][e ROM
-    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", 0xD000);
+    // Apple ][+ ROM
+    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", Apple2_12K_ROM, 0);
+    memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
     // Disk ][ ROM in Slot 6
-    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DISK_II_C600.ROM", 0xC600);
+    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
     
     // WOZ DISK
 //    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS 3.3 System Master.woz");
@@ -1050,7 +1053,7 @@ void tst6502() {
     double execution_time = (double)elapsed / tick_per_sec;
     
     double mips = inst_cnt / (execution_time * M);
-    double mhz = clktime / (execution_time * M);
+    double mhz = m6502.clktime / (execution_time * M);
     printf("clk:%llu Elpased time: (%llu / %u / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", iterations *3, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
 //    printf("  dd:%llu  ee:%llu  nn:%llu\n", dd, ee, ee - dd);
 #endif

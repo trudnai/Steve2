@@ -17,6 +17,7 @@
 #define G (M * K)
 #define T (G * K)
 
+#define PG 256ULL
 #define KB 1024ULL
 #define MB (KB * KB)
 #define GB (MB * KB)

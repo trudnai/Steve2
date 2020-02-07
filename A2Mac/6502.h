@@ -71,13 +71,17 @@ typedef struct m6502_s {
     };
     uint16_t PC;            // Program Counter
     uint8_t SP;             // Stack Pointer ( stack addr = 0x01 + sp )
-    unsigned clk;           // Clock Counter
+
+//    unsigned clk;           // Clock Counter
+    uint64_t clktime;
+
     debugLevel_t dbgLevel;  // 0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
     
     union {
         unsigned int IF;             // interrut flag
         interrupt_t interrupt;
     };
+    
 } m6502_t;
 
 

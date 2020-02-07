@@ -93,56 +93,31 @@ INLINE void STR( uint8_t * dst, uint8_t src ) {
     dbgPrintf("STR [%04X], %02X ", (int)(dst - RAM), src );
  
     uint16_t addr = dst - RAM;
-//    if ( ( addr >= 0x400 ) && ( addr < 0x800 ) ) {
-//        char c = charConv[src];
-////        if ( c == '?' ) {
-////            printf("? SYNTAX ERROR\n");
-////        }
-//
-//        if (( src > ' ' ) && ( c < 0x7F ))
-//            printf("*** PRINT: %04X: t:%02X '%c'\n", addr, src, isprint(c) ? c : ' ');
-//    }
-//    else
-    if ( ( addr >= 0xC000 ) && ( addr < 0xD000 ) ) {
-    //    printf("mmio write:[%04X] = %02X\n", addr, src);
-    }
-    // Need to protect ROM!!!
-    else if ( ( addr >= 0xE000 ) && ( addr < 0xF000 ) ) {
+
+    // I/O or ROM or RAM EXP
+    if ( addr >= 0xC000 ) {
+        // ROM or RAM EXP
+        if ( addr >= 0xD000 ) {
+            uint8_t * pgaddr;
+            // DO NOT MAKE IT NICER! faster this way!
+            if ( (pgaddr = RAM_PG_WR_TBL[ addr >> 8 ]) ) {
+                dst = pgaddr + (addr & 0xFF);
+            }
+            else {
+                // NULL page table, so no need to do anything
+                return;
+            }
+        }
+        // I/O
+        else {
     //        printf("mmio write:[%04X] = %02X\n", addr, src);
+    //        dst = Apple2_Dummy_Page;
+            return;
+        }
     }
-    else {
-        *dst = src;
-    }
+    
+    *dst = src;
 
-
-//    else switch ( addr ) {
-//        case 0x36:
-//        case 0x37:
-//            dbgPrintf("*** OUTROUT %04X: %02X\n", addr, src);
-//            break;
-//
-//        case 0x9B:
-//        case 0x9C:
-//            dbgPrintf("*** LOWTR %04X: %02X\n", addr, src);
-//            break;
-//
-//        case 0x6F: // FRETOP
-//        case 0x70:
-//            dbgPrintf("*** FRETOP %04X: %02X\n", addr, src);
-//            break;
-//
-//        case 0x73: // MEMSIZ
-//        case 0x74:
-//            dbgPrintf("*** MEMSIZ %04X: %02X\n", addr, src);
-//            break;
-//
-//        case 0x5E:
-//            dbgPrintf("*** ??? %04X: %02X\n", addr, src);
-//            break;
-//            
-//        default:
-//            break;
-//    }
 }
 
 /**

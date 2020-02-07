@@ -8,6 +8,8 @@
 
 
 import Cocoa
+import AVFoundation
+
 
 let K : Double = 1000.0
 let M : Double = (K * K)
@@ -18,6 +20,24 @@ let KB : Double = 1024.0
 let MB : Double = (KB * KB)
 let GB : Double = (MB * KB)
 let TB : Double = (GB * KB)
+
+
+var spk_up: AVAudioPlayer?
+var spk_dn: AVAudioPlayer?
+
+@_cdecl("ViewController_spk_up_play")
+func spk_up_play() {
+    spk_up?.stop()
+    spk_dn?.stop()
+    spk_up?.play()
+}
+
+@_cdecl("ViewController_spk_dn_play")
+func spk_dn_play() {
+    spk_up?.stop()
+    spk_dn?.stop()
+    spk_dn?.play()
+}
 
 
 #if METAL_YES
@@ -74,6 +94,8 @@ class ViewController: NSViewController {
     
     var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
+        
+        
         #if SPEEDTEST
         if ( workItem != nil ) {
             workItem!.cancel();
@@ -336,8 +358,31 @@ class ViewController: NSViewController {
     
     let upd = RepeatingTimer(timeInterval: 1/Double(fps))
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let spk_up_path = Bundle.main.path(forResource: "spk_up", ofType:"wav")!
+        let spk_up_url = URL(fileURLWithPath: spk_up_path)
+        do {
+            spk_up = try AVAudioPlayer(contentsOf: spk_up_url)
+//            spk_up?.play()
+        } catch {
+            // couldn't load file :(
+        }
+        
+        let spk_dn_path = Bundle.main.path(forResource: "spk_dn", ofType:"wav")!
+        let spk_dn_url = URL(fileURLWithPath: spk_dn_path)
+        do {
+            spk_dn = try AVAudioPlayer(contentsOf: spk_dn_url)
+//            spk_up?.play()
+        } catch {
+            // couldn't load file :(
+        }
+
+
+
         
         //view.frame = CGRect(origin: CGPoint(), size: NSScreen.main!.visibleFrame.size)
                 

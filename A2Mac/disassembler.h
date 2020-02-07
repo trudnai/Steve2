@@ -11,7 +11,7 @@
 
 #ifdef DISASSEMBLER
 
-extern unsigned long long int clktime;
+//extern unsigned long long int clktime;
 unsigned long long discnt = 0;
 
 #define disHexB( to, b ) \
@@ -75,7 +75,7 @@ INLINE void printDisassembly( FILE * f ) {
 
         fprintf( f, "%llu\t%llu %s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t;\t%s\n", // Virtual ][ style
             ++discnt,
-            clktime,
+            m6502.clktime,
             disassembly.addr,
             disassembly.opcode,
             disassembly.inst,
@@ -97,7 +97,7 @@ INLINE void printDisassembly( FILE * f ) {
 #define disPuts( to, from )
 #define disPrintf( to, fmt, args... )
 #define disNewInstruction()
-#define printDisassembly()
+#define printDisassembly( f )
 
 #endif // DISASSEMBLER
 

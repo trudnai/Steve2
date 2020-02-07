@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
+		3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37423E169F8008BDB95 /* spk_dn.wav */; };
+		3262F37723E169F8008BDB95 /* spk_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37523E169F8008BDB95 /* spk_up.wav */; };
 		326ED2EF232D7A0000A41337 /* 6502_functional_test.bin in Resources */ = {isa = PBXBuildFile; fileRef = 326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */; };
 		32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
@@ -82,6 +84,8 @@
 		32439F8422ECD8AD0077AAE0 /* apple.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple.rom; sourceTree = "<group>"; };
 		32439F8522ECD8AD0077AAE0 /* 6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502.h; sourceTree = "<group>"; };
 		32439F8622ECD8AD0077AAE0 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		3262F37423E169F8008BDB95 /* spk_dn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spk_dn.wav; sourceTree = "<group>"; };
+		3262F37523E169F8008BDB95 /* spk_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spk_up.wav; sourceTree = "<group>"; };
 		3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio_8bit_ioaddr.h; sourceTree = "<group>"; };
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
 		326C50802383CC0B00A05420 /* woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = woz.h; sourceTree = "<group>"; };
@@ -173,6 +177,15 @@
 			path = instructions;
 			sourceTree = "<group>";
 		};
+		3262F37823E17013008BDB95 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3262F37423E169F8008BDB95 /* spk_dn.wav */,
+				3262F37523E169F8008BDB95 /* spk_up.wav */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		32BFFB4E22EACC630003B53F = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +214,7 @@
 		32BFFB5922EACC630003B53F /* A2Mac */ = {
 			isa = PBXGroup;
 			children = (
+				3262F37823E17013008BDB95 /* Resources */,
 				32439F7522ECD8AD0077AAE0 /* instructions */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
@@ -389,10 +403,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				32EDB7A223272CA80073AF2D /* fail1.txt in Resources */,
+				3262F37723E169F8008BDB95 /* spk_up.wav in Resources */,
 				32C4533123335E560000EBA1 /* Main.storyboard in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
 				326ED2EF232D7A0000A41337 /* 6502_functional_test.bin in Resources */,
+				3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +660,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_MATH = YES;
+				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = A2Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -674,8 +694,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_MATH = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_UNROLL_LOOPS = NO;
 				INFOPLIST_FILE = A2Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

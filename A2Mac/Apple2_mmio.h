@@ -24,9 +24,147 @@ typedef union {
     uint16_t shift16;
 } WOZread_t;
 
-uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};
-uint8_t * RAM = Apple2_64K_RAM;
 WOZread_t WOZread = {0};
+
+
+typedef union address16_u {
+    uint16_t addr;
+    struct {
+        uint8_t offs;
+        uint8_t page;
+    };
+} address16_t;
+
+
+
+uint8_t Apple2_Dummy_Page[ 1 * PG ];        // Dummy Page for discarding data
+uint8_t Apple2_512_AUX[  2 * PG ] = {0};    // Auxiliary bank for page 0 and 1
+uint8_t Apple2_12K_ROM[ 12 * KB ] = {0};    // ROM D0, D8, E0, E8, F0, F8
+uint8_t Apple2_16K_RAM[ 16 * KB ] = {0};    // 16K Memory Expansion Card
+uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};    // Main Memory
+uint8_t * RAM = Apple2_64K_RAM;             // Pointer to the main memory so we can use this from Swift
+
+
+#define DEF_RAM_PAGE(mem,pg) \
+    (mem) + ((pg) << 8)
+
+#define DEF_RAM_PAGE16(mem,pg) \
+    DEF_RAM_PAGE(mem, (pg) + 0x00), \
+    DEF_RAM_PAGE(mem, (pg) + 0x01), \
+    DEF_RAM_PAGE(mem, (pg) + 0x02), \
+    DEF_RAM_PAGE(mem, (pg) + 0x03), \
+    DEF_RAM_PAGE(mem, (pg) + 0x04), \
+    DEF_RAM_PAGE(mem, (pg) + 0x05), \
+    DEF_RAM_PAGE(mem, (pg) + 0x06), \
+    DEF_RAM_PAGE(mem, (pg) + 0x07), \
+    DEF_RAM_PAGE(mem, (pg) + 0x08), \
+    DEF_RAM_PAGE(mem, (pg) + 0x09), \
+    DEF_RAM_PAGE(mem, (pg) + 0x0A), \
+    DEF_RAM_PAGE(mem, (pg) + 0x0B), \
+    DEF_RAM_PAGE(mem, (pg) + 0x0C), \
+    DEF_RAM_PAGE(mem, (pg) + 0x0D), \
+    DEF_RAM_PAGE(mem, (pg) + 0x0E), \
+    DEF_RAM_PAGE(mem, (pg) + 0x0F)
+
+#define SWITCH_RAM_PAGE16( tbl,tpg, mem,mpg ) \
+    (tbl)[ (tpg) + 0x00 ] = DEF_RAM_PAGE(mem, (mpg) + 0x00); \
+    (tbl)[ (tpg) + 0x01 ] = DEF_RAM_PAGE(mem, (mpg) + 0x01); \
+    (tbl)[ (tpg) + 0x02 ] = DEF_RAM_PAGE(mem, (mpg) + 0x02); \
+    (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03); \
+    (tbl)[ (tpg) + 0x04 ] = DEF_RAM_PAGE(mem, (mpg) + 0x04); \
+    (tbl)[ (tpg) + 0x05 ] = DEF_RAM_PAGE(mem, (mpg) + 0x05); \
+    (tbl)[ (tpg) + 0x06 ] = DEF_RAM_PAGE(mem, (mpg) + 0x06); \
+    (tbl)[ (tpg) + 0x07 ] = DEF_RAM_PAGE(mem, (mpg) + 0x07); \
+    (tbl)[ (tpg) + 0x08 ] = DEF_RAM_PAGE(mem, (mpg) + 0x08); \
+    (tbl)[ (tpg) + 0x09 ] = DEF_RAM_PAGE(mem, (mpg) + 0x09); \
+    (tbl)[ (tpg) + 0x0A ] = DEF_RAM_PAGE(mem, (mpg) + 0x0A); \
+    (tbl)[ (tpg) + 0x0B ] = DEF_RAM_PAGE(mem, (mpg) + 0x0B); \
+    (tbl)[ (tpg) + 0x0C ] = DEF_RAM_PAGE(mem, (mpg) + 0x0C); \
+    (tbl)[ (tpg) + 0x0D ] = DEF_RAM_PAGE(mem, (mpg) + 0x0D); \
+    (tbl)[ (tpg) + 0x0E ] = DEF_RAM_PAGE(mem, (mpg) + 0x0E); \
+    (tbl)[ (tpg) + 0x0F ] = DEF_RAM_PAGE(mem, (mpg) + 0x0F);
+
+
+#define DEF_RAM_DUMMY16 \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page, \
+    Apple2_Dummy_Page
+
+#define DEF_RAM_NULL16 \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL, \
+    NULL
+
+uint8_t * RAM_PG_RD_TBL[256] = {
+    // 48K main memory
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x00),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x10),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x20),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x30),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x40),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x50),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x60),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x70),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x80),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x90),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xA0),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xB0),
+    // I/O Addresses
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xC0),
+    // Reading from the ROM
+    DEF_RAM_PAGE16( Apple2_12K_ROM, 0x00),  // D0
+    DEF_RAM_PAGE16( Apple2_12K_ROM, 0x10),  // E0
+    DEF_RAM_PAGE16( Apple2_12K_ROM, 0x20)   // F0
+};
+
+uint8_t * RAM_PG_WR_TBL[256] = {
+    // 48K main memory
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x00),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x10),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x20),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x30),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x40),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x50),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x60),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x70),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x80),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x90),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xA0),
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xB0),
+    // I/O Addresses
+    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xC0),
+    // NO Writing to the ROM
+    DEF_RAM_DUMMY16,
+    DEF_RAM_DUMMY16,
+    DEF_RAM_DUMMY16,
+};
+
 
 
 enum slot {
@@ -41,10 +179,22 @@ enum slot {
 };
 
 
+// Memory Config
+struct MEMcfg_s {
+    uint8_t RAM_16K     : 1;
+    uint8_t RAM_128K    : 1;
+    uint8_t RD_RAM      : 1;
+    uint8_t WR_RAM      : 1;
+    uint8_t RAM_BANK_2  : 1;
+    uint8_t AUX_BANK    : 1;
+} MEMcfg = { 1, 0, 0, 0, 0 };
+
 enum mmio {
     io_KBD              = 0xC000,
     io_KBDSTRB          = 0xC010,
-    
+
+    io_SPKR             = 0xC030,
+
     io_DISK_PHASE0_OFF  = 0xC080,
     io_DISK_PHASE0_ON   = 0xC081,
     io_DISK_PHASE1_OFF  = 0xC082,
@@ -61,7 +211,15 @@ enum mmio {
     io_DISK_WRITE       = 0xC08D,
     io_DISK_CLEAR       = 0xC08E,
     io_DISK_SHIFT       = 0xC08F,
-    
+
+    io_MEM_RDRAM_NOWR_2 = 0xC080,
+    io_MEM_RDROM_WRAM_2 = 0xC081,
+    io_MEM_RDROM_NOWR_2 = 0xC082,
+    io_MEM_RDRAM_WRAM_2 = 0xC083,
+    io_MEM_RDRAM_NOWR_1 = 0xC088,
+    io_MEM_RDROM_WRAM_1 = 0xC089,
+    io_MEM_RDROM_NOWR_1 = 0xC08A,
+    io_MEM_RDRAM_WRAM_1 = 0xC08B,
 };
 
 
@@ -105,14 +263,6 @@ enum mmio {
 //};
 
 //uint8_t ( * mmio_read [ 64 * KB ] )( uint16_t addr );
-
-typedef union address16_u {
-    uint16_t addr;
-    struct {
-        uint8_t offs;
-        uint8_t page;
-    };
-} address16_t;
 
 
 #define CASE_DISKII(x) \
@@ -259,6 +409,9 @@ INLINE void diskII_phase() {
         printf(", p:%d d:%d l:%d: ph:%u trk:%u)", position, direction, lastPosition, phase.count, woz_tmap.phase[phase.count]);
                 
     }
+    else {
+        // invalid magnet config
+    }
     
     printf("\n");
 }
@@ -268,6 +421,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     dbgPrintf("mmio read:%04X\n", addr);
     
     uint8_t currentMagnet = 0;
+    int clk = 0;
     
     switch (addr) {
         case io_KBD:
@@ -279,7 +433,89 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //            printf("io_KBDSTRB\n");
             return RAM[io_KBD] &= 0x7F;
 
+        case io_SPKR:
+            // TODO: This is very slow!
+//            printf("io_KBDSTRB\n");
+            
+            //ViewController_spk_up_play();
+            
+            return RAM[io_SPKR];
+
 //        CASE_DISKII(6)
+            
+        case io_MEM_RDRAM_NOWR_2:
+        case io_MEM_RDROM_WRAM_2:
+        case io_MEM_RDROM_NOWR_2:
+        case io_MEM_RDRAM_WRAM_2:
+        case io_MEM_RDRAM_NOWR_1:
+        case io_MEM_RDROM_WRAM_1:
+        case io_MEM_RDROM_NOWR_1:
+        case io_MEM_RDRAM_WRAM_1:
+            if ( MEMcfg.RAM_16K || MEMcfg.RAM_128K ) {
+                uint8_t * RAM_BANK = Apple2_16K_RAM;
+                
+                // RAM Bank 1 or 2?
+                switch (addr) {
+                    case io_MEM_RDRAM_NOWR_2:
+                    case io_MEM_RDROM_WRAM_2:
+                    case io_MEM_RDROM_NOWR_2:
+                    case io_MEM_RDRAM_WRAM_2:
+                        MEMcfg.RAM_BANK_2 = 1;
+                        RAM_BANK = Apple2_16K_RAM + 0x30;
+                        break;
+                        
+                    default:
+                        MEMcfg.RAM_BANK_2 = 0;
+                        RAM_BANK = Apple2_16K_RAM;
+                        break;
+                }
+
+                // is RAM to read or ROM?
+                switch (addr) {
+                    case io_MEM_RDRAM_NOWR_2:
+                    case io_MEM_RDRAM_WRAM_2:
+                    case io_MEM_RDRAM_NOWR_1:
+                    case io_MEM_RDRAM_WRAM_1:
+                        MEMcfg.RD_RAM = 1;
+                        // set the RAM extension to read on the upper memory area
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, RAM_BANK,       0x00 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_16K_RAM, 0x10 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_16K_RAM, 0x20 );
+                        break;
+                        
+                    default:
+                        MEMcfg.RD_RAM = 0;
+                        // set the ROM to read on the upper memory area
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, Apple2_12K_ROM, 0x00 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_12K_ROM, 0x10 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_12K_ROM, 0x20 );
+                        break;
+                }
+
+                // is RAM Writeable?
+                switch (addr) {
+                    case io_MEM_RDROM_WRAM_2:
+                    case io_MEM_RDRAM_WRAM_2:
+                    case io_MEM_RDROM_WRAM_1:
+                    case io_MEM_RDRAM_WRAM_1:
+                        MEMcfg.WR_RAM = 1;
+                        // set the RAM extension to read from the upper memory area
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xD0, RAM_BANK,       0x00 );
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xE0, Apple2_16K_RAM, 0x10 );
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xF0, Apple2_16K_RAM, 0x20 );
+                        break;
+                        
+                    default:
+                        MEMcfg.WR_RAM = 0;
+                        // set the ROM to read on the upper memory area
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xD0, Apple2_Dummy_Page, 0 );
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xE0, Apple2_Dummy_Page, 0 );
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xF0, Apple2_Dummy_Page, 0 );
+                        break;
+                }
+                
+            } // if there is RAM expansion card installed
+            break;
 
         // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
         case io_DISK_PHASE0_OFF + SLOT6:
@@ -326,16 +562,29 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             int track = woz_tmap.phase[phase.count];
             if (outdev) fprintf(outdev, "track: %d (%d) ", track, phase.count);
             if ( track >= 40 ) {
-                printf("TRCK TOO HIGH!\n");
+                dbgPrintf("TRCK TOO HIGH!\n");
                 return rand();
             }
+            
+            clkelpased = m6502.clktime - clklast;
+            clklast = m6502.clktime;
+
+            if ( clkelpased > 100 ) {
+                bitOffset = (clkelpased % 32) / 4;
+                trackOffset += (clkelpased / 32) % WOZ_TRACK_BYTE_COUNT;
+                WOZread.latch = woz_trks[track].data[trackOffset];
+            }
+            
             // to avoid infinite loop and to search for bit 7 high
             for ( int i = 0; i < WOZ_TRACK_BYTE_COUNT * 8; i++ ) {
                 if ( ++bitOffset >= 8 ) {
                     bitOffset = 0;
-                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
-                        trackOffset = 0;
-                    }
+//                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
+//                        trackOffset = 0;
+//                    }
+                    trackOffset++;
+                    trackOffset %= WOZ_TRACK_BYTE_COUNT;
+
 //                    printf("offs:%u\n", trackOffset);
                     WOZread.latch = woz_trks[track].data[trackOffset];
                 }
@@ -367,9 +616,11 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
             
         default:
-            return RAM[addr];
+            //printf("mmio read:%04X\n", addr);
+            break;
     }
     
+    return RAM[addr];
 }
 
 
@@ -414,53 +665,23 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
  Naive implementation of RAM read from address
  **/
 
-INLINE uint8_t memread_zp( uint8_t addr ) {
-    return RAM[ addr ];
-}
-
 /**
  Naive implementation of RAM read from address
  **/
 INLINE uint8_t memread8( uint16_t addr ) {
-//    if ( addr == 0xD2AD ) {
-//        dbgPrintf("OUT OF MEMORY!\n");
-//    }
-    
-
-    return RAM[ addr ];
+    return * ( RAM_PG_RD_TBL[addr >> 8] + (addr & 0xFF) );
+//    return RAM[ addr ];
 }
 /**
  Naive implementation of RAM read from address
  **/
 INLINE uint16_t memread16( uint16_t addr ) {
-    return * (uint16_t*) (& RAM[ addr ]);
+    return * (uint16_t*) ( RAM_PG_RD_TBL[addr >> 8] + (addr & 0xFF) );
+//    return * (uint16_t*) (& RAM[ addr ]);
 }
 
 INLINE uint8_t memread( uint16_t addr ) {
-//    switch ( ((address16_t)addr).page ) {
-//        case 0xC0:
-//        case 0xC1:
-//        case 0xC2:
-//        case 0xC3:
-//        case 0xC4:
-//        case 0xC5:
-//        case 0xC6:
-//        case 0xC7:
-//        case 0xC8:
-//        case 0xC9:
-//        case 0xCA:
-//        case 0xCB:
-//        case 0xCC:
-//        case 0xCD:
-//        case 0xCE:
-//        case 0xCF:
-//            return ioRead(addr);
-//
-//        defaut:
-//            break;
-//    }
-
-    if ( (addr >= 0xC000) && (addr < 0xC0FF) ) {
+    if ( (addr >= 0xC000) && (addr <= 0xC0FF) ) {
         return ioRead(addr);
     }
     
@@ -478,9 +699,9 @@ INLINE uint8_t memread( uint16_t addr ) {
 /**
  Naive implementation of RAM write to address
  **/
-static  void memwrite_zp( uint8_t addr, uint8_t byte ) {
-    RAM[ addr ] = byte;
-}
+//static  void memwrite_zp( uint8_t addr, uint8_t byte ) {
+//    RAM[ addr ] = byte;
+//}
 
 
 /**
@@ -534,7 +755,8 @@ INLINE uint8_t src_abs() {
     return memread( addr_abs() );
 }
 INLINE uint8_t * dest_abs() {
-    return & RAM[ addr_abs() ];
+    uint16_t addr = addr_abs();
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 
@@ -565,7 +787,8 @@ INLINE uint8_t src_abs_X() {
     return memread( addr_abs_X() );
 }
 INLINE uint8_t * dest_abs_X() {
-    return & RAM[ addr_abs_X() ];
+    uint16_t addr = addr_abs_X();
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 
@@ -582,7 +805,8 @@ INLINE uint8_t src_abs_Y() {
     return memread(addr_abs_Y());
 }
 INLINE uint8_t * dest_abs_Y() {
-    return & RAM[ addr_abs_Y() ];
+    uint16_t addr = addr_abs_Y();
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 INLINE uint16_t imm() {
@@ -601,10 +825,11 @@ INLINE uint8_t addr_zp() {
     return fetch();
 }
 INLINE uint8_t src_zp() {
-    return memread_zp(addr_zp());
+    return memread8(addr_zp());
 }
 INLINE uint8_t * dest_zp() {
-    return & RAM[ addr_zp() ];
+    uint16_t addr = addr_zp();
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 /**
@@ -632,7 +857,8 @@ INLINE uint8_t src_X_ind() {
     return memread( addr_X_ind() );
 }
 INLINE uint8_t * dest_X_ind() {
-    return & RAM[ addr_X_ind() ];
+    uint16_t addr = addr_X_ind();
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 /**
@@ -652,12 +878,7 @@ INLINE uint8_t src_ind_Y() {
 }
 INLINE uint8_t * dest_ind_Y() {
     uint16_t addr = addr_ind_Y();
-//    if ( (addr >= 0xC000) && (addr <= 0xC0FF) ) {
-//        addr = 0xC111;
-//    }
-    //    return & RAM[ addr_abs_Y() ];
-    return & RAM[ addr ];
-//    return & RAM[ addr_ind_Y() ];
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 /**
@@ -670,10 +891,11 @@ INLINE uint8_t addr_zp_X() {
     return fetch() + m6502.X;
 }
 INLINE uint8_t src_zp_X() {
-    return memread_zp(addr_zp_X());
+    return memread8(addr_zp_X());
 }
 INLINE uint8_t * dest_zp_X() {
-    return & RAM[ addr_zp_X() ];
+    uint16_t addr = addr_zp_X();
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 /**
@@ -686,10 +908,11 @@ INLINE uint8_t addr_zp_Y() {
     return fetch() + m6502.Y;
 }
 INLINE uint8_t src_zp_Y() {
-    return memread_zp(addr_zp_Y());
+    return memread8(addr_zp_Y());
 }
 INLINE uint8_t * dest_zp_Y() {
-    return & RAM[ addr_zp_Y() ];
+    uint16_t addr = addr_zp_Y();
+    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
 }
 
 

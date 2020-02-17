@@ -20,7 +20,7 @@
  --------------------------------------------
  implied       BRK           00    1     7
  **/
-INLINE void BRK() {
+INLINE int BRK() {
     dbgPrintf("BRK ");
     disPrintf(disassembly.inst, "BRK");
     PUSH_addr(m6502.PC +1); // PC +2, however, fetch already incremented it by 1
@@ -29,6 +29,8 @@ INLINE void BRK() {
     PUSH(m6502.SR);
     m6502.I = 1;
     m6502.PC = memread16(IRQ_VECTOR);
+    
+    return 7;
 }
 
 /**

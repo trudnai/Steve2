@@ -1,16 +1,27 @@
 //
-//  woz1.h
+//  woz.h
 //  A2Mac
 //
-//  Created by Tamas Rudnai on 11/18/19.
-//  Copyright © 2019 GameAlloy. All rights reserved.
+//  Created by Tamas Rudnai on 2/15/20.
+//  Copyright © 2020 GameAlloy. All rights reserved.
 //
 
 #ifndef woz_h
 #define woz_h
 
+#include <stdio.h>
+#include "common.h"
+
+
 #define DISKII_MAXTRACKS 80
 #define DISKII_PHASES 4
+
+#define WOZ1_MAGIC  0x315A4F57
+#define WOZ2_MAGIC  0x325A4F57
+#define WOZ_INFO_CHUNK_ID  0x4F464E49
+#define WOZ_TMAP_CHUNK_ID  0x50414D54
+#define WOZ_TRKS_CHUNK_ID  0x534B5254
+#define WOZ_META_CHUNK_ID  0x4154454D
 
 
 #pragma pack(push)
@@ -61,5 +72,54 @@ typedef struct woz_track_s {
 typedef woz_track_t woz_trks_t[DISKII_MAXTRACKS];
 
 #pragma pack(pop)
+
+
+
+#define __NO__WOZ_REAL_SPIN2
+#ifdef WOZ_REAL_SPIN
+
+typedef union {
+    struct {
+        uint8_t next;
+        uint8_t data;
+        uint8_t prev;
+        uint8_t shift;
+    };
+    struct {
+        uint32_t lower : 31;
+        uint32_t valid : 1;
+    };
+    uint32_t shift32;
+} WOZread_t;
+
+#else // WOZ_REAL_SPIN
+
+typedef union {
+    struct {
+        uint8_t data;
+        uint8_t shift;
+    };
+    struct {
+        uint16_t lower15 : 15;
+        uint16_t valid : 1;
+    };
+    uint16_t shift16;
+} WOZread_t;
+
+#endif // WOZ_REAL_SPIN
+
+
+extern WOZread_t WOZread;
+extern uint8_t   WOZlatch;
+
+//extern woz_header_t woz_header;
+//extern woz_chunk_header_t woz_chunk_header;
+//extern woz_tmap_t woz_tmap;
+//extern woz_trks_t woz_trks;
+
+
+extern uint8_t woz_read();
+extern void woz_loadFile( const char * filename );
+
 
 #endif /* woz_h */

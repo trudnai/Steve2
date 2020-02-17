@@ -11,20 +11,8 @@
 
 #include "common.h"
 #include "6502.h"
-
-typedef union {
-    struct {
-        uint8_t latch;
-        uint8_t shift;
-    };
-    struct {
-        uint16_t lower15 : 15;
-        uint16_t valid : 1;
-    };
-    uint16_t shift16;
-} WOZread_t;
-
-WOZread_t WOZread = {0};
+#include "disk.h"
+#include "woz.h"
 
 
 typedef union address16_u {
@@ -226,202 +214,12 @@ enum mmio {
 #define PAGESIZE 256
 #define PAGES 16
 
-//uint8_t ram_0[PAGESIZE];
-//uint8_t ram_1[PAGESIZE];
-//uint8_t ram_2[PAGESIZE];
-//uint8_t ram_3[PAGESIZE];
-//uint8_t ram_4[PAGESIZE];
-//uint8_t ram_5[PAGESIZE];
-//uint8_t ram_6[PAGESIZE];
-//uint8_t ram_7[PAGESIZE];
-//uint8_t ram_8[PAGESIZE];
-//uint8_t ram_9[PAGESIZE];
-//uint8_t ram_A[PAGESIZE];
-//uint8_t ram_B[PAGESIZE];
-//uint8_t aui_C[PAGESIZE];
-//uint8_t rom_D[PAGESIZE];
-//uint8_t rom_E[PAGESIZE];
-//uint8_t rom_F[PAGESIZE];
-//
-//uint8_t * ram[PAGES] = {
-//    ram_0,
-//    ram_1,
-//    ram_2,
-//    ram_3,
-//    ram_4,
-//    ram_5,
-//    ram_6,
-//    ram_7,
-//    ram_8,
-//    ram_9,
-//    ram_A,
-//    ram_B,
-//    aui_C,
-//    rom_D,
-//    rom_E,
-//    rom_F,
-//};
-
-//uint8_t ( * mmio_read [ 64 * KB ] )( uint16_t addr );
-
-
-#define CASE_DISKII(x) \
-    case io_DISK_PHASE0_OFF + SLOT##x: \
-        printf("io_DISK_PHASE0_OFF (S%u)\n", x); \
-        return 0; \
-    case io_DISK_PHASE0_ON + SLOT##x: \
-        printf("io_DISK_PHASE0_ON (S%u)\n", x); \
-        return 0; \
-    case io_DISK_PHASE1_OFF + SLOT##x: \
-        printf("io_DISK_PHASE1_OFF (S%u)\n", x); \
-        return 0; \
-    case io_DISK_PHASE1_ON + SLOT##x: \
-        printf("io_DISK_PHASE1_ON (S%u)\n", x); \
-        return 0; \
-    case io_DISK_PHASE2_OFF + SLOT##x: \
-        printf("io_DISK_PHASE2_OFF (S%u)\n", x); \
-        return 0; \
-    case io_DISK_PHASE2_ON + SLOT##x: \
-        printf("io_DISK_PHASE2_ON (S%u)\n", x); \
-        return 0; \
-    case io_DISK_PHASE3_OFF + SLOT##x: \
-        printf("io_DISK_PHASE3_OFF (S%u)\n", x); \
-        return 0; \
-    case io_DISK_PHASE3_ON + SLOT##x: \
-        printf("io_DISK_PHASE3_ON (S%u)\n", x); \
-        return 0; \
-    case io_DISK_POWER_OFF + SLOT##x: \
-        printf("io_DISK_POWER_OFF (S%u)\n", x); \
-        return 0; \
-    case io_DISK_POWER_ON + SLOT##x: \
-        printf("io_DISK_POWER_ON (S%u)\n", x); \
-        return 0; \
-    case io_DISK_SELECT_1 + SLOT##x: \
-        printf("io_DISK_SELECT_1 (S%u)\n", x); \
-        return 0; \
-    case io_DISK_SELECT_2 + SLOT##x: \
-        printf("io_DISK_SELECT_2 (S%u)\n", x); \
-        return 0; \
-    case io_DISK_READ + SLOT##x: \
-        printf("io_DISK_READ (S%u)\n", x); \
-        return 0; \
-    case io_DISK_WRITE + SLOT##x: \
-        printf("io_DISK_WRITE (S%u)\n", x); \
-        return 0; \
-    case io_DISK_CLEAR + SLOT##x: \
-        printf("io_DISK_CLEAR (S%u)\n", x); \
-        return 0; \
-    case io_DISK_SHIFT + SLOT##x: \
-        printf("io_DISK_SHIFT (S%u)\n", x); \
-        return 0;
-
-
-static const int minDiskTrackNum = 0;
-static const int maxDiskTrackNum = 39;
-static const int minDiskPhaseStates = 8; // 4 quarters * 2 because of two neighbouring magnets can be activated at the same time which gets you a half quarter movement
-static const int minDiskPhaseNum = 0;
-static const int maxDiskPhaseNum = minDiskPhaseStates * maxDiskTrackNum;
-
-struct phase_t {
-    uint8_t lastMagnet  : 4;
-    uint8_t magnet      : 4;
-    int     count;
-} phase = { 0, 0, 0 };
-
-//static const int8_t phaseTransition[4][4] = {
-//    {  0, -1,  0, +1 },
-//    { +1,  0, -1,  0 },
-//    {  0, +1,  0, -1 },
-//    { -1,  0, +1,  0 },
-//};
-
-//static const int phaseTransition[16][16] = {
-////   0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0000
-//    {   0,   0,  -2,  -1,   0,   0,   0,   0,  +2,  +1,   0,   0,   0,   0,   0,   0 }, // 0001
-//    {   0,  +2,   0,  +1,  -2,   0,  -1,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0010
-//    {   0,  +1,  -1,   0,   0,   0,  -2,   0,   0,  +2,   0,   0,   0,   0,   0,   0 }, // 0011
-//    {   0,   0,  +2,   0,   0,   0,  +1,   0,  -2,   0,   0,   0,  -1,   0,   0,   0 }, // 0100
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0101
-//    {   0,   0,  +1,  +2,  -1,   0,   0,   0,   0,   0,   0,   0,  -2,   0,   0,   0 }, // 0110
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 0111
-//    {   0,  -2,   0,   0,  +2,   0,   0,   0,   0,  -1,   0,   0,  +1,   0,   0,   0 }, // 1000
-//    {   0,  -1,   0,  -2,   0,   0,   0,   0,  +1,   0,   0,   0,  +2,   0,   0,   0 }, // 1001
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1010
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1011
-//    {   0,   0,   0,   0,  +1,   0,  +2,   0,  -1,  -2,   0,   0,   0,   0,   0,   0 }, // 1100
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1101
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1110
-//    {   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 }, // 1111
-//};
-
-
-// Magnet States --> Stepper Motor Position
-//
-//                N
-//               0001
-//        NW      |      NE
-//       1001     |     0011
-//                |
-// W 1000 ------- o ------- 0010 E
-//                |
-//       1100     |    0110
-//        SW      |     SE
-//               0100
-//                S
-
-// motor position from the magnet state
-// -1 means invalid, not supported
-static const int magnet_to_Poistion[16] = {
-//   0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111
-       -1,   0,   2,   1,   4,  -1,   3,  -1,   6,   7,  -1,  -1,   5,  -1,  -1,  -1
-};
-
-static const int position_to_direction[8][8] = {
-//     N  NE   E  SE   S  SW   W  NW
-//     0   1   2   3   4   5   6   7
-    {  0,  1,  2,  3,  0, -3, -2, -1 }, // 0 N
-    { -1,  0,  1,  2,  3,  0, -3, -2 }, // 1 NE
-    { -2, -1,  0,  1,  2,  3,  0, -3 }, // 2 E
-    { -3, -2, -1,  0,  1,  2,  3,  0 }, // 3 SE
-    {  0, -3, -2, -1,  0,  1,  2,  3 }, // 4 S
-    {  3,  0, -3, -2, -1,  0,  1,  2 }, // 5 SW
-    {  2,  3,  0, -3, -2, -1,  0,  1 }, // 6 W
-    {  1,  2,  3,  0, -3, -2, -1,  0 }, // 7 NW
-};
-
-
-INLINE void diskII_phase() {
-
-    int position = magnet_to_Poistion[phase.magnet];
-    if ( position >= 0 ) {
-        int lastPosition = phase.count & 7;
-        int direction = position_to_direction[lastPosition][position];
-    
-        phase.count += direction;
-        if ( phase.count < minDiskPhaseNum ) {
-            phase.count = minDiskPhaseNum;
-        }
-        else if ( phase.count > maxDiskPhaseNum ) {
-            phase.count = maxDiskPhaseNum;
-        }
-        
-        printf(", p:%d d:%d l:%d: ph:%u trk:%u)", position, direction, lastPosition, phase.count, woz_tmap.phase[phase.count]);
-                
-    }
-    else {
-        // invalid magnet config
-    }
-    
-    printf("\n");
-}
 
 
 INLINE uint8_t ioRead( uint16_t addr ) {
     dbgPrintf("mmio read:%04X\n", addr);
     
     uint8_t currentMagnet = 0;
-    int clk = 0;
     
     switch (addr) {
         case io_KBD:
@@ -441,8 +239,6 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
             return RAM[io_SPKR];
 
-//        CASE_DISKII(6)
-            
         case io_MEM_RDRAM_NOWR_2:
         case io_MEM_RDROM_WRAM_2:
         case io_MEM_RDROM_NOWR_2:
@@ -523,10 +319,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case io_DISK_PHASE2_OFF + SLOT6:
         case io_DISK_PHASE3_OFF + SLOT6:
             currentMagnet = (addr - io_DISK_PHASE0_OFF - SLOT6) / 2;
-            phase.magnet &= ~(1 << currentMagnet);
-            printf("io_DISK_PHASE%u_OFF (S%u, ps:%X) ", currentMagnet, 6, phase.magnet);
+            disk.phase.magnet &= ~(1 << currentMagnet);
+            printf("io_DISK_PHASE%u_OFF (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
 
-            diskII_phase();
+            disk_phase();
             return 0;
 
         case io_DISK_PHASE0_ON + SLOT6:
@@ -534,10 +330,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case io_DISK_PHASE2_ON + SLOT6:
         case io_DISK_PHASE3_ON + SLOT6: {
             currentMagnet = (addr - io_DISK_PHASE0_ON - SLOT6) / 2;
-            phase.magnet |= 1 << currentMagnet;
-            printf("io_DISK_PHASE%u_ON (S%u, ps:%X) ", currentMagnet, 6, phase.magnet);
+            disk.phase.magnet |= 1 << currentMagnet;
+            printf("io_DISK_PHASE%u_ON (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
 
-            diskII_phase();
+            disk_phase();
             return 0;
         }
 
@@ -558,49 +354,9 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return 0;
 
         case io_DISK_READ + SLOT6:
-            dbgPrintf("io_DISK_READ (S%u)\n", 6);
-            int track = woz_tmap.phase[phase.count];
-            if (outdev) fprintf(outdev, "track: %d (%d) ", track, phase.count);
-            if ( track >= 40 ) {
-                dbgPrintf("TRCK TOO HIGH!\n");
-                return rand();
-            }
+            return disk_read();
+          
             
-            clkelpased = m6502.clktime - clklast;
-            clklast = m6502.clktime;
-
-            if ( clkelpased > 100 ) {
-                bitOffset = (clkelpased % 32) / 4;
-                trackOffset += (clkelpased / 32) % WOZ_TRACK_BYTE_COUNT;
-                WOZread.latch = woz_trks[track].data[trackOffset];
-            }
-            
-            // to avoid infinite loop and to search for bit 7 high
-            for ( int i = 0; i < WOZ_TRACK_BYTE_COUNT * 8; i++ ) {
-                if ( ++bitOffset >= 8 ) {
-                    bitOffset = 0;
-//                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
-//                        trackOffset = 0;
-//                    }
-                    trackOffset++;
-                    trackOffset %= WOZ_TRACK_BYTE_COUNT;
-
-//                    printf("offs:%u\n", trackOffset);
-                    WOZread.latch = woz_trks[track].data[trackOffset];
-                }
-                
-                WOZread.shift16 <<= 1;
-                if ( WOZread.valid ) {
-                    uint8_t byte = WOZread.shift;
-//                    printf("%02X ", byte);
-                    WOZread.shift = 0;
-                    if (outdev) fprintf(outdev, "byte: %02X\n", byte);
-                    return byte;
-                }
-            }
-            if (outdev) fprintf(outdev, "TIME OUT!\n");
-            return rand();
-
         case io_DISK_WRITE + SLOT6:
             dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
             return 0;

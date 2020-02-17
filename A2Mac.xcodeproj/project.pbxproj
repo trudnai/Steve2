@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
+		325EB62F23F8856F00C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
+		325EB63623F8F78300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
+		325EB63923F9E48100C6B4A4 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
 		3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37423E169F8008BDB95 /* spk_dn.wav */; };
 		3262F37723E169F8008BDB95 /* spk_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37523E169F8008BDB95 /* spk_up.wav */; };
 		326ED2EF232D7A0000A41337 /* 6502_functional_test.bin in Resources */ = {isa = PBXBuildFile; fileRef = 326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */; };
@@ -84,11 +87,15 @@
 		32439F8422ECD8AD0077AAE0 /* apple.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple.rom; sourceTree = "<group>"; };
 		32439F8522ECD8AD0077AAE0 /* 6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502.h; sourceTree = "<group>"; };
 		32439F8622ECD8AD0077AAE0 /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = common.h; sourceTree = "<group>"; };
+		325EB62D23F8856F00C6B4A4 /* woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = woz.h; sourceTree = "<group>"; };
+		325EB62E23F8856F00C6B4A4 /* woz.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = woz.c; sourceTree = "<group>"; };
+		325EB63423F8F78300C6B4A4 /* disk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disk.h; sourceTree = "<group>"; };
+		325EB63523F8F78300C6B4A4 /* disk.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = disk.c; sourceTree = "<group>"; };
+		325EB63823F9E48100C6B4A4 /* common.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
 		3262F37423E169F8008BDB95 /* spk_dn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spk_dn.wav; sourceTree = "<group>"; };
 		3262F37523E169F8008BDB95 /* spk_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spk_up.wav; sourceTree = "<group>"; };
 		3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio_8bit_ioaddr.h; sourceTree = "<group>"; };
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
-		326C50802383CC0B00A05420 /* woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = woz.h; sourceTree = "<group>"; };
 		326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 6502_functional_test.bin; sourceTree = SOURCE_ROOT; };
 		32B18435233F10BC00DBB4AB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		32B18438233FAB3900DBB4AB /* verticies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verticies.swift; sourceTree = "<group>"; };
@@ -177,6 +184,43 @@
 			path = instructions;
 			sourceTree = "<group>";
 		};
+		325EB63123F8861A00C6B4A4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				325EB63723F9492200C6B4A4 /* util */,
+				325EB63223F8862A00C6B4A4 /* dev */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		325EB63223F8862A00C6B4A4 /* dev */ = {
+			isa = PBXGroup;
+			children = (
+				325EB63323F8863100C6B4A4 /* disk */,
+			);
+			path = dev;
+			sourceTree = "<group>";
+		};
+		325EB63323F8863100C6B4A4 /* disk */ = {
+			isa = PBXGroup;
+			children = (
+				325EB62D23F8856F00C6B4A4 /* woz.h */,
+				325EB62E23F8856F00C6B4A4 /* woz.c */,
+				325EB63423F8F78300C6B4A4 /* disk.h */,
+				325EB63523F8F78300C6B4A4 /* disk.c */,
+			);
+			path = disk;
+			sourceTree = "<group>";
+		};
+		325EB63723F9492200C6B4A4 /* util */ = {
+			isa = PBXGroup;
+			children = (
+				32439F8622ECD8AD0077AAE0 /* common.h */,
+				325EB63823F9E48100C6B4A4 /* common.c */,
+			);
+			path = util;
+			sourceTree = "<group>";
+		};
 		3262F37823E17013008BDB95 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +258,7 @@
 		32BFFB5922EACC630003B53F /* A2Mac */ = {
 			isa = PBXGroup;
 			children = (
+				325EB63123F8861A00C6B4A4 /* src */,
 				3262F37823E17013008BDB95 /* Resources */,
 				32439F7522ECD8AD0077AAE0 /* instructions */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
@@ -224,7 +269,6 @@
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
 				32439F7322ECD8AD0077AAE0 /* Apple2_mmio.h */,
 				3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */,
-				32439F8622ECD8AD0077AAE0 /* common.h */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,
@@ -238,7 +282,6 @@
 				32BFFB6322EACC660003B53F /* Info.plist */,
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
 				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
-				326C50802383CC0B00A05420 /* woz.h */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -459,8 +502,11 @@
 			files = (
 				32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */,
 				32DBF7642334657900DD50E7 /* HiRes.swift in Sources */,
+				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
+				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
 			);

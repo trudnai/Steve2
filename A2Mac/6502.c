@@ -13,36 +13,13 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
+#include "6502.h"
 #include "woz.h"
 
-#define WOZ1_MAGIC  0x315A4F57
-#define WOZ2_MAGIC  0x325A4F57
-#define WOZ_INFO_CHUNK_ID  0x4F464E49
-#define WOZ_TMAP_CHUNK_ID  0x50414D54
-#define WOZ_TRKS_CHUNK_ID  0x534B5254
-#define WOZ_META_CHUNK_ID  0x4154454D
-
-woz_header_t woz_header;
-woz_chunk_header_t woz_chunk_header;
-woz_tmap_t woz_tmap;
-woz_trks_t woz_trks;
-
-uint64_t clklast = 0;
-uint64_t clkelpased = 0;
-uint16_t trackOffset = 0;
-uint8_t  bitOffset = 0;
-
-FILE * outdev = NULL;
 
 void ViewController_spk_up_play(void);
 void ViewController_spk_dn_play(void);
 
-
-#ifdef DEBUG
-#define INLINE
-#else
-#define INLINE static __attribute__((always_inline))
-#endif
 
 #include "common.h"
 
@@ -80,9 +57,9 @@ m6502_t m6502 = {
     0,      // PC
     0,      // SP
     
-//    0,      // clk
     0,      // clktime
-    
+    0,      // clklast
+
     0,      // trace
     0,      // step
     0,      // brk
@@ -91,7 +68,8 @@ m6502_t m6502 = {
     0,      // bra_true
     0,      // bra_false
     0,      // compile
-    HLT     // IF
+    HLT,    // IF
+    
 };
 
 disassembly_t disassembly;
@@ -791,7 +769,7 @@ void m6502_Run() {
 //    mhz = clktime / (execution_time * M);
 }
 
-void read_rom( const char * filename, const uint8_t * rom, const uint16_t addr ) {
+void read_rom( const char * filename, uint8_t * rom, const uint16_t addr ) {
     FILE * f = fopen(filename, "rb");
     if (f == NULL) {
         perror("Failed: ");
@@ -807,64 +785,6 @@ void read_rom( const char * filename, const uint8_t * rom, const uint16_t addr )
 
 }
 
-
-void read_woz( const char * filename ) {
-    FILE * f = fopen(filename, "rb");
-    if (f == NULL) {
-        perror("Failed: ");
-        return;
-    }
-    
-    fread( &woz_header, 1, sizeof(woz_header_t), f);
-    if ( woz_header.magic != WOZ1_MAGIC ) {
-        return;
-    }
-    
-    while ( ! feof(f) ) {
-        // beginning of the chunk, so we can skip it later
-        
-        long r = fread( &woz_chunk_header, 1, sizeof(woz_chunk_header_t), f);
-        if ( r != sizeof(woz_chunk_header_t) ) {
-            break;
-        }
-        long foffs = ftell(f);
-        
-        void * buf = NULL;
-
-        switch ( woz_chunk_header.magic ) {
-            case WOZ_INFO_CHUNK_ID:
-                break;
-
-            case WOZ_TMAP_CHUNK_ID:
-                buf = &woz_tmap;
-                break;
-
-            case WOZ_TRKS_CHUNK_ID:
-                buf = woz_trks;
-                break;
-
-            case WOZ_META_CHUNK_ID:
-                break;
-
-            default:
-                break;
-        }
-        
-        if (buf) {
-            r = fread( buf, 1, woz_chunk_header.size, f);
-            if ( r != woz_chunk_header.size ) {
-                break;
-            }
-        }
-
-        // make sure we are skipping unhandled chunks correctly
-        fseek(f, foffs + woz_chunk_header.size, SEEK_SET);
-    }
-    
-    fclose(f);
-
-
-}
 
 void m6502_ColdReset() {
     inst_cnt = 0;
@@ -906,12 +826,12 @@ void m6502_ColdReset() {
     read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
     
     // WOZ DISK
-//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS 3.3 System Master.woz");
-//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Hard Hat Mack - Disk 1, Side A.woz");
+//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS 3.3 System Master.woz");
+//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Hard Hat Mack - Disk 1, Side A.woz");
 
-//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Merlin-8 v2.48 (DOS 3.3).woz");
-//    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS3.3.Launcher.2.2.woz");
-    read_woz("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple DOS 3.3 January 1983.woz");
+//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Merlin-8 v2.48 (DOS 3.3).woz");
+//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS3.3.Launcher.2.2.woz");
+    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple DOS 3.3 January 1983.woz");
 
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector

@@ -11,6 +11,7 @@
 
 INLINE void BRA( int8_t reladdr ) {
     m6502.PC += reladdr;
+    m6502.clktime++;
 #ifdef DEBUG
     if ( reladdr == -2 ) {
         dbgPrintf2("Infinite Loop at %04X!\n", m6502.PC);

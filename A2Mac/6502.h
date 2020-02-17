@@ -9,20 +9,13 @@
 #ifndef __6502_H__
 #define __6502_H__
 
-#import <stdint.h>
+#include <stdint.h>
+#include "common.h"
+
 
 extern unsigned long long MHz_6502;
 extern unsigned long long clk_6502_per_frm;
 
-
-#ifdef DEBUG
-//#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
-#define dbgPrintf(format, ...)
-#define dbgPrintf2(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)
-#else
-#define dbgPrintf(format, ...)
-#define dbgPrintf2(format, ...)
-#endif
 
 typedef enum {
     NO_INT,
@@ -32,6 +25,7 @@ typedef enum {
     HARDRESET,
     SOFTRESET,
 } interrupt_t;
+
 
 typedef struct debugLevel_s {
     uint8_t trace       : 1;
@@ -43,6 +37,7 @@ typedef struct debugLevel_s {
     uint8_t bra_false   : 1;
     uint8_t compile     : 1;
 } debugLevel_t;
+
 
 typedef struct m6502_s {
     uint8_t  A;             // Accumulator
@@ -74,6 +69,7 @@ typedef struct m6502_s {
 
 //    unsigned clk;           // Clock Counter
     uint64_t clktime;
+    uint64_t clklast;
 
     debugLevel_t dbgLevel;  // 0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
     
@@ -109,5 +105,48 @@ extern void tst6502(void);
 extern void m6502_ColdReset(void);
 extern void m6502_Run(void);
 extern void kbdInput ( uint8_t code );
+
+
+INLINE void set_flags_N( const uint8_t test ) {
+    m6502.N = BITTEST(test, 7);
+}
+
+INLINE void set_flags_V( const uint8_t test ) {
+    m6502.V = BITTEST(test, 6);
+}
+
+INLINE void set_flags_Z( const uint8_t test ) {
+    m6502.Z = test == 0;
+}
+
+INLINE void set_flags_C( const int16_t test ) {
+    m6502.C = test >= 0;
+}
+
+INLINE void set_flags_NZ( const uint8_t test ) {
+    set_flags_N(test);
+    set_flags_Z(test);
+}
+
+INLINE void set_flags_NV( const uint8_t test ) {
+    set_flags_N(test);
+    set_flags_V(test);
+}
+
+INLINE void set_flags_NVZ( const uint8_t test ) {
+    set_flags_NZ(test);
+    set_flags_V(test);
+}
+
+INLINE void set_flags_NZC( const int16_t test ) {
+    set_flags_NZ(test);
+    set_flags_C(test);
+}
+
+//INLINE void set_flags_NZCV( int test ) {
+//    set_flags_NZC(test);
+//    set_flags_V(test);
+//}
+
 
 #endif /* __6502_H__ */

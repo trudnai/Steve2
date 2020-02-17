@@ -68,7 +68,7 @@
 
 /* Begin PBXFileReference section */
 		32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "A2Mac-Bridging-Header.h"; sourceTree = "<group>"; };
-		32439F7322ECD8AD0077AAE0 /* Apple2_mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio.h; sourceTree = "<group>"; };
+		32439F7322ECD8AD0077AAE0 /* mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmio.h; sourceTree = "<group>"; };
 		32439F7422ECD8AD0077AAE0 /* 6502.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502.c; sourceTree = "<group>"; };
 		32439F7622ECD8AD0077AAE0 /* 6502_instr_set_clr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_set_clr.h; sourceTree = "<group>"; };
 		32439F7722ECD8AD0077AAE0 /* 6502_instr_stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_stack.h; sourceTree = "<group>"; };
@@ -187,6 +187,7 @@
 		325EB63123F8861A00C6B4A4 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				325EB63A23FA572000C6B4A4 /* cpu */,
 				325EB63723F9492200C6B4A4 /* util */,
 				325EB63223F8862A00C6B4A4 /* dev */,
 			);
@@ -196,6 +197,7 @@
 		325EB63223F8862A00C6B4A4 /* dev */ = {
 			isa = PBXGroup;
 			children = (
+				325EB63B23FA57C000C6B4A4 /* mem */,
 				325EB63323F8863100C6B4A4 /* disk */,
 			);
 			path = dev;
@@ -217,8 +219,28 @@
 			children = (
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				325EB63823F9E48100C6B4A4 /* common.c */,
+				32DBF76723373FB400DD50E7 /* disassembler.h */,
 			);
 			path = util;
+			sourceTree = "<group>";
+		};
+		325EB63A23FA572000C6B4A4 /* cpu */ = {
+			isa = PBXGroup;
+			children = (
+				32439F7522ECD8AD0077AAE0 /* instructions */,
+				32439F8522ECD8AD0077AAE0 /* 6502.h */,
+				32439F7422ECD8AD0077AAE0 /* 6502.c */,
+			);
+			path = cpu;
+			sourceTree = "<group>";
+		};
+		325EB63B23FA57C000C6B4A4 /* mem */ = {
+			isa = PBXGroup;
+			children = (
+				32439F7322ECD8AD0077AAE0 /* mmio.h */,
+				3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */,
+			);
+			path = mem;
 			sourceTree = "<group>";
 		};
 		3262F37823E17013008BDB95 /* Resources */ = {
@@ -260,15 +282,9 @@
 			children = (
 				325EB63123F8861A00C6B4A4 /* src */,
 				3262F37823E17013008BDB95 /* Resources */,
-				32439F7522ECD8AD0077AAE0 /* instructions */,
-				32439F8522ECD8AD0077AAE0 /* 6502.h */,
-				32439F7422ECD8AD0077AAE0 /* 6502.c */,
-				32DBF76723373FB400DD50E7 /* disassembler.h */,
 				32439F8422ECD8AD0077AAE0 /* apple.rom */,
 				326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */,
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
-				32439F7322ECD8AD0077AAE0 /* Apple2_mmio.h */,
-				3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,

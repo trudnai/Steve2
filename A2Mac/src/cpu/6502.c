@@ -75,7 +75,7 @@ m6502_t m6502 = {
 disassembly_t disassembly;
 
 #include "disassembler.h"
-#include "Apple2_mmio.h"
+#include "mmio.h"
 
 
 uint16_t videoShadow [0x1000];

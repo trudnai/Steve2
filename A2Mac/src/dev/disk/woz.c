@@ -208,7 +208,7 @@ uint8_t woz_read() {
     if ( clkelpased > 100 ) {
 //        printf("NEED SYNC : %llu\n", clkelpased);
         bitOffset = (clkelpased >> 2) & 7;
-        trackOffset += ((clkelpased >> 5) +64) % WOZ_TRACK_BYTE_COUNT;
+        trackOffset += ((clkelpased >> 5) +100) % WOZ_TRACK_BYTE_COUNT;
         WOZread.data = woz_trks[track].data[trackOffset];
     }
 

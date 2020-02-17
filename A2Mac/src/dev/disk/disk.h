@@ -26,6 +26,7 @@ typedef struct phase_s {
 
 typedef struct disk_s {
     phase_t phase;
+    uint64_t clk_since_last_read;
 } disk_t;
 
 extern disk_t disk;
@@ -47,9 +48,11 @@ extern disk_t disk;
 
 extern const int magnet_to_Poistion[16];
 extern const int position_to_direction[8][8];
+extern const unsigned long long clk_6502_per_frm_diskAccelerator;
+extern const unsigned long long clk_diskAcceleratorTimeout;
 
-extern void disk_phase();
-extern uint8_t disk_read();
+extern void disk_phase(void);
+extern uint8_t disk_read(void);
 
 
 #endif /* disk_h */

@@ -65,6 +65,12 @@ INLINE void RTS() {
     dbgPrintf("RTS ");
     disPrintf(disassembly.inst, "RTS");
     m6502.PC = POP_addr() +1;
+
+    // disk accelerator would only work for a certain amount of time
+    // currently it is 200ms simulated times
+    if ( m6502.clktime - disk.clk_since_last_read > clk_diskAcceleratorTimeout ) {
+        clk_6502_per_frm = clk_6502_per_frm_set;
+    }
 }
 
 /**

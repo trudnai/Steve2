@@ -429,6 +429,7 @@ class ViewController: NSViewController {
         mhz = freq
         MHz_6502 = UInt64(mhz * M)
         clk_6502_per_frm = MHz_6502 / UInt64(fps)
+        clk_6502_per_frm_set = clk_6502_per_frm
     }
 
     @IBAction func speedSelected(_ sender: NSButton) {

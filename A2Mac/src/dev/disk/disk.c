@@ -13,9 +13,12 @@
 
 
 disk_t disk = {
-    { 0, 0, 0 }, // phase
+    { 0, 0, 0 },    // phase
+    0,              // clk_since_last_read
 };
 
+const unsigned long long clk_6502_per_frm_diskAccelerator = 100 * M / fps; // disk acceleration bumps up CPU clock to 100 MHz
+const unsigned long long clk_diskAcceleratorTimeout = 200000ULL;
 
 
 // motor position from the magnet state
@@ -57,6 +60,9 @@ void disk_phase() {
         
 //        printf(", p:%d d:%d l:%d: ph:%u trk:%u)", position, direction, lastPosition, phase.count, woz_tmap.phase[phase.count]);
                 
+        disk.clk_since_last_read = m6502.clktime;
+        clk_6502_per_frm = clk_6502_per_frm_diskAccelerator;
+
     }
     else {
         // invalid magnet config
@@ -68,6 +74,8 @@ void disk_phase() {
 
 uint8_t disk_read() {
     dbgPrintf("io_DISK_READ (S%u)\n", 6);
+    disk.clk_since_last_read = m6502.clktime;
+    clk_6502_per_frm = clk_6502_per_frm_diskAccelerator;
     return woz_read();
 }
 

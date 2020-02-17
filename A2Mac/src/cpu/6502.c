@@ -33,10 +33,12 @@ void ViewController_spk_dn_play(void);
 const unsigned long long int iterations = G;
 unsigned long long int inst_cnt = 0;
 
-const unsigned int fps = 30;
+//const unsigned int fps = 30;
 const unsigned long long default_MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
 unsigned long long MHz_6502 = default_MHz_6502;
 unsigned long long clk_6502_per_frm = default_MHz_6502 / fps;
+unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
+
 
 unsigned long long tick_per_sec = G;
 unsigned long long tick_6502_per_sec = 0;
@@ -77,12 +79,55 @@ disassembly_t disassembly;
 #include "disassembler.h"
 #include "mmio.h"
 
-
 uint16_t videoShadow [0x1000];
 uint32_t videoMem [0x2000];
 uint32_t * videoMemPtr = videoMem;
 
 uint16_t HiResLineAddrTbl [0x2000];
+
+
+INLINE void set_flags_N( const uint8_t test ) {
+    m6502.N = BITTEST(test, 7);
+}
+
+INLINE void set_flags_V( const uint8_t test ) {
+    m6502.V = BITTEST(test, 6);
+}
+
+INLINE void set_flags_Z( const uint8_t test ) {
+    m6502.Z = test == 0;
+}
+
+INLINE void set_flags_C( const int16_t test ) {
+    m6502.C = test >= 0;
+}
+
+INLINE void set_flags_NZ( const uint8_t test ) {
+    set_flags_N(test);
+    set_flags_Z(test);
+}
+
+INLINE void set_flags_NV( const uint8_t test ) {
+    set_flags_N(test);
+    set_flags_V(test);
+}
+
+INLINE void set_flags_NVZ( const uint8_t test ) {
+    set_flags_NZ(test);
+    set_flags_V(test);
+}
+
+INLINE void set_flags_NZC( const int16_t test ) {
+    set_flags_NZ(test);
+    set_flags_C(test);
+}
+
+//INLINE void set_flags_NZCV( int test ) {
+//    set_flags_NZC(test);
+//    set_flags_V(test);
+//}
+
+
 
 void initHiResLineAddresses() {
     uint16_t i = 0;

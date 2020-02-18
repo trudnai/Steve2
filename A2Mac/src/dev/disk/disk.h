@@ -18,16 +18,20 @@
 #define minDiskPhaseNum      0
 #define maxDiskPhaseNum     (minDiskPhaseStates * maxDiskTrackNum)
 
+
 typedef struct phase_s {
     uint8_t lastMagnet  : 4;
     uint8_t magnet      : 4;
     int     count;
 } phase_t;
 
+
 typedef struct disk_s {
     phase_t phase;
-    uint64_t clk_since_last_read;
+    uint64_t clk_last_access;
+    uint64_t clk_last_read;
 } disk_t;
+
 
 extern disk_t disk;
 

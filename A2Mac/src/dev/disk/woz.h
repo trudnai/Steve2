@@ -76,6 +76,7 @@ typedef woz_track_t woz_trks_t[DISKII_MAXTRACKS];
 
 
 #define __NO__WOZ_REAL_SPIN2
+
 #ifdef WOZ_REAL_SPIN
 
 typedef union {
@@ -118,7 +119,7 @@ extern uint8_t   WOZlatch;
 //extern woz_trks_t woz_trks;
 
 
-extern uint8_t woz_read();
+extern uint8_t woz_read(void);
 extern void woz_loadFile( const char * filename );
 
 

@@ -26,6 +26,54 @@ woz_header_t woz_header;
 woz_chunk_header_t woz_chunk_header;
 woz_tmap_t woz_tmap;
 woz_trks_t woz_trks;
+int track_loaded = -1;
+
+
+
+#pragma pack(push, 1)
+
+typedef union trackEntry_u {
+    struct {
+        uint8_t data;
+        uint8_t shift;
+    };
+    uint16_t shift16;
+} trackEntry_t;
+
+#pragma pack(pop)
+
+trackEntry_t prepared_track[WOZ_TRACK_BYTE_COUNT];
+
+typedef enum readState_e {
+    readNormal = 0,
+    readHold,
+} readState_t;
+
+readState_t readState = readNormal;
+uint8_t readLatch;
+
+
+void woz_loadTrack( int track ) {
+    trackEntry_t reg = {0};
+
+    reg.shift = woz_trks[track].data[0];
+    reg.data =  woz_trks[track].data[1];
+    prepared_track[0] = reg;
+
+    for ( int offs = 1; offs < WOZ_TRACK_BYTE_COUNT; offs++ ) {
+        
+        for ( int i = 0; i < 8; i++ ) {
+            if (reg.shift & 0x80) {
+                reg.shift = 0;
+            }
+            
+            reg.shift16 <<= 1;
+        }
+        
+        reg.data = woz_trks[track].data[ (offs + 1) % WOZ_TRACK_BYTE_COUNT ];
+        prepared_track[offs] = reg;
+    }
+}
 
 
 uint8_t woz_read() {
@@ -35,6 +83,11 @@ uint8_t woz_read() {
     if ( track >= 40 ) {
         dbgPrintf("TRCK TOO HIGH!\n");
         return rand();
+    }
+    
+    if ( track != track_loaded ) {
+        woz_loadTrack(track);
+        track_loaded = track;
     }
 
 #ifdef WOZ_REAL_SPIN
@@ -166,39 +219,35 @@ uint8_t woz_read() {
 
     
 #elif defined( WOZ_REAL_SPIN2 )
-    clkelpased = m6502.clktime - clklast;
-    clklast = m6502.clktime & ~3;
+//    clkelpased = m6502.clktime - disk.clk_last_read;
+//    disk.clk_last_read = m6502.clktime;
 
-    bitOffset = (clkelpased >> 2) & 7;
-    trackOffset += (clkelpased >> 5) % WOZ_TRACK_BYTE_COUNT;
-    WOZread.data = woz_trks[track].data[trackOffset];
+    bitOffset = (m6502.clktime >> 2) & 7;
+    trackOffset = (m6502.clktime >> 5) % WOZ_TRACK_BYTE_COUNT;
+    trackEntry_t reg = prepared_track[trackOffset];
+    
+    do {
+        switch (readState) {
+            case readNormal:
+                readLatch = reg.shift;
+                break;
+                
+            case readHold:
+            default:
+                readState = readNormal;
+                break;
+        }
 
-    // to avoid infinite loop and to search for bit 7 high
-    for ( int i = 0; i < WOZ_TRACK_BYTE_COUNT * 8; i++ ) {
-        if ( ++bitOffset >= 8 ) {
-            bitOffset = 0;
-//                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
-//                        trackOffset = 0;
-//                    }
-            trackOffset++;
-            trackOffset %= WOZ_TRACK_BYTE_COUNT;
-
-//                    printf("offs:%u\n", trackOffset);
-            WOZread.data = woz_trks[track].data[trackOffset];
+        if (reg.shift & 0x80) {
+            reg.shift = 0;
+            readState = readHold;
         }
         
-        WOZread.shift16 <<= 1;
-        if ( WOZread.valid ) {
-            uint8_t byte = WOZread.shift;
-//                    printf("%02X ", byte);
-            WOZread.shift = 0;
-            if (outdev) fprintf(outdev, "byte: %02X\n", byte);
-            return byte;
-        }
-    }
-    if (outdev) fprintf(outdev, "TIME OUT!\n");
-    return rand();
-    
+        reg.shift16 <<= 1;
+    } while ( --bitOffset > 0 );
+
+    printf("READ: clk:%llu  to:%u  bo:%llu  B:%02X\n", m6502.clktime, trackOffset, (m6502.clktime >> 2) & 7, readLatch);
+    return readLatch;
 
     
 #else // WOZ_REAL_SPIN

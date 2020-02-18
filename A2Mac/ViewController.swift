@@ -265,7 +265,7 @@ class ViewController: NSViewController {
 //        return
         
         frameCnt += 1
-        if ( frameCnt == 15 ) {
+        if ( frameCnt == fps / 2 ) {
 //            flashingSpace = blockChar
             ViewController.charConvTbl = ViewController.charConvTblFlashOn
         }

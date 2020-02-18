@@ -101,7 +101,7 @@ extern void hires_Update(void);
 extern double mips;
 extern double mhz;
 
-#define fps 30
+#define fps 15
 
 extern void tst6502(void);
 extern void m6502_ColdReset(void);

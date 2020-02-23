@@ -560,10 +560,12 @@ class HiRes: NSView {
     //        self.hidden = videoMode.text == 1
         
 //        NSColor.green.setFill()
-        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0).setStroke()
-
+//        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0).setStroke()
+//        NSColor(calibratedRed: 0.05, green: 0.7, blue: 0.1, alpha: 1.0).setStroke()
+        NSColor.systemGreen.setStroke()
+        
         path.removeAllPoints()
-        path.lineWidth=0.7
+        path.lineWidth = 0.7
         path.move(to: NSPoint(x: 0, y: 0))
         
 //        path.appendRect(NSRect(x: 0, y: 0, width: 10, height: 10))

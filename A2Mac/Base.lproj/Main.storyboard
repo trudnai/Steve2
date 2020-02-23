@@ -600,6 +600,44 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Config" id="n97-rZ-OOP" userLabel="Config">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Config" id="Xqf-B7-gCo">
+                                    <items>
+                                        <menuItem title="Disk 1" id="0NC-AF-e3z">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Disk 1" id="lnc-y1-bUG">
+                                                <items>
+                                                    <menuItem title="Apple DOS 3.3 January 1983" identifier="Apple DOS 3.3 January 1983" id="KuV-6R-gyL">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="fFn-bN-fJA"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Donkey Kong" identifier="Donkey Kong" id="ero-Yw-Fxy">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="wwf-cD-Lv9"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Qbit" identifier="Qbit" id="3yK-n1-y7H">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="c8a-9v-oR4"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="Disk 2" id="yVX-3l-dbM">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Item 3" id="Y3v-20-h2Q">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="View" id="H8h-7b-M4v">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="View" id="HyV-fh-RgO">
@@ -705,11 +743,11 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="A2Mac" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl" customClass="MonitorView" customModule="A2Mac" customModuleProvider="target">
+                    <view key="view" canDrawConcurrently="YES" id="m2S-Jp-Qdl" customClass="MonitorView" customModule="A2Mac" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="680" height="400"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIF-Q5-Onc">
+                            <textField canDrawConcurrently="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIF-Q5-Onc">
                                 <rect key="frame" x="0.0" y="0.0" width="592" height="400"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" title="Display Background" drawsBackground="YES" id="cIa-Sd-4OZ">
                                     <font key="font" metaFont="system"/>
@@ -756,7 +794,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
+                            <customView canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="8" width="568" height="384"/>
                             </customView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mfd-12-bcR">

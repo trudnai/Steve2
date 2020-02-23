@@ -118,6 +118,7 @@ extern double mhz;
 
 #define fps 30
 
+extern void woz_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath );
 extern void m6502_Run(void);

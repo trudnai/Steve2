@@ -12,7 +12,12 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
 
-
+    @IBAction func Disk1_Selected(_ sender: NSMenuItem) {
+        if let menuIdentifier = sender.identifier {
+            woz_loadFile( Bundle.main.resourcePath, menuIdentifier.rawValue + ".woz" )
+        }
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
     }

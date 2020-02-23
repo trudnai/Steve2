@@ -49,8 +49,8 @@
 		325EB6A02401118300C6B4A4 /* Crossfire.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6952401118200C6B4A4 /* Crossfire.woz */; };
 		325EB6A12401118300C6B4A4 /* Wavy Navy.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6962401118200C6B4A4 /* Wavy Navy.woz */; };
 		325EB6A22401118300C6B4A4 /* Wavy Navy.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6962401118200C6B4A4 /* Wavy Navy.woz */; };
-		325EB6A32401118300C6B4A4 /* qbit.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* qbit.woz */; };
-		325EB6A42401118300C6B4A4 /* qbit.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* qbit.woz */; };
+		325EB6A32401118300C6B4A4 /* Qbit.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* Qbit.woz */; };
+		325EB6A42401118300C6B4A4 /* Qbit.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* Qbit.woz */; };
 		325EB6A52401118300C6B4A4 /* ProDOS_312.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6982401118200C6B4A4 /* ProDOS_312.woz */; };
 		325EB6A62401118300C6B4A4 /* ProDOS_312.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6982401118200C6B4A4 /* ProDOS_312.woz */; };
 		325EB6A72401118300C6B4A4 /* ProDOS_402_System.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */; };
@@ -68,14 +68,12 @@
 		32BFFB6E22EACC660003B53F /* A2MacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB6D22EACC660003B53F /* A2MacTests.swift */; };
 		32BFFB7922EACC660003B53F /* A2MacUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB7822EACC660003B53F /* A2MacUITests.swift */; };
 		32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */; };
-		32C4530B2331F7220000EBA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32C4530C2331F7220000EBA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32C4530D2331F7220000EBA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32C453112331F7220000EBA1 /* fail1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32EDB7A123272CA80073AF2D /* fail1.txt */; };
 		32C453122331F7220000EBA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
 		32C453132331F7220000EBA1 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
 		32C453152331F7220000EBA1 /* 6502_functional_test.bin in Resources */ = {isa = PBXBuildFile; fileRef = 326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */; };
-		32C4531D2331FED90000EBA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32C4531E2331FED90000EBA1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32C4531F2331FED90000EBA1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32C453232331FED90000EBA1 /* fail1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 32EDB7A123272CA80073AF2D /* fail1.txt */; };
@@ -172,7 +170,7 @@
 		325EB6942401118200C6B4A4 /* Lode Runner.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lode Runner.woz"; sourceTree = "<group>"; };
 		325EB6952401118200C6B4A4 /* Crossfire.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Crossfire.woz; sourceTree = "<group>"; };
 		325EB6962401118200C6B4A4 /* Wavy Navy.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wavy Navy.woz"; sourceTree = "<group>"; };
-		325EB6972401118200C6B4A4 /* qbit.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = qbit.woz; sourceTree = "<group>"; };
+		325EB6972401118200C6B4A4 /* Qbit.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Qbit.woz; sourceTree = "<group>"; };
 		325EB6982401118200C6B4A4 /* ProDOS_312.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProDOS_312.woz; sourceTree = "<group>"; };
 		325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProDOS_402_System.woz; sourceTree = "<group>"; };
 		325EB69A2401118300C6B4A4 /* Sneakers.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sneakers.woz; sourceTree = "<group>"; };
@@ -400,7 +398,7 @@
 				325EB6982401118200C6B4A4 /* ProDOS_312.woz */,
 				325EB68F23FE028800C6B4A4 /* Donkey Kong.woz */,
 				325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */,
-				325EB6972401118200C6B4A4 /* qbit.woz */,
+				325EB6972401118200C6B4A4 /* Qbit.woz */,
 				325EB69A2401118300C6B4A4 /* Sneakers.woz */,
 				325EB6962401118200C6B4A4 /* Wavy Navy.woz */,
 				325EB69B2401118300C6B4A4 /* Xonix.woz */,
@@ -705,7 +703,7 @@
 				325EB6A62401118300C6B4A4 /* ProDOS_312.woz in Resources */,
 				325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */,
 				325EB67D23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */,
-				325EB6A42401118300C6B4A4 /* qbit.woz in Resources */,
+				325EB6A42401118300C6B4A4 /* Qbit.woz in Resources */,
 				325EB68723FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */,
 				325EB64A23FBBACF00C6B4A4 /* Main.storyboard in Resources */,
 				325EB67A23FBC48400C6B4A4 /* spk_up.wav in Resources */,
@@ -747,7 +745,7 @@
 				325EB6A52401118300C6B4A4 /* ProDOS_312.woz in Resources */,
 				325EB6AB2401118300C6B4A4 /* Xonix.woz in Resources */,
 				325EB68623FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */,
-				325EB6A32401118300C6B4A4 /* qbit.woz in Resources */,
+				325EB6A32401118300C6B4A4 /* Qbit.woz in Resources */,
 				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
 				326ED2EF232D7A0000A41337 /* 6502_functional_test.bin in Resources */,
 				3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */,
@@ -862,7 +860,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32C4530B2331F7220000EBA1 /* 6502.c in Sources */,
 				32C4530C2331F7220000EBA1 /* ViewController.swift in Sources */,
 				32C4532F233345820000EBA1 /* MonitorView.swift in Sources */,
 				32C4530D2331F7220000EBA1 /* AppDelegate.swift in Sources */,
@@ -873,7 +870,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32C4531D2331FED90000EBA1 /* 6502.c in Sources */,
 				32C4531E2331FED90000EBA1 /* ViewController.swift in Sources */,
 				32C45330233345820000EBA1 /* MonitorView.swift in Sources */,
 				32C4531F2331FED90000EBA1 /* AppDelegate.swift in Sources */,

@@ -11,6 +11,7 @@
 #define __6502_INSTR_LOAD_STORE_H__
 
 #include <ctype.h>
+#include "../../dev/mem/mmio.h"
 
 /**
  LDA  Load Accumulator with Memory
@@ -112,6 +113,8 @@ INLINE void STR( uint8_t * dst, uint8_t src ) {
         else {
     //        printf("mmio write:[%04X] = %02X\n", addr, src);
     //        dst = Apple2_Dummy_Page;
+            
+            ioWrite( addr, src );
             return;
         }
     }

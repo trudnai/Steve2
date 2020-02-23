@@ -499,8 +499,12 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
     //    printf("mmio:%04X\n", addr);
     switch (addr) {
         case io_KBD:
-            return;
+            break;
             
+        case io_KBDSTRB:
+            RAM[io_KBD] &= 0x7F;
+            break;
+
         default:
             break;
     }

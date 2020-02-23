@@ -255,38 +255,40 @@ uint8_t woz_read() {
     m6502.clklast = m6502.clktime;
     
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
-
-    if ( clkelpased > 100 ) {
-//        printf("NEED SYNC : %llu\n", clkelpased);
-        bitOffset = (clkelpased >> 2) & 7;
-        trackOffset += ((clkelpased >> 5) +100) % usedBytes;
-        WOZread.data = woz_trks[track].data[trackOffset];
-    }
-
-    // to avoid infinite loop and to search for bit 7 high
-    for ( int i = 0; i < usedBytes * 8; i++ ) {
-        if ( ++bitOffset >= 8 ) {
-            bitOffset = 0;
-//                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
-//                        trackOffset = 0;
-//                    }
-            trackOffset++;
-            trackOffset %= usedBytes;
-
-//                    printf("offs:%u\n", trackOffset);
+    if ( usedBytes ) {
+        if ( clkelpased > 100 ) {
+    //        printf("NEED SYNC : %llu\n", clkelpased);
+            bitOffset = (clkelpased >> 2) & 7;
+            trackOffset += ((clkelpased >> 5) +100) % usedBytes;
             WOZread.data = woz_trks[track].data[trackOffset];
         }
-        
-        WOZread.shift16 <<= 1;
-        if ( WOZread.valid ) {
-            uint8_t byte = WOZread.shift;
-//                    printf("%02X ", byte);
-            WOZread.shift = 0;
-            if (outdev) fprintf(outdev, "byte: %02X\n", byte);
-            return byte;
+
+        // to avoid infinite loop and to search for bit 7 high
+        for ( int i = 0; i < usedBytes * 8; i++ ) {
+            if ( ++bitOffset >= 8 ) {
+                bitOffset = 0;
+    //                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
+    //                        trackOffset = 0;
+    //                    }
+                trackOffset++;
+                trackOffset %= usedBytes;
+
+    //                    printf("offs:%u\n", trackOffset);
+                WOZread.data = woz_trks[track].data[trackOffset];
+            }
+            
+            WOZread.shift16 <<= 1;
+            if ( WOZread.valid ) {
+                uint8_t byte = WOZread.shift;
+    //                    printf("%02X ", byte);
+                WOZread.shift = 0;
+                if (outdev) fprintf(outdev, "byte: %02X\n", byte);
+                return byte;
+            }
         }
+        if (outdev) fprintf(outdev, "TIME OUT!\n");
     }
-    if (outdev) fprintf(outdev, "TIME OUT!\n");
+    
     return rand();
 
 #endif // WOZ_REAL_SPIN
@@ -294,11 +296,11 @@ uint8_t woz_read() {
 }
 
 
-void woz_loadFile( const char * bundlePath, const char * filename ) {
+void woz_loadFile( const char * resourcePath, const char * filename ) {
     
     char fullpath[256];
     
-    strcpy(fullpath, bundlePath);
+    strcpy(fullpath, resourcePath);
     strcat(fullpath, "/");
     strcat(fullpath, filename);
     

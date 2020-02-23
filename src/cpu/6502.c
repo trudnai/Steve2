@@ -897,7 +897,7 @@ void m6502_ColdReset( const char * bundlePath ) {
 
     
     // GAMES
-//woz_loadFile( bundlePath, "qbit.woz"); // Lode Runner, Hard Hat Mack, QBit, Crossfire, Heat Seaker, Flight Simulator
+//    woz_loadFile( bundlePath, "qbit.woz"); // Lode Runner, Hard Hat Mack, QBit, Crossfire, Heat Seaker, Flight Simulator
 //    woz_loadFile( bundlePath, "Donkey Kong.woz");
 
 /**///    woz_loadFile( bundlePath, "Crossfire.woz");
@@ -910,6 +910,7 @@ void m6502_ColdReset( const char * bundlePath ) {
     
     // SYSTEM
 /* Requires 64K *///    woz_loadFile( bundlePath, "ProDOS_312.woz");
+/* Requires Enhanced //e or later *///    woz_loadFile( bundlePath, "ProDOS_402_System.woz");
 
 //    woz_loadFile( bundlePath, "Merlin-8 v2.48 (DOS 3.3).woz");
     woz_loadFile( bundlePath, "Apple DOS 3.3 January 1983.woz");

@@ -14,14 +14,14 @@
 #include <string.h>
 #include <time.h>
 #include "6502.h"
-#include "woz.h"
+#include "../dev/disk/woz.h"
 
 
 void ViewController_spk_up_play(void);
 void ViewController_spk_dn_play(void);
 
 
-#include "common.h"
+#include "../util/common.h"
 
 
 #define SOFTRESET_VECTOR    0x3F2
@@ -43,12 +43,12 @@ unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
 unsigned long long tick_per_sec = G;
 unsigned long long tick_6502_per_sec = 0;
 
-INLINE unsigned long long rdtsc(void)
-{
-    unsigned hi, lo;
-    __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi) );
-    return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
-}
+//INLINE unsigned long long rdtsc(void)
+//{
+//    unsigned hi, lo;
+//    __asm__ __volatile__ ("rdtsc" : "=a"(lo), "=d"(hi) );
+//    return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
+//}
 
 m6502_t m6502 = {
     0,      // A
@@ -538,7 +538,7 @@ INLINE int m6502_Step() {
         case 0x75: ADC( src_zp_X() ); return 4;                        // ADC zpg,X
         case 0x76: ROR( dest_zp_X() ); return 6;                       // ROR zpg,X
 //            case 0x77:
-        case 0x78: SEI(); break;                                       // SEI
+        case 0x78: SEI(); return 2;                                    // SEI
         case 0x79: ADC( src_abs_Y() ); return 4;                       // ADC abs,Y
 //        case 0x7A:
 //        case 0x7B:
@@ -610,8 +610,8 @@ INLINE int m6502_Step() {
         case 0xBD: LDA( src_abs_X() ); return 4;                       // LDA abs,X
         case 0xBE: LDX( src_abs_Y() ); return 4;                       // LDX abs,Y
 //        case 0xBF:
-        case 0xC0: CPY( imm() ); break;                                // CPY imm
-        case 0xC1: CMP( src_X_ind() ) ; break;                         // LDA X,ind
+        case 0xC0: CPY( imm() ); return 2;                             // CPY imm
+        case 0xC1: CMP( src_X_ind() ) ; return 6;                      // LDA X,ind
 //        case 0xC2:
 //        case 0xC3:
         case 0xC4: CPY( src_zp() ); return 3;                          // CPY zpg
@@ -624,7 +624,7 @@ INLINE int m6502_Step() {
 //        case 0xCB:
         case 0xCC: CPY( src_abs() ); return 4;                         // CPY abs
         case 0xCD: CMP( src_abs() ); return 4;                         // CMP abs
-        case 0xCE: DEC( dest_abs() ); return 4;                        // DEC abs
+        case 0xCE: DEC( dest_abs() ); return 6;                        // DEC abs
 //        case 0xCF:
         case 0xD0: BNE( rel_addr() ); return 2;                        // BNE rel
         case 0xD1: CMP( src_ind_Y() ); return 5;                       // CMP ind,Y
@@ -672,7 +672,7 @@ INLINE int m6502_Step() {
 //        case 0xFB:
 //        case 0xFC:
         case 0xFD: SBC( src_abs_X() ); return 4;                       // SBC abs,X
-        case 0xFE: INC( dest_abs_X() ); return 6;                      // INC abs,X
+        case 0xFE: INC( dest_abs_X() ); return 7;                      // INC abs,X
 //            case 0xFF:
 
         default:
@@ -804,6 +804,11 @@ void m6502_Run() {
         
     }
     
+//    if ( m6502.clktime - disk.clk_last_access > clk_diskAcceleratorTimeout ) {
+        clk_6502_per_frm = clk_6502_per_frm_set;
+//    }
+    
+    
     //    clock_t end = clock();
     //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
 //    unsigned long long e = rdtsc();
@@ -814,10 +819,17 @@ void m6502_Run() {
 //    mhz = clktime / (execution_time * M);
 }
 
-void read_rom( const char * filename, uint8_t * rom, const uint16_t addr ) {
-    FILE * f = fopen(filename, "rb");
+void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, const uint16_t addr ) {
+    
+    char fullPath[256];
+    
+    strcpy( fullPath, bundlePath );
+    strcat(fullPath, "/");
+    strcat(fullPath, filename);
+        
+    FILE * f = fopen(fullPath, "rb");
     if (f == NULL) {
-        perror("Failed: ");
+        perror("Failed to read ROM: ");
         return;
     }
     
@@ -831,15 +843,17 @@ void read_rom( const char * filename, uint8_t * rom, const uint16_t addr ) {
 }
 
 
-void m6502_ColdReset() {
+void m6502_ColdReset( const char * bundlePath ) {
     inst_cnt = 0;
     mhz = (double)MHz_6502 / M;
+    
+    printf("Bundlepath: %s", bundlePath);
 
-    epoch = rdtsc();
-    sleep(1);
-    unsigned long long e = rdtsc();
-    tick_per_sec = e - epoch;
-    tick_6502_per_sec = tick_per_sec / MHz_6502;
+//    epoch = rdtsc();
+//    sleep(1);
+//    unsigned long long e = rdtsc();
+//    tick_per_sec = e - epoch;
+//    tick_6502_per_sec = tick_per_sec / MHz_6502;
     
     memset( RAM, 0, sizeof(Apple2_64K_RAM) );
     memset( RAM + 0xC000, 0, 0x1000 ); // I/O area should be 0
@@ -865,19 +879,42 @@ void m6502_ColdReset() {
 
 #else
     // Apple ][+ ROM
-    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", Apple2_12K_ROM, 0);
+    read_rom( bundlePath, "Apple2Plus.rom", Apple2_12K_ROM, 0);
+//    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "Apple2Plus.rom", Apple2_12K_ROM, 0);
+//    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", Apple2_12K_ROM, 0);
     memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
     // Disk ][ ROM in Slot 6
-    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
-    
+    read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
+//    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
+
     // WOZ DISK
 //    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS 3.3 System Master.woz");
 //    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Hard Hat Mack - Disk 1, Side A.woz");
 
 //    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Merlin-8 v2.48 (DOS 3.3).woz");
 //    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS3.3.Launcher.2.2.woz");
-    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple DOS 3.3 January 1983.woz");
+//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "Apple DOS 3.3 January 1983.woz");
 
+    
+    // GAMES
+//woz_loadFile( bundlePath, "qbit.woz"); // Lode Runner, Hard Hat Mack, QBit, Crossfire, Heat Seaker, Flight Simulator
+//    woz_loadFile( bundlePath, "Donkey Kong.woz");
+
+/**///    woz_loadFile( bundlePath, "Crossfire.woz");
+//    woz_loadFile( bundlePath, "Lode Runner.woz");
+/**///    woz_loadFile( bundlePath, "Sneakers.woz");
+/**///    woz_loadFile( bundlePath, "Wavy Navy.woz");
+/**///    woz_loadFile( bundlePath, "Xonix.woz");
+/**///    woz_loadFile( bundlePath, "Hard Hat Mack - Disk 1, Side A.woz");
+
+    
+    // SYSTEM
+/* Requires 64K *///    woz_loadFile( bundlePath, "ProDOS_312.woz");
+
+//    woz_loadFile( bundlePath, "Merlin-8 v2.48 (DOS 3.3).woz");
+    woz_loadFile( bundlePath, "Apple DOS 3.3 January 1983.woz");
+
+    
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
     m6502.SP = 0xFF; //-3;
@@ -1004,10 +1041,10 @@ void tst6502() {
     // insert code here...
     printf("6502\n");
     
-    m6502_ColdReset();
+    m6502_ColdReset( "" );
     
     //    clock_t start = clock();
-    epoch = rdtsc();
+//    epoch = rdtsc();
     m6502_Run();
     //    clock_t end = clock();
     //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;

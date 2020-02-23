@@ -10,7 +10,7 @@
 #define __6502_H__
 
 #include <stdint.h>
-#include "common.h"
+#include "../../src/util/common.h"
 
 
 extern unsigned long long MHz_6502;
@@ -92,6 +92,21 @@ typedef struct disassembly_s {
 } disassembly_t;
 
 
+typedef union videoMode_u {
+    struct {
+        uint8_t text : 1;       // 0: graphics 1: text
+        uint8_t col80 : 1;      // 0: 40 col   1: 80 col
+        uint8_t altChr : 1;     // 0: normal   1: alternate character set
+        uint8_t mixed : 1;      // 0: no mix   1: mixed graphics and text when in graphics mode
+        uint8_t hires : 1;      // 0: loRes    1: hiRes
+        uint8_t page : 1;       // 0: page 1   1: page 2 (aux video memory)
+    };
+    uint8_t mode;
+} videoMode_t;
+
+extern videoMode_t videoMode;
+
+
 extern m6502_t m6502;
 extern uint8_t * RAM;
 extern uint32_t * videoMemPtr;
@@ -101,12 +116,13 @@ extern void hires_Update(void);
 extern double mips;
 extern double mhz;
 
-#define fps 15
+#define fps 30
 
 extern void tst6502(void);
-extern void m6502_ColdReset(void);
+extern void m6502_ColdReset( const char * bundlePath );
 extern void m6502_Run(void);
 extern void kbdInput ( uint8_t code );
+extern void setIO ( uint16_t ioaddr, uint8_t val );
 
 
 

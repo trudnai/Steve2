@@ -120,7 +120,7 @@ extern uint8_t   WOZlatch;
 
 
 extern uint8_t woz_read(void);
-extern void woz_loadFile( const char * filename );
+extern void woz_loadFile( const char * bundlePath, const char * filename );
 
 
 #endif /* woz_h */

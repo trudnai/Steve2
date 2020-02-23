@@ -24,6 +24,8 @@ typedef union address16_u {
 } address16_t;
 
 
+videoMode_t videoMode = { 1 }; // 40 col text, page 1
+
 
 uint8_t Apple2_Dummy_Page[ 1 * PG ];        // Dummy Page for discarding data
 uint8_t Apple2_512_AUX[  2 * PG ] = {0};    // Auxiliary bank for page 0 and 1
@@ -178,11 +180,35 @@ struct MEMcfg_s {
 } MEMcfg = { 1, 0, 0, 0, 0 };
 
 enum mmio {
+    // Keyboard
     io_KBD              = 0xC000,
     io_KBDSTRB          = 0xC010,
 
+    // Audio
     io_SPKR             = 0xC030,
+    
+    // Video
+    io_VID_80col_OFF    = 0xC00C,
+    io_VID_80col_ON     = 0xC00D,
+    io_VID_AltChar_OFF  = 0xC00E,
+    io_VID_AltChar_ON   = 0xC00F,
+    io_VID_Text_OFF     = 0xC050,
+    io_VID_Text_ON      = 0xC051,
+    io_VID_Mixed_OFF    = 0xC052,
+    io_VID_Mixed_ON     = 0xC053,
+    io_VID_Page2_OFF    = 0xC054,
+    io_VID_Page2_ON     = 0xC055,
+    io_VID_Hires_OFF    = 0xC056,
+    io_VID_Hires_ON     = 0xC057,
 
+    // Game Controller
+    io_PDL0             = 0xC064,
+    io_PDL1             = 0xC065,
+    io_PDL2             = 0xC066,
+    io_PDL3             = 0xC067,
+    io_PDL_STROBE       = 0xC070,
+
+    // Disk ][
     io_DISK_PHASE0_OFF  = 0xC080,
     io_DISK_PHASE0_ON   = 0xC081,
     io_DISK_PHASE1_OFF  = 0xC082,
@@ -200,6 +226,7 @@ enum mmio {
     io_DISK_CLEAR       = 0xC08E,
     io_DISK_SHIFT       = 0xC08F,
 
+    // Memory
     io_MEM_RDRAM_NOWR_2 = 0xC080,
     io_MEM_RDROM_WRAM_2 = 0xC081,
     io_MEM_RDROM_NOWR_2 = 0xC082,
@@ -239,6 +266,64 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
             return RAM[io_SPKR];
 
+        case io_VID_80col_OFF:
+            videoMode.col80 = 0;
+            break;
+            
+        case io_VID_80col_ON:
+            videoMode.col80 = 1;
+            break;
+            
+        case io_VID_AltChar_OFF:
+            videoMode.altChr = 0;
+            break;
+            
+        case io_VID_AltChar_ON:
+            videoMode.altChr = 1;
+            break;
+            
+        case io_VID_Text_OFF:
+            videoMode.text = 0;
+            break;
+            
+        case io_VID_Text_ON:
+            videoMode.text = 1;
+            break;
+            
+        case io_VID_Mixed_OFF:
+            videoMode.mixed = 0;
+            break;
+            
+        case io_VID_Mixed_ON:
+            videoMode.mixed = 1;
+            break;
+            
+        case io_VID_Page2_OFF:
+            videoMode.page = 0;
+            break;
+            
+        case io_VID_Page2_ON:
+            videoMode.page = 1;
+            break;
+            
+        case io_VID_Hires_OFF:
+            videoMode.hires = 0;
+            break;
+            
+        case io_VID_Hires_ON:
+            videoMode.hires = 1;
+            break;
+            
+            
+        case io_PDL0:
+        case io_PDL1:
+        case io_PDL2:
+        case io_PDL3:
+//            if ( RAM[addr] > 127 ) {
+//                RAM[addr]--;
+//            }
+            return RAM[addr];
+            
         case io_MEM_RDRAM_NOWR_2:
         case io_MEM_RDROM_WRAM_2:
         case io_MEM_RDROM_NOWR_2:
@@ -380,6 +465,11 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 }
 
 
+void setIO ( uint16_t ioaddr, uint8_t val ) {
+    RAM[ioaddr] = val;
+}
+
+
 void kbdInput ( uint8_t code ) {
 //    printf("kbdInput: %02X ('%c')\n", code, isprint(code) ? code : ' ');
     switch ( code ) {
@@ -397,7 +487,7 @@ void kbdInput ( uint8_t code ) {
     
     code |= 0x80;
     
-    while ( RAM[io_KBD] > 0x7F ) {
+    for( int i = 1000; i && ( RAM[io_KBD] > 0x7F ); --i ) {
         usleep(10);
     }
 
@@ -483,6 +573,11 @@ static  void memwrite( uint16_t addr, uint8_t byte ) {
  **/
 INLINE uint8_t fetch() {
     disHexB( disassembly.pOpcode, RAM[m6502.PC] );
+#ifdef CLK_ABSOLUTE_PRECISE
+    if ( (m6502.PC & 0xFF) >= 0xFF ) {
+        m6502.clktime++;
+    }
+#endif
     return memread( m6502.PC++ );
 }
 
@@ -493,6 +588,11 @@ INLINE uint8_t fetch() {
 INLINE uint16_t fetch16() {
     uint16_t word = memread16( m6502.PC );
     // disPrintf(disassembly.comment, "fetch16:%04X", word);
+    #ifdef CLK_ABSOLUTE_PRECISE
+    if ( (m6502.PC & 0xFF) >= 0xFE ) {
+        m6502.clktime++;
+    }
+    #endif
     m6502.PC += 2;
     disHexW( disassembly.pOpcode, word );
     return word;

@@ -10,8 +10,13 @@
 #define __6502_INSTR_BRANCH_H__
 
 INLINE void BRA( int8_t reladdr ) {
+    uint8_t pg = m6502.PC >> 8;
     m6502.PC += reladdr;
+#ifdef CLK_ABSOLUTE_PRECISE
+    m6502.clktime += m6502.PC >> 8 == pg ? 1 : 2;
+#else
     m6502.clktime++;
+#endif
 #ifdef DEBUG
     if ( reladdr == -2 ) {
         dbgPrintf2("Infinite Loop at %04X!\n", m6502.PC);

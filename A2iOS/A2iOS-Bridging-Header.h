@@ -1,5 +1,5 @@
 //
-//  A2Mac-Bridging-Header.h
+//  A2iOS-Bridging-Header.h
 //  A2Mac
 //
 //  Created by Tamas Rudnai on 2/17/20.
@@ -9,11 +9,12 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#ifndef A2Mac_Bridging_Header_h
-#define A2Mac_Bridging_Header_h
+#ifndef A2iOS_Bridging_Header_h
+#define A2iOS_Bridging_Header_h
 
 
 #import "6502.h"
+#import "disk.h"
 
 
-#endif /* A2Mac_Bridging_Header_h */
+#endif /* A2iOS_Bridging_Header_h */

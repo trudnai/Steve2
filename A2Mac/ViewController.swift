@@ -112,7 +112,7 @@ class ViewController: NSViewController {
             DispatchQueue.global().async(execute: workItem!);
         }
         #else
-        m6502_ColdReset()
+        m6502_ColdReset( Bundle.main.resourcePath )
         #endif
     }
     
@@ -130,14 +130,61 @@ class ViewController: NSViewController {
     }
     
     
+    static let textBaseAddr = 0x400
+    static let textBufferSize = 0x400
+    let textLines = 24
+    let textCols = 40
+    let lineEndChars = 1
+    
+    var frameCnt = 0
+//    let spaceChar : Character = "\u{E17F}"
+//    let blockChar : Character = "\u{E07F}"
+    let spaceChar : Character = " "
+    let blockChar : Character = "░"
+    var flashingSpace : Character = " "
+    
+    let ramBufferPointer = UnsafeRawBufferPointer(start: RAM, count: 64 * 1024)
+    let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize)
+    var txtClear = [Character](repeating: " ", count: textBufferSize)
+    var txtArr = [Character](repeating: " ", count: textBufferSize)
+
+    var s = String()
+    
+    func HexDump() {
+        var txt : String = ""
+        
+        for y in 0...textLines - 1 {
+            txt += String(format: "%04X: ", y * 16)
+            for x in 0...15 {
+                let byte = ramBufferPointer[ y * 16 + x ]
+                let chr = String(format: "%02X ", byte)
+                txt += chr
+            }
+            txt += "\n"
+        }
+        
+        DispatchQueue.main.async {
+            self.display.stringValue = txt
+            self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+        }
+    }
+    
+    
     // AppleScript Keycodes
     let leftArrowKey = 123
     let rightArrowKey = 124
     let upArrowKey = 126
     let downArrowKey = 125
+    
+    var ddd = 9;
 
     override func keyDown(with event: NSEvent) {
-//        print("KBD Event")
+        print("KBD Event")
+        
+        for i in 0...65536 {
+            ddd = Int(event.keyCode) + i
+        }
+        ddd = ddd * 2
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.command] where event.characters == "l",
 //             [.command, .shift] where event.characters == "l":
@@ -154,12 +201,20 @@ class ViewController: NSViewController {
         switch keyCode {
         case leftArrowKey:
             kbdInput(0x08)
+            setIO(0xC064, 0);
+            print("LEFT", ddd);
         case rightArrowKey:
             kbdInput(0x15)
-        case leftArrowKey:
+            setIO(0xC064, 255);
+            print("RIGHT")
+        case downArrowKey:
             kbdInput(0x0B)
-        case rightArrowKey:
+            setIO(0xC065, 255);
+            print("DOWN")
+        case upArrowKey:
             kbdInput(0x0A)
+            setIO(0xC065, 0);
+            print("UP")
         default:
 //            print("keycode: %d", keyCode)
             if let chars = event.characters {
@@ -173,6 +228,51 @@ class ViewController: NSViewController {
         
     }
     
+    override func keyUp(with event: NSEvent) {
+        print("KBD Event")
+//        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+//        case [.command] where event.characters == "l",
+//             [.command, .shift] where event.characters == "l":
+//            print("command-l or command-shift-l")
+//        default:
+//            break
+//        }
+//        print( "key = " + (event.charactersIgnoringModifiers ?? ""))
+//        print( "\ncharacter = " + (event.characters ?? ""))
+        
+        #if FUNCTIONTEST
+        #else
+        let keyCode = Int(event.keyCode)
+        switch keyCode {
+        case leftArrowKey:
+//            kbdInput(0x08)
+            setIO(0xC064, 127);
+            print("left")
+        case rightArrowKey:
+//            kbdInput(0x15)
+            setIO(0xC064, 128);
+            print("right")
+        case downArrowKey:
+//            kbdInput(0x0B)
+            setIO(0xC065, 127);
+            print("down")
+        case upArrowKey:
+//            kbdInput(0x0A)
+            setIO(0xC065, 128);
+            print("up")
+        default:
+//            print("keycode: %d", keyCode)
+//            if let chars = event.characters {
+//                let char = chars.uppercased()[chars.startIndex]
+//                if let ascii = char.asciiValue {
+//                    kbdInput(ascii)
+//                }
+//            }
+            break
+        }
+        #endif
+        
+    }
 //    override func flagsChanged(with event: NSEvent) {
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.shift]:
@@ -210,43 +310,7 @@ class ViewController: NSViewController {
 //        }
 //    }
 
-    static let textBaseAddr = 0x400
-    static let textBufferSize = 0x400
-    let textLines = 24
-    let textCols = 40
-    let lineEndChars = 1
-    
-    var frameCnt = 0
-//    let spaceChar : Character = "\u{E17F}"
-//    let blockChar : Character = "\u{E07F}"
-    let spaceChar : Character = " "
-    let blockChar : Character = "░"
-    var flashingSpace : Character = " "
-    
-    let ramBufferPointer = UnsafeRawBufferPointer(start: RAM, count: 64 * 1024)
-    let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize)
-    var txtArr = [Character](repeating: " ", count: textBufferSize)
-    
-    var s = String()
-    
-    func HexDump() {
-        var txt : String = ""
-        
-        for y in 0...textLines - 1 {
-            txt += String(format: "%04X: ", y * 16)
-            for x in 0...15 {
-                let byte = ramBufferPointer[ y * 16 + x ]
-                let chr = String(format: "%02X ", byte)
-                txt += chr
-            }
-            txt += "\n"
-        }
-        
-        DispatchQueue.main.async {
-            self.display.stringValue = txt
-            self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
-        }
-    }
+
     
     
     var was = 0;
@@ -277,42 +341,36 @@ class ViewController: NSViewController {
         
         var txt : String = ""
         
-        for y in 0...textLines-1 {
-//            let textAddr = textBaseAddr + textLineOfs[y]
-            
-//            let linePointer = UnsafeMutableRawPointer( mutating: &RAM + textBaseAddr + y * textCols ) //( start: &RAM + 0x400, count: 0x400)
-//            let lineStr = String(bytesNoCopy: linePointer, length: textCols, encoding: .ascii, freeWhenDone: false)!
-//            txt += lineStr + "\n"
+        var fromLines = 0
+        var toLines = textLines
 
-            for x in 0...textCols-1 {
+        if videoMode.text == 0 {
+            if videoMode.mixed == 1 {
+                fromLines = toLines - 4
+            }
+            else {
+                toLines = 0
+            }
+        }
+
+        txtArr = txtClear
+        
+        for y in fromLines ..< toLines {
+            for x in 0 ..< textCols {
                 let byte = textBufferPointer[ textLineOfs[y] + x ]
                 let idx = Int(byte);
                 let chr = ViewController.charConvTbl[idx]
+
                 // is it a cursor? (slashing space)
 //                if ( chr == "blockChar" ) {
 //                    chr = flashingSpace
 //                }
-    //            print("byte \(index): \(chr)")
-//                txt = txt + "\(chr)"
+
                 txtArr[ y * (textCols + lineEndChars) + x ] = chr
             }
-            
-
-//            for (_, byte) in textBufferPointer.enumerated() {
-//                let idx = Int(byte);
-//                var chr = ViewController.charConvTbl[idx]
-//                // is it a cursor? (slashing space)
-//                if ( chr == blockChar ) {
-//                    chr = flashingSpace
-//                }
-//    //            print("byte \(index): \(chr)")
-//                txt = txt + "\(chr)"
-//            }
-            
-//            txt = txt + "\n"
             txtArr[ y * (textCols + lineEndChars) + textCols ] = "\n"
         }
-//        txtArr[ textLines * (textCols+1) + textCols ] = "\0"
+
         txt = String(txtArr)
 
         DispatchQueue.main.async {
@@ -362,6 +420,10 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        for y in 0 ... textLines - 1 {
+            txtClear[ y * (textCols + lineEndChars) + textCols ] = "\n"
+        }
+
         
         let spk_up_path = Bundle.main.path(forResource: "spk_up", ofType:"wav")!
         let spk_up_url = URL(fileURLWithPath: spk_up_path)

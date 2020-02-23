@@ -18,12 +18,17 @@ class HiRes: NSView {
     static let PixelWidth  = 280
     static let PixelMixedHeight = 160
     static let PixelHeight = 192
+    static let MixedTextHeight = 4
+    static let MixedHeight = 160
     static let blockRows = 24
     static let blockCols = 40
     static let blockWidth = PixelWidth / blockCols
     static let blockHeight = PixelHeight / blockRows
 
-    let HiResBufferPointer = UnsafeRawBufferPointer(start: RAM + Page1Addr, count: PageSize * 2)
+    let HiResBuffer1 = UnsafeRawBufferPointer(start: RAM + Page1Addr, count: PageSize * 2)
+    let HiResBuffer2 = UnsafeRawBufferPointer(start: RAM + Page2Addr, count: PageSize * 2)
+    var HiResBufferPointer = UnsafeRawBufferPointer(start: RAM + Page1Addr, count: PageSize * 2)
+    
     let HiResRawPointer = UnsafeRawPointer(RAM + Page1Addr)
 
     #if METAL_YES
@@ -179,6 +184,7 @@ class HiRes: NSView {
 
 
     func render() {
+        
         guard let drawable = metalLayer?.nextDrawable() else { return }
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -459,48 +465,168 @@ class HiRes: NSView {
         let boundingBox = CGRect(x: 0, y: 0, width: CGFloat(HiRes.PixelWidth), height: CGFloat(HiRes.PixelHeight))
         currentContext!.draw  (image, in: boundingBox)
     }
-    #elseif HIRESDRAW
+    #elseif HIRESDRAWCOLOR
+    
+    let colorPalette : [NSColor] = [
+        NSColor(calibratedRed: 0.0000, green: 0.000, blue: 0.000, alpha: 0.0), // black
+        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0), // green
+        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0), // purple
+        NSColor(calibratedRed: 1.0000, green: 1.000, blue: 1.000, alpha: 1.0), // white
+        NSColor(calibratedRed: 0.0000, green: 0.000, blue: 0.000, alpha: 0.0), // black
+        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0), // orange
+        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0), // blue
+        NSColor(calibratedRed: 1.0000, green: 1.000, blue: 1.000, alpha: 1.0), // white
+    ]
+    
+    let path = NSBezierPath()
+    
     override func draw(_ rect: CGRect) {
 //        NSColor.green.setFill()
-        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 0.5).setStroke()
+        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0).setStroke()
 
-        let path = NSBezierPath()
-        path.lineWidth=1
+        path.removeAllPoints()
+        path.lineWidth = 0.7
         path.move(to: NSPoint(x: 0, y: 0))
         
 //        path.appendRect(NSRect(x: 0, y: 0, width: 10, height: 10))
 
         for y in 0 ..< HiRes.PixelHeight {
+            var color : UInt = 0
+            var lastColor : UInt = 0
+            path.move(to: NSPoint(x: 0, y: y))
+
+            // for color screen we need to process blocks in a pair
+            for blockX in 0 ..< HiRes.blockCols / 2 {
+                
+                let lineAddr = HiResLineAddrTbl[y]
+                var x = blockX * HiRes.blockWidth * 2
+
+                var block0 = UInt(HiResBufferPointer[ Int(lineAddr + blockX * 2) + 0 ])
+                var block1 = UInt(HiResBufferPointer[ Int(lineAddr + blockX * 2) + 1 ])
+                let b70 : UInt = (block0 & 0x80) >> 5
+                let b71 : UInt = (block1 & 0x80) >> 5
+                
+                var block7 : [UInt] = [0,0,0,0,0,0,0]
+                var i = 0
+                
+                for _ in 0 ... 2 {
+                    block7[i]  = b70
+                    block7[i] |= block0 & 3
+                    block0 >>= 2
+                    i += 1
+                }
+
+                block7[i]  = b70
+                block7[i] |= ((block0 & 1) << 1) | (block1 & 1)
+                block1 >>= 1
+                i += 1
+                
+                for _ in 0 ... 2 {
+                    block7[i]  = b71
+                    block7[i] |= block1 & 3
+                    block1 >>= 2
+                    i += 1
+                }
+
+
+                for px in 0 ... 6 { // stride(from: 0, through: 6, by: 1) {
+                    color = block7[px]
+                    if (color != lastColor) {
+                        colorPalette[Int(color)].setStroke()
+                        path.line(to: NSPoint(x: x, y: y))
+                        path.stroke()
+                        path.removeAllPoints()
+                        lastColor = color
+                    }
+                    
+                    x += 1
+                }
+            } // x
+            // make sure we close the path at the end of the horizontal line
+            if (color != lastColor) {
+                path.line(to: NSPoint(x: 279, y: y))
+                lastColor = color
+            }
+        }
+//        path.fill()
+        
+        path.stroke()
+
+    }
+    #elseif HIRESDRAW
+    let path = NSBezierPath()
+    override func draw(_ rect: CGRect) {
+        
+    //        self.hidden = videoMode.text == 1
+        
+//        NSColor.green.setFill()
+        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0).setStroke()
+
+        path.removeAllPoints()
+        path.lineWidth=0.7
+        path.move(to: NSPoint(x: 0, y: 0))
+        
+//        path.appendRect(NSRect(x: 0, y: 0, width: 10, height: 10))
+        
+        var height = HiRes.PixelHeight
+
+        // do not even render it...
+        if videoMode.text == 1 {
+            return
+        }
+        else {
+            if videoMode.mixed == 1 {
+                height = HiRes.MixedHeight
+            }
+            if videoMode.page == 1 {
+                HiResBufferPointer = HiResBuffer2
+            }
+            else {
+                HiResBufferPointer = HiResBuffer1
+            }
+        }
+
+        for y in 0 ..< height {
             var inX = false
             path.move(to: NSPoint(x: 0, y: y))
 
             for blockX in 0 ..< HiRes.blockCols {
                 
                 let lineAddr = HiResLineAddrTbl[y]
-                let block = Int(HiResBufferPointer[ Int(lineAddr + blockX) ])
+                let block = UInt(HiResBufferPointer[ Int(lineAddr + blockX) ])
 
     //                    if( shadowScreen[ screenIdx ] != block ) {
     //                        shadowScreen[ screenIdx ] = block
     //
                 var x = blockX * HiRes.blockWidth
-                for bit in stride(from: 0, through: 6, by: 1) {
-                    let bitMask = 1 << bit
-                    if (block & bitMask) == 0 {
-                        if inX {
-                            inX = false
-                            path.line(to: NSPoint(x: x, y: 192-y))
+                if block != 0 && block != 0x80 {
+                    for bit in 0 ... 6 { // stride(from: 0, through: 6, by: 1) {
+                        let bitMask : UInt = 1 << bit
+                        if (block & bitMask) == 0 {
+                            if inX {
+                                inX = false
+                                path.line(to: NSPoint(x: x, y: 192-y))
+                            }
                         }
-                    }
-                    else { // 28CD41
-                        if ( inX == false ) {
-                            inX = true
-                            path.move(to: NSPoint(x: x, y: 192-y))
+                        else { // 28CD41
+                            if ( inX == false ) {
+                                inX = true
+                                path.move(to: NSPoint(x: x, y: 192-y))
+                            }
                         }
+                        
+                        x += 1
                     }
-                    
-                    x += 1
+                }
+                else {
+                    // make sure we close the path if the next block is completely zero
+                    if inX {
+                        inX = false
+                        path.line(to: NSPoint(x: x, y: 192-y))
+                    }
                 }
             } // x
+            // make sure we close the path at the end of the horizontal line
             if inX {
                 inX = false
                 path.line(to: NSPoint(x: 279, y: 192-y))

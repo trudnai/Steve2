@@ -7,6 +7,7 @@
 //
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "woz.h"
 #include "disk.h"
@@ -85,13 +86,12 @@ uint8_t woz_read() {
         return rand();
     }
     
+#ifdef WOZ_REAL_SPIN
     if ( track != track_loaded ) {
         woz_loadTrack(track);
         track_loaded = track;
     }
 
-#ifdef WOZ_REAL_SPIN
-    
     WOZread.shift32 = 0;
     bitOffset = (m6502.clktime >> 2) & 7;
     trackOffset = (m6502.clktime >> 5) % WOZ_TRACK_BYTE_COUNT;
@@ -253,23 +253,25 @@ uint8_t woz_read() {
 #else // WOZ_REAL_SPIN
     clkelpased = m6502.clktime - m6502.clklast;
     m6502.clklast = m6502.clktime;
+    
+    uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
 
     if ( clkelpased > 100 ) {
 //        printf("NEED SYNC : %llu\n", clkelpased);
         bitOffset = (clkelpased >> 2) & 7;
-        trackOffset += ((clkelpased >> 5) +100) % WOZ_TRACK_BYTE_COUNT;
+        trackOffset += ((clkelpased >> 5) +100) % usedBytes;
         WOZread.data = woz_trks[track].data[trackOffset];
     }
 
     // to avoid infinite loop and to search for bit 7 high
-    for ( int i = 0; i < WOZ_TRACK_BYTE_COUNT * 8; i++ ) {
+    for ( int i = 0; i < usedBytes * 8; i++ ) {
         if ( ++bitOffset >= 8 ) {
             bitOffset = 0;
 //                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
 //                        trackOffset = 0;
 //                    }
             trackOffset++;
-            trackOffset %= WOZ_TRACK_BYTE_COUNT;
+            trackOffset %= usedBytes;
 
 //                    printf("offs:%u\n", trackOffset);
             WOZread.data = woz_trks[track].data[trackOffset];
@@ -292,10 +294,17 @@ uint8_t woz_read() {
 }
 
 
-void woz_loadFile( const char * filename ) {
-    FILE * f = fopen(filename, "rb");
+void woz_loadFile( const char * bundlePath, const char * filename ) {
+    
+    char fullpath[256];
+    
+    strcpy(fullpath, bundlePath);
+    strcat(fullpath, "/");
+    strcat(fullpath, filename);
+    
+    FILE * f = fopen(fullpath, "rb");
     if (f == NULL) {
-        perror("Failed: ");
+        perror("Failed to read WOZ: ");
         return;
     }
     

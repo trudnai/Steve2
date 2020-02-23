@@ -9,7 +9,7 @@
 #ifndef disk_h
 #define disk_h
 
-#include "common.h"
+#include "../../util/common.h"
 
 
 #define minDiskTrackNum      0
@@ -52,8 +52,10 @@ extern disk_t disk;
 
 extern const int magnet_to_Poistion[16];
 extern const int position_to_direction[8][8];
-extern const unsigned long long clk_6502_per_frm_diskAccelerator;
-extern const unsigned long long clk_diskAcceleratorTimeout;
+
+extern int diskAccelerator_speed; // 0 means no acceleration
+//extern const unsigned long long clk_6502_per_frm_diskAccelerator;
+//extern const unsigned long long clk_diskAcceleratorTimeout;
 
 extern void disk_phase(void);
 extern uint8_t disk_read(void);

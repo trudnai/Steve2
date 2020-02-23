@@ -76,8 +76,8 @@ m6502_t m6502 = {
 
 disassembly_t disassembly;
 
-#include "disassembler.h"
-#include "mmio.h"
+#include "../util/disassembler.h"
+#include "../dev/mem/mmio.h"
 
 uint16_t videoShadow [0x1000];
 uint32_t videoMem [0x2000];

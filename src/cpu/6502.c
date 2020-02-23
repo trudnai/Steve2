@@ -913,7 +913,7 @@ void m6502_ColdReset( const char * bundlePath ) {
 /* Requires Enhanced //e or later *///    woz_loadFile( bundlePath, "ProDOS_402_System.woz");
 
 //    woz_loadFile( bundlePath, "Merlin-8 v2.48 (DOS 3.3).woz");
-    woz_loadFile( bundlePath, "Apple DOS 3.3 January 1983.woz");
+//    woz_loadFile( bundlePath, "Apple DOS 3.3 January 1983.woz");
 
     
     m6502.A = m6502.X = m6502.Y = 0xFF;

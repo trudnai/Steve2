@@ -424,6 +424,8 @@ class ViewController: NSViewController {
             txtClear[ y * (textCols + lineEndChars) + textCols ] = "\n"
         }
 
+        woz_loadFile( Bundle.main.resourcePath, "Apple DOS 3.3 January 1983.woz" )
+
         
         let spk_up_path = Bundle.main.path(forResource: "spk_up", ofType:"wav")!
         let spk_up_url = URL(fileURLWithPath: spk_up_path)

@@ -626,6 +626,12 @@
                                                             <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="c8a-9v-oR4"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="Sneakers" identifier="Sneakers" id="iAb-YK-Q8d">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="zhC-rp-mN0"/>
+                                                        </connections>
+                                                    </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>
@@ -797,6 +803,11 @@
                             <customView canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="8" width="568" height="384"/>
                             </customView>
+                            <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M1E-lz-4q8">
+                                <rect key="frame" x="20" y="8" width="564" height="382"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="NSQuickLookTemplate" id="Zax-kI-rxd"/>
+                            </imageView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mfd-12-bcR">
                                 <rect key="frame" x="594" y="362" width="82" height="32"/>
                                 <constraints>
@@ -989,4 +1000,7 @@
             <point key="canvasLocation" x="241" y="1071"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="NSQuickLookTemplate" width="19" height="12"/>
+    </resources>
 </document>

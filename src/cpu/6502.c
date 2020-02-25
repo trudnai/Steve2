@@ -36,7 +36,7 @@ unsigned long long int inst_cnt = 0;
 //const unsigned int fps = 30;
 const unsigned long long default_MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
 unsigned long long MHz_6502 = default_MHz_6502;
-unsigned long long clk_6502_per_frm = default_MHz_6502 / fps;
+unsigned long long clk_6502_per_frm =  25 * M; //default_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
 
 
@@ -804,9 +804,13 @@ void m6502_Run() {
         
     }
     
-//    if ( m6502.clktime - disk.clk_last_access > clk_diskAcceleratorTimeout ) {
-        clk_6502_per_frm = clk_6502_per_frm_set;
-//    }
+    if( diskAccelerator_count ) {
+        if( --diskAccelerator_count <= 0 ) {
+            // make sure we only adjust clock once to get back to normal
+            diskAccelerator_count = 0;
+            clk_6502_per_frm = clk_6502_per_frm_set;
+        }
+    }
     
     
     //    clock_t end = clock();

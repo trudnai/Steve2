@@ -17,7 +17,9 @@ disk_t disk = {
     0,              // clk_since_last_read
 };
 
-int diskAccelerator_speed = 25; // 0 means no acceleration
+const int diskAccelerator_frames  = 2;
+int diskAccelerator_count = 10;
+int diskAccelerator_speed = 25; // less than actual CPU speed means no acceleration
 //const unsigned long long clk_6502_per_frm_diskAccelerator = 25 * M / fps; // disk acceleration bumps up CPU clock to 25 MHz
 //const unsigned long long clk_diskAcceleratorTimeout = 1000ULL;
 
@@ -65,6 +67,7 @@ void disk_phase() {
         if ( diskAccelerator_speed > clk_6502_per_frm ) {
 //            clk_6502_per_frm = clk_6502_per_frm_diskAccelerator;
             clk_6502_per_frm = diskAccelerator_speed * M / fps;  // clk_6502_per_frm_diskAccelerator;
+            diskAccelerator_count = diskAccelerator_frames;
         }
 
     }
@@ -81,6 +84,7 @@ uint8_t disk_read() {
     disk.clk_last_access = m6502.clktime;
     if ( diskAccelerator_speed > 2 ) {
         clk_6502_per_frm = diskAccelerator_speed * M / fps;  // clk_6502_per_frm_diskAccelerator;
+        diskAccelerator_count = diskAccelerator_frames;
     }
     
     return woz_read();

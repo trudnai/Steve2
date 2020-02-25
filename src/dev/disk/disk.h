@@ -53,7 +53,10 @@ extern disk_t disk;
 extern const int magnet_to_Poistion[16];
 extern const int position_to_direction[8][8];
 
-extern int diskAccelerator_speed; // 0 means no acceleration
+extern const int diskAccelerator_frames;    // number of frames disk acceleration will be on
+extern int diskAccelerator_count;           // counter for the disk acceleration frames
+extern int diskAccelerator_speed;           // if less than the actual CPU speed, no acceleration
+
 //extern const unsigned long long clk_6502_per_frm_diskAccelerator;
 //extern const unsigned long long clk_diskAcceleratorTimeout;
 

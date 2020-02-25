@@ -142,7 +142,7 @@ class HiRes: NSView {
         scaleUnitSquare(to: NSSize(width: scaleSizeW, height: scaleSizeH))
         
         // create smaller box views for draw optimization
-        //createHiRes()
+        createHiRes()
         
         #if METAL_YES
         initMetal()
@@ -385,7 +385,7 @@ class HiRes: NSView {
         }
     }
 
-    #if HIRESLOW
+    #if HIRESLOW || HIRESLOWCOLOR
     static let ScreenBitmapSize = (PixelWidth * PixelHeight * 4)
     static let context = createBitmapContext(pixelsWide: PixelWidth, PixelHeight)
     static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)  // UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: byteCount)
@@ -439,7 +439,7 @@ class HiRes: NSView {
                             HiRes.pixels[pixelAddr + R] = 0x08;
                             HiRes.pixels[pixelAddr + G] = 0xA2;
                             HiRes.pixels[pixelAddr + B] = 0x12;
-                            HiRes.pixels[pixelAddr + A] = 0x7F;
+                            HiRes.pixels[pixelAddr + A] = 0xFF;
                         }
 
                         if ( minX > x ) { minX = x }
@@ -465,6 +465,149 @@ class HiRes: NSView {
         let boundingBox = CGRect(x: 0, y: 0, width: CGFloat(HiRes.PixelWidth), height: CGFloat(HiRes.PixelHeight))
         currentContext!.draw  (image, in: boundingBox)
     }
+    
+    #elseif HIRESLOWCOLOR
+    
+    func hiresColorPixel ( pixelAddr : Int, pixel : Int ) {
+        switch ( pixel ) {
+        case 0x00: // black
+            HiRes.pixels[pixelAddr + R] = 0x00;
+            HiRes.pixels[pixelAddr + G] = 0x00;
+            HiRes.pixels[pixelAddr + B] = 0x00;
+            HiRes.pixels[pixelAddr + A] = 0x00;
+            
+        case 0x01: // purple (bits are in reverse!)
+            HiRes.pixels[pixelAddr + R] = 0xBB;
+            HiRes.pixels[pixelAddr + G] = 0x11;
+            HiRes.pixels[pixelAddr + B] = 0xEE;
+            HiRes.pixels[pixelAddr + A] = 0xFF;
+
+        case 0x02: // green
+            HiRes.pixels[pixelAddr + R] = 0x08;
+            HiRes.pixels[pixelAddr + G] = 0xA2;
+            HiRes.pixels[pixelAddr + B] = 0x12;
+            HiRes.pixels[pixelAddr + A] = 0xFF;
+
+        case 0x03: // white
+            HiRes.pixels[pixelAddr + R] = 0xFF;
+            HiRes.pixels[pixelAddr + G] = 0xFF;
+            HiRes.pixels[pixelAddr + B] = 0xFF;
+            HiRes.pixels[pixelAddr + A] = 0xFF;
+            
+        case 0x04: // black 2
+            HiRes.pixels[pixelAddr + R] = 0x00;
+            HiRes.pixels[pixelAddr + G] = 0x00;
+            HiRes.pixels[pixelAddr + B] = 0x00;
+            HiRes.pixels[pixelAddr + A] = 0x00;
+            
+        case 0x05: // blue
+            HiRes.pixels[pixelAddr + R] = 0x11;
+            HiRes.pixels[pixelAddr + G] = 0x66;
+            HiRes.pixels[pixelAddr + B] = 0xEE;
+            HiRes.pixels[pixelAddr + A] = 0xFF;
+
+        case 0x06: // orange
+            HiRes.pixels[pixelAddr + R] = 0xEE;
+            HiRes.pixels[pixelAddr + G] = 0x22;
+            HiRes.pixels[pixelAddr + B] = 0x11;
+            HiRes.pixels[pixelAddr + A] = 0xFF;
+
+        case 0x07: // white 2
+            HiRes.pixels[pixelAddr + R] = 0xFF;
+            HiRes.pixels[pixelAddr + G] = 0xFF;
+            HiRes.pixels[pixelAddr + B] = 0xFF;
+            HiRes.pixels[pixelAddr + A] = 0xFF;
+            
+        default:
+            HiRes.pixels[pixelAddr + R] = 0x00;
+            HiRes.pixels[pixelAddr + G] = 0x00;
+            HiRes.pixels[pixelAddr + B] = 0x00;
+            HiRes.pixels[pixelAddr + A] = 0x00;
+        }
+    }
+    
+    override func draw(_ rect: CGRect) {
+        // print("HIRESSLOW\n")
+
+//        if was > 100 {
+//            return
+//        }
+//        was += 1
+
+        var pixelAddr = 0
+
+        var minX = 9999
+        var minY = 9999
+        var maxX = 0
+        var maxY = 0
+
+        var x = 0
+        var y = 0
+
+        for lineAddr in HiResLineAddrTbl {
+            for blockAddr in 0 ..< HiRes.blockCols / 2 {
+                let blockH = Int(HiResBufferPointer[ Int(lineAddr + blockAddr * 2) ])
+                let blockH7 = ( blockH >> 5 ) & 0x04
+                let blockL = Int(HiResBufferPointer[ Int(lineAddr + blockAddr * 2) + 1 ])
+                let blockL7 = ( blockL >> 5 ) & 0x04
+                
+                let block = ( blockL << 7 ) | ( blockH & 0x7F ) & 0x3FFF
+
+                let screenIdx = y * HiRes.blockCols + x
+
+//                if ( shadowScreen[ screenIdx ] != block ) {
+                    shadowScreen[ screenIdx ] = block
+
+                    for px in 0 ... 2  {
+//                        let bitMask = 3 << ( px * 2 )
+                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockH7 | ( (block >> (px * 2)) & 3 )  ) )
+                        pixelAddr += 4
+                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockH7 | ( (block >> (px * 2)) & 3 )  ) )
+                        pixelAddr += 4
+
+//                        if ( minX > x ) { minX = x }
+//                        if ( minY > y ) { minY = y }
+//                        if ( maxX < x ) { maxX = x }
+//                        if ( maxY < y ) { maxY = y }
+//
+//                        x += 2
+                    }
+                    
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockH7 | ( (block >> (3 * 2)) & 3 )  ) )
+                    pixelAddr += 4
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockL7 | ( (block >> (3 * 2)) & 3 )  ) )
+                    pixelAddr += 4
+                
+                    for px in 4 ... 6  {
+                        //                        let bitMask = 3 << ( px * 2 )
+                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockL7 | ( (block >> (px * 2)) & 3 )  ) )
+                        pixelAddr += 4
+                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockL7 | ( (block >> (px * 2)) & 3 )  ) )
+                        pixelAddr += 4
+
+//                        if ( minX > x ) { minX = x }
+//                        if ( minY > y ) { minY = y }
+//                        if ( maxX < x ) { maxX = x }
+//                        if ( maxY < y ) { maxY = y }
+//
+//                        x += 2
+                    }
+//                }
+//                else {
+//                    pixelAddr += 4 * 7
+//                    x += 7
+//                }
+            }
+
+            y += 1
+            x = 0
+        }
+
+        guard let image = HiRes.context?.makeImage() else { return }
+        let boundingBox = CGRect(x: 0, y: 0, width: CGFloat(HiRes.PixelWidth), height: CGFloat(HiRes.PixelHeight))
+        currentContext!.draw  (image, in: boundingBox)
+    }
+
     #elseif HIRESDRAWCOLOR
     
     let colorPalette : [NSColor] = [
@@ -672,7 +815,7 @@ class HiRes: NSView {
                         blockNeedsDisplay = true
 
                         var x = blockX * HiRes.blockWidth
-                        for bit in stride(from: 0, through: 6, by: 1) {
+                        for bit in 0 ... 6 { // stride(from: 0, through: 6, by: 1) {
                             let bitMask = 1 << bit
                             if (block & bitMask) == 0 {
                                 pixels[pixelAddr + R] = 0x00;

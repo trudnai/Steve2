@@ -135,6 +135,9 @@ class HiRes: NSView {
         super.init(coder: aDecoder)
         initHiResLineAddresses()
         
+        currentContext?.setShouldAntialias(false)
+        currentContext?.interpolationQuality = CGInterpolationQuality.none
+        
 //        let scaleSizeW = Double((frame.size).width) / Double(HiRes.PixelWidth)
 //        let scaleSizeH = Double((frame.size).height) / Double(HiRes.PixelHeight)
         let scaleSizeW = 2
@@ -468,7 +471,7 @@ class HiRes: NSView {
     
     #elseif HIRESLOWCOLOR
     
-    func hiresColorPixel ( pixelAddr : Int, pixel : Int ) {
+    func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int ) {
         switch ( pixel ) {
         case 0x00: // black
             HiRes.pixels[pixelAddr + R] = 0x00;
@@ -476,17 +479,40 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + B] = 0x00;
             HiRes.pixels[pixelAddr + A] = 0x00;
             
+            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+            
         case 0x01: // purple (bits are in reverse!)
             HiRes.pixels[pixelAddr + R] = 0xBB;
             HiRes.pixels[pixelAddr + G] = 0x11;
             HiRes.pixels[pixelAddr + B] = 0xEE;
             HiRes.pixels[pixelAddr + A] = 0xFF;
 
+            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+            
         case 0x02: // green
-            HiRes.pixels[pixelAddr + R] = 0x08;
-            HiRes.pixels[pixelAddr + G] = 0xA2;
-            HiRes.pixels[pixelAddr + B] = 0x12;
-            HiRes.pixels[pixelAddr + A] = 0xFF;
+            if (prev != 0) && (prev != 4) {
+                HiRes.pixels[pixelAddr + R] = 0x08;
+                HiRes.pixels[pixelAddr + G] = 0xA2;
+                HiRes.pixels[pixelAddr + B] = 0x12;
+                HiRes.pixels[pixelAddr + A] = 0xFF;
+            }
+            else {
+                HiRes.pixels[pixelAddr + R] = 0x00;
+                HiRes.pixels[pixelAddr + G] = 0x00;
+                HiRes.pixels[pixelAddr + B] = 0x00;
+                HiRes.pixels[pixelAddr + A] = 0x00;
+            }
+            
+            HiRes.pixels[pixelAddr + 4 + R] = 0x08;
+            HiRes.pixels[pixelAddr + 4 + G] = 0xA2;
+            HiRes.pixels[pixelAddr + 4 + B] = 0x12;
+            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
 
         case 0x03: // white
             HiRes.pixels[pixelAddr + R] = 0xFF;
@@ -494,11 +520,21 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + B] = 0xFF;
             HiRes.pixels[pixelAddr + A] = 0xFF;
             
+            HiRes.pixels[pixelAddr + 4 + R] = 0xFF;
+            HiRes.pixels[pixelAddr + 4 + G] = 0xFF;
+            HiRes.pixels[pixelAddr + 4 + B] = 0xFF;
+            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
+            
         case 0x04: // black 2
             HiRes.pixels[pixelAddr + R] = 0x00;
             HiRes.pixels[pixelAddr + G] = 0x00;
             HiRes.pixels[pixelAddr + B] = 0x00;
             HiRes.pixels[pixelAddr + A] = 0x00;
+            
+            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
             
         case 0x05: // blue
             HiRes.pixels[pixelAddr + R] = 0x11;
@@ -506,11 +542,29 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + B] = 0xEE;
             HiRes.pixels[pixelAddr + A] = 0xFF;
 
+            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+            
         case 0x06: // orange
-            HiRes.pixels[pixelAddr + R] = 0xEE;
-            HiRes.pixels[pixelAddr + G] = 0x22;
-            HiRes.pixels[pixelAddr + B] = 0x11;
-            HiRes.pixels[pixelAddr + A] = 0xFF;
+            if (prev != 0) && (prev != 4) {
+                HiRes.pixels[pixelAddr + R] = 0xEE;
+                HiRes.pixels[pixelAddr + G] = 0x22;
+                HiRes.pixels[pixelAddr + B] = 0x11;
+                HiRes.pixels[pixelAddr + A] = 0xFF;
+            }
+            else {
+                HiRes.pixels[pixelAddr + R] = 0x00;
+                HiRes.pixels[pixelAddr + G] = 0x00;
+                HiRes.pixels[pixelAddr + B] = 0x00;
+                HiRes.pixels[pixelAddr + A] = 0x00;
+            }
+
+            HiRes.pixels[pixelAddr + 4 + R] = 0xEE;
+            HiRes.pixels[pixelAddr + 4 + G] = 0x22;
+            HiRes.pixels[pixelAddr + 4 + B] = 0x11;
+            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
 
         case 0x07: // white 2
             HiRes.pixels[pixelAddr + R] = 0xFF;
@@ -518,12 +572,53 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + B] = 0xFF;
             HiRes.pixels[pixelAddr + A] = 0xFF;
             
+            HiRes.pixels[pixelAddr + 4 + R] = 0xFF;
+            HiRes.pixels[pixelAddr + 4 + G] = 0xFF;
+            HiRes.pixels[pixelAddr + 4 + B] = 0xFF;
+            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
+            
         default:
             HiRes.pixels[pixelAddr + R] = 0x00;
             HiRes.pixels[pixelAddr + G] = 0x00;
             HiRes.pixels[pixelAddr + B] = 0x00;
             HiRes.pixels[pixelAddr + A] = 0x00;
+            
+            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
+            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+            
         }
+        
+        // white adjustment
+        if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
+            HiRes.pixels[pixelAddr + R] = 0xFF;
+            HiRes.pixels[pixelAddr + G] = 0xFF;
+            HiRes.pixels[pixelAddr + B] = 0xFF;
+            HiRes.pixels[pixelAddr + A] = 0xFF;
+            
+            HiRes.pixels[pixelAddr - 4 + R] = 0xFF;
+            HiRes.pixels[pixelAddr - 4 + G] = 0xFF;
+            HiRes.pixels[pixelAddr - 4 + B] = 0xFF;
+            HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+        }
+
+        // purple adjustment
+        if (prev == 0x01) && (pixel != 0) && (pixel != 4) {
+            HiRes.pixels[pixelAddr - 4 + R] = 0xBB;
+            HiRes.pixels[pixelAddr - 4 + G] = 0x11;
+            HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
+            HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+        }
+        
+        // blue adjustment
+        if (prev == 0x05) && (pixel != 0) && (pixel != 4) {
+            HiRes.pixels[pixelAddr - 4 + R] = 0x11;
+            HiRes.pixels[pixelAddr - 4 + G] = 0x66;
+            HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
+            HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+        }
+
     }
     
     override func draw(_ rect: CGRect) {
@@ -545,6 +640,8 @@ class HiRes: NSView {
         var y = 0
 
         for lineAddr in HiResLineAddrTbl {
+            var prev = 0
+            
             for blockAddr in 0 ..< HiRes.blockCols / 2 {
                 let blockH = Int(HiResBufferPointer[ Int(lineAddr + blockAddr * 2) ])
                 let blockH7 = ( blockH >> 5 ) & 0x04
@@ -554,16 +651,17 @@ class HiRes: NSView {
                 let block = ( blockL << 7 ) | ( blockH & 0x7F ) & 0x3FFF
 
                 let screenIdx = y * HiRes.blockCols + x
+                
 
 //                if ( shadowScreen[ screenIdx ] != block ) {
                     shadowScreen[ screenIdx ] = block
 
                     for px in 0 ... 2  {
 //                        let bitMask = 3 << ( px * 2 )
-                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockH7 | ( (block >> (px * 2)) & 3 )  ) )
-                        pixelAddr += 4
-                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockH7 | ( (block >> (px * 2)) & 3 )  ) )
-                        pixelAddr += 4
+                        let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
+                        hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                        pixelAddr += 8
+                        prev = pixel
 
 //                        if ( minX > x ) { minX = x }
 //                        if ( minY > y ) { minY = y }
@@ -572,18 +670,18 @@ class HiRes: NSView {
 //
 //                        x += 2
                     }
-                    
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockH7 | ( (block >> (3 * 2)) & 3 )  ) )
-                    pixelAddr += 4
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockL7 | ( (block >> (3 * 2)) & 3 )  ) )
-                    pixelAddr += 4
-                
+
+                    let pixel = blockH7 | ( (block >> (3 * 2)) & 3 )
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                    pixelAddr += 8
+                    prev = pixel
+
                     for px in 4 ... 6  {
                         //                        let bitMask = 3 << ( px * 2 )
-                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockL7 | ( (block >> (px * 2)) & 3 )  ) )
-                        pixelAddr += 4
-                        hiresColorPixel(pixelAddr: pixelAddr, pixel: ( blockL7 | ( (block >> (px * 2)) & 3 )  ) )
-                        pixelAddr += 4
+                        let pixel = blockL7 | ( (block >> (px * 2)) & 3 )
+                        hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                        pixelAddr += 8
+                        prev = pixel
 
 //                        if ( minX > x ) { minX = x }
 //                        if ( minY > y ) { minY = y }

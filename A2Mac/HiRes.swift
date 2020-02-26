@@ -496,7 +496,8 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + 4 + A] = 0x00;
             
         case 0x02: // green
-            if (prev != 0) && (prev != 4) {
+            if (prev == 0x02) || (prev == 0x03) || (prev == 0x07) {
+//            if (prev != 0) && (prev != 4) {
                 HiRes.pixels[pixelAddr + R] = 0x08;
                 HiRes.pixels[pixelAddr + G] = 0xA2;
                 HiRes.pixels[pixelAddr + B] = 0x12;
@@ -548,7 +549,8 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + 4 + A] = 0x00;
             
         case 0x06: // orange
-            if (prev != 0) && (prev != 4) {
+            if (prev == 0x06) || (prev == 0x03) || (prev == 0x07) {
+//            if (prev != 0) && (prev != 4) {
                 HiRes.pixels[pixelAddr + R] = 0xEE;
                 HiRes.pixels[pixelAddr + G] = 0x22;
                 HiRes.pixels[pixelAddr + B] = 0x11;
@@ -604,7 +606,7 @@ class HiRes: NSView {
         }
 
         // purple adjustment
-        if (prev == 0x01) && (pixel != 0) && (pixel != 4) {
+        if (prev == 0x01) && ( (pixel == 0x01) || (pixel == 0x03) || (pixel == 0x07) ) {
             HiRes.pixels[pixelAddr - 4 + R] = 0xBB;
             HiRes.pixels[pixelAddr - 4 + G] = 0x11;
             HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
@@ -612,7 +614,8 @@ class HiRes: NSView {
         }
         
         // blue adjustment
-        if (prev == 0x05) && (pixel != 0) && (pixel != 4) {
+        if (prev == 0x05) && ( (pixel == 0x05) || (pixel == 0x03) || (pixel == 0x07) ) {
+//        if (prev == 0x05) && (pixel != 0) && (pixel != 4) {
             HiRes.pixels[pixelAddr - 4 + R] = 0x11;
             HiRes.pixels[pixelAddr - 4 + G] = 0x66;
             HiRes.pixels[pixelAddr - 4 + B] = 0xEE;

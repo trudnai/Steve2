@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3213936624079C30007F5C4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
 		325EB62F23F8856F00C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
@@ -83,9 +84,6 @@
 		32C4532E233345430000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C4532F233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C45330233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
-		32C4533123335E560000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
-		32C4533223335E570000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
-		32C4533323335E570000EBA1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -728,6 +726,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3213936624079C30007F5C4A /* Main.storyboard in Resources */,
 				325EB6A12401118300C6B4A4 /* Wavy Navy.woz in Resources */,
 				325EB68023FBDF8F00C6B4A4 /* Apple2Plus.rom in Resources */,
 				325EB68323FBDFBB00C6B4A4 /* DISK_II_C600.ROM in Resources */,
@@ -739,7 +738,6 @@
 				325EB69023FE028800C6B4A4 /* Donkey Kong.woz in Resources */,
 				325EB68923FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */,
 				325EB69F2401118300C6B4A4 /* Crossfire.woz in Resources */,
-				32C4533123335E560000EBA1 /* Main.storyboard in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				325EB68C23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */,
 				325EB6A52401118300C6B4A4 /* ProDOS_312.woz in Resources */,
@@ -771,7 +769,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C453112331F7220000EBA1 /* fail1.txt in Resources */,
-				32C4533223335E570000EBA1 /* Main.storyboard in Resources */,
 				32C453122331F7220000EBA1 /* Assets.xcassets in Resources */,
 				32C453132331F7220000EBA1 /* apple.rom in Resources */,
 				32C453152331F7220000EBA1 /* 6502_functional_test.bin in Resources */,
@@ -783,7 +780,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				32C453232331FED90000EBA1 /* fail1.txt in Resources */,
-				32C4533323335E570000EBA1 /* Main.storyboard in Resources */,
 				32C453242331FED90000EBA1 /* Assets.xcassets in Resources */,
 				32C453252331FED90000EBA1 /* apple.rom in Resources */,
 				32C453272331FED90000EBA1 /* 6502_functional_test.bin in Resources */,

@@ -135,8 +135,8 @@ class HiRes: NSView {
         super.init(coder: aDecoder)
         initHiResLineAddresses()
         
-        currentContext?.setShouldAntialias(false)
-        currentContext?.interpolationQuality = CGInterpolationQuality.none
+//        currentContext?.setShouldAntialias(false)
+//        currentContext?.interpolationQuality = CGInterpolationQuality.none
         
 //        let scaleSizeW = Double((frame.size).width) / Double(HiRes.PixelWidth)
 //        let scaleSizeH = Double((frame.size).height) / Double(HiRes.PixelHeight)
@@ -496,8 +496,7 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + 4 + A] = 0x00;
             
         case 0x02: // green
-            if (prev == 0x02) || (prev == 0x03) || (prev == 0x07) {
-//            if (prev != 0) && (prev != 4) {
+            if (prev == 0x02) || (prev == 0x06) || (prev == 0x03) || (prev == 0x07) || (prev == 0x00) || (prev == 0x04) {
                 HiRes.pixels[pixelAddr + R] = 0x08;
                 HiRes.pixels[pixelAddr + G] = 0xA2;
                 HiRes.pixels[pixelAddr + B] = 0x12;
@@ -510,10 +509,19 @@ class HiRes: NSView {
                 HiRes.pixels[pixelAddr + A] = 0x00;
             }
             
-            HiRes.pixels[pixelAddr + 4 + R] = 0x08;
-            HiRes.pixels[pixelAddr + 4 + G] = 0xA2;
-            HiRes.pixels[pixelAddr + 4 + B] = 0x12;
-            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
+            // reducing color bleeding
+            if (prev == 0x01) || (prev == 0x05) {
+                HiRes.pixels[pixelAddr + 4 + R] = 0x00;
+                HiRes.pixels[pixelAddr + 4 + G] = 0x00;
+                HiRes.pixels[pixelAddr + 4 + B] = 0x00;
+                HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+            }
+            else {
+                HiRes.pixels[pixelAddr + 4 + R] = 0x08;
+                HiRes.pixels[pixelAddr + 4 + G] = 0xA2;
+                HiRes.pixels[pixelAddr + 4 + B] = 0x12;
+                HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
+            }
 
         case 0x03: // white
             HiRes.pixels[pixelAddr + R] = 0xFF;
@@ -549,8 +557,8 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr + 4 + A] = 0x00;
             
         case 0x06: // orange
+            // do we need to extend the color?
             if (prev == 0x06) || (prev == 0x03) || (prev == 0x07) {
-//            if (prev != 0) && (prev != 4) {
                 HiRes.pixels[pixelAddr + R] = 0xEE;
                 HiRes.pixels[pixelAddr + G] = 0x22;
                 HiRes.pixels[pixelAddr + B] = 0x11;
@@ -603,19 +611,29 @@ class HiRes: NSView {
             HiRes.pixels[pixelAddr - 4 + G] = 0xFF;
             HiRes.pixels[pixelAddr - 4 + B] = 0xFF;
             HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+            
+            // TODO: Need better check if extra green was created
+            if (HiRes.pixels[pixelAddr - 8 + G] == 0xA2 ) {
+                HiRes.pixels[pixelAddr - 8 + R] = 0x00;
+                HiRes.pixels[pixelAddr - 8 + G] = 0x00;
+                HiRes.pixels[pixelAddr - 8 + B] = 0x00;
+                HiRes.pixels[pixelAddr - 8 + A] = 0x00;
+            }
         }
 
-        // purple adjustment
-        if (prev == 0x01) && ( (pixel == 0x01) || (pixel == 0x03) || (pixel == 0x07) ) {
-            HiRes.pixels[pixelAddr - 4 + R] = 0xBB;
-            HiRes.pixels[pixelAddr - 4 + G] = 0x11;
-            HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
-            HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+        // purple adjustment -- followed by white
+        else if (prev == 0x01) && ( (pixel == 0x01) || (pixel == 0x03) || (pixel == 0x07) || (pixel == 0x00) || (pixel == 0x04) ) {
+            // was the previous purple pixel promoted to white or is it still purple?
+            if ( HiRes.pixels[pixelAddr - 8 + R] == 0xBB ) {
+                HiRes.pixels[pixelAddr - 4 + R] = 0xBB;
+                HiRes.pixels[pixelAddr - 4 + G] = 0x11;
+                HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
+                HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+            }
         }
-        
+
         // blue adjustment
-        if (prev == 0x05) && ( (pixel == 0x05) || (pixel == 0x03) || (pixel == 0x07) ) {
-//        if (prev == 0x05) && (pixel != 0) && (pixel != 4) {
+        else if (prev == 0x05) && ( (pixel == 0x05) || (pixel == 0x03) || (pixel == 0x07) ) {
             HiRes.pixels[pixelAddr - 4 + R] = 0x11;
             HiRes.pixels[pixelAddr - 4 + G] = 0x66;
             HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
@@ -703,6 +721,9 @@ class HiRes: NSView {
             y += 1
             x = 0
         }
+
+//        HiRes.context?.setShouldAntialias(true)
+//        HiRes.context?.interpolationQuality = CGInterpolationQuality.low
 
         guard let image = HiRes.context?.makeImage() else { return }
         let boundingBox = CGRect(x: 0, y: 0, width: CGFloat(HiRes.PixelWidth), height: CGFloat(HiRes.PixelHeight))

@@ -140,9 +140,10 @@ class HiRes: NSView {
         
 //        let scaleSizeW = Double((frame.size).width) / Double(HiRes.PixelWidth)
 //        let scaleSizeH = Double((frame.size).height) / Double(HiRes.PixelHeight)
-        let scaleSizeW = 2
-        let scaleSizeH = 2
-        scaleUnitSquare(to: NSSize(width: scaleSizeW, height: scaleSizeH))
+
+//        let scaleSizeW = 4
+//        let scaleSizeH = 4
+//        scaleUnitSquare(to: NSSize(width: scaleSizeW, height: scaleSizeH))
         
         // create smaller box views for draw optimization
         createHiRes()
@@ -399,7 +400,8 @@ class HiRes: NSView {
     let B = 0
     let A = 3
     
-    var shadowScreen = [Int](repeating: 1, count: PageSize)
+    var blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols / 2)
+    var shadowScreen = [Int](repeating: 0, count: PageSize)
 
     var was = 0;
     
@@ -665,6 +667,24 @@ class HiRes: NSView {
 //            return
 //        }
 //        was += 1
+        
+        var height = HiRes.PixelHeight
+
+        // do not even render it...
+        if videoMode.text == 1 {
+            return
+        }
+        else {
+            if videoMode.mixed == 1 {
+                height = HiRes.MixedHeight
+            }
+            if videoMode.page == 1 {
+                HiResBufferPointer = HiResBuffer2
+            }
+            else {
+                HiResBufferPointer = HiResBuffer1
+            }
+        }
 
         var pixelAddr = 0
 
@@ -676,23 +696,35 @@ class HiRes: NSView {
         var x = 0
         var y = 0
 
+        HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
+        
         for lineAddr in HiResLineAddrTbl {
+            
+            if ( height <= 0 ) {
+                break
+            }
+            height -= 1
+            
+            let blockVertIdx = y / 8 * HiRes.blockCols / 2
             var prev = 0
             
-            for blockAddr in 0 ..< HiRes.blockCols / 2 {
-                let blockH = Int(HiResBufferPointer[ Int(lineAddr + blockAddr * 2) ])
+            for blockHorIdx in 0 ..< HiRes.blockCols / 2 {
+                let blockH = Int(HiResBufferPointer[ Int(lineAddr + blockHorIdx * 2) ])
                 let blockH7 = ( blockH >> 5 ) & 0x04
-                let blockL = Int(HiResBufferPointer[ Int(lineAddr + blockAddr * 2) + 1 ])
+                let blockL = Int(HiResBufferPointer[ Int(lineAddr + blockHorIdx * 2) + 1 ])
                 let blockL7 = ( blockL >> 5 ) & 0x04
                 
                 let block = ( blockL << 7 ) | ( blockH & 0x7F ) & 0x3FFF
 
-                let screenIdx = y * HiRes.blockCols + x
-                
+                let screenIdx = y * HiRes.blockCols + blockHorIdx
+                if ( shadowScreen[ screenIdx ] != block ) {
+                    blockChanged[ blockVertIdx + blockHorIdx ] = true
+                }
+                else {
+                    blockChanged[ blockVertIdx + blockHorIdx ] = false
+                }
 
-//                if ( shadowScreen[ screenIdx ] != block ) {
                     shadowScreen[ screenIdx ] = block
-
                     for px in 0 ... 2  {
 //                        let bitMask = 3 << ( px * 2 )
                         let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
@@ -727,12 +759,12 @@ class HiRes: NSView {
 //
 //                        x += 2
                     }
-//                }
+                }
 //                else {
 //                    pixelAddr += 4 * 7
 //                    x += 7
 //                }
-            }
+//            }
 
             y += 1
             x = 0
@@ -742,7 +774,22 @@ class HiRes: NSView {
 //        HiRes.context?.interpolationQuality = CGInterpolationQuality.low
 
         guard let image = HiRes.context?.makeImage() else { return }
-        let boundingBox = CGRect(x: 0, y: 0, width: CGFloat(HiRes.PixelWidth), height: CGFloat(HiRes.PixelHeight))
+
+//        let blockScreenWidth = HiRes.PixelWidth * 4 / (HiRes.blockCols / 2)
+//        let blockScreenHeigth = HiRes.PixelHeight * 4 / HiRes.blockRows
+//
+//        for y in 0 ..< HiRes.blockRows {
+//            for x in 0 ..< HiRes.blockCols / 2 {
+//                // refresh the entire screen
+//                let boundingBox = CGRect(x: x * blockScreenWidth, y: y * blockScreenHeigth, width: blockScreenWidth, height: blockScreenHeigth)
+//                currentContext!.draw  (image, in: boundingBox)
+//return
+//            }
+//        }
+        
+        
+        // refresh the entire screen
+        let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         currentContext!.draw  (image, in: boundingBox)
     }
 
@@ -837,16 +884,18 @@ class HiRes: NSView {
     #elseif HIRESDRAW
     let path = NSBezierPath()
     override func draw(_ rect: CGRect) {
-        
+        let pixelWidth = bounds.width / CGFloat(HiRes.PixelWidth)
+        let pixelHeight = bounds.height / CGFloat(HiRes.PixelHeight)
+
     //        self.hidden = videoMode.text == 1
         
 //        NSColor.green.setFill()
 //        NSColor(calibratedRed: 0.0314, green: 0.635, blue: 0.071, alpha: 1.0).setStroke()
 //        NSColor(calibratedRed: 0.05, green: 0.7, blue: 0.1, alpha: 1.0).setStroke()
         NSColor.systemGreen.setStroke()
-        
+
         path.removeAllPoints()
-        path.lineWidth = 0.7
+        path.lineWidth = 0.7 * pixelHeight
         path.move(to: NSPoint(x: 0, y: 0))
         
 //        path.appendRect(NSRect(x: 0, y: 0, width: 10, height: 10))
@@ -869,6 +918,7 @@ class HiRes: NSView {
             }
         }
 
+        
         for y in 0 ..< height {
             var inX = false
             path.move(to: NSPoint(x: 0, y: y))
@@ -888,13 +938,13 @@ class HiRes: NSView {
                         if (block & bitMask) == 0 {
                             if inX {
                                 inX = false
-                                path.line(to: NSPoint(x: x, y: 192-y))
+                                path.line(to: NSPoint(x: CGFloat(x) * pixelWidth, y: CGFloat(192 - y) * pixelHeight ))
                             }
                         }
                         else { // 28CD41
                             if ( inX == false ) {
                                 inX = true
-                                path.move(to: NSPoint(x: x, y: 192-y))
+                                path.move(to: NSPoint(x: CGFloat(x) * pixelWidth, y: CGFloat(192 - y) * pixelHeight ))
                             }
                         }
                         
@@ -905,14 +955,14 @@ class HiRes: NSView {
                     // make sure we close the path if the next block is completely zero
                     if inX {
                         inX = false
-                        path.line(to: NSPoint(x: x, y: 192-y))
+                        path.line(to: NSPoint(x: CGFloat(x) * pixelWidth, y: CGFloat(192 - y) * pixelHeight ))
                     }
                 }
             } // x
             // make sure we close the path at the end of the horizontal line
             if inX {
                 inX = false
-                path.line(to: NSPoint(x: 279, y: 192-y))
+                path.line(to: NSPoint(x: 279 * pixelWidth, y: CGFloat(192 - y) * pixelHeight ))
             }
         }
 //        path.fill()

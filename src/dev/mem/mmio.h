@@ -473,10 +473,10 @@ void setIO ( uint16_t ioaddr, uint8_t val ) {
 void kbdInput ( uint8_t code ) {
 //    printf("kbdInput: %02X ('%c')\n", code, isprint(code) ? code : ' ');
     switch ( code ) {
-//        case '\n':
-//            code = 0x0D;
-//            break;
-//
+        case '\n':
+            code = 0x0D;
+            break;
+
         case 0x7F: // BackSlash
             code = 0x08;
             break;
@@ -487,8 +487,8 @@ void kbdInput ( uint8_t code ) {
     
     code |= 0x80;
     
-    for( int i = 1000; i && ( RAM[io_KBD] > 0x7F ); --i ) {
-        usleep(10);
+    for( int i = 10000000; i && ( RAM[io_KBD] > 0x7F ); --i ) {
+        usleep(1);
     }
 
     RAM[io_KBD] = code;

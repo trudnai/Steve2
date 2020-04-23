@@ -181,10 +181,12 @@ class ViewController: NSViewController {
     override func keyDown(with event: NSEvent) {
         print("KBD Event")
         
-        for i in 0...65536 {
-            ddd = Int(event.keyCode) + i
-        }
-        ddd = ddd * 2
+//        for i in 0...65536 {
+//            ddd = Int(event.keyCode) + i
+//        }
+//        ddd = ddd * 2
+        
+        
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.command] where event.characters == "l",
 //             [.command, .shift] where event.characters == "l":
@@ -195,37 +197,64 @@ class ViewController: NSViewController {
 //        print( "key = " + (event.charactersIgnoringModifiers ?? ""))
 //        print( "\ncharacter = " + (event.characters ?? ""))
         
-        #if FUNCTIONTEST
-        #else
-        let keyCode = Int(event.keyCode)
-        switch keyCode {
-        case leftArrowKey:
-            kbdInput(0x08)
-            setIO(0xC064, 0);
-            print("LEFT", ddd);
-        case rightArrowKey:
-            kbdInput(0x15)
-            setIO(0xC064, 255);
-            print("RIGHT")
-        case downArrowKey:
-            kbdInput(0x0B)
-            setIO(0xC065, 255);
-            print("DOWN")
-        case upArrowKey:
-            kbdInput(0x0A)
-            setIO(0xC065, 0);
-            print("UP")
-        default:
-//            print("keycode: %d", keyCode)
-            if let chars = event.characters {
-                let char = chars.uppercased()[chars.startIndex]
-                if let ascii = char.asciiValue {
-                    kbdInput(ascii)
+        
+        if event.modifierFlags.contains(.command) { // .shift, .option, .control ...
+            if let chars = event.charactersIgnoringModifiers {
+                switch chars {
+                case "v":
+                    print("CMD + V")
+                    
+                    let pasteBoard = NSPasteboard.general
+                    if let str = pasteBoard.string( forType: .string ) {
+                        print("PASTED:", str)
+                        
+                        DispatchQueue.global(qos: .background).async {
+                            for char in str.uppercased() {
+                                if let ascii = char.asciiValue {
+                                    kbdInput(ascii)
+                                }
+                            }
+                        }
+                        
+                    }
+                    
+                default:
+                    break
                 }
             }
         }
-        #endif
-        
+        else {
+            #if FUNCTIONTEST
+            #else
+            let keyCode = Int(event.keyCode)
+            switch keyCode {
+            case leftArrowKey:
+                kbdInput(0x08)
+                setIO(0xC064, 0);
+                print("LEFT", ddd);
+            case rightArrowKey:
+                kbdInput(0x15)
+                setIO(0xC064, 255);
+                print("RIGHT")
+            case downArrowKey:
+                kbdInput(0x0B)
+                setIO(0xC065, 255);
+                print("DOWN")
+            case upArrowKey:
+                kbdInput(0x0A)
+                setIO(0xC065, 0);
+                print("UP")
+            default:
+    //            print("keycode: %d", keyCode)
+                if let chars = event.characters {
+                    let char = chars.uppercased()[chars.startIndex]
+                    if let ascii = char.asciiValue {
+                        kbdInput(ascii)
+                    }
+                }
+            }
+            #endif
+        }
     }
     
     override func keyUp(with event: NSEvent) {

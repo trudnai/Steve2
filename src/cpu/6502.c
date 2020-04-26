@@ -828,8 +828,8 @@ void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, co
     char fullPath[256];
     
     strcpy( fullPath, bundlePath );
-    strcat(fullPath, "/");
-    strcat(fullPath, filename);
+    strcat( fullPath, "/");
+    strcat( fullPath, filename );
         
     FILE * f = fopen(fullPath, "rb");
     if (f == NULL) {
@@ -847,7 +847,62 @@ void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, co
 }
 
 
-void m6502_ColdReset( const char * bundlePath ) {
+size_t getFileSize ( const char * fullPath ) {
+    FILE * f = fopen(fullPath, "rb");
+    if (f == NULL) {
+        perror("Failed to read ROM: ");
+        return 0;
+    }
+    
+    fseek(f, 0L, SEEK_END);
+    size_t flen = ftell(f);
+    fseek(f, 0L, SEEK_SET);
+
+    fclose(f);
+    
+    return flen;
+}
+
+
+void rom_loadFile( const char * bundlePath, const char * filename ) {
+    char fullPath[256];
+    
+    strcpy( fullPath, bundlePath );
+    strcat( fullPath, "/");
+    strcat( fullPath, filename );
+
+    size_t flen = getFileSize(fullPath);
+    
+    if ( flen == 0 ) {
+        return; // there was an error
+    }
+    
+    else if ( flen == 16 * KB ) {
+        read_rom( bundlePath, filename, Apple2_16K_ROM, 0);
+        memcpy(Apple2_12K_ROM + 0x0000, Apple2_16K_ROM + 0x1000, sizeof(Apple2_12K_ROM));
+        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, 0x1000);
+    }
+    
+    else if ( flen == 12 * KB ) {
+        read_rom( bundlePath, filename, Apple2_12K_ROM, 0);
+        memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
+    }
+
+    //    read_rom( bundlePath, "Apple2Plus.rom", Apple2_12K_ROM, 0);
+    //    read_rom( bundlePath, "Apple2e.rom", Apple2_16K_ROM, 0);
+//        read_rom( bundlePath, "Apple2e_Enhanced.rom", Apple2_16K_ROM, 0);
+
+    //    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "Apple2Plus.rom", Apple2_12K_ROM, 0);
+    //    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", Apple2_12K_ROM, 0);
+
+    //    memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
+//        memcpy(Apple2_12K_ROM + 0x0000, Apple2_16K_ROM + 0x1000, sizeof(Apple2_12K_ROM));
+//        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, sizeof(Apple2_16K_ROM));
+
+}
+
+
+void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     inst_cnt = 0;
     mhz = (double)MHz_6502 / M;
     
@@ -858,9 +913,8 @@ void m6502_ColdReset( const char * bundlePath ) {
 //    unsigned long long e = rdtsc();
 //    tick_per_sec = e - epoch;
 //    tick_6502_per_sec = tick_per_sec / MHz_6502;
-    
-    memset( RAM, 0, sizeof(Apple2_64K_RAM) );
-    memset( RAM + 0xC000, 0, 0x1000 ); // I/O area should be 0
+
+    resetMemory();
 
     outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
     if (outdev == NULL) {
@@ -883,42 +937,12 @@ void m6502_ColdReset( const char * bundlePath ) {
 
 #else
     // Apple ][+ ROM
-    read_rom( bundlePath, "Apple2Plus.rom", Apple2_12K_ROM, 0);
-//    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "Apple2Plus.rom", Apple2_12K_ROM, 0);
-//    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", Apple2_12K_ROM, 0);
-    memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
+    
+    rom_loadFile(bundlePath, romFileName);
+    
     // Disk ][ ROM in Slot 6
     read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
 //    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
-
-    // WOZ DISK
-//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS 3.3 System Master.woz");
-//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Hard Hat Mack - Disk 1, Side A.woz");
-
-//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Merlin-8 v2.48 (DOS 3.3).woz");
-//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/DOS3.3.Launcher.2.2.woz");
-//    woz_loadFile("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "Apple DOS 3.3 January 1983.woz");
-
-    
-    // GAMES
-//    woz_loadFile( bundlePath, "qbit.woz"); // Lode Runner, Hard Hat Mack, QBit, Crossfire, Heat Seaker, Flight Simulator
-//    woz_loadFile( bundlePath, "Donkey Kong.woz");
-
-/**///    woz_loadFile( bundlePath, "Crossfire.woz");
-//    woz_loadFile( bundlePath, "Lode Runner.woz");
-/**///    woz_loadFile( bundlePath, "Sneakers.woz");
-/**///    woz_loadFile( bundlePath, "Wavy Navy.woz");
-/**///    woz_loadFile( bundlePath, "Xonix.woz");
-/**///    woz_loadFile( bundlePath, "Hard Hat Mack - Disk 1, Side A.woz");
-
-    
-    // SYSTEM
-/* Requires 64K *///    woz_loadFile( bundlePath, "ProDOS_312.woz");
-/* Requires Enhanced //e or later *///    woz_loadFile( bundlePath, "ProDOS_402_System.woz");
-
-//    woz_loadFile( bundlePath, "Merlin-8 v2.48 (DOS 3.3).woz");
-//    woz_loadFile( bundlePath, "Apple DOS 3.3 January 1983.woz");
-
     
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
@@ -1046,7 +1070,7 @@ void tst6502() {
     // insert code here...
     printf("6502\n");
     
-    m6502_ColdReset( "" );
+    m6502_ColdReset( "", "" );
     
     //    clock_t start = clock();
 //    epoch = rdtsc();

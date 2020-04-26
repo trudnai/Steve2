@@ -91,6 +91,8 @@ class ViewController: NSViewController {
     static let charConvTblFlashOff = Array( charConvStrFlashOff )
     
     static var charConvTbl = charConvTblFlashOn
+    
+    static var romFileName = "Apple2e_Enhanced.rom";
 
     let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
@@ -117,7 +119,7 @@ class ViewController: NSViewController {
             DispatchQueue.global().async(execute: workItem!);
         }
         #else
-        m6502_ColdReset( Bundle.main.resourcePath )
+        m6502_ColdReset( Bundle.main.resourcePath, ViewController.romFileName )
         #endif
     }
     

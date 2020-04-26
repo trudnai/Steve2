@@ -604,6 +604,37 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Config" id="Xqf-B7-gCo">
                                     <items>
+                                        <menuItem title="ROM" id="Y3v-20-h2Q">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Disk 1" id="7dA-Bf-QS9">
+                                                <items>
+                                                    <menuItem title="Apple ][" identifier="apple" id="vNT-Vf-GnM">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="kGO-kr-gGf"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Apple ][ Plus" identifier="Apple2Plus" id="wL6-44-pA1">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="7Z4-x3-Io3"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Apple //e" identifier="Apple2e" id="fj0-JM-dwU">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="xDa-lu-WEG"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Apple //e Enhanced" identifier="Apple2e_Enhanced" id="xHh-GT-uQa">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="A4H-Kk-DWT"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
                                         <menuItem title="Disk 1" id="0NC-AF-e3z">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Disk 1" id="lnc-y1-bUG">
@@ -648,9 +679,6 @@
                                             </menu>
                                         </menuItem>
                                         <menuItem title="Disk 2" id="yVX-3l-dbM">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                        </menuItem>
-                                        <menuItem title="Item 3" id="Y3v-20-h2Q">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                     </items>

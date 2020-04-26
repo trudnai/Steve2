@@ -118,9 +118,10 @@ extern double mhz;
 
 #define fps 30
 
+extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void woz_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
-extern void m6502_ColdReset( const char * bundlePath );
+extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
 extern void m6502_Run(void);
 extern void kbdInput ( uint8_t code );
 extern void setIO ( uint16_t ioaddr, uint8_t val );

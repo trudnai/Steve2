@@ -223,17 +223,6 @@ enum slot {
 };
 
 
-// Memory Config
-typedef struct MEMcfg_s {
-    uint8_t RAM_16K     : 1;
-    uint8_t RAM_128K    : 1;
-    uint8_t RD_RAM      : 1;
-    uint8_t WR_RAM      : 1;
-    uint8_t RAM_BANK_2  : 1;
-    uint8_t AUX_BANK    : 1;
-    uint8_t is80STORE  : 1;
-} MEMcfg_t;
-
 MEMcfg_t MEMcfg = { 1, 0, 0, 0, 0, 0, 0 };
 
 // https://www.kreativekorp.com/miscpages/a2info/iomemory.shtml
@@ -256,6 +245,7 @@ enum mmio {
     io_VID_SET80VID     = 0xC00D,   //  ECG W    80 Columns
     io_VID_CLRALTCHAR   = 0xC00E,   //  ECG W    Primary Character Set
     io_VID_SETALTCHAR   = 0xC00F,   //  ECG W    Alternate Character Set
+    io_VID_RDTEXT       = 0xC01A,   //  ECG  R7  Status of Text/Graphics
     io_VID_ALTCHAR      = 0xC01E,   //  ECG  R7  Status of Primary/Alternate Character Set
     io_VID_RD80VID      = 0xC01F,   //  ECG  R7  Status of 40/80 Columns
     io_VID_Text_OFF     = 0xC050,
@@ -383,7 +373,7 @@ void resetMemory() {
 
 
 void textPageSelect() {
-        if ( MEMcfg.is80STORE && videoMode.page2 ) {
+        if ( MEMcfg.is80STORE && MEMcfg.page2 ) {
             SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_AUX, 0x04)
             SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_AUX, 0x04)
         }
@@ -395,7 +385,8 @@ void textPageSelect() {
 
 
 INLINE uint8_t ioRead( uint16_t addr ) {
-    dbgPrintf("mmio read:%04X\n", addr);
+    if (addr != 0xC000)
+    printf("ioRead:%04X\n", addr);
     
     uint8_t currentMagnet = 0;
     
@@ -425,6 +416,9 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //            videoMode.col80 = 1;
 //            break;
 //
+        case io_VID_RDTEXT:
+            return videoMode.text << 7;
+            
         case io_VID_ALTCHAR:
             return videoMode.altChr << 7;
             
@@ -432,26 +426,26 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return videoMode.col80 << 7;
             
         case io_TAPEIN:
-            return videoMode.page2 << 7;
+            return MEMcfg.page2 << 7;
             
         case io_RDCXROM:
-            return videoMode.intCxROM << 7;
+            return MEMcfg.intCxROM << 7;
             
         case io_RDC3ROM:
-            return videoMode.slotC3ROM << 7;
+            return MEMcfg.slotC3ROM << 7;
             
         case io_RD80STORE:
             return MEMcfg.is80STORE << 7;
             
         case io_VID_TXTPAGE1:
 //            printf("io_VID_TXTPAGE1\n");
-            videoMode.page2 = 0;
+            MEMcfg.page2 = 0;
             textPageSelect();
             break;
             
         case io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
-            videoMode.page2 = 1;
+            MEMcfg.page2 = 1;
             textPageSelect();
             break;
             
@@ -669,7 +663,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             
         case io_SETSLOTCXROM:
 //            printf("io_SETSLOTCXROM\n");
-            videoMode.intCxROM = 0;
+            MEMcfg.intCxROM = 0;
 //            SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0);
             SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0);
 //            RAM_PG_RD_TBL[ 0xC0 ] = DEF_RAM_PAGE(Apple2_64K_RAM, 0xC0);
@@ -677,7 +671,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 
         case io_SETINTCXROM:
 //            printf("io_SETINTCXROM\n");
-            videoMode.intCxROM = 1;
+            MEMcfg.intCxROM = 1;
 //            SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
             SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
 //            RAM_PG_RD_TBL[ 0xC0 ] = DEF_RAM_PAGE(Apple2_16K_ROM, 0x00);
@@ -685,14 +679,14 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 
         case io_SETSLOTC3ROM:
 //            printf("io_SETSLOTC3ROM\n");
-            videoMode.slotC3ROM = 1;
+            MEMcfg.slotC3ROM = 1;
             SWITCH_ROM_PAGE( RAM_PG_RD_TBL, 0xC3, Apple2_64K_RAM, 0xC3);
 //            RAM_PG_RD_TBL[ 0xC3 ] = DEF_RAM_PAGE(Apple2_64K_RAM, 0xC3);
             break;
 
         case io_SETINTC3ROM:
 //            printf("io_SETINTC3ROM\n");
-            videoMode.slotC3ROM = 0;
+            MEMcfg.slotC3ROM = 0;
             SWITCH_ROM_PAGE( RAM_PG_RD_TBL, 0xC3, Apple2_16K_ROM, 0x03);
 //            RAM_PG_RD_TBL[ 0xC3 ] = DEF_RAM_PAGE(Apple2_16K_ROM, 0x03);
             break;
@@ -728,13 +722,13 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             
         case io_VID_TXTPAGE1:
 //            printf("io_VID_TXTPAGE1\n");
-            videoMode.page2 = 0;
+            MEMcfg.page2 = 0;
             textPageSelect();
             break;
             
         case io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
-            videoMode.page2 = 1;
+            MEMcfg.page2 = 1;
             textPageSelect();
             break;
             

@@ -87,30 +87,42 @@ typedef struct disassembly_s {
     char opcode[4 * 3 + 1];         // max 4 bytes * (2 digits + 1 space) + \0
     char * pOpcode;                 // pointer for opcode string builder
     char inst[6 + 1];               // 3 char (unknown instr? -- give it 6 chars) + \0
-    char oper[14 + 2 + 1 + 1 + 1];   // 4 digits + 2 brackets + 1 comma + 1 index + \0
+    char oper[14 + 2 + 1 + 1 + 1];  // 4 digits + 2 brackets + 1 comma + 1 index + \0
     char comment[256];              // to be able to add some comments
 } disassembly_t;
 
 
+// Memory Config
+typedef struct MEMcfg_s {
+    unsigned RAM_16K     : 1;
+    unsigned RAM_128K    : 1;
+    unsigned RD_RAM      : 1;
+    unsigned WR_RAM      : 1;
+    unsigned RAM_BANK_2  : 1;
+    unsigned AUX_BANK    : 1;
+    unsigned page2       : 1;    // 0: page 1   1: page 2 (aux video memory)
+    unsigned intCxROM    : 1;    // 0: Slot Cx ROM   1: Internal Cx ROM
+    unsigned slotC3ROM   : 1;    // 0: Internal ROM  1: Slot 3 ROM
+    unsigned is80STORE   : 1;
+} MEMcfg_t;
+
+
 typedef union videoMode_u {
     struct {
-        uint8_t text : 1;       // 0: graphics 1: text
-        uint8_t col80 : 1;      // 0: 40 col   1: 80 col
-        uint8_t altChr : 1;     // 0: normal   1: alternate character set
-        uint8_t mixed : 1;      // 0: no mix   1: mixed graphics and text when in graphics mode
-        uint8_t hires : 1;      // 0: loRes    1: hiRes
-        uint8_t page2 : 1;       // 0: page 1   1: page 2 (aux video memory)
-        uint8_t intCxROM : 1;   // 0: Slot Cx ROM   1: Internal Cx ROM
-        uint8_t slotC3ROM : 1;  // 0: Internal ROM  1: Slot 3 ROM
+        uint8_t text    : 1;    // 0: graphics 1: text
+        uint8_t col80   : 1;    // 0: 40 col   1: 80 col
+        uint8_t altChr  : 1;    // 0: normal   1: alternate character set
+        uint8_t mixed   : 1;    // 0: no mix   1: mixed graphics and text when in graphics mode
+        uint8_t hires   : 1;    // 0: loRes    1: hiRes
     };
     uint8_t mode;
 } videoMode_t;
 
 extern videoMode_t videoMode;
-
+extern MEMcfg_t MEMcfg;
 
 extern m6502_t m6502;
-extern uint8_t * const AUX;             // Pointer to the auxiliary memory so we can use this from Swift
+extern uint8_t * const AUX;         // Pointer to the auxiliary memory so we can use this from Swift
 extern uint8_t * const RAM;
 //extern uint8_t * AUX_VID_RAM;
 extern uint32_t * videoMemPtr;

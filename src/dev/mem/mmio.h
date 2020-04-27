@@ -385,8 +385,7 @@ void textPageSelect() {
 
 
 INLINE uint8_t ioRead( uint16_t addr ) {
-    if (addr != 0xC000)
-    printf("ioRead:%04X\n", addr);
+    dbgPrintf("mmio read:%04X\n", addr);
     
     uint8_t currentMagnet = 0;
     

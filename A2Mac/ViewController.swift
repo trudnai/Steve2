@@ -408,7 +408,19 @@ class ViewController: NSViewController  {
         }
 
         txtArr = txtClear
-        
+
+
+        // render an empty space to eiminate displaying text portion of the screen covered by graphics
+        for y in 0 ..< fromLines {
+            if videoMode.col80 == 0 {
+                txtArr[ y * (textCols + lineEndChars) + textCols ] = "\n"
+            }
+            else {
+                txtArr[ y * (textCols * 2 + lineEndChars) + textCols * 2] = "\n"
+            }
+        }
+
+        // render the rest of the text screen
         for y in fromLines ..< toLines {
             for x in 0 ..< textCols {
                 let byte = textBufferPointer[ textLineOfs[y] + x ]

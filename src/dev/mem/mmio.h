@@ -67,10 +67,6 @@ uint8_t * RAM = Apple2_64K_RAM;             // Pointer to the main memory so we 
     (tbl)[ (tpg) + 0x01 ] = DEF_RAM_PAGE(mem, (mpg) + 0x01); \
     (tbl)[ (tpg) + 0x02 ] = DEF_RAM_PAGE(mem, (mpg) + 0x02); \
     (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03);
-//    (tbl)[ (tpg) + 0x04 ] = DEF_RAM_PAGE(mem, (mpg) + 0x04); \
-//    (tbl)[ (tpg) + 0x05 ] = DEF_RAM_PAGE(mem, (mpg) + 0x05); \
-//    (tbl)[ (tpg) + 0x06 ] = DEF_RAM_PAGE(mem, (mpg) + 0x06); \
-//    (tbl)[ (tpg) + 0x07 ] = DEF_RAM_PAGE(mem, (mpg) + 0x07);
 
 
 #define SWITCH_ROM_PAGE( tbl,tpg, mem,mpg ) \
@@ -386,6 +382,17 @@ void resetMemory() {
 }
 
 
+void textPageSelect() {
+        if ( MEMcfg.is80STORE && videoMode.page2 ) {
+            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
+            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
+        }
+        else {
+            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
+            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
+        }
+}
+
 
 INLINE uint8_t ioRead( uint16_t addr ) {
     dbgPrintf("mmio read:%04X\n", addr);
@@ -439,19 +446,13 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case io_VID_TXTPAGE1:
 //            printf("io_VID_TXTPAGE1\n");
             videoMode.page2 = 0;
-            if ( MEMcfg.is80STORE ) {
-                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
-                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
-            }
+            textPageSelect();
             break;
             
         case io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
             videoMode.page2 = 1;
-            if ( MEMcfg.is80STORE ) {
-                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
-                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
-            }
+            textPageSelect();
             break;
             
         case io_VID_Text_OFF:
@@ -716,39 +717,25 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
         case io_80STOREOFF:
 //            printf("io_80STOREOFF\n");
             MEMcfg.is80STORE = 0;
-            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
-            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
+            textPageSelect();
             break;
             
         case io_80STOREON:
 //            printf("io_80STOREON\n");
             MEMcfg.is80STORE = 1;
-            if ( videoMode.page2 ) {
-                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
-                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
-            }
-            else {
-                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
-                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
-            }
+            textPageSelect();
             break;
             
         case io_VID_TXTPAGE1:
 //            printf("io_VID_TXTPAGE1\n");
             videoMode.page2 = 0;
-            if ( MEMcfg.is80STORE ) {
-                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
-                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
-            }
+            textPageSelect();
             break;
             
         case io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
             videoMode.page2 = 1;
-            if ( MEMcfg.is80STORE ) {
-                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
-                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
-            }
+            textPageSelect();
             break;
             
         default:

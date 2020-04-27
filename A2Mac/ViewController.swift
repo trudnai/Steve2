@@ -158,8 +158,8 @@ class ViewController: NSViewController  {
 //    static var flashingSpace : Character = " "
     
     let ramBufferPointer = UnsafeRawBufferPointer(start: RAM, count: 64 * 1024)
-    let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize)
-    let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX_VID_RAM, count: textBufferSize * 2)
+    let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize * 2)
+    let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textBaseAddr, count: textBufferSize)
 
     static let textArraySize = textLines * (textCols + lineEndChars) + textCols * 2
 

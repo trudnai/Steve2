@@ -29,15 +29,15 @@ videoMode_t videoMode = { 1 }; // 40 col text, page 1
 
 uint8_t Apple2_Dummy_Page[ 1 * PG ];        // Dummy Page for discarding data
 uint8_t Apple2_Dummy_RAM[ 4 * KB ];         // Dummy RAM for discarding data
-uint8_t Apple2_512_AUX[  2 * PG ] = {0};    // Auxiliary bank for page 0 and 1
-uint8_t Apple2_VID_AUX[  2 * KB ] = {0};    // Auxiliary RAM for video page 2
 uint8_t Apple2_12K_ROM[ 12 * KB ] = {0};    // ROM D0, D8, E0, E8, F0, F8
 uint8_t Apple2_16K_ROM[ 16 * KB ] = {0};    // ROM C0, C8, D0, D8, E0, E8, F0, F8
 uint8_t Apple2_16K_RAM[ 16 * KB ] = {0};    // 16K Memory Expansion Card
+uint8_t Apple2_64K_AUX[ 64 * KB ] = {0};    // 64K Expansion Memory
 uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};    // Main Memory
 
-uint8_t * AUX_VID_RAM = Apple2_VID_AUX;     // Pointer to Auxiliary Video Memory
-uint8_t * RAM = Apple2_64K_RAM;             // Pointer to the main memory so we can use this from Swift
+//uint8_t * AUX_VID_RAM = Apple2_VID_AUX;     // Pointer to Auxiliary Video Memory
+uint8_t * const AUX = Apple2_64K_AUX;             // Pointer to the auxiliary memory so we can use this from Swift
+uint8_t * const RAM = Apple2_64K_RAM;             // Pointer to the main memory so we can use this from Swift
 
 
 #define DEF_RAM_PAGE(mem,pg) \
@@ -371,7 +371,7 @@ void resetMemory() {
     MEMcfg.is80STORE    = 0;
 
     // Aux Video Memory
-    memset( Apple2_VID_AUX, 0xFF | 0x80, sizeof(Apple2_VID_AUX) );
+    memset( AUX, 0, sizeof(Apple2_64K_AUX) );
     // 64K Main Memory Area
     memset( RAM, 0, sizeof(Apple2_64K_RAM) );
     // 16K Memory Expansion
@@ -384,8 +384,8 @@ void resetMemory() {
 
 void textPageSelect() {
         if ( MEMcfg.is80STORE && videoMode.page2 ) {
-            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
-            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
+            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_AUX, 0x04)
+            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_AUX, 0x04)
         }
         else {
             SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)

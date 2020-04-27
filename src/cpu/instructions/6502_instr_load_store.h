@@ -118,6 +118,20 @@ INLINE void STR( uint8_t * dst, uint8_t src ) {
             return;
         }
     }
+//    else if ( ( addr >= 0x400 ) && ( addr < 0x800 ) ) {
+//        // Peripheral-card scratchpad RAM locations should be available on both memory
+//        if ( ( ( addr >= 0x478 ) && ( addr <= 0x47F ) )
+//          || ( ( addr >= 0x4F8 ) && ( addr <= 0x4FF ) )
+//          || ( ( addr >= 0x578 ) && ( addr <= 0x57F ) )
+//          || ( ( addr >= 0x5F8 ) && ( addr <= 0x5FF ) )
+//          || ( ( addr >= 0x678 ) && ( addr <= 0x67F ) )
+//          || ( ( addr >= 0x6F8 ) && ( addr <= 0x6FF ) )
+//          || ( ( addr >= 0x778 ) && ( addr <= 0x77F ) )
+//          || ( ( addr >= 0x7F8 ) && ( addr <= 0x7FF ) )
+//        ) {
+//            AUX_VID_RAM[ addr - 0x400 ] = src;
+//        }
+//    }
     
     *dst = src;
 

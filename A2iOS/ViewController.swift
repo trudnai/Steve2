@@ -239,8 +239,8 @@ class ViewController: UIViewController {
     var flashingSpace : Character = " "
     
     let ramBufferPointer = UnsafeRawBufferPointer(start: RAM, count: 64 * 1024)
-    let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize)
-    let txtClear = [Character](repeating: " ", count: textBufferSize)
+    let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize * 2)
+    let txtClear = [Character](repeating: " ", count: textBufferSize * 2)
     var txtArr = txtClear
     
     var s = String()

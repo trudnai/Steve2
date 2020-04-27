@@ -99,7 +99,9 @@ typedef union videoMode_u {
         uint8_t altChr : 1;     // 0: normal   1: alternate character set
         uint8_t mixed : 1;      // 0: no mix   1: mixed graphics and text when in graphics mode
         uint8_t hires : 1;      // 0: loRes    1: hiRes
-        uint8_t page : 1;       // 0: page 1   1: page 2 (aux video memory)
+        uint8_t page2 : 1;       // 0: page 1   1: page 2 (aux video memory)
+        uint8_t intCxROM : 1;   // 0: Slot Cx ROM   1: Internal Cx ROM
+        uint8_t slotC3ROM : 1;  // 0: Internal ROM  1: Slot 3 ROM
     };
     uint8_t mode;
 } videoMode_t;
@@ -109,6 +111,7 @@ extern videoMode_t videoMode;
 
 extern m6502_t m6502;
 extern uint8_t * RAM;
+extern uint8_t * AUX_VID_RAM;
 extern uint32_t * videoMemPtr;
 
 extern void hires_Update(void);

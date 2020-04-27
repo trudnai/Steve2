@@ -30,10 +30,13 @@ videoMode_t videoMode = { 1 }; // 40 col text, page 1
 uint8_t Apple2_Dummy_Page[ 1 * PG ];        // Dummy Page for discarding data
 uint8_t Apple2_Dummy_RAM[ 4 * KB ];         // Dummy RAM for discarding data
 uint8_t Apple2_512_AUX[  2 * PG ] = {0};    // Auxiliary bank for page 0 and 1
+uint8_t Apple2_VID_AUX[  2 * KB ] = {0};    // Auxiliary RAM for video page 2
 uint8_t Apple2_12K_ROM[ 12 * KB ] = {0};    // ROM D0, D8, E0, E8, F0, F8
 uint8_t Apple2_16K_ROM[ 16 * KB ] = {0};    // ROM C0, C8, D0, D8, E0, E8, F0, F8
 uint8_t Apple2_16K_RAM[ 16 * KB ] = {0};    // 16K Memory Expansion Card
 uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};    // Main Memory
+
+uint8_t * AUX_VID_RAM = Apple2_VID_AUX;     // Pointer to Auxiliary Video Memory
 uint8_t * RAM = Apple2_64K_RAM;             // Pointer to the main memory so we can use this from Swift
 
 
@@ -57,6 +60,38 @@ uint8_t * RAM = Apple2_64K_RAM;             // Pointer to the main memory so we 
     DEF_RAM_PAGE(mem, (pg) + 0x0D), \
     DEF_RAM_PAGE(mem, (pg) + 0x0E), \
     DEF_RAM_PAGE(mem, (pg) + 0x0F)
+
+
+#define SWITCH_VIDEO_RAM( tbl,tpg, mem,mpg ) \
+    (tbl)[ (tpg) + 0x00 ] = DEF_RAM_PAGE(mem, (mpg) + 0x00); \
+    (tbl)[ (tpg) + 0x01 ] = DEF_RAM_PAGE(mem, (mpg) + 0x01); \
+    (tbl)[ (tpg) + 0x02 ] = DEF_RAM_PAGE(mem, (mpg) + 0x02); \
+    (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03);
+//    (tbl)[ (tpg) + 0x04 ] = DEF_RAM_PAGE(mem, (mpg) + 0x04); \
+//    (tbl)[ (tpg) + 0x05 ] = DEF_RAM_PAGE(mem, (mpg) + 0x05); \
+//    (tbl)[ (tpg) + 0x06 ] = DEF_RAM_PAGE(mem, (mpg) + 0x06); \
+//    (tbl)[ (tpg) + 0x07 ] = DEF_RAM_PAGE(mem, (mpg) + 0x07);
+
+
+#define SWITCH_ROM_PAGE( tbl,tpg, mem,mpg ) \
+    (tbl)[ (tpg) ] = DEF_RAM_PAGE( mem, (mpg) );
+
+#define SWITCH_CX_ROM( tbl,tpg, mem,mpg ) \
+    (tbl)[ (tpg) + 0x01 ] = DEF_RAM_PAGE(mem, (mpg) + 0x01); \
+    (tbl)[ (tpg) + 0x02 ] = DEF_RAM_PAGE(mem, (mpg) + 0x02); \
+    (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03); \
+    (tbl)[ (tpg) + 0x04 ] = DEF_RAM_PAGE(mem, (mpg) + 0x04); \
+    (tbl)[ (tpg) + 0x05 ] = DEF_RAM_PAGE(mem, (mpg) + 0x05); \
+    (tbl)[ (tpg) + 0x06 ] = DEF_RAM_PAGE(mem, (mpg) + 0x06); \
+    (tbl)[ (tpg) + 0x07 ] = DEF_RAM_PAGE(mem, (mpg) + 0x07); \
+    (tbl)[ (tpg) + 0x08 ] = DEF_RAM_PAGE(mem, (mpg) + 0x08); \
+    (tbl)[ (tpg) + 0x09 ] = DEF_RAM_PAGE(mem, (mpg) + 0x09); \
+    (tbl)[ (tpg) + 0x0A ] = DEF_RAM_PAGE(mem, (mpg) + 0x0A); \
+    (tbl)[ (tpg) + 0x0B ] = DEF_RAM_PAGE(mem, (mpg) + 0x0B); \
+    (tbl)[ (tpg) + 0x0C ] = DEF_RAM_PAGE(mem, (mpg) + 0x0C); \
+    (tbl)[ (tpg) + 0x0D ] = DEF_RAM_PAGE(mem, (mpg) + 0x0D); \
+    (tbl)[ (tpg) + 0x0E ] = DEF_RAM_PAGE(mem, (mpg) + 0x0E); \
+    (tbl)[ (tpg) + 0x0F ] = DEF_RAM_PAGE(mem, (mpg) + 0x0F);
 
 #define SWITCH_RAM_PAGE16( tbl,tpg, mem,mpg ) \
     (tbl)[ (tpg) + 0x00 ] = DEF_RAM_PAGE(mem, (mpg) + 0x00); \
@@ -150,7 +185,28 @@ uint8_t * RAM_PG_WR_TBL[256] = {
     DEF_RAM_PAGE16( Apple2_64K_RAM, 0xA0),
     DEF_RAM_PAGE16( Apple2_64K_RAM, 0xB0),
     // I/O Addresses
+//    DEF_RAM_DUMMY16,
+    
     DEF_RAM_PAGE16( Apple2_64K_RAM, 0xC0),
+
+//    DEF_RAM_PAGE(Apple2_64K_RAM, 0xC0),
+//    // SLOT ROM is non-writeable
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 01
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 02
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 03
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 04
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 05
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 06
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 07
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 08
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 09
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 0A
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 0B
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 0C
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 0D
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 0E
+//    DEF_RAM_PAGE(Apple2_Dummy_Page, 0), // 0F
+
     // NO Writing to the ROM
     DEF_RAM_DUMMY16,
     DEF_RAM_DUMMY16,
@@ -179,31 +235,45 @@ typedef struct MEMcfg_s {
     uint8_t WR_RAM      : 1;
     uint8_t RAM_BANK_2  : 1;
     uint8_t AUX_BANK    : 1;
+    uint8_t is80STORE  : 1;
 } MEMcfg_t;
 
-MEMcfg_t MEMcfg = { 1, 0, 0, 0, 0, 0 };
+MEMcfg_t MEMcfg = { 1, 0, 0, 0, 0, 0, 0 };
+
+// https://www.kreativekorp.com/miscpages/a2info/iomemory.shtml
+// Comp:  O = Apple II+  E = Apple IIe  C = Apple IIc  G = Apple IIgs
+// Act:   R = Read       W = Write      7 = Bit 7      V = Value
 
 enum mmio {
     // Keyboard
-    io_KBD              = 0xC000,
-    io_KBDSTRB          = 0xC010,
+    io_KBD              = 0xC000,   // OECG  R   Last Key Pressed + 128
+    io_KBDSTRB          = 0xC010,   // OECG WR   Keyboard Strobe
 
     // Audio
-    io_SPKR             = 0xC030,
+    io_SPKR             = 0xC030,   // OECG  R   Toggle Speaker
     
     // Video
-    io_VID_80col_OFF    = 0xC00C,
-    io_VID_80col_ON     = 0xC00D,
-    io_VID_AltChar_OFF  = 0xC00E,
-    io_VID_AltChar_ON   = 0xC00F,
+    io_80STOREOFF       = 0xC000,   //  ECG W    Use $C002-$C005 for Aux Memory
+    io_80STOREON        = 0xC001,   //  ECG W    Use PAGE2 for Aux Memory
+    io_RD80STORE        = 0xC018,   //  ECG  R7  Status of $C002-$C005/PAGE2 for Aux Mem
+    io_VID_CLR80VID     = 0xC00C,   //  ECG W    40 Columns
+    io_VID_SET80VID     = 0xC00D,   //  ECG W    80 Columns
+    io_VID_CLRALTCHAR   = 0xC00E,   //  ECG W    Primary Character Set
+    io_VID_SETALTCHAR   = 0xC00F,   //  ECG W    Alternate Character Set
+    io_VID_ALTCHAR      = 0xC01E,   //  ECG  R7  Status of Primary/Alternate Character Set
+    io_VID_RD80VID      = 0xC01F,   //  ECG  R7  Status of 40/80 Columns
     io_VID_Text_OFF     = 0xC050,
     io_VID_Text_ON      = 0xC051,
     io_VID_Mixed_OFF    = 0xC052,
     io_VID_Mixed_ON     = 0xC053,
-    io_VID_Page2_OFF    = 0xC054,
-    io_VID_Page2_ON     = 0xC055,
+    io_VID_TXTPAGE1     = 0xC054,   // OECG WR   Display Page 1
+    io_VID_TXTPAGE2     = 0xC055,   // OECG WR   If 80STORE Off: Display Page 2
+                                    //  ECG WR   If 80STORE On: Read/Write Aux Display Mem
     io_VID_Hires_OFF    = 0xC056,
     io_VID_Hires_ON     = 0xC057,
+    
+    io_TAPEIN           = 0xC060,   // OE    R7  Read Cassette Input
+                                    //   C   R7  Status of 80/40 Column Switch
 
     // Game Controller
     io_PDL0             = 0xC064,
@@ -231,6 +301,14 @@ enum mmio {
     io_DISK_SHIFT       = 0xC08F,
 
     // Memory
+    io_SETSLOTCXROM     = 0xC006,   //  E G W    Disable Internal ROM / Enable Peripheral ROM ($C100-$CFFF)
+    io_SETINTCXROM      = 0xC007,   //  E G W    Enable Internal ROM ($C100-$CFFF)
+    io_RDCXROM          = 0xC015,   //  E G  R7  Read state of $C100-$CFFF soft switch -- Status of Periph/ROM Access
+    io_RSTXINT          = 0xC015,   //   C   R   Reset Mouse X0 Interrupt
+    io_SETINTC3ROM      = 0xC00A,   //  E G W    ROM in Slot 3
+    io_SETSLOTC3ROM     = 0xC00B,   //  E G W    ROM in Aux Slot
+    io_RDC3ROM          = 0xC017,   //  E G  R7  Status of Slot 3/Aux Slot ROM
+    io_RSTYINT          = 0xC017,   //   C   R   Reset Mouse Y0 Interrupt
     io_MEM_RDRAM_NOWR_2 = 0xC080,
     io_MEM_RDROM_WRAM_2 = 0xC081,
     io_MEM_RDROM_NOWR_2 = 0xC082,
@@ -294,7 +372,10 @@ void resetMemory() {
     MEMcfg.WR_RAM       = 0;
     MEMcfg.RAM_BANK_2   = 0;
     MEMcfg.AUX_BANK     = 0;
+    MEMcfg.is80STORE    = 0;
 
+    // Aux Video Memory
+    memset( Apple2_VID_AUX, 0xFF | 0x80, sizeof(Apple2_VID_AUX) );
     // 64K Main Memory Area
     memset( RAM, 0, sizeof(Apple2_64K_RAM) );
     // 16K Memory Expansion
@@ -329,20 +410,48 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
             return RAM[io_SPKR];
 
-        case io_VID_80col_OFF:
-            videoMode.col80 = 0;
+//        case io_VID_CLR80VID:
+//            videoMode.col80 = 0;
+//            break;
+//
+//        case io_VID_SET80VID:
+//            videoMode.col80 = 1;
+//            break;
+//
+        case io_VID_ALTCHAR:
+            return videoMode.altChr << 7;
+            
+        case io_VID_RD80VID:
+            return videoMode.col80 << 7;
+            
+        case io_TAPEIN:
+            return videoMode.page2 << 7;
+            
+        case io_RDCXROM:
+            return videoMode.intCxROM << 7;
+            
+        case io_RDC3ROM:
+            return videoMode.slotC3ROM << 7;
+            
+        case io_RD80STORE:
+            return MEMcfg.is80STORE << 7;
+            
+        case io_VID_TXTPAGE1:
+//            printf("io_VID_TXTPAGE1\n");
+            videoMode.page2 = 0;
+            if ( MEMcfg.is80STORE ) {
+                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
+                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
+            }
             break;
             
-        case io_VID_80col_ON:
-            videoMode.col80 = 1;
-            break;
-            
-        case io_VID_AltChar_OFF:
-            videoMode.altChr = 0;
-            break;
-            
-        case io_VID_AltChar_ON:
-            videoMode.altChr = 1;
+        case io_VID_TXTPAGE2:
+//            printf("io_VID_TXTPAGE2\n");
+            videoMode.page2 = 1;
+            if ( MEMcfg.is80STORE ) {
+                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
+                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
+            }
             break;
             
         case io_VID_Text_OFF:
@@ -359,14 +468,6 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
         case io_VID_Mixed_ON:
             videoMode.mixed = 1;
-            break;
-            
-        case io_VID_Page2_OFF:
-            videoMode.page = 0;
-            break;
-            
-        case io_VID_Page2_ON:
-            videoMode.page = 1;
             break;
             
         case io_VID_Hires_OFF:
@@ -559,15 +660,97 @@ void kbdInput ( uint8_t code ) {
 
 
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {
-    //    printf("mmio:%04X\n", addr);
+    // printf("ioWrite:%04X (A:%02X)\n", addr, m6502.A);
     switch (addr) {
-        case io_KBD:
-            break;
-            
         case io_KBDSTRB:
             RAM[io_KBD] &= 0x7F;
             break;
+            
+        case io_SETSLOTCXROM:
+//            printf("io_SETSLOTCXROM\n");
+            videoMode.intCxROM = 0;
+//            SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0);
+            SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0);
+//            RAM_PG_RD_TBL[ 0xC0 ] = DEF_RAM_PAGE(Apple2_64K_RAM, 0xC0);
+            break;
 
+        case io_SETINTCXROM:
+//            printf("io_SETINTCXROM\n");
+            videoMode.intCxROM = 1;
+//            SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
+            SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
+//            RAM_PG_RD_TBL[ 0xC0 ] = DEF_RAM_PAGE(Apple2_16K_ROM, 0x00);
+            break;
+
+        case io_SETSLOTC3ROM:
+//            printf("io_SETSLOTC3ROM\n");
+            videoMode.slotC3ROM = 1;
+            SWITCH_ROM_PAGE( RAM_PG_RD_TBL, 0xC3, Apple2_64K_RAM, 0xC3);
+//            RAM_PG_RD_TBL[ 0xC3 ] = DEF_RAM_PAGE(Apple2_64K_RAM, 0xC3);
+            break;
+
+        case io_SETINTC3ROM:
+//            printf("io_SETINTC3ROM\n");
+            videoMode.slotC3ROM = 0;
+            SWITCH_ROM_PAGE( RAM_PG_RD_TBL, 0xC3, Apple2_16K_ROM, 0x03);
+//            RAM_PG_RD_TBL[ 0xC3 ] = DEF_RAM_PAGE(Apple2_16K_ROM, 0x03);
+            break;
+
+        case io_VID_CLR80VID:
+//            printf("io_VID_CLR80VID\n");
+            videoMode.col80 = 0;
+            break;
+            
+        case io_VID_SET80VID:
+            videoMode.col80 = 1;
+            break;
+            
+        case io_VID_CLRALTCHAR:
+            videoMode.altChr = 0;
+            break;
+            
+        case io_VID_SETALTCHAR:
+            videoMode.altChr = 1;
+            break;
+            
+        case io_80STOREOFF:
+//            printf("io_80STOREOFF\n");
+            MEMcfg.is80STORE = 0;
+            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
+            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
+            break;
+            
+        case io_80STOREON:
+//            printf("io_80STOREON\n");
+            MEMcfg.is80STORE = 1;
+            if ( videoMode.page2 ) {
+                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
+                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
+            }
+            else {
+                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
+                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
+            }
+            break;
+            
+        case io_VID_TXTPAGE1:
+//            printf("io_VID_TXTPAGE1\n");
+            videoMode.page2 = 0;
+            if ( MEMcfg.is80STORE ) {
+                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
+                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
+            }
+            break;
+            
+        case io_VID_TXTPAGE2:
+//            printf("io_VID_TXTPAGE2\n");
+            videoMode.page2 = 1;
+            if ( MEMcfg.is80STORE ) {
+                SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_VID_AUX, 0x00)
+                SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_VID_AUX, 0x00)
+            }
+            break;
+            
         default:
             break;
     }

@@ -44,7 +44,7 @@ func spk_dn_play() {
 import Metal
 #endif
 
-class ViewController: NSViewController {
+class ViewController: NSViewController  {
 
     @IBOutlet weak var displayField: NSTextField!
     @IBOutlet weak var display: NSTextFieldCell!
@@ -139,21 +139,32 @@ class ViewController: NSViewController {
     
     static let textBaseAddr = 0x400
     static let textBufferSize = 0x400
-    let textLines = 24
-    let textCols = 40
-    let lineEndChars = 1
-    
+
+    // static only needed to be able to initialize things
+    static let textLines = 24
+    static let textCols = 40
+    static let lineEndChars = 1
+
+    // these are needed to be able to easy access to these constants from instances
+    let textLines = ViewController.textLines
+    let textCols = ViewController.textCols
+    let lineEndChars = ViewController.lineEndChars
+
     var frameCnt = 0
 //    let spaceChar : Character = "\u{E17F}"
 //    let blockChar : Character = "\u{E07F}"
-    let spaceChar : Character = " "
-    let blockChar : Character = "░"
-    var flashingSpace : Character = " "
+//    static let spaceChar : Character = " "
+//    static let blockChar : Character = "░"
+//    static var flashingSpace : Character = " "
     
     let ramBufferPointer = UnsafeRawBufferPointer(start: RAM, count: 64 * 1024)
     let textBufferPointer = UnsafeRawBufferPointer(start: RAM + textBaseAddr, count: textBufferSize)
-    var txtClear = [Character](repeating: " ", count: textBufferSize)
-    var txtArr = [Character](repeating: " ", count: textBufferSize)
+    let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX_VID_RAM, count: textBufferSize * 2)
+
+    static let textArraySize = textLines * (textCols + lineEndChars) + textCols * 2
+
+    var txtClear = [Character](repeating: " ", count: textArraySize * 2)
+    var txtArr = [Character](repeating: " ", count: textArraySize * 2)
 
     var s = String()
     
@@ -185,6 +196,10 @@ class ViewController: NSViewController {
     
     var ddd = 9;
 
+    override var acceptsFirstResponder: Bool {
+        return true
+    }
+    
     override func keyDown(with event: NSEvent) {
         print("KBD Event")
         
@@ -262,6 +277,7 @@ class ViewController: NSViewController {
             }
             #endif
         }
+        
     }
     
     override func keyUp(with event: NSEvent) {
@@ -351,6 +367,8 @@ class ViewController: NSViewController {
     
     var was = 0;
     
+    var currentVideoMode = videoMode
+    
     func Update() {
 
         #if SPEEDTEST
@@ -396,20 +414,45 @@ class ViewController: NSViewController {
                 let byte = textBufferPointer[ textLineOfs[y] + x ]
                 let idx = Int(byte);
                 let chr = ViewController.charConvTbl[idx]
+                
+                if videoMode.col80 == 0 {
+                    txtArr[ y * (textCols + lineEndChars) + x ] = chr
+                }
+                else {
+                    txtArr[ y * (textCols * 2 + lineEndChars) + x * 2 + 1] = chr
 
-                // is it a cursor? (slashing space)
-//                if ( chr == "blockChar" ) {
-//                    chr = flashingSpace
-//                }
-
-                txtArr[ y * (textCols + lineEndChars) + x ] = chr
+                    let byte = textAuxBufferPointer[ textLineOfs[y] + x ]
+                    let idx = Int(byte);
+                    let chr = ViewController.charConvTbl[idx]
+                    
+                    txtArr[ y * (textCols * 2 + lineEndChars) + x * 2] = chr
+                }
             }
-            txtArr[ y * (textCols + lineEndChars) + textCols ] = "\n"
+            
+            if videoMode.col80 == 0 {
+                txtArr[ y * (textCols + lineEndChars) + textCols ] = "\n"
+            }
+            else {
+                txtArr[ y * (textCols * 2 + lineEndChars) + textCols * 2] = "\n"
+            }
         }
 
         txt = String(txtArr)
 
         DispatchQueue.main.async {
+            if videoMode.col80 != self.currentVideoMode.col80 {
+                self.currentVideoMode.col80 = videoMode.col80
+                
+                if let fontSize = self.display.font?.pointSize {
+                    if videoMode.col80 == 1 {
+                        self.display.font = NSFont(name: "PRNumber3", size: fontSize)
+                    }
+                    else {
+                        self.display.font = NSFont(name: "PrintChar21", size: fontSize)
+                    }
+                }
+            }
+            
             self.display.stringValue = txt
 //            self.display.stringValue = "testing\nit\nout"
 
@@ -456,9 +499,9 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for y in 0 ... textLines - 1 {
-            txtClear[ y * (textCols + lineEndChars) + textCols ] = "\n"
-        }
+//        for y in 0 ... textLines - 1 {
+//            txtClear[ y * (textCols + lineEndChars) + textCols * 2 + 1 ] = "\n"
+//        }
 
         woz_loadFile( Bundle.main.resourcePath, "Apple DOS 3.3 January 1983.woz" )
 
@@ -496,13 +539,20 @@ class ViewController: NSViewController {
 //            return $0
 //        }
 
-//        //        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
-//        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
-////            print("keyDown event")
-//            self.keyDown(with: $0)
+        //        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+//            print("keyDown event")
+            self.keyDown(with: $0)
+            return nil
 //            return $0
-//        }
-        
+        }
+        NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
+//            print("keyUp event")
+            self.keyUp(with: $0)
+            return nil
+//            return $0
+        }
+
         displayField.maximumNumberOfLines = textLines
         displayField.preferredMaxLayoutWidth = displayField.frame.width
 

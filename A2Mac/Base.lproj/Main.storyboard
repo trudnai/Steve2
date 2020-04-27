@@ -795,7 +795,7 @@
                         <subviews>
                             <textField canDrawConcurrently="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIF-Q5-Onc">
                                 <rect key="frame" x="0.0" y="0.0" width="1152" height="800"/>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" title="Display Background" drawsBackground="YES" id="cIa-Sd-4OZ">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" title="Display Background" drawsBackground="YES" id="cIa-Sd-4OZ">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" red="0.078431372549019607" green="0.10980392156862745" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" red="0.078431372549019607" green="0.10980392156862745" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -859,7 +859,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="t2i-0h-wau"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hmD-vF-EXJ">
+                                                <buttonCell key="cell" type="push" title="Power" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hmD-vF-EXJ">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -872,7 +872,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="sbX-nh-SV3"/>
                                                 </constraints>
-                                                <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LHj-7W-LwD">
+                                                <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" refusesFirstResponder="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LHj-7W-LwD">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                     <connections>
@@ -902,7 +902,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="ai1-6C-5tW"/>
                                                 </constraints>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="FBZ-dh-6Fs">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" alignment="center" title="Label" id="FBZ-dh-6Fs">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -913,7 +913,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="xCE-LE-hVy"/>
                                                 </constraints>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="CPU Speed" id="b3T-0k-ama">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" alignment="left" title="CPU Speed" id="b3T-0k-ama">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -921,7 +921,7 @@
                                             </textField>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Pw-e8-92m">
                                                 <rect key="frame" x="-1" y="119" width="55" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="1.023" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="AgQ-Np-TYQ">
+                                                <buttonCell key="cell" type="radio" title="1.023" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" state="on" inset="2" id="AgQ-Np-TYQ">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -931,7 +931,7 @@
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hU1-g7-CCX">
                                                 <rect key="frame" x="-1" y="95" width="30" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="2" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="nfH-ww-Ofp">
+                                                <buttonCell key="cell" type="radio" title="2" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="nfH-ww-Ofp">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -941,7 +941,7 @@
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hfg-DD-meM">
                                                 <rect key="frame" x="-1" y="71" width="31" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="4" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="dqL-yg-qaX">
+                                                <buttonCell key="cell" type="radio" title="4" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="dqL-yg-qaX">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -951,7 +951,7 @@
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OsQ-RW-v8K">
                                                 <rect key="frame" x="-1" y="47" width="37" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="10" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="3Ve-WW-CIS">
+                                                <buttonCell key="cell" type="radio" title="10" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="3Ve-WW-CIS">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -961,7 +961,7 @@
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGb-dz-KHi">
                                                 <rect key="frame" x="-1" y="23" width="45" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="100" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="BUX-kX-vwG">
+                                                <buttonCell key="cell" type="radio" title="100" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="BUX-kX-vwG">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -971,7 +971,7 @@
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="umb-DW-vGc">
                                                 <rect key="frame" x="-1" y="-1" width="47" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="666" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="8VU-4B-7Pe">
+                                                <buttonCell key="cell" type="radio" title="666" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="8VU-4B-7Pe">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>

@@ -678,7 +678,7 @@ class HiRes: NSView {
             if videoMode.mixed == 1 {
                 height = HiRes.MixedHeight
             }
-            if MEMcfg.page2 == 1 {
+            if MEMcfg.txt_page_2 == 1 {
                 HiResBufferPointer = HiResBuffer2
             }
             else {

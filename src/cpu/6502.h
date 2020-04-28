@@ -100,10 +100,13 @@ typedef struct MEMcfg_s {
     unsigned WR_RAM      : 1;
     unsigned RAM_BANK_2  : 1;
     unsigned AUX_BANK    : 1;
-    unsigned page2       : 1;    // 0: page 1   1: page 2 (aux video memory)
-    unsigned intCxROM    : 1;    // 0: Slot Cx ROM   1: Internal Cx ROM
-    unsigned slotC3ROM   : 1;    // 0: Internal ROM  1: Slot 3 ROM
-    unsigned is80STORE   : 1;
+    unsigned txt_page_2  : 1;    // 0: page 1   1: page 2 (aux video memory)
+    unsigned int_Cx_ROM  : 1;    // 0: Slot Cx ROM   1: Internal Cx ROM
+    unsigned slot_C3_ROM : 1;    // 0: Internal ROM  1: Slot 3 ROM
+    unsigned is_80STORE  : 1;
+    unsigned RD_AUX_MEM  : 1;
+    unsigned WR_AUX_MEM  : 1;
+    unsigned ALT_ZP      : 1;
 } MEMcfg_t;
 
 

@@ -21,7 +21,7 @@
 
 
 #ifdef DEBUG
-//#define dbgPrintf(format, ...) printf (format, ## __VA_ARGS__)
+//#define dbgPrintf(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)
 #define dbgPrintf(format, ...)
 #define dbgPrintf2(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)
 #else

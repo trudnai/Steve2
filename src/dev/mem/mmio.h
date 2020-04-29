@@ -29,11 +29,12 @@ videoMode_t videoMode = { 1 }; // 40 col text, page 1
 
 uint8_t Apple2_Dummy_Page[ 1 * PG ];        // Dummy Page for discarding data
 uint8_t Apple2_Dummy_RAM[ 4 * KB ];         // Dummy RAM for discarding data
-uint8_t Apple2_12K_ROM[ 12 * KB ] = {0};    // ROM D0, D8, E0, E8, F0, F8
+
 uint8_t Apple2_16K_ROM[ 16 * KB ] = {0};    // ROM C0, C8, D0, D8, E0, E8, F0, F8
-uint8_t Apple2_16K_RAM[ 16 * KB ] = {0};    // 16K Memory Expansion Card
+
 uint8_t Apple2_64K_AUX[ 64 * KB ] = {0};    // 64K Expansion Memory
 uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};    // Main Memory
+uint8_t Apple2_64K_CUR[ 64 * KB ] = {0};    // Current Copy of Memory
 
 //uint8_t * AUX_VID_RAM = Apple2_VID_AUX;     // Pointer to Auxiliary Video Memory
 uint8_t * const AUX = Apple2_64K_AUX;             // Pointer to the auxiliary memory so we can use this from Swift
@@ -181,9 +182,9 @@ uint8_t * RAM_PG_RD_TBL[256] = {
     // I/O Addresses
     DEF_RAM_PAGE16( Apple2_64K_RAM, 0xC0),
     // Reading from the ROM
-    DEF_RAM_PAGE16( Apple2_12K_ROM, 0x00),  // D0
-    DEF_RAM_PAGE16( Apple2_12K_ROM, 0x10),  // E0
-    DEF_RAM_PAGE16( Apple2_12K_ROM, 0x20)   // F0
+    DEF_RAM_PAGE16( Apple2_16K_ROM, 0x10),  // D0
+    DEF_RAM_PAGE16( Apple2_16K_ROM, 0x20),  // E0
+    DEF_RAM_PAGE16( Apple2_16K_ROM, 0x30)   // F0
 };
 
 uint8_t * RAM_PG_WR_TBL[256] = {
@@ -354,9 +355,9 @@ void resetMemory() {
     // I/O Addresses
     SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0)
     // Reading from the ROM
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, Apple2_12K_ROM, 0x00)  // D0
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_12K_ROM, 0x10)  // E0
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_12K_ROM, 0x20)  // F0
+    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, Apple2_16K_ROM, 0x10)  // D0
+    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_16K_ROM, 0x20)  // E0
+    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_16K_ROM, 0x30)  // F0
 
     // 48K main memory
     SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x00, Apple2_64K_RAM, 0x00)
@@ -392,8 +393,6 @@ void resetMemory() {
     memset( AUX, 0, sizeof(Apple2_64K_AUX) );
     // 64K Main Memory Area
     memset( RAM, 0, sizeof(Apple2_64K_RAM) );
-    // 16K Memory Expansion
-    memset( RAM, 0, sizeof(Apple2_16K_RAM) );
     // I/O area should be 0 -- just in case we decide to init RAM with a different pattern...
     memset( RAM + 0xC000, 0, 0x1000 );
     
@@ -546,7 +545,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case io_MEM_RDROM_NOWR_1:
         case io_MEM_RDRAM_WRAM_1:
             if ( MEMcfg.RAM_16K || MEMcfg.RAM_128K ) {
-                uint8_t * RAM_BANK = Apple2_16K_RAM;
+                uint8_t * RAM_BANK = Apple2_64K_AUX + 0xC000;
                 
                 // RAM Bank 1 or 2?
                 switch (addr) {
@@ -555,12 +554,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
                     case io_MEM_RDROM_NOWR_2:
                     case io_MEM_RDRAM_WRAM_2:
                         MEMcfg.RAM_BANK_2 = 1;
-                        RAM_BANK = Apple2_16K_RAM + 0x30;
+                        RAM_BANK = Apple2_64K_AUX + 0xD000;
                         break;
                         
                     default:
                         MEMcfg.RAM_BANK_2 = 0;
-                        RAM_BANK = Apple2_16K_RAM;
+                        RAM_BANK = Apple2_64K_AUX + 0xC000;
                         break;
                 }
 
@@ -573,16 +572,16 @@ INLINE uint8_t ioRead( uint16_t addr ) {
                         MEMcfg.RD_RAM = 1;
                         // set the RAM extension to read on the upper memory area
                         SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, RAM_BANK,       0x00 );
-                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_16K_RAM, 0x10 );
-                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_16K_RAM, 0x20 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_64K_AUX, 0xE0 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_64K_AUX, 0xF0 );
                         break;
                         
                     default:
                         MEMcfg.RD_RAM = 0;
                         // set the ROM to read on the upper memory area
-                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, Apple2_12K_ROM, 0x00 );
-                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_12K_ROM, 0x10 );
-                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_12K_ROM, 0x20 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, Apple2_16K_ROM, 0x10 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_16K_ROM, 0x20 );
+                        SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_16K_ROM, 0x30 );
                         break;
                 }
 
@@ -595,8 +594,8 @@ INLINE uint8_t ioRead( uint16_t addr ) {
                         MEMcfg.WR_RAM = 1;
                         // set the RAM extension to read from the upper memory area
                         SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xD0, RAM_BANK,       0x00 );
-                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xE0, Apple2_16K_RAM, 0x10 );
-                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xF0, Apple2_16K_RAM, 0x20 );
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xE0, Apple2_64K_AUX, 0xE0 );
+                        SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xF0, Apple2_64K_AUX, 0xF0 );
                         break;
                         
                     default:

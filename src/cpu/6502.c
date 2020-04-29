@@ -886,15 +886,14 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     
     else if ( flen == 16 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0);
-        memcpy(Apple2_12K_ROM + 0x0000, Apple2_16K_ROM + 0x1000, sizeof(Apple2_12K_ROM));
-        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, 0x1000);
+        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, 16 * KB);
         
         SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
     }
     
     else if ( flen == 12 * KB ) {
-        read_rom( bundlePath, filename, Apple2_12K_ROM, 0);
-        memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
+        read_rom( bundlePath, filename, Apple2_16K_ROM, 0x1000);
+        memcpy(Apple2_64K_RAM + 0xD000, Apple2_16K_ROM + 0x1000, 12 * KB);
     }
 
     //    read_rom( bundlePath, "Apple2Plus.rom", Apple2_12K_ROM, 0);

@@ -35,9 +35,11 @@ unsigned long long int inst_cnt = 0;
 
 //const unsigned int fps = 30;
 const unsigned long long default_MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
+const unsigned long long startup_MHz_6502 = 25 * M;
 unsigned long long MHz_6502 = default_MHz_6502;
-unsigned long long clk_6502_per_frm =  25 * M; //default_MHz_6502 / fps;
+unsigned long long clk_6502_per_frm =  startup_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
+unsigned long long clk_6502_per_frm_max = default_MHz_6502 / fps;
 
 
 unsigned long long tick_per_sec = G;
@@ -547,35 +549,35 @@ INLINE int m6502_Step() {
         case 0x7E: ROR( dest_abs_X() ); return 7;                      // ROR abs,X
 //        case 0x7F:
 //        case 0x80:
-        case 0x81: STA( dest_X_ind() ) ; return 6;                     // STA X,ind
+        case 0x81: STA( addr_X_ind() ) ; return 6;                     // STA X,ind
 //        case 0x82:
 //        case 0x83:
-        case 0x84: STY( dest_zp() ); return 3;                         // STY zpg
-        case 0x85: STA( dest_zp() ); return 3;                         // STA zpg
-        case 0x86: STX( dest_zp() ); return 3;                         // STX zpg
+        case 0x84: STY( addr_zp() ); return 3;                         // STY zpg
+        case 0x85: STA( addr_zp() ); return 3;                         // STA zpg
+        case 0x86: STX( addr_zp() ); return 3;                         // STX zpg
 //        case 0x87:
         case 0x88: DEY(); return 2;                                    // DEY
 //        case 0x89: NOP(); imm(); return 4;                             // NOP imm
         case 0x8A: TXA(); return 2;                                    // TXA
 //        case 0x8B:
-        case 0x8C: STY( dest_abs() ); return 4;                        // STY abs
-        case 0x8D: STA( dest_abs() ); return 4;                        // STA abs
-        case 0x8E: STX( dest_abs() ); return 4;                        // STX abs
+        case 0x8C: STY( addr_abs() ); return 4;                        // STY abs
+        case 0x8D: STA( addr_abs() ); return 4;                        // STA abs
+        case 0x8E: STX( addr_abs() ); return 4;                        // STX abs
 //        case 0x8F:
         case 0x90: BCC( rel_addr() ); return 2;                        // BCC rel
-        case 0x91: STA( dest_ind_Y() ); return 6;                      // STA ind,Y
+        case 0x91: STA( addr_ind_Y() ); return 6;                      // STA ind,Y
 //        case 0x92:
 //        case 0x93:
-        case 0x94: STY( dest_zp_X() ); return 4;                       // STY zpg,X
-        case 0x95: STA( dest_zp_X() ); return 4;                       // STA zpg,X
-        case 0x96: STX( dest_zp_Y() ); return 4;                       // STX zpg,Y
+        case 0x94: STY( addr_zp_X() ); return 4;                       // STY zpg,X
+        case 0x95: STA( addr_zp_X() ); return 4;                       // STA zpg,X
+        case 0x96: STX( addr_zp_Y() ); return 4;                       // STX zpg,Y
 //        case 0x97:
         case 0x98: TYA(); return 2;                                    // TYA
-        case 0x99: STA( dest_abs_Y() ); return 5;                      // STA abs,Y
+        case 0x99: STA( addr_abs_Y() ); return 5;                      // STA abs,Y
         case 0x9A: TXS(); return 2;                                    // TXS
 //        case 0x9B:
 //        case 0x9C:
-        case 0x9D: STA( dest_abs_X() ); return 5;                      // STA abs,X
+        case 0x9D: STA( addr_abs_X() ); return 5;                      // STA abs,X
 //        case 0x9E:
 //        case 0x9F:
         case 0xA0: LDY( imm() ); return 2;                             // LDY imm
@@ -694,19 +696,24 @@ double mips = 0;
 double mhz = 0;
 unsigned long long epoch = 0;
 
+
+unsigned int clkfrm = 0;
+
 void m6502_Run() {
     static unsigned int clk = 0;
-    static unsigned int clkfrm = 0;
     
     // init time
 //#ifdef CLK_WAIT
 //    unsigned long long elpased = (unsigned long long)-1LL;
 //#endif
 
+    // we will also use this to pause the simulation if not finished by the end of the frame
+    clk_6502_per_frm_max = clk_6502_per_frm;
+    
 #ifdef SPEEDTEST
     for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
 #elif defined( CLK_WAIT )
-        for ( clkfrm = 0; clkfrm < clk_6502_per_frm ; clkfrm += clk )
+        for ( clkfrm = 0; clkfrm < clk_6502_per_frm_max ; clkfrm += clk )
 #else
 //    for ( ; m6502.pc ; )
     for ( ; ; )

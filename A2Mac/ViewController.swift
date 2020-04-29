@@ -368,13 +368,24 @@ class ViewController: NSViewController  {
     var was = 0;
     
     var currentVideoMode = videoMode
+    var lastFrameTime = CACurrentMediaTime() as Double
+    var frameCounter : UInt = 0
+    var clkCounter : Double = 0
     
     func Update() {
+        clk_6502_per_frm_max = 0
+        
+        clkCounter += Double(clkfrm)
 
-        #if SPEEDTEST
-        #else
-        m6502_Run()
-        #endif
+        frameCounter += 1
+        
+        if ( frameCounter % UInt(fps) == 0 ) {
+            let currentTime = CACurrentMediaTime() as Double
+            let elpasedTime = currentTime - lastFrameTime
+            lastFrameTime = currentTime
+            mhz = Double( clkCounter ) / (elpasedTime * M);
+            clkCounter = 0
+        }
         
 //        render()
 //        hires.compute()
@@ -468,12 +479,15 @@ class ViewController: NSViewController  {
             self.display.stringValue = txt
 //            self.display.stringValue = "testing\nit\nout"
 
-            if ( (mhz < 10) && (mhz != floor(mhz)) ) {
+            if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
                 self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
             }
             else {
-                self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
+                self.speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
             }
+//            else {
+//                self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
+//            }
             
             #if HIRES
 //            if ( self.was < 300 ) {
@@ -492,6 +506,13 @@ class ViewController: NSViewController  {
 //            }
             #endif
         }
+        
+        #if SPEEDTEST
+        #else
+        m6502_Run()
+        #endif
+        
+        
     }
 
     
@@ -588,15 +609,14 @@ class ViewController: NSViewController  {
 
     
     func setCPUClockSpeed( freq : Double ) {
-        mhz = freq
-        MHz_6502 = UInt64(mhz * M)
+        MHz_6502 = UInt64(freq * M)
         clk_6502_per_frm = MHz_6502 / UInt64(fps)
         clk_6502_per_frm_set = clk_6502_per_frm
     }
 
     @IBAction func speedSelected(_ sender: NSButton) {
-        if ( sender.title == "Max" ) {
-            clk_6502_per_frm = UINT64_MAX
+        if ( sender.title == "MAX" ) {
+            setCPUClockSpeed(freq: 9999)
         }
         else if let freq = Double( sender.title ) {
             setCPUClockSpeed(freq: freq)

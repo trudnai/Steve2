@@ -970,8 +970,8 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="umb-DW-vGc">
-                                                <rect key="frame" x="-1" y="-1" width="47" height="18"/>
-                                                <buttonCell key="cell" type="radio" title="666" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="8VU-4B-7Pe">
+                                                <rect key="frame" x="-1" y="-1" width="51" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="MAX" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="8VU-4B-7Pe">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>

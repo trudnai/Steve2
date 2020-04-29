@@ -437,7 +437,7 @@ void auxMemorySelect() {
 
 
 INLINE uint8_t ioRead( uint16_t addr ) {
-    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
+//    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
     
     uint8_t currentMagnet = 0;
     
@@ -677,7 +677,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     return RAM[addr];
 }
 
-
+// TODO:
 void setIO ( uint16_t ioaddr, uint8_t val ) {
     RAM[ioaddr] = val;
 }
@@ -710,7 +710,7 @@ void kbdInput ( uint8_t code ) {
 
 
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {
-    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
+//    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
     switch (addr) {
         case io_KBDSTRB:
             RAM[io_KBD] &= 0x7F;
@@ -834,14 +834,14 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
  **/
 INLINE uint8_t memread8( uint16_t addr ) {
     return * ( RAM_PG_RD_TBL[addr >> 8] + (addr & 0xFF) );
-//    return RAM[ addr ];
+//    return   RAM[addr];
 }
 /**
  Naive implementation of RAM read from address
  **/
 INLINE uint16_t memread16( uint16_t addr ) {
     return * (uint16_t*) ( RAM_PG_RD_TBL[addr >> 8] + (addr & 0xFF) );
-//    return * (uint16_t*) (& RAM[ addr ]);
+//    return * (uint16_t*) (RAM + addr);
 }
 
 INLINE uint8_t memread( uint16_t addr ) {
@@ -890,7 +890,7 @@ static  void memwrite( uint16_t addr, uint8_t byte ) {
  increase pc by one
  **/
 INLINE uint8_t fetch() {
-    disHexB( disassembly.pOpcode, RAM[m6502.PC] );
+    disHexB( disassembly.pOpcode, memread(m6502.PC) );
 #ifdef CLK_ABSOLUTE_PRECISE
     if ( (m6502.PC & 0xFF) >= 0xFF ) {
         m6502.clktime++;

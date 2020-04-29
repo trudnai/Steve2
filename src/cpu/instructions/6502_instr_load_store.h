@@ -90,51 +90,17 @@ char * charConv =
  
  (not a real instruction, only a helper function)
 **/
-INLINE void STR( uint8_t * dst, uint8_t src ) {
-    dbgPrintf("STR [%04X], %02X ", (int)(dst - RAM), src );
- 
-    uint16_t addr = dst - RAM;
+INLINE void STR( uint16_t addr, uint8_t src ) {
+    dbgPrintf("STR [%04X], %02X ", addr, src );
 
     // I/O or ROM or RAM EXP
-    if ( addr >= 0xC000 ) {
-        // ROM or RAM EXP
-        if ( addr >= 0xD000 ) {
-            uint8_t * pgaddr;
-            // DO NOT MAKE IT NICER! faster this way!
-            if ( (pgaddr = RAM_PG_WR_TBL[ addr >> 8 ]) ) {
-                dst = pgaddr + (addr & 0xFF);
-            }
-            else {
-                // NULL page table, so no need to do anything
-                return;
-            }
-        }
-        // I/O
-        else {
-    //        printf("mmio write:[%04X] = %02X\n", addr, src);
-    //        dst = Apple2_Dummy_Page;
-            
-            ioWrite( addr, src );
-            return;
-        }
+    if ( ( addr >= 0xC000 ) && ( addr < 0xC100 ) ) {
+        return ioWrite( addr, src );
     }
-//    else if ( ( addr >= 0x400 ) && ( addr < 0x800 ) ) {
-//        // Peripheral-card scratchpad RAM locations should be available on both memory
-//        if ( ( ( addr >= 0x478 ) && ( addr <= 0x47F ) )
-//          || ( ( addr >= 0x4F8 ) && ( addr <= 0x4FF ) )
-//          || ( ( addr >= 0x578 ) && ( addr <= 0x57F ) )
-//          || ( ( addr >= 0x5F8 ) && ( addr <= 0x5FF ) )
-//          || ( ( addr >= 0x678 ) && ( addr <= 0x67F ) )
-//          || ( ( addr >= 0x6F8 ) && ( addr <= 0x6FF ) )
-//          || ( ( addr >= 0x778 ) && ( addr <= 0x77F ) )
-//          || ( ( addr >= 0x7F8 ) && ( addr <= 0x7FF ) )
-//        ) {
-//            AUX_VID_RAM[ addr - 0x400 ] = src;
-//        }
-//    }
     
-    *dst = src;
-
+    // DO NOT MAKE IT NICER! faster this way!
+    *(RAM_PG_WR_TBL[ addr >> 8 ] + (addr & 0xFF)) = src;
+//    RAM[addr] = src;
 }
 
 /**
@@ -153,10 +119,10 @@ INLINE void STR( uint8_t * dst, uint8_t src ) {
  (indirect,X)  STA (oper,X)  81    2     6
  (indirect),Y  STA (oper),Y  91    2     6
 **/
-INLINE void STA( uint8_t * dst ) {
+INLINE void STA( uint16_t addr ) {
     dbgPrintf("STA ");
     disPrintf(disassembly.inst, "STA");
-    STR(dst, m6502.A);
+    STR(addr, m6502.A);
 }
 
 /**
@@ -171,10 +137,10 @@ INLINE void STA( uint8_t * dst ) {
  zeropage,Y    STX oper,Y    96    2     4
  absolute      STX oper      8E    3     4
  **/
-INLINE void STX( uint8_t * dst ) {
+INLINE void STX( uint16_t addr ) {
     dbgPrintf("STX ");
     disPrintf(disassembly.inst, "STX");
-    STR(dst, m6502.X);
+    STR(addr, m6502.X);
 }
 
 /**
@@ -189,10 +155,10 @@ INLINE void STX( uint8_t * dst ) {
  zeropage,X    STY oper,X    94    2     4
  absolute      STY oper      8C    3     4
  **/
-INLINE void STY( uint8_t * dst ) {
+INLINE void STY( uint16_t addr ) {
     dbgPrintf("STY ");
     disPrintf(disassembly.inst, "STY");
-    STR(dst, m6502.Y);
+    STR(addr, m6502.Y);
 }
 
 #endif // __6502_INSTR_LOAD_STORE_H__

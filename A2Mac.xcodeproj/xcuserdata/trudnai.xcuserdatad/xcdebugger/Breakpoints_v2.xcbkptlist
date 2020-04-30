@@ -1069,8 +1069,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "500"
             endingLineNumber = "500"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "ioRead(addr)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1085,8 +1085,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "490"
             endingLineNumber = "490"
-            landmarkName = "auxMemorySelect()"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1181,7 +1181,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "497"
             endingLineNumber = "497"
-            landmarkName = "auxMemorySelect()"
+            landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1293,7 +1293,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "426"
             endingLineNumber = "426"
-            landmarkName = "resetMemory()"
+            landmarkName = "textPageSelect()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

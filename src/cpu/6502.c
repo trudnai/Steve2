@@ -886,14 +886,14 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     
     else if ( flen == 16 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0);
-        memcpy(Apple2_64K_MEM + 0xC000, Apple2_16K_ROM, 16 * KB);
+//        memcpy(Apple2_64K_MEM + 0xC000, Apple2_16K_ROM, 16 * KB);
         
 //         SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
     }
     
     else if ( flen == 12 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0x1000);
-        memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 12 * KB);
+//        memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 12 * KB);
     }
 
 }

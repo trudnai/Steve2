@@ -63,4 +63,8 @@ class RepeatingTimer {
         state = .suspended
         timer.suspend()
     }
+    
+    func kill() {
+        timer.cancel()
+    }
 }

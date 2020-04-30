@@ -373,7 +373,6 @@ class ViewController: UIViewController {
     
     
     let upd = RepeatingTimer(timeInterval: 1/Double(fps))
-
     
     override var prefersStatusBarHidden: Bool {
         return true

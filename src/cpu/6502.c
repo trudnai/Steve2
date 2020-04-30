@@ -39,7 +39,7 @@ const unsigned long long startup_MHz_6502 = 25 * M;
 unsigned long long MHz_6502 = default_MHz_6502;
 unsigned long long clk_6502_per_frm =  startup_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
-unsigned long long clk_6502_per_frm_max = default_MHz_6502 / fps;
+unsigned long long clk_6502_per_frm_max = 0;
 
 
 unsigned long long tick_per_sec = G;
@@ -887,14 +887,14 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     else if ( flen == 16 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0);
         memcpy(Apple2_12K_ROM + 0x0000, Apple2_16K_ROM + 0x1000, sizeof(Apple2_12K_ROM));
-        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, 0x1000);
+//        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, 0x1000);
         
-        SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
+//         SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
     }
     
     else if ( flen == 12 * KB ) {
         read_rom( bundlePath, filename, Apple2_12K_ROM, 0);
-        memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
+//        memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
     }
 
     //    read_rom( bundlePath, "Apple2Plus.rom", Apple2_12K_ROM, 0);
@@ -914,6 +914,12 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     inst_cnt = 0;
     mhz = (double)MHz_6502 / M;
+    
+    unsigned long long saved_frm_set = clk_6502_per_frm_set;
+    clk_6502_per_frm_max = clk_6502_per_frm_set = 0;
+    
+    // wait 100ms to be sure simulation has been halted
+    usleep(100000);
     
     printf("Bundlepath: %s", bundlePath);
 
@@ -1071,6 +1077,8 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     
 //    memcpy( RAM + 0x1000, counter_fast, sizeof(counter));
 //    m6502.PC = 0x1000;
+    
+    clk_6502_per_frm_set = saved_frm_set;
 
 }
 

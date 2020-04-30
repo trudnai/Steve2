@@ -27,18 +27,19 @@ typedef union address16_u {
 videoMode_t videoMode = { 1 }; // 40 col text, page 1
 
 
-uint8_t Apple2_Dummy_Page[ 1 * PG ];        // Dummy Page for discarding data
-uint8_t Apple2_Dummy_RAM[ 4 * KB ];         // Dummy RAM for discarding data
+uint8_t Apple2_Dummy_Page[ 1 * PG ];            // Dummy Page to discard data
+uint8_t Apple2_Dummy_RAM[ 4 * KB ];             // Dummy RAM to discard data
 
-uint8_t Apple2_16K_ROM[ 16 * KB ] = {0};    // ROM C0, C8, D0, D8, E0, E8, F0, F8
+uint8_t Apple2_16K_ROM[ 16 * KB ] = {0};        // ROM C0, C8, D0, D8, E0, E8, F0, F8
 
-uint8_t Apple2_64K_AUX[ 64 * KB ] = {0};    // 64K Expansion Memory
-uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};    // Main Memory
-uint8_t Apple2_64K_CUR[ 64 * KB ] = {0};    // Current Copy of Memory
+uint8_t Apple2_64K_AUX[ 64 * KB ] = {0};        // 64K Expansion Memory
+uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};        // Main Memory
+uint8_t Apple2_64K_MEM[ 64 * KB ] = {0};        // Shadow Copy of Memory (or current memory content)
 
-//uint8_t * AUX_VID_RAM = Apple2_VID_AUX;     // Pointer to Auxiliary Video Memory
-uint8_t * const AUX = Apple2_64K_AUX;             // Pointer to the auxiliary memory so we can use this from Swift
-uint8_t * const RAM = Apple2_64K_RAM;             // Pointer to the main memory so we can use this from Swift
+//uint8_t * AUX_VID_RAM = Apple2_VID_AUX;       // Pointer to Auxiliary Video Memory
+uint8_t * const AUX = Apple2_64K_AUX;           // Pointer to the Auxiliary Memory so we can use this from Swift
+uint8_t * const RAM = Apple2_64K_RAM;           // Pointer to the Main Memory so we can use this from Swift
+uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory so we can use this from Swift
 
 
 #define DEF_RAM_PAGE(mem,pg) \
@@ -393,6 +394,8 @@ void resetMemory() {
     memset( AUX, 0, sizeof(Apple2_64K_AUX) );
     // 64K Main Memory Area
     memset( RAM, 0, sizeof(Apple2_64K_RAM) );
+    // 64K Shadow Memory Area
+    memset( RAM, 0, sizeof(Apple2_64K_MEM) );
     // I/O area should be 0 -- just in case we decide to init RAM with a different pattern...
     memset( RAM + 0xC000, 0, 0x1000 );
     
@@ -400,23 +403,52 @@ void resetMemory() {
 
 
 void textPageSelect() {
+    uint8_t * shadow = Apple2_64K_MEM + 0x400;
+    uint8_t * memory;
+
     if ( MEMcfg.is_80STORE && MEMcfg.txt_page_2 ) {
+        memory = Apple2_64K_AUX + 0x400;
+        
+        // save the content of Shadow Memory
+        memcpy(Apple2_64K_RAM + 0x400, shadow, 0x400);
+        
         SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_AUX, 0x04)
         SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_AUX, 0x04)
     }
     else {
+        memory = Apple2_64K_RAM + 0x400;
+
+        // save the content of Shadow Memory
+        memcpy(Apple2_64K_AUX + 0x400, shadow, 0x400);
+        
         SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
         SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
     }
+
+    // load new content to shadow memory
+    memcpy(shadow, memory, 0x400);
 }
 
 
 void auxMemorySelect() {
+    uint8_t * shadow = Apple2_64K_MEM + 0x200;
+    uint8_t * memory;
+
     if ( MEMcfg.is_80STORE ) {
         if ( MEMcfg.RD_AUX_MEM ) {
+            memory = Apple2_64K_AUX + 0x200;
+            
+            // save the content of Shadow Memory
+            memcpy(Apple2_64K_RAM + 0x200, shadow, 0xA00);
+            
             SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_AUX );
         }
         else {
+            memory = Apple2_64K_RAM + 0x200;
+            
+            // save the content of Shadow Memory
+            memcpy(Apple2_64K_AUX + 0x200, shadow, 0xA00);
+            
             SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_RAM );
         }
         
@@ -431,6 +463,9 @@ void auxMemorySelect() {
         SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_RAM );
         SWITCH_AUX_MEM( RAM_PG_WR_TBL, Apple2_64K_RAM );
     }
+    
+    // load new content to shadow memory
+    memcpy(shadow, memory, 0xA00);
 }
 
 

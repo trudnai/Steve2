@@ -102,7 +102,6 @@ class ViewController: NSViewController  {
     var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
         
-        
         #if SPEEDTEST
         if ( workItem != nil ) {
             workItem!.cancel();
@@ -119,7 +118,15 @@ class ViewController: NSViewController  {
             DispatchQueue.global().async(execute: workItem!);
         }
         #else
+        upd.suspend()
+        halted = true
+        usleep(100000);
+        
         m6502_ColdReset( Bundle.main.resourcePath, ViewController.romFileName )
+                
+        halted = false
+        upd.resume()
+
         #endif
     }
     
@@ -372,6 +379,8 @@ class ViewController: NSViewController  {
     var frameCounter : UInt = 0
     var clkCounter : Double = 0
     
+    var halted = true;
+    
     func Update() {
         clk_6502_per_frm_max = 0
         
@@ -509,7 +518,9 @@ class ViewController: NSViewController  {
         
         #if SPEEDTEST
         #else
-        m6502_Run()
+        if ( !halted ) {
+            m6502_Run()
+        }
         #endif
         
         
@@ -527,7 +538,7 @@ class ViewController: NSViewController  {
     
     
     let upd = RepeatingTimer(timeInterval: 1/Double(fps))
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -616,7 +627,7 @@ class ViewController: NSViewController  {
 
     @IBAction func speedSelected(_ sender: NSButton) {
         if ( sender.title == "MAX" ) {
-            setCPUClockSpeed(freq: 9999)
+            setCPUClockSpeed(freq: 1000)
         }
         else if let freq = Double( sender.title ) {
             setCPUClockSpeed(freq: freq)

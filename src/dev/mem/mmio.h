@@ -84,7 +84,26 @@ uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory 
 /*    (tbl)[ (tpg) + 0x00 ] = DEF_RAM_PAGE(mem, (mpg) + 0x00); */ \
     (tbl)[ (tpg) + 0x01 ] = DEF_RAM_PAGE(mem, (mpg) + 0x01); \
     (tbl)[ (tpg) + 0x02 ] = DEF_RAM_PAGE(mem, (mpg) + 0x02); \
-/*    (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03); */ \
+    (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03); \
+    (tbl)[ (tpg) + 0x04 ] = DEF_RAM_PAGE(mem, (mpg) + 0x04); \
+    (tbl)[ (tpg) + 0x05 ] = DEF_RAM_PAGE(mem, (mpg) + 0x05); \
+    (tbl)[ (tpg) + 0x06 ] = DEF_RAM_PAGE(mem, (mpg) + 0x06); \
+    (tbl)[ (tpg) + 0x07 ] = DEF_RAM_PAGE(mem, (mpg) + 0x07); \
+    (tbl)[ (tpg) + 0x08 ] = DEF_RAM_PAGE(mem, (mpg) + 0x08); \
+    (tbl)[ (tpg) + 0x09 ] = DEF_RAM_PAGE(mem, (mpg) + 0x09); \
+    (tbl)[ (tpg) + 0x0A ] = DEF_RAM_PAGE(mem, (mpg) + 0x0A); \
+    (tbl)[ (tpg) + 0x0B ] = DEF_RAM_PAGE(mem, (mpg) + 0x0B); \
+    (tbl)[ (tpg) + 0x0C ] = DEF_RAM_PAGE(mem, (mpg) + 0x0C); \
+    (tbl)[ (tpg) + 0x0D ] = DEF_RAM_PAGE(mem, (mpg) + 0x0D); \
+    (tbl)[ (tpg) + 0x0E ] = DEF_RAM_PAGE(mem, (mpg) + 0x0E); \
+    (tbl)[ (tpg) + 0x0F ] = DEF_RAM_PAGE(mem, (mpg) + 0x0F);
+
+
+#define SWITCH_RAM_PAGE16( tbl,tpg, mem,mpg ) \
+    (tbl)[ (tpg) + 0x00 ] = DEF_RAM_PAGE(mem, (mpg) + 0x00); \
+    (tbl)[ (tpg) + 0x01 ] = DEF_RAM_PAGE(mem, (mpg) + 0x01); \
+    (tbl)[ (tpg) + 0x02 ] = DEF_RAM_PAGE(mem, (mpg) + 0x02); \
+    (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03); \
     (tbl)[ (tpg) + 0x04 ] = DEF_RAM_PAGE(mem, (mpg) + 0x04); \
     (tbl)[ (tpg) + 0x05 ] = DEF_RAM_PAGE(mem, (mpg) + 0x05); \
     (tbl)[ (tpg) + 0x06 ] = DEF_RAM_PAGE(mem, (mpg) + 0x06); \
@@ -109,25 +128,22 @@ uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory 
     (tbl)[ 0x08 ] = DEF_RAM_PAGE(mem, 0x08); \
     (tbl)[ 0x09 ] = DEF_RAM_PAGE(mem, 0x09); \
     (tbl)[ 0x0A ] = DEF_RAM_PAGE(mem, 0x0A); \
-    (tbl)[ 0x0B ] = DEF_RAM_PAGE(mem, 0x0B);
-
-#define SWITCH_RAM_PAGE16( tbl,tpg, mem,mpg ) \
-    (tbl)[ (tpg) + 0x00 ] = DEF_RAM_PAGE(mem, (mpg) + 0x00); \
-    (tbl)[ (tpg) + 0x01 ] = DEF_RAM_PAGE(mem, (mpg) + 0x01); \
-    (tbl)[ (tpg) + 0x02 ] = DEF_RAM_PAGE(mem, (mpg) + 0x02); \
-    (tbl)[ (tpg) + 0x03 ] = DEF_RAM_PAGE(mem, (mpg) + 0x03); \
-    (tbl)[ (tpg) + 0x04 ] = DEF_RAM_PAGE(mem, (mpg) + 0x04); \
-    (tbl)[ (tpg) + 0x05 ] = DEF_RAM_PAGE(mem, (mpg) + 0x05); \
-    (tbl)[ (tpg) + 0x06 ] = DEF_RAM_PAGE(mem, (mpg) + 0x06); \
-    (tbl)[ (tpg) + 0x07 ] = DEF_RAM_PAGE(mem, (mpg) + 0x07); \
-    (tbl)[ (tpg) + 0x08 ] = DEF_RAM_PAGE(mem, (mpg) + 0x08); \
-    (tbl)[ (tpg) + 0x09 ] = DEF_RAM_PAGE(mem, (mpg) + 0x09); \
-    (tbl)[ (tpg) + 0x0A ] = DEF_RAM_PAGE(mem, (mpg) + 0x0A); \
-    (tbl)[ (tpg) + 0x0B ] = DEF_RAM_PAGE(mem, (mpg) + 0x0B); \
-    (tbl)[ (tpg) + 0x0C ] = DEF_RAM_PAGE(mem, (mpg) + 0x0C); \
-    (tbl)[ (tpg) + 0x0D ] = DEF_RAM_PAGE(mem, (mpg) + 0x0D); \
-    (tbl)[ (tpg) + 0x0E ] = DEF_RAM_PAGE(mem, (mpg) + 0x0E); \
-    (tbl)[ (tpg) + 0x0F ] = DEF_RAM_PAGE(mem, (mpg) + 0x0F);
+    (tbl)[ 0x0B ] = DEF_RAM_PAGE(mem, 0x0B); \
+    (tbl)[ 0x0B ] = DEF_RAM_PAGE(mem, 0x0C); \
+    (tbl)[ 0x0B ] = DEF_RAM_PAGE(mem, 0x0D); \
+    (tbl)[ 0x0B ] = DEF_RAM_PAGE(mem, 0x0E); \
+    (tbl)[ 0x0B ] = DEF_RAM_PAGE(mem, 0x0F); \
+    SWITCH_RAM_PAGE16( tbl, 0x10, mem, 0x10 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x20, mem, 0x20 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x30, mem, 0x30 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x40, mem, 0x40 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x50, mem, 0x50 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x60, mem, 0x60 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x70, mem, 0x70 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x80, mem, 0x80 ); \
+    SWITCH_RAM_PAGE16( tbl, 0x90, mem, 0x90 ); \
+    SWITCH_RAM_PAGE16( tbl, 0xA0, mem, 0xA0 ); \
+    SWITCH_RAM_PAGE16( tbl, 0xB0, mem, 0xB0 );
 
 
 #define DEF_RAM_DUMMY16 \
@@ -245,7 +261,7 @@ enum slot {
 };
 
 
-MEMcfg_t MEMcfg = { 1, 0, 0, 0, 0, 0, 0, 0, 0 };
+MEMcfg_t MEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 // https://www.kreativekorp.com/miscpages/a2info/iomemory.shtml
 // Comp:  O = Apple II+  E = Apple IIe  C = Apple IIc  G = Apple IIgs
@@ -361,20 +377,20 @@ void resetMemory() {
     SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xF0, Apple2_16K_ROM, 0x30)  // F0
 
     // 48K main memory
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x00, Apple2_64K_RAM, 0x00)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x10, Apple2_64K_RAM, 0x10)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x20, Apple2_64K_RAM, 0x20)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x30, Apple2_64K_RAM, 0x30)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x40, Apple2_64K_RAM, 0x40)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x50, Apple2_64K_RAM, 0x50)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x60, Apple2_64K_RAM, 0x60)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x70, Apple2_64K_RAM, 0x70)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x80, Apple2_64K_RAM, 0x80)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0x90, Apple2_64K_RAM, 0x90)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xA0, Apple2_64K_RAM, 0xA0)
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xB0, Apple2_64K_RAM, 0xB0)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x00, Apple2_64K_RAM, 0x00)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x10, Apple2_64K_RAM, 0x10)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x20, Apple2_64K_RAM, 0x20)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x30, Apple2_64K_RAM, 0x30)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x40, Apple2_64K_RAM, 0x40)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x50, Apple2_64K_RAM, 0x50)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x60, Apple2_64K_RAM, 0x60)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x70, Apple2_64K_RAM, 0x70)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x80, Apple2_64K_RAM, 0x80)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0x90, Apple2_64K_RAM, 0x90)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xA0, Apple2_64K_RAM, 0xA0)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xB0, Apple2_64K_RAM, 0xB0)
     // I/O Addresses
-    SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0)
+    SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xC0, Apple2_64K_RAM, 0xC0)
     // NO Writing to the ROM
     SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xD0, Apple2_Dummy_RAM, 0 );
     SWITCH_RAM_PAGE16( RAM_PG_WR_TBL, 0xE0, Apple2_Dummy_RAM, 0 );
@@ -389,15 +405,21 @@ void resetMemory() {
     MEMcfg.is_80STORE   = 0;
     MEMcfg.RD_AUX_MEM   = 0;
     MEMcfg.WR_AUX_MEM   = 0;
+    MEMcfg.int_Cx_ROM   = 0;
+    MEMcfg.ALT_ZP       = 0;
+    MEMcfg.RD_AUX_MEM   = 0;
+    MEMcfg.WR_AUX_MEM   = 0;
+    MEMcfg.txt_page_2   = 0;
+    
 
     // Aux Video Memory
-    memset( AUX, 0, sizeof(Apple2_64K_AUX) );
+    memset( Apple2_64K_AUX, 0, sizeof(Apple2_64K_AUX) );
     // 64K Main Memory Area
-    memset( RAM, 0, sizeof(Apple2_64K_RAM) );
-    // 64K Shadow Memory Area
-    memset( RAM, 0, sizeof(Apple2_64K_MEM) );
+    memset( Apple2_64K_RAM, 0, sizeof(Apple2_64K_RAM) );
+    // 16K Memory Expansion
+    memset( Apple2_16K_RAM, 0, sizeof(Apple2_16K_RAM) );
     // I/O area should be 0 -- just in case we decide to init RAM with a different pattern...
-    memset( RAM + 0xC000, 0, 0x1000 );
+    memset( Apple2_64K_RAM + 0xC000, 0, 0x1000 );
     
 }
 
@@ -750,14 +772,6 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             RAM[io_KBD] &= 0x7F;
             break;
             
-        case io_SETSLOTCXROM:
-//            printf("io_SETSLOTCXROM\n");
-            MEMcfg.int_Cx_ROM = 0;
-//            SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0);
-            SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0);
-//            RAM_PG_RD_TBL[ 0xC0 ] = DEF_RAM_PAGE(Apple2_64K_RAM, 0xC0);
-            break;
-
         case io_RDMAINRAM:
 //            printf("io_RDMAINRAM\n");
             MEMcfg.RD_AUX_MEM = 0;
@@ -792,6 +806,12 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             MEMcfg.ALT_ZP = 1;
             SWITCH_STACK_ZP(RAM_PG_RD_TBL, Apple2_64K_AUX);
             SWITCH_STACK_ZP(RAM_PG_WR_TBL, Apple2_64K_AUX);
+            break;
+
+        case io_SETSLOTCXROM:
+//            printf("io_SETSLOTCXROM\n");
+            MEMcfg.int_Cx_ROM = 0;
+            SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_64K_RAM, 0xC0);
             break;
 
         case io_SETINTCXROM:

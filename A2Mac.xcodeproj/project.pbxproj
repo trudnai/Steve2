@@ -68,7 +68,6 @@
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37423E169F8008BDB95 /* spk_dn.wav */; };
 		3262F37723E169F8008BDB95 /* spk_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37523E169F8008BDB95 /* spk_up.wav */; };
-		326ED2EF232D7A0000A41337 /* 6502_functional_test.bin in Resources */ = {isa = PBXBuildFile; fileRef = 326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */; };
 		32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
@@ -763,7 +762,6 @@
 				325EB68623FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */,
 				325EB6A32401118300C6B4A4 /* Qbit.woz in Resources */,
 				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
-				326ED2EF232D7A0000A41337 /* 6502_functional_test.bin in Resources */,
 				3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

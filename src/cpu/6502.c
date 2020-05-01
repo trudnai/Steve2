@@ -886,14 +886,14 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     
     else if ( flen == 16 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0);
-//        memcpy(Apple2_64K_MEM + 0xC000, Apple2_16K_ROM, 16 * KB);
+        memcpy(Apple2_64K_MEM + 0xC000, Apple2_16K_ROM, 16 * KB);
         
 //         SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
     }
     
     else if ( flen == 12 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0x1000);
-//        memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 12 * KB);
+        memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 12 * KB);
     }
 
 }
@@ -944,7 +944,9 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     rom_loadFile(bundlePath, romFileName);
     
     // Disk ][ ROM in Slot 6
-    read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_MEM, 0xC600);
+    read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
+    memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
+    
 //    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "DISK_II_C600.ROM", Apple2_64K_MEM, 0xC600);
     
     m6502.A = m6502.X = m6502.Y = 0xFF;

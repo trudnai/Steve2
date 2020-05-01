@@ -39,7 +39,13 @@ uint8_t Apple2_64K_MEM[ 64 * KB ] = {0};        // Shadow Copy of Memory (or cur
 //uint8_t * AUX_VID_RAM = Apple2_VID_AUX;       // Pointer to Auxiliary Video Memory
 uint8_t * const AUX = Apple2_64K_AUX;           // Pointer to the Auxiliary Memory so we can use this from Swift
 uint8_t * const RAM = Apple2_64K_RAM;           // Pointer to the Main Memory so we can use this from Swift
-uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory so we can use this from Swift
+uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory Map so we can use this from Swift
+
+uint8_t * const RDLOMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
+uint8_t * const WRLOMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
+uint8_t * const RDHIMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
+uint8_t * const WRHIMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
+
 
 
 #define DEF_RAM_PAGE(mem,pg) \
@@ -184,20 +190,20 @@ uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory 
 
 uint8_t * RAM_PG_RD_TBL[256] = {
     // 48K main memory
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x00),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x10),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x20),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x30),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x40),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x50),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x60),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x70),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x80),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x90),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xA0),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xB0),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x00),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x10),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x20),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x30),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x40),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x50),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x60),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x70),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x80),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x90),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0xA0),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0xB0),
     // I/O Addresses
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xC0),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0xC0),
     // Reading from the ROM
     DEF_RAM_PAGE16( Apple2_16K_ROM, 0x10),  // D0
     DEF_RAM_PAGE16( Apple2_16K_ROM, 0x20),  // E0
@@ -206,22 +212,22 @@ uint8_t * RAM_PG_RD_TBL[256] = {
 
 uint8_t * RAM_PG_WR_TBL[256] = {
     // 48K main memory
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x00),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x10),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x20),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x30),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x40),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x50),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x60),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x70),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x80),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0x90),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xA0),
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xB0),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x00),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x10),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x20),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x30),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x40),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x50),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x60),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x70),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x80),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0x90),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0xA0),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0xB0),
     // I/O Addresses
 //    DEF_RAM_DUMMY16,
     
-    DEF_RAM_PAGE16( Apple2_64K_RAM, 0xC0),
+    DEF_RAM_PAGE16( Apple2_64K_MEM, 0xC0),
 
 //    DEF_RAM_PAGE(Apple2_64K_RAM, 0xC0),
 //    // SLOT ROM is non-writeable
@@ -415,6 +421,7 @@ void resetMemory() {
     memset( Apple2_64K_AUX, 0, sizeof(Apple2_64K_AUX) );
     // 64K Main Memory Area
     memset( Apple2_64K_RAM, 0, sizeof(Apple2_64K_RAM) );
+    memset( Apple2_64K_MEM, 0, sizeof(Apple2_64K_MEM) );
     // I/O area should be 0 -- just in case we decide to init RAM with a different pattern...
     memset( Apple2_64K_RAM + 0xC000, 0, 0x1000 );
 }
@@ -430,6 +437,9 @@ void textPageSelect() {
         // save the content of Shadow Memory
         memcpy(Apple2_64K_RAM + 0x400, shadow, 0x400);
         
+        // load the content of Video Page 2
+        memcpy(Apple2_64K_MEM + 0x400, Apple2_64K_AUX, 0x400);
+        
         SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_AUX, 0x04)
         SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_AUX, 0x04)
     }
@@ -438,6 +448,9 @@ void textPageSelect() {
 
         // save the content of Shadow Memory
         memcpy(Apple2_64K_AUX + 0x400, shadow, 0x400);
+        
+        // load the content of Video Page 2
+        memcpy(Apple2_64K_MEM + 0x400, Apple2_64K_RAM, 0x400);
         
         SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
         SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
@@ -459,6 +472,9 @@ void auxMemorySelect() {
             // save the content of Shadow Memory
             memcpy(Apple2_64K_RAM + 0x200, shadow, 0xA00);
             
+            // load the content of Aux Memory
+            memcpy(Apple2_64K_MEM + 0x200, Apple2_64K_AUX, 0xA00);
+            
             SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_AUX );
         }
         else {
@@ -466,6 +482,9 @@ void auxMemorySelect() {
             
             // save the content of Shadow Memory
             memcpy(Apple2_64K_AUX + 0x200, shadow, 0xA00);
+            
+            // load the content of Int Memory
+            memcpy(Apple2_64K_MEM + 0x200, Apple2_64K_RAM, 0xA00);
             
             SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_RAM );
         }
@@ -623,6 +642,13 @@ INLINE uint8_t ioRead( uint16_t addr ) {
                     case io_MEM_RDRAM_NOWR_1:
                     case io_MEM_RDRAM_WRAM_1:
                         MEMcfg.RD_RAM = 1;
+                        
+                        uint8_t * shadow = Apple2_64K_MEM + 0xD000;
+                        // save the content of Shadow Memory
+                        memcpy(Apple2_64K_RAM + 0xD000, shadow, 0x3000);
+                        // load the content of Aux Memory
+                        memcpy(Apple2_64K_MEM + 0xD000, Apple2_64K_AUX, 0x3000);
+
                         // set the RAM extension to read on the upper memory area
                         SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, RAM_BANK,       0x00 );
                         SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_64K_AUX, 0xE0 );
@@ -631,6 +657,13 @@ INLINE uint8_t ioRead( uint16_t addr ) {
                         
                     default:
                         MEMcfg.RD_RAM = 0;
+                        
+                        shadow = Apple2_64K_MEM + 0xD000;
+                        // save the content of Shadow Memory
+                        memcpy(Apple2_64K_AUX + 0xD000, shadow, 0x3000);
+                        // load the content of ROM Memory
+                        memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 0x3000);
+
                         // set the ROM to read on the upper memory area
                         SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xD0, Apple2_16K_ROM, 0x10 );
                         SWITCH_RAM_PAGE16( RAM_PG_RD_TBL, 0xE0, Apple2_16K_ROM, 0x20 );
@@ -882,9 +915,22 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 /**
  Naive implementation of RAM read from address
  **/
-INLINE uint8_t memread8( uint16_t addr ) {
+INLINE uint8_t memread8_paged( uint16_t addr ) {
     return * ( RAM_PG_RD_TBL[addr >> 8] + (addr & 0xFF) );
 //    return   RAM[addr];
+}
+INLINE uint8_t memread8_low( uint16_t addr ) {
+    return RDLOMEM[addr];
+}
+INLINE uint8_t memread8_high( uint16_t addr ) {
+    return RDHIMEM[addr];
+}
+INLINE uint8_t memread8( uint16_t addr ) {
+    if (addr >= 0xC000) {
+        return memread8_high(addr);
+    }
+
+    return memread8_low(addr);
 }
 /**
  Naive implementation of RAM read from address
@@ -895,11 +941,17 @@ INLINE uint16_t memread16( uint16_t addr ) {
 }
 
 INLINE uint8_t memread( uint16_t addr ) {
-    if ( (addr >= 0xC000) && (addr <= 0xC0FF) ) {
-        return ioRead(addr);
+    if (addr >= 0xC000) {
+        if (addr <= 0xC0FF) {
+            return ioRead(addr);
+        }
+
+        return memread8_high(addr);
     }
-    
-    return memread8(addr);
+
+    return memread8_low(addr);
+
+//    return memread8(addr);
 }
 
 /**

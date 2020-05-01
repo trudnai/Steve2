@@ -427,37 +427,36 @@ void resetMemory() {
 }
 
 
+static uint8_t page2 = 0;
+
 void textPageSelect() {
     uint8_t * shadow = Apple2_64K_MEM + 0x400;
-    uint8_t * memory;
-
-    if ( MEMcfg.is_80STORE && MEMcfg.txt_page_2 ) {
-        memory = Apple2_64K_AUX + 0x400;
+    
+    if ( page2 != MEMcfg.txt_page_2 ) {
+        page2 = MEMcfg.txt_page_2;
         
-        // save the content of Shadow Memory
-        memcpy(Apple2_64K_RAM + 0x400, shadow, 0x400);
-        
-        // load the content of Video Page 2
-        memcpy(Apple2_64K_MEM + 0x400, Apple2_64K_AUX, 0x400);
-        
-        SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_AUX, 0x04)
-        SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_AUX, 0x04)
+        if ( MEMcfg.is_80STORE && MEMcfg.txt_page_2 ) {
+            // save the content of Shadow Memory
+            memcpy(Apple2_64K_RAM + 0x400, shadow, 0x400);
+            
+            // load the content of Video Page 2
+            memcpy(shadow, Apple2_64K_AUX, 0x400);
+            
+            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_MEM, 0x04)
+            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_MEM, 0x04)
+        }
+        else {
+            // save the content of Shadow Memory
+            memcpy(Apple2_64K_AUX + 0x400, shadow, 0x400);
+            
+            // load the content of Video Page 2
+            memcpy(shadow, Apple2_64K_RAM, 0x400);
+            
+            SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_MEM, 0x04)
+            SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_MEM, 0x04)
+        }
     }
-    else {
-        memory = Apple2_64K_RAM + 0x400;
-
-        // save the content of Shadow Memory
-        memcpy(Apple2_64K_AUX + 0x400, shadow, 0x400);
-        
-        // load the content of Video Page 2
-        memcpy(Apple2_64K_MEM + 0x400, Apple2_64K_RAM, 0x400);
-        
-        SWITCH_VIDEO_RAM( RAM_PG_RD_TBL, 0x04, Apple2_64K_RAM, 0x04)
-        SWITCH_VIDEO_RAM( RAM_PG_WR_TBL, 0x04, Apple2_64K_RAM, 0x04)
-    }
-
-    // load new content to shadow memory
-    memcpy(shadow, memory, 0x400);
+    
 }
 
 
@@ -475,7 +474,7 @@ void auxMemorySelect() {
             // load the content of Aux Memory
             memcpy(Apple2_64K_MEM + 0x200, Apple2_64K_AUX, 0xA00);
             
-            SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_AUX );
+            SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_MEM );
         }
         else {
             memory = Apple2_64K_RAM + 0x200;
@@ -486,19 +485,19 @@ void auxMemorySelect() {
             // load the content of Int Memory
             memcpy(Apple2_64K_MEM + 0x200, Apple2_64K_RAM, 0xA00);
             
-            SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_RAM );
+            SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_MEM );
         }
         
         if ( MEMcfg.WR_AUX_MEM ) {
-            SWITCH_AUX_MEM( RAM_PG_WR_TBL, Apple2_64K_AUX );
+            SWITCH_AUX_MEM( RAM_PG_WR_TBL, Apple2_64K_MEM );
         }
         else {
-            SWITCH_AUX_MEM( RAM_PG_WR_TBL, Apple2_64K_RAM );
+            SWITCH_AUX_MEM( RAM_PG_WR_TBL, Apple2_64K_MEM );
         }
     }
     else {
-        SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_RAM );
-        SWITCH_AUX_MEM( RAM_PG_WR_TBL, Apple2_64K_RAM );
+        SWITCH_AUX_MEM( RAM_PG_RD_TBL, Apple2_64K_MEM );
+        SWITCH_AUX_MEM( RAM_PG_WR_TBL, Apple2_64K_MEM );
     }
     
     // load new content to shadow memory
@@ -946,9 +945,11 @@ INLINE uint8_t memread( uint16_t addr ) {
             return ioRead(addr);
         }
 
+//        return memread8_paged(addr);
         return memread8_high(addr);
     }
 
+//    return memread8_paged(addr);
     return memread8_low(addr);
 
 //    return memread8(addr);
@@ -1031,8 +1032,7 @@ INLINE uint8_t src_abs() {
     return memread( addr_abs() );
 }
 INLINE uint8_t * dest_abs() {
-    uint16_t addr = addr_abs();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_abs();
 }
 
 
@@ -1063,8 +1063,7 @@ INLINE uint8_t src_abs_X() {
     return memread( addr_abs_X() );
 }
 INLINE uint8_t * dest_abs_X() {
-    uint16_t addr = addr_abs_X();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_abs_X();
 }
 
 
@@ -1081,8 +1080,7 @@ INLINE uint8_t src_abs_Y() {
     return memread(addr_abs_Y());
 }
 INLINE uint8_t * dest_abs_Y() {
-    uint16_t addr = addr_abs_Y();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_abs_Y();
 }
 
 INLINE uint16_t imm() {
@@ -1104,8 +1102,7 @@ INLINE uint8_t src_zp() {
     return memread8(addr_zp());
 }
 INLINE uint8_t * dest_zp() {
-    uint16_t addr = addr_zp();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_zp();
 }
 
 /**
@@ -1133,8 +1130,7 @@ INLINE uint8_t src_X_ind() {
     return memread( addr_X_ind() );
 }
 INLINE uint8_t * dest_X_ind() {
-    uint16_t addr = addr_X_ind();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_X_ind();
 }
 
 /**
@@ -1153,8 +1149,7 @@ INLINE uint8_t src_ind_Y() {
     return memread( addr_ind_Y() );
 }
 INLINE uint8_t * dest_ind_Y() {
-    uint16_t addr = addr_ind_Y();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_ind_Y();
 }
 
 /**
@@ -1170,8 +1165,7 @@ INLINE uint8_t src_zp_X() {
     return memread8(addr_zp_X());
 }
 INLINE uint8_t * dest_zp_X() {
-    uint16_t addr = addr_zp_X();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_zp_X();
 }
 
 /**
@@ -1187,8 +1181,7 @@ INLINE uint8_t src_zp_Y() {
     return memread8(addr_zp_Y());
 }
 INLINE uint8_t * dest_zp_Y() {
-    uint16_t addr = addr_zp_Y();
-    return ( RAM_PG_WR_TBL[addr >> 8] + (addr & 0xFF) );
+    return WRLOMEM + addr_zp_Y();
 }
 
 

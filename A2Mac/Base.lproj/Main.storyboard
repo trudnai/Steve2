@@ -811,7 +811,7 @@
                                     <constraint firstAttribute="width" constant="1120" id="uez-Mi-0Sh"/>
                                     <constraint firstAttribute="height" constant="768" id="zl6-au-oZj"/>
                                 </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" id="pIk-RC-s5g">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" id="pIk-RC-s5g">
                                     <font key="font" size="32" name="PrintChar21"/>
                                     <string key="title">1234567890123456789012345678901234567890
 @@@@@@@@@1@@@@@@@@@2@@@@@@@@@3@@@@@@@@@4

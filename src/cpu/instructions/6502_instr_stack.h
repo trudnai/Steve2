@@ -13,14 +13,12 @@ static const uint16_t stack_base_addr = 0x100;
 
 
 INLINE void PUSH( uint8_t src ) {
-//    RAM[ stack_base_addr | m6502.SP-- ] = src;
     // DO NOT MAKE IT NICER! faster this way!
-    *( RAM_PG_WR_TBL[ stack_base_addr >> 8 ] + m6502.SP-- ) = src;
+    WRLOMEM[ stack_base_addr | m6502.SP-- ] = src;
 }
 
 INLINE uint8_t POP() {
-//    return RAM[ stack_base_addr | ++m6502.SP ];
-    return *( RAM_PG_WR_TBL[ stack_base_addr >> 8 ] + ++m6502.SP );
+    return RDLOMEM[ stack_base_addr | ++m6502.SP ];
 }
 
 

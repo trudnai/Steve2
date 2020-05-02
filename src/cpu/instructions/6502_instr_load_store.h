@@ -92,15 +92,7 @@ char * charConv =
 **/
 INLINE void STR( uint16_t addr, uint8_t src ) {
     dbgPrintf("STR [%04X], %02X ", addr, src );
-
-    // I/O or ROM or RAM EXP
-    if ( ( addr >= 0xC000 ) && ( addr < 0xC100 ) ) {
-        return ioWrite( addr, src );
-    }
-    
-    // DO NOT MAKE IT NICER! faster this way!
-    *(RAM_PG_WR_TBL[ addr >> 8 ] + (addr & 0xFF)) = src;
-//    RAM[addr] = src;
+    memwrite(addr, src);
 }
 
 /**

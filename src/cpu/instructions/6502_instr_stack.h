@@ -18,8 +18,6 @@ INLINE void PUSH( uint8_t src ) {
 }
 
 INLINE uint8_t POP() {
-//    return RAM[ stack_base_addr | ++m6502.SP ];
-//    return *( RAM_PG_RD_TBL[ stack_base_addr >> 8 ] + ++m6502.SP );
     return RDLOMEM[ stack_base_addr | ++m6502.SP ];
 }
 

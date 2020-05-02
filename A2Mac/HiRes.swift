@@ -25,9 +25,9 @@ class HiRes: NSView {
     static let blockWidth = PixelWidth / blockCols
     static let blockHeight = PixelHeight / blockRows
 
-    let HiResBuffer1 = UnsafeRawBufferPointer(start: RAM + Page1Addr, count: PageSize * 2)
-    let HiResBuffer2 = UnsafeRawBufferPointer(start: RAM + Page2Addr, count: PageSize * 2)
-    var HiResBufferPointer = UnsafeRawBufferPointer(start: RAM + Page1Addr, count: PageSize * 2)
+    let HiResBuffer1 = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
+    let HiResBuffer2 = UnsafeRawBufferPointer(start: MEM + Page2Addr, count: PageSize * 2)
+    var HiResBufferPointer = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
     
     let HiResRawPointer = UnsafeRawPointer(RAM + Page1Addr)
 

@@ -713,7 +713,8 @@ void m6502_Run() {
 #ifdef SPEEDTEST
     for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
 #elif defined( CLK_WAIT )
-        for ( clkfrm = 0; clkfrm < clk_6502_per_frm_max ; clkfrm += clk )
+        // we clear the clkfrm from ViewController Update()
+        for ( ; clkfrm < clk_6502_per_frm_max ; clkfrm += clk )
 #else
 //    for ( ; m6502.pc ; )
     for ( ; ; )
@@ -886,27 +887,13 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     
     else if ( flen == 16 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0);
-        memcpy(Apple2_12K_ROM + 0x0000, Apple2_16K_ROM + 0x1000, sizeof(Apple2_12K_ROM));
-//        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, 0x1000);
-        
-//         SWITCH_CX_ROM( RAM_PG_RD_TBL, 0xC0, Apple2_16K_ROM, 0x00);
+        memcpy(Apple2_64K_MEM + 0xC000, Apple2_16K_ROM, 16 * KB);
     }
     
     else if ( flen == 12 * KB ) {
-        read_rom( bundlePath, filename, Apple2_12K_ROM, 0);
-//        memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
+        read_rom( bundlePath, filename, Apple2_16K_ROM, 0x1000);
+        memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 12 * KB);
     }
-
-    //    read_rom( bundlePath, "Apple2Plus.rom", Apple2_12K_ROM, 0);
-    //    read_rom( bundlePath, "Apple2e.rom", Apple2_16K_ROM, 0);
-//        read_rom( bundlePath, "Apple2e_Enhanced.rom", Apple2_16K_ROM, 0);
-
-    //    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "Apple2Plus.rom", Apple2_12K_ROM, 0);
-    //    read_rom("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/Apple2Plus.rom", Apple2_12K_ROM, 0);
-
-    //    memcpy(Apple2_64K_RAM + 0xD000, Apple2_12K_ROM, sizeof(Apple2_12K_ROM));
-//        memcpy(Apple2_12K_ROM + 0x0000, Apple2_16K_ROM + 0x1000, sizeof(Apple2_12K_ROM));
-//        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, sizeof(Apple2_16K_ROM));
 
 }
 
@@ -957,7 +944,9 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     
     // Disk ][ ROM in Slot 6
     read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
-//    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
+    memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
+    
+//    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "DISK_II_C600.ROM", Apple2_64K_MEM, 0xC600);
     
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector

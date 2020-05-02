@@ -324,28 +324,32 @@ void resetMemory() {
 
 
 static uint8_t page2 = 0;
+static uint8_t * activePage = Apple2_64K_RAM + 0x400;
 
 void textPageSelect() {
     uint8_t * shadow = Apple2_64K_MEM + 0x400;
     
     if ( page2 != MEMcfg.txt_page_2 ) {
         page2 = MEMcfg.txt_page_2;
-        
+        static uint8_t * newPage = NULL;
+
         if ( MEMcfg.is_80STORE && MEMcfg.txt_page_2 ) {
-            // save the content of Shadow Memory
-            memcpy(Apple2_64K_RAM + 0x400, shadow, 0x400);
-            
-            // load the content of Video Page 2
-            memcpy(shadow, Apple2_64K_AUX, 0x400);
-            
+            newPage = Apple2_64K_AUX + 0x400;
         }
         else {
-            // save the content of Shadow Memory
-            memcpy(Apple2_64K_AUX + 0x400, shadow, 0x400);
+            newPage = Apple2_64K_RAM + 0x400;
+        }
+
+        if ( activePage != newPage ) {
+            if ( activePage ) {
+                // save the content of Shadow Memory
+                memcpy(activePage, shadow, 0x400);
+            }
             
             // load the content of Video Page 2
-            memcpy(shadow, Apple2_64K_RAM, 0x400);
+            memcpy(shadow, newPage, 0x400);
             
+            activePage = newPage;
         }
     }
     

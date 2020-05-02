@@ -382,9 +382,11 @@ class ViewController: NSViewController  {
     var halted = true;
     
     func Update() {
-        clk_6502_per_frm_max = 0
+//        clk_6502_per_frm_max = 0
         
         clkCounter += Double(clkfrm)
+        // we start a new frame from here, so CPU is running even while rendering
+        clkfrm = 0
 
         frameCounter += 1
         

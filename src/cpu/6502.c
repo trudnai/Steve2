@@ -713,7 +713,8 @@ void m6502_Run() {
 #ifdef SPEEDTEST
     for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
 #elif defined( CLK_WAIT )
-        for ( clkfrm = 0; clkfrm < clk_6502_per_frm_max ; clkfrm += clk )
+        // we clear the clkfrm from ViewController Update()
+        for ( ; clkfrm < clk_6502_per_frm_max ; clkfrm += clk )
 #else
 //    for ( ; m6502.pc ; )
     for ( ; ; )

@@ -934,9 +934,19 @@ INLINE uint8_t memread8( uint16_t addr ) {
 /**
  Naive implementation of RAM read from address
  **/
+INLINE uint16_t memread16_low( uint16_t addr ) {
+    return * (uint16_t*) ( RDLOMEM + addr );
+}
+INLINE uint16_t memread16_high( uint16_t addr ) {
+    return * (uint16_t*) ( RDHIMEM + addr );
+}
 INLINE uint16_t memread16( uint16_t addr ) {
-    return * (uint16_t*) ( RAM_PG_RD_TBL[addr >> 8] + (addr & 0xFF) );
-//    return * (uint16_t*) (RAM + addr);
+
+    if (addr >= 0xC000) {
+        return memread16_high(addr);
+    }
+
+    return memread16_low(addr);
 }
 
 INLINE uint8_t memread( uint16_t addr ) {

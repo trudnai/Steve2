@@ -23,11 +23,11 @@
  absolute      INC oper      EE    3     6
  absolute,X    INC oper,X    FE    3     7
 **/
-INLINE void INC( uint8_t * dst ) {
-    dbgPrintf("INC %02X -> ", *dst);
+INLINE void INC( uint16_t addr ) {
+    dbgPrintf("INC %02X -> ", WRLOMEM[addr]);
     disPrintf(disassembly.inst, "INC");
-    set_flags_NZ( ++(*dst) );
-    dbgPrintf("%02X ", *dst);
+    set_flags_NZ( ++(WRLOMEM[addr]) );
+    dbgPrintf("%02X ", WRLOMEM[addr]);
 }
 
 /**
@@ -77,11 +77,11 @@ INLINE void INY() {
  absolute      DEC oper      CE    3     3
  absolute,X    DEC oper,X    DE    3     7
 **/
-INLINE void DEC( uint8_t * dst ) {
-    dbgPrintf("DEC %02X -> ", *dst);
+INLINE void DEC( uint16_t addr ) {
+    dbgPrintf("DEC %02X -> ", WRLOMEM[addr]);
     disPrintf(disassembly.inst, "DEC");
-    set_flags_NZ( --(*dst) );
-    dbgPrintf("%02X ", *dst);
+    set_flags_NZ( --(WRLOMEM[addr]) );
+    dbgPrintf("%02X ", WRLOMEM[addr]);
 }
 
 /**

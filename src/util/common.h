@@ -58,9 +58,9 @@ union {
 } bits_t;
 
 
-#define BITTEST(n,x) ((bits_t)(n)).b##x
-//#define BITTEST(n,x) ( (n) >> (x) )
-//#define BITTEST(n,x) ( (n) & (1 << (x)) )
+//#define BITTEST(n,x) ((bits_t)(n)).b##x
+//#define BITTEST(n,x) (( (n) >> (x) ) & 1)
+#define BITTEST(n,x) ( (n) & (1 << (x)) )
 
 
 extern FILE * outdev;

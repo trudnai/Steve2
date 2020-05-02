@@ -86,7 +86,7 @@ INLINE void RTS() {
 INLINE void RTI() {
     dbgPrintf("RTI ");
     disPrintf(disassembly.inst, "RTI");
-    m6502.SR = POP();
+    setFlags( POP() );
 //    m6502.I = 0;
     m6502.PC = POP_addr();
 }

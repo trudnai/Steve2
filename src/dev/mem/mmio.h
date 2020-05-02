@@ -906,6 +906,12 @@ INLINE uint16_t fetch16() {
     return word;
 }
 
+
+INLINE uint8_t * dest( uint8_t * mem, uint16_t addr ) {
+    return mem + addr;
+}
+
+
 /**
  abs        ....    absolute         OPC $LLHH,X
  operand is address; effective address is address incremented by X with carry **

@@ -26,7 +26,7 @@ INLINE int BRK() {
     PUSH_addr(m6502.PC +1); // PC +2, however, fetch already incremented it by 1
     // B flag should be set before pushing flags onto the stack
     m6502.B = 1;
-    PUSH(m6502.SR);
+    PUSH( getFlags().SR );
     m6502.I = 1;
     m6502.PC = memread16(IRQ_VECTOR);
     

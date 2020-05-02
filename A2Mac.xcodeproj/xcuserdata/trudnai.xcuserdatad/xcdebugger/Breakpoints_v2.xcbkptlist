@@ -1053,7 +1053,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "490"
             endingLineNumber = "490"
-            landmarkName = "auxMemorySelect()"
+            landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1069,7 +1069,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "486"
             endingLineNumber = "486"
-            landmarkName = "auxMemorySelect()"
+            landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1085,8 +1085,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "804"
             endingLineNumber = "804"
-            landmarkName = "ioWrite(addr, val)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1101,7 +1101,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "808"
             endingLineNumber = "808"
-            landmarkName = "ioWrite(addr, val)"
+            landmarkName = "memread16_low(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1117,7 +1117,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "823"
             endingLineNumber = "823"
-            landmarkName = "ioWrite(addr, val)"
+            landmarkName = "memread(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1133,8 +1133,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "787"
             endingLineNumber = "787"
-            landmarkName = "kbdInput(code)"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1149,7 +1149,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "497"
             endingLineNumber = "497"
-            landmarkName = "auxMemorySelect()"
+            landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1165,7 +1165,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "812"
             endingLineNumber = "812"
-            landmarkName = "ioWrite(addr, val)"
+            landmarkName = "memread16(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1181,7 +1181,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "816"
             endingLineNumber = "816"
-            landmarkName = "ioWrite(addr, val)"
+            landmarkName = "memread16(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1229,7 +1229,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "426"
             endingLineNumber = "426"
-            landmarkName = "resetMemory()"
+            landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1309,7 +1309,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "414"
             endingLineNumber = "414"
-            landmarkName = "resetMemory()"
+            landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

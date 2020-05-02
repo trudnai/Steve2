@@ -405,6 +405,7 @@ class ViewController: NSViewController  {
 //        return
         
         frameCnt += 1
+        
         if ( frameCnt == fps / 2 ) {
 //            flashingSpace = blockChar
             ViewController.charConvTbl = ViewController.charConvTblFlashOn
@@ -415,65 +416,68 @@ class ViewController: NSViewController  {
             frameCnt = 0
         }
         
-        var txt : String = ""
-        
-        var fromLines = 0
-        var toLines = textLines
+        // Rendering is happening in the main thread, which has two implications:
+        //   1. We can update UI elements
+        //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
+        DispatchQueue.main.async {
+            
+            var txt : String = ""
+            
+            var fromLines = 0
+            var toLines = self.textLines
 
-        if videoMode.text == 0 {
-            if videoMode.mixed == 1 {
-                fromLines = toLines - 4
-            }
-            else {
-                toLines = 0
-            }
-        }
-
-        txtArr = txtClear
-
-
-        // render an empty space to eiminate displaying text portion of the screen covered by graphics
-        for y in 0 ..< fromLines {
-            if videoMode.col80 == 0 {
-                txtArr[ y * (textCols + lineEndChars) + textCols ] = "\n"
-            }
-            else {
-                txtArr[ y * (textCols * 2 + lineEndChars) + textCols * 2] = "\n"
-            }
-        }
-
-        // render the rest of the text screen
-        for y in fromLines ..< toLines {
-            for x in 0 ..< textCols {
-                let byte = textBufferPointer[ textLineOfs[y] + x ]
-                let idx = Int(byte);
-                let chr = ViewController.charConvTbl[idx]
-                
-                if videoMode.col80 == 0 {
-                    txtArr[ y * (textCols + lineEndChars) + x ] = chr
+            if videoMode.text == 0 {
+                if videoMode.mixed == 1 {
+                    fromLines = toLines - 4
                 }
                 else {
-                    txtArr[ y * (textCols * 2 + lineEndChars) + x * 2 + 1] = chr
+                    toLines = 0
+                }
+            }
 
-                    let byte = textAuxBufferPointer[ textLineOfs[y] + x ]
+            self.txtArr = self.txtClear
+
+            // render an empty space to eiminate displaying text portion of the screen covered by graphics
+            for y in 0 ..< fromLines {
+                if videoMode.col80 == 0 {
+                    self.txtArr[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
+                }
+                else {
+                    self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
+                }
+            }
+
+            // render the rest of the text screen
+            for y in fromLines ..< toLines {
+                for x in 0 ..< self.textCols {
+                    let byte = self.textBufferPointer[ self.textLineOfs[y] + x ]
                     let idx = Int(byte);
                     let chr = ViewController.charConvTbl[idx]
                     
-                    txtArr[ y * (textCols * 2 + lineEndChars) + x * 2] = chr
+                    if videoMode.col80 == 0 {
+                        self.txtArr[ y * (self.textCols + self.lineEndChars) + x ] = chr
+                    }
+                    else {
+                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
+
+                        let byte = self.textAuxBufferPointer[ self.textLineOfs[y] + x ]
+                        let idx = Int(byte);
+                        let chr = ViewController.charConvTbl[idx]
+                        
+                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr
+                    }
+                }
+                
+                if videoMode.col80 == 0 {
+                    self.txtArr[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
+                }
+                else {
+                    self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
                 }
             }
-            
-            if videoMode.col80 == 0 {
-                txtArr[ y * (textCols + lineEndChars) + textCols ] = "\n"
-            }
-            else {
-                txtArr[ y * (textCols * 2 + lineEndChars) + textCols * 2] = "\n"
-            }
-        }
 
-        txt = String(txtArr)
+            txt = String(self.txtArr)
 
-        DispatchQueue.main.async {
             if videoMode.col80 != self.currentVideoMode.col80 {
                 self.currentVideoMode.col80 = videoMode.col80
                 

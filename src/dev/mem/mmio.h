@@ -28,7 +28,7 @@ videoMode_t videoMode = { 1 }; // 40 col text, page 1
 
 
 uint8_t Apple2_Dummy_Page[ 1 * PG ];            // Dummy Page to discard data
-uint8_t Apple2_Dummy_RAM[ 4 * KB ];             // Dummy RAM to discard data
+uint8_t Apple2_Dummy_RAM[ 64 * KB ];            // Dummy RAM to discard data
 
 uint8_t Apple2_16K_ROM[ 16 * KB ] = {0};        // ROM C0, C8, D0, D8, E0, E8, F0, F8
 
@@ -44,7 +44,7 @@ uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory 
 uint8_t * const RDLOMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
 uint8_t * const WRLOMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
 uint8_t * const RDHIMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
-uint8_t * const WRHIMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory Map so we can use this from Swift
+uint8_t * const WRHIMEM = Apple2_Dummy_RAM;     // Pointer to the Shadow Memory Map so we can use this from Swift
 
 
 
@@ -941,7 +941,7 @@ INLINE uint16_t memread16( uint16_t addr ) {
 
 INLINE uint8_t memread( uint16_t addr ) {
     if (addr >= 0xC000) {
-        if (addr <= 0xC0FF) {
+        if (addr < 0xC100) {
             return ioRead(addr);
         }
 
@@ -974,19 +974,37 @@ INLINE uint8_t memread( uint16_t addr ) {
 /**
  Naive implementation of RAM write to address
  **/
-static  void memwrite( uint16_t addr, uint8_t byte ) {
-//    if ( addr >= 0xD000 ) {
-//        // ROM
-//        return;
-//    }
-//    if ( addr >= 0xC000 ) {
-//        return mmioWrite(addr);
+
+INLINE void memwrite8_low( uint16_t addr, uint8_t data ) {
+    WRLOMEM[addr] = data;
+}
+INLINE void memwrite8_high( uint16_t addr, uint8_t data ) {
+    WRHIMEM[addr] = data;
+}
+INLINE void memwrite( uint16_t addr, uint8_t data ) {
+    if (addr >= 0xC000) {
+        if (addr < 0xC100) {
+            ioWrite(addr, data);
+        }
+        else {
+//    *(RAM_PG_WR_TBL[ addr >> 8 ] + (addr & 0xFF)) = data;
+           memwrite8_high(addr, data);
+        }
+    }
+    else {
+        memwrite8_low(addr, data);
+    }
+    
+//    // I/O or ROM or RAM EXP
+//    if ( ( addr >= 0xC000 ) && ( addr < 0xC100 ) ) {
+//        return ioWrite( addr, src );
 //    }
 //
-    
-    RAM[ addr ] = byte;
+//    // DO NOT MAKE IT NICER! faster this way!
+//    *(RAM_PG_WR_TBL[ addr >> 8 ] + (addr & 0xFF)) = src;
+////    RAM[addr] = src;
+//
 }
-
 
 /**
  Fetching 1 byte from memory address pc (program counter)

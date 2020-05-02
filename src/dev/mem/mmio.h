@@ -811,9 +811,9 @@ INLINE uint16_t memread16_high( uint16_t addr ) {
 }
 INLINE uint16_t memread16( uint16_t addr ) {
 
-    if (addr >= 0xC000) {
-        return memread16_high(addr);
-    }
+//    if (addr >= 0xC000) {
+//        return memread16_high(addr);
+//    }
 
     return memread16_low(addr);
 }
@@ -886,7 +886,7 @@ INLINE uint8_t fetch() {
         m6502.clktime++;
     }
 #endif
-    return memread( m6502.PC++ );
+    return memread8_low( m6502.PC++ );
 }
 
 /**

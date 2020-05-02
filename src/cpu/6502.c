@@ -189,6 +189,35 @@ void hires_Update () {
 **/
 #include "6502_instructions.h"
 
+INLINE flags_t getFlags() {
+    flags_t f = {
+        m6502.C != 0,    // Carry Flag
+        m6502.Z != 0,    // Zero Flag
+        m6502.I != 0,    // Interrupt Flag
+        m6502.D != 0,    // Decimal Flag
+        m6502.B != 0,    // B Flag
+        m6502.res != 0,  // reserved -- should be always 1
+        m6502.V != 0,    // Overflow Flag ???
+        m6502.N != 0,    // Negative Flag
+    };
+
+    return f;
+}
+
+
+INLINE void setFlags( uint8_t byte ) {
+    flags_t flags = { .SR =  byte };
+    
+    m6502.C = flags.C;      // Carry Flag
+    m6502.Z = flags.Z;      // Zero Flag
+    m6502.I = flags.I;      // Interrupt Flag
+    m6502.D = flags.D;      // Decimal Flag
+    m6502.B = flags.B;      // B Flag
+    m6502.res = flags.res;  // reserved -- should be always 1
+    m6502.V = flags.V;      // Overflow Flag ???
+    m6502.N = flags.N;      // Negative Flag
+}
+
 
 INLINE int m6502_Step() {
 
@@ -426,7 +455,7 @@ INLINE int m6502_Step() {
 //        case 0x03: // SLO* (undocumented)
 //        case 0x04: // NOP* (undocumented)
         case 0x05: ORA( src_zp() ); return 3;                          // ORA zpg
-        case 0x06: ASL( dest_zp() ); return 5;                         // ASL zpg
+        case 0x06: ASL( addr_zp() ); return 5;                         // ASL zpg
 //        case 0x07: // SLO* (undocumented)
         case 0x08: PHP(); return 3;                                    // PHP
         case 0x09: ORA( imm() ); return 2;                             // ORA imm
@@ -434,7 +463,7 @@ INLINE int m6502_Step() {
 //        case 0x0B: // ANC** (undocumented)
 //        case 0x0C: // NOP* (undocumented)
         case 0x0D: ORA( src_abs() ); return 4;                         // ORA abs
-        case 0x0E: ASL( dest_abs() ); return 6;                        // ASL abs
+        case 0x0E: ASL( addr_abs() ); return 6;                        // ASL abs
 //            case 0x0F: // SLO* (undocumented)
         case 0x10: BPL( rel_addr() ); return 2;                        // BPL rel
         case 0x11: ORA( src_ind_Y() ); return 5;                       // ORA ind,Y
@@ -442,7 +471,7 @@ INLINE int m6502_Step() {
 //        case 0x13: // SLO* (undocumented)
 //        case 0x14: // NOP* (undocumented)
         case 0x15: ORA( src_zp_X() ); return 4;                        // ORA zpg,X
-        case 0x16: ASL( dest_zp_X() ); return 6;                       // ASL zpg,X
+        case 0x16: ASL( addr_zp_X() ); return 6;                       // ASL zpg,X
 //            case 0x17: // SLO* (undocumented)
         case 0x18: CLC(); return 2;                                    // CLC
         case 0x19: ORA( src_abs_Y() ); return 4;                       // ORA abs,Y
@@ -450,7 +479,7 @@ INLINE int m6502_Step() {
 //        case 0x1B: // SLO* (undocumented)
 //        case 0x1C: // NOP* (undocumented)
         case 0x1D: ORA( src_abs_X() ); return 4;                       // ORA abs,X
-        case 0x1E: ASL( dest_abs_X() ); return 7;                      // ASL abs,X
+        case 0x1E: ASL( addr_abs_X() ); return 7;                      // ASL abs,X
 //        case 0x1F: // SLO* (undocumented)
         case 0x20: JSR( abs_addr() ); return 6;                        // JSR abs
         case 0x21: AND( src_X_ind() ); return 6;                       // AND X,ind
@@ -458,7 +487,7 @@ INLINE int m6502_Step() {
 //        case 0x23: RLA izx 8
         case 0x24: BIT( src_zp() ); return 3;                          // BIT zpg
         case 0x25: AND( src_zp() ); return 3;                          // AND zpg
-        case 0x26: ROL( dest_zp() ); return 5;                         // ROL zpg
+        case 0x26: ROL( addr_zp() ); return 5;                         // ROL zpg
 //        case 0x27: RLA zp 5
         case 0x28: PLP(); return 4;                                    // PLP
         case 0x29: AND( imm() ); return 2;                             // AND imm
@@ -466,7 +495,7 @@ INLINE int m6502_Step() {
 //        case 0x2B: ANC imm 2
         case 0x2C: BIT( src_abs() ); return 4;                         // BIT abs
         case 0x2D: AND( src_abs() ); return 4;                         // AND abs
-        case 0x2E: ROL( dest_abs() ); return 6;                        // ROL abs
+        case 0x2E: ROL( addr_abs() ); return 6;                        // ROL abs
 //        case 0x2F: RLA abs 6
         case 0x30: BMI( rel_addr() ); return 2;                        // BMI rel
         case 0x31: AND( src_ind_Y() ); return 5;                       // AND ind,Y
@@ -474,7 +503,7 @@ INLINE int m6502_Step() {
 //        case 0x33: RLA izy 8
 //        case 0x34: NOP zpx 4
         case 0x35: AND( src_zp_X() ); return 4;                        // AND zpg,X
-        case 0x36: ROL( dest_zp_X() ); return 6;                       // ROL zpg,X
+        case 0x36: ROL( addr_zp_X() ); return 6;                       // ROL zpg,X
 //        case 0x37: RLA zpx 6
         case 0x38: SEC(); return 2;                                    // SEC
         case 0x39: AND( src_abs_Y() ); return 4;                       // AND abs,Y
@@ -482,7 +511,7 @@ INLINE int m6502_Step() {
 //        case 0x3B: RLA aby 7
 //        case 0x3C: NOP abx 4
         case 0x3D: AND( src_abs_X() ); return 4;                       // AND abs,X
-        case 0x3E: ROL( dest_abs_X() ); return 7;                      // ROL abs,X
+        case 0x3E: ROL( addr_abs_X() ); return 7;                      // ROL abs,X
 //            case 0x3F: RLA abx 7
         case 0x40: RTI(); return 6;                                    // RTI
         case 0x41: EOR( src_X_ind() ); return 6;                       // EOR X,ind
@@ -490,7 +519,7 @@ INLINE int m6502_Step() {
 //        case 0x43: SRE izx 8
 //        case 0x44: NOP zp 3
         case 0x45: EOR( src_zp() ); return 3;                          // EOR zpg
-        case 0x46: LSR( dest_zp() ); return 5;                         // LSR zpg
+        case 0x46: LSR( addr_zp() ); return 5;                         // LSR zpg
 //        case 0x47: SRE zp 5
         case 0x48: PHA(); return 3;                                    // PHA
         case 0x49: EOR( imm() ); return 2;                             // EOR imm
@@ -498,7 +527,7 @@ INLINE int m6502_Step() {
 //        case 0x4B: ALR imm 2
         case 0x4C: JMP( abs_addr() ); return 3;                        // JMP abs
         case 0x4D: EOR( src_abs() ); return 4;                         // EOR abs
-        case 0x4E: LSR( dest_abs() ); return 6;                        // LSR abs
+        case 0x4E: LSR( addr_abs() ); return 6;                        // LSR abs
 //        case 0x4F: SRE abs 6
         case 0x50: BVC( rel_addr() ); return 2;                        // BVC rel
         case 0x51: EOR( src_ind_Y() ); return 5;                       // EOR ind,Y
@@ -506,7 +535,7 @@ INLINE int m6502_Step() {
 //        case 0x53: SRE izy 8
 //        case 0x54: NOP zpx 4
         case 0x55: EOR( src_zp_X() ); return 4;                        // AND zpg,X
-        case 0x56: LSR( dest_zp_X() ); return 6;                       // LSR zpg,X
+        case 0x56: LSR( addr_zp_X() ); return 6;                       // LSR zpg,X
 //            case 0x57: SRE zpx 6
         case 0x58: CLI(); return 2;                                    // CLI
         case 0x59: EOR( src_abs_Y() ); return 4;                       // EOR abs,Y
@@ -514,7 +543,7 @@ INLINE int m6502_Step() {
 //        case 0x5B: SRE aby 7
 //        case 0x5C: NOP abx 4
         case 0x5D: EOR( src_abs_X() ); return 4;                       // EOR abs,X
-        case 0x5E: LSR( dest_abs_X() ); return 7;                      // LSR abs,X
+        case 0x5E: LSR( addr_abs_X() ); return 7;                      // LSR abs,X
 //            case 0x5F: SRE abx 7
         case 0x60: RTS(); return 6;                                    // RTS
         case 0x61: ADC( src_X_ind() ); return 6;                       // ADC X,ind
@@ -522,7 +551,7 @@ INLINE int m6502_Step() {
 //        case 0x63: RRA izx 8
 //        case 0x64: NOP zp 3
         case 0x65: ADC( src_zp() ); return 3;                          // ADC zpg
-        case 0x66: ROR( dest_zp() ); return 5;                         // ROR zpg
+        case 0x66: ROR( addr_zp() ); return 5;                         // ROR zpg
 //        case 0x67: RRA zp 5
         case 0x68: PLA(); break;                                       // PLA
         case 0x69: ADC( imm() ); return 2;                             // ADC imm
@@ -530,7 +559,7 @@ INLINE int m6502_Step() {
 //        case 0x6B: ARR imm 2
         case 0x6C: JMP( ind_addr() ); return 5;                        // JMP ind
         case 0x6D: ADC( src_abs() ); return 4;                         // ADC abs
-        case 0x6E: ROR( dest_abs() ); return 6;                        // ROR abs
+        case 0x6E: ROR( addr_abs() ); return 6;                        // ROR abs
 //        case 0x6F: RRA abs 6
         case 0x70: BVS( rel_addr() ); return 2;                        // BVS rel
         case 0x71: ADC( src_ind_Y() ); return 5;                       // ADC ind,Y
@@ -538,7 +567,7 @@ INLINE int m6502_Step() {
 //        case 0x73:
 //        case 0x74:
         case 0x75: ADC( src_zp_X() ); return 4;                        // ADC zpg,X
-        case 0x76: ROR( dest_zp_X() ); return 6;                       // ROR zpg,X
+        case 0x76: ROR( addr_zp_X() ); return 6;                       // ROR zpg,X
 //            case 0x77:
         case 0x78: SEI(); return 2;                                    // SEI
         case 0x79: ADC( src_abs_Y() ); return 4;                       // ADC abs,Y
@@ -546,7 +575,7 @@ INLINE int m6502_Step() {
 //        case 0x7B:
 //        case 0x7C:
         case 0x7D: ADC( src_abs_X() ); return 4;                       // ADC abs,X
-        case 0x7E: ROR( dest_abs_X() ); return 7;                      // ROR abs,X
+        case 0x7E: ROR( addr_abs_X() ); return 7;                      // ROR abs,X
 //        case 0x7F:
 //        case 0x80:
         case 0x81: STA( addr_X_ind() ) ; return 6;                     // STA X,ind
@@ -618,7 +647,7 @@ INLINE int m6502_Step() {
 //        case 0xC3:
         case 0xC4: CPY( src_zp() ); return 3;                          // CPY zpg
         case 0xC5: CMP( src_zp() ); return 3;                          // CMP zpg
-        case 0xC6: DEC( dest_zp() ); return 5;                         // DEC zpg
+        case 0xC6: DEC( addr_zp() ); return 5;                         // DEC zpg
 //        case 0xC7:
         case 0xC8: INY(); return 2;                                    // INY
         case 0xC9: CMP( imm() ); return 2;                             // CMP imm
@@ -626,7 +655,7 @@ INLINE int m6502_Step() {
 //        case 0xCB:
         case 0xCC: CPY( src_abs() ); return 4;                         // CPY abs
         case 0xCD: CMP( src_abs() ); return 4;                         // CMP abs
-        case 0xCE: DEC( dest_abs() ); return 6;                        // DEC abs
+        case 0xCE: DEC( addr_abs() ); return 6;                        // DEC abs
 //        case 0xCF:
         case 0xD0: BNE( rel_addr() ); return 2;                        // BNE rel
         case 0xD1: CMP( src_ind_Y() ); return 5;                       // CMP ind,Y
@@ -634,7 +663,7 @@ INLINE int m6502_Step() {
 //        case 0xD3:
 //        case 0xD4:
         case 0xD5: CMP( src_zp_X() ); return 4;                        // CMP zpg,X
-        case 0xD6: DEC( dest_zp_X() ); return 6;                       // DEC zpg,X
+        case 0xD6: DEC( addr_zp_X() ); return 6;                       // DEC zpg,X
 //        case 0xD7:
         case 0xD8: CLD(); return 2;                                    // CLD
         case 0xD9: CMP( src_abs_Y() ); return 4;                       // CMP abs,Y
@@ -642,7 +671,7 @@ INLINE int m6502_Step() {
 //        case 0xDB:
 //        case 0xDC:
         case 0xDD: CMP( src_abs_X() ); return 4;                       // CMP abs,X
-        case 0xDE: DEC( dest_abs_X() ); return 7;                      // DEC abs,X
+        case 0xDE: DEC( addr_abs_X() ); return 7;                      // DEC abs,X
 //        case 0xDF:
         case 0xE0: CPX( imm() ); return 2;                             // CPX imm
         case 0xE1: SBC( src_X_ind() ) ; return 6;                      // SBC (X,ind)
@@ -650,7 +679,7 @@ INLINE int m6502_Step() {
 //        case 0xE3:
         case 0xE4: CPX( src_zp() ); return 3;                          // CPX zpg
         case 0xE5: SBC( src_zp() ); return 3;                          // SBC zpg
-        case 0xE6: INC( dest_zp() ); return 5;                         // INC zpg
+        case 0xE6: INC( addr_zp() ); return 5;                         // INC zpg
 //        case 0xE7:
         case 0xE8: INX(); return 2;                                    // INX
         case 0xE9: SBC( imm() ); return 2;                             // SBC imm
@@ -658,7 +687,7 @@ INLINE int m6502_Step() {
 //        case 0xEB:
         case 0xEC: CPX( src_abs() ); return 4;                         // CPX abs
         case 0xED: SBC( src_abs() ); return 4;                         // SBC abs
-        case 0xEE: INC( dest_abs() ); return 6;                        // INC abs
+        case 0xEE: INC( addr_abs() ); return 6;                        // INC abs
 //        case 0xEF:
         case 0xF0: BEQ( rel_addr() ); return 2;                        // BEQ rel
         case 0xF1: SBC( src_ind_Y() ); return 5;                       // SBC ind,Y
@@ -666,7 +695,7 @@ INLINE int m6502_Step() {
 //        case 0xF3:
 //        case 0xF4:
         case 0xF5: SBC( src_zp_X() ); return 4;                        // SBC zpg,X
-        case 0xF6: INC( dest_zp_X() ); return 6;                       // INC zpg,X
+        case 0xF6: INC( addr_zp_X() ); return 6;                       // INC zpg,X
 //        case 0xF7:
         case 0xF8: SED(); return 2;                                    // SED
         case 0xF9: SBC( src_abs_Y() ); return 4;                       // SBC abs,Y
@@ -674,7 +703,7 @@ INLINE int m6502_Step() {
 //        case 0xFB:
 //        case 0xFC:
         case 0xFD: SBC( src_abs_X() ); return 4;                       // SBC abs,X
-        case 0xFE: INC( dest_abs_X() ); return 7;                      // INC abs,X
+        case 0xFE: INC( addr_abs_X() ); return 7;                      // INC abs,X
 //            case 0xFF:
 
         default:
@@ -954,7 +983,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     
     // N V - B D I Z C
     // 0 0 1 0 0 1 0 0
-    m6502.SR = 0x24;
+    setFlags(0x24);
     
     m6502.IF = 0;
     

@@ -78,7 +78,7 @@ INLINE void PLA() {
 INLINE void PHP() {
     dbgPrintf("PHP %02X ", m6502.SR);
     disPrintf(disassembly.inst, "PHP");
-    PUSH( m6502.SR ); // res and B flag should be set
+    PUSH( getFlags().SR ); // res and B flag should be set
 }
 
 /**
@@ -92,7 +92,7 @@ INLINE void PHP() {
  implied       PLP           28    1     4
  **/
 INLINE void PLP() {
-    m6502.SR = POP() | 0x30; // res and B flag should be set
+    setFlags(POP() | 0x30); // res and B flag should be set
     dbgPrintf("PLP %02X ", m6502.SR);
     disPrintf(disassembly.inst, "PLP");
 }

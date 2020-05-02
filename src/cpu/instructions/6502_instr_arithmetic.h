@@ -36,10 +36,10 @@ INLINE void ADC( uint8_t src ) {
     uint16_t tmp;
 
     // V = C7 != C6
-    m6502.V = ((m6502.A & 0x7F) + (src & 0x7F) + m6502.C) > 0x7F;
+    m6502.V = ((m6502.A & 0x7F) + (src & 0x7F) + (m6502.C != 0)) > 0x7F;
 
     if ( m6502.D ) {
-        if ( (tmp = (m6502.A & 0x0F) + (src & 0x0F) + m6502.C) > 0x09 ) {
+        if ( (tmp = (m6502.A & 0x0F) + (src & 0x0F) + (m6502.C != 0)) > 0x09 ) {
             tmp += 0x06;
         }
         if ( (tmp += (m6502.A & 0xF0) + (src & 0xF0)) > 0x99 ) {
@@ -56,7 +56,7 @@ INLINE void ADC( uint8_t src ) {
 //        }
     }
     else {
-        tmp = (uint16_t)m6502.A + src + m6502.C;
+        tmp = (uint16_t)m6502.A + src + (m6502.C != 0);
     }
     
     set_flags_NZ( m6502.A = tmp );

@@ -1005,7 +1005,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "875"
             endingLineNumber = "875"
-            landmarkName = "rom_loadFile(bundlePath, filename)"
+            landmarkName = "read_rom(bundlePath, filename, rom, addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1021,7 +1021,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "915"
             endingLineNumber = "915"
-            landmarkName = "m6502_ColdReset(bundlePath, romFileName)"
+            landmarkName = "rom_loadFile(bundlePath, filename)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1293,7 +1293,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "841"
             endingLineNumber = "841"
-            landmarkName = "read_rom(bundlePath, filename, rom, addr)"
+            landmarkName = "m6502_Run()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1325,7 +1325,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "890"
             endingLineNumber = "890"
-            landmarkName = "rom_loadFile(bundlePath, filename)"
+            landmarkName = "getFileSize(fullPath)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

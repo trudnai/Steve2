@@ -24,16 +24,16 @@
  absolute      ASL oper      0E    3     6
  absolute,X    ASL oper,X    1E    3     7
 **/
-INLINE void ASL( uint8_t * dst ) {
+INLINE void ASL( uint16_t addr ) {
     dbgPrintf("ASL ");
     disPrintf(disassembly.inst, "ASL");
-    m6502.C = *dst >> 7;
-    set_flags_NZ( *dst <<= 1 );
+    m6502.C = WRLOMEM[addr] & 0x80;
+    set_flags_NZ( WRLOMEM[addr] <<= 1 );
 }
 INLINE void ASLA() {
     dbgPrintf("ASL ");
     disPrintf(disassembly.inst, "ASL");
-    m6502.C = m6502.A >> 7;
+    m6502.C = m6502.A & 0x80;
     set_flags_NZ( m6502.A <<= 1 );
 }
 
@@ -51,11 +51,11 @@ INLINE void ASLA() {
  absolute      LSR oper      4E    3     6
  absolute,X    LSR oper,X    5E    3     7
 **/
-INLINE void LSR( uint8_t * dst ) {
+INLINE void LSR( uint16_t addr ) {
     dbgPrintf("LSR ");
     disPrintf(disassembly.inst, "LSR");
-    m6502.C = *dst & 1;
-    set_flags_NZ( *dst >>= 1 );
+    m6502.C = WRLOMEM[addr] & 1;
+    set_flags_NZ( WRLOMEM[addr] >>= 1 );
 }
 INLINE void LSRA() {
     dbgPrintf("LSR ");
@@ -78,19 +78,19 @@ INLINE void LSRA() {
  absolute      ROL oper      2E    3     6
  absolute,X    ROL oper,X    3E    3     7
 **/
-INLINE void ROL( uint8_t * dst ) {
+INLINE void ROL( uint16_t addr ) {
     dbgPrintf("ROL ");
     disPrintf(disassembly.inst, "ROL");
-    uint8_t C = m6502.C;
-    m6502.C = *dst >> 7;
-    *dst <<= 1;
-    set_flags_NZ( *dst |= C );
+    uint8_t C = m6502.C != 0;
+    m6502.C = WRLOMEM[addr] & 0x80;
+    WRLOMEM[addr] <<= 1;
+    set_flags_NZ( WRLOMEM[addr] |= C );
 }
 INLINE void ROLA() {
     dbgPrintf("ROL ");
     disPrintf(disassembly.inst, "ROL");
-    uint8_t C = m6502.C;
-    m6502.C = m6502.A >> 7;
+    uint8_t C = m6502.C != 0;
+    m6502.C = m6502.A & 0x80;
     m6502.A <<= 1;
     set_flags_NZ( m6502.A |= C );
 }
@@ -109,21 +109,21 @@ INLINE void ROLA() {
  absolute      ROR oper      6E    3     6
  absolute,X    ROR oper,X    7E    3     7
 **/
-INLINE void ROR( uint8_t * dst ) {
+INLINE void ROR( uint16_t addr ) {
     dbgPrintf("ROR ");
     disPrintf(disassembly.inst, "ROR");
-    uint8_t C = m6502.C << 7;
-    m6502.C = *dst & 1;
-    *dst >>= 1;
-    set_flags_NZ( *dst |= C );
+    uint8_t C = m6502.C != 0;
+    m6502.C = WRLOMEM[addr] & 1;
+    WRLOMEM[addr] >>= 1;
+    set_flags_NZ( WRLOMEM[addr] |= C  << 7 );
 }
 INLINE void RORA() {
     dbgPrintf("ROR ");
     disPrintf(disassembly.inst, "ROR");
-    uint8_t C = m6502.C << 7;
+    uint8_t C = m6502.C != 0;
     m6502.C = m6502.A & 1;
     m6502.A >>= 1;
-    set_flags_NZ( m6502.A |= C );
+    set_flags_NZ( m6502.A |= C << 7);
 }
 
 

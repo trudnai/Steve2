@@ -42,6 +42,22 @@ typedef struct debugLevel_s {
 } debugLevel_t;
 
 
+typedef union flags_u {
+    struct {
+        uint8_t C:1;    // Carry Flag
+        uint8_t Z:1;    // Zero Flag
+        uint8_t I:1;    // Interrupt Flag
+        uint8_t D:1;    // Decimal Flag
+        uint8_t B:1;    // B Flag
+        uint8_t res:1;  // reserved -- should be always 1
+        uint8_t V:1;    // Overflow Flag ???
+        uint8_t N:1;    // Negative Flag
+    };
+    
+    uint8_t SR;
+} flags_t;
+
+
 typedef struct m6502_s {
     uint8_t  A;             // Accumulator
     uint8_t  X;             // X index register
@@ -54,19 +70,17 @@ typedef struct m6502_s {
 //            uint8_t aaa:3;
 //        };
 //    };
-    union {
-        uint8_t SR;         // Status Register
-        struct {
-            uint8_t C:1;    // Carry Flag
-            uint8_t Z:1;    // Zero Flag
-            uint8_t I:1;    // Interrupt Flag
-            uint8_t D:1;    // Decimal Flag
-            uint8_t B:1;    // B Flag
-            uint8_t res:1;  // reserved -- should be always 1
-            uint8_t V:1;    // Overflow Flag ???
-            uint8_t N:1;    // Negative Flag
-        };
+    struct { // no bitfield faster processing
+        uint8_t C;    // Carry Flag
+        uint8_t Z;    // Zero Flag
+        uint8_t I;    // Interrupt Flag
+        uint8_t D;    // Decimal Flag
+        uint8_t B;    // B Flag
+        uint8_t res;  // reserved -- should be always 1
+        uint8_t V;    // Overflow Flag ???
+        uint8_t N;    // Negative Flag
     };
+    
     uint16_t PC;            // Program Counter
     uint8_t SP;             // Stack Pointer ( stack addr = 0x01 + sp )
 
@@ -147,6 +161,7 @@ extern void m6502_Run(void);
 extern void kbdInput ( uint8_t code );
 extern void setIO ( uint16_t ioaddr, uint8_t val );
 
-
+INLINE flags_t getFlags( void );
+INLINE void setFlags( uint8_t byte );
 
 #endif /* __6502_H__ */

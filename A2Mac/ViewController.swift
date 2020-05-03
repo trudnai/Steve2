@@ -633,7 +633,7 @@ class ViewController: NSViewController  {
 
     @IBAction func speedSelected(_ sender: NSButton) {
         if ( sender.title == "MAX" ) {
-            setCPUClockSpeed(freq: 1000)
+            setCPUClockSpeed(freq: 1100)
         }
         else if let freq = Double( sender.title ) {
             setCPUClockSpeed(freq: freq)

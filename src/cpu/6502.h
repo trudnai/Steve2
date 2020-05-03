@@ -161,7 +161,10 @@ extern void m6502_Run(void);
 extern void kbdInput ( uint8_t code );
 extern void setIO ( uint16_t ioaddr, uint8_t val );
 
-INLINE flags_t getFlags( void );
-INLINE void setFlags( uint8_t byte );
+extern void interrupt_IRQ(void);
+extern void interrupt_NMI(void);
+extern void hardReset(void);
+extern void softReset(void);
+
 
 #endif /* __6502_H__ */

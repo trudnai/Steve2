@@ -141,6 +141,16 @@ class ViewController: NSViewController  {
 //        m6502.pc = resetAddr
         
         m6502.interrupt = SOFTRESET;
+        
+        let saved_frm_set = clk_6502_per_frm_set;
+        clk_6502_per_frm_set = 0
+        clk_6502_per_frm_max = 0
+        // wait for 1 ms to allow the simulation to halt
+        usleep(10000);
+
+        softReset()
+     
+        clk_6502_per_frm_set = saved_frm_set
     }
     
     

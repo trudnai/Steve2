@@ -131,7 +131,6 @@ typedef struct {
  This idea is that "INLINE" would work only if it is
  located in the same source file -- hence the include...
 **/
-#include "6502_instructions.h"
 
 INLINE flags_t getFlags() {
     flags_t f = {
@@ -162,6 +161,7 @@ INLINE void setFlags( uint8_t byte ) {
     m6502.N = flags.N;      // Negative Flag
 }
 
+#include "6502_instructions.h"
 
 INLINE int m6502_Step() {
 
@@ -672,6 +672,36 @@ unsigned long long epoch = 0;
 
 unsigned int clkfrm = 0;
 
+void interrupt_IRQ() {
+    m6502.PC = memread16(IRQ_VECTOR);
+    // TODO: PUSH things onto stack?
+}
+
+void interrupt_NMI() {
+    m6502.PC = memread16(NMI_VECTOR);
+    // TODO: PUSH things onto stack?
+}
+
+void hardReset() {
+    m6502.PC = memread16(RESET_VECTOR);
+    // make sure it will be a cold reset...
+    memwrite(0x3F4, 0);
+    m6502.SP = 0xFF;
+    // N V - B D I Z C
+    // 0 0 1 0 0 1 0 1
+    setFlags(0x25);
+}
+
+void softReset() {
+//    m6502.PC = memread16(SOFTRESET_VECTOR);
+    m6502.PC = memread16( RESET_VECTOR );
+    
+    m6502.SP = 0xFF;
+    // N V - B D I Z C
+    // 0 0 1 0 0 1 0 1
+    setFlags(0x25);
+}
+
 void m6502_Run() {
     static unsigned int clk = 0;
     
@@ -702,35 +732,19 @@ void m6502_Run() {
                     return;
                     
                 case IRQ:
-                    m6502.PC = memread16(IRQ_VECTOR);
-                    // TODO: PUSH things onto stack?
+                    interrupt_IRQ();
                     break;
                     
                 case NMI:
-                    m6502.PC = memread16(NMI_VECTOR);
-                    // TODO: PUSH things onto stack?
+                    interrupt_NMI();
                     break;
                     
                 case HARDRESET:
-                    m6502.PC = memread16(RESET_VECTOR);
-                    // make sure it will be a cold reset...
-                    memwrite(0x3F4, 0);
-                    m6502.SP = 0xFF;
-                    // N V - B D I Z C
-                    // 0 0 1 0 0 1 0 1
-                    m6502.SR = 0x25;
-                    
+                    hardReset();
                     break;
                     
                 case SOFTRESET:
-//                    m6502.PC = memread16(SOFTRESET_VECTOR);
-                    m6502.PC = memread16( RESET_VECTOR );
-
-                    m6502.SP = 0xFF;
-                    // N V - B D I Z C
-                    // 0 0 1 0 0 1 0 1
-                    m6502.SR = 0x25;
-
+                    softReset();
                     break;
                     
                 default:

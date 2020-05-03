@@ -1003,9 +1003,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "875"
-            endingLineNumber = "875"
-            landmarkName = "read_rom(bundlePath, filename, rom, addr)"
+            startingLineNumber = "878"
+            endingLineNumber = "878"
+            landmarkName = "rom_loadFile(bundlePath, filename)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1019,9 +1019,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "915"
-            endingLineNumber = "915"
-            landmarkName = "rom_loadFile(bundlePath, filename)"
+            startingLineNumber = "918"
+            endingLineNumber = "918"
+            landmarkName = "m6502_ColdReset(bundlePath, romFileName)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1051,8 +1051,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "494"
+            endingLineNumber = "494"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1067,8 +1067,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "486"
-            endingLineNumber = "486"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1083,8 +1083,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "804"
-            endingLineNumber = "804"
+            startingLineNumber = "808"
+            endingLineNumber = "808"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1099,25 +1099,9 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "808"
-            endingLineNumber = "808"
+            startingLineNumber = "812"
+            endingLineNumber = "812"
             landmarkName = "memread16_low(addr)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "76F537F4-0C3F-4323-AEDB-0C1A969D8120"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "src/dev/mem/mmio.h"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "823"
-            endingLineNumber = "823"
-            landmarkName = "memread(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1131,8 +1115,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "787"
-            endingLineNumber = "787"
+            startingLineNumber = "791"
+            endingLineNumber = "791"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1147,8 +1131,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "497"
-            endingLineNumber = "497"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1157,22 +1141,6 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "4482B405-D689-4C35-8AD4-5DF498E6B9CD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "src/dev/mem/mmio.h"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "812"
-            endingLineNumber = "812"
-            landmarkName = "memread16(addr)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "61A1B9CE-10AC-43DD-BAC7-C190399B279B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1188,23 +1156,23 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "44BAE963-091D-4168-AD62-5B31763B1BAB"
+            uuid = "61A1B9CE-10AC-43DD-BAC7-C190399B279B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "530"
-            endingLineNumber = "530"
-            landmarkName = "ioRead(addr)"
+            startingLineNumber = "820"
+            endingLineNumber = "820"
+            landmarkName = "memread16(addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7A128228-C27C-4BF5-860B-1B0279E4B270"
+            uuid = "44BAE963-091D-4168-AD62-5B31763B1BAB"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -1220,6 +1188,22 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "7A128228-C27C-4BF5-860B-1B0279E4B270"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/dev/mem/mmio.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "538"
+            endingLineNumber = "538"
+            landmarkName = "ioRead(addr)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
             uuid = "6F431491-525B-44A3-8712-9BD3ADCA84C8"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -1227,8 +1211,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "426"
-            endingLineNumber = "426"
+            startingLineNumber = "430"
+            endingLineNumber = "430"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1243,41 +1227,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "772"
-            endingLineNumber = "772"
+            startingLineNumber = "775"
+            endingLineNumber = "775"
             landmarkName = "m6502_Run()"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "6B91B46F-ADF4-4578-AB06-5B47325DBB17"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "src/cpu/6502.c"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "959"
-            endingLineNumber = "959"
-            landmarkName = "m6502_ColdReset(bundlePath, romFileName)"
-            landmarkType = "9">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "58313E4A-D7F7-4DF8-AC43-E3D5609001DF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "src/cpu/6502.c"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "959"
-            endingLineNumber = "959"
-            landmarkName = "m6502_ColdReset(bundlePath, romFileName)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1285,15 +1237,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "81ABEFF0-8A2F-499D-B0CC-BDF6DE53217A"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "841"
-            endingLineNumber = "841"
-            landmarkName = "m6502_Run()"
+            startingLineNumber = "844"
+            endingLineNumber = "844"
+            landmarkName = "getFileSize(fullPath)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1301,14 +1253,14 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "2DBE73CE-4A30-49DA-95C6-10E1A928BB30"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "414"
-            endingLineNumber = "414"
+            startingLineNumber = "418"
+            endingLineNumber = "418"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1317,15 +1269,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FBD620D0-F2F2-44DA-AC1C-C7C2CFAEA87D"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "890"
-            endingLineNumber = "890"
-            landmarkName = "getFileSize(fullPath)"
+            startingLineNumber = "893"
+            endingLineNumber = "893"
+            landmarkName = "m6502_ColdReset(bundlePath, romFileName)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1391,6 +1343,70 @@
             endingLineNumber = "477"
             landmarkName = "Update()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F40D9227-617A-468F-97E2-E0222B629329"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/dev/mem/mmio.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "textPageSelect()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/dev/mem/mmio.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "333"
+            endingLineNumber = "333"
+            landmarkName = "textPageSelect()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "66885E40-F885-4FBA-9685-7056F0E1C676"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/dev/mem/mmio.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "931"
+            endingLineNumber = "931"
+            landmarkName = "dest_abs()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "333F20D2-3A96-48D4-9800-8833CB83E09B"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/cpu/6502.c"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "472"
+            endingLineNumber = "472"
+            landmarkName = "m6502_Step()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

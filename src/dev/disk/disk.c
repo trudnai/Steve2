@@ -17,8 +17,8 @@ disk_t disk = {
     0,              // clk_since_last_read
 };
 
-const int diskAccelerator_frames  = 3;
-int diskAccelerator_count = 10;
+const int diskAccelerator_frames  = 1;
+int diskAccelerator_count = 10000;
 int diskAccelerator_speed = 25; // less than actual CPU speed means no acceleration
 //const unsigned long long clk_6502_per_frm_diskAccelerator = 25 * M / fps; // disk acceleration bumps up CPU clock to 25 MHz
 //const unsigned long long clk_diskAcceleratorTimeout = 1000ULL;
@@ -45,6 +45,13 @@ const int position_to_direction[8][8] = {
 };
 
 
+void disk_accelerator_speedup() {
+    if ( diskAccelerator_speed > clk_6502_per_frm ) {
+        clk_6502_per_frm = diskAccelerator_speed * M / fps;  // clk_6502_per_frm_diskAccelerator;
+        diskAccelerator_count = diskAccelerator_frames;
+    }
+}
+
 void disk_phase() {
 
     int position = magnet_to_Poistion[disk.phase.magnet];
@@ -64,12 +71,7 @@ void disk_phase() {
 //        printf(", p:%d d:%d l:%d: ph:%u trk:%u)", position, direction, lastPosition, phase.count, woz_tmap.phase[phase.count]);
                 
         disk.clk_last_access = m6502.clktime;
-        if ( diskAccelerator_speed > clk_6502_per_frm ) {
-//            clk_6502_per_frm = clk_6502_per_frm_diskAccelerator;
-            clk_6502_per_frm = diskAccelerator_speed * M / fps;  // clk_6502_per_frm_diskAccelerator;
-            diskAccelerator_count = diskAccelerator_frames;
-        }
-
+        disk_accelerator_speedup();
     }
     else {
         // invalid magnet config
@@ -82,11 +84,8 @@ void disk_phase() {
 uint8_t disk_read() {
     dbgPrintf("io_DISK_READ (S%u)\n", 6);
     disk.clk_last_access = m6502.clktime;
-    if ( diskAccelerator_speed > 2 ) {
-        clk_6502_per_frm = diskAccelerator_speed * M / fps;  // clk_6502_per_frm_diskAccelerator;
-        diskAccelerator_count = diskAccelerator_frames;
-    }
-    
+    disk_accelerator_speedup();
+
     return woz_read();
 }
 

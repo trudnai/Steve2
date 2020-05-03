@@ -146,7 +146,7 @@ extern uint8_t * const RAM;
 extern uint8_t * const MEM;         // Pointer to the Shadow Memory Map so we can use this from Swift//extern uint8_t * AUX_VID_RAM;
 extern uint32_t * videoMemPtr;
 
-extern void hires_Update(void);
+//extern void hires_Update(void);
 
 extern double mips;
 extern double mhz;

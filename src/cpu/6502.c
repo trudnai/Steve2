@@ -35,7 +35,7 @@ unsigned long long int inst_cnt = 0;
 
 //const unsigned int fps = 30;
 const unsigned long long default_MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
-const unsigned long long startup_MHz_6502 = 25 * M;
+const unsigned long long startup_MHz_6502 = 32 * M;
 unsigned long long MHz_6502 = default_MHz_6502;
 unsigned long long clk_6502_per_frm =  startup_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;

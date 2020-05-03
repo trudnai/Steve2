@@ -996,7 +996,7 @@ INLINE uint8_t addr_zp() {
     return fetch();
 }
 INLINE uint8_t src_zp() {
-    return memread8(addr_zp());
+    return memread8_low(addr_zp());
 }
 INLINE uint8_t * dest_zp() {
     return WRLOMEM + addr_zp();
@@ -1059,7 +1059,7 @@ INLINE uint8_t addr_zp_X() {
     return fetch() + m6502.X;
 }
 INLINE uint8_t src_zp_X() {
-    return memread8(addr_zp_X());
+    return memread8_low(addr_zp_X());
 }
 INLINE uint8_t * dest_zp_X() {
     return WRLOMEM + addr_zp_X();
@@ -1075,7 +1075,7 @@ INLINE uint8_t addr_zp_Y() {
     return fetch() + m6502.Y;
 }
 INLINE uint8_t src_zp_Y() {
-    return memread8(addr_zp_Y());
+    return memread8_low(addr_zp_Y());
 }
 INLINE uint8_t * dest_zp_Y() {
     return WRLOMEM + addr_zp_Y();

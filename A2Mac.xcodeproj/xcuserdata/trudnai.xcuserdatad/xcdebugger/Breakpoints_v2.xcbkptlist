@@ -1003,9 +1003,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "878"
-            endingLineNumber = "878"
-            landmarkName = "rom_loadFile(bundlePath, filename)"
+            startingLineNumber = "773"
+            endingLineNumber = "773"
+            landmarkName = "read_rom(bundlePath, filename, rom, addr)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1019,9 +1019,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "918"
-            endingLineNumber = "918"
-            landmarkName = "m6502_ColdReset(bundlePath, romFileName)"
+            startingLineNumber = "813"
+            endingLineNumber = "813"
+            landmarkName = "rom_loadFile(bundlePath, filename)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1227,8 +1227,8 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "775"
-            endingLineNumber = "775"
+            startingLineNumber = "719"
+            endingLineNumber = "719"
             landmarkName = "m6502_Run()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1243,9 +1243,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "844"
-            endingLineNumber = "844"
-            landmarkName = "getFileSize(fullPath)"
+            startingLineNumber = "748"
+            endingLineNumber = "748"
+            landmarkName = "m6502_Run()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1275,9 +1275,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "893"
-            endingLineNumber = "893"
-            landmarkName = "m6502_ColdReset(bundlePath, romFileName)"
+            startingLineNumber = "788"
+            endingLineNumber = "788"
+            landmarkName = "getFileSize(fullPath)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1381,15 +1381,15 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "66885E40-F885-4FBA-9685-7056F0E1C676"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "931"
-            endingLineNumber = "931"
-            landmarkName = "dest_abs()"
+            startingLineNumber = "927"
+            endingLineNumber = "927"
+            landmarkName = "addr_abs()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1403,9 +1403,25 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
+            startingLineNumber = "416"
+            endingLineNumber = "416"
             landmarkName = "m6502_Step()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8871CCC2-3BF8-4780-B743-7E264F6219FC"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/dev/disk/disk.c"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "disk_accelerator_speedup()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>

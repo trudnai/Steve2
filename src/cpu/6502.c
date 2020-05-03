@@ -745,7 +745,7 @@ void m6502_Run() {
         // we clear the clkfrm from ViewController Update()
         for ( ; clkfrm < clk_6502_per_frm_max ; clkfrm += clk )
 #else
-//    for ( ; m6502.pc ; )
+    // this is for max speed only -- WARNING! It works only if simulation runs in a completely different thread from the Update()
     for ( ; ; )
 #endif
     {
@@ -797,48 +797,8 @@ void m6502_Run() {
         }
 #endif // INTERRUPT_CHECK_PER_STEP
         
-//        dbgPrintf("%llu %04X: ", clktime, m6502.PC);
-        m6502.clktime +=
-        clk = m6502_Step();
+        m6502.clktime += ( clk = m6502_Step() );
         printDisassembly( outdev );
-        
-//        dbgPrintf2("A:%02X X:%02X Y:%02X SP:%02X %c%c%c%c%c%c%c%c\n\n",
-//                  m6502.A,
-//                  m6502.X,
-//                  m6502.Y,
-//                  m6502.SP,
-//                  m6502.N ? 'N' : 'n',
-//                  m6502.V ? 'V' : 'v',
-//                  m6502.res ? 'R' : 'r',
-//                  m6502.B ? 'B' : 'b',
-//                  m6502.D ? 'D' : 'd',
-//                  m6502.I ? 'I' : 'i',
-//                  m6502.Z ? 'Z' : 'z',
-//                  m6502.C ? 'C' : 'c'
-//                  );
-        
-#ifdef CLK_WAIT
-//        ee += tick_6502_per_sec * clk;
-//        ee /= 2;
-//        dd += rdtsc() - epoch - elpased;
-//        dd /= 2;
-        
-        // get the new time in ticks needed to simulate exact 6502 clock
- //       elpased = tick_6502_per_sec * clktime;
-
-        // query time + wait
-
-        // TODO: We should use nanosleep
-//        usleep(1); // this is good enough for debugging
-
-//        nanosleep(&tim, NULL);
-        
-//        printf("  tps:%llu  s:%llu  t:%llu  d:%llu  e:%llu  n:%llu\n", tick_6502_per_sec, s, t, t - s, e, e - (t - s));
-
-        // tight loop gives us the most precise wait time
-//        while ( rdtsc() - epoch < elpased ) {}
-#endif
-        
     }
     
     if( diskAccelerator_count ) {
@@ -849,15 +809,6 @@ void m6502_Run() {
         }
     }
     
-    
-    //    clock_t end = clock();
-    //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
-//    unsigned long long e = rdtsc();
-//    unsigned long long t = e - epoch;
-//    double execution_time = (double)t / tick_per_sec;
-//
-//    mips = inst_cnt / (execution_time * M);
-//    mhz = clktime / (execution_time * M);
 }
 
 void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, const uint16_t addr ) {

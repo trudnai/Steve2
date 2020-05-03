@@ -131,26 +131,17 @@ class ViewController: NSViewController  {
     }
     
     @IBAction func Reset(_ sender: Any) {
-//        let resetPointer = UnsafeRawBufferPointer(start: &RAM + 0x3F2, count: 2)
-//        let ral = UInt16(resetPointer[0])
-//        let rah = UInt16(resetPointer[1])
-//        let resetAddr = rah << 8 + ral
-//
-//        let hex = String(resetAddr, radix: 16, uppercase: true)
-//        print("reset to:\(hex)\n")
-//        m6502.pc = resetAddr
+//        m6502.interrupt = SOFTRESET;
         
-        m6502.interrupt = SOFTRESET;
-        
-        let saved_frm_set = clk_6502_per_frm_set;
-        clk_6502_per_frm_set = 0
-        clk_6502_per_frm_max = 0
-        // wait for 1 ms to allow the simulation to halt
-        usleep(10000);
+//        let saved_frm_set = clk_6502_per_frm_set;
+//        clk_6502_per_frm_set = 0
+//        clk_6502_per_frm_max = 0
+//        // wait for 1 ms to allow the simulation to halt
+//        usleep(10000);
 
         softReset()
      
-        clk_6502_per_frm_set = saved_frm_set
+//        clk_6502_per_frm_set = saved_frm_set
     }
     
     

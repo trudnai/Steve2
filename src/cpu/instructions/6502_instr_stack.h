@@ -18,7 +18,7 @@ INLINE void PUSH( uint8_t src ) {
 }
 
 INLINE uint8_t POP() {
-    return RDLOMEM[ stack_base_addr | ++m6502.SP ];
+    return Apple2_64K_MEM[ stack_base_addr | ++m6502.SP ];
 }
 
 

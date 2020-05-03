@@ -81,12 +81,6 @@ disassembly_t disassembly;
 #include "../util/disassembler.h"
 #include "../dev/mem/mmio.h"
 
-uint16_t videoShadow [0x1000];
-uint32_t videoMem [0x2000];
-uint32_t * videoMemPtr = videoMem;
-
-uint16_t HiResLineAddrTbl [0x2000];
-
 
 INLINE void set_flags_N( const uint8_t test ) {
     m6502.N = BITTEST(test, 7);
@@ -124,62 +118,12 @@ INLINE void set_flags_NZC( const int16_t test ) {
     set_flags_C(test);
 }
 
-//INLINE void set_flags_NZCV( int test ) {
-//    set_flags_NZC(test);
-//    set_flags_V(test);
-//}
-
-
-
-void initHiResLineAddresses() {
-    uint16_t i = 0;
-    for ( uint16_t x = 0; x <= 0x50; x+= 0x28 ) {
-        for ( uint16_t y = 0; y <= 0x380; y += 0x80 ) {
-            for ( uint16_t z = 0; z <= 0x1C00; z += 0x400) {
-                HiResLineAddrTbl[i++] = x + y + z;
-            }
-        }
-    }
-}
-
 
 typedef struct {
     uint8_t L;
     uint8_t H;
 } bytes_t;
 
-void hires_Update () {
-    // lines
-    int videoMemIndex = 0;
-    for( int y = 0; y < 192; y++ ) {
-        // 16 bit blocks of columns
-        for ( int x = 0; x < 20; x++ ) {
-            // odd
-            bytes_t block = * (bytes_t*)(& RAM[ HiResLineAddrTbl[y * 20] + x * 2 ]);
-            for ( uint8_t bit = 0; bit < 7; bit++ ) {
-                uint8_t bitMask = 1 << bit;
-                
-                if (block.L & bitMask) {
-                    videoMem[videoMemIndex++] = 0x7F12A208;
-                }
-                else { // 28CD41
-                    videoMem[videoMemIndex++] = 0x00000000;
-                }
-            }
-            // even
-            for ( uint8_t bit = 0; bit < 7; bit++ ) {
-                uint8_t bitMask = 1 << bit;
-                
-                if (block.H & bitMask) {
-                    videoMem[videoMemIndex++] = 0x7F12A208;
-                }
-                else { // 28CD41
-                    videoMem[videoMemIndex++] = 0x00000000;
-                }
-            }
-        }
-    }
-}
 
 /**
  Instruction Implementations

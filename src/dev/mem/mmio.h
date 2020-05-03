@@ -792,7 +792,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
  Naive implementation of RAM read from address
  **/
 INLINE uint8_t memread8_low( uint16_t addr ) {
-    return RDLOMEM[addr];
+    return Apple2_64K_MEM[addr];
 }
 INLINE uint8_t memread8_high( uint16_t addr ) {
     return RDHIMEM[addr];
@@ -808,7 +808,7 @@ INLINE uint8_t memread8( uint16_t addr ) {
  Naive implementation of RAM read from address
  **/
 INLINE uint16_t memread16_low( uint16_t addr ) {
-    return * (uint16_t*) ( RDLOMEM + addr );
+    return * (uint16_t*) ( Apple2_64K_MEM + addr );
 }
 INLINE uint16_t memread16_high( uint16_t addr ) {
     return * (uint16_t*) ( RDHIMEM + addr );

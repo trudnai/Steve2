@@ -392,7 +392,8 @@ class HiRes: NSView {
     #if HIRESLOW || HIRESLOWCOLOR
     static let ScreenBitmapSize = (PixelWidth * PixelHeight * 4)
     static let context = createBitmapContext(pixelsWide: PixelWidth, PixelHeight)
-    static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)  // UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: byteCount)
+    static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)
+    static var typedPointer = pixels.bindMemory(to: UInt32.self)
     #endif
     
     let R = 2
@@ -473,29 +474,26 @@ class HiRes: NSView {
     
     #elseif HIRESLOWCOLOR
     
+    
+    let color_black     : UInt32 = 0x00000000;
+    let color_white     : UInt32 = 0xFFFFFFFF;
+    let color_purple    : UInt32 = 0xFFBB11EE;
+    let color_green     : UInt32 = 0xFF0BA212;
+    let color_blue      : UInt32 = 0xFF1166EE;
+    let color_orange    : UInt32 = 0xFFEE2211;
+
     func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int ) {
+        let colorAddr = pixelAddr / 4
+        
         switch ( pixel ) {
         case 0x00: // black
-            HiRes.pixels[pixelAddr + R] = 0x00;
-            HiRes.pixels[pixelAddr + G] = 0x00;
-            HiRes.pixels[pixelAddr + B] = 0x00;
-            HiRes.pixels[pixelAddr + A] = 0x00;
-            
-            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
-            
-        case 0x01: // purple (bits are in reverse!)
-            HiRes.pixels[pixelAddr + R] = 0xBB;
-            HiRes.pixels[pixelAddr + G] = 0x11;
-            HiRes.pixels[pixelAddr + B] = 0xEE;
-            HiRes.pixels[pixelAddr + A] = 0xFF;
+//            HiRes.typedPointer[colorAddr] = color_black;
+//            HiRes.typedPointer[colorAddr + 1] = color_black;
+            break
 
-            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+        case 0x01: // purple (bits are in reverse!)
+            HiRes.typedPointer[colorAddr] = color_purple;
+//            HiRes.typedPointer[colorAddr + 1] = color_black;
             
         case 0x02: // green
             if  (prev == 0x02) ||
@@ -504,131 +502,66 @@ class HiRes: NSView {
                 (prev == 0x00) || (prev == 0x04) ||
                 (prev == 0x04)
             {
-                HiRes.pixels[pixelAddr + R] = 0x08;
-                HiRes.pixels[pixelAddr + G] = 0xA2;
-                HiRes.pixels[pixelAddr + B] = 0x12;
-                HiRes.pixels[pixelAddr + A] = 0xFF;
+                HiRes.typedPointer[colorAddr] = color_green;
             }
-            else {
-                HiRes.pixels[pixelAddr + R] = 0x00;
-                HiRes.pixels[pixelAddr + G] = 0x00;
-                HiRes.pixels[pixelAddr + B] = 0x00;
-                HiRes.pixels[pixelAddr + A] = 0x00;
-            }
+//            else {
+//                HiRes.typedPointer[colorAddr] = color_black;
+//            }
             
             // reducing color bleeding
             if  (prev == 0x01) ||
                 (prev == 0x05)
             {
-                HiRes.pixels[pixelAddr + 4 + R] = 0x00;
-                HiRes.pixels[pixelAddr + 4 + G] = 0x00;
-                HiRes.pixels[pixelAddr + 4 + B] = 0x00;
-                HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+//                HiRes.typedPointer[colorAddr + 1] = color_black;
             }
             else {
-                HiRes.pixels[pixelAddr + 4 + R] = 0x08;
-                HiRes.pixels[pixelAddr + 4 + G] = 0xA2;
-                HiRes.pixels[pixelAddr + 4 + B] = 0x12;
-                HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
+                HiRes.typedPointer[colorAddr + 1] = color_green;
             }
 
         case 0x03: // white
-            HiRes.pixels[pixelAddr + R] = 0xFF;
-            HiRes.pixels[pixelAddr + G] = 0xFF;
-            HiRes.pixels[pixelAddr + B] = 0xFF;
-            HiRes.pixels[pixelAddr + A] = 0xFF;
-            
-            HiRes.pixels[pixelAddr + 4 + R] = 0xFF;
-            HiRes.pixels[pixelAddr + 4 + G] = 0xFF;
-            HiRes.pixels[pixelAddr + 4 + B] = 0xFF;
-            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
-            
+            HiRes.typedPointer[colorAddr] = color_white;
+            HiRes.typedPointer[colorAddr + 1] = color_white;
+
         case 0x04: // black 2
-            HiRes.pixels[pixelAddr + R] = 0x00;
-            HiRes.pixels[pixelAddr + G] = 0x00;
-            HiRes.pixels[pixelAddr + B] = 0x00;
-            HiRes.pixels[pixelAddr + A] = 0x00;
-            
-            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
+//            HiRes.typedPointer[colorAddr] = color_black;
+//            HiRes.typedPointer[colorAddr + 1] = color_black;
+            break
             
         case 0x05: // blue
-            HiRes.pixels[pixelAddr + R] = 0x11;
-            HiRes.pixels[pixelAddr + G] = 0x66;
-            HiRes.pixels[pixelAddr + B] = 0xEE;
-            HiRes.pixels[pixelAddr + A] = 0xFF;
+            HiRes.typedPointer[colorAddr] = color_blue;
+//            HiRes.typedPointer[colorAddr + 1] = color_black;
 
-            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
-            
         case 0x06: // orange
             // do we need to extend the color?
             if  (prev == 0x06) ||
                 (prev == 0x03) || (prev == 0x07)
             {
-                HiRes.pixels[pixelAddr + R] = 0xEE;
-                HiRes.pixels[pixelAddr + G] = 0x22;
-                HiRes.pixels[pixelAddr + B] = 0x11;
-                HiRes.pixels[pixelAddr + A] = 0xFF;
+                HiRes.typedPointer[colorAddr] = color_orange;
             }
             else {
-                HiRes.pixels[pixelAddr + R] = 0x00;
-                HiRes.pixels[pixelAddr + G] = 0x00;
-                HiRes.pixels[pixelAddr + B] = 0x00;
-                HiRes.pixels[pixelAddr + A] = 0x00;
+//                HiRes.typedPointer[colorAddr] = color_black;
             }
 
-            HiRes.pixels[pixelAddr + 4 + R] = 0xEE;
-            HiRes.pixels[pixelAddr + 4 + G] = 0x22;
-            HiRes.pixels[pixelAddr + 4 + B] = 0x11;
-            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
+            HiRes.typedPointer[colorAddr + 1] = color_orange;
 
         case 0x07: // white 2
-            HiRes.pixels[pixelAddr + R] = 0xFF;
-            HiRes.pixels[pixelAddr + G] = 0xFF;
-            HiRes.pixels[pixelAddr + B] = 0xFF;
-            HiRes.pixels[pixelAddr + A] = 0xFF;
-            
-            HiRes.pixels[pixelAddr + 4 + R] = 0xFF;
-            HiRes.pixels[pixelAddr + 4 + G] = 0xFF;
-            HiRes.pixels[pixelAddr + 4 + B] = 0xFF;
-            HiRes.pixels[pixelAddr + 4 + A] = 0xFF;
-            
+            HiRes.typedPointer[colorAddr] = color_white;
+            HiRes.typedPointer[colorAddr + 1] = color_white;
+
         default:
-            HiRes.pixels[pixelAddr + R] = 0x00;
-            HiRes.pixels[pixelAddr + G] = 0x00;
-            HiRes.pixels[pixelAddr + B] = 0x00;
-            HiRes.pixels[pixelAddr + A] = 0x00;
-            
-            HiRes.pixels[pixelAddr + 4 + R] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + G] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + B] = 0x00;
-            HiRes.pixels[pixelAddr + 4 + A] = 0x00;
-            
+//            HiRes.typedPointer[colorAddr] = color_black;
+//            HiRes.typedPointer[colorAddr + 1] = color_black;
+            break
         }
         
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
-            HiRes.pixels[pixelAddr + R] = 0xFF;
-            HiRes.pixels[pixelAddr + G] = 0xFF;
-            HiRes.pixels[pixelAddr + B] = 0xFF;
-            HiRes.pixels[pixelAddr + A] = 0xFF;
-            
-            HiRes.pixels[pixelAddr - 4 + R] = 0xFF;
-            HiRes.pixels[pixelAddr - 4 + G] = 0xFF;
-            HiRes.pixels[pixelAddr - 4 + B] = 0xFF;
-            HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
-            
+            HiRes.typedPointer[colorAddr] = color_white;
+            HiRes.typedPointer[colorAddr - 1] = color_white;
+
             // TODO: Need better check if extra green was created
             if (HiRes.pixels[pixelAddr - 8 + G] == 0xA2 ) {
-                HiRes.pixels[pixelAddr - 8 + R] = 0x00;
-                HiRes.pixels[pixelAddr - 8 + G] = 0x00;
-                HiRes.pixels[pixelAddr - 8 + B] = 0x00;
-                HiRes.pixels[pixelAddr - 8 + A] = 0x00;
+                HiRes.typedPointer[colorAddr - 2] = color_black;
             }
         }
 
@@ -640,10 +573,7 @@ class HiRes: NSView {
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
             if ( HiRes.pixels[pixelAddr - 8 + R] == 0xBB ) {
-                HiRes.pixels[pixelAddr - 4 + R] = 0xBB;
-                HiRes.pixels[pixelAddr - 4 + G] = 0x11;
-                HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
-                HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+                HiRes.typedPointer[colorAddr - 1] = color_purple;
             }
         }
 
@@ -652,10 +582,7 @@ class HiRes: NSView {
             (pixel == 0x05) ||
             (pixel == 0x03) || (pixel == 0x07)
         ) {
-            HiRes.pixels[pixelAddr - 4 + R] = 0x11;
-            HiRes.pixels[pixelAddr - 4 + G] = 0x66;
-            HiRes.pixels[pixelAddr - 4 + B] = 0xEE;
-            HiRes.pixels[pixelAddr - 4 + A] = 0xFF;
+            HiRes.typedPointer[colorAddr - 1] = color_blue;
         }
 
     }
@@ -688,12 +615,12 @@ class HiRes: NSView {
 
         var pixelAddr = 0
 
-        var minX = 9999
-        var minY = 9999
-        var maxX = 0
-        var maxY = 0
-
-        var x = 0
+//        var minX = 9999
+//        var minY = 9999
+//        var maxX = 0
+//        var maxY = 0
+//
+//        var x = 0
         var y = 0
 
         HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
@@ -767,7 +694,7 @@ class HiRes: NSView {
 //            }
 
             y += 1
-            x = 0
+//            x = 0
         }
 
 //        HiRes.context?.setShouldAntialias(true)
@@ -790,7 +717,7 @@ class HiRes: NSView {
         
         // refresh the entire screen
         let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        currentContext!.draw  (image, in: boundingBox)
+        currentContext!.draw(image, in: boundingBox)
     }
 
     #elseif HIRESDRAWCOLOR

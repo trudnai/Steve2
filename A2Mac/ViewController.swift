@@ -517,8 +517,55 @@ class ViewController: NSViewController  {
 //            }
             
 //                self.HiRes.setNeedsDisplay(self.HiRes.frame)
-//            self.hires.setNeedsDisplay( CGRect(x: 0, y: 191-50, width: 50, height: 50) )
-            self.hires.needsDisplay = true
+//            self.hires.setNeedsDisplay( CGRect(x: 0, y: 0, width: self.hires.frame.width, height: self.hires.frame.height) )
+
+            
+//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 100, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 100, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 100, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 100, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 100, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 800, y: 100, width: 50, height: 50) )
+//
+//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 200, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 200, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 200, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 200, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 200, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 200, width: 50, height: 50) )
+//
+//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 300, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 300, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 300, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 300, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 300, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 300, width: 50, height: 50) )
+//
+//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 400, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 400, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 400, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 400, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 400, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 400, width: 50, height: 50) )
+//
+//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 500, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 500, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 500, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 500, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 500, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 500, width: 50, height: 50) )
+//
+//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 600, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 600, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 600, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 600, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 600, width: 50, height: 50) )
+//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 600, width: 50, height: 50) )
+
+            // only refresh graphics view when needed (aka not in text mode)
+            if ( videoMode.text == 0 ) {
+                self.hires.needsDisplay = true
+            }
 //            }
             #endif
         }

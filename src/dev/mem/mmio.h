@@ -405,12 +405,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     switch (addr) {
         case io_KBD:
 //            if ( RAM[io_KBD] > 0x7F ) printf("io_KBD:%04X\n", addr);
-            return RAM[io_KBD];
+            return Apple2_64K_RAM[io_KBD];
 
         case io_KBDSTRB:
             // TODO: This is very slow!
 //            printf("io_KBDSTRB\n");
-            return RAM[io_KBD] &= 0x7F;
+            return Apple2_64K_RAM[io_KBD] &= 0x7F;
 
         case io_SPKR:
             // TODO: This is very slow!
@@ -418,7 +418,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
             //ViewController_spk_up_play();
             
-            return RAM[io_SPKR];
+            return Apple2_64K_RAM[io_SPKR];
 
 //        case io_VID_CLR80VID:
 //            videoMode.col80 = 0;
@@ -496,7 +496,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //            if ( RAM[addr] > 127 ) {
 //                RAM[addr]--;
 //            }
-            return RAM[addr];
+            return Apple2_64K_RAM[addr];
             
         case io_MEM_RDRAM_NOWR_2:
         case io_MEM_RDROM_WRAM_2:
@@ -637,12 +637,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
     }
     
-    return RAM[addr];
+    return Apple2_64K_RAM[addr];
 }
 
 // TODO:
 void setIO ( uint16_t ioaddr, uint8_t val ) {
-    RAM[ioaddr] = val;
+    Apple2_64K_RAM[ioaddr] = val;
 }
 
 
@@ -676,7 +676,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 //    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
     switch (addr) {
         case io_KBDSTRB:
-            RAM[io_KBD] &= 0x7F;
+            Apple2_64K_RAM[io_KBD] &= 0x7F;
             break;
             
         case io_RDMAINRAM:

@@ -353,8 +353,8 @@
             timestampString = "590831455.181416"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "HiRes"
             landmarkType = "3">
          </BreakpointContent>
@@ -369,8 +369,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "923"
-            endingLineNumber = "923"
+            startingLineNumber = "879"
+            endingLineNumber = "879"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -385,8 +385,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "954"
-            endingLineNumber = "954"
+            startingLineNumber = "910"
+            endingLineNumber = "910"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -401,8 +401,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "951"
-            endingLineNumber = "951"
+            startingLineNumber = "907"
+            endingLineNumber = "907"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -417,8 +417,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "928"
-            endingLineNumber = "928"
+            startingLineNumber = "884"
+            endingLineNumber = "884"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -433,10 +433,10 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
-            landmarkName = "keyUp(with:)"
-            landmarkType = "7">
+            startingLineNumber = "344"
+            endingLineNumber = "344"
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -465,8 +465,8 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
+            startingLineNumber = "189"
+            endingLineNumber = "189"
             landmarkName = "HexDump()"
             landmarkType = "7">
          </BreakpointContent>
@@ -481,8 +481,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "HiRes"
             landmarkType = "3">
          </BreakpointContent>
@@ -497,8 +497,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
             landmarkName = "compute()"
             landmarkType = "7">
          </BreakpointContent>
@@ -657,10 +657,10 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "558"
-            endingLineNumber = "558"
-            landmarkName = "ViewController"
-            landmarkType = "3">
+            startingLineNumber = "611"
+            endingLineNumber = "611"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -875,8 +875,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "200"
-            endingLineNumber = "200"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "render()"
             landmarkType = "7">
          </BreakpointContent>
@@ -939,8 +939,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "937"
-            endingLineNumber = "937"
+            startingLineNumber = "893"
+            endingLineNumber = "893"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -955,8 +955,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "950"
-            endingLineNumber = "950"
+            startingLineNumber = "906"
+            endingLineNumber = "906"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -971,8 +971,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "960"
-            endingLineNumber = "960"
+            startingLineNumber = "916"
+            endingLineNumber = "916"
             landmarkName = "draw(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -987,8 +987,8 @@
             filePath = "A2Mac/HiRes.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "654"
-            endingLineNumber = "654"
+            startingLineNumber = "585"
+            endingLineNumber = "585"
             landmarkName = "hiresColorPixel(pixelAddr:pixel:prev:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1003,8 +1003,8 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "773"
-            endingLineNumber = "773"
+            startingLineNumber = "787"
+            endingLineNumber = "787"
             landmarkName = "read_rom(bundlePath, filename, rom, addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1019,8 +1019,8 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "813"
-            endingLineNumber = "813"
+            startingLineNumber = "827"
+            endingLineNumber = "827"
             landmarkName = "rom_loadFile(bundlePath, filename)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1035,10 +1035,10 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
-            landmarkName = "ViewController"
-            landmarkType = "3">
+            startingLineNumber = "212"
+            endingLineNumber = "212"
+            landmarkName = "keyDown(with:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1051,8 +1051,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
+            startingLineNumber = "495"
+            endingLineNumber = "495"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1067,8 +1067,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "491"
+            endingLineNumber = "491"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1083,8 +1083,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "808"
-            endingLineNumber = "808"
+            startingLineNumber = "815"
+            endingLineNumber = "815"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1099,8 +1099,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "812"
-            endingLineNumber = "812"
+            startingLineNumber = "819"
+            endingLineNumber = "819"
             landmarkName = "memread16_low(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1115,8 +1115,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "791"
-            endingLineNumber = "791"
+            startingLineNumber = "798"
+            endingLineNumber = "798"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -1131,8 +1131,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
+            startingLineNumber = "502"
+            endingLineNumber = "502"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1147,8 +1147,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "816"
-            endingLineNumber = "816"
+            startingLineNumber = "823"
+            endingLineNumber = "823"
             landmarkName = "memread16(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1163,8 +1163,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "820"
-            endingLineNumber = "820"
+            startingLineNumber = "827"
+            endingLineNumber = "827"
             landmarkName = "memread16(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1179,8 +1179,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "534"
-            endingLineNumber = "534"
+            startingLineNumber = "535"
+            endingLineNumber = "535"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1195,8 +1195,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "538"
-            endingLineNumber = "538"
+            startingLineNumber = "539"
+            endingLineNumber = "539"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1211,8 +1211,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "430"
-            endingLineNumber = "430"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1227,8 +1227,8 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "748"
-            endingLineNumber = "748"
+            startingLineNumber = "762"
+            endingLineNumber = "762"
             landmarkName = "m6502_Run()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1243,8 +1243,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "418"
-            endingLineNumber = "418"
+            startingLineNumber = "419"
+            endingLineNumber = "419"
             landmarkName = "ioRead(addr)"
             landmarkType = "9">
          </BreakpointContent>
@@ -1259,9 +1259,9 @@
             filePath = "src/cpu/6502.c"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "788"
-            endingLineNumber = "788"
-            landmarkName = "read_rom(bundlePath, filename, rom, addr)"
+            startingLineNumber = "802"
+            endingLineNumber = "802"
+            landmarkName = "getFileSize(fullPath)"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1275,8 +1275,8 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "407"
-            endingLineNumber = "407"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
             landmarkName = "Update()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1291,8 +1291,8 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "524"
-            endingLineNumber = "524"
+            startingLineNumber = "575"
+            endingLineNumber = "575"
             landmarkName = "Update()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1307,8 +1307,8 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "516"
-            endingLineNumber = "516"
+            startingLineNumber = "519"
+            endingLineNumber = "519"
             landmarkName = "Update()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1323,8 +1323,8 @@
             filePath = "A2Mac/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "480"
+            endingLineNumber = "480"
             landmarkName = "Update()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1349,7 +1349,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/dev/mem/mmio.h"
@@ -1359,6 +1359,533 @@
             endingLineNumber = "333"
             landmarkName = "textPageSelect()"
             landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - 4c2e8954e10bfcf8"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "textPageSelect"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "61">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "10779">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "10874">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "11472">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "11567">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "12113">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "12208">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "12650">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "12745">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "13239">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "13334">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "13976">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "14071">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "14553">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "14648">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "15342">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "15437">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "15919">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "16014">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "16508">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "16603">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "17105">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "17200">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "17654">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "17749">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "18303">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "18398">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "18852">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "18947">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "19441">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "19536">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "19978">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "20073">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "20561">
+               </Location>
+               <Location
+                  uuid = "FDB4D6D5-918D-4D77-BF67-C2770D05D393 - a5c41d868e51379f"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "m6502_Run"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/src/dev/mem/mmio.h"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "333"
+                  endingLineNumber = "333"
+                  offsetFromSymbolStart = "20656">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1371,8 +1898,8 @@
             filePath = "src/dev/mem/mmio.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "927"
-            endingLineNumber = "927"
+            startingLineNumber = "934"
+            endingLineNumber = "934"
             landmarkName = "addr_abs()"
             landmarkType = "9">
          </BreakpointContent>
@@ -1407,6 +1934,86 @@
             endingLineNumber = "49"
             landmarkName = "disk_accelerator_speedup()"
             landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CD5D7B3F-3441-407E-B7A8-CA8541EE2054"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "src/dev/mem/mmio.h"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
+            landmarkName = "ioRead(addr)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "531A3C75-FA0F-43A7-AD42-356CDA5C6B6C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "A2Mac/HiRes.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "643"
+            endingLineNumber = "643"
+            landmarkName = "Update()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ADF25D90-51C8-4D88-BD9B-352BC4E00C20"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "A2Mac/HiRes.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "626"
+            endingLineNumber = "626"
+            landmarkName = "Update()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ADF25D90-51C8-4D88-BD9B-352BC4E00C20 - 6be15f36516fdb02"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A2Mac.HiRes.Update() -&gt; ()"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/A2Mac/HiRes.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "626"
+                  endingLineNumber = "626"
+                  offsetFromSymbolStart = "2114">
+               </Location>
+               <Location
+                  uuid = "ADF25D90-51C8-4D88-BD9B-352BC4E00C20 - 6be15f36516fdb02"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "A2Mac.HiRes.Update() -&gt; ()"
+                  moduleName = "A2Mac"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/A2Mac/HiRes.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "626"
+                  endingLineNumber = "626"
+                  offsetFromSymbolStart = "2147">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

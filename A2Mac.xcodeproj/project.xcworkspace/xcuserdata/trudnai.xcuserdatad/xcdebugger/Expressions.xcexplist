@@ -14,9 +14,6 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "rel_addr:Apple2_mmio.h">
-      </ContextState>
-      <ContextState
          contextName = "read_rom:6502.c">
          <PersistentStrings>
             <PersistentString
@@ -35,6 +32,9 @@
                value = "(void*)Apple2_64K_RAM">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "rel_addr:Apple2_mmio.h">
       </ContextState>
       <ContextState
          contextName = "addr_ind_Y:Apple2_mmio.h">
@@ -143,6 +143,20 @@
          contextName = "memread8:Apple2_mmio.h">
       </ContextState>
       <ContextState
+         contextName = "textPageSelect:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "AUX[0x22]">
+            </PersistentString>
+            <PersistentString
+               value = "RAM[0x22]">
+            </PersistentString>
+            <PersistentString
+               value = "MEMcfg">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ioRead:Apple2_mmio.h">
          <PersistentStrings>
             <PersistentString
@@ -174,17 +188,6 @@
             </PersistentString>
             <PersistentString
                value = "phaseTransition[phase.current][phase.last]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "textPageSelect:mmio.h">
-         <PersistentStrings>
-            <PersistentString
-               value = "AUX[0x22]">
-            </PersistentString>
-            <PersistentString
-               value = "RAM[0x22]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -256,7 +259,7 @@
          contextName = "HiRes.draw(_:):HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "ctx?.bitsPerComponent">
+               value = "(blockH7 | ( block &amp; bitMask ))">
             </PersistentString>
             <PersistentString
                value = "ctx?.data">
@@ -283,13 +286,21 @@
                value = "shadowScreen">
             </PersistentString>
             <PersistentString
-               value = "(blockH7 | ( block &amp; bitMask ))">
+               value = "ctx?.height">
             </PersistentString>
             <PersistentString
                value = "linAddr">
             </PersistentString>
             <PersistentString
-               value = "ctx?.height">
+               value = "ctx?.bitsPerComponent">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ioRead:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -376,6 +387,14 @@
       </ContextState>
       <ContextState
          contextName = "STA:6502_instr_load_store.h">
+      </ContextState>
+      <ContextState
+         contextName = "addr_abs:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "cache">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "m6502_Step:6502.c">

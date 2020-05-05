@@ -402,17 +402,18 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     
     uint8_t currentMagnet = 0;
     
-    switch (addr) {
-        case io_KBD:
+    switch ( (uint8_t)addr ) {
+        case (uint8_t)io_KBD:
 //            if ( RAM[io_KBD] > 0x7F ) printf("io_KBD:%04X\n", addr);
             return Apple2_64K_RAM[io_KBD];
 
-        case io_KBDSTRB:
+        case (uint8_t)io_KBDSTRB:
             // TODO: This is very slow!
 //            printf("io_KBDSTRB\n");
-            return Apple2_64K_RAM[io_KBD] &= 0x7F;
+            Apple2_64K_RAM[io_KBD] &= 0x7F;
+            return Apple2_64K_RAM[io_KBDSTRB];
 
-        case io_SPKR:
+        case (uint8_t)io_SPKR:
             // TODO: This is very slow!
 //            printf("io_KBDSTRB\n");
             
@@ -428,93 +429,93 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //            videoMode.col80 = 1;
 //            break;
 //
-        case io_VID_RDTEXT:
+        case (uint8_t)io_VID_RDTEXT:
             return videoMode.text << 7;
             
-        case io_VID_ALTCHAR:
+        case (uint8_t)io_VID_ALTCHAR:
             return videoMode.altChr << 7;
             
-        case io_VID_RD80VID:
+        case (uint8_t)io_VID_RD80VID:
             return videoMode.col80 << 7;
             
-        case io_TAPEIN:
+        case (uint8_t)io_TAPEIN:
             return MEMcfg.txt_page_2 << 7;
             
-        case io_RDCXROM:
+        case (uint8_t)io_RDCXROM:
             return MEMcfg.int_Cx_ROM << 7;
             
-        case io_RDALTZP:
+        case (uint8_t)io_RDALTZP:
             return MEMcfg.ALT_ZP << 7;
             
-        case io_RDC3ROM:
+        case (uint8_t)io_RDC3ROM:
             return MEMcfg.slot_C3_ROM << 7;
             
-        case io_RD80STORE:
+        case (uint8_t)io_RD80STORE:
             return MEMcfg.is_80STORE << 7;
             
-        case io_VID_TXTPAGE1:
+        case (uint8_t)io_VID_TXTPAGE1:
 //            printf("io_VID_TXTPAGE1\n");
             MEMcfg.txt_page_2 = 0;
             textPageSelect();
             break;
             
-        case io_VID_TXTPAGE2:
+        case (uint8_t)io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
             MEMcfg.txt_page_2 = 1;
             textPageSelect();
             break;
             
-        case io_VID_Text_OFF:
+        case (uint8_t)io_VID_Text_OFF:
             videoMode.text = 0;
             break;
             
-        case io_VID_Text_ON:
+        case (uint8_t)io_VID_Text_ON:
             videoMode.text = 1;
             break;
             
-        case io_VID_Mixed_OFF:
+        case (uint8_t)io_VID_Mixed_OFF:
             videoMode.mixed = 0;
             break;
             
-        case io_VID_Mixed_ON:
+        case (uint8_t)io_VID_Mixed_ON:
             videoMode.mixed = 1;
             break;
             
-        case io_VID_Hires_OFF:
+        case (uint8_t)io_VID_Hires_OFF:
             videoMode.hires = 0;
             break;
             
-        case io_VID_Hires_ON:
+        case (uint8_t)io_VID_Hires_ON:
             videoMode.hires = 1;
             break;
             
             
-        case io_PDL0:
-        case io_PDL1:
-        case io_PDL2:
-        case io_PDL3:
+        case (uint8_t)io_PDL0:
+        case (uint8_t)io_PDL1:
+        case (uint8_t)io_PDL2:
+        case (uint8_t)io_PDL3:
 //            if ( RAM[addr] > 127 ) {
 //                RAM[addr]--;
 //            }
             return Apple2_64K_RAM[addr];
             
-        case io_MEM_RDRAM_NOWR_2:
-        case io_MEM_RDROM_WRAM_2:
-        case io_MEM_RDROM_NOWR_2:
-        case io_MEM_RDRAM_WRAM_2:
-        case io_MEM_RDRAM_NOWR_1:
-        case io_MEM_RDROM_WRAM_1:
-        case io_MEM_RDROM_NOWR_1:
-        case io_MEM_RDRAM_WRAM_1:
+        case (uint8_t)io_MEM_RDRAM_NOWR_2:
+        case (uint8_t)io_MEM_RDROM_WRAM_2:
+        case (uint8_t)io_MEM_RDROM_NOWR_2:
+        case (uint8_t)io_MEM_RDRAM_WRAM_2:
+        case (uint8_t)io_MEM_RDRAM_NOWR_1:
+        case (uint8_t)io_MEM_RDROM_WRAM_1:
+        case (uint8_t)io_MEM_RDROM_NOWR_1:
+        case (uint8_t)io_MEM_RDRAM_WRAM_1:
             if ( MEMcfg.RAM_16K || MEMcfg.RAM_128K ) {
                 uint8_t * RAM_BANK = Apple2_64K_AUX + 0xC000;
                 
                 // RAM Bank 1 or 2?
-                switch (addr) {
-                    case io_MEM_RDRAM_NOWR_2:
-                    case io_MEM_RDROM_WRAM_2:
-                    case io_MEM_RDROM_NOWR_2:
-                    case io_MEM_RDRAM_WRAM_2:
+                switch ((uint8_t)addr) {
+                    case (uint8_t)io_MEM_RDRAM_NOWR_2:
+                    case (uint8_t)io_MEM_RDROM_WRAM_2:
+                    case (uint8_t)io_MEM_RDROM_NOWR_2:
+                    case (uint8_t)io_MEM_RDRAM_WRAM_2:
                         MEMcfg.RAM_BANK_2 = 1;
                         RAM_BANK = Apple2_64K_AUX + 0xD000;
                         break;
@@ -526,11 +527,11 @@ INLINE uint8_t ioRead( uint16_t addr ) {
                 }
 
                 // is RAM to read or ROM?
-                switch (addr) {
-                    case io_MEM_RDRAM_NOWR_2:
-                    case io_MEM_RDRAM_WRAM_2:
-                    case io_MEM_RDRAM_NOWR_1:
-                    case io_MEM_RDRAM_WRAM_1:
+                switch ((uint8_t)addr) {
+                    case (uint8_t)io_MEM_RDRAM_NOWR_2:
+                    case (uint8_t)io_MEM_RDRAM_WRAM_2:
+                    case (uint8_t)io_MEM_RDRAM_NOWR_1:
+                    case (uint8_t)io_MEM_RDRAM_WRAM_1:
                         MEMcfg.RD_RAM = 1;
                         
                         uint8_t * shadow = Apple2_64K_MEM + 0xD000;
@@ -556,11 +557,11 @@ INLINE uint8_t ioRead( uint16_t addr ) {
                 }
 
                 // is RAM Writeable?
-                switch (addr) {
-                    case io_MEM_RDROM_WRAM_2:
-                    case io_MEM_RDRAM_WRAM_2:
-                    case io_MEM_RDROM_WRAM_1:
-                    case io_MEM_RDRAM_WRAM_1:
+                switch ((uint8_t)addr) {
+                    case (uint8_t)io_MEM_RDROM_WRAM_2:
+                    case (uint8_t)io_MEM_RDRAM_WRAM_2:
+                    case (uint8_t)io_MEM_RDROM_WRAM_1:
+                    case (uint8_t)io_MEM_RDRAM_WRAM_1:
                         MEMcfg.WR_RAM = 1;
                         // set the RAM extension to read from the upper memory area
                         break;
@@ -575,10 +576,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
 
         // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
-        case io_DISK_PHASE0_OFF + SLOT6:
-        case io_DISK_PHASE1_OFF + SLOT6:
-        case io_DISK_PHASE2_OFF + SLOT6:
-        case io_DISK_PHASE3_OFF + SLOT6:
+        case (uint8_t)io_DISK_PHASE0_OFF + SLOT6:
+        case (uint8_t)io_DISK_PHASE1_OFF + SLOT6:
+        case (uint8_t)io_DISK_PHASE2_OFF + SLOT6:
+        case (uint8_t)io_DISK_PHASE3_OFF + SLOT6:
             currentMagnet = (addr - io_DISK_PHASE0_OFF - SLOT6) / 2;
             disk.phase.magnet &= ~(1 << currentMagnet);
             printf("io_DISK_PHASE%u_OFF (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
@@ -586,10 +587,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             disk_phase();
             return 0;
 
-        case io_DISK_PHASE0_ON + SLOT6:
-        case io_DISK_PHASE1_ON + SLOT6:
-        case io_DISK_PHASE2_ON + SLOT6:
-        case io_DISK_PHASE3_ON + SLOT6: {
+        case (uint8_t)io_DISK_PHASE0_ON + SLOT6:
+        case (uint8_t)io_DISK_PHASE1_ON + SLOT6:
+        case (uint8_t)io_DISK_PHASE2_ON + SLOT6:
+        case (uint8_t)io_DISK_PHASE3_ON + SLOT6: {
             currentMagnet = (addr - io_DISK_PHASE0_ON - SLOT6) / 2;
             disk.phase.magnet |= 1 << currentMagnet;
             printf("io_DISK_PHASE%u_ON (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
@@ -598,35 +599,35 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return 0;
         }
 
-        case io_DISK_POWER_OFF + SLOT6:
+        case (uint8_t)io_DISK_POWER_OFF + SLOT6:
             dbgPrintf2("io_DISK_POWER_OFF (S%u)\n", 6);
             return 0;
 
-        case io_DISK_POWER_ON + SLOT6:
+        case (uint8_t)io_DISK_POWER_ON + SLOT6:
             dbgPrintf2("io_DISK_POWER_ON (S%u)\n", 6);
             return 0;
 
-        case io_DISK_SELECT_1 + SLOT6:
+        case (uint8_t)io_DISK_SELECT_1 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_1 (S%u)\n", 6);
             return 0;
 
-        case io_DISK_SELECT_2 + SLOT6:
+        case (uint8_t)io_DISK_SELECT_2 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_2 (S%u)\n", 6);
             return 0;
 
-        case io_DISK_READ + SLOT6:
+        case (uint8_t)io_DISK_READ + SLOT6:
             return disk_read();
           
             
-        case io_DISK_WRITE + SLOT6:
+        case (uint8_t)io_DISK_WRITE + SLOT6:
             dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
             return 0;
 
-        case io_DISK_CLEAR + SLOT6:
+        case (uint8_t)io_DISK_CLEAR + SLOT6:
             dbgPrintf2("io_DISK_CLEAR (S%u)\n", 6);
             return 0;
 
-        case io_DISK_SHIFT + SLOT6:
+        case (uint8_t)io_DISK_SHIFT + SLOT6:
             dbgPrintf2("io_DISK_SHIFT (S%u)\n", 6);
             return 0;
 
@@ -670,6 +671,12 @@ void kbdInput ( uint8_t code ) {
 
     RAM[io_KBD] = RAM[io_KBDSTRB] = code;
 }
+
+
+void kbdUp () {
+    RAM[io_KBDSTRB] &= 0x7F;
+}
+
 
 
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {

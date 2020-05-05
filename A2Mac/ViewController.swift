@@ -332,6 +332,8 @@ class ViewController: NSViewController  {
         }
         #endif
         
+        kbdUp()
+        
     }
 //    override func flagsChanged(with event: NSEvent) {
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
@@ -564,7 +566,8 @@ class ViewController: NSViewController  {
 
             // only refresh graphics view when needed (aka not in text mode)
             if ( videoMode.text == 0 ) {
-                self.hires.needsDisplay = true
+//                self.hires.needsDisplay = true
+                self.hires.Update()
             }
 //            }
             #endif
@@ -601,6 +604,8 @@ class ViewController: NSViewController  {
 //            txtClear[ y * (textCols + lineEndChars) + textCols * 2 + 1 ] = "\n"
 //        }
 
+        hires.needsDisplay = true;
+        
         woz_loadFile( Bundle.main.resourcePath, "Apple DOS 3.3 January 1983.woz" )
 
         

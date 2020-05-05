@@ -134,7 +134,8 @@ class HiRes: NSView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initHiResLineAddresses()
-        
+        HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
+
 //        currentContext?.setShouldAntialias(false)
 //        currentContext?.interpolationQuality = CGInterpolationQuality.none
         
@@ -586,17 +587,11 @@ class HiRes: NSView {
         }
 
     }
+
     
-    override func draw(_ rect: CGRect) {
-        // print("HIRESSLOW\n")
-
-//        if was > 100 {
-//            return
-//        }
-//        was += 1
-        
+    func Update() {
         var height = HiRes.PixelHeight
-
+        
         // do not even render it...
         if videoMode.text == 1 {
             return
@@ -612,17 +607,13 @@ class HiRes: NSView {
                 HiResBufferPointer = HiResBuffer1
             }
         }
-
+        
         var pixelAddr = 0
-
-//        var minX = 9999
-//        var minY = 9999
-//        var maxX = 0
-//        var maxY = 0
-//
-//        var x = 0
+        
         var y = 0
-
+        
+        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols / 2)
+        
         HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
         
         for lineAddr in HiResLineAddrTbl {
@@ -636,66 +627,79 @@ class HiRes: NSView {
             var prev = 0
             
             for blockHorIdx in 0 ..< HiRes.blockCols / 2 {
+//                print("blockVertIdx:", blockVertIdx, "   blockHorIdx:", blockHorIdx)
+                
                 let blockH = Int(HiResBufferPointer[ Int(lineAddr + blockHorIdx * 2) ])
                 let blockH7 = ( blockH >> 5 ) & 0x04
                 let blockL = Int(HiResBufferPointer[ Int(lineAddr + blockHorIdx * 2) + 1 ])
                 let blockL7 = ( blockL >> 5 ) & 0x04
                 
                 let block = ( blockL << 7 ) | ( blockH & 0x7F ) & 0x3FFF
+                let block8 = ( blockL << 8 ) | blockH
 
                 let screenIdx = y * HiRes.blockCols + blockHorIdx
-                if ( shadowScreen[ screenIdx ] != block ) {
-                    blockChanged[ blockVertIdx + blockHorIdx ] = true
-                }
-                else {
-                    blockChanged[ blockVertIdx + blockHorIdx ] = false
-                }
-
-                    shadowScreen[ screenIdx ] = block
-                    for px in 0 ... 2  {
-//                        let bitMask = 3 << ( px * 2 )
-                        let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
-                        hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
-                        pixelAddr += 8
-                        prev = pixel
-
-//                        if ( minX > x ) { minX = x }
-//                        if ( minY > y ) { minY = y }
-//                        if ( maxX < x ) { maxX = x }
-//                        if ( maxY < y ) { maxY = y }
-//
-//                        x += 2
-                    }
-
-                    let pixel = blockH7 | ( (block >> (3 * 2)) & 3 )
+                
+                // get all changed blocks
+                blockChanged[ blockVertIdx + blockHorIdx ] = blockChanged[ blockVertIdx + blockHorIdx ] || shadowScreen[ screenIdx ] != block8
+                shadowScreen[ screenIdx ] = block8
+                
+                for px in 0 ... 2  {
+                    //                        let bitMask = 3 << ( px * 2 )
+                    let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
                     hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                     pixelAddr += 8
                     prev = pixel
-
-                    for px in 4 ... 6  {
-                        //                        let bitMask = 3 << ( px * 2 )
-                        let pixel = blockL7 | ( (block >> (px * 2)) & 3 )
-                        hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
-                        pixelAddr += 8
-                        prev = pixel
-
-//                        if ( minX > x ) { minX = x }
-//                        if ( minY > y ) { minY = y }
-//                        if ( maxX < x ) { maxX = x }
-//                        if ( maxY < y ) { maxY = y }
-//
-//                        x += 2
-                    }
                 }
-//                else {
-//                    pixelAddr += 4 * 7
-//                    x += 7
-//                }
-//            }
-
+                
+                let pixel = blockH7 | ( (block >> (3 * 2)) & 3 )
+                hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                pixelAddr += 8
+                prev = pixel
+                
+                for px in 4 ... 6  {
+                    //                        let bitMask = 3 << ( px * 2 )
+                    let pixel = blockL7 | ( (block >> (px * 2)) & 3 )
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                    pixelAddr += 8
+                    prev = pixel
+                }
+            }
             y += 1
-//            x = 0
         }
+
+        
+        // refresh changed block only
+        
+        let blockScreenWidth = Int(frame.width) / HiRes.blockCols * 2
+        let blockScreenHeigth = Int(frame.height) / HiRes.blockRows
+
+        for blockVertIdx in 0 ..< HiRes.blockRows {
+            for blockHorIdx in 0 ..< HiRes.blockCols / 2 {
+                if blockChanged[ blockVertIdx * HiRes.blockCols / 2 + blockHorIdx ] {
+                    // refresh the entire screen
+                    let boundingBox = CGRect(
+                        x: blockHorIdx * blockScreenWidth - 2,
+                        y: Int(frame.height) - blockVertIdx * blockScreenHeigth - blockScreenHeigth - 2,
+                        width: blockScreenWidth + 4,
+                        height: blockScreenHeigth + 4)
+                    
+                    self.setNeedsDisplay( boundingBox )
+                }
+            }
+        }
+        
+//        needsDisplay = true // refresh the entire screen
+
+    }
+    
+    override func draw(_ rect: CGRect) {
+        // print("HIRESSLOW\n")
+
+//        if was > 100 {
+//            return
+//        }
+//        was += 1
+        
 
 //        HiRes.context?.setShouldAntialias(true)
 //        HiRes.context?.interpolationQuality = CGInterpolationQuality.low

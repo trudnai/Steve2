@@ -483,8 +483,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "190"
             endingLineNumber = "190"
-            landmarkName = "HiRes"
-            landmarkType = "3">
+            landmarkName = "compute()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -499,7 +499,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "165"
             endingLineNumber = "165"
-            landmarkName = "compute()"
+            landmarkName = "init(frame:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1982,38 +1982,6 @@
             endingLineNumber = "626"
             landmarkName = "Update()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "ADF25D90-51C8-4D88-BD9B-352BC4E00C20 - 6be15f36516fdb02"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "A2Mac.HiRes.Update() -&gt; ()"
-                  moduleName = "A2Mac"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/A2Mac/HiRes.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "626"
-                  endingLineNumber = "626"
-                  offsetFromSymbolStart = "2114">
-               </Location>
-               <Location
-                  uuid = "ADF25D90-51C8-4D88-BD9B-352BC4E00C20 - 6be15f36516fdb02"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "A2Mac.HiRes.Update() -&gt; ()"
-                  moduleName = "A2Mac"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/A2Mac/HiRes.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "626"
-                  endingLineNumber = "626"
-                  offsetFromSymbolStart = "2147">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

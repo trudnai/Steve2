@@ -841,7 +841,9 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     mhz = (double)MHz_6502 / M;
     
     unsigned long long saved_frm_set = clk_6502_per_frm_set;
-    clk_6502_per_frm_max = clk_6502_per_frm_set = 0;
+    clk_6502_per_frm     =
+    clk_6502_per_frm_max =
+    clk_6502_per_frm_set = 0;
     
     // wait 100ms to be sure simulation has been halted
     usleep(100000);
@@ -1005,8 +1007,9 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 //    memcpy( RAM + 0x1000, counter_fast, sizeof(counter));
 //    m6502.PC = 0x1000;
     
-    clk_6502_per_frm_set = saved_frm_set;
-
+    clk_6502_per_frm_set    = saved_frm_set;
+    clk_6502_per_frm        = startup_MHz_6502 / fps;
+    diskAccelerator_count   = 15;
 }
 
 

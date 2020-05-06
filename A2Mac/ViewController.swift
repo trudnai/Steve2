@@ -288,6 +288,10 @@ class ViewController: NSViewController  {
         
     }
     
+    
+    var savedVideoMode = videoMode_t.init()
+    
+    
     override func keyUp(with event: NSEvent) {
         print("KBD Event")
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
@@ -564,6 +568,12 @@ class ViewController: NSViewController  {
 //            self.hires.setNeedsDisplay( CGRect(x: 400, y: 600, width: 50, height: 50) )
 //            self.hires.setNeedsDisplay( CGRect(x: 500, y: 600, width: 50, height: 50) )
 
+            if self.savedVideoMode.text != videoMode.text {
+                self.savedVideoMode.text = videoMode.text
+                
+                self.hires.clearScreen()
+            }
+            
             // only refresh graphics view when needed (aka not in text mode)
             if ( videoMode.text == 0 ) {
 //                self.hires.needsDisplay = true

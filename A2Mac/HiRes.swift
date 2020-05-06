@@ -129,12 +129,18 @@ class HiRes: NSView {
             }
         }
     }
+    
+    
+    func clearScreen() {
+        HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
+        needsDisplay = true
+    }
 
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         initHiResLineAddresses()
-        HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
+        clearScreen()
 
 //        currentContext?.setShouldAntialias(false)
 //        currentContext?.interpolationQuality = CGInterpolationQuality.none

@@ -399,7 +399,8 @@ void auxMemorySelect() {
 
 INLINE uint8_t ioRead( uint16_t addr ) {
 //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
-    
+//    printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
+
     uint8_t currentMagnet = 0;
     
     switch ( (uint8_t)addr ) {
@@ -681,6 +682,7 @@ void kbdUp () {
 
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 //    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
+    
     switch (addr) {
         case io_KBDSTRB:
             Apple2_64K_RAM[io_KBD] &= 0x7F;

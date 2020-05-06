@@ -1950,38 +1950,6 @@
             endingLineNumber = "632"
             landmarkName = "Update()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "ADF25D90-51C8-4D88-BD9B-352BC4E00C20 - 6be15f36516fdb02"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "A2Mac.HiRes.Update() -&gt; ()"
-                  moduleName = "A2Mac"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/A2Mac/HiRes.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "632"
-                  endingLineNumber = "632"
-                  offsetFromSymbolStart = "2114">
-               </Location>
-               <Location
-                  uuid = "ADF25D90-51C8-4D88-BD9B-352BC4E00C20 - 6be15f36516fdb02"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "A2Mac.HiRes.Update() -&gt; ()"
-                  moduleName = "A2Mac"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/trudnai/Dropbox/Projects/A2Mac/A2Mac/HiRes.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "632"
-                  endingLineNumber = "632"
-                  offsetFromSymbolStart = "2147">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

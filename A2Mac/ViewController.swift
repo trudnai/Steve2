@@ -383,8 +383,9 @@ class ViewController: NSViewController  {
     
     var currentVideoMode = videoMode
     var lastFrameTime = CACurrentMediaTime() as Double
-    var frameCounter : UInt = 0
+    var frameCounter : UInt32 = 0
     var clkCounter : Double = 0
+    let fpsHalf = fps / 2
     
     var halted = true;
     
@@ -397,7 +398,7 @@ class ViewController: NSViewController  {
 
         frameCounter += 1
         
-        if ( frameCounter % UInt(fps) == 0 ) {
+        if ( frameCounter % fps == 0 ) {
             let currentTime = CACurrentMediaTime() as Double
             let elpasedTime = currentTime - lastFrameTime
             lastFrameTime = currentTime
@@ -413,7 +414,7 @@ class ViewController: NSViewController  {
         
         frameCnt += 1
         
-        if ( frameCnt == fps / 2 ) {
+        if ( frameCnt == fpsHalf ) {
 //            flashingSpace = blockChar
             ViewController.charConvTbl = ViewController.charConvTblFlashOn
         }
@@ -445,43 +446,49 @@ class ViewController: NSViewController  {
             self.txtArr = self.txtClear
 
             // render an empty space to eiminate displaying text portion of the screen covered by graphics
+            let charDisposition = videoMode.col80 == 0 ? 1 : 2
             for y in 0 ..< fromLines {
-                if videoMode.col80 == 0 {
-                    self.txtArr[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
-                }
-                else {
-                    self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
-                }
+                self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * charDisposition] = "\n"
             }
 
-            // render the rest of the text screen
-            for y in fromLines ..< toLines {
-                for x in 0 ..< self.textCols {
-                    let byte = self.textBufferPointer[ self.textLineOfs[y] + x ]
-                    let idx = Int(byte);
-                    let chr = ViewController.charConvTbl[idx]
-                    
-                    if videoMode.col80 == 0 {
-                        self.txtArr[ y * (self.textCols + self.lineEndChars) + x ] = chr
-                    }
-                    else {
-                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
 
-                        let byte = self.textAuxBufferPointer[ self.textLineOfs[y] + x ]
+            // 40 col
+            if videoMode.col80 == 0 {
+                // render the rest of the text screen
+                for y in fromLines ..< toLines {
+                    for x in 0 ..< self.textCols {
+                        let byte = self.textBufferPointer[ self.textLineOfs[y] + x ]
                         let idx = Int(byte);
                         let chr = ViewController.charConvTbl[idx]
                         
-                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr
+                        self.txtArr[ y * (self.textCols + self.lineEndChars) + x ] = chr
                     }
-                }
-                
-                if videoMode.col80 == 0 {
+                    
                     self.txtArr[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
                 }
-                else {
+            }
+            // 80 col
+            else {
+                // render the rest of the text screen
+                for y in fromLines ..< toLines {
+                    for x in 0 ..< self.textCols {
+                        let byte = self.textBufferPointer[ self.textLineOfs[y] + x ]
+                        let idx = Int(byte);
+                        let chr = ViewController.charConvTbl[idx]
+                        
+                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
+                        
+                        let byte2 = self.textAuxBufferPointer[ self.textLineOfs[y] + x ]
+                        let idx2 = Int(byte2);
+                        let chr2 = ViewController.charConvTbl[idx2]
+                        
+                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr2
+                    }
+                    
                     self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
                 }
             }
+
 
             txt = String(self.txtArr)
 
@@ -570,8 +577,15 @@ class ViewController: NSViewController  {
 
             if self.savedVideoMode.text != videoMode.text {
                 self.savedVideoMode.text = videoMode.text
-                
-                self.hires.clearScreen()
+
+//                self.hires.clearScreen()
+
+                if ( videoMode.text == 0 ) {
+                    self.hires.isHidden = false
+                }
+                else {
+                    self.hires.isHidden = true
+                }
             }
             
             // only refresh graphics view when needed (aka not in text mode)

@@ -15,7 +15,7 @@ INLINE void BRA( int8_t reladdr ) {
     uint8_t pg = m6502.PC >> 8;
     m6502.clktime += m6502.PC >> 8 == pg ? 1 : 2;
 #else
-    m6502.clktime++;
+//    m6502.clktime++;
 #endif
 #ifdef DEBUG
     if ( reladdr == -2 ) {

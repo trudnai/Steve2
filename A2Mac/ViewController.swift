@@ -448,7 +448,7 @@ class ViewController: NSViewController  {
             // render an empty space to eiminate displaying text portion of the screen covered by graphics
             let charDisposition = videoMode.col80 == 0 ? 1 : 2
             for y in 0 ..< fromLines {
-                self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * charDisposition] = "\n"
+                self.txtArr[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
             }
 
 

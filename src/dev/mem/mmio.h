@@ -989,7 +989,7 @@ INLINE uint8_t * dest_abs_Y() {
     return WRLOMEM + addr_abs_Y();
 }
 
-INLINE uint16_t imm() {
+INLINE uint8_t imm() {
     disPrintf(disassembly.oper, "#$%02X", memread8(m6502.PC))
     return fetch();
 }

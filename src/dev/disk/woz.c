@@ -254,12 +254,15 @@ uint8_t woz_read() {
     clkelpased = m6502.clktime - m6502.clklast;
     m6502.clklast = m6502.clktime;
     
+    const int clkBeforeAdjusting = 250;
+    const int magicShiftOffset = 90;
+    
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     if ( usedBytes ) {
-        if ( clkelpased > 120 ) {
+        if ( clkelpased > clkBeforeAdjusting ) {
     //        printf("NEED SYNC : %llu\n", clkelpased);
             bitOffset = (clkelpased >> 2) & 7;
-            trackOffset += ((clkelpased >> 5) +80) % usedBytes;
+            trackOffset += ((clkelpased >> 5) + magicShiftOffset) % usedBytes;
             WOZread.data = woz_trks[track].data[trackOffset];
         }
 

@@ -45,15 +45,6 @@ INLINE void ADC( uint8_t src ) {
         if ( (tmp += (m6502.A & 0xF0) + (src & 0xF0)) > 0x99 ) {
             tmp += 0x60;
         }
-        
-//        tmp = m6502.A + src + m6502.C;
-//
-//        if ( (tmp & 0x0F) > 0x09 ) {
-//            tmp += 0x06;
-//        }
-//        if ( tmp > 0x99 ) {
-//            tmp += 0x60;
-//        }
     }
     else {
         tmp = (uint16_t)m6502.A + src + (m6502.C != 0);

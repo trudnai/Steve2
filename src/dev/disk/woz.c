@@ -256,10 +256,10 @@ uint8_t woz_read() {
     
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     if ( usedBytes ) {
-        if ( clkelpased > 100 ) {
+        if ( clkelpased > 120 ) {
     //        printf("NEED SYNC : %llu\n", clkelpased);
             bitOffset = (clkelpased >> 2) & 7;
-            trackOffset += ((clkelpased >> 5) +100) % usedBytes;
+            trackOffset += ((clkelpased >> 5) +80) % usedBytes;
             WOZread.data = woz_trks[track].data[trackOffset];
         }
 

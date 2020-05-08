@@ -837,7 +837,7 @@
 @@@@@@@@@@@@@@@@@@22@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@23@@@@@@@@@@@@@@@@@@@@
 @@@@@@@@@@@@@@@@@@24@@@@@@@@@@@@@@@@@@@@</string>
-                                    <color key="textColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>

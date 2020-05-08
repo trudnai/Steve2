@@ -483,7 +483,7 @@ class HiRes: NSView {
     
     
     let color_black     : UInt32 = 0x00000000;
-    let color_white     : UInt32 = 0xFFFFFFFF;
+    let color_white     : UInt32 = 0xEEEEEEEE;
     let color_purple    : UInt32 = 0xFFBB11EE;
     let color_green     : UInt32 = 0xFF0BA212;
     let color_blue      : UInt32 = 0xFF1166EE;
@@ -503,18 +503,6 @@ class HiRes: NSView {
 //            HiRes.typedPointer[colorAddr + 1] = color_black;
             
         case 0x02: // green
-            if  (prev == 0x02) ||
-                (prev == 0x06) ||
-                (prev == 0x03) || (prev == 0x07) ||
-                (prev == 0x00) || (prev == 0x04) ||
-                (prev == 0x04)
-            {
-                HiRes.typedPointer[colorAddr] = color_green;
-            }
-//            else {
-//                HiRes.typedPointer[colorAddr] = color_black;
-//            }
-            
             // reducing color bleeding
             if  (prev == 0x01) ||
                 (prev == 0x05)
@@ -522,6 +510,7 @@ class HiRes: NSView {
 //                HiRes.typedPointer[colorAddr + 1] = color_black;
             }
             else {
+                HiRes.typedPointer[colorAddr] = color_green;
                 HiRes.typedPointer[colorAddr + 1] = color_green;
             }
 
@@ -539,18 +528,17 @@ class HiRes: NSView {
 //            HiRes.typedPointer[colorAddr + 1] = color_black;
 
         case 0x06: // orange
-            // do we need to extend the color?
-            if  (prev == 0x06) ||
-                (prev == 0x03) || (prev == 0x07)
+            // reducing color bleeding
+            if  (prev == 0x01) ||
+                (prev == 0x05)
             {
-                HiRes.typedPointer[colorAddr] = color_orange;
+//                HiRes.typedPointer[colorAddr + 1] = color_black;
             }
             else {
-//                HiRes.typedPointer[colorAddr] = color_black;
+                HiRes.typedPointer[colorAddr] = color_orange;
+                HiRes.typedPointer[colorAddr + 1] = color_orange;
             }
-
-            HiRes.typedPointer[colorAddr + 1] = color_orange;
-
+            
         case 0x07: // white 2
             HiRes.typedPointer[colorAddr] = color_white;
             HiRes.typedPointer[colorAddr + 1] = color_white;
@@ -574,9 +562,9 @@ class HiRes: NSView {
 
         // purple adjustment -- followed by white
         else if (prev == 0x01) && (
-            (pixel == 0x01) || (pixel == 0x03) ||
-            (pixel == 0x07) || (pixel == 0x00) ||
-            (pixel == 0x04)
+            (pixel == 0x01) ||
+            (pixel == 0x03) || (pixel == 0x07) || // white
+            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
             if ( HiRes.pixels[pixelAddr - 8 + R] == 0xBB ) {
@@ -584,13 +572,18 @@ class HiRes: NSView {
             }
         }
 
-        // blue adjustment
+        // blue adjustment -- followed by white
         else if (prev == 0x05) && (
             (pixel == 0x05) ||
-            (pixel == 0x03) || (pixel == 0x07)
+            (pixel == 0x03) || (pixel == 0x07) || // white
+            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
-            HiRes.typedPointer[colorAddr - 1] = color_blue;
+            // was the previous purple pixel promoted to white or is it still purple?
+            if ( HiRes.pixels[pixelAddr - 8 + R] == 0x11 ) {
+                HiRes.typedPointer[colorAddr - 1] = color_blue;
+            }
         }
+        
 
     }
 
@@ -657,7 +650,7 @@ class HiRes: NSView {
                     prev = pixel
                 }
                 
-                let pixel = blockH7 | ( (block >> (3 * 2)) & 3 )
+                let pixel = (blockL7 | blockH7) | ( (block >> (3 * 2)) & 3 )
                 hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                 pixelAddr += 8
                 prev = pixel

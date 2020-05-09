@@ -37,7 +37,7 @@ unsigned long long int inst_cnt = 0;
 const unsigned long long default_MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
 const unsigned long long startup_MHz_6502 = 32 * M;
 unsigned long long MHz_6502 = default_MHz_6502;
-unsigned long long clk_6502_per_frm =  startup_MHz_6502 / fps;
+unsigned long long clk_6502_per_frm =  default_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_max = 0;
 
@@ -1008,13 +1008,10 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
         
     };
 
-    
-//    memcpy( RAM + 0x1000, counter_fast, sizeof(counter));
-//    m6502.PC = 0x1000;
-    
-    clk_6502_per_frm_set    = saved_frm_set;
-    clk_6502_per_frm        = startup_MHz_6502 / fps;
-    diskAccelerator_count   = 15;
+
+    // set the default speed
+    clk_6502_per_frm_set = clk_6502_per_frm = default_MHz_6502 / fps;
+
 }
 
 

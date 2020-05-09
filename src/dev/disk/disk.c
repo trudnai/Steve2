@@ -18,7 +18,7 @@ disk_t disk = {
 };
 
 const int diskAccelerator_frames  = 2;
-int diskAccelerator_count = 15;
+int diskAccelerator_count = 0;
 int diskAccelerator_speed = 25 * M / fps; // less than actual CPU speed means no acceleration
 //const unsigned long long clk_6502_per_frm_diskAccelerator = 25 * M / fps; // disk acceleration bumps up CPU clock to 25 MHz
 //const unsigned long long clk_diskAcceleratorTimeout = 1000ULL;

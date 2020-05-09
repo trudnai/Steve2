@@ -489,68 +489,66 @@ class HiRes: NSView {
     let color_blue      : UInt32 = 0xFF1166EE;
     let color_orange    : UInt32 = 0xFFEE2211;
 
-    func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int ) {
+    func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int, prevPrev : Int ) {
         let colorAddr = pixelAddr / 4
         
         switch ( pixel ) {
-        case 0x00: // black
-//            HiRes.typedPointer[colorAddr] = color_black;
-//            HiRes.typedPointer[colorAddr + 1] = color_black;
-            break
-
         case 0x01: // purple (bits are in reverse!)
             HiRes.pixelsRGBA[colorAddr] = color_purple;
-            if  (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_purple;
+//            HiRes.pixelsRGBA[colorAddr + 1] = color_purple
+            if  (colorAddr >= 1) && (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_purple
             }
             
         case 0x02: // green
             // reducing color bleeding
             if (colorAddr > 0) && (HiRes.pixelsRGBA[colorAddr - 1] != color_black) {
-                HiRes.pixelsRGBA[colorAddr] = color_green;
+                HiRes.pixelsRGBA[colorAddr] = color_green
             }
-            HiRes.pixelsRGBA[colorAddr + 1] = color_green;
+            HiRes.pixelsRGBA[colorAddr + 1] = color_green
 
-        case 0x03: // white
-            HiRes.pixelsRGBA[colorAddr] = color_white;
+        case 0x03, // white 1
+             0x07: // white 2
+            HiRes.pixelsRGBA[colorAddr] = color_white
             HiRes.pixelsRGBA[colorAddr + 1] = color_white;
 
-        case 0x04: // black 2
-//            HiRes.typedPointer[colorAddr] = color_black;
-//            HiRes.typedPointer[colorAddr + 1] = color_black;
-            break
-            
         case 0x05: // blue
-            HiRes.pixelsRGBA[colorAddr] = color_blue;
-            if  (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_blue;
+            HiRes.pixelsRGBA[colorAddr] = color_blue
+//            HiRes.pixelsRGBA[colorAddr + 1] = color_blue
+            if  (colorAddr >= 1) && (prev != 0x00) && (prev != 0x04) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_blue
             }
 
         case 0x06: // orange
             // reducing color bleeding
             if (colorAddr > 0) && (HiRes.pixelsRGBA[colorAddr - 1] != color_black) {
-                HiRes.pixelsRGBA[colorAddr] = color_orange;
+                HiRes.pixelsRGBA[colorAddr] = color_orange
             }
-            HiRes.pixelsRGBA[colorAddr + 1] = color_orange;
+            HiRes.pixelsRGBA[colorAddr + 1] = color_orange
 
-        case 0x07: // white 2
-            HiRes.pixelsRGBA[colorAddr] = color_white;
-            HiRes.pixelsRGBA[colorAddr + 1] = color_white;
-
-        default:
-//            HiRes.typedPointer[colorAddr] = color_black;
-//            HiRes.typedPointer[colorAddr + 1] = color_black;
+        default: // 0x00 (black 1), 0x04 (black 2)
+            HiRes.pixelsRGBA[colorAddr] = color_black
+            HiRes.pixelsRGBA[colorAddr + 1] = color_black
+            if (colorAddr >= 1) && ( (prev == 0x01) || (prev == 0x05) ) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_black
+            }
             break
         }
+
+//        if (colorAddr >= 1) && ( (pixel & 0x02) == 2 ) && ( (prev == 0x01) || (prev == 0x05) ) {
+//            HiRes.pixelsRGBA[colorAddr - 1] = color_black
+//        }
         
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
-            HiRes.pixelsRGBA[colorAddr] = color_white;
-            HiRes.pixelsRGBA[colorAddr - 1] = color_white;
-
+            HiRes.pixelsRGBA[colorAddr] = color_white
+            if (colorAddr >= 1) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_white
+            }
+            
             // TODO: Need better check if extra green was created
-            if (HiRes.pixels[pixelAddr - 8 + G] == 0xA2 ) {
-                HiRes.pixelsRGBA[colorAddr - 2] = color_black;
+            if (colorAddr >= 2) && (HiRes.pixelsRGBA[colorAddr - 2] == color_green ) {
+                HiRes.pixelsRGBA[colorAddr - 2] = color_black
             }
         }
 
@@ -561,8 +559,8 @@ class HiRes: NSView {
 //            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
-            if ( HiRes.pixelsRGBA[colorAddr - 2] == color_purple ) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_purple;
+            if (colorAddr >= 2) && ( HiRes.pixelsRGBA[colorAddr - 2] == color_purple ) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_purple
             }
         }
 
@@ -573,8 +571,8 @@ class HiRes: NSView {
 //            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
             // was the previous blue pixel promoted to white or is it still blue?
-            if ( HiRes.pixelsRGBA[colorAddr - 2] == color_blue ) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_blue;
+            if (colorAddr >= 2) && ( HiRes.pixelsRGBA[colorAddr - 2] == color_blue ) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_blue
             }
         }
         
@@ -617,7 +615,8 @@ class HiRes: NSView {
             
             let blockVertIdx = y / 8 * HiRes.blockCols / 2
             var prev = 0
-            
+            var prevPrev = 0
+
             for blockHorIdx in 0 ..< HiRes.blockCols / 2 {
 //                print("blockVertIdx:", blockVertIdx, "   blockHorIdx:", blockHorIdx)
                 
@@ -638,21 +637,24 @@ class HiRes: NSView {
                 for px in 0 ... 2  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev, prevPrev: prevPrev )
                     pixelAddr += 8
+                    prevPrev = prev
                     prev = pixel
                 }
                 
                 let pixel = (blockL7 | blockH7) | ( (block >> (3 * 2)) & 3 )
-                hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev, prevPrev: prevPrev )
                 pixelAddr += 8
+                prevPrev = prev
                 prev = pixel
                 
                 for px in 4 ... 6  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockL7 | ( (block >> (px * 2)) & 3 )
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev, prevPrev: prevPrev )
                     pixelAddr += 8
+                    prevPrev = prev
                     prev = pixel
                 }
             }
@@ -687,35 +689,12 @@ class HiRes: NSView {
     }
     
     override func draw(_ rect: CGRect) {
-        // print("HIRESSLOW\n")
-
-//        if was > 100 {
-//            return
-//        }
-//        was += 1
-        
-
-//        HiRes.context?.setShouldAntialias(true)
-//        HiRes.context?.interpolationQuality = CGInterpolationQuality.low
-
         guard let image = HiRes.context?.makeImage() else { return }
 
-//        let blockScreenWidth = HiRes.PixelWidth * 4 / (HiRes.blockCols / 2)
-//        let blockScreenHeigth = HiRes.PixelHeight * 4 / HiRes.blockRows
-//
-//        for y in 0 ..< HiRes.blockRows {
-//            for x in 0 ..< HiRes.blockCols / 2 {
-//                // refresh the entire screen
-//                let boundingBox = CGRect(x: x * blockScreenWidth, y: y * blockScreenHeigth, width: blockScreenWidth, height: blockScreenHeigth)
-//                currentContext!.draw  (image, in: boundingBox)
-//return
-//            }
-//        }
-        
-        
         // refresh the entire screen
         let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        currentContext!.draw(image, in: boundingBox)
+        currentContext?.interpolationQuality = .none
+        currentContext?.draw(image, in: boundingBox)
     }
 
     #elseif HIRESDRAWCOLOR

@@ -711,21 +711,18 @@ void softReset() {
 }
 
 void m6502_Run() {
-    static unsigned int clk = 0;
     
     // init time
 //#ifdef CLK_WAIT
 //    unsigned long long elpased = (unsigned long long)-1LL;
 //#endif
 
-    // we will also use this to pause the simulation if not finished by the end of the frame
-    clk_6502_per_frm_max = clk_6502_per_frm;
-    
 #ifdef SPEEDTEST
     for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
 #elif defined( CLK_WAIT )
         // we clear the clkfrm from ViewController Update()
-        for ( ; clkfrm < clk_6502_per_frm_max ; clkfrm += clk )
+        // we will also use this to pause the simulation if not finished by the end of the frame
+        for ( clk_6502_per_frm_max = clk_6502_per_frm; clkfrm < clk_6502_per_frm_max ; clkfrm += m6502_Step() )
 #else
     // this is for max speed only -- WARNING! It works only if simulation runs in a completely different thread from the Update()
     for ( ; ; )
@@ -763,9 +760,9 @@ void m6502_Run() {
         }
 #endif // INTERRUPT_CHECK_PER_STEP
         
-        m6502.clktime += ( clk = m6502_Step() );
-        printDisassembly( outdev );
     }
+    
+    m6502.clktime += clk_6502_per_frm;
     
     if( diskAccelerator_count ) {
         if( --diskAccelerator_count <= 0 ) {

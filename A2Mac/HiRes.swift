@@ -489,7 +489,7 @@ class HiRes: NSView {
     let color_blue      : UInt32 = 0xFF1166EE;
     let color_orange    : UInt32 = 0xFFEE2211;
 
-    func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int, prevPrev : Int ) {
+    func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int ) {
         let colorAddr = pixelAddr / 4
         
         switch ( pixel ) {
@@ -615,7 +615,6 @@ class HiRes: NSView {
             
             let blockVertIdx = y / 8 * HiRes.blockCols / 2
             var prev = 0
-            var prevPrev = 0
 
             for blockHorIdx in 0 ..< HiRes.blockCols / 2 {
 //                print("blockVertIdx:", blockVertIdx, "   blockHorIdx:", blockHorIdx)
@@ -637,24 +636,21 @@ class HiRes: NSView {
                 for px in 0 ... 2  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev, prevPrev: prevPrev )
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                     pixelAddr += 8
-                    prevPrev = prev
                     prev = pixel
                 }
                 
                 let pixel = (blockL7 | blockH7) | ( (block >> (3 * 2)) & 3 )
-                hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev, prevPrev: prevPrev )
+                hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                 pixelAddr += 8
-                prevPrev = prev
                 prev = pixel
                 
                 for px in 4 ... 6  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockL7 | ( (block >> (px * 2)) & 3 )
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev, prevPrev: prevPrev )
+                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                     pixelAddr += 8
-                    prevPrev = prev
                     prev = pixel
                 }
             }

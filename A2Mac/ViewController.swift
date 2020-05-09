@@ -50,6 +50,7 @@ class ViewController: NSViewController  {
     @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
     @IBOutlet weak var hires: HiRes!
+    @IBOutlet weak var splashScreen: NSImageView!
     
     
 //    static let charConvStr : String =
@@ -101,6 +102,28 @@ class ViewController: NSViewController  {
     
     var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
+
+        //------------------------------------------------------------
+        // Animated Splash Screen fade out and (Text) Monitor fade in
+        
+        displayField.alphaValue = 0
+        displayField.isHidden = false
+        splashScreen.alphaValue = 1
+        splashScreen.isHidden = false
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            NSAnimationContext.runAnimationGroup({ (context) in
+                context.duration = 1.0
+                // Use the value you want to animate to (NOT the starting value)
+                self.displayField.animator().alphaValue = 1
+                self.splashScreen.animator().alphaValue = 0
+            },
+            completionHandler:{ () -> Void in
+                self.displayField.alphaValue = 1
+                self.splashScreen.isHidden = true
+            })
+        }
+        //------------------------------------------------------------
         
         #if SPEEDTEST
         if ( workItem != nil ) {
@@ -624,11 +647,7 @@ class ViewController: NSViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        for y in 0 ... textLines - 1 {
-//            txtClear[ y * (textCols + lineEndChars) + textCols * 2 + 1 ] = "\n"
-//        }
-
-        hires.needsDisplay = true;
+        hires.clearScreen();
         
         woz_loadFile( Bundle.main.resourcePath, "Apple DOS 3.3 January 1983.woz" )
 

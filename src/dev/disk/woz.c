@@ -251,11 +251,11 @@ uint8_t woz_read() {
 
     
 #else // WOZ_REAL_SPIN
-    clkelpased = m6502.clktime - m6502.clklast;
-    m6502.clklast = m6502.clktime;
+    clkelpased = m6502.clktime + clkfrm - m6502.clklast;
+    m6502.clklast = m6502.clktime + clkfrm;
     
     const int clkBeforeAdjusting = 250;
-    const int magicShiftOffset = 90;
+    const int magicShiftOffset = 80;
     
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     if ( usedBytes ) {

@@ -102,18 +102,22 @@ class ViewController: NSViewController  {
     
     var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
+        
+        upd.suspend()
+        halted = true
 
         //------------------------------------------------------------
         // Animated Splash Screen fade out and (Text) Monitor fade in
         
+        hires.isHidden = true
         displayField.alphaValue = 0
         displayField.isHidden = false
         splashScreen.alphaValue = 1
         splashScreen.isHidden = false
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             NSAnimationContext.runAnimationGroup({ (context) in
-                context.duration = 1.0
+                context.duration = 0.5
                 // Use the value you want to animate to (NOT the starting value)
                 self.displayField.animator().alphaValue = 1
                 self.splashScreen.animator().alphaValue = 0
@@ -122,6 +126,11 @@ class ViewController: NSViewController  {
                 self.displayField.alphaValue = 1
                 self.splashScreen.isHidden = true
             })
+            
+            m6502_ColdReset( Bundle.main.resourcePath, ViewController.romFileName )
+            
+            self.halted = false
+            self.upd.resume()
         }
         //------------------------------------------------------------
         
@@ -141,15 +150,8 @@ class ViewController: NSViewController  {
             DispatchQueue.global().async(execute: workItem!);
         }
         #else
-        upd.suspend()
-        halted = true
-        usleep(100000);
         
-        m6502_ColdReset( Bundle.main.resourcePath, ViewController.romFileName )
-                
-        halted = false
-        upd.resume()
-
+        
         #endif
     }
     

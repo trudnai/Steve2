@@ -318,6 +318,10 @@ void resetMemory() {
     // 64K Main Memory Area
     memset( Apple2_64K_RAM, 0, sizeof(Apple2_64K_RAM) );
     memset( Apple2_64K_MEM, 0, sizeof(Apple2_64K_MEM) );
+    // text memory should be filled by spaces
+    memset( Apple2_64K_AUX + 0x400, 0xA0, 0x800 );
+    memset( Apple2_64K_RAM + 0x400, 0xA0, 0x800 );
+    memset( Apple2_64K_MEM + 0x400, 0xA0, 0x800 );
     // I/O area should be 0 -- just in case we decide to init RAM with a different pattern...
     memset( Apple2_64K_RAM + 0xC000, 0, 0x1000 );
 }

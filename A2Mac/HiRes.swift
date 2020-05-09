@@ -400,7 +400,7 @@ class HiRes: NSView {
     static let ScreenBitmapSize = (PixelWidth * PixelHeight * 4)
     static let context = createBitmapContext(pixelsWide: PixelWidth, PixelHeight)
     static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)
-    static var typedPointer = pixels.bindMemory(to: UInt32.self)
+    static var pixelsRGBA = pixels.bindMemory(to: UInt32.self)
     #endif
     
     let R = 2
@@ -499,24 +499,21 @@ class HiRes: NSView {
             break
 
         case 0x01: // purple (bits are in reverse!)
-            HiRes.typedPointer[colorAddr] = color_purple;
-//            HiRes.typedPointer[colorAddr + 1] = color_black;
+            HiRes.pixelsRGBA[colorAddr] = color_purple;
+            if  (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_purple;
+            }
             
         case 0x02: // green
             // reducing color bleeding
-            if  (prev == 0x01) ||
-                (prev == 0x05)
-            {
-//                HiRes.typedPointer[colorAddr + 1] = color_black;
+            if (colorAddr > 0) && (HiRes.pixelsRGBA[colorAddr - 1] != color_black) {
+                HiRes.pixelsRGBA[colorAddr] = color_green;
             }
-            else {
-                HiRes.typedPointer[colorAddr] = color_green;
-                HiRes.typedPointer[colorAddr + 1] = color_green;
-            }
+            HiRes.pixelsRGBA[colorAddr + 1] = color_green;
 
         case 0x03: // white
-            HiRes.typedPointer[colorAddr] = color_white;
-            HiRes.typedPointer[colorAddr + 1] = color_white;
+            HiRes.pixelsRGBA[colorAddr] = color_white;
+            HiRes.pixelsRGBA[colorAddr + 1] = color_white;
 
         case 0x04: // black 2
 //            HiRes.typedPointer[colorAddr] = color_black;
@@ -524,24 +521,21 @@ class HiRes: NSView {
             break
             
         case 0x05: // blue
-            HiRes.typedPointer[colorAddr] = color_blue;
-//            HiRes.typedPointer[colorAddr + 1] = color_black;
+            HiRes.pixelsRGBA[colorAddr] = color_blue;
+            if  (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_blue;
+            }
 
         case 0x06: // orange
             // reducing color bleeding
-            if  (prev == 0x01) ||
-                (prev == 0x05)
-            {
-//                HiRes.typedPointer[colorAddr + 1] = color_black;
+            if (colorAddr > 0) && (HiRes.pixelsRGBA[colorAddr - 1] != color_black) {
+                HiRes.pixelsRGBA[colorAddr] = color_orange;
             }
-            else {
-                HiRes.typedPointer[colorAddr] = color_orange;
-                HiRes.typedPointer[colorAddr + 1] = color_orange;
-            }
-            
+            HiRes.pixelsRGBA[colorAddr + 1] = color_orange;
+
         case 0x07: // white 2
-            HiRes.typedPointer[colorAddr] = color_white;
-            HiRes.typedPointer[colorAddr + 1] = color_white;
+            HiRes.pixelsRGBA[colorAddr] = color_white;
+            HiRes.pixelsRGBA[colorAddr + 1] = color_white;
 
         default:
 //            HiRes.typedPointer[colorAddr] = color_black;
@@ -551,40 +545,39 @@ class HiRes: NSView {
         
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
-            HiRes.typedPointer[colorAddr] = color_white;
-            HiRes.typedPointer[colorAddr - 1] = color_white;
+            HiRes.pixelsRGBA[colorAddr] = color_white;
+            HiRes.pixelsRGBA[colorAddr - 1] = color_white;
 
             // TODO: Need better check if extra green was created
             if (HiRes.pixels[pixelAddr - 8 + G] == 0xA2 ) {
-                HiRes.typedPointer[colorAddr - 2] = color_black;
+                HiRes.pixelsRGBA[colorAddr - 2] = color_black;
             }
         }
 
         // purple adjustment -- followed by white
         else if (prev == 0x01) && (
             (pixel == 0x01) ||
-            (pixel == 0x03) || (pixel == 0x07) || // white
-            (pixel == 0x00) || (pixel == 0x04)    // black
+            (pixel == 0x03) || (pixel == 0x07)  // white
+//            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
-            if ( HiRes.pixels[pixelAddr - 8 + R] == 0xBB ) {
-                HiRes.typedPointer[colorAddr - 1] = color_purple;
+            if ( HiRes.pixelsRGBA[colorAddr - 2] == color_purple ) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_purple;
             }
         }
 
         // blue adjustment -- followed by white
         else if (prev == 0x05) && (
             (pixel == 0x05) ||
-            (pixel == 0x03) || (pixel == 0x07) || // white
-            (pixel == 0x00) || (pixel == 0x04)    // black
+            (pixel == 0x03) || (pixel == 0x07)  // white
+//            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
-            // was the previous purple pixel promoted to white or is it still purple?
-            if ( HiRes.pixels[pixelAddr - 8 + R] == 0x11 ) {
-                HiRes.typedPointer[colorAddr - 1] = color_blue;
+            // was the previous blue pixel promoted to white or is it still blue?
+            if ( HiRes.pixelsRGBA[colorAddr - 2] == color_blue ) {
+                HiRes.pixelsRGBA[colorAddr - 1] = color_blue;
             }
         }
         
-
     }
 
     
@@ -669,6 +662,8 @@ class HiRes: NSView {
         
         // refresh changed block only
         
+        let screenBlockMargin = 6
+        
         let blockScreenWidth = Int(frame.width) / HiRes.blockCols * 2
         let blockScreenHeigth = Int(frame.height) / HiRes.blockRows
 
@@ -677,10 +672,10 @@ class HiRes: NSView {
                 if blockChanged[ blockVertIdx * HiRes.blockCols / 2 + blockHorIdx ] {
                     // refresh the entire screen
                     let boundingBox = CGRect(
-                        x: blockHorIdx * blockScreenWidth - 2,
-                        y: Int(frame.height) - blockVertIdx * blockScreenHeigth - blockScreenHeigth - 2,
-                        width: blockScreenWidth + 4,
-                        height: blockScreenHeigth + 4)
+                        x: blockHorIdx * blockScreenWidth - screenBlockMargin,
+                        y: Int(frame.height) - blockVertIdx * blockScreenHeigth - blockScreenHeigth - screenBlockMargin,
+                        width: blockScreenWidth + screenBlockMargin * 2,
+                        height: blockScreenHeigth + screenBlockMargin * 2)
                     
                     self.setNeedsDisplay( boundingBox )
                 }

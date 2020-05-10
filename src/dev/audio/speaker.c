@@ -48,6 +48,10 @@ ALCcontext *ctx = NULL;
 ALuint spkr_buf = 0;
 ALuint spkr_src = 0;
 
+// we start with the max, because otherwise the speaker clicks
+uint8_t spkr_level = SPKR_LEVEL_MAX;
+
+
 const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate;
@@ -64,7 +68,7 @@ void spkr_init() {
     alcMakeContextCurrent(ctx);
     
     // Fill buffer with zeros
-    memset( spkr_samples, 127, spkr_buf_size );
+    memset( spkr_samples, spkr_level, spkr_buf_size );
     
 }
 
@@ -112,4 +116,6 @@ void spkr_play() {
     alSourcei(spkr_src, AL_LOOPING, 0);
     
     alSourcePlay(spkr_src);
+    
+    memset(spkr_samples, spkr_level, spkr_buf_size);
 }

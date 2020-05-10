@@ -48,7 +48,6 @@ uint8_t * const RDHIMEM = Apple2_64K_MEM;       // Pointer to the Shadow Memory 
 uint8_t * const WRHIMEM = Apple2_Dummy_RAM;     // Pointer to the Shadow Memory Map so we can use this from Swift
 
 
-
 #define DEF_RAM_PAGE(mem,pg) \
     (mem) + ((pg) << 8)
 
@@ -401,6 +400,35 @@ void auxMemorySelect() {
 }
 
 
+INLINE void spkr_switch() {
+    // TODO: This is very slow!
+    //            printf("io_KBDSTRB\n");
+    
+    // push a click into the speaker buffer
+    // (we will play the entire buffer at the end of the frame)
+    int sample_idx = clkfrm / 22;
+    if ( spkr_level > SPKR_LEVEL_MIN ) {
+        spkr_level = SPKR_LEVEL_MIN;
+    }
+    else {
+        spkr_level = SPKR_LEVEL_MAX;
+    }
+    //spkr_samples[sample_idx] = spkr_level;
+    memset(spkr_samples + sample_idx, spkr_level, spkr_buf_size - sample_idx);
+    
+    //ViewController_spk_up_play();
+    
+    
+    //        case io_VID_CLR80VID:
+    //            videoMode.col80 = 0;
+    //            break;
+    //
+    //        case io_VID_SET80VID:
+    //            videoMode.col80 = 1;
+    //            break;
+    //
+}
+
 
 INLINE uint8_t ioRead( uint16_t addr ) {
 //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
@@ -419,28 +447,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             Apple2_64K_RAM[io_KBD] &= 0x7F;
             return Apple2_64K_RAM[io_KBDSTRB];
 
-        case (uint8_t)io_SPKR: {
-            // TODO: This is very slow!
-//            printf("io_KBDSTRB\n");
-         
-            // push a click into the speaker buffer
-            // (we will play the entire buffer at the end of the frame)
-            int sample_idx = clkfrm / 22;
-            spkr_samples[sample_idx] = 0;
-            
-            //ViewController_spk_up_play();
-            
+        case (uint8_t)io_SPKR:
+            spkr_switch();
             return Apple2_64K_RAM[io_SPKR];
 
-//        case io_VID_CLR80VID:
-//            videoMode.col80 = 0;
-//            break;
-//
-//        case io_VID_SET80VID:
-//            videoMode.col80 = 1;
-//            break;
-//
-        }
         case (uint8_t)io_VID_RDTEXT:
             return videoMode.text << 7;
             
@@ -697,6 +707,10 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
     switch (addr) {
         case io_KBDSTRB:
             Apple2_64K_RAM[io_KBD] &= 0x7F;
+            break;
+            
+        case io_SPKR:
+            spkr_switch();
             break;
             
         case io_RDMAINRAM:

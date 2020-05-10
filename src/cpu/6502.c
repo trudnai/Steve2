@@ -713,10 +713,6 @@ void softReset() {
 
 void m6502_Run() {
     
-    // clear speaker buffer, so we can fill it up by new data
-    memset(spkr_samples, 127, spkr_buf_size);
-    
-    
     // init time
 //#ifdef CLK_WAIT
 //    unsigned long long elpased = (unsigned long long)-1LL;
@@ -778,7 +774,11 @@ void m6502_Run() {
     }
     
     spkr_play();
+    // clear speaker buffer, so we can fill it up by new data
+    memset(spkr_samples, spkr_level, spkr_buf_size);
     
+    
+
 }
 
 void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, const uint16_t addr ) {

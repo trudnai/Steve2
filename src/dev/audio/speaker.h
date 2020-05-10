@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 #define SPKR_LEVEL_MIN      0
-#define SPKR_LEVEL_MAX      127
+#define SPKR_LEVEL_MAX      255
 
 extern void spkr_init(void);
 extern void spkr_exit(void);

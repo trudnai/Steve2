@@ -70,6 +70,8 @@
 		3262F37723E169F8008BDB95 /* spk_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37523E169F8008BDB95 /* spk_up.wav */; };
 		32A9F72C24668D26004902A1 /* apple-rainbow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32A9F72B24668D26004902A1 /* apple-rainbow.jpg */; };
 		32A9F72D24668D26004902A1 /* apple-rainbow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32A9F72B24668D26004902A1 /* apple-rainbow.jpg */; };
+		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
+		32A9F74B2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
@@ -189,6 +191,8 @@
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
 		326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 6502_functional_test.bin; sourceTree = SOURCE_ROOT; };
 		32A9F72B24668D26004902A1 /* apple-rainbow.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "apple-rainbow.jpg"; sourceTree = "<group>"; };
+		32A9F7482467B60B004902A1 /* speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speaker.h; sourceTree = "<group>"; };
+		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
 		32B18435233F10BC00DBB4AB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		32B18438233FAB3900DBB4AB /* verticies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verticies.swift; sourceTree = "<group>"; };
 		32BFFB5722EACC630003B53F /* A2Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A2Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -310,6 +314,7 @@
 		325EB63223F8862A00C6B4A4 /* dev */ = {
 			isa = PBXGroup;
 			children = (
+				32A9F7472467B5DF004902A1 /* audio */,
 				325EB63B23FA57C000C6B4A4 /* mem */,
 				325EB63323F8863100C6B4A4 /* disk */,
 			);
@@ -417,6 +422,15 @@
 				325EB69B2401118300C6B4A4 /* Xonix.woz */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		32A9F7472467B5DF004902A1 /* audio */ = {
+			isa = PBXGroup;
+			children = (
+				32A9F7492467B60B004902A1 /* speaker.c */,
+				32A9F7482467B60B004902A1 /* speaker.h */,
+			);
+			path = audio;
 			sourceTree = "<group>";
 		};
 		32BFFB4E22EACC630003B53F = {
@@ -816,6 +830,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				325EB67623FBC44400C6B4A4 /* common.c in Sources */,
+				32A9F74B2467B60B004902A1 /* speaker.c in Sources */,
 				325EB67523FBC43E00C6B4A4 /* 6502.c in Sources */,
 				325EB67823FBC45300C6B4A4 /* disk.c in Sources */,
 				325EB64723FBBACF00C6B4A4 /* ViewController.swift in Sources */,
@@ -849,6 +864,7 @@
 				32439F8722ECD8AD0077AAE0 /* 6502.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
+				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,

@@ -427,8 +427,8 @@
 		32A9F7472467B5DF004902A1 /* audio */ = {
 			isa = PBXGroup;
 			children = (
-				32A9F7492467B60B004902A1 /* speaker.c */,
 				32A9F7482467B60B004902A1 /* speaker.h */,
+				32A9F7492467B60B004902A1 /* speaker.c */,
 			);
 			path = audio;
 			sourceTree = "<group>";

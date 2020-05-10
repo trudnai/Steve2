@@ -514,7 +514,6 @@ class HiRes: NSView {
 
         case 0x05: // blue
             HiRes.pixelsRGBA[colorAddr] = color_blue
-//            HiRes.pixelsRGBA[colorAddr + 1] = color_blue
             if  (colorAddr >= 1) && (prev != 0x00) && (prev != 0x04) {
                 HiRes.pixelsRGBA[colorAddr - 1] = color_blue
             }
@@ -529,16 +528,9 @@ class HiRes: NSView {
         default: // 0x00 (black 1), 0x04 (black 2)
             HiRes.pixelsRGBA[colorAddr] = color_black
             HiRes.pixelsRGBA[colorAddr + 1] = color_black
-            if (colorAddr >= 1) && ( (prev == 0x01) || (prev == 0x05) ) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_black
-            }
             break
         }
 
-//        if (colorAddr >= 1) && ( (pixel & 0x02) == 2 ) && ( (prev == 0x01) || (prev == 0x05) ) {
-//            HiRes.pixelsRGBA[colorAddr - 1] = color_black
-//        }
-        
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
             HiRes.pixelsRGBA[colorAddr] = color_white
@@ -552,11 +544,18 @@ class HiRes: NSView {
             }
         }
 
+//        // green adjustment -- followed by white
+//        if (prev == 0x02) && (
+//            (pixel == 0x02) ||
+//                (pixel == 0x03) || (pixel == 0x07)  // white
+//            ) {
+//            HiRes.pixelsRGBA[colorAddr - 1] = color_green
+//        }
+//
         // purple adjustment -- followed by white
-        else if (prev == 0x01) && (
+        if (prev == 0x01) && (
             (pixel == 0x01) ||
             (pixel == 0x03) || (pixel == 0x07)  // white
-//            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
             if (colorAddr >= 2) && ( HiRes.pixelsRGBA[colorAddr - 2] == color_purple ) {
@@ -568,12 +567,8 @@ class HiRes: NSView {
         else if (prev == 0x05) && (
             (pixel == 0x05) ||
             (pixel == 0x03) || (pixel == 0x07)  // white
-//            (pixel == 0x00) || (pixel == 0x04)    // black
         ) {
-            // was the previous blue pixel promoted to white or is it still blue?
-            if (colorAddr >= 2) && ( HiRes.pixelsRGBA[colorAddr - 2] == color_blue ) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_blue
-            }
+            HiRes.pixelsRGBA[colorAddr - 1] = color_blue
         }
         
     }

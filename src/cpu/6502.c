@@ -15,6 +15,7 @@
 #include <time.h>
 #include "6502.h"
 #include "../dev/disk/woz.h"
+#include "speaker.h"
 
 
 void ViewController_spk_up_play(void);
@@ -712,6 +713,10 @@ void softReset() {
 
 void m6502_Run() {
     
+    // clear speaker buffer, so we can fill it up by new data
+    memset(spkr_samples, 127, spkr_buf_size);
+    
+    
     // init time
 //#ifdef CLK_WAIT
 //    unsigned long long elpased = (unsigned long long)-1LL;
@@ -771,6 +776,8 @@ void m6502_Run() {
             clk_6502_per_frm = clk_6502_per_frm_set;
         }
     }
+    
+    spkr_play();
     
 }
 
@@ -844,6 +851,8 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     inst_cnt = 0;
     mhz = (double)MHz_6502 / M;
+    
+    spkr_init();
     
     unsigned long long saved_frm_set = clk_6502_per_frm_set;
     clk_6502_per_frm     =

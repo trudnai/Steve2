@@ -13,6 +13,7 @@
 #include "6502.h"
 #include "disk.h"
 #include "woz.h"
+#include "speaker.h"
 
 
 typedef union address16_u {
@@ -418,9 +419,14 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             Apple2_64K_RAM[io_KBD] &= 0x7F;
             return Apple2_64K_RAM[io_KBDSTRB];
 
-        case (uint8_t)io_SPKR:
+        case (uint8_t)io_SPKR: {
             // TODO: This is very slow!
 //            printf("io_KBDSTRB\n");
+         
+            // push a click into the speaker buffer
+            // (we will play the entire buffer at the end of the frame)
+            int sample_idx = clkfrm / 22;
+            spkr_samples[sample_idx] = 0;
             
             //ViewController_spk_up_play();
             
@@ -434,6 +440,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //            videoMode.col80 = 1;
 //            break;
 //
+        }
         case (uint8_t)io_VID_RDTEXT:
             return videoMode.text << 7;
             

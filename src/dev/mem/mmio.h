@@ -406,15 +406,24 @@ INLINE void spkr_switch() {
     
     // push a click into the speaker buffer
     // (we will play the entire buffer at the end of the frame)
-    int sample_idx = clkfrm / 22;
+    spkr_sample_idx = clkfrm / 22;
+    
     if ( spkr_level > SPKR_LEVEL_MIN ) {
+        // down edge
+        while( (spkr_level -= 16) > SPKR_LEVEL_MIN ) {
+            spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+        }
         spkr_level = SPKR_LEVEL_MIN;
     }
     else {
+        // up edge
+        while( (spkr_level += 16) < SPKR_LEVEL_MAX ) {
+            spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+        }
         spkr_level = SPKR_LEVEL_MAX;
     }
     //spkr_samples[sample_idx] = spkr_level;
-    memset(spkr_samples + sample_idx, spkr_level, spkr_buf_size - sample_idx);
+    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size - spkr_sample_idx);
     
     //ViewController_spk_up_play();
     

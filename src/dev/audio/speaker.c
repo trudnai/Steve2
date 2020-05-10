@@ -49,15 +49,17 @@ ALuint spkr_buf = 0;
 ALuint spkr_src = 0;
 
 // we start with the max, because otherwise the speaker clicks
-uint8_t spkr_level = SPKR_LEVEL_MAX;
+int spkr_level = SPKR_LEVEL_MAX;
 
 
+const int spkr_fps = 20;
 const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate;
 char spkr_samples [ spkr_buf_size ];
+unsigned spkr_sample_idx = 0;
 
-/* initialize OpenAL */
+// initialize OpenAL
 void spkr_init() {
     
     const char *defname = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
@@ -72,7 +74,7 @@ void spkr_init() {
     
 }
 
-/* Dealloc OpenAL */
+// Dealloc OpenAL
 void spkr_exit() {
     ALCdevice *dev = NULL;
     ALCcontext *ctx = NULL;
@@ -87,35 +89,50 @@ void spkr_exit() {
 }
 
 void spkr_play() {
-    if ( spkr_src ) {
-        alSourceStop(spkr_src);
-        al_check_error();
-        alSourcei(spkr_src, AL_BUFFER, 0);
-        al_check_error();
-    }
-    
-    if ( spkr_buf ) {
-        alDeleteBuffers(1, &spkr_buf);
-        al_check_error();
-    }
-    
-    /* Create buffer to store samples */
-    spkr_buf = 0;
-    alGenBuffers(1, &spkr_buf);
-    al_check_error();
-    
-
-    /* Download buffer to OpenAL */
-    alBufferData(spkr_buf, AL_FORMAT_MONO8, spkr_samples, spkr_buf_size, spkr_sample_rate);
-    al_check_error();
+    if ( spkr_sample_idx ) {
         
-    /* Set-up sound source and play buffer */
-    spkr_src = 0;
-    alGenSources(1, &spkr_src);
-    alSourcei(spkr_src, AL_BUFFER, spkr_buf);
-    alSourcei(spkr_src, AL_LOOPING, 0);
-    
-    alSourcePlay(spkr_src);
-    
-    memset(spkr_samples, spkr_level, spkr_buf_size);
+        if ( spkr_src ) {
+            alSourceStop(spkr_src);
+            al_check_error();
+            alSourcei(spkr_src, AL_BUFFER, 0);
+            al_check_error();
+        }
+        
+        if ( spkr_buf ) {
+            alDeleteBuffers(1, &spkr_buf);
+            al_check_error();
+        }
+        
+        // Create buffer to store samples
+        spkr_buf = 0;
+        alGenBuffers(1, &spkr_buf);
+        al_check_error();
+        
+
+        // Download buffer to OpenAL
+        alBufferData(spkr_buf, AL_FORMAT_MONO8, spkr_samples, spkr_buf_size / spkr_fps, spkr_sample_rate);
+        al_check_error();
+            
+        // Set-up sound source and play buffer
+        spkr_src = 0;
+        alGenSources(1, &spkr_src);
+        alSourcei(spkr_src, AL_BUFFER, spkr_buf);
+        alSourcei(spkr_src, AL_LOOPING, 0);
+        
+        alSourcePlay(spkr_src);
+        
+        ALint secoffset = 0;
+        alGetSourcei( spkr_src, AL_BYTE_OFFSET, &secoffset );
+        
+        // ccopy slack buffer to the top, so we will not lose the edges
+        memcpy(spkr_samples, spkr_samples + secoffset, spkr_buf_size - spkr_buf_size / spkr_fps);
+        // clear the slack buffer , so we can fill it up by new data
+        memset(spkr_samples + secoffset, spkr_level, spkr_buf_size - spkr_buf_size / spkr_fps);
+
+        // start from the beginning
+        spkr_sample_idx = 0;
+    }
+    else {
+        alSourceStop(spkr_src);
+    }
 }

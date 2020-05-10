@@ -20,8 +20,8 @@ extern void spkr_play(void);
 
 extern const unsigned spkr_buf_size;
 extern char spkr_samples [];
-
-extern uint8_t spkr_level;
+extern unsigned spkr_sample_idx;
+extern int spkr_level;
 
 
 

@@ -774,8 +774,6 @@ void m6502_Run() {
     }
     
     spkr_play();
-    // clear speaker buffer, so we can fill it up by new data
-    memset(spkr_samples, spkr_level, spkr_buf_size);
     
     
 

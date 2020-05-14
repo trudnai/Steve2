@@ -675,6 +675,18 @@
                                                             <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="zhC-rp-mN0"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="Wavy Navy" identifier="Wavy Navy" id="GB7-kl-zHb">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="lcd-GR-OVR"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Xonix" identifier="Xonix" id="242-uR-ubX">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Ysg-X9-qeK"/>
+                                                        </connections>
+                                                    </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>

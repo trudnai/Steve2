@@ -119,6 +119,8 @@ void spkr_play() {
         alSourcei(spkr_src, AL_BUFFER, spkr_buf);
         alSourcei(spkr_src, AL_LOOPING, 0);
         
+        alSourcei( spkr_src, AL_BYTE_OFFSET, 0 );
+        al_check_error();
         alSourcePlay(spkr_src);
         
         ALint secoffset = 0;
@@ -134,5 +136,25 @@ void spkr_play() {
     }
     else {
         alSourceStop(spkr_src);
+    }
+}
+
+
+void spkr_Update() {
+    if ( spkr_src && spkr_buf ) {
+        if ( spkr_src ) {
+            alSourcePause(spkr_src);
+            al_check_error();
+            alSourcei(spkr_src, AL_BUFFER, 0);
+            al_check_error();
+        }
+
+        // Download buffer to OpenAL
+        alBufferData(spkr_buf, AL_FORMAT_MONO8, spkr_samples, spkr_buf_size / spkr_fps, spkr_sample_rate);
+        al_check_error();
+        
+        alSourcei( spkr_src, AL_BYTE_OFFSET, 0 );
+        al_check_error();
+        alSourcePlay(spkr_src);
     }
 }

@@ -772,10 +772,9 @@ void m6502_Run() {
             clk_6502_per_frm = clk_6502_per_frm_set;
         }
     }
-    
+
+    // play the entire sound buffer for this frame
     spkr_play();
-    
-    
 
 }
 
@@ -851,6 +850,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     mhz = (double)MHz_6502 / M;
     
     spkr_init();
+//    spkr_play();
     
     unsigned long long saved_frm_set = clk_6502_per_frm_set;
     clk_6502_per_frm     =

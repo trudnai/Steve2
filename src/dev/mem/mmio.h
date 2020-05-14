@@ -406,18 +406,18 @@ INLINE void spkr_switch() {
     
     // push a click into the speaker buffer
     // (we will play the entire buffer at the end of the frame)
-    spkr_sample_idx = clkfrm / 22;
+    spkr_sample_idx = clkfrm / (default_MHz_6502 / spkr_sample_rate);
     
     if ( spkr_level > SPKR_LEVEL_MIN ) {
         // down edge
-        while( (spkr_level -= 16) > SPKR_LEVEL_MIN ) {
+        while( (spkr_level -= (spkr_level - SPKR_LEVEL_MIN) / 2 ) > SPKR_LEVEL_MIN + 1 ) {
             spkr_samples[ spkr_sample_idx++ ] = spkr_level;
         }
         spkr_level = SPKR_LEVEL_MIN;
     }
     else {
         // up edge
-        while( (spkr_level += 16) < SPKR_LEVEL_MAX ) {
+        while( (spkr_level += (SPKR_LEVEL_MAX - spkr_level) / 2 )  < SPKR_LEVEL_MAX - 1 ) {
             spkr_samples[ spkr_sample_idx++ ] = spkr_level;
         }
         spkr_level = SPKR_LEVEL_MAX;

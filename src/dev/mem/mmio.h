@@ -404,6 +404,8 @@ INLINE void spkr_switch() {
     // TODO: This is very slow!
     //            printf("io_KBDSTRB\n");
     
+    spkr_play_time = spkr_play_timeout;
+    
     // push a click into the speaker buffer
     // (we will play the entire buffer at the end of the frame)
     spkr_sample_idx = clkfrm / (default_MHz_6502 / spkr_sample_rate);

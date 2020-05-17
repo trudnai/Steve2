@@ -67,6 +67,9 @@ const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate / spkr_fps;
 char spkr_samples [ spkr_buf_size * spkr_fps * 2]; // 1s of sound
 unsigned spkr_sample_idx = 0;
 
+const unsigned spkr_play_timeout = 10;
+unsigned spkr_play_time = 0;
+
 
 #define BUFFER_COUNT 10
 #define SOURCES_COUNT 1
@@ -132,7 +135,7 @@ ALint freeBuffers = BUFFER_COUNT;
 //ALuint alBuffers[BUFFER_COUNT];
 
 void spkr_update() {
-    if ( spkr_sample_idx ) {
+    if ( spkr_play_time ) {
         
 //        printf("freeBuffers: %d", freeBuffers);
         
@@ -182,16 +185,35 @@ void spkr_update() {
 
         // Download buffer to OpenAL
         
-//        memcpy(spkr_samples + spkr_buf_size, spkr_samples + spkr_buf_size - spkr_extra_buf, spkr_extra_buf);
-        alBufferData(spkr_buffers[freeBuffers - 1], AL_FORMAT_MONO8, spkr_samples, spkr_buf_size + spkr_extra_buf, spkr_sample_rate);
-        al_check_error();
+        if ( --spkr_play_time == 0 ) {
+            // we need to soft mute the speaker to eliminate clicking noise
+            // simple linear mute
+            int step = (SPKR_LEVEL_ZERO - (int)spkr_level) / 128;
+            if ( step != 0 ) {
+                for ( spkr_sample_idx = 0; spkr_level != SPKR_LEVEL_ZERO; spkr_level += step) {
+                    for ( int i = 0; i < 4; i++ ) {
+                        spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+                    }
+                }
+                spkr_level = SPKR_LEVEL_ZERO;
+                spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+                //spkr_samples[sample_idx] = spkr_level;
+                memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_extra_buf);
 
-        alSourceQueueBuffers(spkr_src, 1, &spkr_buffers[freeBuffers - 1]);
-//        al_check_error();
-
-//        ALint secoffset = 0;
-//        alGetSourcei( spkr_src, AL_BYTE_OFFSET, &secoffset );
-
+                freeBuffers--;
+                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_MONO8, spkr_samples, spkr_sample_idx, spkr_sample_rate);
+                al_check_error();
+                alSourceQueueBuffers(spkr_src, 1, &spkr_buffers[freeBuffers]);
+                al_check_error();
+            }
+        }
+        else {
+            freeBuffers--;
+            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_MONO8, spkr_samples, spkr_buf_size + spkr_extra_buf, spkr_sample_rate);
+            al_check_error();
+            alSourceQueueBuffers(spkr_src, 1, &spkr_buffers[freeBuffers]);
+            al_check_error();
+        }
         
         switch (state) {
             case AL_PAUSED:
@@ -208,24 +230,15 @@ void spkr_update() {
                 break;
         }
         
-
-//        // copy slack buffer to the top, so we will not lose the edges
-//        memcpy(spkr_samples, spkr_samples + secoffset, spkr_buf_size - secoffset);
-//        // clear the slack buffer , so we can fill it up by new data
-//        memset(spkr_samples + secoffset, spkr_level, spkr_buf_size - secoffset);
-
         // clear the slack buffer , so we can fill it up by new data
-        memset(spkr_samples, spkr_level, spkr_buf_size);
+        memset(spkr_samples, spkr_level, spkr_buf_size + spkr_extra_buf);
 
         // start from the beginning
         spkr_sample_idx = 0;
 
-//        if ( freeBuffers > 0 ) {
-            freeBuffers--;
-//        }
     }
-//    else {
-//        // TODO: Need better speaker turn off logic to avoid click noise
+    else {
+        // TODO: Need better speaker turn off logic to avoid click noise
 ////        if ( spkr_src ) {
 ////            alSourceStop(spkr_src);
 ////            al_check_error();
@@ -238,7 +251,7 @@ void spkr_update() {
 ////            memset(spkr_samples, spkr_level, spkr_buf_size);
 ////        }
 ////        printf("freeBuffers_nosound: %d\n", freeBuffers);
-//    }
+    }
 }
 
 

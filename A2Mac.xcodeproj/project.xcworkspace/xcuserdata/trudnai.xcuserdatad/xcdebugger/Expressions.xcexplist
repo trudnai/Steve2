@@ -40,6 +40,14 @@
          contextName = "addr_ind_Y:Apple2_mmio.h">
       </ContextState>
       <ContextState
+         contextName = "spkr_playUpd:speaker.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "freeBuffers">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "m6502_ColdReset:6502.c">
          <PersistentStrings>
             <PersistentString
@@ -245,6 +253,9 @@
             <PersistentString
                value = "txtArr">
             </PersistentString>
+            <PersistentString
+               value = "clkfrm">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
@@ -259,16 +270,13 @@
          contextName = "HiRes.draw(_:):HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "(blockH7 | ( block &amp; bitMask ))">
+               value = "ctx?.height">
             </PersistentString>
             <PersistentString
                value = "ctx?.data">
             </PersistentString>
             <PersistentString
                value = "ctx?.width">
-            </PersistentString>
-            <PersistentString
-               value = "ctx?.bitmapInfo">
             </PersistentString>
             <PersistentString
                value = "ctx?.bytesPerRow">
@@ -280,19 +288,22 @@
                value = "HiResLineAddrTbl">
             </PersistentString>
             <PersistentString
+               value = "ctx?.bitmapInfo">
+            </PersistentString>
+            <PersistentString
+               value = "(blockH7 | ( block &amp; bitMask ))">
+            </PersistentString>
+            <PersistentString
                value = "HiRes.blockCols">
             </PersistentString>
             <PersistentString
-               value = "shadowScreen">
-            </PersistentString>
-            <PersistentString
-               value = "ctx?.height">
+               value = "ctx?.bitsPerComponent">
             </PersistentString>
             <PersistentString
                value = "linAddr">
             </PersistentString>
             <PersistentString
-               value = "ctx?.bitsPerComponent">
+               value = "shadowScreen">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -317,6 +328,23 @@
          <PersistentStrings>
             <PersistentString
                value = "sender.identifier!.rawValue">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "woz_read:woz.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.clktime">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clktime + clkfrm - m6502.clklast">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clktime + clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clklast">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -469,6 +497,23 @@
          <PersistentStrings>
             <PersistentString
                value = "disassembly">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "spkr_switch:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "freeBuffers">
+            </PersistentString>
+            <PersistentString
+               value = "BUFFER_COUNT">
+            </PersistentString>
+            <PersistentString
+               value = "clk_6502_per_frm_set">
+            </PersistentString>
+            <PersistentString
+               value = "clkfrm">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

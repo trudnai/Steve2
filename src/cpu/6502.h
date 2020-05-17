@@ -11,6 +11,7 @@
 
 #include <stdint.h>
 #include "../../src/util/common.h"
+#include "../../src/dev/audio/speaker.h" // So we can access to speaker stuff from Swift
 
 
 extern unsigned long long MHz_6502;

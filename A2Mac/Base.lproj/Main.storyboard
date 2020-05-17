@@ -913,8 +913,37 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
-                                        <rect key="frame" x="8" y="8" width="104" height="186"/>
+                                        <rect key="frame" x="8" y="8" width="104" height="217"/>
                                         <subviews>
+                                            <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
+                                                <rect key="frame" x="0.0" y="194" width="104" height="23"/>
+                                                <subviews>
+                                                    <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
+                                                        <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" title="13" drawsBackground="YES" id="ZKd-sJ-O4U">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" id="uQO-BN-oqa">
+                                                        <rect key="frame" x="88" y="-2" width="19" height="27"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="256" doubleValue="13" id="h0r-W8-egl"/>
+                                                        <connections>
+                                                            <action selector="SoundGapChanged:" target="XfG-lQ-9wD" id="Y1Z-lh-l8u"/>
+                                                        </connections>
+                                                    </stepper>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="23" id="X5P-d2-aYo"/>
+                                                </constraints>
+                                                <holdingPriorities>
+                                                    <real value="250"/>
+                                                    <real value="250"/>
+                                                </holdingPriorities>
+                                            </splitView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FZk-VW-alq">
                                                 <rect key="frame" x="-2" y="169" width="41" height="17"/>
                                                 <constraints>
@@ -998,7 +1027,12 @@
                                                 </connections>
                                             </button>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="Ge3-qD-JO6" secondAttribute="trailing" id="CjH-r2-t3y"/>
+                                            <constraint firstItem="Ge3-qD-JO6" firstAttribute="leading" secondItem="lVP-FP-u6x" secondAttribute="leading" id="Z0F-GF-dgy"/>
+                                        </constraints>
                                         <visibilityPriorities>
+                                            <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
@@ -1009,6 +1043,7 @@
                                             <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
@@ -1054,6 +1089,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="SoundGap" destination="ZKd-sJ-O4U" id="IrM-7f-7Nb"/>
                         <outlet property="display" destination="pIk-RC-s5g" id="Hvd-DI-h6z"/>
                         <outlet property="displayField" destination="SEL-hl-0c0" id="4Pc-hG-qQf"/>
                         <outlet property="hires" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>

@@ -263,6 +263,7 @@ uint8_t woz_read() {
     //        printf("NEED SYNC : %llu\n", clkelpased);
             bitOffset = (clkelpased >> 2) & 7;
             trackOffset += ((clkelpased >> 5) + magicShiftOffset) % usedBytes;
+            trackOffset %= usedBytes;
             WOZread.data = woz_trks[track].data[trackOffset];
         }
 
@@ -286,6 +287,7 @@ uint8_t woz_read() {
     //                    printf("%02X ", byte);
                 WOZread.shift = 0;
                 if (outdev) fprintf(outdev, "byte: %02X\n", byte);
+
                 return byte;
             }
         }

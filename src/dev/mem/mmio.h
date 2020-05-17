@@ -423,7 +423,7 @@ INLINE void spkr_switch() {
         spkr_level = SPKR_LEVEL_MAX;
     }
     //spkr_samples[sample_idx] = spkr_level;
-    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size - spkr_sample_idx);
+    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size);
     
     //ViewController_spk_up_play();
     

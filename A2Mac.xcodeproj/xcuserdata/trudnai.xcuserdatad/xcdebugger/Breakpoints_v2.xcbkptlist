@@ -1932,8 +1932,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "122"
             endingLineNumber = "122"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "spkr_exit()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1964,7 +1964,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "202"
             endingLineNumber = "202"
-            landmarkName = "spkr_playUpd()"
+            landmarkName = "spkr_update()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1980,7 +1980,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "222"
             endingLineNumber = "222"
-            landmarkName = "spkr_playUpd()"
+            landmarkName = "spkr_update()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1996,7 +1996,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "230"
             endingLineNumber = "230"
-            landmarkName = "spkr_playUpd()"
+            landmarkName = "spkr_update()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2092,7 +2092,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "238"
             endingLineNumber = "238"
-            landmarkName = "spkr_playUpd()"
+            landmarkName = "spkr_update()"
             landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2108,8 +2108,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "262"
             endingLineNumber = "262"
-            landmarkName = "spkr_playUpd()"
-            landmarkType = "9">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

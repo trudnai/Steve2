@@ -64,7 +64,7 @@ const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
 unsigned spkr_extra_buf = 13; // TODO: Should it be a dynamic value calculated by how many bytes we overshot by the edge curve generator?
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate / spkr_fps;
-char spkr_samples [ spkr_buf_size * spkr_fps * 100]; // 1s of sound
+char spkr_samples [ spkr_buf_size * spkr_fps * 2]; // 1s of sound
 unsigned spkr_sample_idx = 0;
 
 
@@ -96,10 +96,15 @@ void spkr_init() {
     al_check_error();
     alSourcei(spkr_src, AL_LOOPING, AL_FALSE);
     al_check_error();
-    
+    alSourcef(spkr_src, AL_ROLLOFF_FACTOR, 0);
+    al_check_error();
+    alSource3f(spkr_src, AL_POSITION, 0.0, 8.0, 0.0);
+    al_check_error();
     alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
     al_check_error();
-    
+    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
+    al_check_error();
+
     // start from the beginning
     spkr_sample_idx = 0;
 
@@ -237,21 +242,21 @@ void spkr_update() {
 }
 
 
-void spkr_Update() {
-    if ( spkr_src && spkr_buf ) {
-        if ( spkr_src ) {
-            alSourcePause(spkr_src);
-            al_check_error();
-            alSourcei(spkr_src, AL_BUFFER, 0);
-            al_check_error();
-        }
-
-        // Download buffer to OpenAL
-        alBufferData(spkr_buf, AL_FORMAT_MONO8, spkr_samples, spkr_buf_size, spkr_sample_rate);
-        al_check_error();
-        
-        alSourcei( spkr_src, AL_BYTE_OFFSET, 0 );
-        al_check_error();
-        alSourcePlay(spkr_src);
-    }
-}
+//void spkr_Update() {
+//    if ( spkr_src && spkr_buf ) {
+//        if ( spkr_src ) {
+//            alSourcePause(spkr_src);
+//            al_check_error();
+//            alSourcei(spkr_src, AL_BUFFER, 0);
+//            al_check_error();
+//        }
+//
+//        // Download buffer to OpenAL
+//        alBufferData(spkr_buf, AL_FORMAT_MONO8, spkr_samples, spkr_buf_size, spkr_sample_rate);
+//        al_check_error();
+//
+//        alSourcei( spkr_src, AL_BYTE_OFFSET, 0 );
+//        al_check_error();
+//        alSourcePlay(spkr_src);
+//    }
+//}

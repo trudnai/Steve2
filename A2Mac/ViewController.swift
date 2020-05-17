@@ -234,7 +234,7 @@ class ViewController: NSViewController  {
     }
     
     override func keyDown(with event: NSEvent) {
-        print("KBD Event")
+        print("keyDown")
         
 //        for i in 0...65536 {
 //            ddd = Int(event.keyCode) + i
@@ -318,7 +318,7 @@ class ViewController: NSViewController  {
     
     
     override func keyUp(with event: NSEvent) {
-        print("KBD Event")
+        print("keyUp")
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.command] where event.characters == "l",
 //             [.command, .shift] where event.characters == "l":
@@ -620,6 +620,10 @@ class ViewController: NSViewController  {
             }
 //            }
             #endif
+
+            // stream speaker from a separate thread from the simulation
+            // TODO: Do we need to do this from here?
+//            spkr_update()
         }
         
         #if SPEEDTEST
@@ -738,6 +742,13 @@ class ViewController: NSViewController  {
         }
     }
     
+    
+    @IBOutlet weak var SoundGap: NSTextFieldCell!
+    
+    @IBAction func SoundGapChanged(_ sender: NSStepper) {
+        SoundGap.integerValue = sender.integerValue
+        spkr_extra_buf = UInt32( sender.integerValue )
+    }
     
 }
 

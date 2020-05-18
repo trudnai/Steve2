@@ -859,7 +859,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     // wait 100ms to be sure simulation has been halted
     usleep(100000);
     
-    printf("Bundlepath: %s", bundlePath);
+    printf("Bundlepath: %s\n", bundlePath);
 
 //    epoch = rdtsc();
 //    sleep(1);

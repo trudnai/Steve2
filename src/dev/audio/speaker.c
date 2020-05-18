@@ -89,7 +89,6 @@ void spkr_init() {
     // Fill buffer with zeros
     memset( spkr_samples, spkr_level, spkr_buf_size );
     
-    
     // Create buffer to store samples
     alGenBuffers(BUFFER_COUNT, spkr_buffers);
     al_check_error();
@@ -111,6 +110,8 @@ void spkr_init() {
     // start from the beginning
     spkr_sample_idx = 0;
 
+    // make sure we have free buffers initialized here
+    freeBuffers = BUFFER_COUNT;
 }
 
 // Dealloc OpenAL
@@ -154,12 +155,24 @@ void spkr_update() {
 //            spkr_buf = 0;
 //        }
 
+//        ALint queued = 0;
         ALint processed = 0;
+        
+//        alGetSourcei (spkr_src, AL_BUFFERS_QUEUED, &queued);
+//        alGetSourcei (spkr_src, AL_BUFFERS_PROCESSED, &processed);
+//
+//        printf("freeBuffers:%d  queued:%d  processed:%d\n", freeBuffers, queued,processed);
+        
         do {
             alGetSourcei (spkr_src, AL_BUFFERS_PROCESSED, &processed);
-//            if ( processed )
-            freeBuffers += processed;
 //            al_check_error();
+
+            if ( processed ) {
+                alSourceUnqueueBuffers( spkr_src, processed, &spkr_buffers[freeBuffers]);
+//            al_check_error();
+                freeBuffers += processed;
+            }
+            
 //            usleep(100);
 //            if ( freeBuffers <= 0 ) printf("No Free Buffer\n");
         } while( freeBuffers <= 0 );
@@ -172,11 +185,6 @@ void spkr_update() {
         alGetSourcei( spkr_src, AL_SOURCE_STATE, &state );
 //        al_check_error();
 
-        if ( processed ) {
-            alSourceUnqueueBuffers( spkr_src, processed, &spkr_buffers[freeBuffers - processed]);
-//            al_check_error();
-        }
-        
 //        spkr_samples[0] = 0;
 //        spkr_samples[1] = 255;
 //        spkr_samples[2] = 0;

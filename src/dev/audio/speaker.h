@@ -15,9 +15,6 @@
 #define SPKR_LEVEL_MAX      255
 #define SPKR_LEVEL_ZERO     ( SPKR_LEVEL_MIN + SPKR_LEVEL_MAX / 2 )
 
-extern void spkr_init(void);
-extern void spkr_exit(void);
-extern void spkr_update(void);
 
 extern const unsigned spkr_sample_rate;
 extern const unsigned spkr_buf_size;
@@ -31,6 +28,11 @@ extern unsigned spkr_extra_buf;
 extern const unsigned spkr_play_timeout;
 extern unsigned spkr_play_time;
 
+
+extern void spkr_init(void);
+extern void spkr_exit(void);
+extern void spkr_update(void);
+extern void spkr_toggle(void);
 
 
 #endif /* speaker_h */

@@ -55,20 +55,8 @@ ALCcontext *ctx = NULL;
 ALuint spkr_buf = 0;
 ALuint spkr_src = 0;
 
-// we start with the max, because otherwise the speaker clicks
-int spkr_level = SPKR_LEVEL_MAX;
 
-
-const int spkr_fps = fps;
-const int spkr_seconds = 1;
-const unsigned spkr_sample_rate = 44100;
-unsigned spkr_extra_buf = 13; // TODO: Should it be a dynamic value calculated by how many bytes we overshot by the edge curve generator?
-const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate / spkr_fps;
-char spkr_samples [ spkr_buf_size * spkr_fps * 2]; // 1s of sound
-unsigned spkr_sample_idx = 0;
-
-const unsigned spkr_play_timeout = 10;
-unsigned spkr_play_time = 0;
+int spkr_level = SPKR_LEVEL_ZERO;
 
 
 #define BUFFER_COUNT 10
@@ -77,10 +65,25 @@ unsigned spkr_play_time = 0;
 ALuint spkr_buffers[BUFFER_COUNT];
 
 
+const int spkr_fps = fps;
+const int spkr_seconds = 1;
+const unsigned spkr_sample_rate = 44100;
+unsigned spkr_extra_buf = 13; // TODO: Should it be a dynamic value calculated by how many bytes we overshot by the edge curve generator?
+const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate / spkr_fps;
+char spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT];
+unsigned spkr_sample_idx = 0;
+
+const unsigned spkr_play_timeout = 10;
+unsigned spkr_play_time = 0;
+
+
 // initialize OpenAL
 void spkr_init() {
     const char *defname = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
     printf( "Default device: %s\n", defname );
+
+    // restart OpenAL when restarting the virtual machine
+    spkr_exit();
     
     dev = alcOpenDevice(defname);
     ctx = alcCreateContext(dev, NULL);
@@ -116,20 +119,63 @@ void spkr_init() {
 
 // Dealloc OpenAL
 void spkr_exit() {
-    ALCdevice *dev = NULL;
-    ALCcontext *ctx = NULL;
-    ctx = alcGetCurrentContext();
-    dev = alcGetContextsDevice(ctx);
-    
-    alcMakeContextCurrent(NULL);
-    alcDestroyContext(ctx);
-    alcCloseDevice(dev);
-    
-    al_check_error();
+    if ( spkr_src ) {
+        ALCdevice *dev = NULL;
+        ALCcontext *ctx = NULL;
+        ctx = alcGetCurrentContext();
+        dev = alcGetContextsDevice(ctx);
+        
+        alcMakeContextCurrent(NULL);
+        alcDestroyContext(ctx);
+        alcCloseDevice(dev);
+        
+        al_check_error();
+        
+        spkr_src = 0;
+    }
 }
 
-void spkr_playStart() {
+
+void spkr_toggle() {
+    // TODO: This is very slow!
+    //            printf("io_KBDSTRB\n");
+    
+    spkr_play_time = spkr_play_timeout;
+    
+    // push a click into the speaker buffer
+    // (we will play the entire buffer at the end of the frame)
+    spkr_sample_idx = clkfrm / (default_MHz_6502 / spkr_sample_rate);
+    
+    if ( spkr_level > SPKR_LEVEL_MIN ) {
+        // down edge
+        while( (spkr_level -= (spkr_level - SPKR_LEVEL_MIN) / 2 ) > SPKR_LEVEL_MIN + 1 ) {
+            spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+        }
+        spkr_level = SPKR_LEVEL_MIN;
+    }
+    else {
+        // up edge
+        while( (spkr_level += (SPKR_LEVEL_MAX - spkr_level) / 2 )  < SPKR_LEVEL_MAX - 1 ) {
+            spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+        }
+        spkr_level = SPKR_LEVEL_MAX;
+    }
+    //spkr_samples[sample_idx] = spkr_level;
+    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size);
+    
+    //ViewController_spk_up_play();
+    
+    
+    //        case io_VID_CLR80VID:
+    //            videoMode.col80 = 0;
+    //            break;
+    //
+    //        case io_VID_SET80VID:
+    //            videoMode.col80 = 1;
+    //            break;
+    //
 }
+
 
 
 ALint freeBuffers = BUFFER_COUNT;

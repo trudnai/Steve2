@@ -14,6 +14,7 @@
 #include "../../src/dev/audio/speaker.h" // So we can access to speaker stuff from Swift
 
 
+extern const unsigned long long default_MHz_6502;
 extern unsigned long long MHz_6502;
 extern unsigned long long clk_6502_per_frm;
 extern unsigned long long clk_6502_per_frm_set;

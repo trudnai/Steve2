@@ -849,7 +849,6 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     mhz = (double)MHz_6502 / M;
     
     spkr_init();
-    spkr_playStart();
     
     unsigned long long saved_frm_set = clk_6502_per_frm_set;
     clk_6502_per_frm     =

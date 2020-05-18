@@ -400,47 +400,6 @@ void auxMemorySelect() {
 }
 
 
-INLINE void spkr_switch() {
-    // TODO: This is very slow!
-    //            printf("io_KBDSTRB\n");
-    
-    spkr_play_time = spkr_play_timeout;
-    
-    // push a click into the speaker buffer
-    // (we will play the entire buffer at the end of the frame)
-    spkr_sample_idx = clkfrm / (default_MHz_6502 / spkr_sample_rate);
-    
-    if ( spkr_level > SPKR_LEVEL_MIN ) {
-        // down edge
-        while( (spkr_level -= (spkr_level - SPKR_LEVEL_MIN) / 2 ) > SPKR_LEVEL_MIN + 1 ) {
-            spkr_samples[ spkr_sample_idx++ ] = spkr_level;
-        }
-        spkr_level = SPKR_LEVEL_MIN;
-    }
-    else {
-        // up edge
-        while( (spkr_level += (SPKR_LEVEL_MAX - spkr_level) / 2 )  < SPKR_LEVEL_MAX - 1 ) {
-            spkr_samples[ spkr_sample_idx++ ] = spkr_level;
-        }
-        spkr_level = SPKR_LEVEL_MAX;
-    }
-    //spkr_samples[sample_idx] = spkr_level;
-    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size);
-    
-    //ViewController_spk_up_play();
-    
-    
-    //        case io_VID_CLR80VID:
-    //            videoMode.col80 = 0;
-    //            break;
-    //
-    //        case io_VID_SET80VID:
-    //            videoMode.col80 = 1;
-    //            break;
-    //
-}
-
-
 INLINE uint8_t ioRead( uint16_t addr ) {
 //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
 //    printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
@@ -459,7 +418,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return Apple2_64K_RAM[io_KBDSTRB];
 
         case (uint8_t)io_SPKR:
-            spkr_switch();
+            spkr_toggle();
             return Apple2_64K_RAM[io_SPKR];
 
         case (uint8_t)io_VID_RDTEXT:
@@ -721,7 +680,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             break;
             
         case io_SPKR:
-            spkr_switch();
+            spkr_toggle();
             break;
             
         case io_RDMAINRAM:

@@ -921,7 +921,7 @@
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>
                                                         <autoresizingMask key="autoresizingMask"/>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" title="13" drawsBackground="YES" id="ZKd-sJ-O4U">
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" title="26" drawsBackground="YES" id="ZKd-sJ-O4U">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -930,7 +930,7 @@
                                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" id="uQO-BN-oqa">
                                                         <rect key="frame" x="88" y="-2" width="19" height="27"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="256" doubleValue="13" id="h0r-W8-egl"/>
+                                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="256" doubleValue="26" id="h0r-W8-egl"/>
                                                         <connections>
                                                             <action selector="SoundGapChanged:" target="XfG-lQ-9wD" id="Y1Z-lh-l8u"/>
                                                         </connections>

@@ -41,11 +41,6 @@
       </ContextState>
       <ContextState
          contextName = "spkr_playUpd:speaker.c">
-         <PersistentStrings>
-            <PersistentString
-               value = "freeBuffers">
-            </PersistentString>
-         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "m6502_ColdReset:6502.c">
@@ -144,6 +139,17 @@
          <PersistentStrings>
             <PersistentString
                value = "m6502">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "spkr_toggle:speaker.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "(clkfrm / (default_MHz_6502 / spkr_sample_rate))">
+            </PersistentString>
+            <PersistentString
+               value = "spkr_sample_idx">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

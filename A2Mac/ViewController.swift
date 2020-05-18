@@ -600,10 +600,10 @@ class ViewController: NSViewController  {
 //            self.hires.setNeedsDisplay( CGRect(x: 400, y: 600, width: 50, height: 50) )
 //            self.hires.setNeedsDisplay( CGRect(x: 500, y: 600, width: 50, height: 50) )
 
-            if self.savedVideoMode.text != videoMode.text {
-                self.savedVideoMode.text = videoMode.text
+            if self.savedVideoMode.mode != videoMode.mode {
+                self.savedVideoMode.mode = videoMode.mode
 
-//                self.hires.clearScreen()
+                self.hires.clearScreen()
 
                 if ( videoMode.text == 0 ) {
                     self.hires.isHidden = false
@@ -612,7 +612,7 @@ class ViewController: NSViewController  {
                     self.hires.isHidden = true
                 }
             }
-            
+
             // only refresh graphics view when needed (aka not in text mode)
             if ( videoMode.text == 0 ) {
 //                self.hires.needsDisplay = true

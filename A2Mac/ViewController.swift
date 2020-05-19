@@ -544,81 +544,26 @@ class ViewController: NSViewController  {
 //            }
             
             #if HIRES
-//            if ( self.was < 300 ) {
-//                self.was += 1
-//
-//                for x in stride(from: 0, to: 280, by: 7) {
-//                    for y in stride(from: 0, to: 192, by: 8) {
-//                        self.hires.setNeedsDisplay( CGRect(x: x, y: y, width: 7, height: 8) )
-//                    }
-//                }
-//            }
-            
-//                self.HiRes.setNeedsDisplay(self.HiRes.frame)
-//            self.hires.setNeedsDisplay( CGRect(x: 0, y: 0, width: self.hires.frame.width, height: self.hires.frame.height) )
-
-            
-//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 100, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 100, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 100, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 100, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 100, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 800, y: 100, width: 50, height: 50) )
-//
-//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 200, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 200, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 200, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 200, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 200, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 200, width: 50, height: 50) )
-//
-//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 300, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 300, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 300, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 300, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 300, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 300, width: 50, height: 50) )
-//
-//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 400, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 400, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 400, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 400, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 400, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 400, width: 50, height: 50) )
-//
-//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 500, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 500, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 500, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 500, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 500, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 500, width: 50, height: 50) )
-//
-//            self.hires.setNeedsDisplay( CGRect(x:   0, y: 600, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 100, y: 600, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 200, y: 600, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 300, y: 600, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 400, y: 600, width: 50, height: 50) )
-//            self.hires.setNeedsDisplay( CGRect(x: 500, y: 600, width: 50, height: 50) )
-
-            if self.savedVideoMode.mode != videoMode.mode {
-                self.savedVideoMode.mode = videoMode.mode
-
-                self.hires.clearScreen()
-
-                if ( videoMode.text == 0 ) {
-                    self.hires.isHidden = false
-                }
-                else {
-                    self.hires.isHidden = true
-                }
-            }
 
             // only refresh graphics view when needed (aka not in text mode)
             if ( videoMode.text == 0 ) {
-//                self.hires.needsDisplay = true
+                // when we change video mode, buffer needs to be cleared to avoid artifacts
+                if ( self.savedVideoMode.text == 1 )
+                || ( self.savedVideoMode.mixed != videoMode.mixed )
+                {
+                    self.hires.clearScreen()
+                    self.hires.isHidden = false
+                }
+
                 self.hires.Update()
             }
-//            }
+            else if ( self.savedVideoMode.text == 0 ) {
+                // we just switched from grahics to text
+                self.hires.isHidden = true
+            }
+
+            self.savedVideoMode = videoMode
+
             #endif
 
             // stream speaker from a separate thread from the simulation

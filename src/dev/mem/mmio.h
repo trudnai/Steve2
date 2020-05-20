@@ -14,6 +14,7 @@
 #include "disk.h"
 #include "woz.h"
 #include "speaker.h"
+#include "paddle.h"
 
 
 typedef union address16_u {
@@ -486,11 +487,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_PDL1:
         case (uint8_t)io_PDL2:
         case (uint8_t)io_PDL3:
-//            if ( RAM[addr] > 127 ) {
-//                RAM[addr]--;
-//            }
-            return Apple2_64K_RAM[addr];
+            printf("PDL%d: %d\n", addr - io_PDL0, pdl_read( addr - io_PDL0 ));
+            return pdl_read( addr - io_PDL0 );
             
+        case (uint8_t)io_PDL_STROBE:
+            return pdl_reset();
+
         case (uint8_t)io_MEM_RDRAM_NOWR_2:
         case (uint8_t)io_MEM_RDROM_WRAM_2:
         case (uint8_t)io_MEM_RDROM_NOWR_2:

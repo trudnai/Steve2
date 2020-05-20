@@ -6,41 +6,40 @@
          contextName = "AND:6502_instr_logic.h">
       </ContextState>
       <ContextState
-         contextName = "set_flags_V:common.h">
+         contextName = "LSRA:6502_instr_shift_rotate.h">
          <PersistentStrings>
             <PersistentString
-               value = "test">
+               value = "m6502.A">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "read_rom:6502.c">
+         contextName = "specialized closure #1 in ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "Apple2_64K_AUX + 0xC600">
-            </PersistentString>
-            <PersistentString
-               value = "Apple2_64K_RAM + 0xC600">
-            </PersistentString>
-            <PersistentString
-               value = "(void*)rom">
-            </PersistentString>
-            <PersistentString
-               value = "strlen(fullPath)">
-            </PersistentString>
-            <PersistentString
-               value = "(void*)Apple2_64K_RAM">
+               value = "self.HiRes.frame">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "rel_addr:Apple2_mmio.h">
+         contextName = "read_woz:6502.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "r">
+            </PersistentString>
+            <PersistentString
+               value = "foffs + woz_chunk_header.size">
+            </PersistentString>
+            <PersistentString
+               value = "woz_chunk_header.size">
+            </PersistentString>
+            <PersistentString
+               value = "sizeof(woz_chunk_header_t)">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "addr_ind_Y:Apple2_mmio.h">
-      </ContextState>
-      <ContextState
-         contextName = "spkr_playUpd:speaker.c">
+         contextName = "CMP:6502_instr_compare_test.h">
       </ContextState>
       <ContextState
          contextName = "m6502_ColdReset:6502.c">
@@ -54,65 +53,85 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "set_flags_NZC:common.h">
+         contextName = "STR:6502_instr_load_store.h">
          <PersistentStrings>
             <PersistentString
-               value = "(unsigned)0xFF">
-            </PersistentString>
-            <PersistentString
-               value = "(unsigned)test ">
+               value = "m6502">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "mach_msg_trap:(null)">
+         contextName = "m6502_Step:6502.c">
          <PersistentStrings>
+            <PersistentString
+               value = "m6502.dbgLevel.trace">
+            </PersistentString>
+            <PersistentString
+               value = "RAM[0x51]">
+            </PersistentString>
+            <PersistentString
+               value = "disassembly">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.A">
+            </PersistentString>
             <PersistentString
                value = "RAM">
             </PersistentString>
+            <PersistentString
+               value = "RAM[0x50]">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.viewDidLoad():ViewController.swift">
+         contextName = "addr_abs:mmio.h">
          <PersistentStrings>
             <PersistentString
-               value = "y">
-            </PersistentString>
-            <PersistentString
-               value = "textLines">
-            </PersistentString>
-            <PersistentString
-               value = "hires.frame">
-            </PersistentString>
-            <PersistentString
-               value = "view">
-            </PersistentString>
-            <PersistentString
-               value = "hires.layer">
+               value = "cache">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.Reset(_:):ViewController.swift">
+         contextName = "addr_ind_Y:Apple2_mmio.h">
+      </ContextState>
+      <ContextState
+         contextName = "set_flags_NZCV:common.h">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.pc">
+               value = "m6502">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ORA:6502_instr_logic.h">
-      </ContextState>
-      <ContextState
-         contextName = "BRA:6502_instr_branch.h">
+         contextName = "AppDelegate.Disk1_Selected(_:):AppDelegate.swift">
          <PersistentStrings>
             <PersistentString
-               value = "">
-            </PersistentString>
-            <PersistentString
-               value = "RAM[0x346f]">
+               value = "sender.identifier!.rawValue">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "spkr_switch:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "freeBuffers">
+            </PersistentString>
+            <PersistentString
+               value = "BUFFER_COUNT">
+            </PersistentString>
+            <PersistentString
+               value = "clk_6502_per_frm_set">
+            </PersistentString>
+            <PersistentString
+               value = "clkfrm">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PLA:6502_instr_stack.h">
+      </ContextState>
+      <ContextState
+         contextName = "LDA:6502_instr_load_store.h">
       </ContextState>
       <ContextState
          contextName = "HiRes.initMetal():HiRes.swift">
@@ -135,26 +154,37 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "set_flags_NZCV:common.h">
+         contextName = "JMP:6502_instr_call_ret_jump.h">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.createHiRes():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "m6502">
+               value = "container.frame">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "spkr_toggle:speaker.c">
+         contextName = "ADC:6502_instr_arithmetic.h">
+      </ContextState>
+      <ContextState
+         contextName = "HiRes.initHiResLineAddresses():HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "(clkfrm / (default_MHz_6502 / spkr_sample_rate))">
-            </PersistentString>
-            <PersistentString
-               value = "spkr_sample_idx">
+               value = "HiResLineAddrTbl">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "memread8:Apple2_mmio.h">
+         contextName = "spkr_playUpd:speaker.c">
+      </ContextState>
+      <ContextState
+         contextName = "mach_msg_trap:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "RAM">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "textPageSelect:mmio.h">
@@ -167,6 +197,170 @@
             </PersistentString>
             <PersistentString
                value = "MEMcfg">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "memread8:Apple2_mmio.h">
+      </ContextState>
+      <ContextState
+         contextName = "set_flags_NZ:common.h">
+      </ContextState>
+      <ContextState
+         contextName = "pdl_read:paddle.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "pdl_elapsed_time">
+            </PersistentString>
+            <PersistentString
+               value = "pdl_value[pdl]">
+            </PersistentString>
+            <PersistentString
+               value = "normalized_time &gt;= pdl_value[pdl] ? 255 : 0">
+            </PersistentString>
+            <PersistentString
+               value = "(3300 * 255/3300)">
+            </PersistentString>
+            <PersistentString
+               value = "(uint8_t)( pdl_value[pdl] * 512 * ( 1 - (pdl_elapsed_time / 3300.0) ) )">
+            </PersistentString>
+            <PersistentString
+               value = "1 * 512 * (1  - ( 3300 / 3300.0  ))">
+            </PersistentString>
+            <PersistentString
+               value = "normalized_time">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "PUSH:6502_instr_stack.h">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.viewDidLoad():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "y">
+            </PersistentString>
+            <PersistentString
+               value = "textLines">
+            </PersistentString>
+            <PersistentString
+               value = "hires.layer">
+            </PersistentString>
+            <PersistentString
+               value = "view">
+            </PersistentString>
+            <PersistentString
+               value = "hires.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "dest_ind_Y:Apple2_mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "disassembly">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CPY:6502_instr_compare_test.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.Y">
+            </PersistentString>
+            <PersistentString
+               value = "(int)m6502.Y - imm">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "set_flags_NZC:common.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "(unsigned)test ">
+            </PersistentString>
+            <PersistentString
+               value = "(unsigned)0xFF">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "STA:6502_instr_load_store.h">
+      </ContextState>
+      <ContextState
+         contextName = "ORA:6502_instr_logic.h">
+      </ContextState>
+      <ContextState
+         contextName = "m6502_step:6502.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502">
+            </PersistentString>
+            <PersistentString
+               value = "bp1">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+            <PersistentString
+               value = "RAM">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "woz_read:woz.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.clktime">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clktime + clkfrm - m6502.clklast">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clktime + clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clklast">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "rel_addr:Apple2_mmio.h">
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.Reset(_:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.pc">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "m6502_run:6502.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "RAM[0x70]">
+            </PersistentString>
+            <PersistentString
+               value = "RAM[0x74]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.setCPUClockSpeed(freq:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "MHz_6502">
+            </PersistentString>
+            <PersistentString
+               value = "mhz">
+            </PersistentString>
+            <PersistentString
+               value = "fps">
+            </PersistentString>
+            <PersistentString
+               value = "clk_6502_per_frm">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -206,69 +400,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "CPY:6502_instr_compare_test.h">
+         contextName = "spkr_toggle:speaker.c">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.Y">
+               value = "(clkfrm / (default_MHz_6502 / spkr_sample_rate))">
             </PersistentString>
             <PersistentString
-               value = "(int)m6502.Y - imm">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "LSRA:6502_instr_shift_rotate.h">
-         <PersistentStrings>
-            <PersistentString
-               value = "m6502.A">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "STR:6502_instr_load_store.h">
-         <PersistentStrings>
-            <PersistentString
-               value = "m6502">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "PLA:6502_instr_stack.h">
-      </ContextState>
-      <ContextState
-         contextName = "BNE:6502_instr_branch.h">
-      </ContextState>
-      <ContextState
-         contextName = "PUSH:6502_instr_stack.h">
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.Update():ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "y * (textCols + lineEndChars) + x ">
-            </PersistentString>
-            <PersistentString
-               value = "textCols">
-            </PersistentString>
-            <PersistentString
-               value = "textLines * (textCols+1) + textCols">
-            </PersistentString>
-            <PersistentString
-               value = "textLines">
-            </PersistentString>
-            <PersistentString
-               value = "txtArr">
-            </PersistentString>
-            <PersistentString
-               value = "clkfrm">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.createHiRes():ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "container.frame">
+               value = "spkr_sample_idx">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -276,10 +414,10 @@
          contextName = "HiRes.draw(_:):HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "ctx?.height">
+               value = "linAddr">
             </PersistentString>
             <PersistentString
-               value = "ctx?.data">
+               value = "shadowScreen">
             </PersistentString>
             <PersistentString
                value = "ctx?.width">
@@ -303,54 +441,61 @@
                value = "HiRes.blockCols">
             </PersistentString>
             <PersistentString
+               value = "ctx?.height">
+            </PersistentString>
+            <PersistentString
                value = "ctx?.bitsPerComponent">
             </PersistentString>
             <PersistentString
-               value = "linAddr">
-            </PersistentString>
-            <PersistentString
-               value = "shadowScreen">
+               value = "ctx?.data">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ioRead:mmio.h">
+         contextName = "set_flags_V:common.h">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.PC">
+               value = "test">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.currentContext.getter:ViewController.swift">
+         contextName = "HiRes.compute():HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "NSGraphicsContext.current">
+               value = "computePipelineState.maxTotalThreadsPerThreadgroup">
+            </PersistentString>
+            <PersistentString
+               value = "result[2]">
+            </PersistentString>
+            <PersistentString
+               value = "UnsafeRawBufferPointer(result)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "AppDelegate.Disk1_Selected(_:):AppDelegate.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "sender.identifier!.rawValue">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "init:6502.c">
       </ContextState>
       <ContextState
-         contextName = "woz_read:woz.c">
+         contextName = "ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.clktime">
+               value = "y * (textCols + lineEndChars) + x ">
             </PersistentString>
             <PersistentString
-               value = "m6502.clktime + clkfrm - m6502.clklast">
+               value = "textCols">
             </PersistentString>
             <PersistentString
-               value = "m6502.clktime + clkfrm">
+               value = "textLines * (textCols+1) + textCols">
             </PersistentString>
             <PersistentString
-               value = "m6502.clklast">
+               value = "textLines">
+            </PersistentString>
+            <PersistentString
+               value = "clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "txtArr">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -372,171 +517,55 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "set_flags_NZ:common.h">
+         contextName = "ioRead:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "CMP:6502_instr_compare_test.h">
+         contextName = "ViewController.currentContext.getter:ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "NSGraphicsContext.current">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "read_rom:6502.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "Apple2_64K_AUX + 0xC600">
+            </PersistentString>
+            <PersistentString
+               value = "(void*)rom">
+            </PersistentString>
+            <PersistentString
+               value = "Apple2_64K_RAM + 0xC600">
+            </PersistentString>
+            <PersistentString
+               value = "strlen(fullPath)">
+            </PersistentString>
+            <PersistentString
+               value = "(void*)Apple2_64K_RAM">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "POP:6502_instr_stack.h">
       </ContextState>
       <ContextState
-         contextName = "LDA:6502_instr_load_store.h">
+         contextName = "BNE:6502_instr_branch.h">
       </ContextState>
       <ContextState
-         contextName = "m6502_step:6502.c">
+         contextName = "BRA:6502_instr_branch.h">
          <PersistentStrings>
             <PersistentString
-               value = "m6502">
+               value = "">
             </PersistentString>
             <PersistentString
-               value = "bp1">
-            </PersistentString>
-            <PersistentString
-               value = "m6502.PC">
-            </PersistentString>
-            <PersistentString
-               value = "RAM">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HiRes.initHiResLineAddresses():HiRes.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "HiResLineAddrTbl">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "specialized closure #1 in ViewController.Update():ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.HiRes.frame">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "JMP:6502_instr_call_ret_jump.h">
-      </ContextState>
-      <ContextState
-         contextName = "STA:6502_instr_load_store.h">
-      </ContextState>
-      <ContextState
-         contextName = "addr_abs:mmio.h">
-         <PersistentStrings>
-            <PersistentString
-               value = "cache">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "m6502_Step:6502.c">
-         <PersistentStrings>
-            <PersistentString
-               value = "m6502.dbgLevel.trace">
-            </PersistentString>
-            <PersistentString
-               value = "RAM[0x51]">
-            </PersistentString>
-            <PersistentString
-               value = "disassembly">
-            </PersistentString>
-            <PersistentString
-               value = "RAM">
-            </PersistentString>
-            <PersistentString
-               value = "RAM[0x50]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ADC:6502_instr_arithmetic.h">
-      </ContextState>
-      <ContextState
-         contextName = "m6502_run:6502.c">
-         <PersistentStrings>
-            <PersistentString
-               value = "RAM[0x70]">
-            </PersistentString>
-            <PersistentString
-               value = "RAM[0x74]">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HiRes.compute():HiRes.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "UnsafeRawBufferPointer(result)">
-            </PersistentString>
-            <PersistentString
-               value = "result[2]">
-            </PersistentString>
-            <PersistentString
-               value = "computePipelineState.maxTotalThreadsPerThreadgroup">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "init:6502.c">
-      </ContextState>
-      <ContextState
-         contextName = "read_woz:6502.c">
-         <PersistentStrings>
-            <PersistentString
-               value = "r">
-            </PersistentString>
-            <PersistentString
-               value = "foffs + woz_chunk_header.size">
-            </PersistentString>
-            <PersistentString
-               value = "woz_chunk_header.size">
-            </PersistentString>
-            <PersistentString
-               value = "sizeof(woz_chunk_header_t)">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "dest_ind_Y:Apple2_mmio.h">
-         <PersistentStrings>
-            <PersistentString
-               value = "disassembly">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "spkr_switch:mmio.h">
-         <PersistentStrings>
-            <PersistentString
-               value = "freeBuffers">
-            </PersistentString>
-            <PersistentString
-               value = "BUFFER_COUNT">
-            </PersistentString>
-            <PersistentString
-               value = "clk_6502_per_frm_set">
-            </PersistentString>
-            <PersistentString
-               value = "clkfrm">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.setCPUClockSpeed(freq:):ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "MHz_6502">
-            </PersistentString>
-            <PersistentString
-               value = "mhz">
-            </PersistentString>
-            <PersistentString
-               value = "fps">
-            </PersistentString>
-            <PersistentString
-               value = "clk_6502_per_frm">
+               value = "RAM[0x346f]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

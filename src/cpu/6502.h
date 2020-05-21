@@ -148,6 +148,8 @@ extern uint8_t * const RAM;
 extern uint8_t * const MEM;         // Pointer to the Shadow Memory Map so we can use this from Swift//extern uint8_t * AUX_VID_RAM;
 extern uint32_t * videoMemPtr;
 
+extern double * pdl_valarr;
+
 //extern void hires_Update(void);
 
 extern double mips;
@@ -161,7 +163,7 @@ extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
 extern void m6502_Run(void);
 extern void kbdInput ( uint8_t code );
-extern void kbdUp ();
+extern void kbdUp (void);
 extern void setIO ( uint16_t ioaddr, uint8_t val );
 
 extern void interrupt_IRQ(void);

@@ -364,42 +364,51 @@ class ViewController: NSViewController  {
         kbdUp()
         
     }
-//    override func flagsChanged(with event: NSEvent) {
-//        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
-//        case [.shift]:
-//            print("shift key is pressed")
-//        case [.control]:
-//            print("control key is pressed")
-//        case [.option] :
-//            print("option key is pressed")
-//        case [.command]:
-//            print("Command key is pressed")
-//        case [.control, .shift]:
-//            print("control-shift keys are pressed")
-//        case [.option, .shift]:
-//            print("option-shift keys are pressed")
-//        case [.command, .shift]:
-//            print("command-shift keys are pressed")
-//        case [.control, .option]:
-//            print("control-option keys are pressed")
-//        case [.control, .command]:
-//            print("control-command keys are pressed")
-//        case [.option, .command]:
-//            print("option-command keys are pressed")
-//        case [.shift, .control, .option]:
-//            print("shift-control-option keys are pressed")
-//        case [.shift, .control, .command]:
-//            print("shift-control-command keys are pressed")
-//        case [.control, .option, .command]:
-//            print("control-option-command keys are pressed")
-//        case [.shift, .command, .option]:
-//            print("shift-command-option keys are pressed")
-//        case [.shift, .control, .option, .command]:
-//            print("shift-control-option-command keys are pressed")
-//        default:
-//            print("no modifier keys are pressed")
-//        }
-//    }
+    
+    override func flagsChanged(with event: NSEvent) {
+        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        case [.shift]:
+            print("shift key is pressed")
+        case [.control]:
+            print("control key is pressed")
+        case [.option] :
+            setIO(0xC061, 1 << 7);
+            print("option key is pressed")
+        case [.command]:
+            print("Command key is pressed")
+            setIO(0xC062, 1 << 7);
+        case [.control, .shift]:
+            print("control-shift keys are pressed")
+        case [.option, .shift]:
+            print("option-shift keys are pressed")
+        case [.command, .shift]:
+            print("command-shift keys are pressed")
+        case [.control, .option]:
+            print("control-option keys are pressed")
+        case [.control, .command]:
+            print("control-command keys are pressed")
+        case [.option, .command]:
+            print("option-command keys are pressed")
+        case [.shift, .control, .option]:
+            print("shift-control-option keys are pressed")
+        case [.shift, .control, .command]:
+            print("shift-control-command keys are pressed")
+        case [.control, .option, .command]:
+            print("control-option-command keys are pressed")
+        case [.shift, .command, .option]:
+            print("shift-command-option keys are pressed")
+        case [.shift, .control, .option, .command]:
+            print("shift-control-option-command keys are pressed")
+        case [.function]:
+            print("function key is pressed")
+        case [.capsLock]:
+            print("capsLock key is pressed")
+        default:
+            setIO(0xC061, 0);
+            setIO(0xC062, 0);
+            print("no modifier keys are pressed")
+        }
+    }
 
 
     
@@ -414,8 +423,12 @@ class ViewController: NSViewController  {
     
     var halted = true;
     
+    var mouseLocation = NSPoint.zero
+    
     func Update() {
 //        clk_6502_per_frm_max = 0
+        
+
         
         clkCounter += Double(clkfrm)
         // we start a new frame from here, so CPU is running even while rendering
@@ -569,7 +582,13 @@ class ViewController: NSViewController  {
             // stream speaker from a separate thread from the simulation
             // TODO: Do we need to do this from here?
 //            spkr_update()
+
+            // Mouse 2 JoyStick (Game Controller / Paddle)
+            self.mouseLocation = self.view.window!.mouseLocationOutsideOfEventStream
+            pdl_valarr[0] = Double(self.mouseLocation.x / (self.displayField.frame.width) )
+            pdl_valarr[1] = 1 - Double(self.mouseLocation.y / (self.displayField.frame.height) )
         }
+        
         
         #if SPEEDTEST
         #else

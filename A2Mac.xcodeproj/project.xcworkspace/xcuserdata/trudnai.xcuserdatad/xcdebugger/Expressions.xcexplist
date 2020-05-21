@@ -495,6 +495,9 @@
                value = "clkfrm">
             </PersistentString>
             <PersistentString
+               value = "mouseLocation">
+            </PersistentString>
+            <PersistentString
                value = "txtArr">
             </PersistentString>
          </PersistentStrings>

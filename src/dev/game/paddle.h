@@ -20,7 +20,11 @@ uint64_t pdl_current_time = 0;
 uint64_t pdl_elapsed_time = 0;
 
 double pdl_value[4] = { 0.5, 0.5, 0.5, 0.5 };
+double pdl_prev[4] = { 0.5, 0.5, 0.5, 0.5 };
+double pdl_diff[4] = { 0.0, 0.0, 0.0, 0.0 };
 double * pdl_valarr = pdl_value;
+double * pdl_prevarr = pdl_prev;
+double * pdl_diffarr = pdl_diff;
 
 INLINE uint8_t pdl_reset() {
     pdl_reset_time = m6502.clktime + clkfrm;

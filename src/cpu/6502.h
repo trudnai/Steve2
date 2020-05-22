@@ -149,13 +149,15 @@ extern uint8_t * const MEM;         // Pointer to the Shadow Memory Map so we ca
 extern uint32_t * videoMemPtr;
 
 extern double * pdl_valarr;
+extern double * pdl_prevarr;
+extern double * pdl_diffarr;
 
 //extern void hires_Update(void);
 
 extern double mips;
 extern double mhz;
 
-#define fps 30U
+#define fps 60U
 
 extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void woz_loadFile( const char * bundlePath, const char * filename );

@@ -68,7 +68,7 @@ ALuint spkr_buffers[BUFFER_COUNT];
 const int spkr_fps = fps;
 const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
-unsigned spkr_extra_buf = 26; // TODO: Should it be a dynamic value calculated by how many bytes we overshot by the edge curve generator?
+unsigned spkr_extra_buf = 780 / fps;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * 2 / spkr_fps;
 char spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT * 2]; // stereo
 unsigned spkr_sample_idx = 0;

@@ -583,16 +583,23 @@ class ViewController: NSViewController  {
             // TODO: Do we need to do this from here?
 //            spkr_update()
 
-            // Mouse 2 JoyStick (Game Controller / Paddle)
-            self.mouseLocation = self.view.window!.mouseLocationOutsideOfEventStream
-            pdl_valarr[0] = Double(self.mouseLocation.x / (self.displayField.frame.width) )
-            pdl_valarr[1] = 1 - Double(self.mouseLocation.y / (self.displayField.frame.height) )
         }
         
         
         #if SPEEDTEST
         #else
         if ( !halted ) {
+            // Mouse 2 JoyStick (Game Controller / Paddle)
+            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
+            
+            pdl_prevarr[0] = pdl_valarr[0]
+            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
+            
+            pdl_prevarr[1] = pdl_valarr[1]
+            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
+
             m6502_Run()
         }
         #endif

@@ -407,6 +407,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 
     uint8_t currentMagnet = 0;
     
+    // TODO: This is for checking only, should be either removed or the entire ioRead should based on binary search, whatever is faster
+    if ( addr == io_KBD ) {
+//        clk_6502_per_frm_max = clk_6502_per_frm_max > 32768 ? clk_6502_per_frm_max - 32768 : 0; // ECO Mode!
+        return Apple2_64K_RAM[io_KBD];
+    }
+    
     switch ( (uint8_t)addr ) {
         case (uint8_t)io_KBD:
 //            if ( RAM[io_KBD] > 0x7F ) printf("io_KBD:%04X\n", addr);

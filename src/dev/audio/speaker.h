@@ -11,15 +11,15 @@
 
 #include <stdio.h>
 
-#define SPKR_LEVEL_MIN      32
-#define SPKR_LEVEL_MAX      223
-#define SPKR_LEVEL_ZERO     128 // as defined in OpenAL documentation for 8bit PCM
+#define SPKR_LEVEL_MIN      (-28000)
+#define SPKR_LEVEL_MAX      (+28000)
+#define SPKR_LEVEL_ZERO     0 // as defined in OpenAL documentation for 8bit PCM
 
 
 extern const unsigned spkr_sample_rate;
 extern const unsigned spkr_buf_size;
 extern const int spkr_fps;
-extern char spkr_samples [];
+extern int16_t spkr_samples [];
 extern unsigned spkr_sample_idx;
 extern int spkr_level;
 extern int freeBuffers;

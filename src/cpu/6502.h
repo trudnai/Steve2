@@ -157,7 +157,7 @@ extern double * pdl_diffarr;
 extern double mips;
 extern double mhz;
 
-#define fps 60U
+#define fps 30U
 
 extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void woz_loadFile( const char * bundlePath, const char * filename );

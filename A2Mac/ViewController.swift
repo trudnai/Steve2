@@ -285,20 +285,33 @@ class ViewController: NSViewController  {
             switch keyCode {
             case leftArrowKey:
                 kbdInput(0x08)
-                setIO(0xC064, 0);
+//                setIO(0xC064, 0);
                 print("LEFT", ddd);
+                
+                // Keyboard 2 JoyStick (Game Controller / Paddle)
+                pdl_valarr[0] = 0
+                
             case rightArrowKey:
                 kbdInput(0x15)
-                setIO(0xC064, 255);
+//                setIO(0xC064, 255);
                 print("RIGHT")
+                // Keyboard 2 JoyStick (Game Controller / Paddle)
+                pdl_valarr[0] = 1
+                
             case downArrowKey:
                 kbdInput(0x0B)
-                setIO(0xC065, 255);
+//                setIO(0xC065, 255);
                 print("DOWN")
+                // Keyboard 2 JoyStick (Game Controller / Paddle)
+                pdl_valarr[1] = 0
+                
             case upArrowKey:
                 kbdInput(0x0A)
-                setIO(0xC065, 0);
+//                setIO(0xC065, 0);
                 print("UP")
+                // Keyboard 2 JoyStick (Game Controller / Paddle)
+                pdl_valarr[1] = 1
+                
             default:
     //            print("keycode: %d", keyCode)
                 if let chars = event.characters {
@@ -335,20 +348,32 @@ class ViewController: NSViewController  {
         switch keyCode {
         case leftArrowKey:
 //            kbdInput(0x08)
-            setIO(0xC064, 127);
+//            setIO(0xC064, 127);
             print("left")
+            // Keyboard 2 JoyStick (Game Controller / Paddle)
+            pdl_valarr[0] = 0.5
+            
         case rightArrowKey:
 //            kbdInput(0x15)
-            setIO(0xC064, 128);
+//            setIO(0xC064, 128);
             print("right")
+            // Keyboard 2 JoyStick (Game Controller / Paddle)
+            pdl_valarr[0] = 0.5
+            
         case downArrowKey:
 //            kbdInput(0x0B)
-            setIO(0xC065, 127);
+//            setIO(0xC065, 127);
             print("down")
+            // Keyboard 2 JoyStick (Game Controller / Paddle)
+            pdl_valarr[1] = 0.5
+            
         case upArrowKey:
 //            kbdInput(0x0A)
-            setIO(0xC065, 128);
+//            setIO(0xC065, 128);
             print("up")
+            // Keyboard 2 JoyStick (Game Controller / Paddle)
+            pdl_valarr[1] = 0.5
+            
         default:
 //            print("keycode: %d", keyCode)
 //            if let chars = event.characters {
@@ -425,6 +450,8 @@ class ViewController: NSViewController  {
     
     var mouseLocation = NSPoint.zero
     
+    var shadowTxt : String = ""
+    
     func Update() {
 //        clk_6502_per_frm_max = 0
         
@@ -466,9 +493,8 @@ class ViewController: NSViewController  {
         //   1. We can update UI elements
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
         DispatchQueue.main.async {
-            
             var txt : String = ""
-            
+
             var fromLines = 0
             var toLines = self.textLines
 
@@ -543,7 +569,10 @@ class ViewController: NSViewController  {
                 }
             }
             
-            self.display.stringValue = txt
+            if ( self.shadowTxt != txt ) {
+                self.shadowTxt = txt
+                self.display.stringValue = txt
+            }
 //            self.display.stringValue = "testing\nit\nout"
 
             if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
@@ -589,16 +618,16 @@ class ViewController: NSViewController  {
         #if SPEEDTEST
         #else
         if ( !halted ) {
-            // Mouse 2 JoyStick (Game Controller / Paddle)
-            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
-            
-            pdl_prevarr[0] = pdl_valarr[0]
-            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
-            pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
-            
-            pdl_prevarr[1] = pdl_valarr[1]
-            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-            pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
+//            // Mouse 2 JoyStick (Game Controller / Paddle)
+//            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
+//
+//            pdl_prevarr[0] = pdl_valarr[0]
+//            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
+//            pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
+//
+//            pdl_prevarr[1] = pdl_valarr[1]
+//            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+//            pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
 
             m6502_Run()
         }
@@ -627,7 +656,6 @@ class ViewController: NSViewController  {
         hires.clearScreen();
         
         woz_loadFile( Bundle.main.resourcePath, "Apple DOS 3.3 January 1983.woz" )
-
         
         let spk_up_path = Bundle.main.path(forResource: "spk_up", ofType:"wav")!
         let spk_up_url = URL(fileURLWithPath: spk_up_path)

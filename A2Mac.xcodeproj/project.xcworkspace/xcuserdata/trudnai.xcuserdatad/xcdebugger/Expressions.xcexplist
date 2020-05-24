@@ -439,6 +439,9 @@
             <PersistentString
                value = "(int16_t)28000 + (int16_t)-32768">
             </PersistentString>
+            <PersistentString
+               value = "28000 + fadeLevel">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState

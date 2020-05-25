@@ -485,10 +485,15 @@ class HiRes: NSView {
     let color_black     : UInt32 = 0x00000000;
     let color_white     : UInt32 = 0xEEEEEEEE;
     let color_purple    : UInt32 = 0xFFBB11EE;
-    let color_green     : UInt32 = 0xFF0BA212;
-    let color_blue      : UInt32 = 0xFF1166EE;
+    let color_green     : UInt32 = 0xFF0BBB11;
+    let color_blue      : UInt32 = 0xFF1155FF;
     let color_orange    : UInt32 = 0xFFEE2211;
+    
+    // for debugging only:
+    let color_turquis   : UInt32 = 0xFF11BBBB;
+    let color_yellow    : UInt32 = 0xFFBBBB11;
 
+    
     func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int ) {
         let colorAddr = pixelAddr / 4
         
@@ -507,10 +512,15 @@ class HiRes: NSView {
             }
             HiRes.pixelsRGBA[colorAddr + 1] = color_green
 
-        case 0x03, // white 1
-             0x07: // white 2
+        case 0x03: // white 1
+//            if ( colorAddr >= 2 ) && ( HiRes.pixelsRGBA[colorAddr - 2] != color_black ) {
+//                HiRes.pixelsRGBA[colorAddr - 1] = HiRes.pixelsRGBA[colorAddr - 2]
+//            }
+//            if (colorAddr >= 1) {
+//                HiRes.pixelsRGBA[colorAddr - 1] = color_white
+//            }
             HiRes.pixelsRGBA[colorAddr] = color_white
-            HiRes.pixelsRGBA[colorAddr + 1] = color_white;
+            HiRes.pixelsRGBA[colorAddr + 1] = color_white
 
         case 0x05: // blue
             HiRes.pixelsRGBA[colorAddr] = color_blue
@@ -524,6 +534,13 @@ class HiRes: NSView {
                 HiRes.pixelsRGBA[colorAddr] = color_orange
             }
             HiRes.pixelsRGBA[colorAddr + 1] = color_orange
+
+        case 0x07: // white 2
+//            if ( colorAddr >= 1 ) {
+//                HiRes.pixelsRGBA[colorAddr - 1] = color_yellow
+//            }
+            HiRes.pixelsRGBA[colorAddr] = color_white
+            HiRes.pixelsRGBA[colorAddr + 1] = color_white
 
         default: // 0x00 (black 1), 0x04 (black 2)
             HiRes.pixelsRGBA[colorAddr] = color_black
@@ -540,18 +557,17 @@ class HiRes: NSView {
             
             // TODO: Need better check if extra green was created
             if (colorAddr >= 2) && (HiRes.pixelsRGBA[colorAddr - 2] == color_green ) {
-                HiRes.pixelsRGBA[colorAddr - 2] = color_black
+                if (colorAddr < 3) || (HiRes.pixelsRGBA[colorAddr - 3] != color_green) {
+                    HiRes.pixelsRGBA[colorAddr - 2] = color_black
+                }
             }
         }
 
 //        // green adjustment -- followed by white
-//        if (prev == 0x02) && (
-//            (pixel == 0x02) ||
-//                (pixel == 0x03) || (pixel == 0x07)  // white
-//            ) {
+//        if (colorAddr >= 1) && (prev == 0x03) && (HiRes.pixelsRGBA[colorAddr - 1] = color_green) {
 //            HiRes.pixelsRGBA[colorAddr - 1] = color_green
 //        }
-//
+
         // purple adjustment -- followed by white
         if (prev == 0x01) && (
             (pixel == 0x01) ||

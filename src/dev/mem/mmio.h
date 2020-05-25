@@ -786,7 +786,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             
         case io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
-            MEMcfg.txt_page_2 = 1;
+            MEMcfg.txt_page_2 = ! MEMcfg.is_80STORE;
             textPageSelect();
             break;
             

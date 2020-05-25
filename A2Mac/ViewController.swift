@@ -170,7 +170,8 @@ class ViewController: NSViewController  {
     }
     
     
-    static let textBaseAddr = 0x400
+    static let textPage1Addr = 0x400
+    static let textPage2Addr = 0x800
     static let textBufferSize = 0x400
 
     // static only needed to be able to initialize things
@@ -191,8 +192,10 @@ class ViewController: NSViewController  {
 //    static var flashingSpace : Character = " "
     
     let ramBufferPointer = UnsafeRawBufferPointer(start: MEM, count: 64 * 1024)
-    let textBufferPointer = UnsafeRawBufferPointer(start: MEM + textBaseAddr, count: textBufferSize * 2)
-    let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textBaseAddr, count: textBufferSize)
+    static let textPage1Pointer = UnsafeRawBufferPointer(start: MEM + textPage1Addr, count: textBufferSize * 2)
+    static let textPage2Pointer = UnsafeRawBufferPointer(start: MEM + textPage2Addr, count: textBufferSize * 2)
+    var textBufferPointer = textPage1Pointer
+    let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textPage1Addr, count: textBufferSize)
 
     static let textArraySize = textLines * (textCols + lineEndChars) + textCols * 2
 
@@ -518,6 +521,12 @@ class ViewController: NSViewController  {
 
             // 40 col
             if videoMode.col80 == 0 {
+                if MEMcfg.txt_page_2 == 0 {
+                    self.textBufferPointer = ViewController.textPage1Pointer
+                }
+                else {
+                    self.textBufferPointer = ViewController.textPage2Pointer
+                }
                 // render the rest of the text screen
                 for y in fromLines ..< toLines {
                     for x in 0 ..< self.textCols {

@@ -161,7 +161,7 @@ void spkr_toggle() {
             // how smooth we want the speeker to decay, so we will hear no pops and crackles
             // 0.9 gives you a kind of saw wave at 1KHz (beep)
             // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-            fadeLevel *= 0.64;
+            fadeLevel *= 0.16;
         }
         spkr_level = SPKR_LEVEL_MIN;
     }
@@ -178,7 +178,7 @@ void spkr_toggle() {
             // how smooth we want the speeker to decay, so we will hear no pops and crackles
             // 0.9 gives you a kind of saw wave at 1KHz (beep)
             // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-            fadeLevel *= 0.64;
+            fadeLevel *= 0.32;
         }
         spkr_level = SPKR_LEVEL_MAX;
     }

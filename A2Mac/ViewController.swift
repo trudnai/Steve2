@@ -302,18 +302,18 @@ class ViewController: NSViewController  {
                 pdl_valarr[0] = 1
                 
             case downArrowKey:
-                kbdInput(0x0B)
+//                kbdInput(0x0B)
 //                setIO(0xC065, 255);
                 print("DOWN")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
-                pdl_valarr[1] = 0
+                pdl_valarr[1] = 1
                 
             case upArrowKey:
-                kbdInput(0x0A)
+//                kbdInput(0x0A)
 //                setIO(0xC065, 0);
                 print("UP")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
-                pdl_valarr[1] = 1
+                pdl_valarr[1] = 0
                 
             default:
     //            print("keycode: %d", keyCode)

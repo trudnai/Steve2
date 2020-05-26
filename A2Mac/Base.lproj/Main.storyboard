@@ -657,6 +657,36 @@
                                                             <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Nqe-vH-13o"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="Merlin Pro v1.34" identifier="Merlin Pro v1.34" id="yTC-pI-VWN">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="43k-vB-bj0"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Assembler (early version, 40-column, DOS 3.3) side A" identifier="Merlin Assembler (early version, 40-column, DOS 3.3) side A" id="m64-gM-Lqu">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Fky-ox-w05"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Assembler (early version, 40-column, DOS 3.3) side B" identifier="Merlin Assembler (early version, 40-column, DOS 3.3) side B" id="P9Q-Qp-7FJ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="m2X-qn-NPe"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Macroassembler Side 1 (SDS, 1983)" identifier="Merlin Macroassembler Side 1 (SDS, 1983)" id="VVb-MJ-Ooj">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="g6c-YI-RrA"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Macroassembler Side 2 (SDS, 1983)" identifier="Merlin Macroassembler Side 2 (SDS, 1983)" id="VpX-Fo-Kin">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Xxn-PJ-zcg"/>
+                                                        </connections>
+                                                    </menuItem>
                                                     <menuItem title="Donkey Kong" identifier="Donkey Kong" id="ero-Yw-Fxy">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
@@ -685,6 +715,48 @@
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Ysg-X9-qeK"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Lode Runner" identifier="Lode Runner" id="mnW-xe-mlX">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="nX5-Bp-bUh"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Assembler 1" identifier="merlin_assembler_1" id="4ij-ED-VKK">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="pKd-xa-EjP"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Assembler 2" identifier="merlin_assembler_2" id="XW0-r8-XCg">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="JUf-es-jdV"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Assembler 3" identifier="merlin_assembler_3" id="jjf-fs-rZ7">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="vIK-Yl-r1f"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Pro 2.45 (DOS) Disk 1-2" identifier="Merlin Pro 2.45 (DOS) Disk 1-2" id="jOM-h8-d1i">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="otr-1O-TAM"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Pro 2.45 (DOS) Disk 2-2" identifier="Merlin Pro 2.45 (DOS) Disk 2-2" id="brN-Z1-Wpp">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Bwc-m1-LET"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack)" identifier="Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack)" id="zBI-ok-Se7">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="GUr-Zl-fYR"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>

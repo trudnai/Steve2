@@ -1,0 +1,10 @@
+# gitignore for A2MAC project
+@ (c) by Tamas Rudnai
+
+# logfiles
+*.log
+**/*.log
+
+# XCode debugger settings
+A2Mac.xcodeproj/xcuserdata/trudnai.xcuserdatad/xcdebugger/
+

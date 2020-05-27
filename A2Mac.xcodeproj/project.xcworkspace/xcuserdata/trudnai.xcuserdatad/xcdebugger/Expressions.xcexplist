@@ -67,7 +67,19 @@
          contextName = "closure #1 in ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
+               value = "MEMcfg.txt_page_2">
+            </PersistentString>
+            <PersistentString
                value = "self.shadowTxt">
+            </PersistentString>
+            <PersistentString
+               value = "txt">
+            </PersistentString>
+            <PersistentString
+               value = "MEMcfg.is_80STORE">
+            </PersistentString>
+            <PersistentString
+               value = "txtArr">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -215,13 +227,16 @@
          contextName = "textPageSelect:mmio.h">
          <PersistentStrings>
             <PersistentString
-               value = "AUX[0x22]">
+               value = "MEMcfg">
             </PersistentString>
             <PersistentString
                value = "RAM[0x22]">
             </PersistentString>
             <PersistentString
-               value = "MEMcfg">
+               value = "AUX[0x22]">
+            </PersistentString>
+            <PersistentString
+               value = "newTextPage">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

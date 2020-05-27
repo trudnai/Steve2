@@ -192,10 +192,12 @@ class ViewController: NSViewController  {
 //    static var flashingSpace : Character = " "
     
     let ramBufferPointer = UnsafeRawBufferPointer(start: MEM, count: 64 * 1024)
-    static let textPage1Pointer = UnsafeRawBufferPointer(start: MEM + textPage1Addr, count: textBufferSize * 2)
-    static let textPage2Pointer = UnsafeRawBufferPointer(start: MEM + textPage2Addr, count: textBufferSize * 2)
+    static let textPage1Pointer = UnsafeRawBufferPointer(start: MEM + textPage1Addr, count: textBufferSize)
+    static let textPage2Pointer = UnsafeRawBufferPointer(start: MEM + textPage2Addr, count: textBufferSize)
+    static let textIntBufferPointer = UnsafeRawBufferPointer(start: RAM + textPage1Addr, count: textBufferSize)
+    static let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textPage1Addr, count: textBufferSize)
+
     var textBufferPointer = textPage1Pointer
-    let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textPage1Addr, count: textBufferSize)
 
     static let textArraySize = textLines * (textCols + lineEndChars) + textCols * 2
 
@@ -495,7 +497,7 @@ class ViewController: NSViewController  {
         // Rendering is happening in the main thread, which has two implications:
         //   1. We can update UI elements
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
-        DispatchQueue.main.async {
+        DispatchQueue.main.sync {
             var txt : String = ""
 
             var fromLines = 0
@@ -542,16 +544,21 @@ class ViewController: NSViewController  {
             }
             // 80 col
             else {
+                let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
+                
+                let textIntBuffer = auxPage ?  ViewController.textIntBufferPointer : ViewController.textPage1Pointer
+                let textAuxBuffer = auxPage ?  ViewController.textPage1Pointer : ViewController.textAuxBufferPointer
+                
                 // render the rest of the text screen
                 for y in fromLines ..< toLines {
                     for x in 0 ..< self.textCols {
-                        let byte = self.textBufferPointer[ self.textLineOfs[y] + x ]
+                        let byte = textIntBuffer[ self.textLineOfs[y] + x ]
                         let idx = Int(byte);
                         let chr = ViewController.charConvTbl[idx]
                         
                         self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
                         
-                        let byte2 = self.textAuxBufferPointer[ self.textLineOfs[y] + x ]
+                        let byte2 = textAuxBuffer[ self.textLineOfs[y] + x ]
                         let idx2 = Int(byte2);
                         let chr2 = ViewController.charConvTbl[idx2]
                         

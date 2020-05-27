@@ -28,6 +28,7 @@
 		32440B7D247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */; };
 		32440B80247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */; };
 		32440B81247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */; };
+		32440B83247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */; };
 		325EB62F23F8856F00C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
 		325EB63623F8F78300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
 		325EB63923F9E48100C6B4A4 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
@@ -174,6 +175,7 @@
 		32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Macroassembler Side 1 (SDS, 1983).woz"; sourceTree = "<group>"; };
 		32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz"; sourceTree = "<group>"; };
 		32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz"; sourceTree = "<group>"; };
+		32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wavy Navy (4am crack).woz"; sourceTree = "<group>"; };
 		325EB62D23F8856F00C6B4A4 /* woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = woz.h; sourceTree = "<group>"; };
 		325EB62E23F8856F00C6B4A4 /* woz.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = woz.c; sourceTree = "<group>"; };
 		325EB63423F8F78300C6B4A4 /* disk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disk.h; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				325EB6972401118200C6B4A4 /* Qbit.woz */,
 				325EB69A2401118300C6B4A4 /* Sneakers.woz */,
 				325EB6962401118200C6B4A4 /* Wavy Navy.woz */,
+				32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */,
 				325EB69B2401118300C6B4A4 /* Xonix.woz */,
 				32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */,
 				32440B74247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz */,
@@ -825,6 +828,7 @@
 				325EB69023FE028800C6B4A4 /* Donkey Kong.woz in Resources */,
 				325EB68923FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */,
 				325EB69F2401118300C6B4A4 /* Crossfire.woz in Resources */,
+				32440B83247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz in Resources */,
 				32440B81247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Resources */,
 				32440B80247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,

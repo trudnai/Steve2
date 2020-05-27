@@ -711,6 +711,12 @@
                                                             <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="lcd-GR-OVR"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="Wavy Navy (4am crack)" identifier="Wavy Navy (4am crack)" id="owL-6l-KXD">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="hRl-0O-47L"/>
+                                                        </connections>
+                                                    </menuItem>
                                                     <menuItem title="Xonix" identifier="Xonix" id="242-uR-ubX">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>

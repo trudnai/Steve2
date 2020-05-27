@@ -328,36 +328,32 @@ void resetMemory() {
 }
 
 
-static uint8_t page2 = 0;
-static uint8_t * activePage = Apple2_64K_RAM + 0x400;
+static uint8_t activeTextAuxPage = 0;
+static uint8_t * activeTextPage = Apple2_64K_RAM + 0x400;
+static uint8_t * shadowTextPage = Apple2_64K_MEM + 0x400;
+
+inline uint8_t *extracted() {
+    uint8_t * shadow = Apple2_64K_MEM + 0x400;
+    return shadow;
+}
 
 void textPageSelect() {
-    uint8_t * shadow = Apple2_64K_MEM + 0x400;
+    uint8_t textAuxPage = MEMcfg.is_80STORE && MEMcfg.txt_page_2;
     
-    if ( page2 != MEMcfg.txt_page_2 ) {
-        page2 = MEMcfg.txt_page_2;
-        static uint8_t * newPage = NULL;
+    if ( activeTextAuxPage != textAuxPage ) {
+        activeTextAuxPage = textAuxPage;
+        uint8_t * newTextPage = ( textAuxPage ? Apple2_64K_AUX : Apple2_64K_RAM ) + 0x400;
 
-        if ( MEMcfg.is_80STORE && MEMcfg.txt_page_2 ) {
-            newPage = Apple2_64K_AUX + 0x400;
+        if ( activeTextPage ) {
+            // save the content of Shadow Memory
+            memcpy(activeTextPage, shadowTextPage, 0x400);
         }
-        else {
-            newPage = Apple2_64K_RAM + 0x400;
-        }
-
-        if ( activePage != newPage ) {
-            if ( activePage ) {
-                // save the content of Shadow Memory
-                memcpy(activePage, shadow, 0x400);
-            }
-            
-            // load the content of Video Page 2
-            memcpy(shadow, newPage, 0x400);
-            
-            activePage = newPage;
-        }
+        
+        // load the content of new Video Page
+        memcpy(shadowTextPage, newTextPage, 0x400);
+        
+        activeTextPage = newTextPage;
     }
-    
 }
 
 
@@ -786,7 +782,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             
         case io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
-            MEMcfg.txt_page_2 = ! MEMcfg.is_80STORE;
+            MEMcfg.txt_page_2 = 1;
             textPageSelect();
             break;
             

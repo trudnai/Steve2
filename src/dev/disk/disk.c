@@ -7,8 +7,8 @@
 //
 
 #include "disk.h"
-#include "../../cpu/6502.h"
-#include "../../util/common.h"
+#include "6502.h"
+#include "common.h"
 #include "woz.h"
 
 
@@ -19,9 +19,7 @@ disk_t disk = {
 
 const int diskAccelerator_frames  = 2;
 int diskAccelerator_count = 0;
-int diskAccelerator_speed = 25 * M / fps; // less than actual CPU speed means no acceleration
-//const unsigned long long clk_6502_per_frm_diskAccelerator = 25 * M / fps; // disk acceleration bumps up CPU clock to 25 MHz
-//const unsigned long long clk_diskAcceleratorTimeout = 1000ULL;
+int diskAccelerator_speed = 25 * M / fps; // if less than actual CPU speed means no acceleration
 
 
 // motor position from the magnet state

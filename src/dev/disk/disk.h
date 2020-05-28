@@ -58,7 +58,7 @@ extern int diskAccelerator_count;           // counter for the disk acceleration
 extern int diskAccelerator_speed;           // if less than the actual CPU speed, no acceleration
 
 extern int diskAccelerator_count;
-
+extern int diskAccelerator_speed;
 
 //extern const unsigned long long clk_6502_per_frm_diskAccelerator;
 //extern const unsigned long long clk_diskAcceleratorTimeout;

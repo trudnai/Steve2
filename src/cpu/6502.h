@@ -10,8 +10,7 @@
 #define __6502_H__
 
 #include <stdint.h>
-#include "../../src/util/common.h"
-#include "../../src/dev/audio/speaker.h" // So we can access to speaker stuff from Swift
+#include "common.h"
 
 
 extern const unsigned long long default_MHz_6502;

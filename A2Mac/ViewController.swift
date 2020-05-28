@@ -754,7 +754,29 @@ class ViewController: NSViewController  {
         }
         else if let freq = Double( sender.title ) {
             setCPUClockSpeed(freq: freq)
+        
+            
+            // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
+            
+            spkr_extra_buf = 780 / fps
+            
+            switch freq {
+            case 2.0:
+                spkr_extra_buf = UInt32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
+                break
+                
+            case 4.0:
+                spkr_extra_buf = UInt32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
+                break
+                
+            default:
+                spkr_extra_buf = 780 / fps // normally it should come up as 26, but this way it is calculated with FPS
+                break
+            }
+                        
+            SoundGap.integerValue = Int(spkr_extra_buf)
         }
+        
     }
     
     
@@ -763,6 +785,15 @@ class ViewController: NSViewController  {
     @IBAction func SoundGapChanged(_ sender: NSStepper) {
         SoundGap.integerValue = sender.integerValue
         spkr_extra_buf = UInt32( sender.integerValue )
+    }
+    
+    @IBAction func QuickDisk(_ sender: NSButton) {
+        if sender.state == .on {
+            diskAccelerator_speed = Int32( 25 * M / Double(fps) )
+        }
+        else {
+            diskAccelerator_speed = 0
+        }
     }
     
 }

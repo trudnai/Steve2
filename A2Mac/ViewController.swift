@@ -398,26 +398,42 @@ class ViewController: NSViewController  {
     override func flagsChanged(with event: NSEvent) {
         switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
         case [.shift]:
+            setIO(0xC061, 0);
+            setIO(0xC062, 0);
+            setIO(0xC063, 1 << 7);
             print("shift key is pressed")
         case [.control]:
             print("control key is pressed")
         case [.option] :
             setIO(0xC061, 1 << 7);
+            setIO(0xC062, 0);
+            setIO(0xC063, 0);
             print("option key is pressed")
         case [.command]:
             print("Command key is pressed")
+            setIO(0xC061, 0);
             setIO(0xC062, 1 << 7);
+            setIO(0xC063, 0);
         case [.control, .shift]:
             print("control-shift keys are pressed")
         case [.option, .shift]:
+            setIO(0xC061, 1 << 7);
+            setIO(0xC062, 0);
+            setIO(0xC063, 1 << 7);
             print("option-shift keys are pressed")
         case [.command, .shift]:
+            setIO(0xC061, 0);
+            setIO(0xC062, 1 << 7);
+            setIO(0xC063, 1 << 7);
             print("command-shift keys are pressed")
         case [.control, .option]:
             print("control-option keys are pressed")
         case [.control, .command]:
             print("control-command keys are pressed")
         case [.option, .command]:
+            setIO(0xC061, 1 << 7);
+            setIO(0xC062, 1 << 7);
+            setIO(0xC063, 0);
             print("option-command keys are pressed")
         case [.shift, .control, .option]:
             print("shift-control-option keys are pressed")
@@ -426,6 +442,9 @@ class ViewController: NSViewController  {
         case [.control, .option, .command]:
             print("control-option-command keys are pressed")
         case [.shift, .command, .option]:
+            setIO(0xC061, 1 << 7);
+            setIO(0xC062, 1 << 7);
+            setIO(0xC063, 1 << 7);
             print("shift-command-option keys are pressed")
         case [.shift, .control, .option, .command]:
             print("shift-control-option-command keys are pressed")
@@ -436,6 +455,7 @@ class ViewController: NSViewController  {
         default:
             setIO(0xC061, 0);
             setIO(0xC062, 0);
+            setIO(0xC063, 0);
             print("no modifier keys are pressed")
         }
     }
@@ -672,27 +692,6 @@ class ViewController: NSViewController  {
         hires.clearScreen();
         
         woz_loadFile( Bundle.main.resourcePath, "Apple DOS 3.3 January 1983.woz" )
-        
-        let spk_up_path = Bundle.main.path(forResource: "spk_up", ofType:"wav")!
-        let spk_up_url = URL(fileURLWithPath: spk_up_path)
-        do {
-            spk_up = try AVAudioPlayer(contentsOf: spk_up_url)
-//            spk_up?.play()
-        } catch {
-            // couldn't load file :(
-        }
-        
-        let spk_dn_path = Bundle.main.path(forResource: "spk_dn", ofType:"wav")!
-        let spk_dn_url = URL(fileURLWithPath: spk_dn_path)
-        do {
-            spk_dn = try AVAudioPlayer(contentsOf: spk_dn_url)
-//            spk_up?.play()
-        } catch {
-            // couldn't load file :(
-        }
-
-
-
         
         //view.frame = CGRect(origin: CGPoint(), size: NSScreen.main!.visibleFrame.size)
                 

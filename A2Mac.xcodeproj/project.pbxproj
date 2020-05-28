@@ -55,8 +55,6 @@
 		325EB67623FBC44400C6B4A4 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
 		325EB67723FBC45300C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
 		325EB67823FBC45300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
-		325EB67923FBC48400C6B4A4 /* spk_dn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37423E169F8008BDB95 /* spk_dn.wav */; };
-		325EB67A23FBC48400C6B4A4 /* spk_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37523E169F8008BDB95 /* spk_up.wav */; };
 		325EB67C23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		325EB67D23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		325EB67E23FBDEE700C6B4A4 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
@@ -89,8 +87,6 @@
 		325EB6AA2401118300C6B4A4 /* Sneakers.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
 		325EB6AB2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
-		3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37423E169F8008BDB95 /* spk_dn.wav */; };
-		3262F37723E169F8008BDB95 /* spk_up.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3262F37523E169F8008BDB95 /* spk_up.wav */; };
 		32A9F72C24668D26004902A1 /* apple-rainbow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32A9F72B24668D26004902A1 /* apple-rainbow.jpg */; };
 		32A9F72D24668D26004902A1 /* apple-rainbow.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 32A9F72B24668D26004902A1 /* apple-rainbow.jpg */; };
 		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
@@ -233,8 +229,6 @@
 		325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProDOS_402_System.woz; sourceTree = "<group>"; };
 		325EB69A2401118300C6B4A4 /* Sneakers.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sneakers.woz; sourceTree = "<group>"; };
 		325EB69B2401118300C6B4A4 /* Xonix.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Xonix.woz; sourceTree = "<group>"; };
-		3262F37423E169F8008BDB95 /* spk_dn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spk_dn.wav; sourceTree = "<group>"; };
-		3262F37523E169F8008BDB95 /* spk_up.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = spk_up.wav; sourceTree = "<group>"; };
 		3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio_8bit_ioaddr.h; sourceTree = "<group>"; };
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
@@ -451,8 +445,6 @@
 			isa = PBXGroup;
 			children = (
 				32A9F72B24668D26004902A1 /* apple-rainbow.jpg */,
-				3262F37423E169F8008BDB95 /* spk_dn.wav */,
-				3262F37523E169F8008BDB95 /* spk_up.wav */,
 				325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */,
 				32089E4724556DBD0036E667 /* PRNumber3.ttf */,
 				32439F8422ECD8AD0077AAE0 /* apple.rom */,
@@ -808,7 +800,6 @@
 				325EB69123FE028800C6B4A4 /* Donkey Kong.woz in Resources */,
 				325EB68A23FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */,
 				325EB6A02401118300C6B4A4 /* Crossfire.woz in Resources */,
-				325EB67923FBC48400C6B4A4 /* spk_dn.wav in Resources */,
 				325EB64C23FBBAD100C6B4A4 /* Assets.xcassets in Resources */,
 				323E2DD1245531E600156805 /* Apple2e.rom in Resources */,
 				325EB68D23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */,
@@ -820,7 +811,6 @@
 				325EB6A42401118300C6B4A4 /* Qbit.woz in Resources */,
 				325EB68723FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */,
 				325EB64A23FBBACF00C6B4A4 /* Main.storyboard in Resources */,
-				325EB67A23FBC48400C6B4A4 /* spk_up.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -855,7 +845,6 @@
 				32440B95247F86D6000F9DA1 /* Apple II Dealer Diagnostics.woz in Resources */,
 				325EB67C23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */,
 				325EB69D2401118300C6B4A4 /* Lode Runner.woz in Resources */,
-				3262F37723E169F8008BDB95 /* spk_up.wav in Resources */,
 				32440B97247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz in Resources */,
 				32440B76247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Resources */,
 				32089E4824556DBD0036E667 /* PRNumber3.ttf in Resources */,
@@ -887,7 +876,6 @@
 				325EB6A32401118300C6B4A4 /* Qbit.woz in Resources */,
 				32440BA1247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz in Resources */,
 				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
-				3262F37623E169F8008BDB95 /* spk_dn.wav in Resources */,
 				32440B9D247F9DC7000F9DA1 /* blank.woz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

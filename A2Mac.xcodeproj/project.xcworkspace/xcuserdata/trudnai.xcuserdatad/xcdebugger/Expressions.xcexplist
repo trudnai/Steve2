@@ -154,6 +154,14 @@
          contextName = "PLA:6502_instr_stack.h">
       </ContextState>
       <ContextState
+         contextName = "memwrite8_high:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "WRHIMEM[addr]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "LDA:6502_instr_load_store.h">
       </ContextState>
       <ContextState
@@ -574,6 +582,12 @@
             <PersistentString
                value = "m6502.PC">
             </PersistentString>
+            <PersistentString
+               value = "MEMcfg.RAM_16K">
+            </PersistentString>
+            <PersistentString
+               value = "MEMcfg.RAM_128K">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
@@ -581,6 +595,17 @@
          <PersistentStrings>
             <PersistentString
                value = "NSGraphicsContext.current">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "memwrite8_bank2:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "WRD0MEM">
+            </PersistentString>
+            <PersistentString
+               value = "WRHIMEM">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

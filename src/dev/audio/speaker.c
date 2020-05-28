@@ -140,56 +140,60 @@ char spkr_state = 0;
 
 void spkr_toggle() {
     // TODO: This is very slow!
-    //            printf("io_KBDSTRB\n");
     
-    spkr_play_time = spkr_play_timeout;
+    spkr_play_time = 0;
     
-    // push a click into the speaker buffer
-    // (we will play the entire buffer at the end of the frame)
-    spkr_sample_idx = (clkfrm / (default_MHz_6502 / spkr_sample_rate)) * 2;
-    
-    if ( spkr_state ) {
-        // down edge
-        spkr_state = 0;
+    if ( clk_6502_per_frm_set <  clk_6502_per_frm_max_sound ) {
         
-        float fadeLevel = spkr_level - SPKR_LEVEL_MIN;
+        spkr_play_time = spkr_play_timeout;
         
-        while ( fadeLevel > +1 ) {
-            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel;
-            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel;
+        // push a click into the speaker buffer
+        // (we will play the entire buffer at the end of the frame)
+        spkr_sample_idx = (clkfrm / (default_MHz_6502 / spkr_sample_rate)) * 2;
+        
+        if ( spkr_state ) {
+            // down edge
+            spkr_state = 0;
             
-            // how smooth we want the speeker to decay, so we will hear no pops and crackles
-            // 0.9 gives you a kind of saw wave at 1KHz (beep)
-            // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-            fadeLevel *= 0.16;
-        }
-        spkr_level = SPKR_LEVEL_MIN;
-    }
-    else {
-        // up edge
-        spkr_state = 1;
-        
-        float fadeLevel = spkr_level - SPKR_LEVEL_MAX;
-        
-        while ( fadeLevel < -1 ) {
-            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel;
-            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel;
+            float fadeLevel = spkr_level - SPKR_LEVEL_MIN;
             
-            // how smooth we want the speeker to decay, so we will hear no pops and crackles
-            // 0.9 gives you a kind of saw wave at 1KHz (beep)
-            // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-            fadeLevel *= 0.32;
+            while ( fadeLevel > +1 ) {
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel;
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel;
+                
+                // how smooth we want the speeker to decay, so we will hear no pops and crackles
+                // 0.9 gives you a kind of saw wave at 1KHz (beep)
+                // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
+                fadeLevel *= 0.16;
+            }
+            spkr_level = SPKR_LEVEL_MIN;
         }
-        spkr_level = SPKR_LEVEL_MAX;
-    }
+        else {
+            // up edge
+            spkr_state = 1;
+            
+            float fadeLevel = spkr_level - SPKR_LEVEL_MAX;
+            
+            while ( fadeLevel < -1 ) {
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel;
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel;
+                
+                // how smooth we want the speeker to decay, so we will hear no pops and crackles
+                // 0.9 gives you a kind of saw wave at 1KHz (beep)
+                // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
+                fadeLevel *= 0.32;
+            }
+            spkr_level = SPKR_LEVEL_MAX;
+        }
 
-    
-    //spkr_samples[sample_idx] = spkr_level;
-    for ( int i = spkr_sample_idx; i < spkr_buf_size + spkr_extra_buf; i++ ) {
-        spkr_samples[i] = spkr_level;
+        
+        //spkr_samples[sample_idx] = spkr_level;
+        for ( int i = spkr_sample_idx; i < spkr_buf_size + spkr_extra_buf; i++ ) {
+            spkr_samples[i] = spkr_level;
+        }
+    //    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size * sizeof(spkr_samples[0]));
+        
     }
-//    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size * sizeof(spkr_samples[0]));
-    
 }
 
 

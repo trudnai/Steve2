@@ -19,6 +19,7 @@ extern unsigned long long MHz_6502;
 extern unsigned long long clk_6502_per_frm;
 extern unsigned long long clk_6502_per_frm_set;
 extern unsigned long long clk_6502_per_frm_max;
+extern unsigned long long clk_6502_per_frm_max_sound;
 extern unsigned int clkfrm;
 
 

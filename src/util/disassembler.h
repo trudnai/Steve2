@@ -91,7 +91,7 @@ INLINE void printDisassembly( FILE * f ) {
 
         fprintf( f, "%llu\t%llu %s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t;\t%s\n", // Virtual ][ style
             ++discnt,
-            m6502.clktime,
+            m6502.clktime + clkfrm,
             disassembly.addr,
             disassembly.opcode,
             disassembly.inst,

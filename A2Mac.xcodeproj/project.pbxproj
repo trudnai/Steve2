@@ -18,8 +18,6 @@
 		32440B64247C9C9C000F9DA1 /* merlin_assembler_1.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B61247C9C2D000F9DA1 /* merlin_assembler_1.woz */; };
 		32440B65247C9C9C000F9DA1 /* merlin_assembler_2.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B62247C9C2D000F9DA1 /* merlin_assembler_2.woz */; };
 		32440B66247C9C9C000F9DA1 /* merlin_assembler_3.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B63247C9C2D000F9DA1 /* merlin_assembler_3.woz */; };
-		32440B6A247CA1CE000F9DA1 /* 65C02.c in Sources */ = {isa = PBXBuildFile; fileRef = 32440B69247CA1CE000F9DA1 /* 65C02.c */; };
-		32440B6B247CA1E0000F9DA1 /* 65C02.c in Sources */ = {isa = PBXBuildFile; fileRef = 32440B69247CA1CE000F9DA1 /* 65C02.c */; };
 		32440B75247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B72247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz */; };
 		32440B76247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */; };
 		32440B77247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B74247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz */; };
@@ -29,6 +27,8 @@
 		32440B80247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */; };
 		32440B81247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */; };
 		32440B83247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */; };
+		32440B84247E27D3000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
+		32440B85247E27D7000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		325EB62F23F8856F00C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
 		325EB63623F8F78300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
 		325EB63923F9E48100C6B4A4 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
@@ -891,7 +891,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32440B6B247CA1E0000F9DA1 /* 65C02.c in Sources */,
+				32440B85247E27D7000F9DA1 /* 6502.c in Sources */,
 				325EB67623FBC44400C6B4A4 /* common.c in Sources */,
 				32A9F74B2467B60B004902A1 /* speaker.c in Sources */,
 				325EB67823FBC45300C6B4A4 /* disk.c in Sources */,
@@ -923,13 +923,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32440B6A247CA1CE000F9DA1 /* 65C02.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
+				32440B84247E27D3000F9DA1 /* 6502.c in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,

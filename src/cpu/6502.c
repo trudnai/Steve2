@@ -40,6 +40,7 @@ const unsigned long long startup_MHz_6502 = 32 * M;
 unsigned long long MHz_6502 = default_MHz_6502;
 unsigned long long clk_6502_per_frm =  default_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
+unsigned long long clk_6502_per_frm_max_sound = 4 * default_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_max = 0;
 
 
@@ -729,6 +730,8 @@ void m6502_Run() {
     for ( ; ; )
 #endif
     {
+    
+    printDisassembly(outdev);
         
 #ifdef INTERRUPT_CHECK_PER_STEP
         if ( m6502.IF ) {

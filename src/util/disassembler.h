@@ -89,21 +89,37 @@ INLINE void printDisassembly( FILE * f ) {
 //            m6502.C ? 'C' : 'c'
 //        );
 
-        fprintf( f, "%llu\t%llu %s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t;\t%s\n", // Virtual ][ style
-            ++discnt,
-            m6502.clktime + clkfrm,
-            disassembly.addr,
-            disassembly.opcode,
-            disassembly.inst,
-            disassembly.oper,
-            m6502.A,
-            m6502.X,
-            m6502.Y,
-            0,
-            //getFlags2(),
-            m6502.SP,
-            disassembly.comment
-        );
+//        fprintf( f, "%llu\t%llu %s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t;\t%s\n", // Virtual ][ style
+//            ++discnt,
+//            m6502.clktime + clkfrm,
+//            disassembly.addr,
+//            disassembly.opcode,
+//            disassembly.inst,
+//            disassembly.oper,
+//            m6502.A,
+//            m6502.X,
+//            m6502.Y,
+//            0,
+//            //getFlags2(),
+//            m6502.SP,
+//            disassembly.comment
+//        );
+
+        // Virtual ][ Style
+        fprintf( f, "%llu\t%llu\t%s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\n", // Virtual ][ style
+                ++discnt,
+                m6502.clktime + clkfrm,
+                disassembly.addr,
+                disassembly.opcode,
+                disassembly.inst,
+                disassembly.oper,
+                m6502.A,
+                m6502.X,
+                m6502.Y,
+                getFlags2().SR,
+                m6502.SP
+                );
+
     }
 }
 

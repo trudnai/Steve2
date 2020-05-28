@@ -413,6 +413,133 @@ void auxMemorySelect() {
 uint8_t * current_RAM_bank = Apple2_64K_AUX + 0xC000;
 
 
+INLINE void io_RAM_EXP( uint16_t addr ) {
+    
+    if ( MEMcfg.RAM_16K || MEMcfg.RAM_128K ) {
+        uint8_t * RAM_BANK = Apple2_64K_AUX + 0xC000;
+        
+        // save the content of Shadow Memory in needed
+        if ( MEMcfg.WR_RAM ) {
+            //                    printf("Saving RAM Bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
+            memcpy(current_RAM_bank, Apple2_64K_MEM + 0xD000, 0x1000);
+            memcpy(Apple2_64K_AUX + 0xE000, Apple2_64K_MEM + 0xE000, 0x2000);
+        }
+        
+        // RAM Bank 1 or 2?
+        switch ((uint8_t)addr) {
+            case (uint8_t)io_MEM_RDRAM_NOWR_2:
+            case (uint8_t)io_MEM_RDROM_WRAM_2:
+            case (uint8_t)io_MEM_RDROM_NOWR_2:
+            case (uint8_t)io_MEM_RDRAM_WRAM_2:
+                
+            case (uint8_t)io_MEM_RDRAM_NOWR_2_:
+            case (uint8_t)io_MEM_RDROM_WRAM_2_:
+            case (uint8_t)io_MEM_RDROM_NOWR_2_:
+            case (uint8_t)io_MEM_RDRAM_WRAM_2_:
+                
+                //                        printf("RAM_BANK_2\n");
+                
+                MEMcfg.RAM_BANK_2 = 1;
+                RAM_BANK = Apple2_64K_AUX + 0xD000;
+                break;
+                
+            default:
+                //                        printf("RAM_BANK_1\n");
+                
+                MEMcfg.RAM_BANK_2 = 0;
+                RAM_BANK = Apple2_64K_AUX + 0xC000;
+                break;
+        }
+        
+        // is RAM to read or ROM?
+        switch ((uint8_t)addr) {
+            case (uint8_t)io_MEM_RDRAM_NOWR_2:
+            case (uint8_t)io_MEM_RDRAM_WRAM_2:
+            case (uint8_t)io_MEM_RDRAM_NOWR_1:
+            case (uint8_t)io_MEM_RDRAM_WRAM_1:
+                
+            case (uint8_t)io_MEM_RDRAM_NOWR_2_:
+            case (uint8_t)io_MEM_RDRAM_WRAM_2_:
+            case (uint8_t)io_MEM_RDRAM_NOWR_1_:
+            case (uint8_t)io_MEM_RDRAM_WRAM_1_:
+                
+                //                        printf("RD_RAM\n");
+                
+                MEMcfg.RD_RAM = 1;
+                
+                // load the content of Aux Memory
+                memcpy(Apple2_64K_MEM + 0xD000, RAM_BANK, 0x1000);
+                memcpy(Apple2_64K_MEM + 0xE000, Apple2_64K_AUX + 0xE000, 0x2000);
+                
+                // set the RAM extension to read on the upper memory area
+                break;
+                
+            default:
+                //                        printf("RD_ROM\n");
+                
+                MEMcfg.RD_RAM = 0;
+                
+                // load the content of ROM Memory
+                memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 0x3000);
+                
+                // set the ROM to read on the upper memory area
+                break;
+        }
+        
+        // is RAM Writeable?
+        switch ((uint8_t)addr) {
+            case (uint8_t)io_MEM_RDROM_WRAM_2:
+            case (uint8_t)io_MEM_RDROM_WRAM_1:
+                
+            case (uint8_t)io_MEM_RDROM_WRAM_2_:
+            case (uint8_t)io_MEM_RDROM_WRAM_1_:
+                
+                //                        printf("RD_ROM + WR_AUX\n");
+                
+                // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
+                MEMcfg.WR_RAM = 0;
+                if ( MEMcfg.RAM_BANK_2 ) {
+                    WRD0MEM = Apple2_64K_AUX;   // for Write $D000 - $DFFF (shadow memory) - BANK 2
+                }
+                else {
+                    WRD0MEM = Apple2_64K_AUX - 0x1000;   // for Write $D000 - $DFFF (shadow memory) - BANK 1
+                }
+                WRHIMEM = Apple2_64K_AUX;   // for Write $E000 - $FFFF (shadow memory)
+                break;
+                
+            case (uint8_t)io_MEM_RDRAM_WRAM_2:
+            case (uint8_t)io_MEM_RDRAM_WRAM_1:
+                
+            case (uint8_t)io_MEM_RDRAM_WRAM_2_:
+            case (uint8_t)io_MEM_RDRAM_WRAM_1_:
+                
+                //                        printf("RD_RAM + WR_RAM\n");
+                
+                // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
+                MEMcfg.WR_RAM = 1;
+                WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
+                WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
+                break;
+                
+            default:
+                //                        printf("RD_ROM + NO_WR\n");
+                
+                // No writing (Readonly), and mark it as NO need to commit from Shadow RAM
+                MEMcfg.WR_RAM = 0;
+                WRD0MEM = Apple2_Dummy_RAM;   // for Discarding any writes to $D000 - $DFFF - BANK X
+                WRHIMEM = Apple2_Dummy_RAM;   // for Discarding any writes to $E000 - $FFFF
+                break;
+        }
+        
+        current_RAM_bank = RAM_BANK;
+        //                printf("Set current_RAM_bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
+        
+        
+    } // if there is RAM expansion card installed
+
+}
+
+
 INLINE uint8_t ioRead( uint16_t addr ) {
 //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
 //    printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
@@ -530,128 +657,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_MEM_RDROM_WRAM_1_:
         case (uint8_t)io_MEM_RDROM_NOWR_1_:
         case (uint8_t)io_MEM_RDRAM_WRAM_1_:
-            
-            if ( MEMcfg.RAM_16K || MEMcfg.RAM_128K ) {
-                uint8_t * RAM_BANK = Apple2_64K_AUX + 0xC000;
-                
-                // save the content of Shadow Memory in needed
-                if ( MEMcfg.WR_RAM ) {
-//                    printf("Saving RAM Bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
-                    memcpy(current_RAM_bank, Apple2_64K_MEM + 0xD000, 0x1000);
-                    memcpy(Apple2_64K_AUX + 0xE000, Apple2_64K_MEM + 0xE000, 0x2000);
-                }
-                
-                // RAM Bank 1 or 2?
-                switch ((uint8_t)addr) {
-                    case (uint8_t)io_MEM_RDRAM_NOWR_2:
-                    case (uint8_t)io_MEM_RDROM_WRAM_2:
-                    case (uint8_t)io_MEM_RDROM_NOWR_2:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_2:
-
-                    case (uint8_t)io_MEM_RDRAM_NOWR_2_:
-                    case (uint8_t)io_MEM_RDROM_WRAM_2_:
-                    case (uint8_t)io_MEM_RDROM_NOWR_2_:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_2_:
-
-//                        printf("RAM_BANK_2\n");
-                        
-                        MEMcfg.RAM_BANK_2 = 1;
-                        RAM_BANK = Apple2_64K_AUX + 0xD000;
-                        break;
-                        
-                    default:
-//                        printf("RAM_BANK_1\n");
-                        
-                        MEMcfg.RAM_BANK_2 = 0;
-                        RAM_BANK = Apple2_64K_AUX + 0xC000;
-                        break;
-                }
-
-                // is RAM to read or ROM?
-                switch ((uint8_t)addr) {
-                    case (uint8_t)io_MEM_RDRAM_NOWR_2:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_2:
-                    case (uint8_t)io_MEM_RDRAM_NOWR_1:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_1:
-
-                    case (uint8_t)io_MEM_RDRAM_NOWR_2_:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_2_:
-                    case (uint8_t)io_MEM_RDRAM_NOWR_1_:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_1_:
-
-//                        printf("RD_RAM\n");
-                        
-                        MEMcfg.RD_RAM = 1;
-                        
-                        // load the content of Aux Memory
-                        memcpy(Apple2_64K_MEM + 0xD000, RAM_BANK, 0x1000);
-                        memcpy(Apple2_64K_MEM + 0xE000, Apple2_64K_AUX + 0xE000, 0x2000);
-
-                        // set the RAM extension to read on the upper memory area
-                        break;
-                        
-                    default:
-//                        printf("RD_ROM\n");
-                        
-                        MEMcfg.RD_RAM = 0;
-                        
-                        // load the content of ROM Memory
-                        memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 0x3000);
-
-                        // set the ROM to read on the upper memory area
-                        break;
-                }
-
-                // is RAM Writeable?
-                switch ((uint8_t)addr) {
-                    case (uint8_t)io_MEM_RDROM_WRAM_2:
-                    case (uint8_t)io_MEM_RDROM_WRAM_1:
-                        
-                    case (uint8_t)io_MEM_RDROM_WRAM_2_:
-                    case (uint8_t)io_MEM_RDROM_WRAM_1_:
-                        
-//                        printf("RD_ROM + WR_AUX\n");
-
-                        // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
-                        MEMcfg.WR_RAM = 0;
-                        if ( MEMcfg.RAM_BANK_2 ) {
-                            WRD0MEM = Apple2_64K_AUX;   // for Write $D000 - $DFFF (shadow memory) - BANK 2
-                        }
-                        else {
-                            WRD0MEM = Apple2_64K_AUX - 0x1000;   // for Write $D000 - $DFFF (shadow memory) - BANK 1
-                        }
-                        WRHIMEM = Apple2_64K_AUX;   // for Write $E000 - $FFFF (shadow memory)
-                        break;
-                        
-                    case (uint8_t)io_MEM_RDRAM_WRAM_2:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_1:
-                        
-                    case (uint8_t)io_MEM_RDRAM_WRAM_2_:
-                    case (uint8_t)io_MEM_RDRAM_WRAM_1_:
-                        
-//                        printf("RD_RAM + WR_RAM\n");
-                        
-                        // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
-                        MEMcfg.WR_RAM = 1;
-                        WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
-                        WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
-                        break;
-                        
-                    default:
-//                        printf("RD_ROM + NO_WR\n");
-                        
-                        // No writing (Readonly), and mark it as NO need to commit from Shadow RAM
-                        MEMcfg.WR_RAM = 0;
-                        WRD0MEM = Apple2_Dummy_RAM;   // for Discarding any writes to $D000 - $DFFF - BANK X
-                        WRHIMEM = Apple2_Dummy_RAM;   // for Discarding any writes to $E000 - $FFFF
-                        break;
-                }
-                
-                current_RAM_bank = RAM_BANK;
-//                printf("Set current_RAM_bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
-
-                
-            } // if there is RAM expansion card installed
+            io_RAM_EXP(addr);
             break;
 
         // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
@@ -761,112 +767,134 @@ void kbdUp () {
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 //    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
     
-    switch (addr) {
-        case io_KBDSTRB:
+    switch ( (uint8_t)addr ) {
+        case (uint8_t)io_KBDSTRB:
             Apple2_64K_RAM[io_KBD] &= 0x7F;
             break;
             
-        case io_SPKR:
+        case (uint8_t)io_SPKR:
             spkr_toggle();
             break;
             
-        case io_RDMAINRAM:
+        case (uint8_t)io_RDMAINRAM:
 //            printf("io_RDMAINRAM\n");
             MEMcfg.RD_AUX_MEM = 0;
             auxMemorySelect();
             break;
 
-        case io_RDCARDRAM:
+        case (uint8_t)io_RDCARDRAM:
 //            printf("io_RDCARDRAM\n");
             MEMcfg.RD_AUX_MEM = 1;
             auxMemorySelect();
             break;
 
-        case io_WRMAINRAM:
+        case (uint8_t)io_WRMAINRAM:
 //            printf("io_WRMAINRAM\n");
             MEMcfg.WR_AUX_MEM = 0;
             auxMemorySelect();
             break;
 
-        case io_WRCARDRAM:
+        case (uint8_t)io_WRCARDRAM:
 //            printf("io_WRCARDRAM\n");
             MEMcfg.WR_AUX_MEM = 1;
             auxMemorySelect();
             break;
 
-        case io_SETSTDZP:
+        case (uint8_t)io_SETSTDZP:
             MEMcfg.ALT_ZP = 0;
             // TODO: set zero page table to RAM
             break;
             
-        case io_SETALTZP:
+        case (uint8_t)io_SETALTZP:
             MEMcfg.ALT_ZP = 1;
             // TODO: set zero page table to AUX
             break;
 
-        case io_SETSLOTCXROM:
+        case (uint8_t)io_SETSLOTCXROM:
 //            printf("io_SETSLOTCXROM\n");
             MEMcfg.int_Cx_ROM = 0;
             // TODO: set Cx00 ROM area table to SLOT
             break;
 
-        case io_SETINTCXROM:
+        case (uint8_t)io_SETINTCXROM:
 //            printf("io_SETINTCXROM\n");
             MEMcfg.int_Cx_ROM = 1;
             // TODO: set Cx00 ROM area table to INT
             break;
 
-        case io_SETSLOTC3ROM:
+        case (uint8_t)io_SETSLOTC3ROM:
 //            printf("io_SETSLOTC3ROM\n");
             MEMcfg.slot_C3_ROM = 1;
             // TODO: set C300 ROM area table to SLOT
             break;
 
-        case io_SETINTC3ROM:
+        case (uint8_t)io_SETINTC3ROM:
 //            printf("io_SETINTC3ROM\n");
             MEMcfg.slot_C3_ROM = 0;
             // TODO: set C300 ROM area table to INT
             break;
 
-        case io_VID_CLR80VID:
+        case (uint8_t)io_VID_CLR80VID:
 //            printf("io_VID_CLR80VID\n");
             videoMode.col80 = 0;
             break;
             
-        case io_VID_SET80VID:
+        case (uint8_t)io_VID_SET80VID:
             videoMode.col80 = 1;
             break;
             
-        case io_VID_CLRALTCHAR:
+        case (uint8_t)io_VID_CLRALTCHAR:
             videoMode.altChr = 0;
             break;
             
-        case io_VID_SETALTCHAR:
+        case (uint8_t)io_VID_SETALTCHAR:
             videoMode.altChr = 1;
             break;
             
-        case io_80STOREOFF:
+        case (uint8_t)io_80STOREOFF:
 //            printf("io_80STOREOFF\n");
             MEMcfg.is_80STORE = 0;
             textPageSelect();
             break;
             
-        case io_80STOREON:
+        case (uint8_t)io_80STOREON:
 //            printf("io_80STOREON\n");
             MEMcfg.is_80STORE = 1;
             textPageSelect();
             break;
             
-        case io_VID_TXTPAGE1:
+        case (uint8_t)io_VID_TXTPAGE1:
 //            printf("io_VID_TXTPAGE1\n");
             MEMcfg.txt_page_2 = 0;
             textPageSelect();
             break;
             
-        case io_VID_TXTPAGE2:
+        case (uint8_t)io_VID_TXTPAGE2:
 //            printf("io_VID_TXTPAGE2\n");
             MEMcfg.txt_page_2 = 1;
             textPageSelect();
+            break;
+            
+        case (uint8_t)io_MEM_RDRAM_NOWR_2:
+        case (uint8_t)io_MEM_RDROM_WRAM_2:
+        case (uint8_t)io_MEM_RDROM_NOWR_2:
+        case (uint8_t)io_MEM_RDRAM_WRAM_2:
+            
+        case (uint8_t)io_MEM_RDRAM_NOWR_2_:
+        case (uint8_t)io_MEM_RDROM_WRAM_2_:
+        case (uint8_t)io_MEM_RDROM_NOWR_2_:
+        case (uint8_t)io_MEM_RDRAM_WRAM_2_:
+            
+        case (uint8_t)io_MEM_RDRAM_NOWR_1:
+        case (uint8_t)io_MEM_RDROM_WRAM_1:
+        case (uint8_t)io_MEM_RDROM_NOWR_1:
+        case (uint8_t)io_MEM_RDRAM_WRAM_1:
+            
+        case (uint8_t)io_MEM_RDRAM_NOWR_1_:
+        case (uint8_t)io_MEM_RDROM_WRAM_1_:
+        case (uint8_t)io_MEM_RDROM_NOWR_1_:
+        case (uint8_t)io_MEM_RDRAM_WRAM_1_:
+            io_RAM_EXP(addr);
             break;
             
         default:
@@ -1010,7 +1038,12 @@ INLINE uint16_t fetch16() {
     }
     #endif
     m6502.PC += 2;
-    disHexW( disassembly.pOpcode, word );
+//    disHexW( disassembly.pOpcode, word );
+    
+    // Virtual ][ Style
+    disHexB( disassembly.pOpcode, (uint8_t)word );
+    disHexB( disassembly.pOpcode, (uint8_t)(word >> 8));
+    
     return word;
 }
 

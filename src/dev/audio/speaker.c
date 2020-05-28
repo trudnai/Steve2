@@ -16,6 +16,7 @@
 
 #include "speaker.h"
 #include "6502.h"
+#include "disk.h" // to be able to disable disk acceleration
 
 
 #define min(x,y) (x) < (y) ? (x) : (y)
@@ -142,6 +143,12 @@ void spkr_toggle() {
     // TODO: This is very slow!
     
     spkr_play_time = 0;
+    
+    if ( diskAccelerator_count ) {
+        // turn off disk acceleration immediately
+        diskAccelerator_count = 0;
+        clk_6502_per_frm = clk_6502_per_frm_max = clk_6502_per_frm_set;
+    }
     
     if ( clk_6502_per_frm_set <  clk_6502_per_frm_max_sound ) {
         

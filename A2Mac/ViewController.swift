@@ -400,31 +400,31 @@ class ViewController: NSViewController  {
         case [.shift]:
             setIO(0xC061, 0);
             setIO(0xC062, 0);
-            setIO(0xC063, 1 << 7);
+            setIO(0xC063, 0); // inverted (bit 7: not pressed)
             print("shift key is pressed")
         case [.control]:
             print("control key is pressed")
         case [.option] :
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 0);
-            setIO(0xC063, 0);
+            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
             print("option key is pressed")
         case [.command]:
             print("Command key is pressed")
             setIO(0xC061, 0);
             setIO(0xC062, 1 << 7);
-            setIO(0xC063, 0);
+            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
         case [.control, .shift]:
             print("control-shift keys are pressed")
         case [.option, .shift]:
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 0);
-            setIO(0xC063, 1 << 7);
+            setIO(0xC063, 0); // inverted (bit 7: not pressed)
             print("option-shift keys are pressed")
         case [.command, .shift]:
             setIO(0xC061, 0);
             setIO(0xC062, 1 << 7);
-            setIO(0xC063, 1 << 7);
+            setIO(0xC063, 0); // inverted (bit 7: not pressed)
             print("command-shift keys are pressed")
         case [.control, .option]:
             print("control-option keys are pressed")
@@ -433,7 +433,7 @@ class ViewController: NSViewController  {
         case [.option, .command]:
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 1 << 7);
-            setIO(0xC063, 0);
+            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
             print("option-command keys are pressed")
         case [.shift, .control, .option]:
             print("shift-control-option keys are pressed")
@@ -444,7 +444,7 @@ class ViewController: NSViewController  {
         case [.shift, .command, .option]:
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 1 << 7);
-            setIO(0xC063, 1 << 7);
+            setIO(0xC063, 0); // inverted (bit 7: not pressed)
             print("shift-command-option keys are pressed")
         case [.shift, .control, .option, .command]:
             print("shift-control-option-command keys are pressed")
@@ -455,7 +455,7 @@ class ViewController: NSViewController  {
         default:
             setIO(0xC061, 0);
             setIO(0xC062, 0);
-            setIO(0xC063, 0);
+            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
             print("no modifier keys are pressed")
         }
     }
@@ -654,16 +654,16 @@ class ViewController: NSViewController  {
         #if SPEEDTEST
         #else
         if ( !halted ) {
-//            // Mouse 2 JoyStick (Game Controller / Paddle)
-//            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
-//
-//            pdl_prevarr[0] = pdl_valarr[0]
-//            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
-//            pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
-//
-//            pdl_prevarr[1] = pdl_valarr[1]
-//            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-//            pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
+            // Mouse 2 JoyStick (Game Controller / Paddle)
+            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
+
+            pdl_prevarr[2] = pdl_valarr[2]
+            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
+
+            pdl_prevarr[3] = pdl_valarr[3]
+            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
 
             m6502_Run()
         }

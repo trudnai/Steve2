@@ -1019,6 +1019,12 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 
     // set the default speed
     clk_6502_per_frm_set = clk_6502_per_frm = default_MHz_6502 / fps;
+    
+    
+    // Initialize Paddle / Game Controller / Joystick / Mouse Buttons
+    setIO(0xC061, 0);
+    setIO(0xC062, 0);
+    setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
 
 }
 

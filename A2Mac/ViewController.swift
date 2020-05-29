@@ -49,6 +49,7 @@ class ViewController: NSViewController  {
     @IBOutlet weak var displayField: NSTextField!
     @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
+    @IBOutlet weak var lores: LoRes!
     @IBOutlet weak var hires: HiRes!
     @IBOutlet weak var splashScreen: NSImageView!
     
@@ -95,7 +96,7 @@ class ViewController: NSViewController  {
     
     static var romFileName = "Apple2e_Enhanced.rom";
 
-    let textLineOfs : [Int] = [
+    static let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
         0x228, 0x2A8, 0x328, 0x3A8, 0x050, 0x0D0, 0x150, 0x1D0, 0x250, 0x2D0, 0x350, 0x3D0
     ]
@@ -197,6 +198,10 @@ class ViewController: NSViewController  {
     static let textIntBufferPointer = UnsafeRawBufferPointer(start: RAM + textPage1Addr, count: textBufferSize)
     static let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textPage1Addr, count: textBufferSize)
 
+    // TODO: Render text screen in native C
+//    static let textScreen = UnsafeMutableRawPointer(mutating: testText)
+
+    
     var textBufferPointer = textPage1Pointer
 
     static let textArraySize = textLines * (textCols + lineEndChars) + textCols * 2
@@ -552,7 +557,7 @@ class ViewController: NSViewController  {
                 // render the rest of the text screen
                 for y in fromLines ..< toLines {
                     for x in 0 ..< self.textCols {
-                        let byte = self.textBufferPointer[ self.textLineOfs[y] + x ]
+                        let byte = self.textBufferPointer[ ViewController.textLineOfs[y] + x ]
                         let idx = Int(byte);
                         let chr = ViewController.charConvTbl[idx]
                         
@@ -572,13 +577,13 @@ class ViewController: NSViewController  {
                 // render the rest of the text screen
                 for y in fromLines ..< toLines {
                     for x in 0 ..< self.textCols {
-                        let byte = textIntBuffer[ self.textLineOfs[y] + x ]
+                        let byte = textIntBuffer[ ViewController.textLineOfs[y] + x ]
                         let idx = Int(byte);
                         let chr = ViewController.charConvTbl[idx]
                         
                         self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
                         
-                        let byte2 = textAuxBuffer[ self.textLineOfs[y] + x ]
+                        let byte2 = textAuxBuffer[ ViewController.textLineOfs[y] + x ]
                         let idx2 = Int(byte2);
                         let chr2 = ViewController.charConvTbl[idx2]
                         
@@ -591,6 +596,9 @@ class ViewController: NSViewController  {
 
 
             txt = String(self.txtArr)
+
+            // TODO: Render text Screen in native C
+//            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
 
             if videoMode.col80 != self.currentVideoMode.col80 {
                 self.currentVideoMode.col80 = videoMode.col80
@@ -625,18 +633,36 @@ class ViewController: NSViewController  {
 
             // only refresh graphics view when needed (aka not in text mode)
             if ( videoMode.text == 0 ) {
-                // when we change video mode, buffer needs to be cleared to avoid artifacts
-                if ( self.savedVideoMode.text == 1 )
-                || ( self.savedVideoMode.mixed != videoMode.mixed )
-                {
-                    self.hires.clearScreen()
-                    self.hires.isHidden = false
-                }
+                if ( videoMode.hires == 0 ) {
+                    // when we change video mode, buffer needs to be cleared to avoid artifacts
+                    if ( self.savedVideoMode.text == 1 )
+                    || ( self.savedVideoMode.mixed != videoMode.mixed )
+                    || ( self.savedVideoMode.hires != videoMode.hires )
+                    {
+                        self.lores.clearScreen()
+                        self.lores.isHidden = false
+                        self.hires.isHidden = true
+                    }
 
-                self.hires.Update()
+                    self.lores.Update()
+                }
+                else {
+                    // when we change video mode, buffer needs to be cleared to avoid artifacts
+                    if ( self.savedVideoMode.text == 1 )
+                    || ( self.savedVideoMode.mixed != videoMode.mixed )
+                    || ( self.savedVideoMode.hires != videoMode.hires )
+                    {
+                        self.hires.clearScreen()
+                        self.hires.isHidden = false
+                        self.lores.isHidden = true
+                    }
+                    
+                    self.hires.Update()
+                }
             }
             else if ( self.savedVideoMode.text == 0 ) {
                 // we just switched from grahics to text
+                self.lores.isHidden = true
                 self.hires.isHidden = true
             }
 
@@ -648,23 +674,23 @@ class ViewController: NSViewController  {
             // TODO: Do we need to do this from here?
 //            spkr_update()
 
+            // Mouse 2 JoyStick (Game Controller / Paddle)
+            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
+            
+            pdl_prevarr[2] = pdl_valarr[2]
+            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
+            
+            pdl_prevarr[3] = pdl_valarr[3]
+            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
+            
         }
         
         
         #if SPEEDTEST
         #else
         if ( !halted ) {
-            // Mouse 2 JoyStick (Game Controller / Paddle)
-            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
-
-            pdl_prevarr[2] = pdl_valarr[2]
-            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
-            pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
-
-            pdl_prevarr[3] = pdl_valarr[3]
-            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-            pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
-
             m6502_Run()
         }
         #endif

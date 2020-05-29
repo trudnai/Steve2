@@ -40,6 +40,7 @@
 		32440B97247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B8E247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz */; };
 		32440B9D247F9DC7000F9DA1 /* blank.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B9C247F9DC7000F9DA1 /* blank.woz */; };
 		32440BA1247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */; };
+		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
 		325EB62F23F8856F00C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
 		325EB63623F8F78300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
 		325EB63923F9E48100C6B4A4 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
@@ -194,6 +195,7 @@
 		32440B8E247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Apple ][ Dealer Service Programs.woz"; sourceTree = "<group>"; };
 		32440B9C247F9DC7000F9DA1 /* blank.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = blank.woz; sourceTree = "<group>"; };
 		32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = LOCKSMITH_V7_REV_B.woz; sourceTree = "<group>"; };
+		32440BA22480D5C0000F9DA1 /* LoRes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRes.swift; sourceTree = "<group>"; };
 		325EB62D23F8856F00C6B4A4 /* woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = woz.h; sourceTree = "<group>"; };
 		325EB62E23F8856F00C6B4A4 /* woz.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = woz.c; sourceTree = "<group>"; };
 		325EB63423F8F78300C6B4A4 /* disk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disk.h; sourceTree = "<group>"; };
@@ -551,6 +553,7 @@
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,
 				32C4532D233345420000EBA1 /* MonitorView.swift */,
 				32C453072331C0910000EBA1 /* NSLayoutManager-Extension.swift */,
+				32440BA22480D5C0000F9DA1 /* LoRes.swift */,
 				32DBF7632334657900DD50E7 /* HiRes.swift */,
 				32EDB7A123272CA80073AF2D /* fail1.txt */,
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
@@ -961,6 +964,7 @@
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
+				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
 				32440B84247E27D3000F9DA1 /* 6502.c in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,

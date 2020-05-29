@@ -312,6 +312,23 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "LoRes.Update():LoRes.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UInt8( (block &gt;&gt; 4) &amp; 0x0F )">
+            </PersistentString>
+            <PersistentString
+               value = "UInt8(block)">
+            </PersistentString>
+            <PersistentString
+               value = "UInt8(block &amp; 4)">
+            </PersistentString>
+            <PersistentString
+               value = "blockChanged[ screenIdx ]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "CPY:6502_instr_compare_test.h">
          <PersistentStrings>
             <PersistentString

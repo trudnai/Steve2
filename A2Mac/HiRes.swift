@@ -494,7 +494,7 @@ class HiRes: NSView {
     let color_yellow    : UInt32 = 0xFFBBBB11;
 
     
-    func hiresColorPixel ( pixelAddr : Int, pixel : Int, prev : Int ) {
+    func colorPixel ( pixelAddr : Int, pixel : Int, prev : Int ) {
         let colorAddr = pixelAddr / 4
         
         switch ( pixel ) {
@@ -647,20 +647,20 @@ class HiRes: NSView {
                 for px in 0 ... 2  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                    colorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                     pixelAddr += 8
                     prev = pixel
                 }
                 
                 let pixel = (blockL7 | blockH7) | ( (block >> (3 * 2)) & 3 )
-                hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                colorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                 pixelAddr += 8
                 prev = pixel
                 
                 for px in 4 ... 6  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockL7 | ( (block >> (px * 2)) & 3 )
-                    hiresColorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
+                    colorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
                     pixelAddr += 8
                     prev = pixel
                 }

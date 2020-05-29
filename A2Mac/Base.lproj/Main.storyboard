@@ -995,7 +995,10 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
+                            <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gqh-qw-fjy" userLabel="LoRes" customClass="LoRes" customModule="A2Mac" customModuleProvider="target">
+                                <rect key="frame" x="16" y="16" width="1120" height="768"/>
+                            </customView>
+                            <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" userLabel="HiRes" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                             </customView>
                             <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1E-lz-4q8" userLabel="Splash Screen">
@@ -1221,12 +1224,16 @@
                             </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="FF5-Ke-cOk"/>
                             <constraint firstAttribute="bottom" secondItem="Fdf-pv-iEw" secondAttribute="bottom" constant="8" id="H1Q-Vj-rPM"/>
                             <constraint firstItem="iIF-Q5-Onc" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="LGA-tZ-gFh"/>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="Mbh-RX-74d"/>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="NJ1-qp-iku"/>
                             <constraint firstItem="SEL-hl-0c0" firstAttribute="bottom" secondItem="iIF-Q5-Onc" secondAttribute="bottom" constant="-16" id="Q2B-a3-gBp"/>
                             <constraint firstItem="SEL-hl-0c0" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="leading" constant="16" id="QGx-a9-RR9"/>
                             <constraint firstItem="M1E-lz-4q8" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="SK0-9r-JCV"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="Umg-3A-zmv"/>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="VcW-Wh-wiF"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="8" id="Xbh-Ub-1Ng"/>
                             <constraint firstItem="M1E-lz-4q8" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="aA5-fx-nSB"/>
                             <constraint firstItem="SEL-hl-0c0" firstAttribute="top" secondItem="iIF-Q5-Onc" secondAttribute="top" constant="16" id="aWz-Ad-PIM"/>
@@ -1247,6 +1254,7 @@
                         <outlet property="display" destination="pIk-RC-s5g" id="Hvd-DI-h6z"/>
                         <outlet property="displayField" destination="SEL-hl-0c0" id="4Pc-hG-qQf"/>
                         <outlet property="hires" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>
+                        <outlet property="lores" destination="Gqh-qw-fjy" id="vOE-5m-Jfi"/>
                         <outlet property="speedometer" destination="FBZ-dh-6Fs" id="L0v-RY-xwB"/>
                         <outlet property="splashScreen" destination="M1E-lz-4q8" id="xc3-CZ-dRf"/>
                     </connections>

@@ -44,10 +44,14 @@ uint8_t * const RAM = Apple2_64K_RAM;           // Pointer to the Main Memory so
 uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory Map so we can use this from Swift
 
 uint8_t * const RDLOMEM = Apple2_64K_MEM;       // for Read $0000 - $BFFF (shadow memory)
-uint8_t * const WRLOMEM = Apple2_64K_MEM;       // for Write $0000 - $BFFF (shadow memory)
+uint8_t *       WRLOMEM = Apple2_64K_MEM;       // for Write $0000 - $BFFF (shadow memory)
 uint8_t * const RDHIMEM = Apple2_64K_MEM;       // for Read / Write $0000 - $BFFF (shadow memory)
 uint8_t *       WRD0MEM = Apple2_Dummy_RAM;     // for writing $D000 - $DFFF
 uint8_t *       WRHIMEM = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
+
+
+MEMcfg_t MEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+MEMcfg_t newMEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 
 #define DEF_RAM_PAGE(mem,pg) \
@@ -203,8 +207,6 @@ enum slot {
 };
 
 
-MEMcfg_t MEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
 // https://www.kreativekorp.com/miscpages/a2info/iomemory.shtml
 // Comp:  O = Apple II+  E = Apple IIe  C = Apple IIc  G = Apple IIgs
 // Act:   R = Read       W = Write      7 = Bit 7      V = Value
@@ -220,6 +222,7 @@ enum mmio {
     // Video
     io_80STOREOFF       = 0xC000,   //  ECG W    Use $C002-$C005 for Aux Memory
     io_80STOREON        = 0xC001,   //  ECG W    Use PAGE2 for Aux Memory
+    
     io_RD80STORE        = 0xC018,   //  ECG  R7  Status of $C002-$C005/PAGE2 for Aux Mem
     io_VID_CLR80VID     = 0xC00C,   //  ECG W    40 Columns
     io_VID_SET80VID     = 0xC00D,   //  ECG W    80 Columns
@@ -277,31 +280,37 @@ enum mmio {
     io_SETALTZP         = 0xC009,   //  ECG W    Aux Stack and Zero Page
     io_SETINTC3ROM      = 0xC00A,   //  E G W    ROM in Slot 3
     io_SETSLOTC3ROM     = 0xC00B,   //  E G W    ROM in Aux Slot
+    
+    io_RDLCBNK2         = 0xC011,   //  ECG  R7  Status of Selected $Dx Bank
+    io_RDLCRAM          = 0xC012,   //  ECG  R7  Status of $Dx ROM / $Dx RAM (LC RAM)
+    io_RDRAMRD          = 0xC013,   //  ECG  R7  Status of Main/Aux RAM Reading (auxilliary 48K)
+    io_RDRAMWR          = 0xC014,   //  ECG  R7  Status of Main/Aux RAM Writing (auxilliary 48K)
+    
     io_RDCXROM          = 0xC015,   //  E G  R7  Read state of $C100-$CFFF soft switch -- Status of Periph/ROM Access
     io_RSTXINT          = 0xC015,   //   C   R   Reset Mouse X0 Interrupt
     io_RDALTZP          = 0xC016,   //  ECG  R7  Status of Main/Aux Stack and Zero Page
     io_RDC3ROM          = 0xC017,   //  E G  R7  Status of Slot 3/Aux Slot ROM
     io_RSTYINT          = 0xC017,   //   C   R   Reset Mouse Y0 Interrupt
     
-    io_MEM_RDRAM_NOWR_2 = 0xC080,
-    io_MEM_RDROM_WRAM_2 = 0xC081,
-    io_MEM_RDROM_NOWR_2 = 0xC082,
-    io_MEM_RDRAM_WRAM_2 = 0xC083,
+    io_MEM_RDRAM_NOWR_2 = 0xC080,   //  OECG WR   Read RAM bank 2; no write
+    io_MEM_RDROM_WRAM_2 = 0xC081,   //  OECG  RR  Read ROM; write RAM bank 2
+    io_MEM_RDROM_NOWR_2 = 0xC082,   //  OECG WR   Read ROM; no write
+    io_MEM_RDRAM_WRAM_2 = 0xC083,   //  OECG  RR  Read/write RAM bank 2
     
-    io_MEM_RDRAM_NOWR_2_ = 0xC084,
-    io_MEM_RDROM_WRAM_2_ = 0xC085,
-    io_MEM_RDROM_NOWR_2_ = 0xC086,
-    io_MEM_RDRAM_WRAM_2_ = 0xC087,
+    io_MEM_RDRAM_NOWR_2_ = 0xC084,  //  OECG WR   Read RAM bank 2; no write
+    io_MEM_RDROM_WRAM_2_ = 0xC085,  //  OECG  RR  Read ROM; write RAM bank 2
+    io_MEM_RDROM_NOWR_2_ = 0xC086,  //  OECG WR   Read ROM; no write
+    io_MEM_RDRAM_WRAM_2_ = 0xC087,  //  OECG  RR  Read/write RAM bank 2
     
-    io_MEM_RDRAM_NOWR_1 = 0xC088,
-    io_MEM_RDROM_WRAM_1 = 0xC089,
-    io_MEM_RDROM_NOWR_1 = 0xC08A,
-    io_MEM_RDRAM_WRAM_1 = 0xC08B,
+    io_MEM_RDRAM_NOWR_1 = 0xC088,   //  OECG WR   Read RAM bank 1; no write
+    io_MEM_RDROM_WRAM_1 = 0xC089,   //  OECG  RR  Read ROM; write RAM bank 1
+    io_MEM_RDROM_NOWR_1 = 0xC08A,   //  OECG WR   Read ROM; no write
+    io_MEM_RDRAM_WRAM_1 = 0xC08B,   //  OECG  RR  Read/write RAM bank 1
 
-    io_MEM_RDRAM_NOWR_1_ = 0xC08C,
-    io_MEM_RDROM_WRAM_1_ = 0xC08D,
-    io_MEM_RDROM_NOWR_1_ = 0xC08E,
-    io_MEM_RDRAM_WRAM_1_ = 0xC08F,
+    io_MEM_RDRAM_NOWR_1_ = 0xC08C,  //  OECG WR   Read RAM bank 1; no write
+    io_MEM_RDROM_WRAM_1_ = 0xC08D,  //  OECG  RR  Read ROM; write RAM bank 1
+    io_MEM_RDROM_NOWR_1_ = 0xC08E,  //  OECG WR   Read ROM; no write
+    io_MEM_RDRAM_WRAM_1_ = 0xC08F,  //  OECG  RR  Read/write RAM bank 1
 };
 
 
@@ -338,6 +347,8 @@ void resetMemory() {
     memset( Apple2_64K_MEM + 0x400, 0xA0, 0x800 );
     // I/O area should be 0 -- just in case we decide to init RAM with a different pattern...
     memset( Apple2_64K_RAM + 0xC000, 0, 0x1000 );
+    
+    newMEMcfg = MEMcfg;
 }
 
 
@@ -370,43 +381,37 @@ void textPageSelect() {
 }
 
 
-void auxMemorySelect() {
-    uint8_t * shadow = Apple2_64K_MEM + 0x200;
-    uint8_t * memory;
+const uint8_t * const shadowLowMEM = Apple2_64K_MEM + 0x200;
+const uint8_t * currentLowMEM = Apple2_64K_RAM + 0x200;
 
-    if ( MEMcfg.is_80STORE ) {
-        if ( MEMcfg.RD_AUX_MEM ) {
-            memory = Apple2_64K_AUX + 0x200;
-            
-            // save the content of Shadow Memory
-            memcpy(Apple2_64K_RAM + 0x200, shadow, 0xA00);
-            
-            // load the content of Aux Memory
-            memcpy(Apple2_64K_MEM + 0x200, Apple2_64K_AUX, 0xA00);
+void auxMemorySelect( MEMcfg_t newMEMcfg ) {
+    
+    // save the content of Shadow Memory
+    memcpy( (void*) currentLowMEM, shadowLowMEM, 0xBE00);
+    
+    if ( newMEMcfg.is_80STORE ) {
+        if ( newMEMcfg.RD_AUX_MEM ) {
+            currentLowMEM = Apple2_64K_AUX + 0x200;
         }
         else {
-            memory = Apple2_64K_RAM + 0x200;
-            
-            // save the content of Shadow Memory
-            memcpy(Apple2_64K_AUX + 0x200, shadow, 0xA00);
-            
-            // load the content of Int Memory
-            memcpy(Apple2_64K_MEM + 0x200, Apple2_64K_RAM, 0xA00);
+            currentLowMEM = Apple2_64K_RAM + 0x200;
         }
         
         if ( MEMcfg.WR_AUX_MEM ) {
-            // TODO: set write table for AUX
+            WRLOMEM = Apple2_64K_AUX;   
         }
         else {
-            // TODO: set write table for RAM
+            WRLOMEM = Apple2_64K_RAM;
         }
     }
     else {
-        // TODO: set read table for RAM
+        WRLOMEM = Apple2_64K_RAM;
     }
     
     // load new content to shadow memory
-    memcpy(shadow, memory, 0xA00);
+    memcpy( (void*) shadowLowMEM, currentLowMEM, 0xBE00);
+    
+    MEMcfg = newMEMcfg;
 }
 
 
@@ -582,6 +587,18 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_RDCXROM:
             return MEMcfg.int_Cx_ROM << 7;
             
+        case (uint8_t)io_RDLCBNK2:
+            return MEMcfg.RAM_BANK_2 << 7;
+            
+        case (uint8_t)io_RDLCRAM:
+            return MEMcfg.RD_RAM << 7;
+            
+        case (uint8_t)io_RDRAMRD:
+            return MEMcfg.RD_AUX_MEM << 7;
+            
+        case (uint8_t)io_RDRAMWR:
+            return MEMcfg.WR_AUX_MEM << 7;
+            
         case (uint8_t)io_RDALTZP:
             return MEMcfg.ALT_ZP << 7;
             
@@ -637,6 +654,34 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
         case (uint8_t)io_PDL_STROBE:
             return pdl_reset();
+            
+        case (uint8_t)io_RDMAINRAM:
+//            printf("io_RDMAINRAM\n");
+            newMEMcfg = MEMcfg;
+            newMEMcfg.RD_AUX_MEM = 0;
+            auxMemorySelect(newMEMcfg);
+            break;
+            
+        case (uint8_t)io_RDCARDRAM:
+//            printf("io_RDCARDRAM\n");
+            newMEMcfg = MEMcfg;
+            newMEMcfg.RD_AUX_MEM = 1;
+            auxMemorySelect(newMEMcfg);
+            break;
+            
+        case (uint8_t)io_WRMAINRAM:
+//            printf("io_WRMAINRAM\n");
+            newMEMcfg = MEMcfg;
+            newMEMcfg.WR_AUX_MEM = 0;
+            auxMemorySelect(newMEMcfg);
+            break;
+            
+        case (uint8_t)io_WRCARDRAM:
+//            printf("io_WRCARDRAM\n");
+            newMEMcfg = MEMcfg;
+            newMEMcfg.WR_AUX_MEM = 1;
+            auxMemorySelect(newMEMcfg);
+            break;
 
         case (uint8_t)io_MEM_RDRAM_NOWR_2:
         case (uint8_t)io_MEM_RDROM_WRAM_2:
@@ -763,7 +808,6 @@ void kbdUp () {
 }
 
 
-
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 //    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
     
@@ -778,26 +822,30 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             
         case (uint8_t)io_RDMAINRAM:
 //            printf("io_RDMAINRAM\n");
-            MEMcfg.RD_AUX_MEM = 0;
-            auxMemorySelect();
+            newMEMcfg = MEMcfg;
+            newMEMcfg.RD_AUX_MEM = 0;
+            auxMemorySelect(newMEMcfg);
             break;
 
         case (uint8_t)io_RDCARDRAM:
 //            printf("io_RDCARDRAM\n");
-            MEMcfg.RD_AUX_MEM = 1;
-            auxMemorySelect();
+            newMEMcfg = MEMcfg;
+            newMEMcfg.RD_AUX_MEM = 1;
+            auxMemorySelect(newMEMcfg);
             break;
 
         case (uint8_t)io_WRMAINRAM:
 //            printf("io_WRMAINRAM\n");
-            MEMcfg.WR_AUX_MEM = 0;
-            auxMemorySelect();
+            newMEMcfg = MEMcfg;
+            newMEMcfg.WR_AUX_MEM = 0;
+            auxMemorySelect(newMEMcfg);
             break;
 
         case (uint8_t)io_WRCARDRAM:
 //            printf("io_WRCARDRAM\n");
-            MEMcfg.WR_AUX_MEM = 1;
-            auxMemorySelect();
+            newMEMcfg = MEMcfg;
+            newMEMcfg.WR_AUX_MEM = 1;
+            auxMemorySelect(newMEMcfg);
             break;
 
         case (uint8_t)io_SETSTDZP:

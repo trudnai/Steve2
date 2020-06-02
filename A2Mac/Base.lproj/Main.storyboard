@@ -639,6 +639,12 @@
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Disk 1" id="lnc-y1-bUG">
                                                 <items>
+                                                    <menuItem title="Open File" id="NHq-5y-OJe">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="selectAnImageFromFileWithSender:" target="Voe-Tx-rLC" id="d7g-4U-neM"/>
+                                                        </connections>
+                                                    </menuItem>
                                                     <menuItem title="Apple DOS 3.3 January 1983" identifier="Apple DOS 3.3 January 1983" id="KuV-6R-gyL">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
@@ -1058,10 +1064,46 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
-                                        <rect key="frame" x="8" y="8" width="104" height="239"/>
+                                        <rect key="frame" x="8" y="8" width="104" height="301"/>
                                         <subviews>
+                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7yw-J0-Fmj">
+                                                <rect key="frame" x="0.0" y="298" width="96" height="5"/>
+                                            </box>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e2E-di-h3i">
+                                                <rect key="frame" x="-2" y="276" width="83" height="18"/>
+                                                <buttonCell key="cell" type="check" title="KeybStick" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="UW9-Bt-pMv">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="Keyboard2JoystickOnOff:" target="XfG-lQ-9wD" id="8LD-mj-n5E"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wa3-TC-XUI">
+                                                <rect key="frame" x="-2" y="254" width="79" height="18"/>
+                                                <buttonCell key="cell" type="check" title="MouStick" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BGz-fX-MyG">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="Mouse2JoystickOnOff:" target="XfG-lQ-9wD" id="ci4-xN-MVe"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xrz-jA-1Fh">
+                                                <rect key="frame" x="-2" y="232" width="63" height="18"/>
+                                                <buttonCell key="cell" type="check" title="Mouse" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1RG-zY-mD2">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="MouseOnOff:" target="XfG-lQ-9wD" id="h09-p3-mS4"/>
+                                                </connections>
+                                            </button>
+                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xk-n9g">
+                                                <rect key="frame" x="0.0" y="223" width="96" height="5"/>
+                                            </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-cj-gLu">
-                                                <rect key="frame" x="-2" y="223" width="87" height="18"/>
+                                                <rect key="frame" x="-2" y="201" width="87" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Quick Disk" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6QV-uF-Gh7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1070,8 +1112,11 @@
                                                     <action selector="QuickDisk:" target="XfG-lQ-9wD" id="tt5-2M-B2Y"/>
                                                 </connections>
                                             </button>
-                                            <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
-                                                <rect key="frame" x="0.0" y="194" width="104" height="23"/>
+                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
+                                                <rect key="frame" x="0.0" y="192" width="96" height="5"/>
+                                            </box>
+                                            <splitView hidden="YES" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
+                                                <rect key="frame" x="0.0" y="278" width="104" height="23"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>
@@ -1197,8 +1242,20 @@
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>

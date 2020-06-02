@@ -11,6 +11,7 @@
 
 #include <stdint.h>
 #include "common.h"
+#include "woz.h"
 
 
 extern const unsigned long long default_MHz_6502;
@@ -160,7 +161,6 @@ extern double mhz;
 #define fps 30U
 
 extern void rom_loadFile( const char * bundlePath, const char * filename );
-extern void woz_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
 extern void m6502_Run(void);

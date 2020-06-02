@@ -53,6 +53,10 @@ class ViewController: NSViewController  {
     @IBOutlet weak var hires: HiRes!
     @IBOutlet weak var splashScreen: NSImageView!
     
+    var Keyboard2Joystick = true
+    var Mouse2Joystick = false
+    var MouseInterface = true
+
     
 //    static let charConvStr : String =
 //        "@🄰🄱🄲🄳🄴🄵🄶🄷🄸🄹🄺🄻🄼🄽🄾🄿🅀🅁🅂🅃🅄🅅🅆🅇🅈🅉[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
@@ -294,34 +298,41 @@ class ViewController: NSViewController  {
             let keyCode = Int(event.keyCode)
             switch keyCode {
             case leftArrowKey:
-                kbdInput(0x08)
-//                setIO(0xC064, 0);
                 print("LEFT", ddd);
+                if ( Keyboard2Joystick ) {
+                    // Keyboard 2 JoyStick (Game Controller / Paddle)
+                    pdl_valarr[0] = 0
+                }
+                kbdInput(0x08)
                 
-                // Keyboard 2 JoyStick (Game Controller / Paddle)
-                pdl_valarr[0] = 0
                 
             case rightArrowKey:
-                kbdInput(0x15)
-//                setIO(0xC064, 255);
                 print("RIGHT")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
-                pdl_valarr[0] = 1
-                
+                if ( Keyboard2Joystick ) {
+                    pdl_valarr[0] = 1
+                }
+                kbdInput(0x15)
+
             case downArrowKey:
-//                kbdInput(0x0B)
-//                setIO(0xC065, 255);
                 print("DOWN")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
-                pdl_valarr[1] = 1
-                
+                if ( Keyboard2Joystick ) {
+                    pdl_valarr[1] = 1
+                }
+                else {
+                    kbdInput(0x0B)
+                }
             case upArrowKey:
-//                kbdInput(0x0A)
-//                setIO(0xC065, 0);
                 print("UP")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
-                pdl_valarr[1] = 0
-                
+                if ( Keyboard2Joystick ) {
+                    pdl_valarr[1] = 0
+                }
+                else {
+                    kbdInput(0x0A)
+                }
+
             default:
     //            print("keycode: %d", keyCode)
                 if let chars = event.characters {
@@ -677,14 +688,25 @@ class ViewController: NSViewController  {
             // Mouse 2 JoyStick (Game Controller / Paddle)
             mouseLocation = view.window!.mouseLocationOutsideOfEventStream
             
-            pdl_prevarr[2] = pdl_valarr[2]
-            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
-            pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
+            if ( Mouse2Joystick ) {
+                pdl_prevarr[0] = pdl_valarr[0]
+                pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
+                pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
+                
+                pdl_prevarr[1] = pdl_valarr[1]
+                pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+                pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
+            }
             
-            pdl_prevarr[3] = pdl_valarr[3]
-            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-            pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
-            
+            if ( MouseInterface ) {
+                pdl_prevarr[2] = pdl_valarr[2]
+                pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
+                pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
+                
+                pdl_prevarr[3] = pdl_valarr[3]
+                pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+                pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
+            }
         }
         
         
@@ -717,7 +739,7 @@ class ViewController: NSViewController  {
         
         hires.clearScreen();
         
-        woz_loadFile( Bundle.main.resourcePath, "Apple DOS 3.3 January 1983.woz" )
+        woz_loadFile( Bundle.main.resourcePath! + "/Apple DOS 3.3 January 1983.woz" )
         
         //view.frame = CGRect(origin: CGPoint(), size: NSScreen.main!.visibleFrame.size)
                 
@@ -810,6 +832,18 @@ class ViewController: NSViewController  {
     @IBAction func SoundGapChanged(_ sender: NSStepper) {
         SoundGap.integerValue = sender.integerValue
         spkr_extra_buf = UInt32( sender.integerValue )
+    }
+    
+    @IBAction func Keyboard2JoystickOnOff(_ sender: NSButton) {
+        Keyboard2Joystick = sender.state == .on
+    }
+    
+    @IBAction func Mouse2JoystickOnOff(_ sender: NSButton) {
+        Mouse2Joystick = sender.state == .on
+    }
+    
+    @IBAction func MouseOnOff(_ sender: NSButton) {
+        MouseInterface = sender.state == .on
     }
     
     @IBAction func QuickDisk(_ sender: NSButton) {

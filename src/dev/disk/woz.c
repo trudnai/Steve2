@@ -301,15 +301,15 @@ uint8_t woz_read() {
 }
 
 
-void woz_loadFile( const char * resourcePath, const char * filename ) {
+void woz_loadFile( const char * filename ) {
     
-    char fullpath[256];
+//    char fullpath[256];
+//
+//    strcpy(fullpath, resourcePath);
+//    strcat(fullpath, "/");
+//    strcat(fullpath, filename);
     
-    strcpy(fullpath, resourcePath);
-    strcat(fullpath, "/");
-    strcat(fullpath, filename);
-    
-    FILE * f = fopen(fullpath, "rb");
+    FILE * f = fopen(filename, "rb");
     if (f == NULL) {
         perror("Failed to read WOZ: ");
         return;

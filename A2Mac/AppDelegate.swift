@@ -33,26 +33,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
-
+    
     @IBAction func selectAnImageFromFile(sender: AnyObject) {
-        let openPanel = NSOpenPanel()
-        openPanel.title = "Disk Image"
-        openPanel.allowsMultipleSelection = false
-        openPanel.canChooseDirectories = false
-        openPanel.canCreateDirectories = false
-        openPanel.canChooseFiles = true
-        openPanel.allowedFileTypes = ["dsk","do","po","nib", "woz"]
-        
-        openPanel.begin { (result) -> Void in
-            if result == NSApplication.ModalResponse.OK {
-                print("file:", openPanel.url!.path)
-                //Do what you will
-                //If there's only one URL, surely 'openPanel.URL'
-                //but otherwise a for loop works
-                woz_loadFile( openPanel.url?.path )
-            }
+        if ( ViewController.current != nil ) {
+            ViewController.current?.perform(#selector(ViewController.openDiskImage))
         }
     }
 
+    
+    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+        woz_loadFile( filename )
+
+        return true
+    }
 }
 

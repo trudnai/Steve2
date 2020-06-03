@@ -83,34 +83,208 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
-                                        <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                                        <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
+                                        <menuItem title="Eject" keyEquivalent="e" id="DVo-aG-piG">
                                             <connections>
                                                 <action selector="performClose:" target="Ady-hI-5gd" id="HmO-Ls-i7Q"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
-                                            <connections>
-                                                <action selector="saveDocument:" target="Ady-hI-5gd" id="teZ-XB-qJY"/>
-                                            </connections>
+                                        <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
+                                        <menuItem title="Disk 1" id="0NC-AF-e3z">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Disk 1" id="lnc-y1-bUG">
+                                                <items>
+                                                    <menuItem title="Open File" id="NHq-5y-OJe">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="selectAnImageFromFileWithSender:" target="Voe-Tx-rLC" id="d7g-4U-neM"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Blank Disk (5¼, 140K)" identifier="blank" id="aNs-m9-L2h">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="40a-S3-CZt"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="RZL-Zg-BzE"/>
+                                                    <menuItem title="Apple DOS 3.3 January 1983" keyEquivalent="1" identifier="Apple DOS 3.3 January 1983" id="KuV-6R-gyL">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="fFn-bN-fJA"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="ProDOS_402_System" identifier="ProDOS_402_System" id="bsO-ds-C6A">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="sSy-DY-QBr"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="10d-dT-lD1"/>
+                                                    <menuItem title="Merlin-8 v2.48 (DOS 3.3)" identifier="Merlin-8 v2.48 (DOS 3.3)" id="eI7-uk-BeY">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Nqe-vH-13o"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Pro v1.34" identifier="Merlin Pro v1.34" id="yTC-pI-VWN">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="43k-vB-bj0"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Assembler (early version, 40-column, DOS 3.3) side A" keyEquivalent="2" identifier="Merlin Assembler (early version, 40-column, DOS 3.3) side A" id="m64-gM-Lqu">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Fky-ox-w05"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Assembler (early version, 40-column, DOS 3.3) side B" identifier="Merlin Assembler (early version, 40-column, DOS 3.3) side B" id="P9Q-Qp-7FJ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="m2X-qn-NPe"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Macroassembler Side 1 (SDS, 1983)" identifier="Merlin Macroassembler Side 1 (SDS, 1983)" id="VVb-MJ-Ooj">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="g6c-YI-RrA"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Merlin Macroassembler Side 2 (SDS, 1983)" identifier="Merlin Macroassembler Side 2 (SDS, 1983)" id="VpX-Fo-Kin">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Xxn-PJ-zcg"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="qIZ-5C-Czj"/>
+                                                    <menuItem title="Apple ][ Dealer Service Programs" identifier="Apple ][ Dealer Service Programs" id="4ij-ED-VKK">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="pKd-xa-EjP"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Apple II Dealer Diagnostics" identifier="Apple II Dealer Diagnostics" id="XW0-r8-XCg">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="JUf-es-jdV"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Apple II+ Dealer Diagnostics" keyEquivalent="3" identifier="Apple II+ Dealer Diagnostics" id="jjf-fs-rZ7">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="vIK-Yl-r1f"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Apple IIc - Diagnostic diskette Program service 077-8125-A" identifier="Apple IIc - Diagnostic diskette Program service 077-8125-A" id="brN-Z1-Wpp">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Bwc-m1-LET"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="LOCKSMITH_V7_REV_B" keyEquivalent="4" identifier="LOCKSMITH_V7_REV_B" id="lZl-BU-L3p">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="xAB-nY-zVJ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="XPS Diagnostic IIe" keyEquivalent="5" identifier="XPS Diagnostic IIe" id="zBI-ok-Se7">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="GUr-Zl-fYR"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="kb8-Z5-nGS"/>
+                                                    <menuItem title="Donkey Kong" keyEquivalent="6" identifier="Donkey Kong" id="ero-Yw-Fxy">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="wwf-cD-Lv9"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Qbit" keyEquivalent="7" identifier="Qbit" id="3yK-n1-y7H">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="c8a-9v-oR4"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Sneakers" keyEquivalent="8" identifier="Sneakers" id="iAb-YK-Q8d">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="zhC-rp-mN0"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Wavy Navy" identifier="Wavy Navy" id="GB7-kl-zHb">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="lcd-GR-OVR"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Wavy Navy (4am crack)" identifier="Wavy Navy (4am crack)" id="owL-6l-KXD">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="hRl-0O-47L"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Xonix" keyEquivalent="9" identifier="Xonix" id="242-uR-ubX">
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Ysg-X9-qeK"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Lode Runner" identifier="Lode Runner" id="mnW-xe-mlX">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="nX5-Bp-bUh"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                         </menuItem>
-                                        <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
-                                            <connections>
-                                                <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="mDf-zr-I0C"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
-                                            <connections>
-                                                <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="iJ3-Pv-kwq"/>
-                                            </connections>
+                                        <menuItem title="Disk 2" id="yVX-3l-dbM">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Disk 1" id="lKH-Zl-lv4">
+                                                <items>
+                                                    <menuItem title="Donkey Kong" identifier="Donkey Kong" id="Ifw-hS-Jdm">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="oc4-nZ-Dax"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Qbit" identifier="Qbit" id="TL2-gn-1Nk">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="16w-R3-sl3"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Sneakers" identifier="Sneakers" id="l1U-9F-drE">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="G2C-BX-cVF"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Wavy Navy" identifier="Wavy Navy" id="kgg-1g-KgL">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="ycl-QC-ABE"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Wavy Navy (4am crack)" identifier="Wavy Navy (4am crack)" id="y1m-35-IPY">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="r13-jg-4TC"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Xonix" identifier="Xonix" id="uJZ-ie-85y">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Qpy-I1-fS2"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Lode Runner" identifier="Lode Runner" id="P3o-YJ-kNR">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="y9u-yU-kDQ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="blank" identifier="blank" id="gqQ-80-bSi">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="TYZ-fl-4eE"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                                        <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
-                                            <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="runPageLayout:" target="Ady-hI-5gd" id="Din-rz-gC5"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
                                             <connections>
                                                 <action selector="print:" target="Ady-hI-5gd" id="qaZ-4w-aoO"/>
@@ -134,11 +308,6 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="WRV-NI-Exz"/>
-                                        <menuItem title="Cut" keyEquivalent="x" id="uRl-iY-unG">
-                                            <connections>
-                                                <action selector="cut:" target="Ady-hI-5gd" id="YJe-68-I9s"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="Copy" keyEquivalent="c" id="x3v-GG-iWU">
                                             <connections>
                                                 <action selector="copy:" target="Ady-hI-5gd" id="G1f-GL-Joy"/>
@@ -147,18 +316,6 @@
                                         <menuItem title="Paste" keyEquivalent="v" id="gVA-U4-sdL">
                                             <connections>
                                                 <action selector="paste:" target="Ady-hI-5gd" id="UvS-8e-Qdg"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Paste and Match Style" keyEquivalent="V" id="WeT-3V-zwk">
-                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                            <connections>
-                                                <action selector="pasteAsPlainText:" target="Ady-hI-5gd" id="cEh-KX-wJQ"/>
-                                            </connections>
-                                        </menuItem>
-                                        <menuItem title="Delete" id="pa3-QI-u2k">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <action selector="delete:" target="Ady-hI-5gd" id="0Mk-Ml-PaM"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
@@ -176,12 +333,6 @@
                                                             <action selector="performFindPanelAction:" target="Ady-hI-5gd" id="cD7-Qs-BN4"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Find and Replace…" tag="12" keyEquivalent="f" id="YEy-JH-Tfz">
-                                                        <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
-                                                        <connections>
-                                                            <action selector="performFindPanelAction:" target="Ady-hI-5gd" id="WD3-Gg-5AJ"/>
-                                                        </connections>
-                                                    </menuItem>
                                                     <menuItem title="Find Next" tag="2" keyEquivalent="g" id="q09-fT-Sye">
                                                         <connections>
                                                             <action selector="performFindPanelAction:" target="Ady-hI-5gd" id="NDo-RZ-v9R"/>
@@ -192,7 +343,8 @@
                                                             <action selector="performFindPanelAction:" target="Ady-hI-5gd" id="HOh-sY-3ay"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Use Selection for Find" tag="7" keyEquivalent="e" id="buJ-ug-pKt">
+                                                    <menuItem title="Use Selection for Find" tag="7" id="buJ-ug-pKt">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="performFindPanelAction:" target="Ady-hI-5gd" id="U76-nv-p5D"/>
                                                         </connections>
@@ -630,212 +782,6 @@
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="A4H-Kk-DWT"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                        <menuItem title="Disk 1" id="0NC-AF-e3z">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Disk 1" id="lnc-y1-bUG">
-                                                <items>
-                                                    <menuItem title="Open File" id="NHq-5y-OJe">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="selectAnImageFromFileWithSender:" target="Voe-Tx-rLC" id="d7g-4U-neM"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Apple DOS 3.3 January 1983" identifier="Apple DOS 3.3 January 1983" id="KuV-6R-gyL">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="fFn-bN-fJA"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="ProDOS_402_System" identifier="ProDOS_402_System" id="bsO-ds-C6A">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="sSy-DY-QBr"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Merlin-8 v2.48 (DOS 3.3)" identifier="Merlin-8 v2.48 (DOS 3.3)" id="eI7-uk-BeY">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Nqe-vH-13o"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Merlin Pro v1.34" identifier="Merlin Pro v1.34" id="yTC-pI-VWN">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="43k-vB-bj0"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Merlin Assembler (early version, 40-column, DOS 3.3) side A" identifier="Merlin Assembler (early version, 40-column, DOS 3.3) side A" id="m64-gM-Lqu">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Fky-ox-w05"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Merlin Assembler (early version, 40-column, DOS 3.3) side B" identifier="Merlin Assembler (early version, 40-column, DOS 3.3) side B" id="P9Q-Qp-7FJ">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="m2X-qn-NPe"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Merlin Macroassembler Side 1 (SDS, 1983)" identifier="Merlin Macroassembler Side 1 (SDS, 1983)" id="VVb-MJ-Ooj">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="g6c-YI-RrA"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Merlin Macroassembler Side 2 (SDS, 1983)" identifier="Merlin Macroassembler Side 2 (SDS, 1983)" id="VpX-Fo-Kin">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Xxn-PJ-zcg"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Donkey Kong" identifier="Donkey Kong" id="ero-Yw-Fxy">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="wwf-cD-Lv9"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Qbit" identifier="Qbit" id="3yK-n1-y7H">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="c8a-9v-oR4"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Sneakers" identifier="Sneakers" id="iAb-YK-Q8d">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="zhC-rp-mN0"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Wavy Navy" identifier="Wavy Navy" id="GB7-kl-zHb">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="lcd-GR-OVR"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Wavy Navy (4am crack)" identifier="Wavy Navy (4am crack)" id="owL-6l-KXD">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="hRl-0O-47L"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Xonix" identifier="Xonix" id="242-uR-ubX">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Ysg-X9-qeK"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Lode Runner" identifier="Lode Runner" id="mnW-xe-mlX">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="nX5-Bp-bUh"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Apple ][ Dealer Service Programs" identifier="Apple ][ Dealer Service Programs" id="4ij-ED-VKK">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="pKd-xa-EjP"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Apple II Dealer Diagnostics" identifier="Apple II Dealer Diagnostics" id="XW0-r8-XCg">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="JUf-es-jdV"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Apple II+ Dealer Diagnostics" identifier="Apple II+ Dealer Diagnostics" id="jjf-fs-rZ7">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="vIK-Yl-r1f"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Apple II+ Products diagnostic 652-0334" identifier="Apple II+ Products diagnostic 652-0334" id="jOM-h8-d1i">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="otr-1O-TAM"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Apple IIc - Diagnostic diskette Program service 077-8125-A" identifier="Apple IIc - Diagnostic diskette Program service 077-8125-A" id="brN-Z1-Wpp">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Bwc-m1-LET"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="XPS Diagnostic IIe" identifier="XPS Diagnostic IIe" id="zBI-ok-Se7">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="GUr-Zl-fYR"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="LOCKSMITH_V7_REV_B" identifier="LOCKSMITH_V7_REV_B" id="lZl-BU-L3p">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="xAB-nY-zVJ"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="blank" identifier="blank" id="aNs-m9-L2h">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="40a-S3-CZt"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                </items>
-                                            </menu>
-                                        </menuItem>
-                                        <menuItem title="Disk 2" id="yVX-3l-dbM">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Disk 1" id="lKH-Zl-lv4">
-                                                <items>
-                                                    <menuItem title="Donkey Kong" identifier="Donkey Kong" id="Ifw-hS-Jdm">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="oc4-nZ-Dax"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Qbit" identifier="Qbit" id="TL2-gn-1Nk">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="16w-R3-sl3"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Sneakers" identifier="Sneakers" id="l1U-9F-drE">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="G2C-BX-cVF"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Wavy Navy" identifier="Wavy Navy" id="kgg-1g-KgL">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="ycl-QC-ABE"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Wavy Navy (4am crack)" identifier="Wavy Navy (4am crack)" id="y1m-35-IPY">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="r13-jg-4TC"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Xonix" identifier="Xonix" id="uJZ-ie-85y">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Qpy-I1-fS2"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="Lode Runner" identifier="Lode Runner" id="P3o-YJ-kNR">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="y9u-yU-kDQ"/>
-                                                        </connections>
-                                                    </menuItem>
-                                                    <menuItem title="blank" identifier="blank" id="gqQ-80-bSi">
-                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                        <connections>
-                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="TYZ-fl-4eE"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>

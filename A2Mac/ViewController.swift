@@ -288,6 +288,7 @@ class ViewController: NSViewController  {
                     }
                     
                 default:
+                    super.keyDown(with: event)
                     break
                 }
             }
@@ -733,9 +734,12 @@ class ViewController: NSViewController  {
     
     let upd = RepeatingTimer(timeInterval: 1/Double(fps))
 
+    static var current : NSViewController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ViewController.current = self
         
         hires.clearScreen();
         
@@ -854,6 +858,37 @@ class ViewController: NSViewController  {
             diskAccelerator_speed = 0
         }
     }
+
+    
+    @objc func openDiskImage() {
+        let openPanel = NSOpenPanel()
+        openPanel.title = "Disk Image"
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowedFileTypes = ["dsk","do","po","nib", "woz"]
+        
+        openPanel.begin { (result) -> Void in
+            if result == NSApplication.ModalResponse.OK {
+                print("file:", openPanel.url!.path)
+                //Do what you will
+                //If there's only one URL, surely 'openPanel.URL'
+                //but otherwise a for loop works
+                
+                if let filePath = openPanel.url?.path {
+                    woz_loadFile( filePath )
+                    NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
+                }
+            }
+        }
+    }
+
+    
+    @IBAction func openDocument(_ sender: Any?) {
+        openDiskImage()
+    }
+    
     
 }
 

@@ -301,7 +301,7 @@ uint8_t woz_read() {
 }
 
 
-void woz_loadFile( const char * filename ) {
+int woz_loadFile( const char * filename ) {
     
 //    char fullpath[256];
 //
@@ -312,12 +312,12 @@ void woz_loadFile( const char * filename ) {
     FILE * f = fopen(filename, "rb");
     if (f == NULL) {
         perror("Failed to read WOZ: ");
-        return;
+        return WOZ_ERR_FILE_NOT_FOUND;
     }
     
     fread( &woz_header, 1, sizeof(woz_header_t), f);
     if ( woz_header.magic != WOZ1_MAGIC ) {
-        return;
+        return WOZ_ERR_NOT_WOZ_FILE;
     }
     
     while ( ! feof(f) ) {
@@ -325,7 +325,7 @@ void woz_loadFile( const char * filename ) {
         
         long r = fread( &woz_chunk_header, 1, sizeof(woz_chunk_header_t), f);
         if ( r != sizeof(woz_chunk_header_t) ) {
-            break;
+            return r == 0 ? 0 : WOZ_ERR_BAD_CHUNK_HDR;
         }
         long foffs = ftell(f);
         
@@ -353,7 +353,7 @@ void woz_loadFile( const char * filename ) {
         if (buf) {
             r = fread( buf, 1, woz_chunk_header.size, f);
             if ( r != woz_chunk_header.size ) {
-                break;
+                return WOZ_ERR_BAD_DATA;
             }
         }
 
@@ -363,6 +363,7 @@ void woz_loadFile( const char * filename ) {
     
     fclose(f);
 
+    return WOZ_ERR_OK;
 }
 
 

@@ -23,6 +23,12 @@
 #define WOZ_TRKS_CHUNK_ID  0x534B5254
 #define WOZ_META_CHUNK_ID  0x4154454D
 
+#define WOZ_ERR_OK               0
+#define WOZ_ERR_FILE_NOT_FOUND  -1
+#define WOZ_ERR_NOT_WOZ_FILE    -2
+#define WOZ_ERR_BAD_CHUNK_HDR   -3
+#define WOZ_ERR_BAD_DATA        -4
+
 
 #pragma pack(push)
 #pragma pack(1)
@@ -120,7 +126,7 @@ extern uint8_t   WOZlatch;
 
 
 extern uint8_t woz_read(void);
-extern void woz_loadFile( const char * filename );
+extern int woz_loadFile( const char * filename );
 
 
 #endif /* woz_h */

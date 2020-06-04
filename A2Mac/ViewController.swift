@@ -98,12 +98,48 @@ class ViewController: NSViewController  {
     
     static var charConvTbl = charConvTblFlashOn
     
-    static var romFileName = "Apple2e_Enhanced.rom";
+    static var romFileName = "Apple2e.rom";
 
     static let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
         0x228, 0x2A8, 0x328, 0x3A8, 0x050, 0x0D0, 0x150, 0x1D0, 0x250, 0x2D0, 0x350, 0x3D0
     ]
+    
+    
+    func dialogOK(title: String, text: String) {
+        let alert = NSAlert()
+        alert.messageText = title
+        alert.informativeText = text
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "OK")
+        alert.runModal()
+        // return alert.runModal() == .alertFirstButtonReturn
+    }
+    
+    
+    @objc func chk_woz_load(err : Int32) {
+        switch (err) {
+        case WOZ_ERR_OK:
+            break
+            
+        case WOZ_ERR_FILE_NOT_FOUND:
+            dialogOK(title: "Error Loading Disk Image", text: "File Not Found!")
+            break
+            
+        case WOZ_ERR_NOT_WOZ_FILE:
+            dialogOK(title: "Error Loading Disk Image", text: "File is not a WOZ image!")
+            break
+            
+        case WOZ_ERR_BAD_CHUNK_HDR, WOZ_ERR_BAD_DATA:
+            dialogOK(title: "Error Loading Disk Image", text: "Malformed WOZ image!")
+            break
+            
+        default:
+            dialogOK(title: "Error Loading Disk Image", text: "Unknown Error! (\(err))" )
+            break
+        }
+    }
+    
     
     var workItem : DispatchWorkItem? = nil;
     @IBAction func Power(_ sender: Any) {
@@ -734,7 +770,7 @@ class ViewController: NSViewController  {
     
     let upd = RepeatingTimer(timeInterval: 1/Double(fps))
 
-    static var current : NSViewController? = nil
+    static var current : ViewController? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -743,8 +779,9 @@ class ViewController: NSViewController  {
         
         hires.clearScreen();
         
-        woz_loadFile( Bundle.main.resourcePath! + "/Apple DOS 3.3 January 1983.woz" )
-        
+        let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/Apple DOS 3.3 January 1983.woz" )
+        chk_woz_load(err: woz_err)
+
         //view.frame = CGRect(origin: CGPoint(), size: NSScreen.main!.visibleFrame.size)
                 
 //        createHiRes()
@@ -877,8 +914,14 @@ class ViewController: NSViewController  {
                 //but otherwise a for loop works
                 
                 if let filePath = openPanel.url?.path {
-                    woz_loadFile( filePath )
-                    NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
+                    let woz_err = woz_loadFile( filePath )
+                    
+                    if woz_err == WOZ_ERR_OK {
+                        NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
+                    }
+                    else {
+                        self.chk_woz_load(err: woz_err)
+                    }
                 }
             }
         }

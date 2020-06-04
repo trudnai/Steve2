@@ -22,7 +22,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction func Disk1_Selected(_ sender: NSMenuItem) {
         if let menuIdentifier = sender.identifier {
-            woz_loadFile( Bundle.main.resourcePath! + "/" + menuIdentifier.rawValue + ".woz" )
+            let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/" + menuIdentifier.rawValue + ".woz" )
+            ViewController.current?.chk_woz_load(err: woz_err)
         }
     }
     
@@ -35,16 +36,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func selectAnImageFromFile(sender: AnyObject) {
-        if ( ViewController.current != nil ) {
-            ViewController.current?.perform(#selector(ViewController.openDiskImage))
-        }
+        ViewController.current?.openDiskImage()
     }
 
     
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
-        woz_loadFile( filename )
+        let woz_err = woz_loadFile( filename )
 
-        return true
+        return woz_err == 0;
     }
+    
 }
 

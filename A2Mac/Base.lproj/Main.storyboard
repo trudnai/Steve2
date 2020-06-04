@@ -752,37 +752,334 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Config" id="n97-rZ-OOP" userLabel="Config">
+                            <menuItem title="Machine" id="n97-rZ-OOP">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Config" id="Xqf-B7-gCo">
+                                <menu key="submenu" title="Machine" id="Xqf-B7-gCo">
                                     <items>
-                                        <menuItem title="ROM" id="Y3v-20-h2Q">
+                                        <menuItem title="► Power On" id="VJp-Pq-vAd">
                                             <modifierMask key="keyEquivalentModifierMask"/>
-                                            <menu key="submenu" title="Disk 1" id="7dA-Bf-QS9">
+                                        </menuItem>
+                                        <menuItem title="❚❚ Pause" id="UvV-rl-Pa2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="■ Off" id="Pvr-O3-O0W">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="EpV-Zl-RlZ"/>
+                                        <menuItem title="Cold Reset" id="nzj-IC-y8T">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Warm Reset" id="ivK-Gh-v9c">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="iZQ-dd-f8J"/>
+                                        <menuItem title="Snapshot" id="5oA-Fb-xBS">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Machine" id="sPt-bm-xHF">
                                                 <items>
-                                                    <menuItem title="Apple ][" identifier="apple" id="vNT-Vf-GnM">
+                                                    <menuItem title="Save" id="TfJ-FC-fVE">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Revert" id="BSq-Md-dlE">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Clone" id="62P-mr-JdC">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Remove" id="F3V-BM-MBF">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Config" id="xCX-YJ-V4X" userLabel="Config">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Config" id="deK-A1-Cfu">
+                                    <items>
+                                        <menuItem title="Computer" id="Z2C-d8-YZG">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Computer" id="ksd-DR-LZn">
+                                                <items>
+                                                    <menuItem title="Apple I" id="vdn-oV-Yg6">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="i6d-jg-ge0"/>
+                                                    <menuItem title="Apple ][" id="mhi-Ny-X7h">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Apple ][ Autostart" id="h9I-nf-vNQ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="wZ1-Eu-OOC"/>
+                                                    <menuItem title="Apple ][ Plus" id="5gw-29-Gu5">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Apple ][ EuroPlus" id="7gZ-uL-uyF">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Apple ][ JPlus" id="csX-uP-6sJ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="16c-Wd-Y9a"/>
+                                                    <menuItem title="Apple //e" state="on" id="BrQ-r4-3m4">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Apple //e Enhanced" id="LjH-XA-GH7">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Apple //e Platinum" id="DKl-ia-cn9">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="auc-hx-H4k"/>
+                                                    <menuItem title="Apple //c" id="U9I-j7-k9t">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Apple //c Plus" id="iyK-TF-6Bt">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="CPU" id="SmQ-6o-1XX">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="CPU" id="KT1-Ia-kZn">
+                                                <items>
+                                                    <menuItem title="6502" state="on" id="k7j-VG-VO2">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="6502 Vanilla" id="tO1-Vs-L9f">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="65C02" id="4mW-JB-ErL">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="e8D-Kj-mbv"/>
+                                                    <menuItem title="1.023 MHz" state="on" id="1RN-01-nf4">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="2 MHz" id="pxO-n6-xHE">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="4 MHz" id="GRs-A7-t6X">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="10 MHz" id="PBY-Ro-rwy">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="100 MHz" id="Aja-GC-sCf">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="MAX MHz" id="xtW-45-OFk">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="RAM" id="Gnp-Nx-lOL">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="RAM" id="90x-gh-RRS">
+                                                <items>
+                                                    <menuItem title="16 K" identifier="apple" id="vCx-u7-Wi3">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="32 K" identifier="Apple2Plus" id="fLN-L3-YoC">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="48 K" state="on" identifier="Apple2e" id="8lO-CC-7hQ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="SZ8-yX-RKG"/>
+                                                    <menuItem title="16 K Language Card" state="on" identifier="Apple2e_Enhanced" id="nJd-RL-OY8">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="64 K Aux Memory" identifier="Apple2e_Enhanced" id="Nru-sa-j2J">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="ROM" id="pY1-DR-M27">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Disk 1" id="Grf-T3-bgk">
+                                                <items>
+                                                    <menuItem title="Apple ][" identifier="apple" id="s4p-zb-EBc">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="kGO-kr-gGf"/>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="fog-8o-ZAp"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Apple ][ Plus" identifier="Apple2Plus" id="wL6-44-pA1">
+                                                    <menuItem title="Apple ][ Plus" identifier="Apple2Plus" id="a2P-0Y-S0y">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="7Z4-x3-Io3"/>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="dhI-7d-ciT"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Apple //e" identifier="Apple2e" id="fj0-JM-dwU">
+                                                    <menuItem title="Apple //e" state="on" identifier="Apple2e" id="MeE-Kj-pad">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="xDa-lu-WEG"/>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="2W2-oY-Osz"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Apple //e Enhanced" identifier="Apple2e_Enhanced" id="xHh-GT-uQa">
+                                                    <menuItem title="Apple //e Enhanced" identifier="Apple2e_Enhanced" id="cDl-MC-vGJ">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
-                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="A4H-Kk-DWT"/>
+                                                            <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="Fob-HD-kdv"/>
                                                         </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="Audio" id="USc-hU-e3R">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Audio" id="hv3-Ib-zwY">
+                                                <items>
+                                                    <menuItem title="Internal Speaker" state="on" id="t2j-es-fcH">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Fake Stereo" id="3QI-CD-CP2">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="MfR-qp-xcm"/>
+                                                    <menuItem title="Soft" id="5tZ-ML-0aT">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Normal" state="on" id="kaI-LZ-xPd">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Hard" id="8Rl-q3-SsH">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="Pcw-F8-msF"/>
+                                                    <menuItem title="Quiet" id="P3j-WZ-K17">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Medium" state="on" id="a2w-0R-hbE">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Loud" id="W9O-C4-6aP">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="Video" id="KaL-8u-rRU">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Video" id="Jdm-9V-ppb">
+                                                <items>
+                                                    <menuItem title="Green" id="Xk5-f8-n1H">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Amber" id="4jU-9d-4Kc">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="White" id="Gh1-av-QsV">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Color" state="on" id="rtw-tz-VQa">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="oNR-hU-4fW"/>
+                                                    <menuItem title="Scan Lines" id="9yZ-sl-GN9">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem isSeparatorItem="YES" id="Uy4-cl-Goa"/>
+                                                    <menuItem title="Videx 80 Col" state="on" id="1AP-7s-pbz">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem title="Device" id="tWa-mz-8FE">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Device" id="2h9-TO-Gxp">
+                                                <items>
+                                                    <menuItem title="#4 Mouse" state="on" id="zb4-xg-8G3">
+                                                        <menu key="submenu" title="#4 Mouse" id="ZhQ-0N-U3c">
+                                                            <items>
+                                                                <menuItem title="Enabled" state="on" id="po4-cY-7DO">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                                <menuItem title="Calibrate" id="SUX-t1-KZF">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                            </items>
+                                                        </menu>
+                                                    </menuItem>
+                                                    <menuItem title="#5 Smart Drive" id="WCm-42-OWi">
+                                                        <menu key="submenu" title="#5 Smart Drive" id="X4T-1z-ROt">
+                                                            <items>
+                                                                <menuItem title="Drive 1" state="on" id="AHa-J8-6Ta">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="Fvj-WP-78c"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Drive 2" state="on" id="DQ6-1k-dPR">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="bsm-mE-Wgc"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Normal Speed" id="45z-1z-gjm">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                                <menuItem title="Enhanced Speed" state="on" id="pBw-9b-ilt">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                            </items>
+                                                        </menu>
+                                                    </menuItem>
+                                                    <menuItem title="#6 Disk ][" state="on" id="SMA-1k-EdT">
+                                                        <menu key="submenu" title="#6 Disk ][" id="bTm-cg-Qdm">
+                                                            <items>
+                                                                <menuItem title="Drive 1" state="on" id="mZb-qD-Rcv">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="G6H-Iv-RQE"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Drive 2" state="on" id="rtf-6x-XqC">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="zLW-7d-aGa"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Normal Speed" id="6pP-NT-9Wi">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                                <menuItem title="Enhanced Speed" state="on" id="Ck6-Su-ss5">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                </menuItem>
+                                                            </items>
+                                                        </menu>
+                                                    </menuItem>
+                                                    <menuItem title="Game Controller" id="whx-uP-lMP">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <menu key="submenu" title="Game Controller" id="UFl-tP-yg9">
+                                                            <items>
+                                                                <menuItem title="Enabled" state="on" id="yac-LJ-3bQ">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="SsM-bV-Gwt"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Keyboard 2 Paddle" state="on" id="hQ7-E1-FD5">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="WIs-9Q-Lik"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                                <menuItem title="Mouse 2 Joystick" id="gkx-1Y-kWQ">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="nhy-co-aDH"/>
+                                                                    </connections>
+                                                                </menuItem>
+                                                            </items>
+                                                        </menu>
                                                     </menuItem>
                                                 </items>
                                             </menu>

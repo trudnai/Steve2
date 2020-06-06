@@ -649,7 +649,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_PDL1:
         case (uint8_t)io_PDL2:
         case (uint8_t)io_PDL3:
-            printf("PDL%d: %d\n", addr - io_PDL0, pdl_read( addr - io_PDL0 ));
+//            printf("PDL%d: %d\n", addr - io_PDL0, pdl_read( addr - io_PDL0 ));
             return pdl_read( addr - io_PDL0 );
             
         case (uint8_t)io_PDL_STROBE:
@@ -712,7 +712,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_DISK_PHASE3_OFF + SLOT6:
             currentMagnet = (addr - io_DISK_PHASE0_OFF - SLOT6) / 2;
             disk.phase.magnet &= ~(1 << currentMagnet);
-            printf("io_DISK_PHASE%u_OFF (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
+//            printf("io_DISK_PHASE%u_OFF (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
 
             disk_phase();
             return 0;
@@ -723,7 +723,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_DISK_PHASE3_ON + SLOT6: {
             currentMagnet = (addr - io_DISK_PHASE0_ON - SLOT6) / 2;
             disk.phase.magnet |= 1 << currentMagnet;
-            printf("io_DISK_PHASE%u_ON (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
+//            printf("io_DISK_PHASE%u_ON (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
 
             disk_phase();
             return 0;
@@ -1202,17 +1202,17 @@ INLINE uint16_t addr_zp_ind( uint8_t addr ) {
  operand is zeropage address;
  effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
  **/
-INLINE uint16_t addr_X_ind() {
+INLINE uint16_t addr_ind_X() {
     dbgPrintf("zpXi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
     disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) )
     disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) + m6502.X) );
     return memread16( fetch() + m6502.X );
 }
 INLINE uint8_t src_X_ind() {
-    return memread( addr_X_ind() );
+    return memread( addr_ind_X() );
 }
 INLINE uint8_t * dest_X_ind() {
-    return WRLOMEM + addr_X_ind();
+    return WRLOMEM + addr_ind_X();
 }
 
 /**

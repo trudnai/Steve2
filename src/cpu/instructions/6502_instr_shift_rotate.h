@@ -24,11 +24,14 @@
  absolute      ASL oper      0E    3     6
  absolute,X    ASL oper,X    1E    3     7
 **/
+INLINE void _ASL( uint16_t addr ) {
+    m6502.C = WRLOMEM[addr] & 0x80;
+    set_flags_NZ( WRLOMEM[addr] <<= 1 );
+}
 INLINE void ASL( uint16_t addr ) {
     dbgPrintf("ASL ");
     disPrintf(disassembly.inst, "ASL");
-    m6502.C = WRLOMEM[addr] & 0x80;
-    set_flags_NZ( WRLOMEM[addr] <<= 1 );
+    _ASL(addr);
 }
 INLINE void ASLA() {
     dbgPrintf("ASL ");
@@ -78,13 +81,16 @@ INLINE void LSRA() {
  absolute      ROL oper      2E    3     6
  absolute,X    ROL oper,X    3E    3     7
 **/
-INLINE void ROL( uint16_t addr ) {
-    dbgPrintf("ROL ");
-    disPrintf(disassembly.inst, "ROL");
+INLINE void _ROL( uint16_t addr ) {
     uint8_t C = m6502.C != 0;
     m6502.C = WRLOMEM[addr] & 0x80;
     WRLOMEM[addr] <<= 1;
     set_flags_NZ( WRLOMEM[addr] |= C );
+}
+INLINE void ROL( uint16_t addr ) {
+    dbgPrintf("ROL ");
+    disPrintf(disassembly.inst, "ROL");
+    _ROL(addr);
 }
 INLINE void ROLA() {
     dbgPrintf("ROL ");

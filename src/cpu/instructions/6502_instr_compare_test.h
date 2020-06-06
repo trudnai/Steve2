@@ -48,10 +48,13 @@ INLINE void BIT( uint8_t src ) {
  (indirect,X)  CMP (oper,X)  C1    2     6
  (indirect),Y  CMP (oper),Y  D1    2     5*
  **/
+INLINE void _CMP( uint8_t src ) {
+    set_flags_NZC( (int16_t)m6502.A - src );
+}
 INLINE void CMP( uint8_t src ) {
     dbgPrintf("CMP(%02X) ", src);
     disPrintf(disassembly.inst, "CMP");
-    set_flags_NZC( (int16_t)m6502.A - src );
+    _CMP(src);
 }
 
 /**

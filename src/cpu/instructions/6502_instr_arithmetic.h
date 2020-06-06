@@ -88,11 +88,7 @@ INLINE void ADC( uint8_t src ) {
  (indirect,X)  SBC (oper,X)  E1    2     6
  (indirect),Y  SBC (oper),Y  F1    2     5*
 **/
-INLINE void SBC( uint8_t src ) {
-    dbgPrintf("SBC(%02X) ", src);
-    disPrintf(disassembly.inst, "SBC");
-//    ADC( ~src );
-    
+INLINE void _SBC( uint8_t src ) {
     uint16_t tmp;
     
     if( m6502.D ) {
@@ -109,13 +105,18 @@ INLINE void SBC( uint8_t src ) {
         }
     }
     else
-    {
+        {
         tmp = m6502.A - src - !m6502.C;
-    }
+        }
     
     m6502.C = tmp < 0x100;
     m6502.V = ( (m6502.A ^ tmp) & 0x80 ) && ( (m6502.A ^ src) & 0x80 );
     set_flags_NZ( m6502.A = tmp );
+}
+INLINE void SBC( uint8_t src ) {
+    dbgPrintf("SBC(%02X) ", src);
+    disPrintf(disassembly.inst, "SBC");
+    _SBC(src);
 }
 
 #endif // __6502_INSTR_ARITHMETIC_H__

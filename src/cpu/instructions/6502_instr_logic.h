@@ -27,10 +27,13 @@
  (indirect,X)  ORA (oper,X)  01    2     6
  (indirect),Y  ORA (oper),Y  11    2     5*
 **/
+INLINE void _ORA( uint8_t src ) {
+    set_flags_NZ( m6502.A |= src );
+}
 INLINE void ORA( uint8_t src ) {
     dbgPrintf("ORA(%02X) ", src);
     disPrintf(disassembly.inst, "ORA");
-    set_flags_NZ( m6502.A |= src );
+    _ORA(src);
 }
 
 /**
@@ -50,10 +53,13 @@ INLINE void ORA( uint8_t src ) {
  (indirect,X)  AND (oper,X)  21    2     6
  (indirect),Y  AND (oper),Y  31    2     5*
  **/
+INLINE void _AND( uint8_t src ) {
+    set_flags_NZ( m6502.A &= src );
+}
 INLINE void AND( uint8_t src ) {
     dbgPrintf("AND(%02X) ", src);
     disPrintf(disassembly.inst, "AND");
-    set_flags_NZ( m6502.A &= src );
+    _AND(src);
 }
 
 /**

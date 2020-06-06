@@ -921,13 +921,13 @@
                                                             <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="dhI-7d-ciT"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Apple //e" state="on" identifier="Apple2e" id="MeE-Kj-pad">
+                                                    <menuItem title="Apple //e" identifier="Apple2e" id="MeE-Kj-pad">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="2W2-oY-Osz"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="Apple //e Enhanced" identifier="Apple2e_Enhanced" id="cDl-MC-vGJ">
+                                                    <menuItem title="Apple //e Enhanced" state="on" identifier="Apple2e_Enhanced" id="cDl-MC-vGJ">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <connections>
                                                             <action selector="ROM_Selected:" target="Voe-Tx-rLC" id="Fob-HD-kdv"/>

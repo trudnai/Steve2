@@ -98,7 +98,7 @@ class ViewController: NSViewController  {
     
     static var charConvTbl = charConvTblFlashOn
     
-    static var romFileName = "Apple2e.rom";
+    static var romFileName = "Apple2e_Enhanced.rom";
 
     static let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,

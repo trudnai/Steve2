@@ -22,6 +22,7 @@
 #include "6502_instr_call_ret_jump.h"
 #include "6502_instr_set_clr.h"
 #include "6502_instr_misc.h"
+#include "6502_instr_undoc.h"
 
 
 #endif // __6502_INSTRUCTIONS_H__

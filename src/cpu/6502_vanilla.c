@@ -41,6 +41,8 @@ unsigned long long MHz_6502 = default_MHz_6502;
 unsigned long long clk_6502_per_frm =  default_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
 unsigned long long clk_6502_per_frm_max = 0;
+unsigned long long clk_6502_per_frm_max_sound = 4 * default_MHz_6502 / fps;
+
 
 
 unsigned long long tick_per_sec = G;
@@ -531,7 +533,7 @@ INLINE int m6502_Step() {
         case 0x7E: ROR( addr_abs_X() ); return 7;                      // ROR abs,X
 //        case 0x7F:
 //        case 0x80:
-        case 0x81: STA( addr_X_ind() ) ; return 6;                     // STA X,ind
+        case 0x81: STA( addr_ind_X() ) ; return 6;                     // STA X,ind
 //        case 0x82:
 //        case 0x83:
         case 0x84: STY( addr_zp() ); return 3;                         // STY zpg

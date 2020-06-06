@@ -109,13 +109,16 @@ INLINE void ROLA() {
  absolute      ROR oper      6E    3     6
  absolute,X    ROR oper,X    7E    3     7
 **/
-INLINE void ROR( uint16_t addr ) {
-    dbgPrintf("ROR ");
-    disPrintf(disassembly.inst, "ROR");
+INLINE void _ROR( uint16_t addr ) {
     uint8_t C = m6502.C != 0;
     m6502.C = WRLOMEM[addr] & 1;
     WRLOMEM[addr] >>= 1;
     set_flags_NZ( WRLOMEM[addr] |= C  << 7 );
+}
+INLINE void ROR( uint16_t addr ) {
+    dbgPrintf("ROR ");
+    disPrintf(disassembly.inst, "ROR");
+    _ROR(addr);
 }
 INLINE void RORA() {
     dbgPrintf("ROR ");

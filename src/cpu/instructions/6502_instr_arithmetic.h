@@ -29,15 +29,12 @@
  (indirect,X)  ADC (oper,X)  61    2     6
  (indirect),Y  ADC (oper),Y  71    2     5*
 **/
-INLINE void ADC( uint8_t src ) {
-    dbgPrintf("ADC(%02X) ", src);
-    disPrintf(disassembly.inst, "ADC");
-
+INLINE void _ADC( uint8_t src ) {
     uint16_t tmp;
-
+    
     // V = C7 != C6
     m6502.V = ((m6502.A & 0x7F) + (src & 0x7F) + (m6502.C != 0)) > 0x7F;
-
+    
     if ( m6502.D ) {
         if ( (tmp = (m6502.A & 0x0F) + (src & 0x0F) + (m6502.C != 0)) > 0x09 ) {
             tmp += 0x06;
@@ -53,19 +50,25 @@ INLINE void ADC( uint8_t src ) {
     set_flags_NZ( m6502.A = tmp );
     m6502.C = tmp > 0xFF;
     m6502.V ^= m6502.C;
-
-//    // this is good but slow:
-//    uint16_t tmp = (uint16_t)m6502.A + src + m6502.C;
-//    m6502.V = ( !((m6502.A ^ src) & 0x80)) && ( (m6502.A ^ tmp) & 0x80);
-//    m6502.C = tmp > 0xFF;
-//    set_flags_NZ( m6502.A = tmp );
-
-//    // this is good but slow:
-//    uint16_t tmp = (uint16_t)m6502.A + src + m6502.C;
-//    m6502.V = ( ((m6502.A ^ src) ^ (m6502.A ^ tmp)) & 0x80 ) != 0;
-//    m6502.C = tmp > 0xFF;
-//    set_flags_NZ( m6502.A = tmp );
     
+    //    // this is good but slow:
+    //    uint16_t tmp = (uint16_t)m6502.A + src + m6502.C;
+    //    m6502.V = ( !((m6502.A ^ src) & 0x80)) && ( (m6502.A ^ tmp) & 0x80);
+    //    m6502.C = tmp > 0xFF;
+    //    set_flags_NZ( m6502.A = tmp );
+    
+    //    // this is good but slow:
+    //    uint16_t tmp = (uint16_t)m6502.A + src + m6502.C;
+    //    m6502.V = ( ((m6502.A ^ src) ^ (m6502.A ^ tmp)) & 0x80 ) != 0;
+    //    m6502.C = tmp > 0xFF;
+    //    set_flags_NZ( m6502.A = tmp );
+    
+}
+INLINE void ADC( uint8_t src ) {
+    dbgPrintf("ADC(%02X) ", src);
+    disPrintf(disassembly.inst, "ADC");
+    
+    _ADC(src);
 }
 
 /**

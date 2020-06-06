@@ -34,6 +34,22 @@ INLINE int BRK() {
 }
 
 /**
+ KIL  Kills the CPU - Well, it hangs it untill the next power cycle
+ **/
+INLINE int KIL() {
+    dbgPrintf("KIL ");
+    disPrintf(disassembly.inst, "KIL");
+    PUSH_addr(m6502.PC -1); // PC, however, fetch already incremented it by 1
+                            // B flag should be set before pushing flags onto the stack
+    m6502.B = 1;
+    PUSH( getFlags().SR );
+    m6502.I = 1;
+    m6502.PC = memread16(IRQ_VECTOR);
+    
+    return 7;
+}
+
+/**
  NOP  No Operation
  
  ---                              N Z C I D V

@@ -13,6 +13,7 @@
 		323D042E248980600086A901 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
 		323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D04312489BFD80086A901 /* PreferencesWindowController.swift */; };
+		323D0437248B6BEA0086A901 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		323E2DCE245531E600156805 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
 		323E2DCF245531E600156805 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
 		323E2DD0245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
@@ -30,7 +31,6 @@
 		32440B80247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */; };
 		32440B81247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */; };
 		32440B83247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */; };
-		32440B84247E27D3000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32440B85247E27D7000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32440B8F247F86D6000F9DA1 /* Apple II+ Dealer Diagnostics.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B86247F86D4000F9DA1 /* Apple II+ Dealer Diagnostics.woz */; };
 		32440B90247F86D6000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B87247F86D5000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz */; };
@@ -154,6 +154,7 @@
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		323D0435248B20F20086A901 /* 6502_instr_undoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_undoc.h; sourceTree = "<group>"; };
 		323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e_Enhanced.rom; sourceTree = "<group>"; };
 		323E2DCD245531E500156805 /* Apple2e.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e.rom; sourceTree = "<group>"; };
 		32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "A2Mac-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -338,6 +339,7 @@
 				32439F7622ECD8AD0077AAE0 /* 6502_instr_set_clr.h */,
 				32439F7722ECD8AD0077AAE0 /* 6502_instr_stack.h */,
 				32439F7822ECD8AD0077AAE0 /* 6502_instr_logic.h */,
+				323D0435248B20F20086A901 /* 6502_instr_undoc.h */,
 				32439F7922ECD8AD0077AAE0 /* 6502_instr_shift_rotate.h */,
 				32439F7A22ECD8AD0077AAE0 /* 6502_instr_inc_dec.h */,
 				32439F7B22ECD8AD0077AAE0 /* 6502_instr_compare_test.h */,
@@ -970,12 +972,12 @@
 			files = (
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
+				323D0437248B6BEA0086A901 /* 6502.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
 				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
-				32440B84247E27D3000F9DA1 /* 6502.c in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,

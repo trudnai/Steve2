@@ -179,7 +179,7 @@
 		32440B61247C9C2D000F9DA1 /* merlin_assembler_1.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = merlin_assembler_1.woz; sourceTree = "<group>"; };
 		32440B62247C9C2D000F9DA1 /* merlin_assembler_2.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = merlin_assembler_2.woz; sourceTree = "<group>"; };
 		32440B63247C9C2D000F9DA1 /* merlin_assembler_3.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = merlin_assembler_3.woz; sourceTree = "<group>"; };
-		32440B67247CA1AF000F9DA1 /* 6502_pure.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_pure.c; sourceTree = "<group>"; };
+		32440B67247CA1AF000F9DA1 /* 6502_vanilla.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_vanilla.c; sourceTree = "<group>"; };
 		32440B69247CA1CE000F9DA1 /* 65C02.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 65C02.c; sourceTree = "<group>"; };
 		32440B72247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz"; sourceTree = "<group>"; };
 		32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Pro 2.45 (DOS) Disk 1-2.woz"; sourceTree = "<group>"; };
@@ -402,7 +402,7 @@
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
 				32440B69247CA1CE000F9DA1 /* 65C02.c */,
-				32440B67247CA1AF000F9DA1 /* 6502_pure.c */,
+				32440B67247CA1AF000F9DA1 /* 6502_vanilla.c */,
 			);
 			path = cpu;
 			sourceTree = "<group>";

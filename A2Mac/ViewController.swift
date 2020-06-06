@@ -284,7 +284,7 @@ class ViewController: NSViewController  {
     }
     
     override func keyDown(with event: NSEvent) {
-        print("keyDown")
+//        print("keyDown")
         
 //        for i in 0...65536 {
 //            ddd = Int(event.keyCode) + i
@@ -335,7 +335,7 @@ class ViewController: NSViewController  {
             let keyCode = Int(event.keyCode)
             switch keyCode {
             case leftArrowKey:
-                print("LEFT", ddd);
+//                print("LEFT", ddd);
                 if ( Keyboard2Joystick ) {
                     // Keyboard 2 JoyStick (Game Controller / Paddle)
                     pdl_valarr[0] = 0
@@ -344,7 +344,7 @@ class ViewController: NSViewController  {
                 
                 
             case rightArrowKey:
-                print("RIGHT")
+//                print("RIGHT")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
                 if ( Keyboard2Joystick ) {
                     pdl_valarr[0] = 1
@@ -352,7 +352,7 @@ class ViewController: NSViewController  {
                 kbdInput(0x15)
 
             case downArrowKey:
-                print("DOWN")
+//                print("DOWN")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
                 if ( Keyboard2Joystick ) {
                     pdl_valarr[1] = 1
@@ -361,7 +361,7 @@ class ViewController: NSViewController  {
                     kbdInput(0x0B)
                 }
             case upArrowKey:
-                print("UP")
+//                print("UP")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
                 if ( Keyboard2Joystick ) {
                     pdl_valarr[1] = 0
@@ -389,7 +389,7 @@ class ViewController: NSViewController  {
     
     
     override func keyUp(with event: NSEvent) {
-        print("keyUp")
+//        print("keyUp")
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.command] where event.characters == "l",
 //             [.command, .shift] where event.characters == "l":
@@ -407,28 +407,28 @@ class ViewController: NSViewController  {
         case leftArrowKey:
 //            kbdInput(0x08)
 //            setIO(0xC064, 127);
-            print("left")
+//            print("left")
             // Keyboard 2 JoyStick (Game Controller / Paddle)
             pdl_valarr[0] = 0.5
             
         case rightArrowKey:
 //            kbdInput(0x15)
 //            setIO(0xC064, 128);
-            print("right")
+//            print("right")
             // Keyboard 2 JoyStick (Game Controller / Paddle)
             pdl_valarr[0] = 0.5
             
         case downArrowKey:
 //            kbdInput(0x0B)
 //            setIO(0xC065, 127);
-            print("down")
+//            print("down")
             // Keyboard 2 JoyStick (Game Controller / Paddle)
             pdl_valarr[1] = 0.5
             
         case upArrowKey:
 //            kbdInput(0x0A)
 //            setIO(0xC065, 128);
-            print("up")
+//            print("up")
             // Keyboard 2 JoyStick (Game Controller / Paddle)
             pdl_valarr[1] = 0.5
             
@@ -454,62 +454,62 @@ class ViewController: NSViewController  {
             setIO(0xC061, 0);
             setIO(0xC062, 0);
             setIO(0xC063, 0); // inverted (bit 7: not pressed)
-            print("shift key is pressed")
-        case [.control]:
-            print("control key is pressed")
+//            print("shift key is pressed")
+//        case [.control]:
+//            print("control key is pressed")
         case [.option] :
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 0);
             setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
-            print("option key is pressed")
+//            print("option key is pressed")
         case [.command]:
-            print("Command key is pressed")
+//            print("Command key is pressed")
             setIO(0xC061, 0);
             setIO(0xC062, 1 << 7);
             setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
-        case [.control, .shift]:
-            print("control-shift keys are pressed")
+//        case [.control, .shift]:
+//            print("control-shift keys are pressed")
         case [.option, .shift]:
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 0);
             setIO(0xC063, 0); // inverted (bit 7: not pressed)
-            print("option-shift keys are pressed")
+//            print("option-shift keys are pressed")
         case [.command, .shift]:
             setIO(0xC061, 0);
             setIO(0xC062, 1 << 7);
             setIO(0xC063, 0); // inverted (bit 7: not pressed)
-            print("command-shift keys are pressed")
-        case [.control, .option]:
-            print("control-option keys are pressed")
-        case [.control, .command]:
-            print("control-command keys are pressed")
+//            print("command-shift keys are pressed")
+//        case [.control, .option]:
+//            print("control-option keys are pressed")
+//        case [.control, .command]:
+//            print("control-command keys are pressed")
         case [.option, .command]:
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 1 << 7);
             setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
-            print("option-command keys are pressed")
-        case [.shift, .control, .option]:
-            print("shift-control-option keys are pressed")
-        case [.shift, .control, .command]:
-            print("shift-control-command keys are pressed")
-        case [.control, .option, .command]:
-            print("control-option-command keys are pressed")
+//            print("option-command keys are pressed")
+//        case [.shift, .control, .option]:
+//            print("shift-control-option keys are pressed")
+//        case [.shift, .control, .command]:
+//            print("shift-control-command keys are pressed")
+//        case [.control, .option, .command]:
+//            print("control-option-command keys are pressed")
         case [.shift, .command, .option]:
             setIO(0xC061, 1 << 7);
             setIO(0xC062, 1 << 7);
             setIO(0xC063, 0); // inverted (bit 7: not pressed)
-            print("shift-command-option keys are pressed")
-        case [.shift, .control, .option, .command]:
-            print("shift-control-option-command keys are pressed")
-        case [.function]:
-            print("function key is pressed")
-        case [.capsLock]:
-            print("capsLock key is pressed")
+//            print("shift-command-option keys are pressed")
+//        case [.shift, .control, .option, .command]:
+//            print("shift-control-option-command keys are pressed")
+//        case [.function]:
+//            print("function key is pressed")
+//        case [.capsLock]:
+//            print("capsLock key is pressed")
         default:
             setIO(0xC061, 0);
             setIO(0xC062, 0);
             setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
-            print("no modifier keys are pressed")
+//            print("no modifier keys are pressed")
         }
     }
 

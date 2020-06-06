@@ -74,7 +74,7 @@ const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * 2 / spkr_fps;
 int16_t spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT * 2]; // stereo
 unsigned spkr_sample_idx = 0;
 
-const unsigned spkr_play_timeout = 8;
+const unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps
 unsigned spkr_play_time = 0;
 
 

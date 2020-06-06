@@ -11,6 +11,7 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    var preferencesController : PreferencesWindowController?
 
     @IBAction func ROM_Selected(_ sender: NSMenuItem) {
         if let menuIdentifier = sender.identifier {
@@ -44,6 +45,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let woz_err = woz_loadFile( filename )
 
         return woz_err == 0;
+    }
+    
+    
+    @IBAction func showPreferences(_ sender: NSMenuItem) {
+        
+        if ( preferencesController == nil ) {
+            let storyboard = NSStoryboard(name: NSStoryboard.Name("Preferences"), bundle: nil)
+            preferencesController = storyboard.instantiateInitialController() as? PreferencesWindowController
+        }
+        
+        if ( preferencesController != nil ) {
+            preferencesController?.showWindow(sender)
+        }
+        
     }
     
 }

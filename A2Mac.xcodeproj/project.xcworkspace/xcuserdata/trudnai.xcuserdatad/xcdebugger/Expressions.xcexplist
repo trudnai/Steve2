@@ -653,6 +653,14 @@
          contextName = "BNE:6502_instr_branch.h">
       </ContextState>
       <ContextState
+         contextName = "AppDelegate.showPreferences(_:):AppDelegate.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "preferencesController">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "BRA:6502_instr_branch.h">
          <PersistentStrings>
             <PersistentString

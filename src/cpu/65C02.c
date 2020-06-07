@@ -81,7 +81,7 @@ m6502_t m6502 = {
     0,      // bra_true
     0,      // bra_false
     0,      // compile
-    HLT,    // IF
+    HALT,   // IF
     
 };
 
@@ -436,7 +436,7 @@ INLINE int m6502_Step() {
 //        case 0x1F: // SLO* (undocumented)
         case 0x20: JSR( abs_addr() ); return 6;                        // JSR abs
         case 0x21: AND( src_X_ind() ); return 6;                       // AND X,ind
-//        case 0x22: KIL
+//        case 0x22: HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
 //        case 0x23: RLA izx 8
         case 0x24: BIT( src_zp() ); return 3;                          // BIT zpg
         case 0x25: AND( src_zp() ); return 3;                          // AND zpg
@@ -452,7 +452,7 @@ INLINE int m6502_Step() {
 //        case 0x2F: RLA abs 6
         case 0x30: BMI( rel_addr() ); return 3;                        // BMI rel
         case 0x31: AND( src_ind_Y() ); return 5;                       // AND ind,Y
-//        case 0x32: KIL
+//        case 0x32: HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
 //        case 0x33: RLA izy 8
 //        case 0x34: NOP zpx 4
         case 0x35: AND( src_zp_X() ); return 4;                        // AND zpg,X
@@ -468,7 +468,7 @@ INLINE int m6502_Step() {
 //            case 0x3F: RLA abx 7
         case 0x40: RTI(); return 6;                                    // RTI
         case 0x41: EOR( src_X_ind() ); return 6;                       // EOR X,ind
-//        case 0x42: KIL
+//        case 0x42: HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
 //        case 0x43: SRE izx 8
 //        case 0x44: NOP zp 3
         case 0x45: EOR( src_zp() ); return 3;                          // EOR zpg
@@ -484,7 +484,7 @@ INLINE int m6502_Step() {
 //        case 0x4F: SRE abs 6
         case 0x50: BVC( rel_addr() ); return 3;                        // BVC rel
         case 0x51: EOR( src_ind_Y() ); return 5;                       // EOR ind,Y
-//        case 0x52: KIL
+//        case 0x52: HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
 //        case 0x53: SRE izy 8
 //        case 0x54: NOP zpx 4
         case 0x55: EOR( src_zp_X() ); return 4;                        // AND zpg,X
@@ -500,7 +500,7 @@ INLINE int m6502_Step() {
 //            case 0x5F: SRE abx 7
         case 0x60: RTS(); return 6;                                    // RTS
         case 0x61: ADC( src_X_ind() ); return 6;                       // ADC X,ind
-//        case 0x62: KIL
+//        case 0x62: HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
 //        case 0x63: RRA izx 8
 //        case 0x64: NOP zp 3
         case 0x65: ADC( src_zp() ); return 3;                          // ADC zpg
@@ -733,7 +733,7 @@ void m6502_Run() {
 #ifdef INTERRUPT_CHECK_PER_STEP
         if ( m6502.IF ) {
             switch (m6502.interrupt) {
-                case HLT:
+                case HALT:
                     // CPU is haletd, nothing to do here...
                     return;
                     

@@ -25,7 +25,7 @@ extern unsigned int clkfrm;
 
 typedef enum {
     NO_INT,
-    HLT,
+    HALT,
     IRQ,
     NMI,
     HARDRESET,

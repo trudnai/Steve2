@@ -79,6 +79,18 @@ void disk_phase() {
 }
 
 
+void disk_phase_on( uint8_t currentMagnet ) {
+    disk.phase.magnet |= 1 << currentMagnet;
+    disk_phase();
+}
+
+
+void disk_phase_off( uint8_t currentMagnet ) {
+    disk.phase.magnet &= ~(1 << currentMagnet);
+    disk_phase();
+}
+
+
 uint8_t disk_read() {
     dbgPrintf("io_DISK_READ (S%u)\n", 6);
     disk.clk_last_access = m6502.clktime;

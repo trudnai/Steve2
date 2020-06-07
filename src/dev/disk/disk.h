@@ -64,6 +64,8 @@ extern int diskAccelerator_speed;
 //extern const unsigned long long clk_diskAcceleratorTimeout;
 
 extern void disk_phase(void);
+extern void disk_phase_on( uint8_t currentMagnet );
+extern void disk_phase_off( uint8_t currentMagnet );
 extern uint8_t disk_read(void);
 
 

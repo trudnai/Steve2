@@ -549,8 +549,6 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
 //    printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
 
-    uint8_t currentMagnet = 0;
-    
     // TODO: This is for checking only, should be either removed or the entire ioRead should based on binary search, whatever is faster
     if ( addr == io_KBD ) {
 //        clk_6502_per_frm_max = clk_6502_per_frm_max > 32768 ? clk_6502_per_frm_max - 32768 : 0; // ECO Mode!
@@ -710,24 +708,15 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_DISK_PHASE1_OFF + SLOT6:
         case (uint8_t)io_DISK_PHASE2_OFF + SLOT6:
         case (uint8_t)io_DISK_PHASE3_OFF + SLOT6:
-            currentMagnet = (addr - io_DISK_PHASE0_OFF - SLOT6) / 2;
-            disk.phase.magnet &= ~(1 << currentMagnet);
-//            printf("io_DISK_PHASE%u_OFF (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
-
-            disk_phase();
+            disk_phase_off( (addr - io_DISK_PHASE0_OFF - SLOT6) / 2 );
             return 0;
 
         case (uint8_t)io_DISK_PHASE0_ON + SLOT6:
         case (uint8_t)io_DISK_PHASE1_ON + SLOT6:
         case (uint8_t)io_DISK_PHASE2_ON + SLOT6:
-        case (uint8_t)io_DISK_PHASE3_ON + SLOT6: {
-            currentMagnet = (addr - io_DISK_PHASE0_ON - SLOT6) / 2;
-            disk.phase.magnet |= 1 << currentMagnet;
-//            printf("io_DISK_PHASE%u_ON (S%u, ps:%X) ", currentMagnet, 6, disk.phase.magnet);
-
-            disk_phase();
+        case (uint8_t)io_DISK_PHASE3_ON + SLOT6:
+            disk_phase_on( (addr - io_DISK_PHASE0_ON - SLOT6) / 2 );
             return 0;
-        }
 
         case (uint8_t)io_DISK_POWER_OFF + SLOT6:
             dbgPrintf2("io_DISK_POWER_OFF (S%u)\n", 6);

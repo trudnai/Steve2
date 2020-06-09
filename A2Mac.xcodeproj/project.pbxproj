@@ -332,6 +332,84 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		323D0438248F6E560086A901 /* sfx */ = {
+			isa = PBXGroup;
+			children = (
+				323D0439248F6E670086A901 /* disk */,
+			);
+			path = sfx;
+			sourceTree = "<group>";
+		};
+		323D0439248F6E670086A901 /* disk */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = disk;
+			sourceTree = "<group>";
+		};
+		323D043A248F6E840086A901 /* dsk */ = {
+			isa = PBXGroup;
+			children = (
+				32440B9C247F9DC7000F9DA1 /* blank.woz */,
+				325EB68523FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz */,
+				325EB68823FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz */,
+				32440B78247CB2B2000F9DA1 /* Merlin Pro v1.34.woz */,
+				32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */,
+				32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */,
+				32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */,
+				32440B7A247CB649000F9DA1 /* Merlin Macroassembler Side 2 (SDS, 1983).woz */,
+				325EB68B23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz */,
+				325EB6952401118200C6B4A4 /* Crossfire.woz */,
+				325EB6942401118200C6B4A4 /* Lode Runner.woz */,
+				325EB6982401118200C6B4A4 /* ProDOS_312.woz */,
+				325EB68F23FE028800C6B4A4 /* Donkey Kong.woz */,
+				325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */,
+				325EB6972401118200C6B4A4 /* Qbit.woz */,
+				325EB69A2401118300C6B4A4 /* Sneakers.woz */,
+				325EB6962401118200C6B4A4 /* Wavy Navy.woz */,
+				32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */,
+				325EB69B2401118300C6B4A4 /* Xonix.woz */,
+				32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */,
+				32440B74247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz */,
+				32440B72247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz */,
+				32440B61247C9C2D000F9DA1 /* merlin_assembler_1.woz */,
+				32440B62247C9C2D000F9DA1 /* merlin_assembler_2.woz */,
+				32440B63247C9C2D000F9DA1 /* merlin_assembler_3.woz */,
+				32440B8E247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz */,
+				32440B8A247F86D5000F9DA1 /* Apple II Dealer Diagnostics Cracked.woz */,
+				32440B8C247F86D5000F9DA1 /* Apple II Dealer Diagnostics.woz */,
+				32440B86247F86D4000F9DA1 /* Apple II+ Dealer Diagnostics.woz */,
+				32440B8D247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz */,
+				32440B89247F86D5000F9DA1 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz */,
+				32440B88247F86D5000F9DA1 /* COMPUTER_CHECKUP.woz */,
+				32440B87247F86D5000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz */,
+				32440B8B247F86D5000F9DA1 /* XPS Diagnostic IIe.woz */,
+				32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */,
+			);
+			path = dsk;
+			sourceTree = "<group>";
+		};
+		323D043B248F6EBE0086A901 /* rom */ = {
+			isa = PBXGroup;
+			children = (
+				32439F8422ECD8AD0077AAE0 /* apple.rom */,
+				323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */,
+				323E2DCD245531E500156805 /* Apple2e.rom */,
+				325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */,
+				325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */,
+			);
+			path = rom;
+			sourceTree = "<group>";
+		};
+		323D043C248F6EDA0086A901 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */,
+				32089E4724556DBD0036E667 /* PRNumber3.ttf */,
+			);
+			path = font;
+			sourceTree = "<group>";
+		};
 		32439F7522ECD8AD0077AAE0 /* instructions */ = {
 			isa = PBXGroup;
 			children = (
@@ -454,49 +532,11 @@
 		3262F37823E17013008BDB95 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				323D043C248F6EDA0086A901 /* font */,
+				323D043A248F6E840086A901 /* dsk */,
+				323D043B248F6EBE0086A901 /* rom */,
+				323D0438248F6E560086A901 /* sfx */,
 				32A9F72B24668D26004902A1 /* apple-rainbow.jpg */,
-				325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */,
-				32089E4724556DBD0036E667 /* PRNumber3.ttf */,
-				32439F8422ECD8AD0077AAE0 /* apple.rom */,
-				323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */,
-				323E2DCD245531E500156805 /* Apple2e.rom */,
-				325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */,
-				325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */,
-				32440B9C247F9DC7000F9DA1 /* blank.woz */,
-				325EB68523FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz */,
-				325EB68823FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz */,
-				32440B78247CB2B2000F9DA1 /* Merlin Pro v1.34.woz */,
-				32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */,
-				32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */,
-				32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */,
-				32440B7A247CB649000F9DA1 /* Merlin Macroassembler Side 2 (SDS, 1983).woz */,
-				325EB68B23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz */,
-				325EB6952401118200C6B4A4 /* Crossfire.woz */,
-				325EB6942401118200C6B4A4 /* Lode Runner.woz */,
-				325EB6982401118200C6B4A4 /* ProDOS_312.woz */,
-				325EB68F23FE028800C6B4A4 /* Donkey Kong.woz */,
-				325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */,
-				325EB6972401118200C6B4A4 /* Qbit.woz */,
-				325EB69A2401118300C6B4A4 /* Sneakers.woz */,
-				325EB6962401118200C6B4A4 /* Wavy Navy.woz */,
-				32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */,
-				325EB69B2401118300C6B4A4 /* Xonix.woz */,
-				32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */,
-				32440B74247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz */,
-				32440B72247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz */,
-				32440B61247C9C2D000F9DA1 /* merlin_assembler_1.woz */,
-				32440B62247C9C2D000F9DA1 /* merlin_assembler_2.woz */,
-				32440B63247C9C2D000F9DA1 /* merlin_assembler_3.woz */,
-				32440B8E247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz */,
-				32440B8A247F86D5000F9DA1 /* Apple II Dealer Diagnostics Cracked.woz */,
-				32440B8C247F86D5000F9DA1 /* Apple II Dealer Diagnostics.woz */,
-				32440B86247F86D4000F9DA1 /* Apple II+ Dealer Diagnostics.woz */,
-				32440B8D247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz */,
-				32440B89247F86D5000F9DA1 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz */,
-				32440B88247F86D5000F9DA1 /* COMPUTER_CHECKUP.woz */,
-				32440B87247F86D5000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz */,
-				32440B8B247F86D5000F9DA1 /* XPS Diagnostic IIe.woz */,
-				32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

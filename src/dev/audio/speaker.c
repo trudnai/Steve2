@@ -78,6 +78,54 @@ const unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps
 unsigned spkr_play_time = 0;
 
 
+static uint8_t* load_sfx( const char * bundlePath, const char * filename ) {
+    char fullPath[256];
+    
+    strcpy( fullPath, bundlePath );
+    strcat( fullPath, "/");
+    strcat( fullPath, filename );
+    
+    FILE * f = fopen(fullPath, "rb");
+    if (f == NULL) {
+        perror("Failed to read SFX: ");
+        return NULL;
+    }
+    
+    fseek(f, 0L, SEEK_END);
+    uint16_t flen = ftell(f);
+    fseek(f, 0L, SEEK_SET);
+
+    if (flen <= 0) {
+        printf("Failed to read SFX or 0 size\n");
+        return NULL;
+    }
+
+    uint8_t * buffer = malloc(flen);
+    
+    if (buffer == NULL) {
+        printf("Not enough memory for SFX\n");
+        return NULL;
+    }
+    
+    fread( buffer, 1, flen, f);
+    fclose(f);
+
+    if ( flen == 0 ) {
+        printf("Error loading SFX file\n");
+        free(buffer);
+        return NULL; // there was an error
+    }
+
+    // everything seems to be ok
+    return buffer;
+}
+
+
+void spkr_load_sfx( const char * bundlePath ) {
+    
+}
+
+
 // initialize OpenAL
 void spkr_init() {
     const char *defname = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);

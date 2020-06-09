@@ -10,6 +10,7 @@
 #include "6502.h"
 #include "common.h"
 #include "woz.h"
+#include "speaker.h"
 
 
 disk_t disk = {
@@ -17,7 +18,7 @@ disk_t disk = {
     0,              // clk_since_last_read
 };
 
-const int diskAccelerator_frames  = 2;
+const int diskAccelerator_frames  = 1;
 int diskAccelerator_count = 0;
 int diskAccelerator_speed = 25 * M / fps; // if less than actual CPU speed means no acceleration
 
@@ -45,7 +46,8 @@ const int position_to_direction[8][8] = {
 
 void disk_accelerator_speedup() {
     if ( diskAccelerator_speed >= clk_6502_per_frm ) {
-        clk_6502_per_frm = diskAccelerator_speed;  // clk_6502_per_frm_diskAccelerator;
+        clk_6502_per_frm =
+        clk_6502_per_frm_max = diskAccelerator_speed;  // clk_6502_per_frm_diskAccelerator;
         diskAccelerator_count = diskAccelerator_frames;
     }
 }
@@ -66,7 +68,9 @@ void disk_phase() {
             disk.phase.count = maxDiskPhaseNum;
         }
         
-//        printf(", p:%d d:%d l:%d: ph:%u trk:%u)", position, direction, lastPosition, phase.count, woz_tmap.phase[phase.count]);
+        spkr_toggle();
+        
+//        printf("Head Position: p:%d d:%d l:%d: ph:%u)\n", position, direction, lastPosition, disk.phase.count);
                 
         disk.clk_last_access = m6502.clktime;
         disk_accelerator_speedup();
@@ -75,7 +79,7 @@ void disk_phase() {
         // invalid magnet config
     }
     
-    printf("\n");
+//    printf("\n");
 }
 
 

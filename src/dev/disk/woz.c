@@ -54,7 +54,7 @@ readState_t readState = readNormal;
 uint8_t readLatch;
 
 
-void woz_loadTrack( int track ) {
+void woz_loadTrack_old( int track ) {
     trackEntry_t reg = {0};
 
     reg.shift = woz_trks[track].data[0];
@@ -73,6 +73,125 @@ void woz_loadTrack( int track ) {
         
         reg.data = woz_trks[track].data[ (offs + 1) % WOZ_TRACK_BYTE_COUNT ];
         prepared_track[offs] = reg;
+    }
+}
+
+
+typedef enum wozTrackState_e {
+    wozTrackState_Start = 0,
+    wozTrackState_D5,
+    wozTrackState_D5_AA,
+    wozTrackState_D5_AA_96,
+    wozTrackState_vol1,
+    wozTrackState_vol2,
+    wozTrackState_trk1,
+    wozTrackState_trk2,
+    wozTrackState_sec1,
+    wozTrackState_sec2,
+} wozTrackState_t;
+
+
+void woz_loadTrack( int track ) {
+    trackEntry_t reg = {0};
+    wozTrackState_t wozTrackState  = wozTrackState_Start;
+
+    reg.shift = 0;
+    reg.data  = 0;
+    prepared_track[0] = reg;
+    
+    int vol = 0;
+    int trk = 0;
+    int sec = 0;
+
+    int bitOffs_D5_SecHdr = 0; // bit offset of D5 Sector Header
+    
+    int bitOffs = 0;
+    
+    for ( int byteOffs = 0; byteOffs < WOZ_TRACK_BYTE_COUNT; byteOffs++ ) {
+
+        reg.data = woz_trks[track].data[ byteOffs ];
+
+        for ( int i = 0; i < 8; i++ ) {
+            reg.shift16 <<= 1;
+            
+            if (reg.shift & 0x80) {
+                switch (wozTrackState) {
+                    case wozTrackState_D5:
+                        switch (reg.shift) {
+                            case 0xAA:
+//                                printf("D5 AA at bitOffset:%d\n", bitOffs);
+                                wozTrackState = wozTrackState_D5_AA;
+                                break;
+                                
+                            default:
+                                wozTrackState = wozTrackState_Start;
+                                break;
+                        }
+                        
+                        break;
+                        
+                    case wozTrackState_D5_AA:
+                        switch (reg.shift) {
+                            case 0x96:
+                                wozTrackState = wozTrackState_vol1;
+//                                printf("D5 AA 96 at bitOffset:%d\n", bitOffs);
+//                                printf("Sector Header at bitOffset:%d\n", bitOffs_D5_SecHdr);
+                                break;
+                                
+                            default:
+                                wozTrackState = wozTrackState_Start;
+                                break;
+                        }
+                        
+                        break;
+                        
+                    case wozTrackState_vol1:
+                        vol = (reg.shift << 1) | 1;
+                        wozTrackState = wozTrackState_vol2;
+                        break;
+                        
+                    case wozTrackState_vol2:
+                        vol &= reg.shift;
+                        wozTrackState = wozTrackState_trk1;
+                        break;
+                        
+                    case wozTrackState_trk1:
+                        trk = (reg.shift << 1) | 1;
+                        wozTrackState = wozTrackState_trk2;
+                        break;
+                        
+                    case wozTrackState_trk2:
+                        trk &= reg.shift;
+                        wozTrackState = wozTrackState_sec1;
+                        break;
+                        
+                    case wozTrackState_sec1:
+                        sec = (reg.shift << 1) | 1;
+                        wozTrackState = wozTrackState_sec2;
+                        break;
+                        
+                    case wozTrackState_sec2:
+                        sec &= reg.shift;
+                        wozTrackState = wozTrackState_Start;
+                        
+                        printf("Vol:%d Track:%d Sector:%d at bitOffset:%d\n", vol, trk, sec, bitOffs_D5_SecHdr);
+
+                        break;
+                        
+                    default:
+                        if ( reg.shift == 0xD5 ) {
+//                            printf("D5 at bitOffset:%d\n", bitOffs);
+                            wozTrackState = wozTrackState_D5;
+                            bitOffs_D5_SecHdr = bitOffs;
+                        }
+                        break;
+                }
+                
+                reg.shift = 0;
+            }
+            
+            bitOffs++;
+        }
     }
 }
 
@@ -251,20 +370,42 @@ uint8_t woz_read() {
 
     
 #else // WOZ_REAL_SPIN
+    static int clkBeforeSync = 0;
+    
     clkelpased = m6502.clktime + clkfrm - m6502.clklast;
     m6502.clklast = m6502.clktime + clkfrm;
     
-    const int clkBeforeAdjusting = 250;
+    clkBeforeSync += clkelpased;
+    
+    const int clkBeforeAdjusting = 512;
     const int magicShiftOffset = 80;
     
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     if ( usedBytes ) {
         if ( clkelpased > clkBeforeAdjusting ) {
-    //        printf("NEED SYNC : %llu\n", clkelpased);
+            printf("NEED SYNC : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
+            clkBeforeSync = 0;
             bitOffset = (clkelpased >> 2) & 7;
-            trackOffset += ((clkelpased >> 5) + magicShiftOffset) % usedBytes;
+            trackOffset += clkelpased >> 5;
             trackOffset %= usedBytes;
-            WOZread.data = woz_trks[track].data[trackOffset];
+
+            // preroll data stream
+            WOZread.shift16 = 0;
+            WOZread.data = woz_trks[track].data[trackOffset++];
+            
+            WOZread.shift16 <<= bitOffset;
+
+            for ( int i = 0; i < magicShiftOffset; i++ ) {
+                for ( ; bitOffset < 8; bitOffset++ ) {
+                    WOZread.shift16 <<= 1;
+                    
+                    if (WOZread.shift & 0x80) {
+                        WOZread.shift = 0;
+                    }
+                }
+                WOZread.data = woz_trks[track].data[trackOffset++];
+                bitOffset = 0;
+            }
         }
 
         // to avoid infinite loop and to search for bit 7 high
@@ -325,7 +466,11 @@ int woz_loadFile( const char * filename ) {
         
         long r = fread( &woz_chunk_header, 1, sizeof(woz_chunk_header_t), f);
         if ( r != sizeof(woz_chunk_header_t) ) {
-            return r == 0 ? 0 : WOZ_ERR_BAD_CHUNK_HDR;
+            if ( r ) {
+                return WOZ_ERR_BAD_CHUNK_HDR;
+            }
+            // ok we just reached the end of the file, we should exit properly, close file handle etc
+            break;
         }
         long foffs = ftell(f);
         
@@ -362,6 +507,10 @@ int woz_loadFile( const char * filename ) {
     }
     
     fclose(f);
+    
+    
+    // DO NOT COMMIT THIS! ONLY FOR DEBUG!!!
+//    woz_loadTrack(0x11);
 
     return WOZ_ERR_OK;
 }

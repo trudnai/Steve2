@@ -953,22 +953,22 @@ INLINE uint8_t memread8_low( uint16_t addr ) {
 INLINE uint8_t memread8_high( uint16_t addr ) {
     return RDHIMEM[addr];
 }
-INLINE uint8_t memread8( uint16_t addr ) {
-    if (addr >= 0xC000) {
-        return memread8_high(addr);
-    }
-
-    return memread8_low(addr);
-}
+//INLINE uint8_t memread8( uint16_t addr ) {
+//    if (addr >= 0xC000) {
+//        return memread8_high(addr);
+//    }
+//
+//    return memread8_low(addr);
+//}
 /**
  Naive implementation of RAM read from address
  **/
 INLINE uint16_t memread16_low( uint16_t addr ) {
     return * (uint16_t*) ( Apple2_64K_MEM + addr );
 }
-INLINE uint16_t memread16_high( uint16_t addr ) {
-    return * (uint16_t*) ( RDHIMEM + addr );
-}
+//INLINE uint16_t memread16_high( uint16_t addr ) {
+//    return * (uint16_t*) ( RDHIMEM + addr );
+//}
 INLINE uint16_t memread16( uint16_t addr ) {
 
 //    if (addr >= 0xC000) {
@@ -1085,9 +1085,9 @@ INLINE uint16_t fetch16() {
 }
 
 
-INLINE uint8_t * dest( uint8_t * mem, uint16_t addr ) {
-    return mem + addr;
-}
+//INLINE uint8_t * dest( uint8_t * mem, uint16_t addr ) {
+//    return mem + addr;
+//}
 
 
 /**
@@ -1102,9 +1102,9 @@ INLINE uint16_t addr_abs() {
 INLINE uint8_t src_abs() {
     return memread( addr_abs() );
 }
-INLINE uint8_t * dest_abs() {
-    return WRLOMEM + addr_abs();
-}
+//INLINE uint8_t * dest_abs() {
+//    return WRLOMEM + addr_abs();
+//}
 
 
 INLINE int8_t rel_addr() {
@@ -1133,9 +1133,9 @@ INLINE uint16_t addr_abs_X() {
 INLINE uint8_t src_abs_X() {
     return memread( addr_abs_X() );
 }
-INLINE uint8_t * dest_abs_X() {
-    return WRLOMEM + addr_abs_X();
-}
+//INLINE uint8_t * dest_abs_X() {
+//    return WRLOMEM + addr_abs_X();
+//}
 
 
 /**
@@ -1150,9 +1150,9 @@ INLINE uint16_t addr_abs_Y() {
 INLINE uint8_t src_abs_Y() {
     return memread(addr_abs_Y());
 }
-INLINE uint8_t * dest_abs_Y() {
-    return WRLOMEM + addr_abs_Y();
-}
+//INLINE uint8_t * dest_abs_Y() {
+//    return WRLOMEM + addr_abs_Y();
+//}
 
 INLINE uint8_t imm() {
     disPrintf(disassembly.oper, "#$%02X", memread8(m6502.PC))
@@ -1172,19 +1172,19 @@ INLINE uint8_t addr_zp() {
 INLINE uint8_t src_zp() {
     return memread8_low(addr_zp());
 }
-INLINE uint8_t * dest_zp() {
-    return WRLOMEM + addr_zp();
-}
+//INLINE uint8_t * dest_zp() {
+//    return WRLOMEM + addr_zp();
+//}
 
 /**
  get a 16 bit address from the zp:zp+1
  **/
-INLINE uint16_t addr_zp_ind( uint8_t addr ) {
-    dbgPrintf("zpi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.oper, "($%02X)", memread8(m6502.PC) );
-    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) ) );
-    return memread16(addr);
-}
+//INLINE uint16_t addr_zp_ind( uint8_t addr ) {
+//    dbgPrintf("zpi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
+//    disPrintf(disassembly.oper, "($%02X)", memread8(m6502.PC) );
+//    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) ) );
+//    return memread16(addr);
+//}
 
 /**
  X,ind        ....    X-indexed, indirect         OPC ($LL,X)
@@ -1200,9 +1200,9 @@ INLINE uint16_t addr_ind_X() {
 INLINE uint8_t src_X_ind() {
     return memread( addr_ind_X() );
 }
-INLINE uint8_t * dest_X_ind() {
-    return WRLOMEM + addr_ind_X();
-}
+//INLINE uint8_t * dest_X_ind() {
+//    return WRLOMEM + addr_ind_X();
+//}
 
 /**
  ind,Y        ....    indirect, Y-indexed         OPC ($LL),Y
@@ -1219,9 +1219,9 @@ INLINE uint16_t addr_ind_Y() {
 INLINE uint8_t src_ind_Y() {
     return memread( addr_ind_Y() );
 }
-INLINE uint8_t * dest_ind_Y() {
-    return WRLOMEM + addr_ind_Y();
-}
+//INLINE uint8_t * dest_ind_Y() {
+//    return WRLOMEM + addr_ind_Y();
+//}
 
 /**
  zpg,X        ....    zeropage, X-indexed         OPC $LL,X
@@ -1235,9 +1235,9 @@ INLINE uint8_t addr_zp_X() {
 INLINE uint8_t src_zp_X() {
     return memread8_low(addr_zp_X());
 }
-INLINE uint8_t * dest_zp_X() {
-    return WRLOMEM + addr_zp_X();
-}
+//INLINE uint8_t * dest_zp_X() {
+//    return WRLOMEM + addr_zp_X();
+//}
 
 /**
  zpg,Y        ....    zeropage, Y-indexed         OPC $LL,Y
@@ -1251,9 +1251,9 @@ INLINE uint8_t addr_zp_Y() {
 INLINE uint8_t src_zp_Y() {
     return memread8_low(addr_zp_Y());
 }
-INLINE uint8_t * dest_zp_Y() {
-    return WRLOMEM + addr_zp_Y();
-}
+//INLINE uint8_t * dest_zp_Y() {
+//    return WRLOMEM + addr_zp_Y();
+//}
 
 
 #endif // __APPLE2_MMIO_H__

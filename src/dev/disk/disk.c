@@ -18,7 +18,7 @@ disk_t disk = {
     0,              // clk_since_last_read
 };
 
-const int diskAccelerator_frames  = 1;
+const int diskAccelerator_frames  = 2;
 int diskAccelerator_count = 0;
 int diskAccelerator_speed = 25 * M / fps; // if less than actual CPU speed means no acceleration
 
@@ -68,7 +68,8 @@ void disk_phase() {
             disk.phase.count = maxDiskPhaseNum;
         }
         
-        spkr_toggle();
+        // TODO: Add track positioning sfx
+//        spkr_toggle();
         
 //        printf("Head Position: p:%d d:%d l:%d: ph:%u)\n", position, direction, lastPosition, disk.phase.count);
                 

@@ -383,7 +383,7 @@ uint8_t woz_read() {
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     if ( usedBytes ) {
         if ( clkelpased > clkBeforeAdjusting ) {
-            printf("NEED SYNC : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
+//            printf("NEED SYNC : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
             clkBeforeSync = 0;
             bitOffset = (clkelpased >> 2) & 7;
             trackOffset += clkelpased >> 5;

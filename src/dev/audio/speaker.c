@@ -69,7 +69,7 @@ ALuint spkr_buffers[BUFFER_COUNT];
 const int spkr_fps = fps;
 const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
-unsigned spkr_extra_buf = 780 / fps;
+unsigned spkr_extra_buf = 800 / fps;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * 2 / spkr_fps;
 int16_t spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT * 2]; // stereo
 unsigned spkr_sample_idx = 0;

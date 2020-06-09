@@ -378,7 +378,7 @@ uint8_t woz_read() {
     clkBeforeSync += clkelpased;
     
     const int clkBeforeAdjusting = 512;
-    const int magicShiftOffset = 80;
+    const int magicShiftOffset = 50;
     
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     if ( usedBytes ) {

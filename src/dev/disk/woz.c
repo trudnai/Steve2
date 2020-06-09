@@ -381,6 +381,7 @@ uint8_t woz_read() {
     const int magicShiftOffset = 50;
     
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
+    
     if ( usedBytes ) {
         if ( clkelpased > clkBeforeAdjusting ) {
 //            printf("NEED SYNC : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
@@ -392,6 +393,7 @@ uint8_t woz_read() {
             // preroll data stream
             WOZread.shift16 = 0;
             WOZread.data = woz_trks[track].data[trackOffset++];
+            trackOffset %= usedBytes;
             
             WOZread.shift16 <<= bitOffset;
 
@@ -399,11 +401,12 @@ uint8_t woz_read() {
                 for ( ; bitOffset < 8; bitOffset++ ) {
                     WOZread.shift16 <<= 1;
                     
-                    if (WOZread.shift & 0x80) {
+                    if ( WOZread.valid ) {
                         WOZread.shift = 0;
                     }
                 }
                 WOZread.data = woz_trks[track].data[trackOffset++];
+                trackOffset %= usedBytes;
                 bitOffset = 0;
             }
         }

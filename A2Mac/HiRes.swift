@@ -700,7 +700,8 @@ class HiRes: NSView {
 
         // refresh the entire screen
         let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        currentContext?.interpolationQuality = .none
+//        currentContext?.interpolationQuality = .none
+        currentContext?.interpolationQuality = .high
         currentContext?.draw(image, in: boundingBox)
     }
 

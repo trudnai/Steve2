@@ -1218,6 +1218,15 @@
                                     <constraint firstAttribute="width" constant="1120" id="uez-Mi-0Sh"/>
                                     <constraint firstAttribute="height" constant="768" id="zl6-au-oZj"/>
                                 </constraints>
+                                <contentFilters>
+                                    <ciFilter name="CIBloom">
+                                        <configuration>
+                                            <null key="inputImage"/>
+                                            <real key="inputIntensity" value="1"/>
+                                            <real key="inputRadius" value="3"/>
+                                        </configuration>
+                                    </ciFilter>
+                                </contentFilters>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" id="pIk-RC-s5g">
                                     <font key="font" size="32" name="PrintChar21"/>
                                     <string key="title">1234567890123456789012345678901234567890
@@ -1250,29 +1259,6 @@
                             </textField>
                             <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gqh-qw-fjy" userLabel="LoRes" customClass="LoRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
-                                <contentFilters>
-                                    <ciFilter name="CIGaussianBlur">
-                                        <configuration>
-                                            <null key="inputImage"/>
-                                            <real key="inputRadius" value="10"/>
-                                        </configuration>
-                                    </ciFilter>
-                                    <ciFilter name="CIGlassLozenge">
-                                        <configuration>
-                                            <null key="inputImage"/>
-                                            <ciVector key="inputPoint0">
-                                                <real value="150"/>
-                                                <real value="150"/>
-                                            </ciVector>
-                                            <ciVector key="inputPoint1">
-                                                <real value="350"/>
-                                                <real value="150"/>
-                                            </ciVector>
-                                            <real key="inputRadius" value="100"/>
-                                            <real key="inputRefraction" value="1.7"/>
-                                        </configuration>
-                                    </ciFilter>
-                                </contentFilters>
                             </customView>
                             <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" userLabel="HiRes" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
@@ -1281,7 +1267,7 @@
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="scanlines" id="jJ6-qt-oZe"/>
                             </imageView>
-                            <imageView hidden="YES" canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ghs-c1-ZkA" userLabel="DotmatrixEffect">
+                            <imageView hidden="YES" canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" alphaValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Ghs-c1-ZkA" userLabel="DotmatrixEffect">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="dotmatrix_effect" id="nPr-Un-zjz"/>
                             </imageView>

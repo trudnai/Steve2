@@ -1250,10 +1250,41 @@
                             </textField>
                             <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gqh-qw-fjy" userLabel="LoRes" customClass="LoRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
+                                <contentFilters>
+                                    <ciFilter name="CIGaussianBlur">
+                                        <configuration>
+                                            <null key="inputImage"/>
+                                            <real key="inputRadius" value="10"/>
+                                        </configuration>
+                                    </ciFilter>
+                                    <ciFilter name="CIGlassLozenge">
+                                        <configuration>
+                                            <null key="inputImage"/>
+                                            <ciVector key="inputPoint0">
+                                                <real value="150"/>
+                                                <real value="150"/>
+                                            </ciVector>
+                                            <ciVector key="inputPoint1">
+                                                <real value="350"/>
+                                                <real value="150"/>
+                                            </ciVector>
+                                            <real key="inputRadius" value="100"/>
+                                            <real key="inputRefraction" value="1.7"/>
+                                        </configuration>
+                                    </ciFilter>
+                                </contentFilters>
                             </customView>
                             <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" userLabel="HiRes" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                             </customView>
+                            <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGn-a4-c1t" userLabel="ScanLines">
+                                <rect key="frame" x="16" y="16" width="1120" height="768"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="scanlines" id="jJ6-qt-oZe"/>
+                            </imageView>
+                            <imageView hidden="YES" canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ghs-c1-ZkA" userLabel="DotmatrixEffect">
+                                <rect key="frame" x="16" y="16" width="1120" height="768"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="dotmatrix_effect" id="nPr-Un-zjz"/>
+                            </imageView>
                             <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1E-lz-4q8" userLabel="Splash Screen">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <ciFilter key="compositingFilter" name="CIExclusionBlendMode">
@@ -1262,6 +1293,20 @@
                                         <null key="inputImage"/>
                                     </configuration>
                                 </ciFilter>
+                                <contentFilters>
+                                    <ciFilter name="CIOpTile">
+                                        <configuration>
+                                            <real key="inputAngle" value="0.20000000000000001"/>
+                                            <ciVector key="inputCenter">
+                                                <real value="560"/>
+                                                <real value="410"/>
+                                            </ciVector>
+                                            <null key="inputImage"/>
+                                            <real key="inputScale" value="1.6000000000000001"/>
+                                            <real key="inputWidth" value="30"/>
+                                        </configuration>
+                                    </ciFilter>
+                                </contentFilters>
                                 <imageCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="apple-rainbow" id="Zax-kI-rxd"/>
                             </imageView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-pv-iEw" userLabel="Side Panel">
@@ -1528,8 +1573,14 @@
                             </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="0wI-2W-KUf"/>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="3ps-FB-mdj"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="8g8-nm-CxE"/>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="DgS-2W-eVa"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="EBM-Pm-MJ8"/>
                             <constraint firstItem="Gqh-qw-fjy" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="FF5-Ke-cOk"/>
                             <constraint firstAttribute="bottom" secondItem="Fdf-pv-iEw" secondAttribute="bottom" constant="8" id="H1Q-Vj-rPM"/>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="HPu-Oe-CBl"/>
                             <constraint firstItem="iIF-Q5-Onc" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="LGA-tZ-gFh"/>
                             <constraint firstItem="Gqh-qw-fjy" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="Mbh-RX-74d"/>
                             <constraint firstItem="Gqh-qw-fjy" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="NJ1-qp-iku"/>
@@ -1538,6 +1589,7 @@
                             <constraint firstItem="M1E-lz-4q8" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="SK0-9r-JCV"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="Umg-3A-zmv"/>
                             <constraint firstItem="Gqh-qw-fjy" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="VcW-Wh-wiF"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="XM9-i5-GOP"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="8" id="Xbh-Ub-1Ng"/>
                             <constraint firstItem="M1E-lz-4q8" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="aA5-fx-nSB"/>
                             <constraint firstItem="SEL-hl-0c0" firstAttribute="top" secondItem="iIF-Q5-Onc" secondAttribute="top" constant="16" id="aWz-Ad-PIM"/>
@@ -1549,6 +1601,7 @@
                             <constraint firstItem="iIF-Q5-Onc" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="m3e-ww-N7S"/>
                             <constraint firstItem="LlM-EV-ruZ" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="nAy-xD-Y3s"/>
                             <constraint firstItem="M1E-lz-4q8" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="oPZ-wI-6Yu"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="xqX-cb-8Hz"/>
                             <constraint firstAttribute="trailing" secondItem="Fdf-pv-iEw" secondAttribute="trailing" constant="8" id="yy6-NU-JJX"/>
                             <constraint firstItem="LlM-EV-ruZ" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="zkY-0O-xcA"/>
                         </constraints>
@@ -1570,5 +1623,7 @@
     </scenes>
     <resources>
         <image name="apple-rainbow" width="800" height="800"/>
+        <image name="dotmatrix_effect" width="268.79998779296875" height="184.32000732421875"/>
+        <image name="scanlines" width="268.79998779296875" height="184.32000732421875"/>
     </resources>
 </document>

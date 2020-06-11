@@ -181,9 +181,15 @@
                                                             <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="Bwc-m1-LET"/>
                                                         </connections>
                                                     </menuItem>
-                                                    <menuItem title="LOCKSMITH_V7_REV_B" keyEquivalent="4" identifier="LOCKSMITH_V7_REV_B" id="lZl-BU-L3p">
+                                                    <menuItem title="LockSmith v6.0" keyEquivalent="4" identifier="locksmith_v6.0" id="lZl-BU-L3p">
                                                         <connections>
                                                             <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="xAB-nY-zVJ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="LOCKSMITH_V7_REV_B" identifier="LOCKSMITH_V7_REV_B" id="zUJ-hr-qSi">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Disk1_Selected:" target="Voe-Tx-rLC" id="MrU-cD-yHm"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="XPS Diagnostic IIe" keyEquivalent="5" identifier="XPS Diagnostic IIe" id="zBI-ok-Se7">
@@ -1176,7 +1182,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Forever ][" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Forever ][    ‒    The Apple II Emulator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1280" height="840"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -1254,7 +1260,7 @@
                             <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" userLabel="HiRes" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                             </customView>
-                            <imageView hidden="YES" canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGn-a4-c1t" userLabel="ScanLines">
+                            <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGn-a4-c1t" userLabel="ScanLines">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="scanlines" id="jJ6-qt-oZe"/>
                             </imageView>
@@ -1266,25 +1272,41 @@
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9jr-eX-yOC">
-                                        <rect key="frame" x="14" y="707" width="398" height="45"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Forever ][" id="Uco-5h-Aii">
-                                            <font key="font" size="45" name="PrintChar21"/>
+                                        <rect key="frame" x="14" y="696" width="397" height="56"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Steve ][" id="Uco-5h-Aii">
+                                            <font key="font" size="56" name="PrintChar21"/>
                                             <color key="textColor" red="0.396078431372549" green="0.72549019607843135" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19A-Bc-mjX">
-                                        <rect key="frame" x="14" y="642" width="391" height="26"/>
+                                        <rect key="frame" x="14" y="652" width="391" height="26"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Apple ][ Emulator" id="3va-2j-fR7">
                                             <font key="font" size="26" name="PrintChar21"/>
                                             <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uMO-wh-lu4" userLabel="Jobs">
+                                        <rect key="frame" x="14" y="614" width="274" height="14"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="In memoriam Steve Jobs" id="LAy-jD-fLj">
+                                            <font key="font" size="14" name="PrintChar21"/>
+                                            <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWG-zg-Mnb" userLabel="Wozniak">
+                                        <rect key="frame" x="16" y="592" width="274" height="14"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Honoring Steve Wozniak" id="5G1-y6-wdu">
+                                            <font key="font" size="14" name="PrintChar21"/>
+                                            <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-E1-CYC">
-                                        <rect key="frame" x="760" y="16" width="346" height="26"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="by Tamas Rudnai" id="tm6-Cq-r7H">
-                                            <font key="font" size="26" name="PrintChar21"/>
+                                        <rect key="frame" x="820" y="16" width="286" height="14"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="© by Tamas Rudnai, 2020" id="tm6-Cq-r7H">
+                                            <font key="font" size="14" name="PrintChar21"/>
                                             <color key="textColor" red="0.019607843137254902" green="0.61568627450980395" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
@@ -1311,13 +1333,17 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="M1E-lz-4q8" secondAttribute="trailing" id="2js-f4-3i4"/>
                                     <constraint firstAttribute="bottom" secondItem="M1E-lz-4q8" secondAttribute="bottom" id="FvX-rE-H55"/>
+                                    <constraint firstItem="uMO-wh-lu4" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="Hcq-uo-o7q"/>
+                                    <constraint firstItem="WWG-zg-Mnb" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="162" id="Pal-mO-Y3V"/>
                                     <constraint firstItem="19A-Bc-mjX" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="QrC-1X-nvG"/>
-                                    <constraint firstItem="19A-Bc-mjX" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="100" id="SZZ-Bf-eaW"/>
+                                    <constraint firstItem="19A-Bc-mjX" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="90" id="SZZ-Bf-eaW"/>
                                     <constraint firstAttribute="bottom" secondItem="bUo-E1-CYC" secondAttribute="bottom" constant="16" id="Yiw-QR-lgh"/>
                                     <constraint firstItem="M1E-lz-4q8" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" id="ZJX-b5-9Zx"/>
+                                    <constraint firstItem="uMO-wh-lu4" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="140" id="hdm-uq-Pa8"/>
                                     <constraint firstAttribute="trailing" secondItem="bUo-E1-CYC" secondAttribute="trailing" constant="16" id="phJ-qW-Sro"/>
                                     <constraint firstItem="9jr-eX-yOC" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="rGe-kW-tUQ"/>
                                     <constraint firstItem="9jr-eX-yOC" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="16" id="sFz-v2-tt5"/>
+                                    <constraint firstItem="WWG-zg-Mnb" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="vDf-7B-UwH"/>
                                     <constraint firstItem="M1E-lz-4q8" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" id="wqQ-J4-rRz"/>
                                 </constraints>
                             </customView>

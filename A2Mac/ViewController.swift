@@ -51,7 +51,7 @@ class ViewController: NSViewController  {
     @IBOutlet weak var speedometer: NSTextFieldCell!
     @IBOutlet weak var lores: LoRes!
     @IBOutlet weak var hires: HiRes!
-    @IBOutlet weak var splashScreen: NSImageView!
+    @IBOutlet weak var splashScreen: NSView!
     
     var Keyboard2Joystick = true
     var Mouse2Joystick = false

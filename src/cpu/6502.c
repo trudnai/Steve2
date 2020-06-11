@@ -691,10 +691,10 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 
     resetMemory();
 
-    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
-    if (outdev == NULL) {
-        outdev = stdout;
-    }
+//    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
+//    if (outdev == NULL) {
+//        outdev = stdout;
+//    }
 
 
     

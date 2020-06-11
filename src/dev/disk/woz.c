@@ -368,6 +368,95 @@ uint8_t woz_read() {
     printf("READ: clk:%llu  to:%u  bo:%llu  B:%02X\n", m6502.clktime, trackOffset, (m6502.clktime >> 2) & 7, readLatch);
     return readLatch;
 
+
+#elif defined( WOZ_SEARCH_NEXTSECT )
+    
+    static int clkBeforeSync = 0;
+    
+    clkelpased = m6502.clktime + clkfrm - m6502.clklast;
+    m6502.clklast = m6502.clktime + clkfrm;
+    
+    clkBeforeSync += clkelpased;
+    
+    const int clkBeforeAdjusting = 1024;
+    const int magicShiftOffset = 8192;
+    
+    uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
+    
+    if ( usedBytes ) {
+//        printf("elpased : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
+        if ( clkelpased > clkBeforeAdjusting ) {
+//            printf("NEED SYNC : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
+            clkBeforeSync = 0;
+//            bitOffset = (clkelpased >> 2) & 7;
+//            bitOffset = 0;
+//            trackOffset += clkelpased >> 5;
+//            trackOffset %= usedBytes;
+
+// preroll data stream
+//            WOZread.shift16 = 0;
+//            WOZread.data = woz_trks[track].data[trackOffset++];
+//            trackOffset %= usedBytes;
+
+//            WOZread.shift16 <<= bitOffset;
+            
+            int w = 2; // 2 x 0xD5
+            
+            for ( int i = 0; i < usedBytes * 8; i++ ) {
+                if ( ++bitOffset >= 8 ) {
+                    bitOffset = 0;
+                    
+                    trackOffset++;
+                    trackOffset %= usedBytes;
+                    
+                    WOZread.data = woz_trks[track].data[trackOffset];
+                }
+                
+                WOZread.shift16 <<= 1;
+                if ( WOZread.valid ) {
+                    uint8_t byte = WOZread.shift;
+                    WOZread.shift = 0;
+                    
+                    // find next sector or end of sector
+                    if ( byte == 0xD5 ) {
+                        // actually 2 sectors, because of DOS 3.3 interleaving algoritm
+                        if ( --w <= 0 ) {
+                            return byte;
+                        }
+                    }
+                }
+            }
+            
+        }
+        
+        // to avoid infinite loop and to search for bit 7 high
+        for ( int i = 0; i < usedBytes * 8; i++ ) {
+            if ( ++bitOffset >= 8 ) {
+                bitOffset = 0;
+//                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
+//                        trackOffset = 0;
+//                    }
+                trackOffset++;
+                trackOffset %= usedBytes;
+                
+//                    printf("offs:%u\n", trackOffset);
+                WOZread.data = woz_trks[track].data[trackOffset];
+            }
+            
+            WOZread.shift16 <<= 1;
+            if ( WOZread.valid ) {
+                uint8_t byte = WOZread.shift;
+//                    printf("%02X ", byte);
+                WOZread.shift = 0;
+                if (outdev) fprintf(outdev, "byte: %02X\n", byte);
+                
+                return byte;
+            }
+        }
+        if (outdev) fprintf(outdev, "TIME OUT!\n");
+    }
+    
+    return rand();
     
 #else // WOZ_REAL_SPIN
     static int clkBeforeSync = 0;
@@ -383,6 +472,8 @@ uint8_t woz_read() {
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     
     if ( usedBytes ) {
+//        printf("elpased : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
+        
         if ( clkelpased > clkBeforeAdjusting ) {
 //            printf("NEED SYNC : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
             clkBeforeSync = 0;
@@ -394,13 +485,13 @@ uint8_t woz_read() {
             WOZread.shift16 = 0;
             WOZread.data = woz_trks[track].data[trackOffset++];
             trackOffset %= usedBytes;
-            
+
             WOZread.shift16 <<= bitOffset;
 
             for ( int i = 0; i < magicShiftOffset; i++ ) {
                 for ( ; bitOffset < 8; bitOffset++ ) {
                     WOZread.shift16 <<= 1;
-                    
+
                     if ( WOZread.valid ) {
                         WOZread.shift = 0;
                     }
@@ -410,32 +501,48 @@ uint8_t woz_read() {
                 bitOffset = 0;
             }
         }
+        else {
+            uint64_t bitForward = (clkelpased >> 2);
+
+            // to avoid infinite loop and to search for bit 7 high
+            for ( uint64_t i = 0; i < bitForward; i++ ) {
+                if ( ++bitOffset >= 8 ) {
+                    bitOffset = 0;
+                    trackOffset++;
+                    trackOffset %= usedBytes;
+
+                    WOZread.data = woz_trks[track].data[trackOffset];
+                }
+
+                WOZread.shift16 <<= 1;
+
+                if ( WOZread.valid ) {
+                    WOZread.shift = 0;
+                }
+            }
+        }
 
         // to avoid infinite loop and to search for bit 7 high
         for ( int i = 0; i < usedBytes * 8; i++ ) {
+            if ( WOZread.valid ) {
+                uint8_t byte = WOZread.shift;
+                WOZread.shift = 0;
+//                if (outdev) fprintf(outdev, "byte: %02X\n", byte);
+                
+                return byte;
+            }
+            
             if ( ++bitOffset >= 8 ) {
                 bitOffset = 0;
-    //                    if ( ++trackOffset >= WOZ_TRACK_BYTE_COUNT ) {
-    //                        trackOffset = 0;
-    //                    }
                 trackOffset++;
                 trackOffset %= usedBytes;
 
-    //                    printf("offs:%u\n", trackOffset);
                 WOZread.data = woz_trks[track].data[trackOffset];
             }
             
             WOZread.shift16 <<= 1;
-            if ( WOZread.valid ) {
-                uint8_t byte = WOZread.shift;
-    //                    printf("%02X ", byte);
-                WOZread.shift = 0;
-                if (outdev) fprintf(outdev, "byte: %02X\n", byte);
-
-                return byte;
-            }
         }
-        if (outdev) fprintf(outdev, "TIME OUT!\n");
+//        if (outdev) fprintf(outdev, "TIME OUT!\n");
     }
     
     return rand();

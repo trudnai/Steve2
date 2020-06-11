@@ -44,6 +44,29 @@ const int position_to_direction[8][8] = {
 };
 
 
+const uint8_t phy2log_dos33[16] = {
+    0, 7, 14, 6, 13, 5, 12, 4, 11, 3, 10, 2, 9, 1, 8, 15
+};
+const uint8_t log2phy_dos33[16] = {
+    0, 13, 11, 9, 7, 5, 3, 1, 14, 12, 10, 8, 6, 4, 2, 15
+};
+
+const uint8_t phy2log_pascal[16] = {
+    0, 8, 1, 9, 2, 10, 3, 11, 4, 12, 5, 13, 6, 14, 7, 15
+};
+const uint8_t log2phy_pascal[16] = {
+    0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15
+};
+
+const uint8_t phy2log_cpm[16] = {
+    0, 11, 6, 1, 12, 7, 2, 13, 8, 3, 14, 9, 4, 15, 10, 5
+};
+const uint8_t log2phy_cpm[16] = {
+    0, 3, 6, 9, 12, 15, 2, 5, 8, 11, 14, 1, 4, 7, 10, 13
+};
+
+
+
 void disk_accelerator_speedup() {
     if ( diskAccelerator_speed >= clk_6502_per_frm ) {
         clk_6502_per_frm =
@@ -100,6 +123,9 @@ uint8_t disk_read() {
     dbgPrintf("io_DISK_READ (S%u)\n", 6);
     disk.clk_last_access = m6502.clktime;
     disk_accelerator_speedup();
+
+    // Debug disk read
+//    spkr_toggle();
 
     return woz_read();
 }

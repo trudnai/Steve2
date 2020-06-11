@@ -344,7 +344,8 @@ class HiRes: NSView {
         let byteCount = (bytesPerRow * pixelsHigh)
         
 //        guard let colorSpace = CGColorSpace(name: CGColorSpace.linearSRGB) else { return nil }
-        guard let colorSpace = CGColorSpace(name: CGColorSpace.genericRGBLinear) else { return nil }
+//        guard let colorSpace = CGColorSpace(name: CGColorSpace.genericRGBLinear) else { return nil }
+        guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB) else { return nil }
 
         let pixels = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: byteCount)
 
@@ -400,7 +401,7 @@ class HiRes: NSView {
     static let ScreenBitmapSize = (PixelWidth * PixelHeight * 4)
     static let context = createBitmapContext(pixelsWide: PixelWidth, PixelHeight)
     static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)
-    static var pixelsRGBA = pixels.bindMemory(to: UInt32.self)
+    static var pixelsSRGB = pixels.bindMemory(to: UInt32.self)
     #endif
     
     let R = 2
@@ -482,13 +483,21 @@ class HiRes: NSView {
     #elseif HIRESLOWCOLOR
     
     
+//    let color_black     : UInt32 = 0x00000000;
+//    let color_white     : UInt32 = 0xEEEEEEEE;
+//    let color_purple    : UInt32 = 0xFFBB11EE;
+//    let color_green     : UInt32 = 0xFF0BBB11;
+//    let color_blue      : UInt32 = 0xFF1155FF;
+//    let color_orange    : UInt32 = 0xFFEE2211;
+   
+    // HiRes Colors for the SRGB color space
     let color_black     : UInt32 = 0x00000000;
-    let color_white     : UInt32 = 0xEEEEEEEE;
-    let color_purple    : UInt32 = 0xFFBB11EE;
-    let color_green     : UInt32 = 0xFF0BBB11;
-    let color_blue      : UInt32 = 0xFF1155FF;
-    let color_orange    : UInt32 = 0xFFEE2211;
-    
+    let color_white     : UInt32 = 0xFFEEEEEE;
+    let color_purple    : UInt32 = 0xFFDD55FF;
+    let color_green     : UInt32 = 0xFF2BD84A;
+    let color_blue      : UInt32 = 0xFF5599FF;
+    let color_orange    : UInt32 = 0xFFFF6302;
+
     // for debugging only:
     let color_turquis   : UInt32 = 0xFF11BBBB;
     let color_yellow    : UInt32 = 0xFFBBBB11;
@@ -499,73 +508,73 @@ class HiRes: NSView {
         
         switch ( pixel ) {
         case 0x01: // purple (bits are in reverse!)
-            HiRes.pixelsRGBA[colorAddr] = color_purple;
-//            HiRes.pixelsRGBA[colorAddr + 1] = color_purple
+            HiRes.pixelsSRGB[colorAddr] = color_purple;
+//            HiRes.pixelsSRGB[colorAddr + 1] = color_purple
             if  (colorAddr >= 1) && (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_purple
+                HiRes.pixelsSRGB[colorAddr - 1] = color_purple
             }
             
         case 0x02: // green
             // reducing color bleeding
-            if (colorAddr > 0) && (HiRes.pixelsRGBA[colorAddr - 1] != color_black) {
-                HiRes.pixelsRGBA[colorAddr] = color_green
+            if (colorAddr > 0) && (HiRes.pixelsSRGB[colorAddr - 1] != color_black) {
+                HiRes.pixelsSRGB[colorAddr] = color_green
             }
-            HiRes.pixelsRGBA[colorAddr + 1] = color_green
+            HiRes.pixelsSRGB[colorAddr + 1] = color_green
 
         case 0x03: // white 1
-//            if ( colorAddr >= 2 ) && ( HiRes.pixelsRGBA[colorAddr - 2] != color_black ) {
-//                HiRes.pixelsRGBA[colorAddr - 1] = HiRes.pixelsRGBA[colorAddr - 2]
+//            if ( colorAddr >= 2 ) && ( HiRes.pixelsSRGB[colorAddr - 2] != color_black ) {
+//                HiRes.pixelsSRGB[colorAddr - 1] = HiRes.pixelsSRGB[colorAddr - 2]
 //            }
 //            if (colorAddr >= 1) {
-//                HiRes.pixelsRGBA[colorAddr - 1] = color_white
+//                HiRes.pixelsSRGB[colorAddr - 1] = color_white
 //            }
-            HiRes.pixelsRGBA[colorAddr] = color_white
-            HiRes.pixelsRGBA[colorAddr + 1] = color_white
+            HiRes.pixelsSRGB[colorAddr] = color_white
+            HiRes.pixelsSRGB[colorAddr + 1] = color_white
 
         case 0x05: // blue
-            HiRes.pixelsRGBA[colorAddr] = color_blue
+            HiRes.pixelsSRGB[colorAddr] = color_blue
             if  (colorAddr >= 1) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_blue
+                HiRes.pixelsSRGB[colorAddr - 1] = color_blue
             }
 
         case 0x06: // orange
             // reducing color bleeding
-            if (colorAddr > 0) && (HiRes.pixelsRGBA[colorAddr - 1] != color_black) {
-                HiRes.pixelsRGBA[colorAddr] = color_orange
+            if (colorAddr > 0) && (HiRes.pixelsSRGB[colorAddr - 1] != color_black) {
+                HiRes.pixelsSRGB[colorAddr] = color_orange
             }
-            HiRes.pixelsRGBA[colorAddr + 1] = color_orange
+            HiRes.pixelsSRGB[colorAddr + 1] = color_orange
 
         case 0x07: // white 2
 //            if ( colorAddr >= 1 ) {
-//                HiRes.pixelsRGBA[colorAddr - 1] = color_yellow
+//                HiRes.pixelsSRGB[colorAddr - 1] = color_yellow
 //            }
-            HiRes.pixelsRGBA[colorAddr] = color_white
-            HiRes.pixelsRGBA[colorAddr + 1] = color_white
+            HiRes.pixelsSRGB[colorAddr] = color_white
+            HiRes.pixelsSRGB[colorAddr + 1] = color_white
 
         default: // 0x00 (black 1), 0x04 (black 2)
-            HiRes.pixelsRGBA[colorAddr] = color_black
-            HiRes.pixelsRGBA[colorAddr + 1] = color_black
+            HiRes.pixelsSRGB[colorAddr] = color_black
+            HiRes.pixelsSRGB[colorAddr + 1] = color_black
             break
         }
 
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
-            HiRes.pixelsRGBA[colorAddr] = color_white
+            HiRes.pixelsSRGB[colorAddr] = color_white
             if (colorAddr >= 1) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_white
+                HiRes.pixelsSRGB[colorAddr - 1] = color_white
             }
             
             // TODO: Need better check if extra green was created
-            if (colorAddr >= 2) && (HiRes.pixelsRGBA[colorAddr - 2] == color_green ) {
-                if (colorAddr < 3) || (HiRes.pixelsRGBA[colorAddr - 3] != color_green) {
-                    HiRes.pixelsRGBA[colorAddr - 2] = color_black
+            if (colorAddr >= 2) && (HiRes.pixelsSRGB[colorAddr - 2] == color_green ) {
+                if (colorAddr < 3) || (HiRes.pixelsSRGB[colorAddr - 3] != color_green) {
+                    HiRes.pixelsSRGB[colorAddr - 2] = color_black
                 }
             }
         }
 
 //        // green adjustment -- followed by white
-//        if (colorAddr >= 1) && (prev == 0x03) && (HiRes.pixelsRGBA[colorAddr - 1] = color_green) {
-//            HiRes.pixelsRGBA[colorAddr - 1] = color_green
+//        if (colorAddr >= 1) && (prev == 0x03) && (HiRes.pixelsSRGB[colorAddr - 1] = color_green) {
+//            HiRes.pixelsSRGB[colorAddr - 1] = color_green
 //        }
 
         // purple adjustment -- followed by white
@@ -574,8 +583,8 @@ class HiRes: NSView {
             (pixel == 0x03) || (pixel == 0x07)  // white
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
-            if (colorAddr >= 2) && ( HiRes.pixelsRGBA[colorAddr - 2] == color_purple ) {
-                HiRes.pixelsRGBA[colorAddr - 1] = color_purple
+            if (colorAddr >= 2) && ( HiRes.pixelsSRGB[colorAddr - 2] == color_purple ) {
+                HiRes.pixelsSRGB[colorAddr - 1] = color_purple
             }
         }
 
@@ -584,7 +593,7 @@ class HiRes: NSView {
             (pixel == 0x05) ||
             (pixel == 0x03) || (pixel == 0x07)  // white
         ) {
-            HiRes.pixelsRGBA[colorAddr - 1] = color_blue
+            HiRes.pixelsSRGB[colorAddr - 1] = color_blue
         }
         
     }
@@ -700,8 +709,8 @@ class HiRes: NSView {
 
         // refresh the entire screen
         let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-//        currentContext?.interpolationQuality = .none
-        currentContext?.interpolationQuality = .high
+        currentContext?.interpolationQuality = .none
+//        currentContext?.interpolationQuality = .high // TODO: Make a switch that lets you turn on and off "old monitor effects"
         currentContext?.draw(image, in: boundingBox)
     }
 

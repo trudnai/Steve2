@@ -530,39 +530,17 @@ class ViewController: NSViewController  {
     
     var shadowTxt : String = ""
     
-    func Update() {
-//        clk_6502_per_frm_max = 0
-        
-
-        
-        clkCounter += Double(clkfrm)
-        // we start a new frame from here, so CPU is running even while rendering
-        clkfrm = 0
-
-        frameCounter += 1
-        
-        if ( frameCounter % fps == 0 ) {
-            let currentTime = CACurrentMediaTime() as Double
-            let elpasedTime = currentTime - lastFrameTime
-            lastFrameTime = currentTime
-            mhz = Double( clkCounter ) / (elpasedTime * M);
-            clkCounter = 0
-        }
-        
-//        render()
-//        hires.compute()
-        
-//        HexDump()
-//        return
+    
+    func Render() {
         
         frameCnt += 1
         
         if ( frameCnt == fpsHalf ) {
-//            flashingSpace = blockChar
+            //            flashingSpace = blockChar
             ViewController.charConvTbl = ViewController.charConvTblFlashOn
         }
         else if ( frameCnt >= fps ) {
-//            flashingSpace = spaceChar
+            //            flashingSpace = spaceChar
             ViewController.charConvTbl = ViewController.charConvTblFlashOff
             frameCnt = 0
         }
@@ -572,10 +550,10 @@ class ViewController: NSViewController  {
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
         DispatchQueue.main.sync {
             var txt : String = ""
-
+            
             var fromLines = 0
             var toLines = self.textLines
-
+            
             if videoMode.text == 0 {
                 if videoMode.mixed == 1 {
                     fromLines = toLines - 4
@@ -584,16 +562,16 @@ class ViewController: NSViewController  {
                     toLines = 0
                 }
             }
-
+            
             self.txtArr = self.txtClear
-
+            
             // render an empty space to eiminate displaying text portion of the screen covered by graphics
             let charDisposition = videoMode.col80 == 0 ? 1 : 2
             for y in 0 ..< fromLines {
                 self.txtArr[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
             }
-
-
+            
+            
             // 40 col
             if videoMode.col80 == 0 {
                 if MEMcfg.txt_page_2 == 0 {
@@ -615,7 +593,7 @@ class ViewController: NSViewController  {
                     self.txtArr[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
                 }
             }
-            // 80 col
+                // 80 col
             else {
                 let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
                 
@@ -641,13 +619,13 @@ class ViewController: NSViewController  {
                     self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
                 }
             }
-
-
+            
+            
             txt = String(self.txtArr)
-
+            
             // TODO: Render text Screen in native C
-//            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
-
+            //            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
+            
             if videoMode.col80 != self.currentVideoMode.col80 {
                 self.currentVideoMode.col80 = videoMode.col80
                 
@@ -665,40 +643,40 @@ class ViewController: NSViewController  {
                 self.shadowTxt = txt
                 self.display.stringValue = txt
             }
-//            self.display.stringValue = "testing\nit\nout"
-
+            //            self.display.stringValue = "testing\nit\nout"
+            
             if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
                 self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
             }
             else {
                 self.speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
             }
-//            else {
-//                self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
-//            }
+            //            else {
+            //                self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
+            //            }
             
             #if HIRES
-
+            
             // only refresh graphics view when needed (aka not in text mode)
             if ( videoMode.text == 0 ) {
                 if ( videoMode.hires == 0 ) {
                     // when we change video mode, buffer needs to be cleared to avoid artifacts
                     if ( self.savedVideoMode.text == 1 )
-                    || ( self.savedVideoMode.mixed != videoMode.mixed )
-                    || ( self.savedVideoMode.hires != videoMode.hires )
+                        || ( self.savedVideoMode.mixed != videoMode.mixed )
+                        || ( self.savedVideoMode.hires != videoMode.hires )
                     {
                         self.lores.clearScreen()
                         self.lores.isHidden = false
                         self.hires.isHidden = true
                     }
-
+                    
                     self.lores.Update()
                 }
                 else {
                     // when we change video mode, buffer needs to be cleared to avoid artifacts
                     if ( self.savedVideoMode.text == 1 )
-                    || ( self.savedVideoMode.mixed != videoMode.mixed )
-                    || ( self.savedVideoMode.hires != videoMode.hires )
+                        || ( self.savedVideoMode.mixed != videoMode.mixed )
+                        || ( self.savedVideoMode.hires != videoMode.hires )
                     {
                         self.hires.clearScreen()
                         self.hires.isHidden = false
@@ -713,15 +691,15 @@ class ViewController: NSViewController  {
                 self.lores.isHidden = true
                 self.hires.isHidden = true
             }
-
+            
             self.savedVideoMode = videoMode
-
+            
             #endif
-
+            
             // stream speaker from a separate thread from the simulation
             // TODO: Do we need to do this from here?
-//            spkr_update()
-
+            //            spkr_update()
+            
             // Mouse 2 JoyStick (Game Controller / Paddle)
             mouseLocation = view.window!.mouseLocationOutsideOfEventStream
             
@@ -745,6 +723,28 @@ class ViewController: NSViewController  {
                 pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
             }
         }
+    }
+
+    
+    func Update() {
+        clkCounter += Double(clkfrm)
+        // we start a new frame from here, so CPU is running even while rendering
+        clkfrm = 0
+
+        frameCounter += 1
+        
+        if ( frameCounter % fps == 0 ) {
+            let currentTime = CACurrentMediaTime() as Double
+            let elpasedTime = currentTime - lastFrameTime
+            lastFrameTime = currentTime
+            mhz = Double( clkCounter ) / (elpasedTime * M);
+            clkCounter = 0
+        }
+        
+        
+//        if ( frameCounter % 5 == 0 ) {
+            Render()
+//        }
         
         
         #if SPEEDTEST

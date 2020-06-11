@@ -210,7 +210,8 @@ class LoRes: NSView {
         let byteCount = (bytesPerRow * pixelsHigh)
         
 //        guard let colorSpace = CGColorSpace(name: CGColorSpace.linearSRGB) else { return nil }
-        guard let colorSpace = CGColorSpace(name: CGColorSpace.genericRGBLinear) else { return nil }
+//        guard let colorSpace = CGColorSpace(name: CGColorSpace.genericRGBLinear) else { return nil }
+        guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB) else { return nil }
 
         let pixels = UnsafeMutablePointer<CUnsignedChar>.allocate(capacity: byteCount)
 
@@ -245,7 +246,7 @@ class LoRes: NSView {
     static let ScreenBitmapSize = (PixelWidth * PixelHeight * 4)
     static let context = createBitmapContext(pixelsWide: PixelWidth, PixelHeight)
     static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)
-    static var pixelsRGBA = pixels.bindMemory(to: UInt32.self)
+    static var pixelsSRGB = pixels.bindMemory(to: UInt32.self)
     
     let R = 2
     let G = 1
@@ -258,22 +259,40 @@ class LoRes: NSView {
     var was = 0;
     
     
+//    static let color_black         : UInt32 = 0x00000000; //  0
+//    static let color_magenta       : UInt32 = 0xFF660022; //  1
+//    static let color_dark_blue     : UInt32 = 0xFF000077; //  2
+//    static let color_purple        : UInt32 = 0xFF9908DD; //  3
+//    static let color_dark_green    : UInt32 = 0xFF005500; //  4
+//    static let color_dark_gray     : UInt32 = 0xFF333333; //  5
+//    static let color_medium_blue   : UInt32 = 0xFF0011BB; //  6
+//    static let color_light_blue    : UInt32 = 0xFF4488FF; //  7
+//    static let color_brown         : UInt32 = 0xFF552200; //  8
+//    static let color_orange        : UInt32 = 0xFFFF6611; //  9
+//    static let color_gray          : UInt32 = 0xFF888888; // 10
+//    static let color_pink          : UInt32 = 0xFFFF8888; // 11
+//    static let color_green         : UInt32 = 0xFF0BBB11; // 12
+//    static let color_yellow        : UInt32 = 0xFFFFFF00; // 13
+//    static let color_aqua          : UInt32 = 0xFF66CC99; // 14
+//    static let color_white         : UInt32 = 0xFFEEEEEE; // 15
+
     static let color_black         : UInt32 = 0x00000000; //  0
-    static let color_magenta       : UInt32 = 0xFF660022; //  1
-    static let color_dark_blue     : UInt32 = 0xFF000077; //  2
-    static let color_purple        : UInt32 = 0xFF9908DD; //  3
-    static let color_dark_green    : UInt32 = 0xFF005500; //  4
-    static let color_dark_gray     : UInt32 = 0xFF333333; //  5
-    static let color_medium_blue   : UInt32 = 0xFF0011BB; //  6
-    static let color_light_blue    : UInt32 = 0xFF4488FF; //  7
-    static let color_brown         : UInt32 = 0xFF552200; //  8
-    static let color_orange        : UInt32 = 0xFFFF6611; //  9
+    static let color_magenta       : UInt32 = 0xFFDD0077; //  1
+    static let color_dark_blue     : UInt32 = 0xFF0006F6; //  2
+    static let color_purple        : UInt32 = 0xFFCC00FF; //  3
+    static let color_dark_green    : UInt32 = 0xFF009800; //  4
+    static let color_dark_gray     : UInt32 = 0xFF888888; //  5 // Darker only on //gs 
+    static let color_medium_blue   : UInt32 = 0xFF006FFD; //  6
+    static let color_light_blue    : UInt32 = 0xFF5AA3F0; //  7
+    static let color_brown         : UInt32 = 0xFF5C341F; //  8
+    static let color_orange        : UInt32 = 0xFFFF6302; //  9
     static let color_gray          : UInt32 = 0xFF888888; // 10
-    static let color_pink          : UInt32 = 0xFFFF8888; // 11
-    static let color_green         : UInt32 = 0xFF0BBB11; // 12
-    static let color_yellow        : UInt32 = 0xFFFFFF00; // 13
-    static let color_aqua          : UInt32 = 0xFF66CC99; // 14
+    static let color_pink          : UInt32 = 0xFFFF50B9; // 11
+    static let color_green         : UInt32 = 0xFF2BD84A; // 12
+    static let color_yellow        : UInt32 = 0xFFFFE700; // 13
+    static let color_aqua          : UInt32 = 0xFF71EED6; // 14
     static let color_white         : UInt32 = 0xFFEEEEEE; // 15
+
     
     let colorTable = [
         color_black,
@@ -300,7 +319,7 @@ class LoRes: NSView {
 
     
     func colorPixel ( pixelAddr : Int, color : Int ) {
-        LoRes.pixelsRGBA[pixelAddr] = colorTable[color]
+        LoRes.pixelsSRGB[pixelAddr] = colorTable[color]
     }
 
     

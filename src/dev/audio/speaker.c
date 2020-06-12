@@ -159,7 +159,6 @@ void spkr_init() {
     alGenBuffers(BUFFER_COUNT, spkr_buffers);
     alGenBuffers(1, &spkr_disk_motor_buf);
     alGenBuffers(1, &spkr_disk_arm_buf);
-    alGenBuffers(1, &spkr_disk_ioerr_buf);
     al_check_error();
     
     // Set-up sound source and play buffer
@@ -237,7 +236,8 @@ void spkr_exit() {
         
         al_check_error();
         
-        spkr_src[0] = 0;
+        memset(spkr_src, 0, sizeof(spkr_src));
+        memset(spkr_buffers, 0, sizeof(spkr_buffers));
     }
 }
 
@@ -467,7 +467,6 @@ void spkr_play_sfx( ALuint src, uint8_t * sfx, int len ) {
 
 
 void spkr_stop_sfx( ALuint src ) {
-    
     ALenum state;
     alGetSourcei( src, AL_SOURCE_STATE, &state );
 //        al_check_error();
@@ -487,32 +486,30 @@ void spkr_stop_sfx( ALuint src ) {
 
 
 void spkr_play_disk_motor() {
-    if ( diskAccelerator_count == 0 ) {
+    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
         spkr_play_sfx( spkr_src[1], diskmotor_sfx, diskmotor_sfx_len );
     }
 }
 
 void spkr_stop_disk_motor( int time ) {
-    if ( diskAccelerator_count == 0 ) {
+    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
         spkr_play_disk_motor_time = time;
     }
 }
 
 
 void spkr_play_disk_arm() {
-    if ( diskAccelerator_count == 0 ) {
+    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
         if ( spkr_play_disk_ioerr_time == 0 ) {
             spkr_play_sfx( spkr_src[2], diskarm_sfx, diskarm_sfx_len );
             spkr_play_disk_arm_time = 2;
-//            spkr_play_disk_ioerr_time = 2;
         }
     }
 }
 
 
 void spkr_play_disk_ioerr() {
-//    spkr_stop_sfx( spkr_src[3], &spkr_disk_ioerr_buf );
-    if ( diskAccelerator_count == 0 ) {
+    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
         spkr_playqueue_sfx( spkr_src[3], diskioerr_sfx, diskioerr_sfx_len - 512);
         spkr_play_disk_ioerr_time = 4;
     }
@@ -520,25 +517,32 @@ void spkr_play_disk_ioerr() {
 
 
 void update_disk_sfx( unsigned * time, ALuint src ) {
-    if ( diskAccelerator_count == 0 ) {
-        if ( *time ) {
-            if ( --*time == 0 ) {
-                spkr_stop_sfx( src );
-            }
+    if ( *time ) {
+        if ( --*time == 0 ) {
+            spkr_stop_sfx( src );
         }
     }
 }
 
 void spkr_update_disk_sfx() {
-    if ( diskAccelerator_count == 0 ) {
-        update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[1] );
-        update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[2] );
-
-        // we do not need to stop playing,
-        // however, counter needed to eliminate arm movement noise while in io error
-        if ( spkr_play_disk_ioerr_time ) {
-            spkr_play_disk_ioerr_time--;
+    // is user speeds up the machine, disk sfx needs to be stopped
+    if ( clk_6502_per_frm > iicplus_MHz_6502 / fps ) {
+        if ( spkr_play_disk_motor_time ) {
+            spkr_play_disk_motor_time = 1; // rest will be taken care below
+        }
+        if ( spkr_play_disk_arm_time ) {
+            spkr_play_disk_arm_time = 1; // rest will be taken care below
         }
     }
+    
+    update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[1] );
+    update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[2] );
+
+    // we do not need to stop playing,
+    // however, counter needed to eliminate arm movement noise while in io error
+    if ( spkr_play_disk_ioerr_time ) {
+        spkr_play_disk_ioerr_time--;
+    }
+    
 }
 

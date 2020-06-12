@@ -21,7 +21,7 @@ disk_t disk = {
 const int diskAccelerator_frames  = 2;
 int diskAccelerator_count = 0;
 int diskAccelerator_speed = 25 * M / fps; // if less than actual CPU speed means no acceleration
-
+int diskAccelerator_enabled = 1;
 
 // motor position from the magnet state
 // -1 means invalid, not supported
@@ -68,7 +68,7 @@ const uint8_t log2phy_cpm[16] = {
 
 
 void disk_accelerator_speedup() {
-    if ( diskAccelerator_speed >= clk_6502_per_frm ) {
+    if ( ( diskAccelerator_enabled ) && ( diskAccelerator_speed >= clk_6502_per_frm ) ) {
         clk_6502_per_frm =
         clk_6502_per_frm_max = diskAccelerator_speed;  // clk_6502_per_frm_diskAccelerator;
         diskAccelerator_count = diskAccelerator_frames;

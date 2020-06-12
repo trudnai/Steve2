@@ -891,10 +891,12 @@ class ViewController: NSViewController  {
     
     @IBAction func QuickDisk(_ sender: NSButton) {
         if sender.state == .on {
-            diskAccelerator_speed = Int32( 25 * M / Double(fps) )
+//            diskAccelerator_speed = Int32( 25 * M / Double(fps) )
+            diskAccelerator_enabled = 1;
         }
         else {
-            diskAccelerator_speed = 0
+//            diskAccelerator_speed = 0
+            diskAccelerator_enabled = 0;
         }
     }
 

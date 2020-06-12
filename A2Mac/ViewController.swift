@@ -891,15 +891,22 @@ class ViewController: NSViewController  {
     
     @IBAction func QuickDisk(_ sender: NSButton) {
         if sender.state == .on {
-//            diskAccelerator_speed = Int32( 25 * M / Double(fps) )
             diskAccelerator_enabled = 1;
         }
         else {
-//            diskAccelerator_speed = 0
             diskAccelerator_enabled = 0;
         }
     }
-
+    
+    @IBAction func DiskSound(_ sender: NSButton) {
+        if sender.state == .on {
+            disk_sfx_enabled = 1;
+        }
+        else {
+            disk_sfx_enabled = 0;
+        }
+    }
+    
     
     @objc func openDiskImage() {
         let openPanel = NSOpenPanel()

@@ -225,6 +225,8 @@ void spkr_init() {
 // Dealloc OpenAL
 void spkr_exit() {
     if ( spkr_src[0] ) {
+        alSourceStop( spkr_src[0] );
+        
         ALCdevice *dev = NULL;
         ALCcontext *ctx = NULL;
         ctx = alcGetCurrentContext();
@@ -238,6 +240,8 @@ void spkr_exit() {
         
         memset(spkr_src, 0, sizeof(spkr_src));
         memset(spkr_buffers, 0, sizeof(spkr_buffers));
+        spkr_disk_motor_buf = 0;
+        spkr_disk_arm_buf = 0;
     }
 }
 
@@ -486,20 +490,20 @@ void spkr_stop_sfx( ALuint src ) {
 
 
 void spkr_play_disk_motor() {
-    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
         spkr_play_sfx( spkr_src[1], diskmotor_sfx, diskmotor_sfx_len );
     }
 }
 
 void spkr_stop_disk_motor( int time ) {
-    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
         spkr_play_disk_motor_time = time;
     }
 }
 
 
 void spkr_play_disk_arm() {
-    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
         if ( spkr_play_disk_ioerr_time == 0 ) {
             spkr_play_sfx( spkr_src[2], diskarm_sfx, diskarm_sfx_len );
             spkr_play_disk_arm_time = 2;
@@ -509,8 +513,8 @@ void spkr_play_disk_arm() {
 
 
 void spkr_play_disk_ioerr() {
-    if ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) {
-        spkr_playqueue_sfx( spkr_src[3], diskioerr_sfx, diskioerr_sfx_len - 512);
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
+        spkr_playqueue_sfx( spkr_src[3], diskioerr_sfx, diskioerr_sfx_len);
         spkr_play_disk_ioerr_time = 4;
     }
 }
@@ -526,7 +530,7 @@ void update_disk_sfx( unsigned * time, ALuint src ) {
 
 void spkr_update_disk_sfx() {
     // is user speeds up the machine, disk sfx needs to be stopped
-    if ( clk_6502_per_frm > iicplus_MHz_6502 / fps ) {
+    if ( ( ! disk_sfx_enabled ) || ( clk_6502_per_frm > iicplus_MHz_6502 / fps ) ) {
         if ( spkr_play_disk_motor_time ) {
             spkr_play_disk_motor_time = 1; // rest will be taken care below
         }

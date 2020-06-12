@@ -57,6 +57,7 @@ extern const int diskAccelerator_frames;    // number of frames disk acceleratio
 extern int diskAccelerator_count;           // counter for the disk acceleration frames
 extern int diskAccelerator_speed;           // if less than the actual CPU speed, no acceleration
 extern int diskAccelerator_enabled;
+extern int disk_sfx_enabled;
 
 extern void disk_phase(void);
 extern void disk_phase_on( uint8_t currentMagnet );

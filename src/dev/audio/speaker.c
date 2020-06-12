@@ -52,13 +52,21 @@ const char* al_err_str(ALenum err) {
 ALCdevice *dev = NULL;
 ALCcontext *ctx = NULL;
 
-ALuint spkr_src [4] = { 0, 0, 0, 0 };
 
 int spkr_level = SPKR_LEVEL_ZERO;
 
 
-#define BUFFER_COUNT 256
-#define SOURCES_COUNT 1
+#define BUFFER_COUNT 64
+#define SOURCES_COUNT 4
+
+enum {
+    SPKR_SRC_GAME_SFX = 0,
+    SPKR_SRC_DISK_MOTOR_SFX,
+    SPKR_SRC_DISK_ARM_SFX,
+    SPKR_SRC_DISK_IOERR_SFX,
+};
+
+ALuint spkr_src [SOURCES_COUNT] = { 0, 0, 0, 0 };
 
 ALuint spkr_buffers[BUFFER_COUNT];
 ALuint spkr_disk_motor_buf = 0;
@@ -162,13 +170,13 @@ void spkr_init() {
     al_check_error();
     
     // Set-up sound source and play buffer
-    alGenSources(4, spkr_src);
+    alGenSources(SOURCES_COUNT, spkr_src);
     al_check_error();
-    alSourcei(spkr_src[0], AL_LOOPING, AL_FALSE);
+    alSourcei(spkr_src[SPKR_SRC_GAME_SFX], AL_LOOPING, AL_FALSE);
     al_check_error();
-    alSourcef(spkr_src[0], AL_ROLLOFF_FACTOR, 0);
+    alSourcef(spkr_src[SPKR_SRC_GAME_SFX], AL_ROLLOFF_FACTOR, 0);
     al_check_error();
-    alSource3f(spkr_src[0], AL_POSITION, 0.0, 8.0, 0.0);
+    alSource3f(spkr_src[SPKR_SRC_GAME_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
     alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
     al_check_error();
@@ -177,11 +185,11 @@ void spkr_init() {
 
     
     // Set-up disk motor sound source and play buffer
-    alSourcei(spkr_src[1], AL_LOOPING, AL_TRUE);
+    alSourcei(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_LOOPING, AL_TRUE);
     al_check_error();
-    alSourcef(spkr_src[1], AL_ROLLOFF_FACTOR, 0);
+    alSourcef(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_ROLLOFF_FACTOR, 0);
     al_check_error();
-    alSource3f(spkr_src[1], AL_POSITION, 0.0, 8.0, 0.0);
+    alSource3f(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
     alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
     al_check_error();
@@ -190,11 +198,11 @@ void spkr_init() {
 
     
     // Set-up disk arm sound source and play buffer
-    alSourcei(spkr_src[2], AL_LOOPING, AL_FALSE);
+    alSourcei(spkr_src[SPKR_SRC_DISK_ARM_SFX], AL_LOOPING, AL_FALSE);
     al_check_error();
-    alSourcef(spkr_src[2], AL_ROLLOFF_FACTOR, 0);
+    alSourcef(spkr_src[SPKR_SRC_DISK_ARM_SFX], AL_ROLLOFF_FACTOR, 0);
     al_check_error();
-    alSource3f(spkr_src[2], AL_POSITION, 0.0, 8.0, 0.0);
+    alSource3f(spkr_src[SPKR_SRC_DISK_ARM_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
     alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
     al_check_error();
@@ -203,11 +211,11 @@ void spkr_init() {
     
     
     // Set-up disk io error sound source and play buffer
-    alSourcei(spkr_src[3], AL_LOOPING, AL_FALSE);
+    alSourcei(spkr_src[SPKR_SRC_DISK_IOERR_SFX], AL_LOOPING, AL_FALSE);
     al_check_error();
-    alSourcef(spkr_src[3], AL_ROLLOFF_FACTOR, 0);
+    alSourcef(spkr_src[SPKR_SRC_DISK_IOERR_SFX], AL_ROLLOFF_FACTOR, 0);
     al_check_error();
-    alSource3f(spkr_src[3], AL_POSITION, 0.0, 8.0, 0.0);
+    alSource3f(spkr_src[SPKR_SRC_DISK_IOERR_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
     alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
     al_check_error();
@@ -224,8 +232,8 @@ void spkr_init() {
 
 // Dealloc OpenAL
 void spkr_exit() {
-    if ( spkr_src[0] ) {
-        alSourceStop( spkr_src[0] );
+    if ( spkr_src[SPKR_SRC_GAME_SFX] ) {
+        alSourceStop( spkr_src[SPKR_SRC_GAME_SFX] );
         
         ALCdevice *dev = NULL;
         ALCcontext *ctx = NULL;
@@ -334,13 +342,13 @@ int spkr_unqueue( ALuint src ) {
 void spkr_update() {
     if ( spkr_play_time ) {
         // free up unused buffers
-        freeBuffers += spkr_unqueue( spkr_src[0] );
+        freeBuffers += spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );
         freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
 
         if ( freeBuffers ) {
         
             ALenum state;
-            alGetSourcei( spkr_src[0], AL_SOURCE_STATE, &state );
+            alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
     //        al_check_error();
 
             if ( --spkr_play_time == 0 ) {
@@ -364,7 +372,7 @@ void spkr_update() {
                     freeBuffers--;
                     alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_samples[0]), spkr_sample_rate);
                     al_check_error();
-                    alSourceQueueBuffers(spkr_src[0], 1, &spkr_buffers[freeBuffers]);
+                    alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                     al_check_error();
                 }
             }
@@ -372,13 +380,13 @@ void spkr_update() {
                 freeBuffers--;
                 alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_samples[0]), spkr_sample_rate);
                 al_check_error();
-                alSourceQueueBuffers(spkr_src[0], 1, &spkr_buffers[freeBuffers]);
+                alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                 al_check_error();
             }
             
             switch (state) {
                 case AL_PAUSED:
-                    alSourcePlay(spkr_src[0]);
+                    alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
                     break;
 
                 case AL_PLAYING:
@@ -386,8 +394,8 @@ void spkr_update() {
                     break;
                     
                 default:
-                    alSourcePlay(spkr_src[0]);
-                    alSourcePause(spkr_src[0]);
+                    alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+                    alSourcePause(spkr_src[SPKR_SRC_GAME_SFX]);
                     break;
             }
             
@@ -491,7 +499,7 @@ void spkr_stop_sfx( ALuint src ) {
 
 void spkr_play_disk_motor() {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
-        spkr_play_sfx( spkr_src[1], diskmotor_sfx, diskmotor_sfx_len );
+        spkr_play_sfx( spkr_src[SPKR_SRC_DISK_MOTOR_SFX], diskmotor_sfx, diskmotor_sfx_len );
     }
 }
 
@@ -505,7 +513,7 @@ void spkr_stop_disk_motor( int time ) {
 void spkr_play_disk_arm() {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
         if ( spkr_play_disk_ioerr_time == 0 ) {
-            spkr_play_sfx( spkr_src[2], diskarm_sfx, diskarm_sfx_len );
+            spkr_play_sfx( spkr_src[SPKR_SRC_DISK_ARM_SFX], diskarm_sfx, diskarm_sfx_len );
             spkr_play_disk_arm_time = 2;
         }
     }
@@ -514,7 +522,7 @@ void spkr_play_disk_arm() {
 
 void spkr_play_disk_ioerr() {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
-        spkr_playqueue_sfx( spkr_src[3], diskioerr_sfx, diskioerr_sfx_len);
+        spkr_playqueue_sfx( spkr_src[SPKR_SRC_DISK_IOERR_SFX], diskioerr_sfx, diskioerr_sfx_len);
         spkr_play_disk_ioerr_time = 4;
     }
 }
@@ -539,8 +547,8 @@ void spkr_update_disk_sfx() {
         }
     }
     
-    update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[1] );
-    update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[2] );
+    update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[SPKR_SRC_DISK_MOTOR_SFX] );
+    update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[SPKR_SRC_DISK_ARM_SFX] );
 
     // we do not need to stop playing,
     // however, counter needed to eliminate arm movement noise while in io error

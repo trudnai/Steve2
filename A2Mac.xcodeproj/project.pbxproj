@@ -14,9 +14,9 @@
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
 		323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D04312489BFD80086A901 /* PreferencesWindowController.swift */; };
 		323D0437248B6BEA0086A901 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
-		323D043E248F70930086A901 /* diskmotor.raw in Resources */ = {isa = PBXBuildFile; fileRef = 323D043D248F70930086A901 /* diskmotor.raw */; };
-		323D0440248F70A10086A901 /* diskioerr.raw in Resources */ = {isa = PBXBuildFile; fileRef = 323D043F248F70A10086A901 /* diskioerr.raw */; };
-		323D0442248F711F0086A901 /* diskarm.raw in Resources */ = {isa = PBXBuildFile; fileRef = 323D0441248F711F0086A901 /* diskarm.raw */; };
+		323D043E248F70930086A901 /* diskmotor.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 323D043D248F70930086A901 /* diskmotor.sfx */; };
+		323D0440248F70A10086A901 /* diskioerr.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 323D043F248F70A10086A901 /* diskioerr.sfx */; };
+		323D0442248F711F0086A901 /* diskarm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 323D0441248F711F0086A901 /* diskarm.sfx */; };
 		323D04442490B3930086A901 /* dotmatrix_effect.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D04432490B3930086A901 /* dotmatrix_effect.png */; };
 		323D04462490BA1E0086A901 /* scanlines.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D04452490BA1E0086A901 /* scanlines.png */; };
 		323E2DCE245531E600156805 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
@@ -160,9 +160,9 @@
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
 		323D0435248B20F20086A901 /* 6502_instr_undoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_undoc.h; sourceTree = "<group>"; };
-		323D043D248F70930086A901 /* diskmotor.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = diskmotor.raw; sourceTree = "<group>"; };
-		323D043F248F70A10086A901 /* diskioerr.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = diskioerr.raw; sourceTree = "<group>"; };
-		323D0441248F711F0086A901 /* diskarm.raw */ = {isa = PBXFileReference; lastKnownFileType = file; path = diskarm.raw; sourceTree = "<group>"; };
+		323D043D248F70930086A901 /* diskmotor.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = diskmotor.sfx; sourceTree = "<group>"; };
+		323D043F248F70A10086A901 /* diskioerr.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = diskioerr.sfx; sourceTree = "<group>"; };
+		323D0441248F711F0086A901 /* diskarm.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = diskarm.sfx; sourceTree = "<group>"; };
 		323D04432490B3930086A901 /* dotmatrix_effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmatrix_effect.png; sourceTree = "<group>"; };
 		323D04452490BA1E0086A901 /* scanlines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanlines.png; sourceTree = "<group>"; };
 		323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e_Enhanced.rom; sourceTree = "<group>"; };
@@ -354,9 +354,9 @@
 		323D0439248F6E670086A901 /* disk */ = {
 			isa = PBXGroup;
 			children = (
-				323D043D248F70930086A901 /* diskmotor.raw */,
-				323D0441248F711F0086A901 /* diskarm.raw */,
-				323D043F248F70A10086A901 /* diskioerr.raw */,
+				323D043D248F70930086A901 /* diskmotor.sfx */,
+				323D0441248F711F0086A901 /* diskarm.sfx */,
+				323D043F248F70A10086A901 /* diskioerr.sfx */,
 			);
 			path = disk;
 			sourceTree = "<group>";
@@ -925,7 +925,7 @@
 				325EB6A92401118300C6B4A4 /* Sneakers.woz in Resources */,
 				325EB6A72401118300C6B4A4 /* ProDOS_402_System.woz in Resources */,
 				32440B96247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz in Resources */,
-				323D0440248F70A10086A901 /* diskioerr.raw in Resources */,
+				323D0440248F70A10086A901 /* diskioerr.sfx in Resources */,
 				325EB69023FE028800C6B4A4 /* Donkey Kong.woz in Resources */,
 				325EB68923FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */,
 				325EB69F2401118300C6B4A4 /* Crossfire.woz in Resources */,
@@ -941,9 +941,9 @@
 				32440B79247CB2B2000F9DA1 /* Merlin Pro v1.34.woz in Resources */,
 				32E21BE72491BF8C006C0C72 /* apple-rainbow.png in Resources */,
 				325EB68C23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */,
-				323D043E248F70930086A901 /* diskmotor.raw in Resources */,
+				323D043E248F70930086A901 /* diskmotor.sfx in Resources */,
 				32440B91247F86D6000F9DA1 /* COMPUTER_CHECKUP.woz in Resources */,
-				323D0442248F711F0086A901 /* diskarm.raw in Resources */,
+				323D0442248F711F0086A901 /* diskarm.sfx in Resources */,
 				325EB6A52401118300C6B4A4 /* ProDOS_312.woz in Resources */,
 				325EB6AB2401118300C6B4A4 /* Xonix.woz in Resources */,
 				323E2DCE245531E600156805 /* Apple2e_Enhanced.rom in Resources */,

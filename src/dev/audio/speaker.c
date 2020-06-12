@@ -69,7 +69,8 @@ ALuint spkr_disk_ioerr_buf = 0;
 const int spkr_fps = fps;
 const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
-const unsigned sfx_sample_rate =  29400; // 22050;
+const unsigned sfx_sample_rate =  22050; // original sample rate
+//const unsigned sfx_sample_rate =  26000; // bit higher pitch
 unsigned spkr_extra_buf = 800 / spkr_fps;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * 2 / spkr_fps;
 int16_t spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT * 2]; // stereo
@@ -518,7 +519,7 @@ void spkr_play_disk_ioerr() {
 }
 
 
-void update_disk_sfx( unsigned * time, ALuint src, ALuint * buf ) {
+void update_disk_sfx( unsigned * time, ALuint src ) {
     if ( diskAccelerator_count == 0 ) {
         if ( *time ) {
             if ( --*time == 0 ) {
@@ -530,9 +531,11 @@ void update_disk_sfx( unsigned * time, ALuint src, ALuint * buf ) {
 
 void spkr_update_disk_sfx() {
     if ( diskAccelerator_count == 0 ) {
-        update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[1], &spkr_disk_motor_buf );
-        update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[2], &spkr_disk_arm_buf );
-//        update_disk_sfx( &spkr_play_disk_ioerr_time, spkr_src[3], &spkr_disk_ioerr_buf );
+        update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[1] );
+        update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[2] );
+
+        // we do not need to stop playing,
+        // however, counter needed to eliminate arm movement noise while in io error
         if ( spkr_play_disk_ioerr_time ) {
             spkr_play_disk_ioerr_time--;
         }

@@ -563,7 +563,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_KBDSTRB:
             // TODO: This is very slow!
 //            printf("io_KBDSTRB\n");
-            Apple2_64K_RAM[io_KBD] &= 0x7F;
+            Apple2_64K_RAM[io_KBD] &= ~(1 << 7);
             return Apple2_64K_RAM[io_KBDSTRB];
 
         case (uint8_t)io_SPKR:
@@ -742,11 +742,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
         case (uint8_t)io_DISK_WRITE + SLOT6:
             dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
-            return 0;
+            Apple2_64K_RAM[io_DISK_CLEAR + SLOT6] |= 1 << 7; // mark disk as write protected
+            return Apple2_64K_RAM[io_DISK_WRITE + SLOT6];
 
         case (uint8_t)io_DISK_CLEAR + SLOT6:
             dbgPrintf2("io_DISK_CLEAR (S%u)\n", 6);
-            return 0;
+            return Apple2_64K_RAM[io_DISK_CLEAR + SLOT6];
 
         case (uint8_t)io_DISK_SHIFT + SLOT6:
             dbgPrintf2("io_DISK_SHIFT (S%u)\n", 6);

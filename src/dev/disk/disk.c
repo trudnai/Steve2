@@ -21,7 +21,7 @@ disk_t disk = {
 const int diskAccelerator_frames  = 2;
 int diskAccelerator_count = 0;
 int diskAccelerator_speed = 25 * M / fps; // if less than actual CPU speed means no acceleration
-int diskAccelerator_enabled = 1;
+int diskAccelerator_enabled = 0;
 int disk_sfx_enabled = 1;
 
 // motor position from the magnet state

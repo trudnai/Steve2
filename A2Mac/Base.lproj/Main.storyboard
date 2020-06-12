@@ -1434,7 +1434,7 @@
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-cj-gLu">
                                                 <rect key="frame" x="-2" y="223" width="87" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Quick Disk" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6QV-uF-Gh7">
+                                                <buttonCell key="cell" type="check" title="Quick Disk" bezelStyle="regularSquare" imagePosition="left" inset="2" id="6QV-uF-Gh7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>

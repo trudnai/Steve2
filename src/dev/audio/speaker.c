@@ -11,8 +11,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
 
 #include "speaker.h"
 #include "6502.h"
@@ -54,7 +52,7 @@ const char* al_err_str(ALenum err) {
 ALCdevice *dev = NULL;
 ALCcontext *ctx = NULL;
 ALuint spkr_buf = 0;
-ALuint spkr_src = 0;
+ALuint spkr_src [4] = { 0, 0, 0, 0 };
 
 
 int spkr_level = SPKR_LEVEL_ZERO;
@@ -64,11 +62,15 @@ int spkr_level = SPKR_LEVEL_ZERO;
 #define SOURCES_COUNT 1
 
 ALuint spkr_buffers[BUFFER_COUNT];
+ALuint spkr_disk_motor_buf = 0;
+ALuint spkr_disk_arm_buf = 0;
+ALuint spkr_disk_ioerr_buf = 0;
 
 
 const int spkr_fps = fps;
 const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
+const unsigned sfx_sample_rate = 22050;
 unsigned spkr_extra_buf = 800 / spkr_fps;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * 2 / spkr_fps;
 int16_t spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT * 2]; // stereo
@@ -76,9 +78,19 @@ unsigned spkr_sample_idx = 0;
 
 const unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps
 unsigned spkr_play_time = 0;
+unsigned spkr_play_disk_motor_time = 0;
+unsigned spkr_play_disk_arm_time = 0;
+unsigned spkr_play_disk_ioerr_time = 0;
+
+uint8_t * diskmotor_sfx = NULL;
+int       diskmotor_sfx_len = 0;
+uint8_t * diskarm_sfx = NULL;
+int       diskarm_sfx_len = 0;
+uint8_t * diskioerr_sfx = NULL;
+int       diskioerr_sfx_len = 0;
 
 
-static uint8_t* load_sfx( const char * bundlePath, const char * filename ) {
+static int load_sfx( const char * bundlePath, const char * filename, uint8_t ** buf ) {
     char fullPath[256];
     
     strcpy( fullPath, bundlePath );
@@ -88,7 +100,7 @@ static uint8_t* load_sfx( const char * bundlePath, const char * filename ) {
     FILE * f = fopen(fullPath, "rb");
     if (f == NULL) {
         perror("Failed to read SFX: ");
-        return NULL;
+        return -1;
     }
     
     fseek(f, 0L, SEEK_END);
@@ -97,32 +109,34 @@ static uint8_t* load_sfx( const char * bundlePath, const char * filename ) {
 
     if (flen <= 0) {
         printf("Failed to read SFX or 0 size\n");
-        return NULL;
+        return -1;
     }
 
-    uint8_t * buffer = malloc(flen);
+    *buf = malloc(flen);
     
-    if (buffer == NULL) {
+    if ( *buf == NULL ) {
         printf("Not enough memory for SFX\n");
-        return NULL;
+        return -1;
     }
     
-    fread( buffer, 1, flen, f);
+    fread( *buf, 1, flen, f);
     fclose(f);
 
     if ( flen == 0 ) {
         printf("Error loading SFX file\n");
-        free(buffer);
-        return NULL; // there was an error
+        free( *buf );
+        return -1; // there was an error
     }
 
     // everything seems to be ok
-    return buffer;
+    return flen;
 }
 
 
 void spkr_load_sfx( const char * bundlePath ) {
-    
+    diskmotor_sfx_len = load_sfx(bundlePath, "diskmotor.raw", &diskmotor_sfx);
+    diskarm_sfx_len = load_sfx(bundlePath, "diskarm.raw", &diskarm_sfx);
+    diskioerr_sfx_len = load_sfx(bundlePath, "diskioerr.raw", &diskioerr_sfx);
 }
 
 
@@ -143,22 +157,65 @@ void spkr_init() {
     
     // Create buffer to store samples
     alGenBuffers(BUFFER_COUNT, spkr_buffers);
+    alGenBuffers(1, &spkr_disk_motor_buf);
+    alGenBuffers(1, &spkr_disk_arm_buf);
+    alGenBuffers(1, &spkr_disk_ioerr_buf);
     al_check_error();
     
     // Set-up sound source and play buffer
-    alGenSources(1, &spkr_src);
+    alGenSources(4, spkr_src);
     al_check_error();
-    alSourcei(spkr_src, AL_LOOPING, AL_FALSE);
+    alSourcei(spkr_src[0], AL_LOOPING, AL_FALSE);
     al_check_error();
-    alSourcef(spkr_src, AL_ROLLOFF_FACTOR, 0);
+    alSourcef(spkr_src[0], AL_ROLLOFF_FACTOR, 0);
     al_check_error();
-    alSource3f(spkr_src, AL_POSITION, 0.0, 8.0, 0.0);
+    alSource3f(spkr_src[0], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
     alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
     al_check_error();
     alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
     al_check_error();
 
+    
+    // Set-up disk motor sound source and play buffer
+    alSourcei(spkr_src[1], AL_LOOPING, AL_TRUE);
+    al_check_error();
+    alSourcef(spkr_src[1], AL_ROLLOFF_FACTOR, 0);
+    al_check_error();
+    alSource3f(spkr_src[1], AL_POSITION, 0.0, 8.0, 0.0);
+    al_check_error();
+    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
+    al_check_error();
+    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
+    al_check_error();
+
+    
+    // Set-up disk arm sound source and play buffer
+    alSourcei(spkr_src[2], AL_LOOPING, AL_TRUE);
+    al_check_error();
+    alSourcef(spkr_src[2], AL_ROLLOFF_FACTOR, 0);
+    al_check_error();
+    alSource3f(spkr_src[2], AL_POSITION, 0.0, 8.0, 0.0);
+    al_check_error();
+    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
+    al_check_error();
+    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
+    al_check_error();
+    
+    
+    // Set-up disk io error sound source and play buffer
+    alSourcei(spkr_src[3], AL_LOOPING, AL_FALSE);
+    al_check_error();
+    alSourcef(spkr_src[3], AL_ROLLOFF_FACTOR, 0);
+    al_check_error();
+    alSource3f(spkr_src[3], AL_POSITION, 0.0, 8.0, 0.0);
+    al_check_error();
+    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
+    al_check_error();
+    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
+    al_check_error();
+    
+    
     // start from the beginning
     spkr_sample_idx = 0;
 
@@ -168,7 +225,7 @@ void spkr_init() {
 
 // Dealloc OpenAL
 void spkr_exit() {
-    if ( spkr_src ) {
+    if ( spkr_src[0] ) {
         ALCdevice *dev = NULL;
         ALCcontext *ctx = NULL;
         ctx = alcGetCurrentContext();
@@ -180,7 +237,7 @@ void spkr_exit() {
         
         al_check_error();
         
-        spkr_src = 0;
+        spkr_src[0] = 0;
     }
 }
 
@@ -264,11 +321,11 @@ void spkr_update() {
 //        printf("freeBuffers:%d  queued:%d  processed:%d\n", freeBuffers, queued,processed);
         
         do {
-            alGetSourcei (spkr_src, AL_BUFFERS_PROCESSED, &processed);
+            alGetSourcei (spkr_src[0], AL_BUFFERS_PROCESSED, &processed);
 //            al_check_error();
 
             if ( processed ) {
-                alSourceUnqueueBuffers( spkr_src, processed, &spkr_buffers[freeBuffers]);
+                alSourceUnqueueBuffers( spkr_src[0], processed, &spkr_buffers[freeBuffers]);
 //            al_check_error();
                 freeBuffers += processed;
             }
@@ -280,7 +337,7 @@ void spkr_update() {
 //        printf("freeBuffers2: %d  processed: %d\n", freeBuffers, processed);
         
         ALenum state;
-        alGetSourcei( spkr_src, AL_SOURCE_STATE, &state );
+        alGetSourcei( spkr_src[0], AL_SOURCE_STATE, &state );
 //        al_check_error();
 
         //////////  check if there is no sound generated for long time, and fade out speaker level to avoid pops and crackles
@@ -310,7 +367,7 @@ void spkr_update() {
                 freeBuffers--;
                 alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_samples[0]), spkr_sample_rate);
                 al_check_error();
-                alSourceQueueBuffers(spkr_src, 1, &spkr_buffers[freeBuffers]);
+                alSourceQueueBuffers(spkr_src[0], 1, &spkr_buffers[freeBuffers]);
                 al_check_error();
             }
         }
@@ -318,13 +375,13 @@ void spkr_update() {
             freeBuffers--;
             alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_samples[0]), spkr_sample_rate);
             al_check_error();
-            alSourceQueueBuffers(spkr_src, 1, &spkr_buffers[freeBuffers]);
+            alSourceQueueBuffers(spkr_src[0], 1, &spkr_buffers[freeBuffers]);
             al_check_error();
         }
         
         switch (state) {
             case AL_PAUSED:
-                alSourcePlay(spkr_src);
+                alSourcePlay(spkr_src[0]);
                 break;
 
             case AL_PLAYING:
@@ -332,8 +389,8 @@ void spkr_update() {
                 break;
                 
             default:
-                alSourcePlay(spkr_src);
-                alSourcePause(spkr_src);
+                alSourcePlay(spkr_src[0]);
+                alSourcePause(spkr_src[0]);
                 break;
         }
         
@@ -347,6 +404,128 @@ void spkr_update() {
         spkr_sample_idx = 0;
 
     }
+
+    
 }
 
+
+void spkr_playqueue_sfx( ALuint src, ALuint * buf, uint8_t * sfx, int len ) {
+    
+    alBufferData( *buf, AL_FORMAT_STEREO16, sfx, len, sfx_sample_rate );
+    al_check_error();
+    alSourceQueueBuffers( src, 1, buf );
+    al_check_error();
+    
+    ALenum state;
+    alGetSourcei( src, AL_SOURCE_STATE, &state );
+//        al_check_error();
+    
+    switch (state) {
+        case AL_PLAYING:
+            // already playing
+            break;
+            
+        default:
+            alSourcePlay( src );
+            break;
+    }
+}
+
+
+void spkr_play_sfx( ALuint src, ALuint * buf, uint8_t * sfx, int len ) {
+
+    ALenum state;
+    alGetSourcei( src, AL_SOURCE_STATE, &state );
+//        al_check_error();
+    
+    switch (state) {
+        case AL_PAUSED:
+            alSourcePlay( src );
+            break;
+            
+        case AL_PLAYING:
+            // already playing
+            break;
+            
+        default:
+            alBufferData( *buf, AL_FORMAT_STEREO16, sfx, len, sfx_sample_rate );
+            al_check_error();
+            alSourceQueueBuffers( src, 1, buf );
+            al_check_error();
+            
+            alSourcePlay( src );
+            break;
+    }
+}
+
+
+void spkr_stop_sfx( ALuint src, ALuint * buf ) {
+    
+    ALenum state;
+    alGetSourcei( src, AL_SOURCE_STATE, &state );
+//        al_check_error();
+    
+    switch (state) {
+        case AL_PAUSED:
+        case AL_PLAYING:
+            alSourceStop( src );
+            alSourceUnqueueBuffers( src, 1, buf );
+            break;
+            
+        default:
+            break;
+    }
+}
+
+
+void spkr_play_disk_motor() {
+    if ( diskAccelerator_count == 0 ) {
+        spkr_play_sfx( spkr_src[1], &spkr_disk_motor_buf, diskmotor_sfx, diskmotor_sfx_len );
+    }
+}
+
+void spkr_stop_disk_motor( int time ) {
+    if ( diskAccelerator_count == 0 ) {
+        spkr_play_disk_motor_time = time;
+    }
+}
+
+
+void spkr_play_disk_arm() {
+    if ( diskAccelerator_count == 0 ) {
+        if ( spkr_play_disk_ioerr_time == 0 ) {
+            spkr_play_sfx( spkr_src[2], &spkr_disk_arm_buf, diskarm_sfx, diskarm_sfx_len );
+            spkr_play_disk_arm_time = 2;
+//            spkr_play_disk_ioerr_time = 2;
+        }
+    }
+}
+
+
+void spkr_play_disk_ioerr() {
+//    spkr_stop_sfx( spkr_src[3], &spkr_disk_ioerr_buf );
+    if ( diskAccelerator_count == 0 ) {
+        spkr_playqueue_sfx( spkr_src[3], &spkr_disk_ioerr_buf, diskioerr_sfx, diskioerr_sfx_len );
+        spkr_play_disk_ioerr_time = 6;
+    }
+}
+
+
+void update_disk_sfx( unsigned * time, ALuint src, ALuint * buf ) {
+    if ( diskAccelerator_count == 0 ) {
+        if ( *time ) {
+            if ( --*time == 0 ) {
+                spkr_stop_sfx( src, buf );
+            }
+        }
+    }
+}
+
+void spkr_update_disk_sfx() {
+    if ( diskAccelerator_count == 0 ) {
+        update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[1], &spkr_disk_motor_buf );
+        update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[2], &spkr_disk_arm_buf );
+        update_disk_sfx( &spkr_play_disk_ioerr_time, spkr_src[3], &spkr_disk_ioerr_buf );
+    }
+}
 

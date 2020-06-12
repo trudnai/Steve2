@@ -598,6 +598,8 @@ void m6502_Run() {
 
     // play the entire sound buffer for this frame
     spkr_update();
+    // this will take care of turning off disk motor sound when time is up
+    spkr_update_disk_sfx();
 }
 
 void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, const uint16_t addr ) {

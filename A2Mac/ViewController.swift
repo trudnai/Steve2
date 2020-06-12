@@ -779,6 +779,8 @@ class ViewController: NSViewController  {
         
         hires.clearScreen();
         
+        spkr_load_sfx( Bundle.main.resourcePath! )
+        
         let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/Apple DOS 3.3 January 1983.woz" )
         chk_woz_load(err: woz_err)
 

@@ -720,10 +720,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 
         case (uint8_t)io_DISK_POWER_OFF + SLOT6:
             dbgPrintf2("io_DISK_POWER_OFF (S%u)\n", 6);
+            disk_motor_off();
             return 0;
 
         case (uint8_t)io_DISK_POWER_ON + SLOT6:
             dbgPrintf2("io_DISK_POWER_ON (S%u)\n", 6);
+            disk_motor_on();
             return 0;
 
         case (uint8_t)io_DISK_SELECT_1 + SLOT6:

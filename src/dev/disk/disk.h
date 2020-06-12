@@ -68,5 +68,8 @@ extern void disk_phase_on( uint8_t currentMagnet );
 extern void disk_phase_off( uint8_t currentMagnet );
 extern uint8_t disk_read(void);
 
+extern void disk_motor_on(void);
+extern void disk_motor_off(void);
+
 
 #endif /* disk_h */

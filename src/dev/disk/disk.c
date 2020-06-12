@@ -85,10 +85,15 @@ void disk_phase() {
         disk.phase.count += direction;
         if( disk.phase.count < minDiskPhaseNum ) {
             disk.phase.count = minDiskPhaseNum;
+            spkr_play_disk_ioerr();
         }
         else
         if( disk.phase.count > maxDiskPhaseNum ) {
             disk.phase.count = maxDiskPhaseNum;
+            spkr_play_disk_ioerr();
+        }
+        else {
+            spkr_play_disk_arm();
         }
         
         // TODO: Add track positioning sfx
@@ -102,6 +107,8 @@ void disk_phase() {
     else {
         // invalid magnet config
     }
+    
+
     
 //    printf("\n");
 }
@@ -118,6 +125,14 @@ void disk_phase_off( uint8_t currentMagnet ) {
     disk_phase();
 }
 
+void disk_motor_on() {
+    spkr_play_disk_motor();
+    spkr_stop_disk_motor( -1 );
+}
+
+void disk_motor_off() {
+    spkr_stop_disk_motor( 3 * fps ); // 3 second delay
+}
 
 uint8_t disk_read() {
     dbgPrintf("io_DISK_READ (S%u)\n", 6);

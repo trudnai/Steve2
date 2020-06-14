@@ -39,7 +39,7 @@ extern int16_t spkr_samples [];
 extern unsigned spkr_sample_idx;
 extern int spkr_level;
 extern int freeBuffers;
-extern unsigned spkr_extra_buf;
+extern int spkr_extra_buf;
 
 extern const unsigned spkr_play_timeout;
 extern unsigned spkr_play_time;

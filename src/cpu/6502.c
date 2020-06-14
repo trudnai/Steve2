@@ -21,7 +21,6 @@
 #include <string.h>
 #include <time.h>
 #include "6502.h"
-#include "woz.h"
 #include "speaker.h"
 
 
@@ -41,15 +40,16 @@ void ViewController_spk_dn_play(void);
 const unsigned long long int iterations = G;
 unsigned long long int inst_cnt = 0;
 
-//const unsigned int fps = 30;
-const unsigned long long default_MHz_6502 = 1.023 * M; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
-const unsigned long long iigs_MHz_6502 = 2.8 * M;
-const unsigned long long iicplus_MHz_6502 = 4 * M;
-const unsigned long long startup_MHz_6502 = 32 * M;
-unsigned long long MHz_6502 = default_MHz_6502;
-unsigned long long clk_6502_per_frm =  default_MHz_6502 / fps;
-unsigned long long clk_6502_per_frm_set = default_MHz_6502 / fps;
-unsigned long long clk_6502_per_frm_max_sound = 4 * default_MHz_6502 / fps;
+unsigned int fps = DEFAULT_FPS;
+
+const double default_MHz_6502 = 1.023; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
+const double iigs_MHz_6502 = 2.8;
+const double iicplus_MHz_6502 = 4;
+const double startup_MHz_6502 = 32;
+double MHz_6502 = default_MHz_6502;
+unsigned long long clk_6502_per_frm =  FRAME_INIT( default_MHz_6502 );
+unsigned long long clk_6502_per_frm_set = FRAME_INIT( default_MHz_6502 );
+unsigned long long clk_6502_per_frm_max_sound = 4 * FRAME_INIT( default_MHz_6502 );
 unsigned long long clk_6502_per_frm_max = 0;
 
 
@@ -673,11 +673,9 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 
 void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     inst_cnt = 0;
-    mhz = (double)MHz_6502 / M;
     
     spkr_init();
     
-    unsigned long long saved_frm_set = clk_6502_per_frm_set;
     clk_6502_per_frm     =
     clk_6502_per_frm_max =
     clk_6502_per_frm_set = 0;
@@ -842,7 +840,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 
 
     // set the default speed
-    clk_6502_per_frm_set = clk_6502_per_frm = default_MHz_6502 / fps;
+    clk_6502_per_frm_set = clk_6502_per_frm = FRAME(default_MHz_6502);
     
     
     // Initialize Paddle / Game Controller / Joystick / Mouse Buttons

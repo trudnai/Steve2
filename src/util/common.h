@@ -42,6 +42,12 @@
 #define TB (GB * KB)
 
 
+// calculates number of cycles in one frame
+#define MHZ(mhz) ( (mhz) * M )
+#define FRAME(mhz) ( MHZ(mhz) / fps )
+#define FRAME_INIT(mhz) ( MHZ(mhz) / DEFAULT_FPS )
+
+
 typedef
 union {
     uint8_t bits;

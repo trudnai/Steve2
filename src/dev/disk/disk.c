@@ -20,7 +20,7 @@ disk_t disk = {
 
 const int diskAccelerator_frames  = 2;
 int diskAccelerator_count = 0;
-int diskAccelerator_speed = 25 * M / fps; // if less than actual CPU speed means no acceleration
+int diskAccelerator_speed = 25; // if less than actual CPU speed means no acceleration
 int diskAccelerator_enabled = 0;
 int disk_sfx_enabled = 1;
 
@@ -69,9 +69,9 @@ const uint8_t log2phy_cpm[16] = {
 
 
 void disk_accelerator_speedup() {
-    if ( ( diskAccelerator_enabled ) && ( diskAccelerator_speed >= clk_6502_per_frm ) ) {
+    if ( ( diskAccelerator_enabled ) && ( FRAME(diskAccelerator_speed) >= clk_6502_per_frm ) ) {
         clk_6502_per_frm =
-        clk_6502_per_frm_max = diskAccelerator_speed;  // clk_6502_per_frm_diskAccelerator;
+        clk_6502_per_frm_max = FRAME(diskAccelerator_speed);  // clk_6502_per_frm_diskAccelerator;
         diskAccelerator_count = diskAccelerator_frames;
     }
 }

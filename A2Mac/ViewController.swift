@@ -833,8 +833,8 @@ class ViewController: NSViewController  {
 
     
     func setCPUClockSpeed( freq : Double ) {
-        MHz_6502 = UInt64(freq * M)
-        clk_6502_per_frm = MHz_6502 / UInt64(fps)
+        MHz_6502 = freq
+        clk_6502_per_frm = UInt64( MHz_6502 * M / Double(fps) )
         clk_6502_per_frm_set = clk_6502_per_frm
     }
 
@@ -848,19 +848,23 @@ class ViewController: NSViewController  {
             
             // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
             
-            spkr_extra_buf = 780 / fps
+//            spkr_extra_buf = Int32( 780 / fps )
+            spkr_extra_buf = 0
             
             switch freq {
             case 2.0:
-                spkr_extra_buf = UInt32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
+//                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
+                spkr_extra_buf = 50
                 break
                 
             case 4.0:
-                spkr_extra_buf = UInt32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
+//                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
+                spkr_extra_buf = 8
                 break
                 
             default:
-                spkr_extra_buf = 780 / fps // normally it should come up as 26, but this way it is calculated with FPS
+//                spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
+                spkr_extra_buf = 0
                 break
             }
                         
@@ -874,7 +878,7 @@ class ViewController: NSViewController  {
     
     @IBAction func SoundGapChanged(_ sender: NSStepper) {
         SoundGap.integerValue = sender.integerValue
-        spkr_extra_buf = UInt32( sender.integerValue )
+        spkr_extra_buf = Int32( sender.integerValue )
     }
     
     @IBAction func Keyboard2JoystickOnOff(_ sender: NSButton) {

@@ -915,6 +915,30 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             textPageSelect();
             break;
             
+        case (uint8_t)io_VID_Text_OFF:
+            videoMode.text = 0;
+            break;
+            
+        case (uint8_t)io_VID_Text_ON:
+            videoMode.text = 1;
+            break;
+            
+        case (uint8_t)io_VID_Mixed_OFF:
+            videoMode.mixed = 0;
+            break;
+            
+        case (uint8_t)io_VID_Mixed_ON:
+            videoMode.mixed = 1;
+            break;
+            
+        case (uint8_t)io_VID_Hires_OFF:
+            videoMode.hires = 0;
+            break;
+            
+        case (uint8_t)io_VID_Hires_ON:
+            videoMode.hires = 1;
+            break;
+            
         case (uint8_t)io_MEM_RDRAM_NOWR_2:
         case (uint8_t)io_MEM_RDROM_WRAM_2:
         case (uint8_t)io_MEM_RDROM_NOWR_2:

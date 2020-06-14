@@ -74,17 +74,17 @@ ALuint spkr_disk_arm_buf = 0;
 ALuint spkr_disk_ioerr_buf = 0;
 
 
-const int spkr_fps = fps;
+const int spkr_fps = 30;
 const int spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
 const unsigned sfx_sample_rate =  22050; // original sample rate
 //const unsigned sfx_sample_rate =  26000; // bit higher pitch
-unsigned spkr_extra_buf = 800 / spkr_fps;
+int spkr_extra_buf = 0; // 800 / spkr_fps;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * 2 / spkr_fps;
 int16_t spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT * 2]; // stereo
 unsigned spkr_sample_idx = 0;
 
-const unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps
+const unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps, normally 8 for 30 fps
 unsigned spkr_play_time = 0;
 unsigned spkr_play_disk_motor_time = 0;
 unsigned spkr_play_disk_arm_time = 0;
@@ -273,7 +273,7 @@ void spkr_toggle() {
         
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
-        spkr_sample_idx = (clkfrm / (default_MHz_6502 / spkr_sample_rate)) * 2;
+        spkr_sample_idx = (clkfrm / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * 2;
         
         if ( spkr_state ) {
             // down edge
@@ -498,20 +498,20 @@ void spkr_stop_sfx( ALuint src ) {
 
 
 void spkr_play_disk_motor() {
-    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_play_sfx( spkr_src[SPKR_SRC_DISK_MOTOR_SFX], diskmotor_sfx, diskmotor_sfx_len );
     }
 }
 
 void spkr_stop_disk_motor( int time ) {
-    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_play_disk_motor_time = time;
     }
 }
 
 
 void spkr_play_disk_arm() {
-    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         if ( spkr_play_disk_ioerr_time == 0 ) {
             spkr_play_sfx( spkr_src[SPKR_SRC_DISK_ARM_SFX], diskarm_sfx, diskarm_sfx_len );
             spkr_play_disk_arm_time = 2;
@@ -521,7 +521,7 @@ void spkr_play_disk_arm() {
 
 
 void spkr_play_disk_ioerr() {
-    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= iicplus_MHz_6502 / fps ) ) {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_playqueue_sfx( spkr_src[SPKR_SRC_DISK_IOERR_SFX], diskioerr_sfx, diskioerr_sfx_len);
         spkr_play_disk_ioerr_time = 4;
     }
@@ -538,7 +538,7 @@ void update_disk_sfx( unsigned * time, ALuint src ) {
 
 void spkr_update_disk_sfx() {
     // is user speeds up the machine, disk sfx needs to be stopped
-    if ( ( ! disk_sfx_enabled ) || ( clk_6502_per_frm > iicplus_MHz_6502 / fps ) ) {
+    if ( ( ! disk_sfx_enabled ) || ( clk_6502_per_frm > FRAME(iicplus_MHz_6502) ) ) {
         if ( spkr_play_disk_motor_time ) {
             spkr_play_disk_motor_time = 1; // rest will be taken care below
         }

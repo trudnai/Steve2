@@ -13,6 +13,22 @@
 #include "common.h"
 #include "woz.h"
 
+typedef enum cpuMode_e {
+    cpuMode_normal = 0,
+    cpuMode_eco,
+    cpuMode_game,
+} cpuMode_s;
+
+typedef enum cpuState_e {
+    cpuState_unknown = 0,
+    cpuState_inited,
+    cpuState_running,
+    cpuState_halting,
+    cpuState_halted,
+} cpuState_s;
+
+extern volatile cpuMode_s cpuMode;
+extern volatile cpuState_s cpuState;
 
 extern const double default_MHz_6502;
 extern const double iigs_MHz_6502;

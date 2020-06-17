@@ -50,6 +50,9 @@ uint8_t *       WRD0MEM = Apple2_Dummy_RAM;     // for writing $D000 - $DFFF
 uint8_t *       WRHIMEM = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
 
 
+static uint8_t writeState = 0;                  // 1 if $C08D was written
+
+
 MEMcfg_t MEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 MEMcfg_t newMEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
@@ -545,25 +548,44 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
 }
 
 
+static unsigned int lastIO = 0;
+
 INLINE uint8_t ioRead( uint16_t addr ) {
 //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
 //    printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
+    
+    unsigned int IOframe = clkfrm - lastIO;
+    lastIO = clkfrm;
 
-    // TODO: This is for checking only, should be either removed or the entire ioRead should based on binary search, whatever is faster
+    // TODO: This is for speed demo only, should be either removed or the entire ioRead should based on binary search, whatever is faster
     if ( addr == io_KBD ) {
 //        clk_6502_per_frm_max = clk_6502_per_frm_max > 32768 ? clk_6502_per_frm_max - 32768 : 0; // ECO Mode!
+        
+        if ( cpuMode == cpuMode_eco ) {
+            // check if this is a busy keyboard poll (aka waiting for user input)
+            if ( IOframe < 16 ) {
+                clk_6502_per_frm_max = 6502; // Absolute low mode
+                cpuState = cpuState_halting;
+            }
+        }
+        
         return Apple2_64K_RAM[io_KBD];
     }
     
     switch ( (uint8_t)addr ) {
         case (uint8_t)io_KBD:
-//            if ( RAM[io_KBD] > 0x7F ) printf("io_KBD:%04X\n", addr);
+            
             return Apple2_64K_RAM[io_KBD];
 
         case (uint8_t)io_KBDSTRB:
-            // TODO: This is very slow!
-//            printf("io_KBDSTRB\n");
             Apple2_64K_RAM[io_KBD] &= ~(1 << 7);
+
+            if ( cpuMode == cpuMode_eco ) {
+                // check if this is a busy keyboard poll (aka waiting for user input)
+                clk_6502_per_frm_max = clk_6502_per_frm; // Absolute low mode
+                cpuState = cpuState_running;
+            }
+            
             return Apple2_64K_RAM[io_KBDSTRB];
 
         case (uint8_t)io_SPKR:
@@ -737,12 +759,20 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return 0;
 
         case (uint8_t)io_DISK_READ + SLOT6:
-            return disk_read();
-          
+            if ( writeState ) {
+                writeState = 0;
+                woz_write( Apple2_64K_RAM[io_DISK_WRITE + SLOT6] );
+                return Apple2_64K_RAM[io_DISK_WRITE + SLOT6];
+            }
+            else {
+                return disk_read();
+            }
+
             
         case (uint8_t)io_DISK_WRITE + SLOT6:
             dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
-            Apple2_64K_RAM[io_DISK_CLEAR + SLOT6] |= 1 << 7; // mark disk as write protected
+//            Apple2_64K_RAM[io_DISK_CLEAR + SLOT6] |= 1 << 7; // mark disk as write protected
+            Apple2_64K_RAM[io_DISK_CLEAR + SLOT6] &= ~(1 << 7); // mark disk as write enabled
             return Apple2_64K_RAM[io_DISK_WRITE + SLOT6];
 
         case (uint8_t)io_DISK_CLEAR + SLOT6:
@@ -960,6 +990,60 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
         case (uint8_t)io_MEM_RDRAM_WRAM_1_:
             io_RAM_EXP(addr);
             break;
+            
+            // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
+        case (uint8_t)io_DISK_PHASE0_OFF + SLOT6:
+        case (uint8_t)io_DISK_PHASE1_OFF + SLOT6:
+        case (uint8_t)io_DISK_PHASE2_OFF + SLOT6:
+        case (uint8_t)io_DISK_PHASE3_OFF + SLOT6:
+            disk_phase_off( (addr - io_DISK_PHASE0_OFF - SLOT6) / 2 );
+            break;
+            
+        case (uint8_t)io_DISK_PHASE0_ON + SLOT6:
+        case (uint8_t)io_DISK_PHASE1_ON + SLOT6:
+        case (uint8_t)io_DISK_PHASE2_ON + SLOT6:
+        case (uint8_t)io_DISK_PHASE3_ON + SLOT6:
+            disk_phase_on( (addr - io_DISK_PHASE0_ON - SLOT6) / 2 );
+            break;
+
+        case (uint8_t)io_DISK_POWER_OFF + SLOT6:
+            dbgPrintf2("io_DISK_POWER_OFF (S%u)\n", 6);
+            disk_motor_off();
+            break;
+
+        case (uint8_t)io_DISK_POWER_ON + SLOT6:
+            dbgPrintf2("io_DISK_POWER_ON (S%u)\n", 6);
+            disk_motor_on();
+            break;
+
+        case (uint8_t)io_DISK_SELECT_1 + SLOT6:
+            dbgPrintf2("io_DISK_SELECT_1 (S%u)\n", 6);
+            break;
+
+        case (uint8_t)io_DISK_SELECT_2 + SLOT6:
+            dbgPrintf2("io_DISK_SELECT_2 (S%u)\n", 6);
+            break;
+
+        case (uint8_t)io_DISK_READ + SLOT6:
+            Apple2_64K_RAM[io_DISK_READ + SLOT6] = val;
+            woz_write( Apple2_64K_RAM[io_DISK_WRITE + SLOT6] );
+            writeState = 0;
+            break;
+
+        case (uint8_t)io_DISK_WRITE + SLOT6:
+            dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
+            Apple2_64K_RAM[io_DISK_WRITE + SLOT6] = val;
+            writeState = 1;
+            break;
+
+        case (uint8_t)io_DISK_CLEAR + SLOT6:
+            dbgPrintf2("io_DISK_CLEAR (S%u)\n", 6);
+            break;
+
+        case (uint8_t)io_DISK_SHIFT + SLOT6:
+            dbgPrintf2("io_DISK_SHIFT (S%u)\n", 6);
+            break;
+            
             
         default:
             break;

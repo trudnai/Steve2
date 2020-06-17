@@ -28,6 +28,10 @@ void ViewController_spk_up_play(void);
 void ViewController_spk_dn_play(void);
 
 
+volatile cpuMode_s cpuMode = cpuMode_normal;
+volatile cpuState_s cpuState = cpuState_unknown;
+
+
 #include "../util/common.h"
 
 
@@ -333,7 +337,7 @@ INLINE int m6502_Step() {
         case 0x69: ADC( imm() ); return 2;                             // ADC imm
         case 0x6A: RORA(); return 2;                                   // ROR A
         case 0x6B: ARC( imm() ); return 2;                             // ARR/ARC* imm 2 (undocumented)
-        case 0x6C: JMP( ind_addr() ); return 5;                        // JMP ind
+        case 0x6C: JMP( ind_addr() ); return    5;                        // JMP ind
         case 0x6D: ADC( src_abs() ); return 4;                         // ADC abs
         case 0x6E: ROR( addr_abs() ); return 6;                        // ROR abs
         case 0x6F: RRA( abs_addr() ); return 6;                        // RRA* abs 6 (undocumented)
@@ -367,7 +371,7 @@ INLINE int m6502_Step() {
         case 0x8B: XAA( imm() ); return 2;                             // XAA* imm 2 (undocumented, highly unstable!)
         case 0x8C: STY( addr_abs() ); return 4;                        // STY abs
         case 0x8D: STA( addr_abs() ); return 4;                        // STA abs
-        case 0x8E: STX( addr_abs() ); return 4;                        // STX abs
+        case 0x8E: STX( addr_abs() ); return 4;                            // STX abs
         case 0x8F: SAX( addr_abs() ); return 4;                        // SAX* abs 4 (undocumented)
         case 0x90: BCC( rel_addr() ); return 3;                        // BCC rel
         case 0x91: STA( addr_ind_Y() ); return 6;                      // STA ind,Y

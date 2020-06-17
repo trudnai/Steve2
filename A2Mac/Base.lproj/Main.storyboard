@@ -1182,7 +1182,7 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" sceneMemberID="viewController">
-                    <window key="window" title="Forever ][    ‒    The Apple II Emulator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Steve ][    ‒    The Apple II Emulator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1280" height="840"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
@@ -1260,7 +1260,7 @@
                             <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" userLabel="HiRes" customClass="HiRes" customModule="A2Mac" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                             </customView>
-                            <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGn-a4-c1t" userLabel="ScanLines">
+                            <imageView hidden="YES" canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGn-a4-c1t" userLabel="ScanLines">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="scanlines" id="jJ6-qt-oZe"/>
                             </imageView>
@@ -1303,6 +1303,14 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w41-S5-cTL" userLabel="Prompt">
+                                        <rect key="frame" x="16" y="554" width="29" height="14"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="]" id="CYs-wL-6Pf">
+                                            <font key="font" size="14" name="PrintChar21"/>
+                                            <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-E1-CYC">
                                         <rect key="frame" x="820" y="16" width="286" height="14"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="© by Tamas Rudnai, 2020" id="tm6-Cq-r7H">
@@ -1312,39 +1320,25 @@
                                         </textFieldCell>
                                     </textField>
                                     <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1E-lz-4q8" userLabel="Splash Logo">
-                                        <rect key="frame" x="0.0" y="0.0" width="1120" height="768"/>
-                                        <contentFilters>
-                                            <ciFilter name="CIOpTile">
-                                                <configuration>
-                                                    <real key="inputAngle" value="0.20000000000000001"/>
-                                                    <ciVector key="inputCenter">
-                                                        <real value="560"/>
-                                                        <real value="410"/>
-                                                    </ciVector>
-                                                    <null key="inputImage"/>
-                                                    <real key="inputScale" value="1.6000000000000001"/>
-                                                    <real key="inputWidth" value="40"/>
-                                                </configuration>
-                                            </ciFilter>
-                                        </contentFilters>
+                                        <rect key="frame" x="-240" y="-256" width="1600" height="1280"/>
                                         <imageCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="apple-rainbow" id="Zax-kI-rxd"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="M1E-lz-4q8" secondAttribute="trailing" id="2js-f4-3i4"/>
-                                    <constraint firstAttribute="bottom" secondItem="M1E-lz-4q8" secondAttribute="bottom" id="FvX-rE-H55"/>
+                                    <constraint firstItem="w41-S5-cTL" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="AR5-1H-lGS"/>
                                     <constraint firstItem="uMO-wh-lu4" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="Hcq-uo-o7q"/>
                                     <constraint firstItem="WWG-zg-Mnb" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="162" id="Pal-mO-Y3V"/>
                                     <constraint firstItem="19A-Bc-mjX" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="QrC-1X-nvG"/>
                                     <constraint firstItem="19A-Bc-mjX" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="90" id="SZZ-Bf-eaW"/>
                                     <constraint firstAttribute="bottom" secondItem="bUo-E1-CYC" secondAttribute="bottom" constant="16" id="Yiw-QR-lgh"/>
-                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" id="ZJX-b5-9Zx"/>
                                     <constraint firstItem="uMO-wh-lu4" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="140" id="hdm-uq-Pa8"/>
+                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="centerY" secondItem="D0w-YC-YlJ" secondAttribute="centerY" id="mjR-uf-mpN"/>
+                                    <constraint firstItem="w41-S5-cTL" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="200" id="pHW-JK-Jx6"/>
                                     <constraint firstAttribute="trailing" secondItem="bUo-E1-CYC" secondAttribute="trailing" constant="16" id="phJ-qW-Sro"/>
                                     <constraint firstItem="9jr-eX-yOC" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="rGe-kW-tUQ"/>
                                     <constraint firstItem="9jr-eX-yOC" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="16" id="sFz-v2-tt5"/>
+                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="centerX" secondItem="D0w-YC-YlJ" secondAttribute="centerX" id="tc8-kW-eON"/>
                                     <constraint firstItem="WWG-zg-Mnb" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="vDf-7B-UwH"/>
-                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" id="wqQ-J4-rRz"/>
                                 </constraints>
                             </customView>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-pv-iEw" userLabel="Side Panel">
@@ -1394,13 +1388,26 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
-                                        <rect key="frame" x="8" y="8" width="104" height="323"/>
+                                        <rect key="frame" x="8" y="8" width="104" height="469"/>
                                         <subviews>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7yw-J0-Fmj">
-                                                <rect key="frame" x="0.0" y="320" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="466" width="96" height="5"/>
+                                            </box>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="isd-yh-gCV">
+                                                <rect key="frame" x="-2" y="444" width="98" height="18"/>
+                                                <buttonCell key="cell" type="check" title="CRT Monitor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="UQ8-Nn-Kt7">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="CRTMonitorOnOff:" target="XfG-lQ-9wD" id="2V4-GI-erE"/>
+                                                </connections>
+                                            </button>
+                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="t35-xh-L18">
+                                                <rect key="frame" x="0.0" y="435" width="96" height="5"/>
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e2E-di-h3i">
-                                                <rect key="frame" x="-2" y="298" width="83" height="18"/>
+                                                <rect key="frame" x="-2" y="413" width="83" height="18"/>
                                                 <buttonCell key="cell" type="check" title="KeybStick" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="UW9-Bt-pMv">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1410,7 +1417,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wa3-TC-XUI">
-                                                <rect key="frame" x="-2" y="276" width="79" height="18"/>
+                                                <rect key="frame" x="-2" y="391" width="79" height="18"/>
                                                 <buttonCell key="cell" type="check" title="MouStick" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BGz-fX-MyG">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1420,7 +1427,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xrz-jA-1Fh">
-                                                <rect key="frame" x="-2" y="254" width="63" height="18"/>
+                                                <rect key="frame" x="-2" y="369" width="63" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Mouse" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1RG-zY-mD2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1430,10 +1437,10 @@
                                                 </connections>
                                             </button>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xk-n9g">
-                                                <rect key="frame" x="0.0" y="245" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="360" width="96" height="5"/>
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-cj-gLu">
-                                                <rect key="frame" x="-2" y="223" width="87" height="18"/>
+                                                <rect key="frame" x="-2" y="338" width="87" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Quick Disk" bezelStyle="regularSquare" imagePosition="left" inset="2" id="6QV-uF-Gh7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1443,7 +1450,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9nQ-Yf-2xf">
-                                                <rect key="frame" x="-2" y="201" width="91" height="18"/>
+                                                <rect key="frame" x="-2" y="316" width="91" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Disk Sound" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="AJi-1B-qeg">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1453,10 +1460,10 @@
                                                 </connections>
                                             </button>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
-                                                <rect key="frame" x="0.0" y="192" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="307" width="96" height="5"/>
                                             </box>
                                             <splitView hidden="YES" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
-                                                <rect key="frame" x="0.0" y="300" width="104" height="23"/>
+                                                <rect key="frame" x="0.0" y="446" width="104" height="23"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>
@@ -1485,18 +1492,21 @@
                                                 </holdingPriorities>
                                             </splitView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FZk-VW-alq">
-                                                <rect key="frame" x="-2" y="169" width="41" height="17"/>
+                                                <rect key="frame" x="-2" y="284" width="75" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="ai1-6C-5tW"/>
                                                 </constraints>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" alignment="center" title="Label" id="FBZ-dh-6Fs">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" alignment="center" title="0.000 MHz" id="FBZ-dh-6Fs">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
+                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Ml4-a9-XEQ">
+                                                <rect key="frame" x="0.0" y="273" width="96" height="5"/>
+                                            </box>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fb7-Jc-jmt">
-                                                <rect key="frame" x="-2" y="144" width="74" height="17"/>
+                                                <rect key="frame" x="-2" y="250" width="74" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="xCE-LE-hVy"/>
                                                 </constraints>
@@ -1507,7 +1517,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Pw-e8-92m">
-                                                <rect key="frame" x="-1" y="119" width="55" height="18"/>
+                                                <rect key="frame" x="-1" y="225" width="55" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="1.023" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" state="on" inset="2" id="AgQ-Np-TYQ">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1517,7 +1527,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hU1-g7-CCX">
-                                                <rect key="frame" x="-1" y="95" width="30" height="18"/>
+                                                <rect key="frame" x="-1" y="201" width="30" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="2" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="nfH-ww-Ofp">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1527,7 +1537,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hfg-DD-meM">
-                                                <rect key="frame" x="-1" y="71" width="31" height="18"/>
+                                                <rect key="frame" x="-1" y="177" width="31" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="4" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="dqL-yg-qaX">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1537,7 +1547,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OsQ-RW-v8K">
-                                                <rect key="frame" x="-1" y="47" width="37" height="18"/>
+                                                <rect key="frame" x="-1" y="153" width="37" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="10" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="3Ve-WW-CIS">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1547,7 +1557,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vGb-dz-KHi">
-                                                <rect key="frame" x="-1" y="23" width="45" height="18"/>
+                                                <rect key="frame" x="-1" y="129" width="45" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="100" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="BUX-kX-vwG">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1557,13 +1567,57 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="umb-DW-vGc">
-                                                <rect key="frame" x="-1" y="-1" width="51" height="18"/>
+                                                <rect key="frame" x="-1" y="105" width="51" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="MAX" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="8VU-4B-7Pe">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="speedSelected:" target="XfG-lQ-9wD" id="Viq-Dy-2or"/>
+                                                </connections>
+                                            </button>
+                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="1b6-qR-DoP">
+                                                <rect key="frame" x="0.0" y="95" width="96" height="5"/>
+                                            </box>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Www-DG-lcV">
+                                                <rect key="frame" x="-2" y="72" width="69" height="17"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="17" id="V60-fY-1kt"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" alignment="left" title="CPU Mode" id="RSV-DX-6Cy">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WeH-Xd-mtE">
+                                                <rect key="frame" x="-1" y="47" width="66" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="Normal" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" state="on" inset="2" id="0UN-dl-3nf">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="setCPUMode:" target="XfG-lQ-9wD" id="Tpg-rW-JJO"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="25n-Et-ouy">
+                                                <rect key="frame" x="-1" y="23" width="45" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="Eco" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="t39-st-goM">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="setCPUMode:" target="XfG-lQ-9wD" id="5GQ-ik-x5E"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pQx-FY-gmj">
+                                                <rect key="frame" x="-1" y="-1" width="58" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="Game" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="Dgy-OG-1MD">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="setCPUMode:" target="XfG-lQ-9wD" id="iTd-yU-Vd4"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1589,8 +1643,24 @@
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
@@ -1662,6 +1732,7 @@
                         <outlet property="displayField" destination="SEL-hl-0c0" id="4Pc-hG-qQf"/>
                         <outlet property="hires" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>
                         <outlet property="lores" destination="Gqh-qw-fjy" id="vOE-5m-Jfi"/>
+                        <outlet property="scanLines" destination="dGn-a4-c1t" id="3Xy-Ku-95P"/>
                         <outlet property="speedometer" destination="FBZ-dh-6Fs" id="L0v-RY-xwB"/>
                         <outlet property="splashScreen" destination="D0w-YC-YlJ" id="WJB-BH-5EP"/>
                     </connections>
@@ -1672,7 +1743,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="apple-rainbow" width="800" height="800"/>
+        <image name="apple-rainbow" width="1600" height="1280"/>
         <image name="dotmatrix_effect" width="268.79998779296875" height="184.32000732421875"/>
         <image name="scanlines" width="268.79998779296875" height="184.32000732421875"/>
     </resources>

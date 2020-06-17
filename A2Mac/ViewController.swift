@@ -52,7 +52,9 @@ class ViewController: NSViewController  {
     @IBOutlet weak var lores: LoRes!
     @IBOutlet weak var hires: HiRes!
     @IBOutlet weak var splashScreen: NSView!
+    @IBOutlet weak var scanLines: NSImageView!
     
+    var CRTMonitor = false
     var Keyboard2Joystick = true
     var Mouse2Joystick = false
     var MouseInterface = true
@@ -145,7 +147,7 @@ class ViewController: NSViewController  {
     @IBAction func Power(_ sender: Any) {
         
         upd.suspend()
-        halted = true
+        cpuState = cpuState_inited;
 
         //------------------------------------------------------------
         // Animated Splash Screen fade out and (Text) Monitor fade in
@@ -170,7 +172,7 @@ class ViewController: NSViewController  {
             
             m6502_ColdReset( Bundle.main.resourcePath, ViewController.romFileName )
             
-            self.halted = false
+            cpuState = cpuState_running;
             self.upd.resume()
         }
         //------------------------------------------------------------
@@ -284,6 +286,11 @@ class ViewController: NSViewController  {
     }
     
     override func keyDown(with event: NSEvent) {
+        
+        if ( cpuMode == cpuMode_eco ) {
+            cpuState = cpuState_running;
+        }
+        
 //        print("keyDown")
         
 //        for i in 0...65536 {
@@ -524,8 +531,6 @@ class ViewController: NSViewController  {
     var clkCounter : Double = 0
     let fpsHalf = fps / 2
     
-    var halted = true;
-    
     var mouseLocation = NSPoint.zero
     
     var shadowTxt : String = ""
@@ -726,35 +731,106 @@ class ViewController: NSViewController  {
     }
 
     
-    func Update() {
-        clkCounter += Double(clkfrm)
-        // we start a new frame from here, so CPU is running even while rendering
-        clkfrm = 0
+    func Input() {
+        // Mouse 2 JoyStick (Game Controller / Paddle)
+        mouseLocation = view.window!.mouseLocationOutsideOfEventStream
+        
+        if ( Mouse2Joystick ) {
+            pdl_prevarr[0] = pdl_valarr[0]
+            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
+            
+            pdl_prevarr[1] = pdl_valarr[1]
+            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
+        }
+        
+        if ( MouseInterface ) {
+            pdl_prevarr[2] = pdl_valarr[2]
+            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
+            
+            pdl_prevarr[3] = pdl_valarr[3]
+            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
+        }
+    }
 
-        frameCounter += 1
-        
-        if ( frameCounter % fps == 0 ) {
-            let currentTime = CACurrentMediaTime() as Double
-            let elpasedTime = currentTime - lastFrameTime
-            lastFrameTime = currentTime
-            mhz = Double( clkCounter ) / (elpasedTime * M);
-            clkCounter = 0
+    
+    func Update() {
+        switch cpuState {
+            case cpuState_running:
+                clkCounter += Double(clkfrm)
+                // we start a new frame from here, so CPU is running even while rendering
+                clkfrm = 0
+                
+                frameCounter += 1
+                
+                if ( frameCounter % fps == 0 ) {
+                    let currentTime = CACurrentMediaTime() as Double
+                    let elpasedTime = currentTime - lastFrameTime
+                    lastFrameTime = currentTime
+                    mhz = Double( clkCounter ) / (elpasedTime * M);
+                    clkCounter = 0
+                }
+                
+                #if SPEEDTEST
+                #else
+                
+                // poll input devices like mouse and joystick
+                Input()
+                
+                // run some code
+                m6502_Run()
+                
+                // video rendering
+//                if ( frameCounter % 5 == 0 ) {
+                    Render()
+//                }
+                
+                #endif
+                
+                break
+            
+            case cpuState_halting:
+                cpuState = cpuState_halted
+                
+//                clkCounter += Double(clkfrm)
+//                // we start a new frame from here, so CPU is running even while rendering
+//                clkfrm = 0
+//
+//                frameCounter += 1
+//
+//                if ( frameCounter % fps == 0 ) {
+//                    let currentTime = CACurrentMediaTime() as Double
+//                    let elpasedTime = currentTime - lastFrameTime
+//                    lastFrameTime = currentTime
+//                    mhz = Double( clkCounter ) / (elpasedTime * M);
+//                    clkCounter = 0
+//                }
+//
+//                #if SPEEDTEST
+//                #else
+//
+//                // poll input devices like mouse and joystick
+//                Input()
+//
+//                // run some code
+//                m6502_Run()
+//
+                // video rendering
+                //                if ( frameCounter % 5 == 0 ) {
+                Render()
+                //                }
+                
+//                #endif
+                
+                break
+                
+            default:
+                break
         }
-        
-        
-//        if ( frameCounter % 5 == 0 ) {
-            Render()
-//        }
-        
-        
-        #if SPEEDTEST
-        #else
-        if ( !halted ) {
-            m6502_Run()
-        }
-        #endif
-        
-        
+
     }
 
     
@@ -873,12 +949,34 @@ class ViewController: NSViewController  {
         
     }
     
+    @IBAction func setCPUMode(_ sender: NSButton) {
+        switch ( sender.title ) {
+            case "Eco":
+                cpuMode = cpuMode_eco
+                break
+
+            case "Game":
+                cpuMode = cpuMode_game
+                cpuState = cpuState_running
+                break
+                
+            default:
+                cpuMode = cpuMode_normal
+                cpuState = cpuState_running
+                break
+        }
+    }
     
     @IBOutlet weak var SoundGap: NSTextFieldCell!
     
     @IBAction func SoundGapChanged(_ sender: NSStepper) {
         SoundGap.integerValue = sender.integerValue
         spkr_extra_buf = Int32( sender.integerValue )
+    }
+    
+    @IBAction func CRTMonitorOnOff(_ sender: NSButton) {
+        CRTMonitor = sender.state == .on
+        scanLines.isHidden = !CRTMonitor
     }
     
     @IBAction func Keyboard2JoystickOnOff(_ sender: NSButton) {

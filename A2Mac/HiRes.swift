@@ -709,8 +709,13 @@ class HiRes: NSView {
 
         // refresh the entire screen
         let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
-        currentContext?.interpolationQuality = .none
-//        currentContext?.interpolationQuality = .high // TODO: Make a switch that lets you turn on and off "old monitor effects"
+        
+        if ( ViewController.current?.CRTMonitor ?? false ) {
+            currentContext?.interpolationQuality = .high // TODO: Make a switch that lets you turn on and off "old monitor effects"
+        }
+        else {
+            currentContext?.interpolationQuality = .none
+        }
         currentContext?.draw(image, in: boundingBox)
     }
 

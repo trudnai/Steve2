@@ -286,11 +286,11 @@ INLINE int m6502_Step() {
         case 0x36: ROL( addr_zp_X() ); return 6;                       // ROL zpg,X
         case 0x37: RLA( addr_zp_X() ); return 6;                       // RLA* zpx 6 (undocumented)
         case 0x38: SEC(); return 2;                                    // SEC
-        case 0x39: AND( src_abs_Y() ); return 4;                       // AND abs,Y
+        case 0x39: AND( src_abs_Y() ); return 4+1;                     // AND abs,Y
         case 0x3A: NOP(); return 2;                                    // NOP* 2 (undocumented)
         case 0x3B: RLA( addr_abs_Y() ); return 7;                      // RLA* aby 7 (undocumented)
         case 0x3C: NOP(); src_abs_X(); return 4;                       // NOP* abx 4 (undocumented)
-        case 0x3D: AND( src_abs_X() ); return 4;                       // AND abs,X
+        case 0x3D: AND( src_abs_X() ); return 4+1;                     // AND abs,X
         case 0x3E: ROL( addr_abs_X() ); return 7;                      // ROL abs,X
         case 0x3F: RLA( addr_abs_X() ); return 7;                      // RLA* abx 7 (undocumented)
         case 0x40: RTI(); return 6;                                    // RTI
@@ -318,11 +318,11 @@ INLINE int m6502_Step() {
         case 0x56: LSR( addr_zp_X() ); return 6;                       // LSR zpg,X
         case 0x57: SRE( addr_ind_X() ); return 6;                      // SRE* zpx 6 (undocumented)
         case 0x58: CLI(); return 2;                                    // CLI
-        case 0x59: EOR( src_abs_Y() ); return 4;                       // EOR abs,Y
+        case 0x59: EOR( src_abs_Y() ); return 4+1;                     // EOR abs,Y
         case 0x5A: NOP(); return 2;                                    // NOP* 2 (undocumented)
         case 0x5B: SRE( addr_abs_Y() ); return 7;                      // SRE* aby 7 (undocumented)
         case 0x5C: NOP(); src_abs_X(); return 4;                       // NOP* abx 4 (undocumented)
-        case 0x5D: EOR( src_abs_X() ); return 4;                       // EOR abs,X
+        case 0x5D: EOR( src_abs_X() ); return 4+1;                     // EOR abs,X
         case 0x5E: LSR( addr_abs_X() ); return 7;                      // LSR abs,X
         case 0x5F: SRE( addr_abs_X() ); return 7;                      // SRE* abx 7 (undocumented)
         case 0x60: RTS(); return 6;                                    // RTS
@@ -333,7 +333,7 @@ INLINE int m6502_Step() {
         case 0x65: ADC( src_zp() ); return 3;                          // ADC zpg
         case 0x66: ROR( addr_zp() ); return 5;                         // ROR zpg
         case 0x67: RRA( addr_zp() ); return 5;                         // RRA* zp 5 (undocumented)
-        case 0x68: PLA(); break;                                       // PLA
+        case 0x68: PLA(); return 4;                                    // PLA
         case 0x69: ADC( imm() ); return 2;                             // ADC imm
         case 0x6A: RORA(); return 2;                                   // ROR A
         case 0x6B: ARC( imm() ); return 2;                             // ARR/ARC* imm 2 (undocumented)
@@ -350,11 +350,11 @@ INLINE int m6502_Step() {
         case 0x76: ROR( addr_zp_X() ); return 6;                       // ROR zpg,X
         case 0x77: RRA( addr_zp_X() ); return 6;                       // RRA* zpx 6 (undocumented)
         case 0x78: SEI(); return 2;                                    // SEI
-        case 0x79: ADC( src_abs_Y() ); return 4;                       // ADC abs,Y
+        case 0x79: ADC( src_abs_Y() ); return 4+1;                     // ADC abs,Y
         case 0x7A: NOP(); return 2;                                    // NOP* 2 (undocumented)
         case 0x7B: RRA( addr_abs_Y() ); return 7;                      // RRA* aby 7 (undocumented)
         case 0x7C: NOP(); src_abs_X(); return 4;                       // NOP* abx 4 (undocumented)
-        case 0x7D: ADC( src_abs_X() ); return 4;                       // ADC abs,X
+        case 0x7D: ADC( src_abs_X() ); return 4+1;                     // ADC abs,X
         case 0x7E: ROR( addr_abs_X() ); return 7;                      // ROR abs,X
         case 0x7F: RRA( addr_abs_X() ); return 7;                      // RRA* abx 7 (undocumented)
         case 0x80: NOP(); imm(); return 2;                             // NOP* imm 2 (undocumented)
@@ -556,7 +556,8 @@ void m6502_Run() {
     for ( ; ; )
 #endif
     {
-    
+
+    // TODO: clkfrm is already increamented!!!
     printDisassembly(outdev);
         
 #ifdef INTERRUPT_CHECK_PER_STEP
@@ -592,6 +593,7 @@ void m6502_Run() {
         
     }
     
+    // TODO: WHat if we dynamically reduce or increace CPU speed?
     m6502.clktime += clk_6502_per_frm;
     
     if( diskAccelerator_count ) {
@@ -697,6 +699,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 
     resetMemory();
 
+    // for DEBUG ONLY!!!
 //    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
 //    if (outdev == NULL) {
 //        outdev = stdout;

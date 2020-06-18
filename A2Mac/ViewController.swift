@@ -289,6 +289,7 @@ class ViewController: NSViewController  {
         
         if ( cpuMode == cpuMode_eco ) {
             cpuState = cpuState_running;
+            upd.resume()
         }
         
 //        print("keyDown")
@@ -825,6 +826,10 @@ class ViewController: NSViewController  {
                 
 //                #endif
                 
+                break
+            
+            case cpuState_halted:
+                upd.suspend()
                 break
                 
             default:

@@ -104,13 +104,16 @@ typedef union {
 typedef union {
     struct {
         uint8_t data;
-        uint8_t shift;
+        uint8_t latch;
+        
+        // for debug and diag purposes
+        uint8_t out[6];
     };
     struct {
         uint16_t lower15 : 15;
         uint16_t valid : 1;
     };
-    uint16_t shift16;
+    uint64_t shift;
 } WOZread_t;
 
 #endif // WOZ_REAL_SPIN
@@ -126,6 +129,7 @@ extern uint8_t   WOZlatch;
 
 
 extern uint8_t woz_read(void);
+extern void woz_write( uint8_t data );
 extern int woz_loadFile( const char * filename );
 
 

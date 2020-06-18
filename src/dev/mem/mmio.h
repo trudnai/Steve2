@@ -564,7 +564,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         if ( cpuMode == cpuMode_eco ) {
             // check if this is a busy keyboard poll (aka waiting for user input)
             if ( IOframe < 16 ) {
-                clk_6502_per_frm_max = 6502; // Absolute low mode
+                clk_6502_per_frm_max = 6502; // Let it run for a bit to display character -- nerd number :-)
                 cpuState = cpuState_halting;
             }
         }
@@ -1064,13 +1064,13 @@ INLINE uint8_t memread8_low( uint16_t addr ) {
 INLINE uint8_t memread8_high( uint16_t addr ) {
     return RDHIMEM[addr];
 }
-//INLINE uint8_t memread8( uint16_t addr ) {
-//    if (addr >= 0xC000) {
-//        return memread8_high(addr);
-//    }
-//
-//    return memread8_low(addr);
-//}
+INLINE uint8_t memread8( uint16_t addr ) {
+    if (addr >= 0xC000) {
+        return memread8_high(addr);
+    }
+
+    return memread8_low(addr);
+}
 /**
  Naive implementation of RAM read from address
  **/

@@ -39,14 +39,16 @@ unsigned long long discnt = 0;
     } \
 }
 
+// TODO: We should add a new field for clk counter, so we can print that out _before_ execution, not after...
 #define disNewInstruction() { \
     if ( m6502.dbgLevel.trace ) { \
+        disassembly.clk = m6502.clktime + clkfrm; \
         snprintf(disassembly.addr, 5, "%04X ", m6502.PC); \
-        *disassembly.opcode = '\0'; \
+        disassembly.opcode[0] = '\0'; \
         disassembly.pOpcode = disassembly.opcode; \
-        *disassembly.inst = '\0'; \
-        *disassembly.oper = '\0'; \
-        *disassembly.comment = '\0'; \
+        disassembly.inst[0] = '\0'; \
+        disassembly.oper[0] = '\0'; \
+        disassembly.comment[0] = '\0'; \
     } \
 }
 
@@ -108,7 +110,7 @@ INLINE void printDisassembly( FILE * f ) {
         // Virtual ][ Style
         fprintf( f, "%llu\t%llu\t%s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\n", // Virtual ][ style
                 ++discnt,
-                m6502.clktime + clkfrm,
+                disassembly.clk,
                 disassembly.addr,
                 disassembly.opcode,
                 disassembly.inst,

@@ -611,6 +611,7 @@
 		32BFFB5922EACC630003B53F /* A2Mac */ = {
 			isa = PBXGroup;
 			children = (
+				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */,
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
@@ -623,7 +624,6 @@
 				32440BA22480D5C0000F9DA1 /* LoRes.swift */,
 				32DBF7632334657900DD50E7 /* HiRes.swift */,
 				32EDB7A123272CA80073AF2D /* fail1.txt */,
-				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				32BFFB6022EACC660003B53F /* Main.storyboard */,
 				323D042D248980600086A901 /* Preferences.storyboard */,
 				32BFFB6322EACC660003B53F /* Info.plist */,
@@ -1410,7 +1410,7 @@
 					"@executable_path/../Frameworks",
 				);
 				OTHER_CFLAGS = (
-					"-D_NO_DISASSEMBLER",
+					"-DDISASSEMBLER",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",
 					"-D_NO_CLK_ABSOLUTE_PRECISE",
 				);
@@ -1447,7 +1447,7 @@
 				);
 				LLVM_LTO = YES_THIN;
 				OTHER_CFLAGS = (
-					"-D_NO_DISASSEMBLER",
+					"-DDISASSEMBLER",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",
 					"-D_NO_CLK_ABSOLUTE_PRECISE",
 				);

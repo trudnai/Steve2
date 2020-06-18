@@ -16,8 +16,10 @@
 
 
 WOZread_t WOZread = {0};
-uint8_t   WOZlatch = 0;
+WOZread_t WOZwrite = {0};
 
+
+int trackWRoffset = 0;
 int trackOffset = 0;
 int bitOffset = 0;
 uint64_t clkelpased;
@@ -88,6 +90,7 @@ typedef enum wozTrackState_e {
     wozTrackState_trk2,
     wozTrackState_sec1,
     wozTrackState_sec2,
+    wozTrackState_END,
 } wozTrackState_t;
 
 
@@ -96,21 +99,17 @@ int vol = 0;
 int trk = 0;
 int sec = 0;
 
-    int bitOffs_D5_SecHdr = 0; // bit offset of D5 Sector Header
+wozTrackState_t woz_decodeTrkSec( uint8_t data, uint64_t clkelapsed, int bitOffs ) {
+    static wozTrackState_t wozTrackState  = wozTrackState_Start;
     
-    int bitOffs = 0;
+    if ( clkelpased > 40 ) {
+        // spent too much time on reading, we cannot reliably decode sector header
+        wozTrackState = wozTrackState_Start;
+    }
     
-    for ( int byteOffs = 0; byteOffs < WOZ_TRACK_BYTE_COUNT; byteOffs++ ) {
-
-        reg.data = woz_trks[track].data[ byteOffs ];
-
-        for ( int i = 0; i < 8; i++ ) {
-            reg.shift16 <<= 1;
-            
-            if (reg.shift & 0x80) {
     switch (wozTrackState) {
         case wozTrackState_D5:
-                        switch (reg.shift) {
+            switch (data) {
                 case 0xAA:
 //                    printf("D5 AA at bitOffset:%d\n", bitOffs);
                     wozTrackState = wozTrackState_D5_AA;
@@ -124,7 +123,7 @@ int sec = 0;
             break;
             
         case wozTrackState_D5_AA:
-                        switch (reg.shift) {
+            switch (data) {
                 case 0x96:
                     wozTrackState = wozTrackState_vol1;
 //                    printf("D5 AA 96 at bitOffset:%d\n", bitOffs);
@@ -139,47 +138,72 @@ int sec = 0;
             break;
             
         case wozTrackState_vol1:
-                        vol = (reg.shift << 1) | 1;
+            vol = (data << 1) | 1;
             wozTrackState = wozTrackState_vol2;
             break;
             
         case wozTrackState_vol2:
-                        vol &= reg.shift;
+            vol &= data;
             wozTrackState = wozTrackState_trk1;
             break;
             
         case wozTrackState_trk1:
-                        trk = (reg.shift << 1) | 1;
+            trk = (data << 1) | 1;
             wozTrackState = wozTrackState_trk2;
             break;
             
         case wozTrackState_trk2:
-                        trk &= reg.shift;
+            trk &= data;
             wozTrackState = wozTrackState_sec1;
             break;
             
         case wozTrackState_sec1:
-                        sec = (reg.shift << 1) | 1;
+            sec = (data << 1) | 1;
             wozTrackState = wozTrackState_sec2;
             break;
             
         case wozTrackState_sec2:
-                        sec &= reg.shift;
-                        wozTrackState = wozTrackState_Start;
+            sec &= data;
+            wozTrackState = wozTrackState_END;
             
-                        printf("Vol:%d Track:%d Sector:%d at bitOffset:%d\n", vol, trk, sec, bitOffs_D5_SecHdr);
+//            printf("Vol:%d Track:%d Sector:%d at bitOffset:%d\n", vol, trk, sec, bitOffs_D5_SecHdr);
             
             break;
             
         default:
-                        if ( reg.shift == 0xD5 ) {
+            if ( data == 0xD5 ) {
 //                printf("D5 at bitOffset:%d\n", bitOffs);
                 wozTrackState = wozTrackState_D5;
                 bitOffs_D5_SecHdr = bitOffs;
             }
+            else {
+                wozTrackState = wozTrackState_Start;
+            }
             break;
     }
     
+    return wozTrackState;
+}
+
+
+void woz_loadTrack( int track ) {
+    trackEntry_t reg = {0};
+
+    reg.shift = 0;
+    reg.data  = 0;
+    prepared_track[0] = reg;
+    
+    int bitOffs = 0;
+    
+    for ( int byteOffs = 0; byteOffs < WOZ_TRACK_BYTE_COUNT; byteOffs++ ) {
+
+        reg.data = woz_trks[track].data[ byteOffs ];
+
+        for ( int i = 0; i < 8; i++ ) {
+            reg.shift16 <<= 1;
+            
+            if (reg.shift & 0x80) {
+                woz_decodeTrkSec( reg.shift, 0, bitOffs );
                 reg.shift = 0;
             }
             
@@ -221,21 +245,25 @@ uint8_t woz_read() {
             trackOffset %= usedBytes;
 
             // preroll data stream
-            WOZread.shift16 = 0;
+            WOZread.shift = 0;
             WOZread.data = woz_trks[track].data[trackOffset++];
             trackOffset %= usedBytes;
+            trackWRoffset = trackOffset;
 
-            WOZread.shift16 <<= bitOffset;
+            WOZread.shift <<= bitOffset;
+            WOZwrite = WOZread;
 
             for ( int i = 0; i < magicShiftOffset; i++ ) {
                 for ( ; bitOffset < 8; bitOffset++ ) {
-                    WOZread.shift16 <<= 1;
+                    WOZread.shift <<= 1;
+                    WOZwrite.shift <<= 1;
 
                     if ( WOZread.valid ) {
-                        WOZread.shift = 0;
+                        WOZread.latch = 0;
                     }
                 }
-                WOZread.data = woz_trks[track].data[trackOffset++];
+                trackWRoffset = trackOffset;
+                WOZwrite.data = WOZread.data = woz_trks[track].data[trackOffset++];
                 trackOffset %= usedBytes;
                 bitOffset = 0;
             }
@@ -247,17 +275,18 @@ uint8_t woz_read() {
             for ( uint64_t i = 0; i < bitForward; i++ ) {
                 if ( ++bitOffset >= 8 ) {
                     bitOffset = 0;
+                    trackWRoffset = trackOffset;
                     trackOffset++;
                     trackOffset %= usedBytes;
 
                     WOZwrite.data = WOZread.data = woz_trks[track].data[trackOffset];
                 }
 
-                WOZread.shift16 <<= 1;
-                WOZwrite.shift16 <<= 1;
+                WOZread.shift <<= 1;
+                WOZwrite.shift <<= 1;
 
                 if ( WOZread.valid ) {
-                    WOZread.shift = 0;
+                    WOZread.latch = 0;
                 }
             }
         }
@@ -265,16 +294,16 @@ uint8_t woz_read() {
         // to avoid infinite loop and to search for bit 7 high
         for ( int i = 0; i < usedBytes * 8; i++ ) {
             if ( WOZread.valid ) {
-                WOZread.shift = 0;
+                WOZread.latch = 0;
 //                if (outdev) fprintf(outdev, "byte: %02X\n", byte);
 
-                if ( woz_decodeTrkSec(WOZwrite.shift, clkelpased, trackOffset * 8 + bitOffset) == wozTrackState_END ) {
-                    if (disk_sfx_enabled) printf("vol:%d trk:%d sec:%d\n", vol, trk, sec);
+                if ( woz_decodeTrkSec(WOZwrite.latch, clkelpased, trackOffset * 8 + bitOffset) == wozTrackState_END ) {
+                    if (outdev) fprintf(outdev, "vol:%d trk:%d sec:%d\n", vol, trk, sec);
                 }
                 
-                if (disk_sfx_enabled) printf("elpased:%lld  read: %02X\n", clkelpased, WOZwrite.shift);
+                if (outdev) fprintf(outdev, "elpased:%lld  read: %02X\n", clkelpased, WOZwrite.latch);
 
-                return WOZwrite.shift;
+                return WOZwrite.latch;
             }
             
             if ( ++bitOffset >= 8 ) {
@@ -286,8 +315,8 @@ uint8_t woz_read() {
                 WOZwrite.data = WOZread.data = woz_trks[track].data[trackOffset];
             }
             
-            WOZread.shift16 <<= 1;
-            WOZwrite.shift16 <<= 1;
+            WOZread.shift <<= 1;
+            WOZwrite.shift <<= 1;
         }
 //        if (outdev) fprintf(outdev, "TIME OUT!\n");
     }
@@ -295,59 +324,90 @@ uint8_t woz_read() {
     return rand();
 }
 
+void printbits ( uint8_t byte ) {
+    fprintf(outdev, "%02X:", byte);
+    
+    for ( int bit = 7; bit >= 0; bit-- ) {
+        fprintf(outdev, "%d", byte & (1 << bit) ? 1 : 0 );
+    }
+    fprintf(outdev, " ");
+}
+
+void printWozBuffer (const char * s, int n, WOZread_t WOZbuf ) {
+    // for DEBUG ONLY!!!
+    if (outdev) {
+        fprintf(outdev, "%s (%d) ", s, n);
+        
+        for ( int i = 5; i >= 0; i-- ) {
+            printbits(WOZbuf.out[i]);
+        }
+        
+        printbits(WOZbuf.latch);
+        printbits(WOZbuf.data);
+        
+        fprintf(outdev, "\n");
+    }
+}
 
 void woz_write( uint8_t data ) {
     
     int track = woz_tmap.phase[disk.phase.count];
     if (outdev) fprintf(outdev, "track: %d (%d) ", track, disk.phase.count);
     if ( track >= 40 ) {
-        dbgPrintf("TRCK TOO HIGH!\n");
+        dbgPrintf("TRACK TOO HIGH!\n");
         return;
     }
-    
-    static int clkBeforeSync = 0;
     
     clkelpased = m6502.clktime + clkfrm - m6502.clklast;
     m6502.clklast = m6502.clktime + clkfrm;
     
-    clkBeforeSync += clkelpased;
-    
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     
     if ( usedBytes ) {
-        if ( disk_sfx_enabled ) printf("elpased:%llu  data:$%02X\n", clkelpased, data);
         
-        if ( clkelpased > 40 ) {
-            if ( disk_sfx_enabled ) printf("I/O ERROR : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
-        }
+        // for DEBUG ONLY!!!
+        if (outdev) fprintf(outdev, "elpased:%llu  data:$%02X\n", clkelpased, data);
+        printWozBuffer("*start", 0, WOZwrite);
 
         
-        // sync data?
-        if ( WOZwrite.shift == 0xFF ) {
-            // yes, we have to push in extra 2 zeros
-            for ( int i = 0; i < 2; i++ ) {
-                WOZread.shift16 <<= 1;
-                WOZwrite.shift16 <<= 1;
-                
+        if ( clkelpased > 32 ) {
+//            if (outdev) fprintf(outdev, "I/O ERROR : %llu\n", clkelpased);
+        
+            uint64_t bitForward = (clkelpased - 32) >> 2;
+            
+            // simulate disk spin over time
+            while ( bitForward-- ) {
                 if ( ++bitOffset >= 8 ) {
                     bitOffset = 0;
                     trackWRoffset = trackOffset;
                     trackOffset++;
                     trackOffset %= usedBytes;
+
+//                    WOZwrite.data =
+                    WOZread.data = woz_trks[track].data[trackOffset];
+                }
+
+                WOZread.shift <<= 1;
+                WOZwrite.shift <<= 1;
+
+                if ( WOZread.valid ) {
+                    WOZread.latch = 0;
                 }
             }
         }
-
         
-        // now we can latch data
-//        uint8_t latch = data;
+        
+        // ok now we can latch data
         WOZwrite.data = WOZread.data = data;
+        printWozBuffer("datain", 0, WOZwrite);
 
+        int i = 8; // 8 bit to shift in
+        
         // shift in 8 bits of data and write it out
-        for ( int i = 0; i < 8; i++ ) {
+        while ( i-- ) {
             if ( ++bitOffset >= 8 ) {
                 // write out first part
-                woz_trks[track].data[trackWRoffset] = WOZwrite.shift;
+                woz_trks[track].data[trackWRoffset] = WOZwrite.latch;
                 
                 bitOffset = 0;
                 trackWRoffset = trackOffset;
@@ -356,31 +416,38 @@ void woz_write( uint8_t data ) {
 
                 // simulate shift in data (path of write latch is already loaded, we should not overwrite it!)
                 uint8_t new = woz_trks[track].data[trackOffset];
-                new &= (1 << i) - 1;
+                new >>= i + 1;
                 WOZread.data |= new;
-                WOZwrite.data |= new;
+//                WOZwrite.data |= new;
 
+                printWozBuffer("shl1in", i, WOZwrite);
+                WOZread.shift <<= 1;
+                WOZwrite.shift <<= 1;
                 break;
             }
             
-            WOZread.shift16 <<= 1;
-            WOZwrite.shift16 <<= 1;
+            WOZread.shift <<= 1;
+            WOZwrite.shift <<= 1;
+            printWozBuffer("shift1", i, WOZwrite);
         };
-        
+        printWozBuffer("shift1", 9, WOZwrite);
+
         // write the remaining bits without altering WOZ track offsets and indexes
-        WOZread_t WOZtmp = WOZwrite;
-        int bo = bitOffset;
+//        WOZread_t WOZtmp = WOZwrite;
+//        int bo = bitOffset;
         
         // second half
-        for ( int i = 8; i; i-- ) {
-            if ( ++bo >= 8 ) {
+        while ( i-- ) {
+            if ( ++bitOffset >= 8 ) {
                 // write out first part
-                woz_trks[track].data[trackWRoffset] = WOZtmp.shift;
+                woz_trks[track].data[trackWRoffset] = WOZwrite.latch;
                 break;
             }
             
-            WOZtmp.shift16 <<= 1;
+            WOZwrite.shift <<= 1;
+            printWozBuffer("shift2", i, WOZwrite);
         };
+        printWozBuffer("shift2", 9, WOZwrite);
 
     }
     

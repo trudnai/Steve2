@@ -6,6 +6,9 @@
 //  Copyright © 2020 GameAlloy. All rights reserved.
 //
 
+
+#include <stdlib.h>
+
 #include "disk.h"
 #include "6502.h"
 #include "common.h"
@@ -15,7 +18,9 @@
 
 disk_t disk = {
     { 0, 0, 0 },    // phase
+    0,              // clk_last_access
     0,              // clk_since_last_read
+    0,              // drive number
 };
 
 const int diskAccelerator_frames  = 2;
@@ -137,12 +142,17 @@ void disk_motor_off() {
 
 uint8_t disk_read() {
     dbgPrintf("io_DISK_READ (S%u)\n", 6);
+    
     disk.clk_last_access = m6502.clktime;
     disk_accelerator_speedup();
 
     // Debug disk read
 //    spkr_toggle();
 
+    if ( disk.drive ) {
+        return rand();
+    }
+    
     return woz_read();
 }
 

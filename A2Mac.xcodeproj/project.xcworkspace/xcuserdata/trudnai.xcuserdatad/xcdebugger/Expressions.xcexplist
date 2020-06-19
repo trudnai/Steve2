@@ -224,6 +224,14 @@
          contextName = "spkr_playUpd:speaker.c">
       </ContextState>
       <ContextState
+         contextName = "fetch:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "memread8_low( m6502.PC)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "mach_msg_trap:(null)">
          <PersistentStrings>
             <PersistentString
@@ -336,6 +344,14 @@
             </PersistentString>
             <PersistentString
                value = "(int)m6502.Y - imm">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "addr_zp:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "memread8(m6502.PC)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -583,6 +599,9 @@
                value = "m6502">
             </PersistentString>
             <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+            <PersistentString
                value = "Apple2_64K_AUX + 0x3600">
             </PersistentString>
             <PersistentString
@@ -590,6 +609,26 @@
             </PersistentString>
             <PersistentString
                value = "(void*)Apple2_64K_RAM">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "_INC:6502_instr_inc_dec.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "WRLOMEM[addr]">
+            </PersistentString>
+            <PersistentString
+               value = "Apple2_64K_MEM[1]">
+            </PersistentString>
+            <PersistentString
+               value = "WRHIMEM[addr]">
+            </PersistentString>
+            <PersistentString
+               value = "Apple2_64K_RAM[1]">
+            </PersistentString>
+            <PersistentString
+               value = "Apple2_64K_AUX[1]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

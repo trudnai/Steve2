@@ -254,11 +254,11 @@ INLINE int m6502_Step() {
         case 0x16: ASL( addr_zp_X() ); return 6;                       // ASL zpg,X
         case 0x17: SLO( addr_zp_X() ); return 6;                       // SLO* zpg,X (undocumented)
         case 0x18: CLC(); return 2;                                    // CLC
-        case 0x19: ORA( src_abs_Y() ); return 4;                       // ORA abs,Y
+        case 0x19: ORA( src_abs_Y() ); return 4+1;                       // ORA abs,Y
         case 0x1A: NOP(); return 2;                                    // NOP* (undocumented)
         case 0x1B: SLO( addr_abs_Y() ); return 7;                      // SLO* abs,Y (undocumented)
         case 0x1C: NOP(); src_abs_X(); return 4;                       // NOP* (undocumented)
-        case 0x1D: ORA( src_abs_X() ); return 4;                       // ORA abs,X
+        case 0x1D: ORA( src_abs_X() ); return 4+1;                       // ORA abs,X
         case 0x1E: ASL( addr_abs_X() ); return 7;                      // ASL abs,X
         case 0x1F: SLO( addr_abs_X() ); return 7;                      // SLO* abs,X (undocumented)
         case 0x20: JSR( abs_addr() ); return 6;                        // JSR abs
@@ -409,10 +409,10 @@ INLINE int m6502_Step() {
         case 0xB1: LDA( src_ind_Y() ); return 5;                       // LDA ind,Y
         case 0xB2: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0xB3: LAX( src_ind_Y() ); return 5;                       // LAX* izy 5 (undocumented)
-        case 0xB4: LDY( src_zp_X() ); return 4;                        // LDY zpg,X
-        case 0xB5: LDA( src_zp_X() ); return 4;                        // LDA zpg,X
-        case 0xB6: LDX( src_zp_Y() ); return 4;                        // LDX zpg,Y
-        case 0xB7: LAX( src_zp_Y() ); return 4;                        // LAX* zpy 4 (undocumented)
+        case 0xB4: LDY( src_zp_X() ); return 4+1;                        // LDY zpg,X
+        case 0xB5: LDA( src_zp_X() ); return 4+1;                        // LDA zpg,X
+        case 0xB6: LDX( src_zp_Y() ); return 4+1;                        // LDX zpg,Y
+        case 0xB7: LAX( src_zp_Y() ); return 4+1;                        // LAX* zpy 4 (undocumented)
         case 0xB8: CLV(); return 2;                                    // CLV
         case 0xB9: LDA( src_abs_Y() ); return 4;                       // LDA abs,Y
         case 0xBA: TSX(); return 2;                                    // TSX
@@ -478,11 +478,11 @@ INLINE int m6502_Step() {
         case 0xF6: INC( addr_zp_X() ); return 6;                       // INC zpg,X
         case 0xF7: ISB( addr_zp_X() ); return 6;                       // ISB* zpx 6 (undocumented)
         case 0xF8: SED(); return 2;                                    // SED
-        case 0xF9: SBC( src_abs_Y() ); return 4;                       // SBC abs,Y
+        case 0xF9: SBC( src_abs_Y() ); return 4+1;                       // SBC abs,Y
         case 0xFA: NOP(); return 2;                                    // NOP
         case 0xFB: ISB( addr_abs_Y() ); return 7;                      // ISB* aby 7 (undocumented)
         case 0xFC: NOP(); src_abs_X(); return 4;                       // NOP* abx 4 (undocumented)
-        case 0xFD: SBC( src_abs_X() ); return 4;                       // SBC abs,X
+        case 0xFD: SBC( src_abs_X() ); return 4+1;                       // SBC abs,X
         case 0xFE: INC( addr_abs_X() ); return 7;                      // INC abs,X
         case 0xFF: ISB( addr_abs_X() ); return 7;                      // ISB* abx 7 (undocumented)
 
@@ -677,6 +677,23 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 }
 
 
+void openLog() {
+    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
+    
+    // for DEBUG ONLY!!! -- use stdout if could not create log file
+//    if (outdev == NULL) {
+//        outdev = stdout;
+//    }
+}
+
+
+void closeLog() {
+    if ( ( outdev ) && ( outdev != stdout ) && ( outdev != stderr ) ) {
+        fclose(outdev);
+    }
+}
+
+
 void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     inst_cnt = 0;
     
@@ -698,13 +715,6 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 //    tick_6502_per_sec = tick_per_sec / MHz_6502;
 
     resetMemory();
-
-    // for DEBUG ONLY!!!
-//    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
-//    if (outdev == NULL) {
-//        outdev = stdout;
-//    }
-
 
     
 #ifdef FUNCTIONTEST

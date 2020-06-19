@@ -134,7 +134,7 @@ typedef struct disassembly_s {
 typedef struct MEMcfg_s {
     unsigned RAM_16K     : 1;
     unsigned RAM_128K    : 1;
-    unsigned RD_RAM      : 1;
+    unsigned RD_INT_RAM  : 1;
     unsigned WR_RAM      : 1;
     unsigned RAM_BANK_2  : 1;
     unsigned AUX_BANK    : 1;
@@ -192,6 +192,10 @@ extern void interrupt_IRQ(void);
 extern void interrupt_NMI(void);
 extern void hardReset(void);
 extern void softReset(void);
+
+extern void openLog(void);
+extern void closeLog(void);
+
 
 
 #endif /* __6502_H__ */

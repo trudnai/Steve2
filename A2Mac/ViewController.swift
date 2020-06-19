@@ -1050,6 +1050,17 @@ class ViewController: NSViewController  {
         openDiskImage()
     }
     
+    @IBAction func traceEnable(_ sender: NSButton) {
+        switch sender.state {
+        case .on:
+            m6502.dbgLevel.trace = 1
+            openLog()
+            
+        default:
+            m6502.dbgLevel.trace = 0
+            closeLog()
+        }
+    }
     
 }
 

@@ -326,7 +326,7 @@ void resetMemory() {
     // Reset memory configuration
     MEMcfg.RAM_16K      = 0;
     MEMcfg.RAM_128K     = 1;
-    MEMcfg.RD_RAM       = 0;
+    MEMcfg.RD_INT_RAM   = 0;
     MEMcfg.WR_RAM       = 0;
     MEMcfg.RAM_BANK_2   = 0;
     MEMcfg.AUX_BANK     = 0;
@@ -401,14 +401,24 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
         }
         
         if ( MEMcfg.WR_AUX_MEM ) {
-            WRLOMEM = Apple2_64K_AUX;   
+            if ( MEMcfg.RD_INT_RAM ) {
+                WRLOMEM = Apple2_64K_AUX;
+            }
+            else {
+                WRLOMEM = Apple2_64K_MEM;
+            }
         }
         else {
-            WRLOMEM = Apple2_64K_RAM;
+            if ( MEMcfg.RD_INT_RAM ) {
+                WRLOMEM = Apple2_64K_MEM;
+            }
+            else {
+                WRLOMEM = Apple2_64K_RAM;
+            }
         }
     }
     else {
-        WRLOMEM = Apple2_64K_RAM;
+        WRLOMEM = Apple2_64K_MEM;
     }
     
     // load new content to shadow memory
@@ -473,7 +483,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
                 
                 //                        printf("RD_RAM\n");
                 
-                MEMcfg.RD_RAM = 1;
+                MEMcfg.RD_INT_RAM = 1;
                 
                 // load the content of Aux Memory
                 memcpy(Apple2_64K_MEM + 0xD000, RAM_BANK, 0x1000);
@@ -485,7 +495,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
             default:
                 //                        printf("RD_ROM\n");
                 
-                MEMcfg.RD_RAM = 0;
+                MEMcfg.RD_INT_RAM = 0;
                 
                 // load the content of ROM Memory
                 memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 0x3000);
@@ -611,7 +621,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return MEMcfg.RAM_BANK_2 << 7;
             
         case (uint8_t)io_RDLCRAM:
-            return MEMcfg.RD_RAM << 7;
+            return MEMcfg.RD_INT_RAM << 7;
             
         case (uint8_t)io_RDRAMRD:
             return MEMcfg.RD_AUX_MEM << 7;
@@ -752,10 +762,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 
         case (uint8_t)io_DISK_SELECT_1 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_1 (S%u)\n", 6);
+            disk.drive = 0;
             return 0;
 
         case (uint8_t)io_DISK_SELECT_2 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_2 (S%u)\n", 6);
+            disk.drive = 1;
             return 0;
 
         case (uint8_t)io_DISK_READ + SLOT6:
@@ -1018,10 +1030,12 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 
         case (uint8_t)io_DISK_SELECT_1 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_1 (S%u)\n", 6);
+            disk.drive = 0;
             break;
 
         case (uint8_t)io_DISK_SELECT_2 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_2 (S%u)\n", 6);
+            disk.drive = 1;
             break;
 
         case (uint8_t)io_DISK_READ + SLOT6:

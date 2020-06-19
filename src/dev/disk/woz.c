@@ -230,11 +230,13 @@ uint8_t woz_read() {
     clkBeforeSync += clkelpased;
     
     const int clkBeforeAdjusting = 512;
-    const int magicShiftOffset = 50;
+    const int magicShiftOffset = 45;
     
     uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     
     if ( usedBytes ) {
+        int shiftOffset = magicShiftOffset;
+        
 //        printf("elpased : %llu (clkBefRd:%d)\n", clkelpased, clkBeforeSync);
         
         if ( clkelpased > clkBeforeAdjusting ) {
@@ -242,7 +244,13 @@ uint8_t woz_read() {
             clkBeforeSync = 0;
             bitOffset = (clkelpased >> 2) & 7;
             trackOffset += clkelpased >> 5;
-            trackOffset %= usedBytes;
+            if ( trackOffset >= usedBytes ) {
+                bitOffset = 0;
+                trackOffset = 0;
+                WOZread.shift = 0;
+                shiftOffset = 0;
+            }
+//            trackOffset %= usedBytes;
 
             // preroll data stream
             WOZread.shift = 0;
@@ -253,7 +261,7 @@ uint8_t woz_read() {
             WOZread.shift <<= bitOffset;
             WOZwrite = WOZread;
 
-            for ( int i = 0; i < magicShiftOffset; i++ ) {
+            for ( int i = 0; i < shiftOffset; i++ ) {
                 for ( ; bitOffset < 8; bitOffset++ ) {
                     WOZread.shift <<= 1;
                     WOZwrite.shift <<= 1;

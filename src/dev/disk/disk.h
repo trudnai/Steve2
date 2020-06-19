@@ -30,6 +30,7 @@ typedef struct disk_s {
     phase_t phase;
     uint64_t clk_last_access;
     uint64_t clk_last_read;
+    uint8_t drive;
 } disk_t;
 
 

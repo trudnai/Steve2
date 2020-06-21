@@ -55,6 +55,7 @@ class ViewController: NSViewController  {
     @IBOutlet weak var scanLines: NSImageView!
     
     var CRTMonitor = false
+    var ColorMonitor = true
     var Keyboard2Joystick = true
     var Mouse2Joystick = false
     var MouseInterface = true
@@ -689,7 +690,7 @@ class ViewController: NSViewController  {
                         self.lores.isHidden = true
                     }
                     
-                    self.hires.Update()
+                    hires.Update()
                 }
             }
             else if ( self.savedVideoMode.text == 0 ) {
@@ -982,6 +983,12 @@ class ViewController: NSViewController  {
     @IBAction func CRTMonitorOnOff(_ sender: NSButton) {
         CRTMonitor = sender.state == .on
         scanLines.isHidden = !CRTMonitor
+        hires.fullUpdate()
+    }
+    
+    @IBAction func ColorMonitorOnOff(_ sender: NSButton) {
+        ColorMonitor = sender.state == .on
+        hires.fullUpdate()
     }
     
     @IBAction func Keyboard2JoystickOnOff(_ sender: NSButton) {

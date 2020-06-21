@@ -22,6 +22,12 @@ let GB : Double = (MB * KB)
 let TB : Double = (GB * KB)
 
 
+let colorWhite  =  NSColor.init( red:0.9296875, green:0.9296875, blue:0.9296875, alpha: 1 )
+let colorGreen  =  NSColor.init( red:0.16796875, green:0.84375, blue:0.2890625, alpha: 1 )
+let colorOrange =  NSColor.init( red:1, green:0.38671875, blue:0.0078125, alpha: 1 )
+
+var monoColor = colorGreen;
+
 var spk_up: AVAudioPlayer?
 var spk_dn: AVAudioPlayer?
 
@@ -543,11 +549,9 @@ class ViewController: NSViewController  {
         frameCnt += 1
         
         if ( frameCnt == fpsHalf ) {
-            //            flashingSpace = blockChar
             ViewController.charConvTbl = ViewController.charConvTblFlashOn
         }
         else if ( frameCnt >= fps ) {
-            //            flashingSpace = spaceChar
             ViewController.charConvTbl = ViewController.charConvTblFlashOff
             frameCnt = 0
         }
@@ -578,7 +582,6 @@ class ViewController: NSViewController  {
                 self.txtArr[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
             }
             
-            
             // 40 col
             if videoMode.col80 == 0 {
                 if MEMcfg.txt_page_2 == 0 {
@@ -600,7 +603,7 @@ class ViewController: NSViewController  {
                     self.txtArr[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
                 }
             }
-                // 80 col
+            // 80 col
             else {
                 let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
                 
@@ -677,7 +680,7 @@ class ViewController: NSViewController  {
                         self.hires.isHidden = true
                     }
                     
-                    self.lores.Update()
+                    self.lores.Render()
                 }
                 else {
                     // when we change video mode, buffer needs to be cleared to avoid artifacts
@@ -690,7 +693,7 @@ class ViewController: NSViewController  {
                         self.lores.isHidden = true
                     }
                     
-                    hires.Update()
+                    hires.Render()
                 }
             }
             else if ( self.savedVideoMode.text == 0 ) {
@@ -983,12 +986,45 @@ class ViewController: NSViewController  {
     @IBAction func CRTMonitorOnOff(_ sender: NSButton) {
         CRTMonitor = sender.state == .on
         scanLines.isHidden = !CRTMonitor
-        hires.fullUpdate()
+        hires.RenderFullScreen()
     }
     
     @IBAction func ColorMonitorOnOff(_ sender: NSButton) {
         ColorMonitor = sender.state == .on
-        hires.fullUpdate()
+        hires.RenderFullScreen()
+        
+        if ( ColorMonitor ) {
+            display.textColor = colorWhite // .white
+        }
+        else {
+            display.textColor = colorGreen // .green
+        }
+    }
+    
+    @IBAction func MonitorChange(_ sender: NSButton) {
+        switch sender.title {
+        case "White Mono":
+            ColorMonitor = false
+            monoColor = colorWhite
+            hires.monoColor = hires.color_white
+
+        case "Green Mono":
+            ColorMonitor = false
+            monoColor = colorGreen
+            hires.monoColor = hires.color_green
+
+        case "Amber Mono":
+            ColorMonitor = false
+            monoColor = colorOrange
+            hires.monoColor = hires.color_orange
+
+        default:
+            ColorMonitor = true
+            monoColor = colorWhite
+        }
+        
+        display.textColor = monoColor
+        hires.RenderFullScreen()
     }
     
     @IBAction func Keyboard2JoystickOnOff(_ sender: NSButton) {

@@ -1388,13 +1388,13 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
-                                        <rect key="frame" x="8" y="8" width="104" height="522"/>
+                                        <rect key="frame" x="8" y="8" width="104" height="596"/>
                                         <subviews>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7yw-J0-Fmj">
-                                                <rect key="frame" x="0.0" y="519" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="593" width="96" height="5"/>
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="isd-yh-gCV">
-                                                <rect key="frame" x="-2" y="497" width="98" height="18"/>
+                                                <rect key="frame" x="-2" y="571" width="98" height="18"/>
                                                 <buttonCell key="cell" type="check" title="CRT Monitor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="UQ8-Nn-Kt7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1403,14 +1403,44 @@
                                                     <action selector="CRTMonitorOnOff:" target="XfG-lQ-9wD" id="2V4-GI-erE"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WzH-g6-yxF">
-                                                <rect key="frame" x="-2" y="475" width="105" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Color Monitor" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jLh-hF-6Z2">
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kmk-ZV-ubT">
+                                                <rect key="frame" x="-1" y="548" width="105" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="Color Monitor" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" state="on" inset="2" id="dIU-uM-oqn">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="ColorMonitorOnOff:" target="XfG-lQ-9wD" id="Aea-ZM-p6Q"/>
+                                                    <action selector="MonitorChange:" target="XfG-lQ-9wD" id="crt-Cx-eyx"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hi6-xc-XvO">
+                                                <rect key="frame" x="-1" y="524" width="95" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="White Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="NOI-xa-uDn">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="MonitorChange:" target="XfG-lQ-9wD" id="EqE-0v-Uap"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0TV-RF-TRX">
+                                                <rect key="frame" x="-1" y="500" width="97" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="Green Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="3IU-9X-jIe">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="MonitorChange:" target="XfG-lQ-9wD" id="Rbp-fx-YDU"/>
+                                                </connections>
+                                            </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDL-Db-4L2">
+                                                <rect key="frame" x="-1" y="476" width="100" height="18"/>
+                                                <buttonCell key="cell" type="radio" title="Amber Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="8c4-i2-4Tf">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="MonitorChange:" target="XfG-lQ-9wD" id="wrg-jk-a1b"/>
                                                 </connections>
                                             </button>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="t35-xh-L18">
@@ -1473,7 +1503,7 @@
                                                 <rect key="frame" x="0.0" y="338" width="96" height="5"/>
                                             </box>
                                             <splitView hidden="YES" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
-                                                <rect key="frame" x="0.0" y="499" width="104" height="23"/>
+                                                <rect key="frame" x="0.0" y="573" width="104" height="23"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>
@@ -1677,8 +1707,14 @@
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>

@@ -323,7 +323,7 @@ class LoRes: NSView {
     }
 
     
-    func Update() {
+    func Render() {
         var height = LoRes.PixelHeight / 2
         
         // do not even render it...

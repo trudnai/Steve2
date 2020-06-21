@@ -167,6 +167,9 @@ class HiRes: NSView {
     let color_turquis   : UInt32 = 0xFF11BBBB;
     let color_yellow    : UInt32 = 0xFFBBBB11;
     
+    // default is green
+    var monoColor       : UInt32 = 0xFF2BD84A;
+    
     
     func refreshChanged( blockSize : Int ) {
         // refresh changed block only
@@ -193,14 +196,37 @@ class HiRes: NSView {
     }
     
     
-    func UpdateMono() {
-        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
+    func RenderMono() {
+        var height = HiRes.PixelHeight
+
+        // do not even render it...
+        if videoMode.text == 1 {
+            return
+        }
+        else {
+            if videoMode.mixed == 1 {
+                height = HiRes.MixedHeight
+            }
+            if MEMcfg.txt_page_2 == 1 {
+                HiResBufferPointer = HiResBuffer2
+            }
+            else {
+                HiResBufferPointer = HiResBuffer1
+            }
+        }
 
         var pixelAddr = 0
         
         var y = 0
         
+        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
+        
         for lineAddr in HiResLineAddrTbl {
+            if ( height <= 0 ) {
+                break
+            }
+            height -= 1
+            
             let blockVertIdx = y / HiRes.blockHeight * HiRes.blockCols
 
             for blockHorIdx in 0..<HiRes.blockCols {
@@ -214,7 +240,7 @@ class HiRes: NSView {
                 for bit in stride(from: 0, through: 6, by: 1) {
                     let bitMask = 1 << bit
                     if (block & bitMask) != 0 {
-                        HiRes.pixelsSRGB[pixelAddr] = color_green;
+                        HiRes.pixelsSRGB[pixelAddr] = monoColor;
                     }
                     else {
                         HiRes.pixelsSRGB[pixelAddr] = color_black;
@@ -324,7 +350,7 @@ class HiRes: NSView {
     }
 
     
-    func UpdateColor() {
+    func RenderColor() {
         var height = HiRes.PixelHeight
         
         // do not even render it...
@@ -368,14 +394,14 @@ class HiRes: NSView {
                 let blockL = Int(HiResBufferPointer[ Int(lineAddr + blockHorIdx * 2) + 1 ])
                 let blockL7 = ( blockL >> 5 ) & 0x04
                 
-                let block = ( blockL << 7 ) | ( blockH & 0x7F ) & 0x3FFF
-                let block8 = ( blockL << 8 ) | blockH
+                let block = ( ( blockL & 0x7F ) << 7 ) | ( blockH & 0x7F )
+                let block14 = ( blockL << 8 ) | blockH
 
                 let screenIdx = y * HiRes.blockCols + blockHorIdx
                 
                 // get all changed blocks
-                blockChanged[ blockVertIdx + blockHorIdx ] = blockChanged[ blockVertIdx + blockHorIdx ] || shadowScreen[ screenIdx ] != block8
-                shadowScreen[ screenIdx ] = block8
+                blockChanged[ blockVertIdx + blockHorIdx ] = blockChanged[ blockVertIdx + blockHorIdx ] || shadowScreen[ screenIdx ] != block14
+                shadowScreen[ screenIdx ] = block14
                 
                 for px in 0 ... 2  {
                     //                        let bitMask = 3 << ( px * 2 )
@@ -408,19 +434,19 @@ class HiRes: NSView {
 
     }
 
-    
-    func Update() {
+
+    func Render() {
         if ( ViewController.current?.ColorMonitor ?? true ) {
-            UpdateColor()
+            RenderColor()
         }
         else {
-            UpdateMono()
+            RenderMono()
         }
     }
-        
-    func fullUpdate() {
+
+    func RenderFullScreen() {
         needsDisplay = true
-        Update()
+        Render()
     }
     
     

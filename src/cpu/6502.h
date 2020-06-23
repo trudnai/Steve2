@@ -178,6 +178,12 @@ extern double mips;
 extern double mhz;
 
 #define DEFAULT_FPS 30U
+#define DEF_VIDEO_DIV 1U
+
+#define GAME_FPS 600U
+#define GAME_VIDEO_DIV 10U
+
+extern unsigned int video_fps_divider;
 extern unsigned int fps;
 
 extern void rom_loadFile( const char * bundlePath, const char * filename );

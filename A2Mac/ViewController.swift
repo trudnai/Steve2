@@ -537,7 +537,6 @@ class ViewController: NSViewController  {
     var lastFrameTime = CACurrentMediaTime() as Double
     var frameCounter : UInt32 = 0
     var clkCounter : Double = 0
-    let fpsHalf = fps / 2
     
     var mouseLocation = NSPoint.zero
     
@@ -548,7 +547,7 @@ class ViewController: NSViewController  {
         
         frameCnt += 1
         
-        if ( frameCnt == fpsHalf ) {
+        if ( frameCnt == fps / 2 ) {
             ViewController.charConvTbl = ViewController.charConvTblFlashOn
         }
         else if ( frameCnt >= fps ) {
@@ -789,9 +788,9 @@ class ViewController: NSViewController  {
                 m6502_Run()
                 
                 // video rendering
-//                if ( frameCounter % 5 == 0 ) {
+                if ( frameCounter % video_fps_divider == 0 ) {
                     Render()
-//                }
+                }
                 
                 #endif
                 
@@ -853,9 +852,18 @@ class ViewController: NSViewController  {
 //    }
     
     
-    let upd = RepeatingTimer(timeInterval: 1/Double(fps))
+    var upd = RepeatingTimer(timeInterval: 1)
 
     static var current : ViewController? = nil
+    
+    func newUpdateTimer( timeInterval : Double ) {
+        upd.kill()
+        upd = RepeatingTimer(timeInterval: timeInterval)
+        upd.eventHandler = {
+            self.Update()
+        }
+        upd.resume()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -908,10 +916,13 @@ class ViewController: NSViewController  {
 //            self.update()
 //        }
         
-        upd.eventHandler = {
-            self.Update()
-        }
-        upd.resume()
+//        upd.eventHandler = {
+//            self.Update()
+//        }
+//        upd.resume()
+        
+        newUpdateTimer( timeInterval: 1 / Double(fps) )
+        
 //        #endif
     }
 
@@ -958,22 +969,50 @@ class ViewController: NSViewController  {
         
     }
     
-    @IBAction func setCPUMode(_ sender: NSButton) {
-        switch ( sender.title ) {
-            case "Eco":
-                cpuMode = cpuMode_eco
-                break
+    
+    func setSimulationMode( mode : String ) {
+        switch ( mode ) {
+        case "Eco":
+            cpuMode = cpuMode_eco
 
-            case "Game":
-                cpuMode = cpuMode_game
-                cpuState = cpuState_running
-                break
-                
-            default:
-                cpuMode = cpuMode_normal
-                cpuState = cpuState_running
-                break
+            fps = DEFAULT_FPS
+            spkr_fps = DEFAULT_FPS
+            video_fps_divider = DEF_VIDEO_DIV
+
+            break
+            
+        case "Game":
+            cpuMode = cpuMode_game
+            cpuState = cpuState_running
+
+            fps = GAME_FPS
+            spkr_fps = GAME_FPS
+            video_fps_divider = GAME_VIDEO_DIV
+
+            break
+            
+        default:
+            cpuMode = cpuMode_normal
+            cpuState = cpuState_running
+            
+            fps = DEFAULT_FPS
+            spkr_fps = DEFAULT_FPS
+            video_fps_divider = DEF_VIDEO_DIV
+
+            break
         }
+        
+        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
+        newUpdateTimer( timeInterval: 1 / Double(fps) )
+        setCPUClockSpeed(freq: MHz_6502)
+        
+        // TODO: Better way to deal with speaker!!!
+        spkr_play_timeout = 8 * video_fps_divider
+    }
+    
+    
+    @IBAction func setCPUMode(_ sender: NSButton) {
+        setSimulationMode(mode: sender.title )
     }
     
     @IBOutlet weak var SoundGap: NSTextFieldCell!

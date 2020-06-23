@@ -44,6 +44,7 @@ volatile cpuState_s cpuState = cpuState_unknown;
 const unsigned long long int iterations = G;
 unsigned long long int inst_cnt = 0;
 
+unsigned int video_fps_divider = DEF_VIDEO_DIV;
 unsigned int fps = DEFAULT_FPS;
 
 const double default_MHz_6502 = 1.023; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;

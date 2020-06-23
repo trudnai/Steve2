@@ -56,7 +56,7 @@ ALCcontext *ctx = NULL;
 int spkr_level = SPKR_LEVEL_ZERO;
 
 
-#define BUFFER_COUNT 64
+#define BUFFER_COUNT 256
 #define SOURCES_COUNT 4
 
 enum {
@@ -74,17 +74,18 @@ ALuint spkr_disk_arm_buf = 0;
 ALuint spkr_disk_ioerr_buf = 0;
 
 
-const int spkr_fps = 30;
-const int spkr_seconds = 1;
+unsigned spkr_fps = DEFAULT_FPS;
+const unsigned spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
 const unsigned sfx_sample_rate =  22050; // original sample rate
 //const unsigned sfx_sample_rate =  26000; // bit higher pitch
 int spkr_extra_buf = 0; // 800 / spkr_fps;
-const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * 2 / spkr_fps;
-int16_t spkr_samples [ spkr_buf_size * spkr_fps * BUFFER_COUNT * 2]; // stereo
+const unsigned spkr_buf_alloc_size = spkr_seconds * spkr_sample_rate * 2 / DEFAULT_FPS;
+unsigned spkr_buf_size = spkr_buf_alloc_size;
+int16_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT * 2]; // stereo
 unsigned spkr_sample_idx = 0;
 
-const unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps, normally 8 for 30 fps
+unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps, normally 8 for 30 fps
 unsigned spkr_play_time = 0;
 unsigned spkr_play_disk_motor_time = 0;
 unsigned spkr_play_disk_arm_time = 0;
@@ -259,7 +260,7 @@ char spkr_state = 0;
 void spkr_toggle() {
     // TODO: This is very slow!
     
-    spkr_play_time = 0;
+//    spkr_play_time = 0;
     
     if ( diskAccelerator_count ) {
         // turn off disk acceleration immediately
@@ -339,6 +340,8 @@ int spkr_unqueue( ALuint src ) {
     return processed;
 }
 
+int playDelay = 4;
+
 void spkr_update() {
     if ( spkr_play_time ) {
         // free up unused buffers
@@ -347,9 +350,6 @@ void spkr_update() {
 
         if ( freeBuffers ) {
         
-            ALenum state;
-            alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
-    //        al_check_error();
 
             if ( --spkr_play_time == 0 ) {
                 float fadeLevel = spkr_level - SPKR_LEVEL_ZERO;
@@ -384,9 +384,16 @@ void spkr_update() {
                 al_check_error();
             }
             
+            ALenum state;
+            alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
+//            al_check_error();
+            
             switch (state) {
                 case AL_PAUSED:
-                    alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+                    if ( --playDelay <= 0 ) {
+                        alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+                        playDelay = 4;
+                    }
                     break;
 
                 case AL_PLAYING:
@@ -407,7 +414,7 @@ void spkr_update() {
         }
         
         // start from the beginning
-        spkr_sample_idx = 0;
+//        spkr_sample_idx = 0;
 
     }
     

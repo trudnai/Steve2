@@ -570,25 +570,28 @@
          contextName = "ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
+               value = "clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "textLines * (textCols+1) + textCols">
+            </PersistentString>
+            <PersistentString
+               value = "txtArr">
+            </PersistentString>
+            <PersistentString
                value = "y * (textCols + lineEndChars) + x ">
             </PersistentString>
             <PersistentString
                value = "textCols">
             </PersistentString>
             <PersistentString
-               value = "textLines * (textCols+1) + textCols">
+               value = "mouseLocation">
             </PersistentString>
             <PersistentString
                value = "textLines">
             </PersistentString>
             <PersistentString
-               value = "mouseLocation">
-            </PersistentString>
-            <PersistentString
-               value = "clkfrm">
-            </PersistentString>
-            <PersistentString
-               value = "txtArr">
+               value = "frameCounter">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

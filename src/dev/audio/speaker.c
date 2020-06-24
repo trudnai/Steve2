@@ -74,7 +74,11 @@ ALuint spkr_disk_arm_buf = 0;
 ALuint spkr_disk_ioerr_buf = 0;
 
 
-unsigned spkr_fps = DEFAULT_FPS;
+const unsigned spkr_fps = DEFAULT_FPS;
+unsigned spkr_fps_divider = 1;
+unsigned spkr_frame_cntr = 0;
+unsigned spkr_clk = 0;
+
 const unsigned spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
 const unsigned sfx_sample_rate =  22050; // original sample rate
@@ -274,7 +278,7 @@ void spkr_toggle() {
         
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
-        spkr_sample_idx = (clkfrm / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * 2;
+        spkr_sample_idx = ( (spkr_clk + clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * 2;
         
         if ( spkr_state ) {
             // down edge
@@ -316,7 +320,7 @@ void spkr_toggle() {
         for ( int i = spkr_sample_idx; i < spkr_buf_size + spkr_extra_buf; i++ ) {
             spkr_samples[i] = spkr_level;
         }
-    //    memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size * sizeof(spkr_samples[0]));
+//        memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size * sizeof(spkr_samples[0]));
         
     }
 }
@@ -342,82 +346,90 @@ int spkr_unqueue( ALuint src ) {
 
 int playDelay = 4;
 
+
 void spkr_update() {
-    if ( spkr_play_time ) {
-        // free up unused buffers
-        freeBuffers += spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );
-        freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
-
-        if ( freeBuffers ) {
+    if ( ++spkr_frame_cntr >= spkr_fps_divider ) {
+        spkr_frame_cntr = 0;
         
+        if ( spkr_play_time ) {
+            // free up unused buffers
+            freeBuffers += spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );
+            freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
 
-            if ( --spkr_play_time == 0 ) {
-                float fadeLevel = spkr_level - SPKR_LEVEL_ZERO;
-                
-                if ( spkr_level != SPKR_LEVEL_ZERO ) {
-                    spkr_sample_idx = 0;
+            if ( freeBuffers ) {
 
-                    while ( ( fadeLevel < -1 ) || ( fadeLevel > 1 ) ) {
-                        spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
-                        spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
-                        
-                        // how smooth we want the speeker to decay, so we will hear no pops and crackles
-                        fadeLevel *= 0.999;
+                if ( --spkr_play_time == 0 ) {
+                    float fadeLevel = spkr_level - SPKR_LEVEL_ZERO;
+                    
+                    if ( spkr_level != SPKR_LEVEL_ZERO ) {
+                        spkr_sample_idx = 0;
+
+                        while ( ( fadeLevel < -1 ) || ( fadeLevel > 1 ) ) {
+                            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
+                            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
+                            
+                            // how smooth we want the speeker to decay, so we will hear no pops and crackles
+                            fadeLevel *= 0.999;
+                        }
+                        spkr_level = SPKR_LEVEL_ZERO;
+
+                        //spkr_samples[sample_idx] = spkr_level;
+                        memset(spkr_samples + spkr_sample_idx, SPKR_LEVEL_ZERO, spkr_extra_buf * sizeof(spkr_samples[0]));
+
+                        freeBuffers--;
+                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_samples[0]), spkr_sample_rate);
+                        al_check_error();
+                        alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
+                        al_check_error();
                     }
-                    spkr_level = SPKR_LEVEL_ZERO;
-
-                    //spkr_samples[sample_idx] = spkr_level;
-                    memset(spkr_samples + spkr_sample_idx, SPKR_LEVEL_ZERO, spkr_extra_buf * sizeof(spkr_samples[0]));
-
+                }
+                else {
                     freeBuffers--;
-                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_samples[0]), spkr_sample_rate);
+                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_samples[0]), spkr_sample_rate);
                     al_check_error();
                     alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                     al_check_error();
                 }
-            }
-            else {
-                freeBuffers--;
-                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_samples[0]), spkr_sample_rate);
-                al_check_error();
-                alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
-                al_check_error();
-            }
-            
-            ALenum state;
-            alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
-//            al_check_error();
-            
-            switch (state) {
-                case AL_PAUSED:
-                    if ( --playDelay <= 0 ) {
-                        alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
-                        playDelay = 4;
-                    }
-                    break;
+                
+                ALenum state;
+                alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
+    //            al_check_error();
+                
+                switch (state) {
+                    case AL_PAUSED:
+                        if ( --playDelay <= 0 ) {
+                            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+                            playDelay = 4;
+                        }
+                        break;
 
-                case AL_PLAYING:
-                    // already playing
-                    break;
-                    
-                default:
-                    alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
-                    alSourcePause(spkr_src[SPKR_SRC_GAME_SFX]);
-                    break;
+                    case AL_PLAYING:
+                        // already playing
+                        break;
+                        
+                    default:
+                        alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+                        alSourcePause(spkr_src[SPKR_SRC_GAME_SFX]);
+                        break;
+                }
+                
+                // clear the slack buffer , so we can fill it up by new data
+                for ( int i = 0; i < spkr_buf_size + spkr_extra_buf; i++ ) {
+                    spkr_samples[i] = spkr_level;
+                }
+                
             }
             
-            // clear the slack buffer , so we can fill it up by new data
-            for ( int i = 0; i < spkr_buf_size + spkr_extra_buf; i++ ) {
-                spkr_samples[i] = spkr_level;
-            }
-            
+            // start from the beginning
+    //        spkr_sample_idx = 0;
+
         }
         
-        // start from the beginning
-//        spkr_sample_idx = 0;
-
+        spkr_clk = 0;
     }
-    
+    else {
+        spkr_clk += clkfrm;
+    }
 }
 
 

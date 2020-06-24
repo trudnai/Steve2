@@ -976,9 +976,7 @@ class ViewController: NSViewController  {
             cpuMode = cpuMode_eco
 
             fps = DEFAULT_FPS
-            spkr_fps = DEFAULT_FPS
             video_fps_divider = DEF_VIDEO_DIV
-
             break
             
         case "Game":
@@ -986,9 +984,7 @@ class ViewController: NSViewController  {
             cpuState = cpuState_running
 
             fps = GAME_FPS
-            spkr_fps = GAME_FPS
             video_fps_divider = GAME_VIDEO_DIV
-
             break
             
         default:
@@ -996,13 +992,14 @@ class ViewController: NSViewController  {
             cpuState = cpuState_running
             
             fps = DEFAULT_FPS
-            spkr_fps = DEFAULT_FPS
             video_fps_divider = DEF_VIDEO_DIV
-
             break
         }
-        
-        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
+
+        spkr_fps_divider = fps / spkr_fps
+        spkr_play_timeout = 8 * spkr_fps_divider
+
+//        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
         newUpdateTimer( timeInterval: 1 / Double(fps) )
         setCPUClockSpeed(freq: MHz_6502)
         

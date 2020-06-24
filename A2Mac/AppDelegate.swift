@@ -17,13 +17,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let menuIdentifier = sender.identifier {
 //            rom_loadFile( Bundle.main.resourcePath, menuIdentifier.rawValue + ".rom" )
             ViewController.romFileName = menuIdentifier.rawValue + ".rom"
-            m6502_ColdReset( Bundle.main.resourcePath, ViewController.romFileName )
+//            print("Resource Path: " + Bundle.main.resourcePath!)
+            m6502_ColdReset( Bundle.main.resourcePath! + "/rom/", ViewController.romFileName )
         }
     }
     
     @IBAction func Disk1_Selected(_ sender: NSMenuItem) {
         if let menuIdentifier = sender.identifier {
-            let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/" + menuIdentifier.rawValue + ".woz" )
+            let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/" + menuIdentifier.rawValue + ".woz" )
             ViewController.current?.chk_woz_load(err: woz_err)
         }
     }

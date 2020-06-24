@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "32BFFB5622EACC630003B53F"
-               BuildableName = "A2Mac.app"
-               BlueprintName = "A2Mac"
+               BuildableName = "Steve ][.app"
+               BlueprintName = "Steve ]["
                ReferencedContainer = "container:A2Mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,8 +31,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "32BFFB5622EACC630003B53F"
-            BuildableName = "A2Mac.app"
-            BlueprintName = "A2Mac"
+            BuildableName = "Steve ][.app"
+            BlueprintName = "Steve ]["
             ReferencedContainer = "container:A2Mac.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -68,14 +68,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
+      enableGPUValidationMode = "1"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "32BFFB5622EACC630003B53F"
-            BuildableName = "A2Mac.app"
-            BlueprintName = "A2Mac"
+            BuildableName = "Steve ][.app"
+            BlueprintName = "Steve ]["
             ReferencedContainer = "container:A2Mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -91,8 +92,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "32BFFB5622EACC630003B53F"
-            BuildableName = "A2Mac.app"
-            BlueprintName = "A2Mac"
+            BuildableName = "Steve ][.app"
+            BlueprintName = "Steve ]["
             ReferencedContainer = "container:A2Mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

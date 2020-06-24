@@ -7,47 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		32089E4824556DBD0036E667 /* PRNumber3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		32089E4924556DBD0036E667 /* PRNumber3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		3213936624079C30007F5C4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		323D042E248980600086A901 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
 		323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D04312489BFD80086A901 /* PreferencesWindowController.swift */; };
 		323D0437248B6BEA0086A901 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
-		323D043E248F70930086A901 /* diskmotor.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 323D043D248F70930086A901 /* diskmotor.sfx */; };
-		323D0440248F70A10086A901 /* diskioerr.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 323D043F248F70A10086A901 /* diskioerr.sfx */; };
-		323D0442248F711F0086A901 /* diskarm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 323D0441248F711F0086A901 /* diskarm.sfx */; };
-		323D04442490B3930086A901 /* dotmatrix_effect.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D04432490B3930086A901 /* dotmatrix_effect.png */; };
-		323D04462490BA1E0086A901 /* scanlines.png in Resources */ = {isa = PBXBuildFile; fileRef = 323D04452490BA1E0086A901 /* scanlines.png */; };
-		323E2DCE245531E600156805 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
+		323D04442490B3930086A901 /* dotmatrix_effect.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04432490B3930086A901 /* dotmatrix_effect.png */; };
 		323E2DCF245531E600156805 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
-		323E2DD0245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
 		323E2DD1245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
-		32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
-		32440B64247C9C9C000F9DA1 /* merlin_assembler_1.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B61247C9C2D000F9DA1 /* merlin_assembler_1.woz */; };
-		32440B65247C9C9C000F9DA1 /* merlin_assembler_2.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B62247C9C2D000F9DA1 /* merlin_assembler_2.woz */; };
-		32440B66247C9C9C000F9DA1 /* merlin_assembler_3.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B63247C9C2D000F9DA1 /* merlin_assembler_3.woz */; };
-		32440B75247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B72247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz */; };
-		32440B76247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */; };
-		32440B77247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B74247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz */; };
-		32440B79247CB2B2000F9DA1 /* Merlin Pro v1.34.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B78247CB2B2000F9DA1 /* Merlin Pro v1.34.woz */; };
-		32440B7C247CB649000F9DA1 /* Merlin Macroassembler Side 2 (SDS, 1983).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7A247CB649000F9DA1 /* Merlin Macroassembler Side 2 (SDS, 1983).woz */; };
-		32440B7D247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */; };
-		32440B80247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */; };
-		32440B81247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */; };
-		32440B83247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */; };
 		32440B85247E27D7000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
-		32440B8F247F86D6000F9DA1 /* Apple II+ Dealer Diagnostics.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B86247F86D4000F9DA1 /* Apple II+ Dealer Diagnostics.woz */; };
-		32440B90247F86D6000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B87247F86D5000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz */; };
-		32440B91247F86D6000F9DA1 /* COMPUTER_CHECKUP.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B88247F86D5000F9DA1 /* COMPUTER_CHECKUP.woz */; };
-		32440B92247F86D6000F9DA1 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B89247F86D5000F9DA1 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz */; };
-		32440B93247F86D6000F9DA1 /* Apple II Dealer Diagnostics Cracked.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B8A247F86D5000F9DA1 /* Apple II Dealer Diagnostics Cracked.woz */; };
-		32440B94247F86D6000F9DA1 /* XPS Diagnostic IIe.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B8B247F86D5000F9DA1 /* XPS Diagnostic IIe.woz */; };
-		32440B95247F86D6000F9DA1 /* Apple II Dealer Diagnostics.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B8C247F86D5000F9DA1 /* Apple II Dealer Diagnostics.woz */; };
-		32440B96247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B8D247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz */; };
-		32440B97247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B8E247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz */; };
-		32440B9D247F9DC7000F9DA1 /* blank.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440B9C247F9DC7000F9DA1 /* blank.woz */; };
-		32440BA1247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */; };
 		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
 		325EB62F23F8856F00C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
 		325EB63623F8F78300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
@@ -64,37 +33,22 @@
 		325EB67623FBC44400C6B4A4 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
 		325EB67723FBC45300C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
 		325EB67823FBC45300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
-		325EB67C23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		325EB67D23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		325EB67E23FBDEE700C6B4A4 /* apple.rom in Resources */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
-		325EB68023FBDF8F00C6B4A4 /* Apple2Plus.rom in Resources */ = {isa = PBXBuildFile; fileRef = 325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */; };
 		325EB68123FBDF8F00C6B4A4 /* Apple2Plus.rom in Resources */ = {isa = PBXBuildFile; fileRef = 325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */; };
-		325EB68323FBDFBB00C6B4A4 /* DISK_II_C600.ROM in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */; };
 		325EB68423FBDFBB00C6B4A4 /* DISK_II_C600.ROM in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */; };
-		325EB68623FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68523FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz */; };
 		325EB68723FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68523FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz */; };
-		325EB68923FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68823FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz */; };
 		325EB68A23FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68823FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz */; };
-		325EB68C23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68B23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz */; };
 		325EB68D23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68B23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz */; };
-		325EB69023FE028800C6B4A4 /* Donkey Kong.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68F23FE028800C6B4A4 /* Donkey Kong.woz */; };
 		325EB69123FE028800C6B4A4 /* Donkey Kong.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB68F23FE028800C6B4A4 /* Donkey Kong.woz */; };
 		325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DBF7632334657900DD50E7 /* HiRes.swift */; };
-		325EB69D2401118300C6B4A4 /* Lode Runner.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6942401118200C6B4A4 /* Lode Runner.woz */; };
 		325EB69E2401118300C6B4A4 /* Lode Runner.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6942401118200C6B4A4 /* Lode Runner.woz */; };
-		325EB69F2401118300C6B4A4 /* Crossfire.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6952401118200C6B4A4 /* Crossfire.woz */; };
 		325EB6A02401118300C6B4A4 /* Crossfire.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6952401118200C6B4A4 /* Crossfire.woz */; };
-		325EB6A12401118300C6B4A4 /* Wavy Navy.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6962401118200C6B4A4 /* Wavy Navy.woz */; };
 		325EB6A22401118300C6B4A4 /* Wavy Navy.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6962401118200C6B4A4 /* Wavy Navy.woz */; };
-		325EB6A32401118300C6B4A4 /* Qbit.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* Qbit.woz */; };
 		325EB6A42401118300C6B4A4 /* Qbit.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* Qbit.woz */; };
-		325EB6A52401118300C6B4A4 /* ProDOS_312.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6982401118200C6B4A4 /* ProDOS_312.woz */; };
 		325EB6A62401118300C6B4A4 /* ProDOS_312.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6982401118200C6B4A4 /* ProDOS_312.woz */; };
-		325EB6A72401118300C6B4A4 /* ProDOS_402_System.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */; };
 		325EB6A82401118300C6B4A4 /* ProDOS_402_System.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */; };
-		325EB6A92401118300C6B4A4 /* Sneakers.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
 		325EB6AA2401118300C6B4A4 /* Sneakers.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
-		325EB6AB2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32A9F74B2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
@@ -119,8 +73,54 @@
 		32C4532E233345430000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C4532F233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C45330233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
-		32E21BE72491BF8C006C0C72 /* apple-rainbow.png in Resources */ = {isa = PBXBuildFile; fileRef = 32E21BE62491BF8B006C0C72 /* apple-rainbow.png */; };
-		32F2C145249218A400FDC61B /* locksmith_v6.0.woz in Resources */ = {isa = PBXBuildFile; fileRef = 32F2C144249218A400FDC61B /* locksmith_v6.0.woz */; };
+		32F8A87C24A3A84300EE6735 /* PrintChar21.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
+		32F8A87D24A3A84700EE6735 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
+		32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
+		32F8A88024A3A8A300EE6735 /* Apple2e_Enhanced.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
+		32F8A88124A3A8A600EE6735 /* Apple2e.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
+		32F8A88224A3A8AA00EE6735 /* Apple2Plus.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */; };
+		32F8A88324A3A8B200EE6735 /* DISK_II_C600.ROM in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */; };
+		32F8A88524A3A91100EE6735 /* blank.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B9C247F9DC7000F9DA1 /* blank.woz */; };
+		32F8A88624A3A91400EE6735 /* Apple DOS 3.3 January 1983.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68523FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz */; };
+		32F8A88824A3A98D00EE6735 /* Hard Hat Mack - Disk 1, Side A.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68823FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz */; };
+		32F8A88924A3A98D00EE6735 /* Merlin Pro v1.34.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B78247CB2B2000F9DA1 /* Merlin Pro v1.34.woz */; };
+		32F8A88A24A3A98D00EE6735 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */; };
+		32F8A88B24A3A98D00EE6735 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */; };
+		32F8A88C24A3A98D00EE6735 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */; };
+		32F8A88D24A3A98D00EE6735 /* Merlin Macroassembler Side 2 (SDS, 1983).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7A247CB649000F9DA1 /* Merlin Macroassembler Side 2 (SDS, 1983).woz */; };
+		32F8A88E24A3A98D00EE6735 /* Merlin-8 v2.48 (DOS 3.3).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68B23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz */; };
+		32F8A88F24A3A98D00EE6735 /* Crossfire.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6952401118200C6B4A4 /* Crossfire.woz */; };
+		32F8A89024A3A98D00EE6735 /* Lode Runner.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6942401118200C6B4A4 /* Lode Runner.woz */; };
+		32F8A89124A3A98D00EE6735 /* ProDOS_312.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6982401118200C6B4A4 /* ProDOS_312.woz */; };
+		32F8A89224A3A98D00EE6735 /* Donkey Kong.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68F23FE028800C6B4A4 /* Donkey Kong.woz */; };
+		32F8A89324A3A98D00EE6735 /* ProDOS_402_System.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */; };
+		32F8A89424A3A98D00EE6735 /* Qbit.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* Qbit.woz */; };
+		32F8A89524A3A98D00EE6735 /* Sneakers.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
+		32F8A89624A3A98D00EE6735 /* Wavy Navy.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6962401118200C6B4A4 /* Wavy Navy.woz */; };
+		32F8A89724A3A98D00EE6735 /* Wavy Navy (4am crack).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */; };
+		32F8A89824A3A98D00EE6735 /* Xonix.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
+		32F8A89924A3A98D00EE6735 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */; };
+		32F8A89A24A3A98D00EE6735 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B74247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz */; };
+		32F8A89B24A3A98D00EE6735 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B72247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz */; };
+		32F8A89C24A3A98D00EE6735 /* merlin_assembler_1.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B61247C9C2D000F9DA1 /* merlin_assembler_1.woz */; };
+		32F8A89D24A3A98D00EE6735 /* merlin_assembler_2.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B62247C9C2D000F9DA1 /* merlin_assembler_2.woz */; };
+		32F8A89E24A3A98D00EE6735 /* merlin_assembler_3.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B63247C9C2D000F9DA1 /* merlin_assembler_3.woz */; };
+		32F8A89F24A3A98D00EE6735 /* Apple ][ Dealer Service Programs.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8E247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz */; };
+		32F8A8A024A3A98D00EE6735 /* Apple II Dealer Diagnostics Cracked.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8A247F86D5000F9DA1 /* Apple II Dealer Diagnostics Cracked.woz */; };
+		32F8A8A124A3A98D00EE6735 /* Apple II Dealer Diagnostics.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8C247F86D5000F9DA1 /* Apple II Dealer Diagnostics.woz */; };
+		32F8A8A224A3A98D00EE6735 /* Apple II+ Dealer Diagnostics.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B86247F86D4000F9DA1 /* Apple II+ Dealer Diagnostics.woz */; };
+		32F8A8A324A3A98D00EE6735 /* Apple II+ Products diagnostic 652-0334.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8D247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz */; };
+		32F8A8A424A3A98D00EE6735 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B89247F86D5000F9DA1 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz */; };
+		32F8A8A524A3A98D00EE6735 /* COMPUTER_CHECKUP.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B88247F86D5000F9DA1 /* COMPUTER_CHECKUP.woz */; };
+		32F8A8A624A3A98D00EE6735 /* XPS Diagnostic IIe 1.0.5.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B87247F86D5000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz */; };
+		32F8A8A724A3A98D00EE6735 /* XPS Diagnostic IIe.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8B247F86D5000F9DA1 /* XPS Diagnostic IIe.woz */; };
+		32F8A8A824A3A98D00EE6735 /* LOCKSMITH_V7_REV_B.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */; };
+		32F8A8A924A3A98D00EE6735 /* locksmith_v6.0.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32F2C144249218A400FDC61B /* locksmith_v6.0.woz */; };
+		32F8A8AB24A3AAD300EE6735 /* diskmotor.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 323D043D248F70930086A901 /* diskmotor.sfx */; };
+		32F8A8AC24A3AAD300EE6735 /* diskarm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 323D0441248F711F0086A901 /* diskarm.sfx */; };
+		32F8A8AD24A3AAD300EE6735 /* diskioerr.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 323D043F248F70A10086A901 /* diskioerr.sfx */; };
+		32F8A8AF24A3AB5900EE6735 /* apple-rainbow.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32E21BE62491BF8B006C0C72 /* apple-rainbow.png */; };
+		32F8A8B024A3AB5D00EE6735 /* scanlines.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04452490BA1E0086A901 /* scanlines.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,6 +153,108 @@
 			remoteInfo = A2Mac;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		32F8A87B24A3A81900EE6735 /* Copy Font Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = fnt;
+			dstSubfolderSpec = 7;
+			files = (
+				32F8A87C24A3A84300EE6735 /* PrintChar21.ttf in Copy Font Files */,
+				32F8A87D24A3A84700EE6735 /* PRNumber3.ttf in Copy Font Files */,
+			);
+			name = "Copy Font Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32F8A87E24A3A87B00EE6735 /* Copy ROM Images */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = rom;
+			dstSubfolderSpec = 7;
+			files = (
+				32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */,
+				32F8A88024A3A8A300EE6735 /* Apple2e_Enhanced.rom in Copy ROM Images */,
+				32F8A88124A3A8A600EE6735 /* Apple2e.rom in Copy ROM Images */,
+				32F8A88224A3A8AA00EE6735 /* Apple2Plus.rom in Copy ROM Images */,
+				32F8A88324A3A8B200EE6735 /* DISK_II_C600.ROM in Copy ROM Images */,
+			);
+			name = "Copy ROM Images";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32F8A88424A3A8CF00EE6735 /* Copy Disk Images */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = dsk;
+			dstSubfolderSpec = 7;
+			files = (
+				32F8A88524A3A91100EE6735 /* blank.woz in Copy Disk Images */,
+				32F8A88624A3A91400EE6735 /* Apple DOS 3.3 January 1983.woz in Copy Disk Images */,
+				32F8A88824A3A98D00EE6735 /* Hard Hat Mack - Disk 1, Side A.woz in Copy Disk Images */,
+				32F8A88924A3A98D00EE6735 /* Merlin Pro v1.34.woz in Copy Disk Images */,
+				32F8A88A24A3A98D00EE6735 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Copy Disk Images */,
+				32F8A88B24A3A98D00EE6735 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Copy Disk Images */,
+				32F8A88C24A3A98D00EE6735 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Copy Disk Images */,
+				32F8A88D24A3A98D00EE6735 /* Merlin Macroassembler Side 2 (SDS, 1983).woz in Copy Disk Images */,
+				32F8A88E24A3A98D00EE6735 /* Merlin-8 v2.48 (DOS 3.3).woz in Copy Disk Images */,
+				32F8A88F24A3A98D00EE6735 /* Crossfire.woz in Copy Disk Images */,
+				32F8A89024A3A98D00EE6735 /* Lode Runner.woz in Copy Disk Images */,
+				32F8A89124A3A98D00EE6735 /* ProDOS_312.woz in Copy Disk Images */,
+				32F8A89224A3A98D00EE6735 /* Donkey Kong.woz in Copy Disk Images */,
+				32F8A89324A3A98D00EE6735 /* ProDOS_402_System.woz in Copy Disk Images */,
+				32F8A89424A3A98D00EE6735 /* Qbit.woz in Copy Disk Images */,
+				32F8A89524A3A98D00EE6735 /* Sneakers.woz in Copy Disk Images */,
+				32F8A89624A3A98D00EE6735 /* Wavy Navy.woz in Copy Disk Images */,
+				32F8A89724A3A98D00EE6735 /* Wavy Navy (4am crack).woz in Copy Disk Images */,
+				32F8A89824A3A98D00EE6735 /* Xonix.woz in Copy Disk Images */,
+				32F8A89924A3A98D00EE6735 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Copy Disk Images */,
+				32F8A89A24A3A98D00EE6735 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz in Copy Disk Images */,
+				32F8A89B24A3A98D00EE6735 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz in Copy Disk Images */,
+				32F8A89C24A3A98D00EE6735 /* merlin_assembler_1.woz in Copy Disk Images */,
+				32F8A89D24A3A98D00EE6735 /* merlin_assembler_2.woz in Copy Disk Images */,
+				32F8A89E24A3A98D00EE6735 /* merlin_assembler_3.woz in Copy Disk Images */,
+				32F8A89F24A3A98D00EE6735 /* Apple ][ Dealer Service Programs.woz in Copy Disk Images */,
+				32F8A8A024A3A98D00EE6735 /* Apple II Dealer Diagnostics Cracked.woz in Copy Disk Images */,
+				32F8A8A124A3A98D00EE6735 /* Apple II Dealer Diagnostics.woz in Copy Disk Images */,
+				32F8A8A224A3A98D00EE6735 /* Apple II+ Dealer Diagnostics.woz in Copy Disk Images */,
+				32F8A8A324A3A98D00EE6735 /* Apple II+ Products diagnostic 652-0334.woz in Copy Disk Images */,
+				32F8A8A424A3A98D00EE6735 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz in Copy Disk Images */,
+				32F8A8A524A3A98D00EE6735 /* COMPUTER_CHECKUP.woz in Copy Disk Images */,
+				32F8A8A624A3A98D00EE6735 /* XPS Diagnostic IIe 1.0.5.woz in Copy Disk Images */,
+				32F8A8A724A3A98D00EE6735 /* XPS Diagnostic IIe.woz in Copy Disk Images */,
+				32F8A8A824A3A98D00EE6735 /* LOCKSMITH_V7_REV_B.woz in Copy Disk Images */,
+				32F8A8A924A3A98D00EE6735 /* locksmith_v6.0.woz in Copy Disk Images */,
+			);
+			name = "Copy Disk Images";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32F8A8AA24A3AA7300EE6735 /* Copy SFX Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = sfx;
+			dstSubfolderSpec = 7;
+			files = (
+				32F8A8AB24A3AAD300EE6735 /* diskmotor.sfx in Copy SFX Files */,
+				32F8A8AC24A3AAD300EE6735 /* diskarm.sfx in Copy SFX Files */,
+				32F8A8AD24A3AAD300EE6735 /* diskioerr.sfx in Copy SFX Files */,
+			);
+			name = "Copy SFX Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32F8A8AE24A3AB2600EE6735 /* Copy Image Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				323D04442490B3930086A901 /* dotmatrix_effect.png in Copy Image Files */,
+				32F8A8AF24A3AB5900EE6735 /* apple-rainbow.png in Copy Image Files */,
+				32F8A8B024A3AB5D00EE6735 /* scanlines.png in Copy Image Files */,
+			);
+			name = "Copy Image Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		32089E4724556DBD0036E667 /* PRNumber3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PRNumber3.ttf; sourceTree = "<group>"; };
@@ -218,7 +320,7 @@
 		325EB63423F8F78300C6B4A4 /* disk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disk.h; sourceTree = "<group>"; };
 		325EB63523F8F78300C6B4A4 /* disk.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = disk.c; sourceTree = "<group>"; };
 		325EB63823F9E48100C6B4A4 /* common.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = common.c; sourceTree = "<group>"; };
-		325EB64023FBBACF00C6B4A4 /* A2iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A2iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		325EB64023FBBACF00C6B4A4 /* Steve ][ iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][ iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		325EB64223FBBACF00C6B4A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		325EB64423FBBACF00C6B4A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		325EB64623FBBACF00C6B4A4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -256,7 +358,7 @@
 		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
 		32B18435233F10BC00DBB4AB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		32B18438233FAB3900DBB4AB /* verticies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verticies.swift; sourceTree = "<group>"; };
-		32BFFB5722EACC630003B53F /* A2Mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A2Mac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		32BFFB5722EACC630003B53F /* Steve ][.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BFFB5A22EACC630003B53F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32BFFB5C22EACC630003B53F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		32BFFB5E22EACC660003B53F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -547,13 +649,11 @@
 		3262F37823E17013008BDB95 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				32F8A8B124A3AE1600EE6735 /* img */,
 				323D043C248F6EDA0086A901 /* font */,
 				323D043A248F6E840086A901 /* dsk */,
 				323D043B248F6EBE0086A901 /* rom */,
 				323D0438248F6E560086A901 /* sfx */,
-				32E21BE62491BF8B006C0C72 /* apple-rainbow.png */,
-				323D04432490B3930086A901 /* dotmatrix_effect.png */,
-				323D04452490BA1E0086A901 /* scanlines.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -596,12 +696,12 @@
 		32BFFB5822EACC630003B53F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				32BFFB5722EACC630003B53F /* A2Mac.app */,
+				32BFFB5722EACC630003B53F /* Steve ][.app */,
 				32BFFB6922EACC660003B53F /* A2MacTests.xctest */,
 				32BFFB7422EACC660003B53F /* A2MacUITests.xctest */,
 				32C453192331F7220000EBA1 /* Speedtest.app */,
 				32C4532B2331FED90000EBA1 /* Functiontest.app */,
-				325EB64023FBBACF00C6B4A4 /* A2iOS.app */,
+				325EB64023FBBACF00C6B4A4 /* Steve ][ iOS.app */,
 				325EB65523FBBAD100C6B4A4 /* A2iOSTests.xctest */,
 				325EB66023FBBAD100C6B4A4 /* A2iOSUITests.xctest */,
 			);
@@ -651,12 +751,22 @@
 			path = A2MacUITests;
 			sourceTree = "<group>";
 		};
+		32F8A8B124A3AE1600EE6735 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				32E21BE62491BF8B006C0C72 /* apple-rainbow.png */,
+				323D04432490B3930086A901 /* dotmatrix_effect.png */,
+				323D04452490BA1E0086A901 /* scanlines.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		325EB63F23FBBACF00C6B4A4 /* A2iOS */ = {
+		325EB63F23FBBACF00C6B4A4 /* Steve ][ iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 325EB66723FBBAD100C6B4A4 /* Build configuration list for PBXNativeTarget "A2iOS" */;
+			buildConfigurationList = 325EB66723FBBAD100C6B4A4 /* Build configuration list for PBXNativeTarget "Steve ][ iOS" */;
 			buildPhases = (
 				325EB63C23FBBACF00C6B4A4 /* Sources */,
 				325EB63D23FBBACF00C6B4A4 /* Frameworks */,
@@ -666,9 +776,9 @@
 			);
 			dependencies = (
 			);
-			name = A2iOS;
+			name = "Steve ][ iOS";
 			productName = A2iOS;
-			productReference = 325EB64023FBBACF00C6B4A4 /* A2iOS.app */;
+			productReference = 325EB64023FBBACF00C6B4A4 /* Steve ][ iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		325EB65423FBBAD100C6B4A4 /* A2iOSTests */ = {
@@ -707,21 +817,26 @@
 			productReference = 325EB66023FBBAD100C6B4A4 /* A2iOSUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		32BFFB5622EACC630003B53F /* A2Mac */ = {
+		32BFFB5622EACC630003B53F /* Steve ][ */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 32BFFB7D22EACC660003B53F /* Build configuration list for PBXNativeTarget "A2Mac" */;
+			buildConfigurationList = 32BFFB7D22EACC660003B53F /* Build configuration list for PBXNativeTarget "Steve ][" */;
 			buildPhases = (
 				32BFFB5322EACC630003B53F /* Sources */,
 				32BFFB5422EACC630003B53F /* Frameworks */,
 				32BFFB5522EACC630003B53F /* Resources */,
+				32F8A87B24A3A81900EE6735 /* Copy Font Files */,
+				32F8A87E24A3A87B00EE6735 /* Copy ROM Images */,
+				32F8A88424A3A8CF00EE6735 /* Copy Disk Images */,
+				32F8A8AA24A3AA7300EE6735 /* Copy SFX Files */,
+				32F8A8AE24A3AB2600EE6735 /* Copy Image Files */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = A2Mac;
+			name = "Steve ][";
 			productName = A2Mac;
-			productReference = 32BFFB5722EACC630003B53F /* A2Mac.app */;
+			productReference = 32BFFB5722EACC630003B53F /* Steve ][.app */;
 			productType = "com.apple.product-type.application";
 		};
 		32BFFB6822EACC660003B53F /* A2MacTests */ = {
@@ -842,12 +957,12 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				32BFFB5622EACC630003B53F /* A2Mac */,
+				32BFFB5622EACC630003B53F /* Steve ][ */,
 				32BFFB6822EACC660003B53F /* A2MacTests */,
 				32BFFB7322EACC660003B53F /* A2MacUITests */,
 				32C453092331F7220000EBA1 /* Speedtest */,
 				32C4531B2331FED90000EBA1 /* Functiontest */,
-				325EB63F23FBBACF00C6B4A4 /* A2iOS */,
+				325EB63F23FBBACF00C6B4A4 /* Steve ][ iOS */,
 				325EB65423FBBAD100C6B4A4 /* A2iOSTests */,
 				325EB65F23FBBAD100C6B4A4 /* A2iOSUITests */,
 			);
@@ -903,57 +1018,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				3213936624079C30007F5C4A /* Main.storyboard in Resources */,
-				32440B8F247F86D6000F9DA1 /* Apple II+ Dealer Diagnostics.woz in Resources */,
-				325EB6A12401118300C6B4A4 /* Wavy Navy.woz in Resources */,
-				323D04462490BA1E0086A901 /* scanlines.png in Resources */,
-				32440B90247F86D6000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz in Resources */,
-				32440B75247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz in Resources */,
-				323D04442490B3930086A901 /* dotmatrix_effect.png in Resources */,
-				32440B66247C9C9C000F9DA1 /* merlin_assembler_3.woz in Resources */,
-				32440B7C247CB649000F9DA1 /* Merlin Macroassembler Side 2 (SDS, 1983).woz in Resources */,
-				325EB68023FBDF8F00C6B4A4 /* Apple2Plus.rom in Resources */,
-				325EB68323FBDFBB00C6B4A4 /* DISK_II_C600.ROM in Resources */,
-				32440B77247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz in Resources */,
-				32440B95247F86D6000F9DA1 /* Apple II Dealer Diagnostics.woz in Resources */,
-				325EB67C23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */,
-				325EB69D2401118300C6B4A4 /* Lode Runner.woz in Resources */,
-				32440B97247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz in Resources */,
-				32440B76247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Resources */,
-				32089E4824556DBD0036E667 /* PRNumber3.ttf in Resources */,
-				32440B94247F86D6000F9DA1 /* XPS Diagnostic IIe.woz in Resources */,
-				32F2C145249218A400FDC61B /* locksmith_v6.0.woz in Resources */,
-				325EB6A92401118300C6B4A4 /* Sneakers.woz in Resources */,
-				325EB6A72401118300C6B4A4 /* ProDOS_402_System.woz in Resources */,
-				32440B96247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz in Resources */,
-				323D0440248F70A10086A901 /* diskioerr.sfx in Resources */,
-				325EB69023FE028800C6B4A4 /* Donkey Kong.woz in Resources */,
-				325EB68923FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */,
-				325EB69F2401118300C6B4A4 /* Crossfire.woz in Resources */,
-				32440B93247F86D6000F9DA1 /* Apple II Dealer Diagnostics Cracked.woz in Resources */,
-				32440B83247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz in Resources */,
-				32440B81247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Resources */,
-				32440B80247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
-				32440B64247C9C9C000F9DA1 /* merlin_assembler_1.woz in Resources */,
-				323E2DD0245531E600156805 /* Apple2e.rom in Resources */,
-				32440B65247C9C9C000F9DA1 /* merlin_assembler_2.woz in Resources */,
-				32440B92247F86D6000F9DA1 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz in Resources */,
-				32440B79247CB2B2000F9DA1 /* Merlin Pro v1.34.woz in Resources */,
-				32E21BE72491BF8C006C0C72 /* apple-rainbow.png in Resources */,
-				325EB68C23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */,
-				323D043E248F70930086A901 /* diskmotor.sfx in Resources */,
-				32440B91247F86D6000F9DA1 /* COMPUTER_CHECKUP.woz in Resources */,
-				323D0442248F711F0086A901 /* diskarm.sfx in Resources */,
-				325EB6A52401118300C6B4A4 /* ProDOS_312.woz in Resources */,
-				325EB6AB2401118300C6B4A4 /* Xonix.woz in Resources */,
-				323E2DCE245531E600156805 /* Apple2e_Enhanced.rom in Resources */,
-				32440B7D247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Resources */,
-				325EB68623FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
-				325EB6A32401118300C6B4A4 /* Qbit.woz in Resources */,
-				32440BA1247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz in Resources */,
-				32439F8822ECD8AD0077AAE0 /* apple.rom in Resources */,
-				32440B9D247F9DC7000F9DA1 /* blank.woz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1089,22 +1155,22 @@
 /* Begin PBXTargetDependency section */
 		325EB65723FBBAD100C6B4A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 325EB63F23FBBACF00C6B4A4 /* A2iOS */;
+			target = 325EB63F23FBBACF00C6B4A4 /* Steve ][ iOS */;
 			targetProxy = 325EB65623FBBAD100C6B4A4 /* PBXContainerItemProxy */;
 		};
 		325EB66223FBBAD100C6B4A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 325EB63F23FBBACF00C6B4A4 /* A2iOS */;
+			target = 325EB63F23FBBACF00C6B4A4 /* Steve ][ iOS */;
 			targetProxy = 325EB66123FBBAD100C6B4A4 /* PBXContainerItemProxy */;
 		};
 		32BFFB6B22EACC660003B53F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 32BFFB5622EACC630003B53F /* A2Mac */;
+			target = 32BFFB5622EACC630003B53F /* Steve ][ */;
 			targetProxy = 32BFFB6A22EACC660003B53F /* PBXContainerItemProxy */;
 		};
 		32BFFB7622EACC660003B53F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 32BFFB5622EACC630003B53F /* A2Mac */;
+			target = 32BFFB5622EACC630003B53F /* Steve ][ */;
 			targetProxy = 32BFFB7522EACC660003B53F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1649,7 +1715,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		325EB66723FBBAD100C6B4A4 /* Build configuration list for PBXNativeTarget "A2iOS" */ = {
+		325EB66723FBBAD100C6B4A4 /* Build configuration list for PBXNativeTarget "Steve ][ iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				325EB66823FBBAD100C6B4A4 /* Debug */,
@@ -1685,7 +1751,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		32BFFB7D22EACC660003B53F /* Build configuration list for PBXNativeTarget "A2Mac" */ = {
+		32BFFB7D22EACC660003B53F /* Build configuration list for PBXNativeTarget "Steve ][" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				32BFFB7E22EACC660003B53F /* Debug */,

@@ -46,9 +46,9 @@ func spk_dn_play() {
 }
 
 
-#if METAL_YES
-import Metal
-#endif
+//#if METAL_YES
+//import Metal
+//#endif
 
 class ViewController: NSViewController  {
 
@@ -177,7 +177,7 @@ class ViewController: NSViewController  {
                 self.splashScreen.isHidden = true
             })
             
-            m6502_ColdReset( Bundle.main.resourcePath, ViewController.romFileName )
+            m6502_ColdReset( Bundle.main.resourcePath! + "/rom/", ViewController.romFileName )
             
             cpuState = cpuState_running;
             self.upd.resume()
@@ -872,9 +872,9 @@ class ViewController: NSViewController  {
         
         hires.clearScreen();
         
-        spkr_load_sfx( Bundle.main.resourcePath! )
+        spkr_load_sfx( Bundle.main.resourcePath! + "/sfx" )
         
-        let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/Apple DOS 3.3 January 1983.woz" )
+        let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/Apple DOS 3.3 January 1983.woz" )
         chk_woz_load(err: woz_err)
 
         //view.frame = CGRect(origin: CGPoint(), size: NSScreen.main!.visibleFrame.size)

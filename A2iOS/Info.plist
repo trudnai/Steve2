@@ -60,9 +60,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UIAppFonts</key>
-	<array>
-		<string>PrintChar21.ttf</string>
-	</array>
+    <key>UIAppFonts</key>
+    <array>
+        <string>fnt/PrintChar21.ttf</string>
+        <string>fnt/PRNumber3.ttf</string>
+    </array>
 </dict>
 </plist>

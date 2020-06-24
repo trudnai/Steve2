@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "325EB63F23FBBACF00C6B4A4"
-               BuildableName = "A2iOS.app"
-               BlueprintName = "A2iOS"
+               BuildableName = "Steve ][ iOS.app"
+               BlueprintName = "Steve ][ iOS"
                ReferencedContainer = "container:A2Mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "325EB63F23FBBACF00C6B4A4"
-            BuildableName = "A2iOS.app"
-            BlueprintName = "A2iOS"
+            BuildableName = "Steve ][ iOS.app"
+            BlueprintName = "Steve ][ iOS"
             ReferencedContainer = "container:A2Mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -82,8 +82,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "325EB63F23FBBACF00C6B4A4"
-            BuildableName = "A2iOS.app"
-            BlueprintName = "A2iOS"
+            BuildableName = "Steve ][ iOS.app"
+            BlueprintName = "Steve ][ iOS"
             ReferencedContainer = "container:A2Mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

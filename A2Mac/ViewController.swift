@@ -466,42 +466,42 @@ class ViewController: NSViewController  {
     override func flagsChanged(with event: NSEvent) {
         switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
         case [.shift]:
-            setIO(0xC061, 0);
-            setIO(0xC062, 0);
-            setIO(0xC063, 0); // inverted (bit 7: not pressed)
+            setIO(0xC061, 0)
+            setIO(0xC062, 0)
+            setIO(0xC063, 0) // inverted (bit 7: not pressed)
 //            print("shift key is pressed")
 //        case [.control]:
 //            print("control key is pressed")
         case [.option] :
-            setIO(0xC061, 1 << 7);
-            setIO(0xC062, 0);
-            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
+            setIO(0xC061, 1 << 7)
+            setIO(0xC062, 0)
+            setIO(0xC063, 1 << 7) // inverted (bit 7: not pressed)
 //            print("option key is pressed")
         case [.command]:
 //            print("Command key is pressed")
-            setIO(0xC061, 0);
-            setIO(0xC062, 1 << 7);
-            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
+            setIO(0xC061, 0)
+            setIO(0xC062, 1 << 7)
+            setIO(0xC063, 1 << 7) // inverted (bit 7: not pressed)
 //        case [.control, .shift]:
 //            print("control-shift keys are pressed")
         case [.option, .shift]:
-            setIO(0xC061, 1 << 7);
-            setIO(0xC062, 0);
-            setIO(0xC063, 0); // inverted (bit 7: not pressed)
+            setIO(0xC061, 1 << 7)
+            setIO(0xC062, 0)
+            setIO(0xC063, 0) // inverted (bit 7: not pressed)
 //            print("option-shift keys are pressed")
         case [.command, .shift]:
-            setIO(0xC061, 0);
-            setIO(0xC062, 1 << 7);
-            setIO(0xC063, 0); // inverted (bit 7: not pressed)
+            setIO(0xC061, 0)
+            setIO(0xC062, 1 << 7)
+            setIO(0xC063, 0) // inverted (bit 7: not pressed)
 //            print("command-shift keys are pressed")
 //        case [.control, .option]:
 //            print("control-option keys are pressed")
 //        case [.control, .command]:
 //            print("control-command keys are pressed")
         case [.option, .command]:
-            setIO(0xC061, 1 << 7);
-            setIO(0xC062, 1 << 7);
-            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
+            setIO(0xC061, 1 << 7)
+            setIO(0xC062, 1 << 7)
+            setIO(0xC063, 1 << 7) // inverted (bit 7: not pressed)
 //            print("option-command keys are pressed")
 //        case [.shift, .control, .option]:
 //            print("shift-control-option keys are pressed")
@@ -510,8 +510,8 @@ class ViewController: NSViewController  {
 //        case [.control, .option, .command]:
 //            print("control-option-command keys are pressed")
         case [.shift, .command, .option]:
-            setIO(0xC061, 1 << 7);
-            setIO(0xC062, 1 << 7);
+            setIO(0xC061, 1 << 7)
+            setIO(0xC062, 1 << 7)
             setIO(0xC063, 0); // inverted (bit 7: not pressed)
 //            print("shift-command-option keys are pressed")
 //        case [.shift, .control, .option, .command]:
@@ -521,9 +521,9 @@ class ViewController: NSViewController  {
 //        case [.capsLock]:
 //            print("capsLock key is pressed")
         default:
-            setIO(0xC061, 0);
-            setIO(0xC062, 0);
-            setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
+            setIO(0xC061, 0)
+            setIO(0xC062, 0)
+            setIO(0xC063, 1 << 7) // inverted (bit 7: not pressed)
 //            print("no modifier keys are pressed")
         }
     }
@@ -733,7 +733,44 @@ class ViewController: NSViewController  {
             }
         }
     }
+    
+    
+    override func mouseDown(with event: NSEvent) {
+        if ( Mouse2Joystick ) {
+            setIO(0xC061, 1 << 7)
+        }
+    }
 
+    override func mouseUp(with event: NSEvent) {
+        if ( Mouse2Joystick ) {
+            setIO(0xC061, 0)
+        }
+    }
+    
+    override func rightMouseDown(with event: NSEvent) {
+        if ( Mouse2Joystick ) {
+            setIO(0xC062, 1 << 7)
+        }
+    }
+    
+    override func rightMouseUp(with event: NSEvent) {
+        if ( Mouse2Joystick ) {
+            setIO(0xC062, 0)
+        }
+    }
+    
+    override func otherMouseDown(with event: NSEvent) {
+        if ( Mouse2Joystick ) {
+            setIO(0xC063, 0) // inverted (bit 7: 0 = pressed)
+        }
+    }
+    
+    override func otherMouseUp(with event: NSEvent) {
+        if ( Mouse2Joystick ) {
+            setIO(0xC063, 1 << 7) // inverted (bit 7: 1 = not pressed)
+        }
+    }
+    
     
     func Input() {
         // Mouse 2 JoyStick (Game Controller / Paddle)

@@ -177,6 +177,9 @@ void spkr_init() {
     // Set-up sound source and play buffer
     alGenSources(SOURCES_COUNT, spkr_src);
     al_check_error();
+    
+    alSourcei(spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_RELATIVE, AL_TRUE);
+    al_check_error();
     alSourcei(spkr_src[SPKR_SRC_GAME_SFX], AL_LOOPING, AL_FALSE);
     al_check_error();
     alSourcef(spkr_src[SPKR_SRC_GAME_SFX], AL_ROLLOFF_FACTOR, 0);
@@ -190,6 +193,8 @@ void spkr_init() {
 
     
     // Set-up disk motor sound source and play buffer
+    alSourcei(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_SOURCE_RELATIVE, AL_TRUE);
+    al_check_error();
     alSourcei(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_LOOPING, AL_TRUE);
     al_check_error();
     alSourcef(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_ROLLOFF_FACTOR, 0);
@@ -203,6 +208,8 @@ void spkr_init() {
 
     
     // Set-up disk arm sound source and play buffer
+    alSourcei(spkr_src[SPKR_SRC_DISK_ARM_SFX], AL_SOURCE_RELATIVE, AL_TRUE);
+    al_check_error();
     alSourcei(spkr_src[SPKR_SRC_DISK_ARM_SFX], AL_LOOPING, AL_FALSE);
     al_check_error();
     alSourcef(spkr_src[SPKR_SRC_DISK_ARM_SFX], AL_ROLLOFF_FACTOR, 0);
@@ -216,6 +223,8 @@ void spkr_init() {
     
     
     // Set-up disk io error sound source and play buffer
+    alSourcei(spkr_src[SPKR_SRC_DISK_IOERR_SFX], AL_SOURCE_RELATIVE, AL_TRUE);
+    al_check_error();
     alSourcei(spkr_src[SPKR_SRC_DISK_IOERR_SFX], AL_LOOPING, AL_FALSE);
     al_check_error();
     alSourcef(spkr_src[SPKR_SRC_DISK_IOERR_SFX], AL_ROLLOFF_FACTOR, 0);
@@ -358,7 +367,8 @@ void spkr_update() {
 
             if ( freeBuffers ) {
 
-                if ( --spkr_play_time == 0 ) {
+                // in Game Mode do not fade out and stop playing
+                if ( ( cpuMode_game != cpuMode ) && ( --spkr_play_time == 0 ) ) {
                     float fadeLevel = spkr_level - SPKR_LEVEL_ZERO;
                     
                     if ( spkr_level != SPKR_LEVEL_ZERO ) {

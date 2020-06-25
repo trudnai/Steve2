@@ -131,6 +131,6 @@ extern uint8_t   WOZlatch;
 extern uint8_t woz_read(void);
 extern void woz_write( uint8_t data );
 extern int woz_loadFile( const char * filename );
-
+extern int woz_saveFile( const char * filename );
 
 #endif /* woz_h */

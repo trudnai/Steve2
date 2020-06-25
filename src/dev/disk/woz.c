@@ -25,10 +25,12 @@ int bitOffset = 0;
 uint64_t clkelpased;
 
 
-woz_header_t woz_header;
-woz_chunk_header_t woz_chunk_header;
-woz_tmap_t woz_tmap;
-woz_trks_t woz_trks;
+size_t woz_file_size = 0;
+uint8_t * woz_file_buffer = NULL;
+woz_header_t * woz_header;
+woz_chunk_header_t * woz_chunk_header;
+woz_tmap_t * woz_tmap;
+woz_trks_t * woz_trks;
 int track_loaded = -1;
 
 
@@ -59,8 +61,8 @@ uint8_t readLatch;
 void woz_loadTrack_old( int track ) {
     trackEntry_t reg = {0};
 
-    reg.shift = woz_trks[track].data[0];
-    reg.data =  woz_trks[track].data[1];
+    reg.shift = (*woz_trks)[track].data[0];
+    reg.data =  (*woz_trks)[track].data[1];
     prepared_track[0] = reg;
 
     for ( int offs = 1; offs < WOZ_TRACK_BYTE_COUNT; offs++ ) {
@@ -73,7 +75,7 @@ void woz_loadTrack_old( int track ) {
             reg.shift16 <<= 1;
         }
         
-        reg.data = woz_trks[track].data[ (offs + 1) % WOZ_TRACK_BYTE_COUNT ];
+        reg.data = (*woz_trks)[track].data[ (offs + 1) % WOZ_TRACK_BYTE_COUNT ];
         prepared_track[offs] = reg;
     }
 }
@@ -197,7 +199,7 @@ void woz_loadTrack( int track ) {
     
     for ( int byteOffs = 0; byteOffs < WOZ_TRACK_BYTE_COUNT; byteOffs++ ) {
 
-        reg.data = woz_trks[track].data[ byteOffs ];
+        reg.data = (*woz_trks)[track].data[ byteOffs ];
 
         for ( int i = 0; i < 8; i++ ) {
             reg.shift16 <<= 1;
@@ -215,7 +217,7 @@ void woz_loadTrack( int track ) {
 
 uint8_t woz_read() {
 
-    int track = woz_tmap.phase[disk.phase.count];
+    int track = woz_tmap->phase[disk.phase.count];
     if (outdev) fprintf(outdev, "track: %d (%d) ", track, disk.phase.count);
     if ( track >= 40 ) {
         dbgPrintf("TRCK TOO HIGH!\n");
@@ -232,7 +234,7 @@ uint8_t woz_read() {
     const int clkBeforeAdjusting = 512;
     const int magicShiftOffset = 45;
     
-    uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
+    uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     
     if ( usedBytes ) {
         int shiftOffset = magicShiftOffset;
@@ -254,7 +256,7 @@ uint8_t woz_read() {
 
             // preroll data stream
             WOZread.shift = 0;
-            WOZread.data = woz_trks[track].data[trackOffset++];
+            WOZread.data = (*woz_trks)[track].data[trackOffset++];
             trackOffset %= usedBytes;
             trackWRoffset = trackOffset;
 
@@ -271,7 +273,7 @@ uint8_t woz_read() {
                     }
                 }
                 trackWRoffset = trackOffset;
-                WOZwrite.data = WOZread.data = woz_trks[track].data[trackOffset++];
+                WOZwrite.data = WOZread.data = (*woz_trks)[track].data[trackOffset++];
                 trackOffset %= usedBytes;
                 bitOffset = 0;
             }
@@ -287,7 +289,7 @@ uint8_t woz_read() {
                     trackOffset++;
                     trackOffset %= usedBytes;
 
-                    WOZwrite.data = WOZread.data = woz_trks[track].data[trackOffset];
+                    WOZwrite.data = WOZread.data = (*woz_trks)[track].data[trackOffset];
                 }
 
                 WOZread.shift <<= 1;
@@ -320,7 +322,7 @@ uint8_t woz_read() {
                 trackOffset++;
                 trackOffset %= usedBytes;
 
-                WOZwrite.data = WOZread.data = woz_trks[track].data[trackOffset];
+                WOZwrite.data = WOZread.data = (*woz_trks)[track].data[trackOffset];
             }
             
             WOZread.shift <<= 1;
@@ -359,7 +361,7 @@ void printWozBuffer (const char * s, int n, WOZread_t WOZbuf ) {
 
 void woz_write( uint8_t data ) {
     
-    int track = woz_tmap.phase[disk.phase.count];
+    int track = woz_tmap->phase[disk.phase.count];
     if (outdev) fprintf(outdev, "track: %d (%d) ", track, disk.phase.count);
     if ( track >= 40 ) {
         dbgPrintf("TRACK TOO HIGH!\n");
@@ -369,7 +371,7 @@ void woz_write( uint8_t data ) {
     clkelpased = m6502.clktime + clkfrm - m6502.clklast;
     m6502.clklast = m6502.clktime + clkfrm;
     
-    uint16_t usedBytes = woz_trks[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? woz_trks[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
+    uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
     
     if ( usedBytes ) {
         
@@ -392,7 +394,7 @@ void woz_write( uint8_t data ) {
                     trackOffset %= usedBytes;
 
 //                    WOZwrite.data =
-                    WOZread.data = woz_trks[track].data[trackOffset];
+                    WOZread.data = (*woz_trks)[track].data[trackOffset];
                 }
 
                 WOZread.shift <<= 1;
@@ -415,7 +417,7 @@ void woz_write( uint8_t data ) {
         while ( i-- ) {
             if ( ++bitOffset >= 8 ) {
                 // write out first part
-                woz_trks[track].data[trackWRoffset] = WOZwrite.latch;
+                (*woz_trks)[track].data[trackWRoffset] = WOZwrite.latch;
                 
                 bitOffset = 0;
                 trackWRoffset = trackOffset;
@@ -423,7 +425,7 @@ void woz_write( uint8_t data ) {
                 trackOffset %= usedBytes;
 
                 // simulate shift in data (path of write latch is already loaded, we should not overwrite it!)
-                uint8_t new = woz_trks[track].data[trackOffset];
+                uint8_t new = (*woz_trks)[track].data[trackOffset];
                 new >>= i + 1;
                 WOZread.data |= new;
 //                WOZwrite.data |= new;
@@ -448,7 +450,7 @@ void woz_write( uint8_t data ) {
         while ( i-- ) {
             if ( ++bitOffset >= 8 ) {
                 // write out first part
-                woz_trks[track].data[trackWRoffset] = WOZwrite.latch;
+                (*woz_trks)[track].data[trackWRoffset] = WOZwrite.latch;
                 break;
             }
             
@@ -476,36 +478,53 @@ int woz_loadFile( const char * filename ) {
         return WOZ_ERR_FILE_NOT_FOUND;
     }
     
-    fread( &woz_header, 1, sizeof(woz_header_t), f);
-    if ( woz_header.magic != WOZ1_MAGIC ) {
+    // get file size
+    fseek(f, 0, SEEK_END);
+    woz_file_size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+    
+    if ( woz_file_buffer ) {
+        free(woz_file_buffer);
+        woz_file_buffer = NULL;
+    }
+
+    woz_file_buffer = malloc(woz_file_size);
+    if (woz_file_buffer == NULL) {
+        perror("Not Enough Memory: ");
+        return WOZ_ERR_BAD_DATA;
+    }
+    woz_header = (woz_header_t*)woz_file_buffer;
+    
+    // to simulate file read
+    long bufOffs = 0;
+    
+    fread( woz_file_buffer, woz_file_size, 1, f);
+    fclose(f);
+    if ( woz_header->magic != WOZ1_MAGIC ) {
+        free(woz_file_buffer);
+        woz_file_buffer = NULL;
         return WOZ_ERR_NOT_WOZ_FILE;
     }
-    
-    while ( ! feof(f) ) {
+
+    bufOffs += sizeof(woz_header_t);
+
+    while ( bufOffs < woz_file_size ) {
         // beginning of the chunk, so we can skip it later
         
-        long r = fread( &woz_chunk_header, 1, sizeof(woz_chunk_header_t), f);
-        if ( r != sizeof(woz_chunk_header_t) ) {
-            if ( r ) {
-                return WOZ_ERR_BAD_CHUNK_HDR;
-            }
-            // ok we just reached the end of the file, we should exit properly, close file handle etc
-            break;
-        }
-        long foffs = ftell(f);
+        woz_chunk_header = (woz_chunk_header_t*)(woz_file_buffer + bufOffs);
         
-        void * buf = NULL;
-
-        switch ( woz_chunk_header.magic ) {
+        bufOffs += sizeof(woz_chunk_header_t);
+        
+        switch ( woz_chunk_header->magic ) {
             case WOZ_INFO_CHUNK_ID:
                 break;
 
             case WOZ_TMAP_CHUNK_ID:
-                buf = &woz_tmap;
+                woz_tmap = (woz_tmap_t*)(woz_file_buffer + bufOffs);
                 break;
 
             case WOZ_TRKS_CHUNK_ID:
-                buf = woz_trks;
+                woz_trks = (woz_trks_t*)(woz_file_buffer + bufOffs);
                 break;
 
             case WOZ_META_CHUNK_ID:
@@ -515,23 +534,29 @@ int woz_loadFile( const char * filename ) {
                 break;
         }
         
-        if (buf) {
-            r = fread( buf, 1, woz_chunk_header.size, f);
-            if ( r != woz_chunk_header.size ) {
-                return WOZ_ERR_BAD_DATA;
-            }
-        }
-
         // make sure we are skipping unhandled chunks correctly
-        fseek(f, foffs + woz_chunk_header.size, SEEK_SET);
+        bufOffs += woz_chunk_header->size;
     }
     
-    fclose(f);
     
     
     // DO NOT COMMIT THIS! ONLY FOR DEBUG!!!
 //    woz_loadTrack(0x11);
 
+    return WOZ_ERR_OK;
+}
+
+int woz_saveFile( const char * filename ) {
+    
+    FILE * f = fopen( filename, "wb" );
+    if (f == NULL) {
+        perror("Failed to crete WOZ: ");
+        return WOZ_ERR_FILE_NOT_FOUND;
+    }
+    
+    fwrite( &woz_file_buffer, woz_file_size, 1, f );
+    fclose(f);
+    
     return WOZ_ERR_OK;
 }
 

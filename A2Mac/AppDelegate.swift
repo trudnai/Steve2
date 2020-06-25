@@ -48,6 +48,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return woz_err == 0;
     }
     
+    @IBAction func saveFile(_ sender: NSMenuItem) {
+        
+        let savePanel = NSSavePanel()
+        savePanel.begin { (result) in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                woz_saveFile( savePanel.url?.absoluteString );
+            }
+        }
+        
+    }
     
     @IBAction func showPreferences(_ sender: NSMenuItem) {
         

@@ -53,7 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let savePanel = NSSavePanel()
         savePanel.begin { (result) in
             if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
-                woz_saveFile( savePanel.url?.absoluteString );
+                woz_saveFile( savePanel.url?.path );
             }
         }
         

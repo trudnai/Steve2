@@ -115,6 +115,14 @@
          contextName = "addr_ind_Y:Apple2_mmio.h">
       </ContextState>
       <ContextState
+         contextName = "closure #1 in AppDelegate.saveFile(_:):AppDelegate.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "savePanel.url?.absoluteString">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "set_flags_NZCV:common.h">
          <PersistentStrings>
             <PersistentString

@@ -554,7 +554,7 @@ int woz_saveFile( const char * filename ) {
         return WOZ_ERR_FILE_NOT_FOUND;
     }
     
-    fwrite( &woz_file_buffer, woz_file_size, 1, f );
+    fwrite( woz_file_buffer, woz_file_size, 1, f );
     fclose(f);
     
     return WOZ_ERR_OK;

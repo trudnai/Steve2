@@ -67,8 +67,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if ( preferencesController != nil ) {
             preferencesController?.showWindow(sender)
         }
-        
     }
+    
+    @IBAction func PowerOn(_ sender: Any) {
+        ViewController.current?.PowerOn(sender)
+    }
+    
+    @IBAction func Pause(_ sender: Any) {
+        ViewController.current?.Pause(sender)
+    }
+    
+    @IBAction func PowerOff(_ sender: Any) {
+        ViewController.current?.PowerOff(sender)
+    }
+    
+    @IBAction func ColdReset(_ sender: Any) {
+        ViewController.current?.Reset(sender)
+    }
+    
+    @IBAction func WarmReset(_ sender: Any) {
+        ViewController.current?.Reset(sender)
+    }
+    
+    
     
 }
 

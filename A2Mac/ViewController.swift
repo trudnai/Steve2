@@ -151,10 +151,11 @@ class ViewController: NSViewController  {
     
     
     var workItem : DispatchWorkItem? = nil;
-    @IBAction func Power(_ sender: Any) {
+    @IBAction func PowerOn(_ sender: Any) {
         
         upd.suspend()
         cpuState = cpuState_inited;
+        spkr_stopAll()
 
         //------------------------------------------------------------
         // Animated Splash Screen fade out and (Text) Monitor fade in
@@ -204,6 +205,48 @@ class ViewController: NSViewController  {
         
         #endif
     }
+
+    
+    @IBAction func PowerOff(_ sender: Any) {
+        
+        upd.suspend()
+        cpuState = cpuState_inited;
+        spkr_stopAll()
+        
+        //------------------------------------------------------------
+        // Animated Splash Screen fade out and (Text) Monitor fade in
+        
+        hires.isHidden = true
+        displayField.alphaValue = 0
+        displayField.isHidden = false
+        splashScreen.alphaValue = 1
+        splashScreen.isHidden = false
+        
+        //------------------------------------------------------------
+        
+    }
+    
+    
+    @IBAction func Pause(_ sender: Any) {
+
+        switch ( cpuState ) {
+        case cpuState_halted:
+            upd.resume()
+            cpuState = cpuState_running
+            break
+            
+        case cpuState_running:
+            upd.suspend()
+            cpuState = cpuState_halted
+            break
+            
+        default:
+//            upd.suspend()
+//            cpuState = cpuState_halted
+            break
+        }
+    }
+
     
     @IBAction func Reset(_ sender: Any) {
 //        m6502.interrupt = SOFTRESET;

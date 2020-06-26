@@ -537,6 +537,8 @@ void softReset() {
     // N V - B D I Z C
     // 0 0 1 0 0 1 0 1
     setFlags(0x25);
+    
+    spkr_stopAll();
 }
 
 void m6502_Run() {

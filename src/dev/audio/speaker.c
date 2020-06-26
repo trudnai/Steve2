@@ -59,13 +59,6 @@ int spkr_level = SPKR_LEVEL_ZERO;
 #define BUFFER_COUNT 256
 #define SOURCES_COUNT 4
 
-enum {
-    SPKR_SRC_GAME_SFX = 0,
-    SPKR_SRC_DISK_MOTOR_SFX,
-    SPKR_SRC_DISK_ARM_SFX,
-    SPKR_SRC_DISK_IOERR_SFX,
-};
-
 ALuint spkr_src [SOURCES_COUNT] = { 0, 0, 0, 0 };
 
 ALuint spkr_buffers[BUFFER_COUNT];
@@ -556,6 +549,12 @@ void spkr_play_disk_ioerr() {
     }
 }
 
+
+void spkr_stopAll() {
+    for ( int i = 0; i < SOURCES_COUNT; i++ ) {
+        spkr_stop_sfx( spkr_src[i] );
+    }
+}
 
 void update_disk_sfx( unsigned * time, ALuint src ) {
     if ( *time ) {

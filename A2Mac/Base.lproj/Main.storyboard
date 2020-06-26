@@ -778,35 +778,50 @@
                                     <items>
                                         <menuItem title="► Power On" id="VJp-Pq-vAd">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="PowerOn:" target="Voe-Tx-rLC" id="IYU-yC-Gc6"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="❚❚ Pause" id="UvV-rl-Pa2">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="Pause:" target="Voe-Tx-rLC" id="DhQ-Sl-WbJ"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="■ Off" id="Pvr-O3-O0W">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="PowerOff:" target="Voe-Tx-rLC" id="DT5-Hh-7bR"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="EpV-Zl-RlZ"/>
                                         <menuItem title="Cold Reset" id="nzj-IC-y8T">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="ColdReset:" target="Voe-Tx-rLC" id="sWD-Vp-yRD"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem title="Warm Reset" id="ivK-Gh-v9c">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="WarmReset:" target="Voe-Tx-rLC" id="rnE-hI-s4T"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="iZQ-dd-f8J"/>
-                                        <menuItem title="Snapshot" id="5oA-Fb-xBS">
+                                        <menuItem title="Snapshot" enabled="NO" id="5oA-Fb-xBS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Machine" id="sPt-bm-xHF">
                                                 <items>
-                                                    <menuItem title="Save" id="TfJ-FC-fVE">
+                                                    <menuItem title="Save" enabled="NO" id="TfJ-FC-fVE">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                     </menuItem>
-                                                    <menuItem title="Revert" id="BSq-Md-dlE">
+                                                    <menuItem title="Revert" enabled="NO" id="BSq-Md-dlE">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                     </menuItem>
-                                                    <menuItem title="Clone" id="62P-mr-JdC">
+                                                    <menuItem title="Clone" enabled="NO" id="62P-mr-JdC">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                     </menuItem>
-                                                    <menuItem title="Remove" id="F3V-BM-MBF">
+                                                    <menuItem title="Remove" enabled="NO" id="F3V-BM-MBF">
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                     </menuItem>
                                                 </items>
@@ -1367,7 +1382,7 @@
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                                 <connections>
-                                                    <action selector="Power:" target="XfG-lQ-9wD" id="IvK-jh-tRI"/>
+                                                    <action selector="PowerOn:" target="XfG-lQ-9wD" id="IvK-jh-tRI"/>
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rR3-9T-NFu">

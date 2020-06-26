@@ -32,6 +32,14 @@
 #define SPKR_LEVEL_ZERO     0 // as defined in OpenAL documentation for 8bit PCM
 
 
+enum {
+    SPKR_SRC_GAME_SFX = 0,
+    SPKR_SRC_DISK_MOTOR_SFX,
+    SPKR_SRC_DISK_ARM_SFX,
+    SPKR_SRC_DISK_IOERR_SFX,
+};
+
+
 extern const unsigned spkr_sample_rate;
 extern const unsigned spkr_buf_alloc_size;
 extern unsigned spkr_buf_size;
@@ -57,6 +65,8 @@ extern void spkr_load_sfx( const char * bundlePath );
 extern void spkr_play_disk_motor(void);
 extern void spkr_stop_disk_motor( int time );
 extern void spkr_update_disk_sfx(void);
+extern void spkr_stop_sfx( ALuint src );
+extern void spkr_stopAll(void);
 
 extern void spkr_play_disk_arm(void);
 extern void spkr_play_disk_ioerr(void);

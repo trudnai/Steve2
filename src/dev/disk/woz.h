@@ -13,6 +13,8 @@
 #include "common.h"
 
 
+#define MAXFILENAME 4096
+
 #define DISKII_MAXTRACKS 80
 #define DISKII_PHASES 4
 
@@ -81,26 +83,6 @@ typedef woz_track_t woz_trks_t[DISKII_MAXTRACKS];
 
 
 
-#define __NO__WOZ_REAL_SPIN2
-
-#ifdef WOZ_REAL_SPIN
-
-typedef union {
-    struct {
-        uint8_t next;
-        uint8_t data;
-        uint8_t prev;
-        uint8_t shift;
-    };
-    struct {
-        uint32_t lower : 31;
-        uint32_t valid : 1;
-    };
-    uint32_t shift32;
-} WOZread_t;
-
-#else // WOZ_REAL_SPIN
-
 typedef union {
     struct {
         uint8_t data;
@@ -116,11 +98,19 @@ typedef union {
     uint64_t shift;
 } WOZread_t;
 
-#endif // WOZ_REAL_SPIN
+
+typedef struct woz_flags_s {
+    uint8_t     image_loaded : 1;
+    uint8_t     image_file_readonly : 1;
+    uint8_t     disk_write_protected : 1;
+    uint8_t     disk_modified : 1;
+} woz_flags_t;
 
 
 extern WOZread_t WOZread;
 extern uint8_t   WOZlatch;
+extern char woz_filename[MAXFILENAME];
+extern woz_flags_t woz_flags;
 
 //extern woz_header_t woz_header;
 //extern woz_chunk_header_t woz_chunk_header;
@@ -132,5 +122,6 @@ extern uint8_t woz_read(void);
 extern void woz_write( uint8_t data );
 extern int woz_loadFile( const char * filename );
 extern int woz_saveFile( const char * filename );
+extern void woz_eject(void);
 
 #endif /* woz_h */

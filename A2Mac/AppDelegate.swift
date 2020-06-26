@@ -26,6 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if let menuIdentifier = sender.identifier {
             let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/" + menuIdentifier.rawValue + ".woz" )
             ViewController.current?.chk_woz_load(err: woz_err)
+            woz_flags.image_file_readonly = 1
         }
     }
     
@@ -49,14 +50,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func saveFile(_ sender: NSMenuItem) {
-        
-        let savePanel = NSSavePanel()
-        savePanel.begin { (result) in
-            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
-                woz_saveFile( savePanel.url?.path );
-            }
-        }
-        
+        ViewController.current?.saveFile()
+    }
+    
+    @IBAction func saveFileAs(_ sender: NSMenuItem) {
+        ViewController.current?.saveFileAs()
     }
     
     @IBAction func showPreferences(_ sender: NSMenuItem) {

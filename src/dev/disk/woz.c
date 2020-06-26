@@ -25,6 +25,8 @@ int bitOffset = 0;
 uint64_t clkelpased;
 
 
+char woz_filename[MAXFILENAME];
+woz_flags_t woz_flags = {0,0,0,0};
 size_t woz_file_size = 0;
 uint8_t * woz_file_buffer = NULL;
 woz_header_t * woz_header;
@@ -368,6 +370,8 @@ void woz_write( uint8_t data ) {
         return;
     }
     
+    woz_flags.disk_modified = 1;
+    
     clkelpased = m6502.clktime + clkfrm - m6502.clklast;
     m6502.clklast = m6502.clktime + clkfrm;
     
@@ -464,6 +468,17 @@ void woz_write( uint8_t data ) {
 }
 
 
+void woz_free_buffer() {
+    if ( woz_file_buffer ) {
+        free(woz_file_buffer);
+        woz_file_buffer = NULL;
+        woz_header = NULL;
+        woz_tmap = NULL;
+        woz_trks = NULL;
+    }
+}
+
+
 int woz_loadFile( const char * filename ) {
     
 //    char fullpath[256];
@@ -478,16 +493,18 @@ int woz_loadFile( const char * filename ) {
         return WOZ_ERR_FILE_NOT_FOUND;
     }
     
+    woz_eject();
+    
     // get file size
     fseek(f, 0, SEEK_END);
     woz_file_size = ftell(f);
     fseek(f, 0, SEEK_SET);
-    
-    if ( woz_file_buffer ) {
-        free(woz_file_buffer);
-        woz_file_buffer = NULL;
-    }
 
+    woz_flags.disk_modified = 0;
+    woz_flags.disk_write_protected = 0;
+    woz_flags.image_file_readonly = 0;
+    woz_flags.image_loaded = 1;
+    
     woz_file_buffer = malloc(woz_file_size);
     if (woz_file_buffer == NULL) {
         perror("Not Enough Memory: ");
@@ -501,8 +518,7 @@ int woz_loadFile( const char * filename ) {
     fread( woz_file_buffer, woz_file_size, 1, f);
     fclose(f);
     if ( woz_header->magic != WOZ1_MAGIC ) {
-        free(woz_file_buffer);
-        woz_file_buffer = NULL;
+        woz_free_buffer();
         return WOZ_ERR_NOT_WOZ_FILE;
     }
 
@@ -510,21 +526,21 @@ int woz_loadFile( const char * filename ) {
 
     while ( bufOffs < woz_file_size ) {
         // beginning of the chunk, so we can skip it later
-        
-        woz_chunk_header = (woz_chunk_header_t*)(woz_file_buffer + bufOffs);
-        
+
+        woz_chunk_header = (woz_chunk_header_t*) &woz_file_buffer[bufOffs];
+
         bufOffs += sizeof(woz_chunk_header_t);
-        
+
         switch ( woz_chunk_header->magic ) {
             case WOZ_INFO_CHUNK_ID:
                 break;
 
             case WOZ_TMAP_CHUNK_ID:
-                woz_tmap = (woz_tmap_t*)(woz_file_buffer + bufOffs);
+                woz_tmap = (woz_tmap_t*) &woz_file_buffer[bufOffs];
                 break;
 
             case WOZ_TRKS_CHUNK_ID:
-                woz_trks = (woz_trks_t*)(woz_file_buffer + bufOffs);
+                woz_trks = (woz_trks_t*) &woz_file_buffer[bufOffs];
                 break;
 
             case WOZ_META_CHUNK_ID:
@@ -546,7 +562,31 @@ int woz_loadFile( const char * filename ) {
     return WOZ_ERR_OK;
 }
 
+
+void woz_ask_to_save(void);
+
+
+void woz_eject() {
+    if ( woz_flags.disk_modified ) {
+        woz_ask_to_save();
+    }
+    
+    woz_flags.disk_modified = 0;
+    woz_flags.disk_write_protected = 0;
+    woz_flags.image_file_readonly = 0;
+    woz_flags.image_loaded = 0;
+
+    woz_file_size = 0;
+
+    woz_free_buffer();
+}
+
+
 int woz_saveFile( const char * filename ) {
+    
+    if ( filename == NULL ) {
+        filename = woz_filename;
+    }
     
     FILE * f = fopen( filename, "wb" );
     if (f == NULL) {
@@ -556,6 +596,8 @@ int woz_saveFile( const char * filename ) {
     
     fwrite( woz_file_buffer, woz_file_size, 1, f );
     fclose(f);
+    
+    woz_flags.disk_modified = 0;
     
     return WOZ_ERR_OK;
 }

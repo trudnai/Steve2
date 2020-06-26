@@ -913,6 +913,7 @@ class ViewController: NSViewController  {
         
         let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/Apple DOS 3.3 January 1983.woz" )
         chk_woz_load(err: woz_err)
+        woz_flags.image_file_readonly = 1
 
         //view.frame = CGRect(origin: CGPoint(), size: NSScreen.main!.visibleFrame.size)
                 
@@ -1133,7 +1134,7 @@ class ViewController: NSViewController  {
     
     @objc func openDiskImage() {
         let openPanel = NSOpenPanel()
-        openPanel.title = "Disk Image"
+        openPanel.title = "Open Disk Image"
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseDirectories = false
         openPanel.canCreateDirectories = false
@@ -1162,6 +1163,37 @@ class ViewController: NSViewController  {
     }
 
     
+    @objc func saveDiskImage() {
+        let openPanel = NSOpenPanel()
+        openPanel.title = "Save Disk Image"
+        openPanel.allowsMultipleSelection = false
+        openPanel.canChooseDirectories = false
+        openPanel.canCreateDirectories = false
+        openPanel.canChooseFiles = true
+        openPanel.allowedFileTypes = ["dsk","do","po","nib", "woz"]
+        
+        openPanel.begin { (result) -> Void in
+            if result == NSApplication.ModalResponse.OK {
+                print("file:", openPanel.url!.path)
+                //Do what you will
+                //If there's only one URL, surely 'openPanel.URL'
+                //but otherwise a for loop works
+                
+                if let filePath = openPanel.url?.path {
+                    let woz_err = woz_loadFile( filePath )
+                    
+                    if woz_err == WOZ_ERR_OK {
+                        NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
+                    }
+                    else {
+                        self.chk_woz_load(err: woz_err)
+                    }
+                }
+            }
+        }
+    }
+    
+    
     @IBAction func openDocument(_ sender: Any?) {
         openDiskImage()
     }
@@ -1178,5 +1210,48 @@ class ViewController: NSViewController  {
         }
     }
     
+    
+    func saveFile() {
+        if ( woz_flags.image_file_readonly != 0 ) {
+            // it is readonly, save it to a different file...
+            saveFileAs()
+        }
+        else {
+            // save WOZ image file overwriting the original image
+            woz_saveFile(nil)
+        }
+    }
+    
+    func saveFileAs() {
+        let savePanel = NSSavePanel()
+        savePanel.title = "Save WOZ Disk Image As..."
+        savePanel.begin { (result) in
+            if result.rawValue == NSApplication.ModalResponse.OK.rawValue {
+                woz_saveFile( savePanel.url?.path );
+            }
+            else {
+                let a = NSAlert()
+                a.messageText = "Are you sure?"
+                a.informativeText = "Are you sure you would like to cancel and lose all modification you have made to the Disk Image?\nALERT: You will lose all new files and modified files from this Disk Image since you loaded. Your decision if permanent and irreversible!"
+                a.addButton(withTitle: "Save")
+                a.addButton(withTitle: "Cancel")
+                a.alertStyle = .warning
+                
+                a.beginSheetModal(for: self.view.window!, completionHandler: { (modalResponse) -> Void in
+                    if modalResponse == .alertFirstButtonReturn {
+                        self.saveFileAs()
+                    }
+                })
+            }
+        }
+    }
+    
+    
+}
+
+
+@_cdecl("woz_ask_to_save")
+func woz_ask_to_save() {
+    ViewController.current?.saveFile()
 }
 

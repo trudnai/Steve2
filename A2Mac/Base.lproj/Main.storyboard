@@ -87,9 +87,14 @@
                                                 </items>
                                             </menu>
                                         </menuItem>
-                                        <menuItem title="Save…" keyEquivalent="s" id="ekf-mq-Seg">
+                                        <menuItem title="Save" keyEquivalent="s" id="ekf-mq-Seg">
                                             <connections>
                                                 <action selector="saveFile:" target="Voe-Tx-rLC" id="ACK-sm-LSp"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Save As…" keyEquivalent="S" id="6Lm-1R-Xv0">
+                                            <connections>
+                                                <action selector="saveFileAs:" target="Voe-Tx-rLC" id="KbC-Ol-j6f"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Eject" keyEquivalent="e" id="DVo-aG-piG">

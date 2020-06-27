@@ -1297,72 +1297,74 @@
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9jr-eX-yOC">
-                                        <rect key="frame" x="14" y="696" width="397" height="56"/>
+                                        <rect key="frame" x="14" y="711" width="291" height="41"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Steve ][" id="Uco-5h-Aii">
-                                            <font key="font" size="56" name="PrintChar21"/>
-                                            <color key="textColor" red="0.396078431372549" green="0.72549019607843135" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="font" size="41" name="PrintChar21"/>
+                                            <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19A-Bc-mjX">
-                                        <rect key="frame" x="14" y="652" width="391" height="26"/>
+                                        <rect key="frame" x="16" y="680" width="287" height="19"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Apple ][ Emulator" id="3va-2j-fR7">
-                                            <font key="font" size="26" name="PrintChar21"/>
-                                            <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="font" size="19" name="PrintChar21"/>
+                                            <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uMO-wh-lu4" userLabel="Jobs">
-                                        <rect key="frame" x="14" y="614" width="274" height="14"/>
+                                        <rect key="frame" x="16" y="627" width="235" height="13"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="In memoriam Steve Jobs" id="LAy-jD-fLj">
-                                            <font key="font" size="14" name="PrintChar21"/>
-                                            <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="font" size="12" name="PrintChar21"/>
+                                            <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWG-zg-Mnb" userLabel="Wozniak">
-                                        <rect key="frame" x="16" y="592" width="274" height="14"/>
+                                        <rect key="frame" x="16" y="606" width="235" height="13"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Honoring Steve Wozniak" id="5G1-y6-wdu">
-                                            <font key="font" size="14" name="PrintChar21"/>
-                                            <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="font" size="12" name="PrintChar21"/>
+                                            <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w41-S5-cTL" userLabel="Prompt">
-                                        <rect key="frame" x="16" y="554" width="29" height="14"/>
+                                        <rect key="frame" x="16" y="553" width="25" height="13"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="]" id="CYs-wL-6Pf">
-                                            <font key="font" size="14" name="PrintChar21"/>
-                                            <color key="textColor" red="0.39607843139999999" green="0.72549019609999998" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="font" size="12" name="PrintChar21"/>
+                                            <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-E1-CYC">
-                                        <rect key="frame" x="820" y="16" width="286" height="14"/>
+                                        <rect key="frame" x="860" y="16" width="246" height="13"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="© by Tamas Rudnai, 2020" id="tm6-Cq-r7H">
-                                            <font key="font" size="14" name="PrintChar21"/>
-                                            <color key="textColor" red="0.019607843137254902" green="0.61568627450980395" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="font" size="12" name="PrintChar21"/>
+                                            <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1E-lz-4q8" userLabel="Splash Logo">
-                                        <rect key="frame" x="-240" y="-256" width="1600" height="1280"/>
-                                        <imageCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="apple-rainbow" id="Zax-kI-rxd"/>
+                                        <rect key="frame" x="45" y="33" width="1120" height="640"/>
+                                        <imageCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="apple_original_logo_design" id="Zax-kI-rxd"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="w41-S5-cTL" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="AR5-1H-lGS"/>
-                                    <constraint firstItem="uMO-wh-lu4" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="Hcq-uo-o7q"/>
-                                    <constraint firstItem="WWG-zg-Mnb" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="162" id="Pal-mO-Y3V"/>
-                                    <constraint firstItem="19A-Bc-mjX" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="QrC-1X-nvG"/>
-                                    <constraint firstItem="19A-Bc-mjX" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="90" id="SZZ-Bf-eaW"/>
+                                    <constraint firstItem="w41-S5-cTL" firstAttribute="top" secondItem="WWG-zg-Mnb" secondAttribute="bottom" constant="40" id="HSO-Om-LZX"/>
+                                    <constraint firstItem="uMO-wh-lu4" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="Hcq-uo-o7q"/>
+                                    <constraint firstItem="19A-Bc-mjX" firstAttribute="top" secondItem="9jr-eX-yOC" secondAttribute="bottom" constant="12" id="I2l-6I-QxL"/>
+                                    <constraint firstItem="19A-Bc-mjX" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="QrC-1X-nvG"/>
                                     <constraint firstAttribute="bottom" secondItem="bUo-E1-CYC" secondAttribute="bottom" constant="16" id="Yiw-QR-lgh"/>
-                                    <constraint firstItem="uMO-wh-lu4" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="140" id="hdm-uq-Pa8"/>
-                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="centerY" secondItem="D0w-YC-YlJ" secondAttribute="centerY" id="mjR-uf-mpN"/>
-                                    <constraint firstItem="w41-S5-cTL" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="200" id="pHW-JK-Jx6"/>
+                                    <constraint firstItem="WWG-zg-Mnb" firstAttribute="top" secondItem="uMO-wh-lu4" secondAttribute="bottom" constant="8" id="eSi-Jc-hjx"/>
+                                    <constraint firstItem="uMO-wh-lu4" firstAttribute="top" secondItem="19A-Bc-mjX" secondAttribute="bottom" constant="40" id="fRZ-vF-d5y"/>
+                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="height" secondItem="D0w-YC-YlJ" secondAttribute="height" multiplier="0.833333" id="lQi-qr-1WL"/>
+                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="centerY" secondItem="D0w-YC-YlJ" secondAttribute="centerY" multiplier="1.08" id="mjR-uf-mpN"/>
                                     <constraint firstAttribute="trailing" secondItem="bUo-E1-CYC" secondAttribute="trailing" constant="16" id="phJ-qW-Sro"/>
                                     <constraint firstItem="9jr-eX-yOC" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="16" id="rGe-kW-tUQ"/>
                                     <constraint firstItem="9jr-eX-yOC" firstAttribute="top" secondItem="D0w-YC-YlJ" secondAttribute="top" constant="16" id="sFz-v2-tt5"/>
-                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="centerX" secondItem="D0w-YC-YlJ" secondAttribute="centerX" id="tc8-kW-eON"/>
+                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="centerX" secondItem="D0w-YC-YlJ" secondAttribute="centerX" multiplier="1.08" id="tc8-kW-eON"/>
+                                    <constraint firstItem="M1E-lz-4q8" firstAttribute="width" secondItem="D0w-YC-YlJ" secondAttribute="width" id="ueb-j5-Wvs"/>
                                     <constraint firstItem="WWG-zg-Mnb" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="vDf-7B-UwH"/>
                                 </constraints>
                             </customView>
@@ -1833,7 +1835,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="apple-rainbow" width="1600" height="1280"/>
+        <image name="apple_original_logo_design" width="384" height="307.20001220703125"/>
         <image name="dotmatrix_effect" width="268.79998779296875" height="184.32000732421875"/>
         <image name="scanlines" width="268.79998779296875" height="184.32000732421875"/>
     </resources>

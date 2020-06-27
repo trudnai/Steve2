@@ -140,9 +140,9 @@ static int load_sfx( const char * bundlePath, const char * filename, uint8_t ** 
 
 
 void spkr_load_sfx( const char * bundlePath ) {
-    diskmotor_sfx_len = load_sfx(bundlePath, "diskmotor.sfx", &diskmotor_sfx);
-    diskarm_sfx_len = load_sfx(bundlePath, "diskarm.sfx", &diskarm_sfx);
-    diskioerr_sfx_len = load_sfx(bundlePath, "diskioerr.sfx", &diskioerr_sfx);
+    diskmotor_sfx_len = load_sfx(bundlePath, "disk_ii_motor_w_floppy.sfx", &diskmotor_sfx);
+    diskarm_sfx_len = load_sfx(bundlePath, "disk_ii_arm.sfx", &diskarm_sfx);
+    diskioerr_sfx_len = load_sfx(bundlePath, "disk_ii_io_error.sfx", &diskioerr_sfx);
 }
 
 

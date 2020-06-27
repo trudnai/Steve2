@@ -741,34 +741,34 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_DISK_PHASE2_OFF + SLOT6:
         case (uint8_t)io_DISK_PHASE3_OFF + SLOT6:
             disk_phase_off( (addr - io_DISK_PHASE0_OFF - SLOT6) / 2 );
-            return 0;
+            return disk_read();
 
         case (uint8_t)io_DISK_PHASE0_ON + SLOT6:
         case (uint8_t)io_DISK_PHASE1_ON + SLOT6:
         case (uint8_t)io_DISK_PHASE2_ON + SLOT6:
         case (uint8_t)io_DISK_PHASE3_ON + SLOT6:
             disk_phase_on( (addr - io_DISK_PHASE0_ON - SLOT6) / 2 );
-            return 0;
+            return disk_read();
 
         case (uint8_t)io_DISK_POWER_OFF + SLOT6:
             dbgPrintf2("io_DISK_POWER_OFF (S%u)\n", 6);
             disk_motor_off();
-            return 0;
+            return disk_read();
 
         case (uint8_t)io_DISK_POWER_ON + SLOT6:
             dbgPrintf2("io_DISK_POWER_ON (S%u)\n", 6);
             disk_motor_on();
-            return 0;
+            return disk_read();
 
         case (uint8_t)io_DISK_SELECT_1 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_1 (S%u)\n", 6);
             disk.drive = 0;
-            return 0;
+            return disk_read();
 
         case (uint8_t)io_DISK_SELECT_2 + SLOT6:
             dbgPrintf2("io_DISK_SELECT_2 (S%u)\n", 6);
             disk.drive = 1;
-            return 0;
+            return disk_read();
 
         case (uint8_t)io_DISK_READ + SLOT6:
             if ( writeState ) {
@@ -784,6 +784,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_DISK_WRITE + SLOT6:
             dbgPrintf2("io_DISK_WRITE (S%u)\n", 6);
 //            Apple2_64K_RAM[io_DISK_CLEAR + SLOT6] |= 1 << 7; // mark disk as write protected
+            WOZwrite.latch = WOZread.latch = 0;
             Apple2_64K_RAM[io_DISK_CLEAR + SLOT6] &= ~(1 << 7); // mark disk as write enabled
             return Apple2_64K_RAM[io_DISK_WRITE + SLOT6];
 
@@ -793,7 +794,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 
         case (uint8_t)io_DISK_SHIFT + SLOT6:
             dbgPrintf2("io_DISK_SHIFT (S%u)\n", 6);
-            return 0;
+            return disk_read();
 
             
             

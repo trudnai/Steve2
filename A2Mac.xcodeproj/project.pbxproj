@@ -126,9 +126,6 @@
 		32F8A8A724A3A98D00EE6735 /* XPS Diagnostic IIe.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8B247F86D5000F9DA1 /* XPS Diagnostic IIe.woz */; };
 		32F8A8A824A3A98D00EE6735 /* LOCKSMITH_V7_REV_B.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */; };
 		32F8A8A924A3A98D00EE6735 /* locksmith_v6.0.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32F2C144249218A400FDC61B /* locksmith_v6.0.woz */; };
-		32F8A8AB24A3AAD300EE6735 /* diskmotor.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 323D043D248F70930086A901 /* diskmotor.sfx */; };
-		32F8A8AC24A3AAD300EE6735 /* diskarm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 323D0441248F711F0086A901 /* diskarm.sfx */; };
-		32F8A8AD24A3AAD300EE6735 /* diskioerr.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 323D043F248F70A10086A901 /* diskioerr.sfx */; };
 		32F8A8AF24A3AB5900EE6735 /* apple-rainbow.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32E21BE62491BF8B006C0C72 /* apple-rainbow.png */; };
 		32F8A8B024A3AB5D00EE6735 /* scanlines.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04452490BA1E0086A901 /* scanlines.png */; };
 /* End PBXBuildFile section */
@@ -247,9 +244,6 @@
 				32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */,
 				3296223A24A710E5002DEB78 /* disk_ii_io_error.sfx in Copy SFX Files */,
 				3296223624A709EE002DEB78 /* disk_ii_motor_w_floppy.sfx in Copy SFX Files */,
-				32F8A8AB24A3AAD300EE6735 /* diskmotor.sfx in Copy SFX Files */,
-				32F8A8AC24A3AAD300EE6735 /* diskarm.sfx in Copy SFX Files */,
-				32F8A8AD24A3AAD300EE6735 /* diskioerr.sfx in Copy SFX Files */,
 			);
 			name = "Copy SFX Files";
 			runOnlyForDeploymentPostprocessing = 0;

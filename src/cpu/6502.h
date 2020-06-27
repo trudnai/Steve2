@@ -181,8 +181,8 @@ extern double mhz;
 #define DEF_VIDEO_DIV 1U
 #define DEF_SPKR_DIV 1U
 
-#define GAME_FPS 300U
-#define GAME_VIDEO_DIV 5U // 300 / 5 = 60 FPS
+#define GAME_FPS 600U
+#define GAME_VIDEO_DIV 10U // 600 / 10 = 60 FPS
 
 extern unsigned int video_fps_divider;
 extern unsigned int fps;

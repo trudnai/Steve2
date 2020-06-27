@@ -517,7 +517,22 @@ int woz_loadFile( const char * filename ) {
     
     fread( woz_file_buffer, woz_file_size, 1, f);
     fclose(f);
-    if ( woz_header->magic != WOZ1_MAGIC ) {
+    
+    // if this really a WOZ file?
+    switch ( woz_header->magic ) {
+        case WOZ1_MAGIC:
+            break;
+            
+        case WOZ2_MAGIC:
+            break;
+            
+        default:
+            woz_free_buffer();
+            return WOZ_ERR_NOT_WOZ_FILE;
+    }
+
+    // check if bits and line ends not been altered by data transmission protocols
+    if ( woz_header->bit_correctness != 0x0A0D0AFF ) {
         woz_free_buffer();
         return WOZ_ERR_NOT_WOZ_FILE;
     }

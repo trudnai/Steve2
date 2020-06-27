@@ -58,6 +58,7 @@ int spkr_level = SPKR_LEVEL_ZERO;
 
 #define BUFFER_COUNT 256
 #define SOURCES_COUNT 4
+#define SPKR_CHANNELS 2
 
 ALuint spkr_src [SOURCES_COUNT] = { 0, 0, 0, 0 };
 
@@ -77,9 +78,9 @@ const unsigned spkr_sample_rate = 44100;
 const unsigned sfx_sample_rate =  22050; // original sample rate
 //const unsigned sfx_sample_rate =  26000; // bit higher pitch
 int spkr_extra_buf = 0; // 800 / spkr_fps;
-const unsigned spkr_buf_alloc_size = spkr_seconds * spkr_sample_rate * 2 / DEFAULT_FPS;
+const unsigned spkr_buf_alloc_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS;
 unsigned spkr_buf_size = spkr_buf_alloc_size;
-int16_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT * 2]; // stereo
+int16_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT * SPKR_CHANNELS]; // stereo
 unsigned spkr_sample_idx = 0;
 
 unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps, normally 8 for 30 fps
@@ -94,6 +95,8 @@ uint8_t * diskarm_sfx = NULL;
 int       diskarm_sfx_len = 0;
 uint8_t * diskioerr_sfx = NULL;
 int       diskioerr_sfx_len = 0;
+
+ALint freeBuffers = BUFFER_COUNT;
 
 
 static int load_sfx( const char * bundlePath, const char * filename, uint8_t ** buf ) {
@@ -237,11 +240,48 @@ void spkr_init() {
     freeBuffers = BUFFER_COUNT;
 }
 
+
+int spkr_unqueue( ALuint src ) {
+    ALint processed = 0;
+    
+    alGetSourcei ( src, AL_BUFFERS_PROCESSED, &processed );
+    al_check_error();
+    printf("%s alGetSourcei(%d)\n", __FUNCTION__, src);
+
+    if ( processed ) {
+        alSourceUnqueueBuffers( src, processed, &spkr_buffers[freeBuffers]);
+        al_check_error();
+    }
+    
+    return processed;
+}
+
+void spkr_unqueueAll() {
+    for ( int i = 0; i < SOURCES_COUNT; i++ ) {
+        spkr_unqueue( spkr_src[i] );
+    }
+}
+
+
 // Dealloc OpenAL
 void spkr_exit() {
     if ( spkr_src[SPKR_SRC_GAME_SFX] ) {
-        alSourceStop( spkr_src[SPKR_SRC_GAME_SFX] );
+        spkr_stopAll();
+        spkr_unqueueAll();
         
+        // delete buffers
+        alDeleteBuffers(BUFFER_COUNT, spkr_buffers);
+        al_check_error();
+        alDeleteBuffers(1, &spkr_disk_motor_buf);
+        al_check_error();
+        alDeleteBuffers(1, &spkr_disk_arm_buf);
+        al_check_error();
+
+        // delete sound source and play buffer
+        alDeleteSources(SOURCES_COUNT, spkr_src);
+        al_check_error();
+
+
         ALCdevice *dev = NULL;
         ALCcontext *ctx = NULL;
         ctx = alcGetCurrentContext();
@@ -280,7 +320,7 @@ void spkr_toggle() {
         
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
-        spkr_sample_idx = ( (spkr_clk + clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * 2;
+        spkr_sample_idx = ( (spkr_clk + clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
         
         if ( spkr_state ) {
             // down edge
@@ -290,7 +330,7 @@ void spkr_toggle() {
             
             while ( fadeLevel > +1 ) {
                 spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel;
-                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel;
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel; // stereo
                 
                 // how smooth we want the speeker to decay, so we will hear no pops and crackles
                 // 0.9 gives you a kind of saw wave at 1KHz (beep)
@@ -307,7 +347,7 @@ void spkr_toggle() {
             
             while ( fadeLevel < -1 ) {
                 spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel;
-                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel;
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel; // stereo
                 
                 // how smooth we want the speeker to decay, so we will hear no pops and crackles
                 // 0.9 gives you a kind of saw wave at 1KHz (beep)
@@ -328,25 +368,8 @@ void spkr_toggle() {
 }
 
 
-
-ALint freeBuffers = BUFFER_COUNT;
-//ALuint alBuffers[BUFFER_COUNT];
-
-int spkr_unqueue( ALuint src ) {
-    ALint processed = 0;
-    
-    alGetSourcei ( src, AL_BUFFERS_PROCESSED, &processed );
-    al_check_error();
-    
-    if ( processed ) {
-        alSourceUnqueueBuffers( src, processed, &spkr_buffers[freeBuffers]);
-        al_check_error();
-    }
-    
-    return processed;
-}
-
-int playDelay = 4;
+#define SPKR_PLAY_DELAY 2
+int playDelay = SPKR_PLAY_DELAY;
 
 
 void spkr_update() {
@@ -354,12 +377,7 @@ void spkr_update() {
         spkr_frame_cntr = 0;
         
         if ( spkr_play_time ) {
-            // free up unused buffers
-            freeBuffers += spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );
-            freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
-
             if ( freeBuffers ) {
-
                 // in Game Mode do not fade out and stop playing
                 if ( ( cpuMode_game != cpuMode ) && ( --spkr_play_time == 0 ) ) {
                     float fadeLevel = spkr_level - SPKR_LEVEL_ZERO;
@@ -369,7 +387,7 @@ void spkr_update() {
 
                         while ( ( fadeLevel < -1 ) || ( fadeLevel > 1 ) ) {
                             spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
-                            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
+                            spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel; // stereo
                             
                             // how smooth we want the speeker to decay, so we will hear no pops and crackles
                             fadeLevel *= 0.999;
@@ -402,7 +420,7 @@ void spkr_update() {
                     case AL_PAUSED:
                         if ( --playDelay <= 0 ) {
                             alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
-                            playDelay = 4;
+                            playDelay = SPKR_PLAY_DELAY;
                         }
                         break;
 
@@ -429,6 +447,10 @@ void spkr_update() {
         }
         
         spkr_clk = 0;
+        
+        // free up unused buffers
+        freeBuffers += spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );
+        freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
     }
     else {
         spkr_clk += clkfrm;
@@ -438,15 +460,16 @@ void spkr_update() {
 
 void spkr_playqueue_sfx( ALuint src, uint8_t * sfx, int len ) {
     
-//    freeBuffers += spkr_unqueue( src );
-//    freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
-
+//    printf("%s freeBuffers:%d\n", __FUNCTION__, freeBuffers);
+    
     if ( freeBuffers ) {
         ALenum queued;
         alGetSourcei( src, AL_BUFFERS_QUEUED, &queued );
     //    printf("Q:%u\n", queued);
 
-        if ( queued < 32 ) {
+//        printf("%s queued:%d\n", __FUNCTION__, queued);
+        
+        if ( queued < 16 ) {
             freeBuffers--;
             alBufferData( spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, sfx, len, sfx_sample_rate );
             al_check_error();
@@ -472,6 +495,9 @@ void spkr_playqueue_sfx( ALuint src, uint8_t * sfx, int len ) {
 
 
 void spkr_play_sfx( ALuint src, uint8_t * sfx, int len ) {
+    
+//    printf("%s freeBuffers:%d\n", __FUNCTION__, freeBuffers);
+
     if ( freeBuffers ) {
         ALenum state;
         alGetSourcei( src, AL_SOURCE_STATE, &state );
@@ -509,13 +535,16 @@ void spkr_stop_sfx( ALuint src ) {
         case AL_PAUSED:
         case AL_PLAYING:
             alSourceStop( src );
-            freeBuffers += spkr_unqueue( src );
-            freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
             break;
             
         default:
             break;
     }
+    
+    // free up unused buffers
+    freeBuffers += spkr_unqueue( src );
+    freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
+    
 }
 
 
@@ -577,12 +606,7 @@ void spkr_update_disk_sfx() {
     
     update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[SPKR_SRC_DISK_MOTOR_SFX] );
     update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[SPKR_SRC_DISK_ARM_SFX] );
+    update_disk_sfx( &spkr_play_disk_ioerr_time, spkr_src[SPKR_SRC_DISK_IOERR_SFX] );
 
-    // we do not need to stop playing,
-    // however, counter needed to eliminate arm movement noise while in io error
-    if ( spkr_play_disk_ioerr_time ) {
-        spkr_play_disk_ioerr_time--;
-    }
-    
 }
 

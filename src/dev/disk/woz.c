@@ -32,7 +32,7 @@ uint8_t * woz_file_buffer = NULL;
 woz_header_t * woz_header;
 woz_chunk_header_t * woz_chunk_header;
 woz_tmap_t * woz_tmap;
-woz_trks_t * woz_trks;
+woz1_trks_t * woz_trks;
 int track_loaded = -1;
 
 
@@ -49,7 +49,7 @@ typedef union trackEntry_u {
 
 #pragma pack(pop)
 
-trackEntry_t prepared_track[WOZ_TRACK_BYTE_COUNT];
+trackEntry_t prepared_track[WOZ1_TRACK_BYTE_COUNT];
 
 typedef enum readState_e {
     readNormal = 0,
@@ -67,7 +67,7 @@ void woz_loadTrack_old( int track ) {
     reg.data =  (*woz_trks)[track].data[1];
     prepared_track[0] = reg;
 
-    for ( int offs = 1; offs < WOZ_TRACK_BYTE_COUNT; offs++ ) {
+    for ( int offs = 1; offs < WOZ1_TRACK_BYTE_COUNT; offs++ ) {
         
         for ( int i = 0; i < 8; i++ ) {
             if (reg.shift & 0x80) {
@@ -77,7 +77,7 @@ void woz_loadTrack_old( int track ) {
             reg.shift16 <<= 1;
         }
         
-        reg.data = (*woz_trks)[track].data[ (offs + 1) % WOZ_TRACK_BYTE_COUNT ];
+        reg.data = (*woz_trks)[track].data[ (offs + 1) % WOZ1_TRACK_BYTE_COUNT ];
         prepared_track[offs] = reg;
     }
 }
@@ -199,7 +199,7 @@ void woz_loadTrack( int track ) {
     
     int bitOffs = 0;
     
-    for ( int byteOffs = 0; byteOffs < WOZ_TRACK_BYTE_COUNT; byteOffs++ ) {
+    for ( int byteOffs = 0; byteOffs < WOZ1_TRACK_BYTE_COUNT; byteOffs++ ) {
 
         reg.data = (*woz_trks)[track].data[ byteOffs ];
 
@@ -236,7 +236,7 @@ uint8_t woz_read() {
     const int clkBeforeAdjusting = 512;
     const int magicShiftOffset = 45;
     
-    uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
+    uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ1_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ1_TRACK_BYTE_COUNT;
     
     if ( usedBytes ) {
         int shiftOffset = magicShiftOffset;
@@ -375,7 +375,7 @@ void woz_write( uint8_t data ) {
     clkelpased = m6502.clktime + clkfrm - m6502.clklast;
     m6502.clklast = m6502.clktime + clkfrm;
     
-    uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ_TRACK_BYTE_COUNT;
+    uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ1_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ1_TRACK_BYTE_COUNT;
     
     if ( usedBytes ) {
         
@@ -555,7 +555,7 @@ int woz_loadFile( const char * filename ) {
                 break;
 
             case WOZ_TRKS_CHUNK_ID:
-                woz_trks = (woz_trks_t*) &woz_file_buffer[bufOffs];
+                woz_trks = (woz1_trks_t*) &woz_file_buffer[bufOffs];
                 break;
 
             case WOZ_META_CHUNK_ID:

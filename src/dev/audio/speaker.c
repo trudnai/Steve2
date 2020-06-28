@@ -244,13 +244,15 @@ void spkr_init() {
 int spkr_unqueue( ALuint src ) {
     ALint processed = 0;
     
-    alGetSourcei ( src, AL_BUFFERS_PROCESSED, &processed );
-    al_check_error();
-    printf("%s alGetSourcei(%d)\n", __FUNCTION__, src);
-
-    if ( processed ) {
-        alSourceUnqueueBuffers( src, processed, &spkr_buffers[freeBuffers]);
+    if ( src ) {
+        alGetSourcei ( src, AL_BUFFERS_PROCESSED, &processed );
         al_check_error();
+    //    printf("%s alGetSourcei(%d)\n", __FUNCTION__, src);
+
+        if ( processed ) {
+            alSourceUnqueueBuffers( src, processed, &spkr_buffers[freeBuffers]);
+            al_check_error();
+        }
     }
     
     return processed;
@@ -322,20 +324,23 @@ void spkr_toggle() {
         // (we will play the entire buffer at the end of the frame)
         spkr_sample_idx = ( (spkr_clk + clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
         
+        spkr_level = spkr_samples[ spkr_sample_idx ];
+        
         if ( spkr_state ) {
             // down edge
             spkr_state = 0;
             
-            float fadeLevel = spkr_level - SPKR_LEVEL_MIN;
-            
-            while ( fadeLevel > +1 ) {
-                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel;
-                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + fadeLevel; // stereo
+            float dumping = spkr_level - SPKR_LEVEL_MIN;
+            dumping *= SPKR_INITIAL_DUMPING;
+
+            while ( dumping > 1 ) {
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + dumping;
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MIN + dumping; // stereo
                 
                 // how smooth we want the speeker to decay, so we will hear no pops and crackles
                 // 0.9 gives you a kind of saw wave at 1KHz (beep)
                 // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-                fadeLevel *= 0.16;
+                dumping *= SPKR_FADE_TRAILING_EDGE;
             }
             spkr_level = SPKR_LEVEL_MIN;
         }
@@ -343,16 +348,17 @@ void spkr_toggle() {
             // up edge
             spkr_state = 1;
             
-            float fadeLevel = spkr_level - SPKR_LEVEL_MAX;
-            
-            while ( fadeLevel < -1 ) {
-                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel;
-                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + fadeLevel; // stereo
+            float dumping = spkr_level - SPKR_LEVEL_MAX;
+            dumping *= SPKR_INITIAL_DUMPING;
+
+            while ( dumping < -1 ) {
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + dumping;
+                spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_MAX + dumping; // stereo
                 
                 // how smooth we want the speeker to decay, so we will hear no pops and crackles
                 // 0.9 gives you a kind of saw wave at 1KHz (beep)
                 // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-                fadeLevel *= 0.32;
+                dumping *= SPKR_FADE_LEADING_EDGE;
             }
             spkr_level = SPKR_LEVEL_MAX;
         }

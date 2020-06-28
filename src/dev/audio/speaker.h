@@ -22,8 +22,12 @@
 //#define SPKR_LEVEL_MAX      (+5000)
 
 // medium
-#define SPKR_LEVEL_MIN      (-3000)
-#define SPKR_LEVEL_MAX      (+3000)
+#define SPKR_LEVEL_MIN      (-3072)
+#define SPKR_LEVEL_MAX      (+3072)
+
+#define SPKR_FADE_LEADING_EDGE      0.32
+#define SPKR_FADE_TRAILING_EDGE     0.16
+#define SPKR_INITIAL_DUMPING        0.86
 
 // quiet
 //#define SPKR_LEVEL_MIN      (-1000)

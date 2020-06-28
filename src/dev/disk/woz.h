@@ -95,22 +95,44 @@ typedef struct woz_tmap_s {
     uint8_t     phase [DISKII_MAXTRACKS * DISKII_PHASES];
 } woz_tmap_t;
 
-#define WOZ_TRACK_BYTE_COUNT 6646
+#define WOZ1_TRACK_BYTE_COUNT 6646
+#define WOZ2_TRACK_BYTE_COUNT 6680
+
 // chunk data only
 
-typedef struct woz_track_s {
-    uint8_t     data [WOZ_TRACK_BYTE_COUNT];
+typedef struct woz1_track_s {
+    uint8_t     data [WOZ1_TRACK_BYTE_COUNT];
     uint16_t    bytes_used;
     uint16_t    bit_count;
     uint16_t    splice_point;
     uint8_t     splice_nibble;
     uint8_t     splice_bit_count;
     uint16_t    reserved;
-} woz_track_t;
+} woz1_track_t;
 
+
+typedef struct woz2_trk_s {
+    uint16_t    starting_block;     // First block of BITS data. This value is relative to the start of the file,
+                                    // so the first possible starting block is 3. Multiply this value by 512 (x << 9)
+                                    // to get the starting byte of the BITS data
+    uint16_t    block_count;        // Number of blocks for this BITS data
+    uint32_t    bit_count;          // The number of bits in the bitstream
+} woz2_trk_t;
+
+#define WOZ_MAX_TRK     160
+
+typedef struct woz2_track_s {
+    uint8_t     trks [WOZ_MAX_TRK];
+    uint16_t    bytes_used;
+    uint16_t    bit_count;
+    uint16_t    splice_point;
+    uint8_t     splice_nibble;
+    uint8_t     splice_bit_count;
+    uint16_t    reserved;
+} woz2_track_t;
 
 // chunk data only
-typedef woz_track_t woz_trks_t[DISKII_MAXTRACKS];
+typedef woz1_track_t woz1_trks_t[DISKII_MAXTRACKS];
 
 #pragma pack(pop)
 

@@ -479,44 +479,17 @@ void woz_free_buffer() {
 }
 
 
-int woz_loadFile( const char * filename ) {
+int woz_parseBuffer() {
     
-//    char fullpath[256];
-//
-//    strcpy(fullpath, resourcePath);
-//    strcat(fullpath, "/");
-//    strcat(fullpath, filename);
-    
-    FILE * f = fopen(filename, "rb");
-    if (f == NULL) {
-        perror("Failed to read WOZ: ");
-        return WOZ_ERR_FILE_NOT_FOUND;
-    }
-    
-    woz_eject();
-    
-    // get file size
-    fseek(f, 0, SEEK_END);
-    woz_file_size = ftell(f);
-    fseek(f, 0, SEEK_SET);
-
     woz_flags.disk_modified = 0;
     woz_flags.disk_write_protected = 0;
     woz_flags.image_file_readonly = 0;
     woz_flags.image_loaded = 1;
     
-    woz_file_buffer = malloc(woz_file_size);
-    if (woz_file_buffer == NULL) {
-        perror("Not Enough Memory: ");
-        return WOZ_ERR_BAD_DATA;
-    }
     woz_header = (woz_header_t*)woz_file_buffer;
     
     // to simulate file read
     long bufOffs = 0;
-    
-    fread( woz_file_buffer, woz_file_size, 1, f);
-    fclose(f);
     
     // if this really a WOZ file?
     switch ( woz_header->magic ) {
@@ -569,12 +542,50 @@ int woz_loadFile( const char * filename ) {
         bufOffs += woz_chunk_header->size;
     }
     
-    
-    
     // DO NOT COMMIT THIS! ONLY FOR DEBUG!!!
 //    woz_loadTrack(0x11);
 
     return WOZ_ERR_OK;
+}
+
+
+int woz_loadFile( const char * filename ) {
+    
+    //    char fullpath[256];
+    //
+    //    strcpy(fullpath, resourcePath);
+    //    strcat(fullpath, "/");
+    //    strcat(fullpath, filename);
+    
+    FILE * f = fopen(filename, "rb");
+    if (f == NULL) {
+        perror("Failed to read WOZ: ");
+        return WOZ_ERR_FILE_NOT_FOUND;
+    }
+    
+    // we eject here so if file not exists, we still have the old disk inserted
+    woz_eject();
+
+    // get file size
+    fseek(f, 0, SEEK_END);
+    woz_file_size = ftell(f);
+    fseek(f, 0, SEEK_SET);
+        
+    woz_file_buffer = malloc(woz_file_size);
+    if (woz_file_buffer == NULL) {
+        perror("Not Enough Memory: ");
+        return WOZ_ERR_BAD_DATA;
+    }
+    
+    size_t len = fread( woz_file_buffer, 1, woz_file_size, f);
+    fclose(f);
+    
+    if ( len != woz_file_size ) {
+        perror("Probably bad WOZ file: ");
+        return WOZ_ERR_BAD_DATA;
+    }
+    
+    return woz_parseBuffer();
 }
 
 

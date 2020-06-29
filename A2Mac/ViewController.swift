@@ -516,14 +516,14 @@ class ViewController: NSViewController  {
 //        case [.control]:
 //            print("control key is pressed")
         case [.option] :
-            setIO(0xC061, 1 << 7)
-            setIO(0xC062, 0)
+            setIO(0xC061, 0)
+            setIO(0xC062, 1 << 7)
             setIO(0xC063, 1 << 7) // inverted (bit 7: not pressed)
 //            print("option key is pressed")
         case [.command]:
 //            print("Command key is pressed")
-            setIO(0xC061, 0)
-            setIO(0xC062, 1 << 7)
+            setIO(0xC061, 1 << 7)
+            setIO(0xC062, 0)
             setIO(0xC063, 1 << 7) // inverted (bit 7: not pressed)
 //        case [.control, .shift]:
 //            print("control-shift keys are pressed")
@@ -533,8 +533,8 @@ class ViewController: NSViewController  {
             setIO(0xC063, 0) // inverted (bit 7: not pressed)
 //            print("option-shift keys are pressed")
         case [.command, .shift]:
-            setIO(0xC061, 0)
-            setIO(0xC062, 1 << 7)
+            setIO(0xC061, 1 << 7)
+            setIO(0xC062, 0)
             setIO(0xC063, 0) // inverted (bit 7: not pressed)
 //            print("command-shift keys are pressed")
 //        case [.control, .option]:
@@ -1191,15 +1191,41 @@ class ViewController: NSViewController  {
                 //If there's only one URL, surely 'openPanel.URL'
                 //but otherwise a for loop works
                 
-                if let filePath = openPanel.url?.path {
-                    let woz_err = woz_loadFile( filePath )
+                switch openPanel.url?.pathExtension.uppercased() {
+                
+                    case "WOZ":
+                        if let filePath = openPanel.url?.path {
+                            let err = woz_loadFile( filePath )
+
+                            if err == WOZ_ERR_OK {
+                                NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
+                            }
+                            else {
+                                self.chk_woz_load(err: err)
+                            }
+                        }
                     
-                    if woz_err == WOZ_ERR_OK {
-                        NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
-                    }
-                    else {
-                        self.chk_woz_load(err: woz_err)
-                    }
+                    case "DSK", "DO", "PO" :
+                        if let filePath = openPanel.url?.path {
+                            woz_eject()
+                            
+                            let err = dsk2woz( filePath )
+
+                            if err == WOZ_ERR_OK {
+                                let err = woz_parseBuffer()
+                                
+                                if err == WOZ_ERR_OK {
+                                    NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
+                                }
+                            }
+                            else {
+                                self.chk_woz_load(err: err)
+                            }
+                        }
+                    
+                default:
+                    break
+
                 }
             }
         }

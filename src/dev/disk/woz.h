@@ -15,6 +15,8 @@
 
 #define MAXFILENAME 4096
 
+#define WOZ1_FILE_SIZE 233216
+
 #define DISKII_MAXTRACKS 80
 #define DISKII_PHASES 4
 
@@ -167,6 +169,9 @@ extern WOZread_t WOZwrite;
 extern uint8_t   WOZlatch;
 extern char woz_filename[MAXFILENAME];
 extern woz_flags_t woz_flags;
+extern size_t woz_file_size;
+extern uint8_t * woz_file_buffer;
+
 
 //extern woz_header_t woz_header;
 //extern woz_chunk_header_t woz_chunk_header;
@@ -176,6 +181,7 @@ extern woz_flags_t woz_flags;
 
 extern uint8_t woz_read(void);
 extern void woz_write( uint8_t data );
+extern int woz_parseBuffer(void);
 extern int woz_loadFile( const char * filename );
 extern int woz_saveFile( const char * filename );
 extern void woz_eject(void);

@@ -83,6 +83,8 @@
 		32E3126524A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
+		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
+		32E3126A24A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
 		32F8A87C24A3A84300EE6735 /* PrintChar21.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		32F8A87D24A3A84700EE6735 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
@@ -392,6 +394,8 @@
 		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
 		32E3126424A7193700E61891 /* disk_ii_arm.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_arm.sfx; sourceTree = "<group>"; };
+		32E3126824A98B9300E61891 /* dsk2woz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsk2woz.c; sourceTree = "<group>"; };
+		32E3126B24A9928F00E61891 /* dsk2woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dsk2woz.h; sourceTree = "<group>"; };
 		32EDB7A123272CA80073AF2D /* fail1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = fail1.txt; sourceTree = "<group>"; };
 		32F2C144249218A400FDC61B /* locksmith_v6.0.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = locksmith_v6.0.woz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -591,6 +595,8 @@
 				325EB62E23F8856F00C6B4A4 /* woz.c */,
 				325EB63423F8F78300C6B4A4 /* disk.h */,
 				325EB63523F8F78300C6B4A4 /* disk.c */,
+				32E3126B24A9928F00E61891 /* dsk2woz.h */,
+				32E3126824A98B9300E61891 /* dsk2woz.c */,
 			);
 			path = disk;
 			sourceTree = "<group>";
@@ -1096,6 +1102,7 @@
 				325EB64323FBBACF00C6B4A4 /* AppDelegate.swift in Sources */,
 				325EB67723FBC45300C6B4A4 /* woz.c in Sources */,
 				325EB64523FBBACF00C6B4A4 /* SceneDelegate.swift in Sources */,
+				32E3126A24A98B9300E61891 /* dsk2woz.c in Sources */,
 				325EB67423FBC0AA00C6B4A4 /* RepeatingTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1124,6 +1131,7 @@
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
 				323D0437248B6BEA0086A901 /* 6502.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
+				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,

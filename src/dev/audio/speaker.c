@@ -53,6 +53,7 @@ ALCdevice *dev = NULL;
 ALCcontext *ctx = NULL;
 
 
+#define SPKR_MIN_VOL    0.0001 // OpenAL cannot change volume to 0.0 for some reason, so we just turn volume really low
 int spkr_level = SPKR_LEVEL_ZERO;
 
 
@@ -66,6 +67,9 @@ ALuint spkr_buffers[BUFFER_COUNT];
 ALuint spkr_disk_motor_buf = 0;
 ALuint spkr_disk_arm_buf = 0;
 ALuint spkr_disk_ioerr_buf = 0;
+
+
+float spkr_vol = 0.5;
 
 
 const unsigned spkr_fps = DEFAULT_FPS;
@@ -174,6 +178,13 @@ void spkr_init() {
     alGenSources(SOURCES_COUNT, spkr_src);
     al_check_error();
     
+    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
+    al_check_error();
+    alListenerf(AL_GAIN, spkr_vol);
+    al_check_error();
+//    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
+//    al_check_error();
+
     alSourcei(spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_RELATIVE, AL_TRUE);
     al_check_error();
     alSourcei(spkr_src[SPKR_SRC_GAME_SFX], AL_LOOPING, AL_FALSE);
@@ -182,10 +193,6 @@ void spkr_init() {
     al_check_error();
     alSource3f(spkr_src[SPKR_SRC_GAME_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
-    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
-    al_check_error();
-//    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
-//    al_check_error();
 
     
     // Set-up disk motor sound source and play buffer
@@ -197,10 +204,6 @@ void spkr_init() {
     al_check_error();
     alSource3f(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
-    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
-    al_check_error();
-//    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
-//    al_check_error();
 
     
     // Set-up disk arm sound source and play buffer
@@ -212,10 +215,6 @@ void spkr_init() {
     al_check_error();
     alSource3f(spkr_src[SPKR_SRC_DISK_ARM_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
-    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
-    al_check_error();
-//    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
-//    al_check_error();
     
     
     // Set-up disk io error sound source and play buffer
@@ -227,10 +226,6 @@ void spkr_init() {
     al_check_error();
     alSource3f(spkr_src[SPKR_SRC_DISK_IOERR_SFX], AL_POSITION, 0.0, 8.0, 0.0);
     al_check_error();
-    alListener3f(AL_POSITION, 0.0, 0.0, 0.0);
-    al_check_error();
-//    alListener3f(AL_ORIENTATION, 0.0, -16.0, 0.0);
-//    al_check_error();
     
     
     // start from the beginning
@@ -238,6 +233,41 @@ void spkr_init() {
 
     // make sure we have free buffers initialized here
     freeBuffers = BUFFER_COUNT;
+}
+
+
+void spkr_vol_up() {
+    spkr_vol += 0.1;
+    if ( spkr_vol > 1 ) {
+        spkr_vol = 1;
+    }
+    alListenerf(AL_GAIN, spkr_vol);
+    al_check_error();
+}
+
+void spkr_vol_dn() {
+    spkr_vol -= 0.1;
+    if ( spkr_vol < 0.1 ) {
+        // use mute to make it completely silent
+        spkr_vol = 0.1;
+    }
+    alListenerf(AL_GAIN, spkr_vol);
+    al_check_error();
+}
+
+void spkr_mute() {
+    ALfloat vol = 0;
+    alGetListenerf(AL_GAIN, &vol);
+    al_check_error();
+
+    if ( vol > SPKR_MIN_VOL ) {
+        alListenerf(AL_GAIN, SPKR_MIN_VOL);
+        al_check_error();
+    }
+    else {
+        alListenerf(AL_GAIN, spkr_vol);
+        al_check_error();
+    }
 }
 
 

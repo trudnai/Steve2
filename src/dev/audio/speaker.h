@@ -58,6 +58,11 @@ extern int spkr_extra_buf;
 extern unsigned spkr_play_timeout;
 extern unsigned spkr_play_time;
 
+extern float spkr_vol;
+
+extern void spkr_vol_up(void);
+extern void spkr_vol_dn(void);
+extern void spkr_mute(void);
 
 extern void spkr_init(void);
 extern void spkr_exit(void);

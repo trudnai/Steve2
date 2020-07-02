@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		32089E4924556DBD0036E667 /* PRNumber3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
+		320B3FC424AD88B0005EA133 /* power.png in Resources */ = {isa = PBXBuildFile; fileRef = 320B3FC324AD88B0005EA133 /* power.png */; };
 		3213936624079C30007F5C4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		323D042E248980600086A901 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
@@ -18,6 +19,7 @@
 		323E2DD1245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
 		32440B85247E27D7000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
+		324D15D324ADAC71008AAFB0 /* floppy.png in Resources */ = {isa = PBXBuildFile; fileRef = 324D15D224ADAC71008AAFB0 /* floppy.png */; };
 		325DC40E24AC5ABC00EB8858 /* doc.on.doc.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */; };
 		325DC41024AC691B00EB8858 /* rgb_color.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40F24AC691B00EB8858 /* rgb_color.png */; };
 		325DC41324AC692D00EB8858 /* rgb_mono.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC41124AC692D00EB8858 /* rgb_mono.png */; };
@@ -54,6 +56,9 @@
 		325EB6A82401118300C6B4A4 /* ProDOS_402_System.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */; };
 		325EB6AA2401118300C6B4A4 /* Sneakers.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
+		326B56E524AD8E89009BA0AC /* gobackward.png in Resources */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
+		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Resources */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
+		32877F8D24ADA6AF003A940D /* joystick.png in Resources */ = {isa = PBXBuildFile; fileRef = 32877F8C24ADA6AF003A940D /* joystick.png */; };
 		3296223224A6622C002DEB78 /* apple_original_logo_design.png in Resources */ = {isa = PBXBuildFile; fileRef = 3296223124A6622C002DEB78 /* apple_original_logo_design.png */; };
 		3296223424A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */; };
 		3296223524A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */; };
@@ -63,6 +68,7 @@
 		3296223A24A710E5002DEB78 /* disk_ii_io_error.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */; };
 		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32A9F74B2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
+		32AF7C9724AD85E8002D82BF /* select_all.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32AF7C9624AD85E8002D82BF /* select_all.png */; };
 		32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
@@ -262,6 +268,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				32AF7C9724AD85E8002D82BF /* select_all.png in Copy Image Files */,
 				325DC41024AC691B00EB8858 /* rgb_color.png in Copy Image Files */,
 				325DC41324AC692D00EB8858 /* rgb_mono.png in Copy Image Files */,
 				325DC41424AC692D00EB8858 /* mono.png in Copy Image Files */,
@@ -278,6 +285,7 @@
 
 /* Begin PBXFileReference section */
 		32089E4724556DBD0036E667 /* PRNumber3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PRNumber3.ttf; sourceTree = "<group>"; };
+		320B3FC324AD88B0005EA133 /* power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = power.png; sourceTree = "<group>"; };
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -335,6 +343,7 @@
 		32440B9C247F9DC7000F9DA1 /* blank.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = blank.woz; sourceTree = "<group>"; };
 		32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = LOCKSMITH_V7_REV_B.woz; sourceTree = "<group>"; };
 		32440BA22480D5C0000F9DA1 /* LoRes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRes.swift; sourceTree = "<group>"; };
+		324D15D224ADAC71008AAFB0 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
 		325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.on.doc.png; sourceTree = "<group>"; };
 		325DC40F24AC691B00EB8858 /* rgb_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_color.png; sourceTree = "<group>"; };
 		325DC41124AC692D00EB8858 /* rgb_mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_mono.png; sourceTree = "<group>"; };
@@ -377,12 +386,16 @@
 		3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio_8bit_ioaddr.h; sourceTree = "<group>"; };
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
+		326B56E424AD8E89009BA0AC /* gobackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gobackward.png; sourceTree = "<group>"; };
+		326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.text.viewfinder.png; sourceTree = "<group>"; };
 		326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = 6502_functional_test.bin; sourceTree = SOURCE_ROOT; };
+		32877F8C24ADA6AF003A940D /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
 		3296223124A6622C002DEB78 /* apple_original_logo_design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple_original_logo_design.png; sourceTree = "<group>"; };
 		3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_motor_w_floppy.sfx; sourceTree = "<group>"; };
 		3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_io_error.sfx; sourceTree = "<group>"; };
 		32A9F7482467B60B004902A1 /* speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speaker.h; sourceTree = "<group>"; };
 		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
+		32AF7C9624AD85E8002D82BF /* select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_all.png; sourceTree = "<group>"; };
 		32B18435233F10BC00DBB4AB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		32B18438233FAB3900DBB4AB /* verticies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verticies.swift; sourceTree = "<group>"; };
 		32BFFB5722EACC630003B53F /* Steve ][.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -792,13 +805,19 @@
 		32F8A8B124A3AE1600EE6735 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				324D15D224ADAC71008AAFB0 /* floppy.png */,
+				32877F8C24ADA6AF003A940D /* joystick.png */,
 				3296223124A6622C002DEB78 /* apple_original_logo_design.png */,
 				32E21BE62491BF8B006C0C72 /* apple-rainbow.png */,
 				323D04432490B3930086A901 /* dotmatrix_effect.png */,
 				323D04452490BA1E0086A901 /* scanlines.png */,
 				325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */,
 				32E3127224AC0AC400E61891 /* doc.on.clipboard.png */,
+				326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */,
+				32AF7C9624AD85E8002D82BF /* select_all.png */,
+				320B3FC324AD88B0005EA133 /* power.png */,
 				325DC41224AC692D00EB8858 /* mono.png */,
+				326B56E424AD8E89009BA0AC /* gobackward.png */,
 				325DC41124AC692D00EB8858 /* rgb_mono.png */,
 				325DC40F24AC691B00EB8858 /* rgb_color.png */,
 			);
@@ -1065,10 +1084,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3296223424A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx in Resources */,
+				320B3FC424AD88B0005EA133 /* power.png in Resources */,
+				32877F8D24ADA6AF003A940D /* joystick.png in Resources */,
 				3296223224A6622C002DEB78 /* apple_original_logo_design.png in Resources */,
 				3213936624079C30007F5C4A /* Main.storyboard in Resources */,
+				326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
+				324D15D324ADAC71008AAFB0 /* floppy.png in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
+				326B56E524AD8E89009BA0AC /* gobackward.png in Resources */,
 				32E3126524A7193700E61891 /* disk_ii_arm.sfx in Resources */,
 				3296223824A710CD002DEB78 /* disk_ii_io_error.sfx in Resources */,
 			);

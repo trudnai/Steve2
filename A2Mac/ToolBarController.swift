@@ -13,15 +13,21 @@ import AVFoundation
 class ToolBarController: NSWindowController {
     
     @IBAction func PowerOn(_ sender: Any) {
-        ViewController.current?.PowerOn(sender)
-    }
-    
-    @IBAction func PowerOff(_ sender: Any) {
-        ViewController.current?.PowerOff(sender)
+        switch cpuState {
+        case cpuState_inited, cpuState_unknown:
+            ViewController.current?.PowerOn(sender)
+
+        default:
+            ViewController.current?.PowerOff(sender)
+        }
     }
     
     @IBAction func Pause(_ sender: Any) {
         ViewController.current?.Pause(sender)
+    }
+    
+    @IBAction func Reset(_ sender: Any) {
+        ViewController.current?.Reset(sender)
     }
     
     @IBAction func Copy(_ sender: Any) {
@@ -81,4 +87,15 @@ class ToolBarController: NSWindowController {
         ViewController.current?.setSimulationMode( mode: sender.selectedItem?.title ?? "Normal" )
     }
     
+    @IBAction func Mute(_ sender: Any) {
+        spkr_mute()
+    }
+    
+    @IBAction func VolDn(_ sender: Any) {
+        spkr_vol_dn()
+    }
+    
+    @IBAction func VolUp(_ sender: Any) {
+        spkr_vol_up()
+    }
 }

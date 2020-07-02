@@ -18,6 +18,10 @@
 		323E2DD1245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
 		32440B85247E27D7000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
+		325DC40E24AC5ABC00EB8858 /* doc.on.doc.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */; };
+		325DC41024AC691B00EB8858 /* rgb_color.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40F24AC691B00EB8858 /* rgb_color.png */; };
+		325DC41324AC692D00EB8858 /* rgb_mono.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC41124AC692D00EB8858 /* rgb_mono.png */; };
+		325DC41424AC692D00EB8858 /* mono.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC41224AC692D00EB8858 /* mono.png */; };
 		325EB62F23F8856F00C6B4A4 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
 		325EB63623F8F78300C6B4A4 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
 		325EB63923F9E48100C6B4A4 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
@@ -85,6 +89,8 @@
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
 		32E3126A24A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
+		32E3126D24AC033A00E61891 /* ToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126C24AC033A00E61891 /* ToolBarController.swift */; };
+		32E3127424AC0B2E00E61891 /* doc.on.clipboard.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32E3127224AC0AC400E61891 /* doc.on.clipboard.png */; };
 		32F8A87C24A3A84300EE6735 /* PrintChar21.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		32F8A87D24A3A84700EE6735 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
@@ -256,6 +262,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
+				325DC41024AC691B00EB8858 /* rgb_color.png in Copy Image Files */,
+				325DC41324AC692D00EB8858 /* rgb_mono.png in Copy Image Files */,
+				325DC41424AC692D00EB8858 /* mono.png in Copy Image Files */,
+				325DC40E24AC5ABC00EB8858 /* doc.on.doc.png in Copy Image Files */,
+				32E3127424AC0B2E00E61891 /* doc.on.clipboard.png in Copy Image Files */,
 				323D04442490B3930086A901 /* dotmatrix_effect.png in Copy Image Files */,
 				32F8A8AF24A3AB5900EE6735 /* apple-rainbow.png in Copy Image Files */,
 				32F8A8B024A3AB5D00EE6735 /* scanlines.png in Copy Image Files */,
@@ -324,6 +335,10 @@
 		32440B9C247F9DC7000F9DA1 /* blank.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = blank.woz; sourceTree = "<group>"; };
 		32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = LOCKSMITH_V7_REV_B.woz; sourceTree = "<group>"; };
 		32440BA22480D5C0000F9DA1 /* LoRes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRes.swift; sourceTree = "<group>"; };
+		325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.on.doc.png; sourceTree = "<group>"; };
+		325DC40F24AC691B00EB8858 /* rgb_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_color.png; sourceTree = "<group>"; };
+		325DC41124AC692D00EB8858 /* rgb_mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_mono.png; sourceTree = "<group>"; };
+		325DC41224AC692D00EB8858 /* mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mono.png; sourceTree = "<group>"; };
 		325EB62D23F8856F00C6B4A4 /* woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = woz.h; sourceTree = "<group>"; };
 		325EB62E23F8856F00C6B4A4 /* woz.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = woz.c; sourceTree = "<group>"; };
 		325EB63423F8F78300C6B4A4 /* disk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disk.h; sourceTree = "<group>"; };
@@ -396,6 +411,8 @@
 		32E3126424A7193700E61891 /* disk_ii_arm.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_arm.sfx; sourceTree = "<group>"; };
 		32E3126824A98B9300E61891 /* dsk2woz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsk2woz.c; sourceTree = "<group>"; };
 		32E3126B24A9928F00E61891 /* dsk2woz.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dsk2woz.h; sourceTree = "<group>"; };
+		32E3126C24AC033A00E61891 /* ToolBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarController.swift; sourceTree = "<group>"; };
+		32E3127224AC0AC400E61891 /* doc.on.clipboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.on.clipboard.png; sourceTree = "<group>"; };
 		32EDB7A123272CA80073AF2D /* fail1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = fail1.txt; sourceTree = "<group>"; };
 		32F2C144249218A400FDC61B /* locksmith_v6.0.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = locksmith_v6.0.woz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -749,6 +766,7 @@
 				32BFFB6322EACC660003B53F /* Info.plist */,
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
 				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
+				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -778,6 +796,11 @@
 				32E21BE62491BF8B006C0C72 /* apple-rainbow.png */,
 				323D04432490B3930086A901 /* dotmatrix_effect.png */,
 				323D04452490BA1E0086A901 /* scanlines.png */,
+				325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */,
+				32E3127224AC0AC400E61891 /* doc.on.clipboard.png */,
+				325DC41224AC692D00EB8858 /* mono.png */,
+				325DC41124AC692D00EB8858 /* rgb_mono.png */,
+				325DC40F24AC691B00EB8858 /* rgb_color.png */,
 			);
 			path = img;
 			sourceTree = "<group>";
@@ -1128,6 +1151,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				32E3126D24AC033A00E61891 /* ToolBarController.swift in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
 				323D0437248B6BEA0086A901 /* 6502.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,

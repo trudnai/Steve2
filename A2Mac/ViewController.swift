@@ -92,7 +92,7 @@ class ViewController: NSViewController  {
             
             "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
             
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{007F}"
+            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
 
     static let charConvStrFlashOn : String =
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
@@ -100,7 +100,7 @@ class ViewController: NSViewController  {
            
             "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
             
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{007F}"
+            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
 
     static let charConvTblFlashOn  = Array( charConvStrFlashOn  )
     static let charConvTblFlashOff = Array( charConvStrFlashOff )
@@ -378,12 +378,10 @@ class ViewController: NSViewController  {
                                 }
                             }
                         }
-                        
                     }
-                    
+
                 default:
                     super.keyDown(with: event)
-                    break
                 }
             }
         }
@@ -440,6 +438,7 @@ class ViewController: NSViewController  {
             #endif
         }
         
+        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
     }
     
     
@@ -1106,9 +1105,8 @@ class ViewController: NSViewController  {
         hires.RenderFullScreen()
     }
     
-    @IBAction func ColorMonitorOnOff(_ sender: NSButton) {
-        ColorMonitor = sender.state == .on
-        hires.RenderFullScreen()
+    func ColorMonitorSelector( color : Bool ) {
+        ColorMonitor = color
         
         if ( ColorMonitor ) {
             display.textColor = colorWhite // .white
@@ -1116,6 +1114,12 @@ class ViewController: NSViewController  {
         else {
             display.textColor = colorGreen // .green
         }
+        
+        hires.RenderFullScreen()
+    }
+    
+    @IBAction func ColorMonitorOnOff(_ sender: NSButton) {
+        ColorMonitorSelector( color: sender.state == .on )
     }
     
     @IBAction func MonitorChange(_ sender: NSButton) {

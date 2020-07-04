@@ -39,14 +39,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func selectAnImageFromFile(sender: AnyObject) {
-        ViewController.current?.openDiskImage()
+        ViewController.current?.openDiskImageDialog()
     }
 
     
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
-        let woz_err = woz_loadFile( filename )
-
-        return woz_err == 0;
+        ViewController.current?.openDiskImage(url: URL(fileURLWithPath: filename))
+        return true;
     }
     
     @IBAction func saveFile(_ sender: NSMenuItem) {

@@ -1088,8 +1088,8 @@ class ViewController: NSViewController  {
     }
     
     
-    @IBAction func setCPUMode(_ sender: NSButton) {
-        setSimulationMode(mode: sender.title )
+    @IBAction func setCPUMode(_ sender: NSPopUpButton) {
+        setSimulationMode(mode: sender.selectedItem?.title ?? "Normal" )
     }
     
     @IBOutlet weak var SoundGap: NSTextFieldCell!
@@ -1179,7 +1179,43 @@ class ViewController: NSViewController  {
     }
     
     
-    @objc func openDiskImage() {
+    func openDiskImage( url: URL ) {
+        switch url.pathExtension.uppercased() {
+            
+        case "WOZ":
+            let err = woz_loadFile( url.path )
+            
+            if err == WOZ_ERR_OK {
+                NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: url.path))
+            }
+            else {
+                self.chk_woz_load(err: err)
+            }
+            
+        case "DSK", "DO", "PO" :
+            woz_eject()
+            
+            let err = dsk2woz( url.path )
+            
+            if err == WOZ_ERR_OK {
+                let err = woz_parseBuffer()
+                
+                if err == WOZ_ERR_OK {
+                    NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: url.path))
+                }
+            }
+            else {
+                self.chk_woz_load(err: err)
+            }
+            
+        default:
+            break
+            
+        }
+
+    }
+    
+    @objc func openDiskImageDialog() {
         let openPanel = NSOpenPanel()
         openPanel.title = "Open Disk Image"
         openPanel.allowsMultipleSelection = false
@@ -1190,46 +1226,21 @@ class ViewController: NSViewController  {
         
         openPanel.begin { (result) -> Void in
             if result == NSApplication.ModalResponse.OK {
-                print("file:", openPanel.url!.path)
+//                print("file:", openPanel.url!.path)
                 //Do what you will
                 //If there's only one URL, surely 'openPanel.URL'
                 //but otherwise a for loop works
                 
-                switch openPanel.url?.pathExtension.uppercased() {
-                
-                    case "WOZ":
-                        if let filePath = openPanel.url?.path {
-                            let err = woz_loadFile( filePath )
-
-                            if err == WOZ_ERR_OK {
-                                NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
-                            }
-                            else {
-                                self.chk_woz_load(err: err)
-                            }
-                        }
+                if let url = openPanel.url {
+                    self.openDiskImage(url: url)
+                }
+                else {
+                    let a = NSAlert()
+                    a.messageText = "File Not Found"
+                    a.informativeText = "Could not locate selected file"
+                    a.alertStyle = .critical
                     
-                    case "DSK", "DO", "PO" :
-                        if let filePath = openPanel.url?.path {
-                            woz_eject()
-                            
-                            let err = dsk2woz( filePath )
-
-                            if err == WOZ_ERR_OK {
-                                let err = woz_parseBuffer()
-                                
-                                if err == WOZ_ERR_OK {
-                                    NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
-                                }
-                            }
-                            else {
-                                self.chk_woz_load(err: err)
-                            }
-                        }
-                    
-                default:
-                    break
-
+                    a.beginSheetModal( for: self.view.window! )
                 }
             }
         }
@@ -1247,13 +1258,13 @@ class ViewController: NSViewController  {
         
         openPanel.begin { (result) -> Void in
             if result == NSApplication.ModalResponse.OK {
-                print("file:", openPanel.url!.path)
+//                print("file:", openPanel.url!.path)
                 //Do what you will
                 //If there's only one URL, surely 'openPanel.URL'
                 //but otherwise a for loop works
                 
                 if let filePath = openPanel.url?.path {
-                    let woz_err = woz_loadFile( filePath )
+                    let woz_err = woz_saveFile( filePath )
                     
                     if woz_err == WOZ_ERR_OK {
                         NSDocumentController.shared.noteNewRecentDocumentURL(URL(fileURLWithPath: filePath))
@@ -1268,7 +1279,7 @@ class ViewController: NSViewController  {
     
     
     @IBAction func openDocument(_ sender: Any?) {
-        openDiskImage()
+        openDiskImageDialog()
     }
     
     @IBAction func traceEnable(_ sender: NSButton) {

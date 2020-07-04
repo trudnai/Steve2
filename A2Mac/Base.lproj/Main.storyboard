@@ -1211,7 +1211,7 @@
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1280" height="840"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="D7F4F3E7-F7E8-42A7-9D76-F84781D283E0" centeredItem="djd-zw-gXS" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="CJg-XD-KnO">
+                        <toolbar key="toolbar" implicitIdentifier="D7F4F3E7-F7E8-42A7-9D76-F84781D283E0" centeredItem="djd-zw-gXS" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="CJg-XD-KnO">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="3J5-kY-CUW">
                                     <connections>
@@ -1710,7 +1710,7 @@
                                                     </menu>
                                                 </popUpButtonCell>
                                                 <connections>
-                                                    <action selector="CPUMode:" target="B8D-0N-5wS" id="LpB-wd-ryF"/>
+                                                    <action selector="setCPUMode:" target="XfG-lQ-9wD" id="cui-we-Dj4"/>
                                                 </connections>
                                             </popUpButton>
                                         </subviews>
@@ -1728,13 +1728,13 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
-                                        <rect key="frame" x="8" y="8" width="104" height="312"/>
+                                        <rect key="frame" x="8" y="8" width="104" height="343"/>
                                         <subviews>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7yw-J0-Fmj">
-                                                <rect key="frame" x="0.0" y="309" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="340" width="96" height="5"/>
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="isd-yh-gCV">
-                                                <rect key="frame" x="-2" y="287" width="98" height="18"/>
+                                                <rect key="frame" x="-2" y="318" width="98" height="18"/>
                                                 <buttonCell key="cell" type="check" title="CRT Monitor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="UQ8-Nn-Kt7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1744,7 +1744,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kmk-ZV-ubT">
-                                                <rect key="frame" x="-1" y="264" width="105" height="18"/>
+                                                <rect key="frame" x="-1" y="295" width="105" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="Color Monitor" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" state="on" inset="2" id="dIU-uM-oqn">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1754,7 +1754,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hi6-xc-XvO">
-                                                <rect key="frame" x="-1" y="240" width="95" height="18"/>
+                                                <rect key="frame" x="-1" y="271" width="95" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="White Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="NOI-xa-uDn">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1764,7 +1764,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0TV-RF-TRX">
-                                                <rect key="frame" x="-1" y="216" width="97" height="18"/>
+                                                <rect key="frame" x="-1" y="247" width="97" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="Green Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="3IU-9X-jIe">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1774,7 +1774,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDL-Db-4L2">
-                                                <rect key="frame" x="-1" y="192" width="100" height="18"/>
+                                                <rect key="frame" x="-1" y="223" width="100" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="Amber Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="8c4-i2-4Tf">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1784,10 +1784,10 @@
                                                 </connections>
                                             </button>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="t35-xh-L18">
-                                                <rect key="frame" x="0.0" y="182" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="213" width="96" height="5"/>
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e2E-di-h3i">
-                                                <rect key="frame" x="-2" y="160" width="83" height="18"/>
+                                                <rect key="frame" x="-2" y="191" width="83" height="18"/>
                                                 <buttonCell key="cell" type="check" title="KeybStick" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="UW9-Bt-pMv">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1797,7 +1797,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wa3-TC-XUI">
-                                                <rect key="frame" x="-2" y="138" width="79" height="18"/>
+                                                <rect key="frame" x="-2" y="169" width="79" height="18"/>
                                                 <buttonCell key="cell" type="check" title="MouStick" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BGz-fX-MyG">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1807,7 +1807,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xrz-jA-1Fh">
-                                                <rect key="frame" x="-2" y="116" width="63" height="18"/>
+                                                <rect key="frame" x="-2" y="147" width="63" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Mouse" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1RG-zY-mD2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1817,10 +1817,10 @@
                                                 </connections>
                                             </button>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xk-n9g">
-                                                <rect key="frame" x="0.0" y="107" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="138" width="96" height="5"/>
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-cj-gLu">
-                                                <rect key="frame" x="-2" y="85" width="87" height="18"/>
+                                                <rect key="frame" x="-2" y="116" width="87" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Quick Disk" bezelStyle="regularSquare" imagePosition="left" inset="2" id="6QV-uF-Gh7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1830,7 +1830,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9nQ-Yf-2xf">
-                                                <rect key="frame" x="-2" y="63" width="91" height="18"/>
+                                                <rect key="frame" x="-2" y="94" width="91" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Disk Sound" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="AJi-1B-qeg">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1840,10 +1840,10 @@
                                                 </connections>
                                             </button>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
-                                                <rect key="frame" x="0.0" y="54" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="85" width="96" height="5"/>
                                             </box>
-                                            <splitView hidden="YES" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
-                                                <rect key="frame" x="0.0" y="289" width="104" height="23"/>
+                                            <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
+                                                <rect key="frame" x="0.0" y="56" width="104" height="23"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>

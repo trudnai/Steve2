@@ -82,9 +82,10 @@ const unsigned spkr_sample_rate = 44100;
 const unsigned sfx_sample_rate =  22050; // original sample rate
 //const unsigned sfx_sample_rate =  26000; // bit higher pitch
 int spkr_extra_buf = 0; // 800 / spkr_fps;
-const unsigned spkr_buf_alloc_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS;
-unsigned spkr_buf_size = spkr_buf_alloc_size;
-int16_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT * SPKR_CHANNELS]; // stereo
+typedef int16_t spkr_sample_t;
+const unsigned spkr_buf_alloc_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS * sizeof(spkr_sample_t) / DEFAULT_FPS; // stereo
+unsigned spkr_buf_size = spkr_buf_alloc_size / sizeof(spkr_sample_t);
+spkr_sample_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT]; // can store up to 1 sec of sound
 unsigned spkr_sample_idx = 0;
 
 unsigned spkr_play_timeout = 8; // increase to 32 for 240 fps, normally 8 for 30 fps
@@ -166,7 +167,7 @@ void spkr_init() {
     alcMakeContextCurrent(ctx);
     
     // Fill buffer with zeros
-    memset( spkr_samples, spkr_level, spkr_buf_size * sizeof(spkr_samples[0]) );
+    memset( spkr_samples, spkr_level, spkr_buf_alloc_size + spkr_extra_buf);
     
     // Create buffer to store samples
     alGenBuffers(BUFFER_COUNT, spkr_buffers);
@@ -278,10 +279,13 @@ int spkr_unqueue( ALuint src ) {
         alGetSourcei ( src, AL_BUFFERS_PROCESSED, &processed );
         al_check_error();
     //    printf("%s alGetSourcei(%d)\n", __FUNCTION__, src);
+//        printf("p:%d\n", processed);
 
-        if ( processed ) {
+        if ( processed > 0 ) {
             alSourceUnqueueBuffers( src, processed, &spkr_buffers[freeBuffers]);
             al_check_error();
+            freeBuffers += processed;
+            freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
         }
     }
     
@@ -313,16 +317,14 @@ void spkr_exit() {
         alDeleteSources(SOURCES_COUNT, spkr_src);
         al_check_error();
 
-
-        ALCdevice *dev = NULL;
-        ALCcontext *ctx = NULL;
-        ctx = alcGetCurrentContext();
-        dev = alcGetContextsDevice(ctx);
+        ALCdevice *dev = alcGetContextsDevice(ctx);
+        ALCcontext *ctx = alcGetCurrentContext();
         
         alcMakeContextCurrent(NULL);
+        al_check_error();
         alcDestroyContext(ctx);
+        al_check_error();
         alcCloseDevice(dev);
-        
         al_check_error();
         
         memset(spkr_src, 0, sizeof(spkr_src));
@@ -398,7 +400,7 @@ void spkr_toggle() {
         for ( int i = spkr_sample_idx; i < spkr_buf_size + spkr_extra_buf; i++ ) {
             spkr_samples[i] = spkr_level;
         }
-//        memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size * sizeof(spkr_samples[0]));
+//        memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_size * sizeof(spkr_sample_t));
         
     }
 }
@@ -412,7 +414,15 @@ void spkr_update() {
     if ( ++spkr_frame_cntr >= spkr_fps_divider ) {
         spkr_frame_cntr = 0;
         
-        if ( spkr_play_time ) {
+        // Fix: Unqueue was not working properly some cases, so we need to monitor
+        //      queued elements and if there are too many, let's just wait
+        #define SPKR_MAX_QUEUED 10
+        ALint queued = 0;
+        alGetSourcei ( spkr_src[SPKR_SRC_GAME_SFX], AL_BUFFERS_QUEUED, &queued );
+        al_check_error();
+//        printf("q:%d clkfrm:%d frm:%llu max:%llu\n", queued, clkfrm, clk_6502_per_frm, clk_6502_per_frm_max);
+
+        if ( ( spkr_play_time ) && ( queued < SPKR_MAX_QUEUED ) ) {
             if ( freeBuffers ) {
                 // in Game Mode do not fade out and stop playing
                 if ( ( cpuMode_game != cpuMode ) && ( --spkr_play_time == 0 ) ) {
@@ -431,18 +441,25 @@ void spkr_update() {
                         spkr_level = SPKR_LEVEL_ZERO;
 
                         //spkr_samples[sample_idx] = spkr_level;
-                        memset(spkr_samples + spkr_sample_idx, SPKR_LEVEL_ZERO, spkr_extra_buf * sizeof(spkr_samples[0]));
+                        memset(spkr_samples + spkr_sample_idx, SPKR_LEVEL_ZERO, spkr_extra_buf * sizeof(spkr_sample_t));
 
                         freeBuffers--;
-                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_samples[0]), spkr_sample_rate);
+                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_sample_t), spkr_sample_rate);
                         al_check_error();
                         alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                         al_check_error();
                     }
                 }
                 else {
+                    // push a click into the speaker buffer
+                    // (we will play the entire buffer at the end of the frame)
+                    spkr_sample_idx = ( (spkr_clk + clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
+
                     freeBuffers--;
                     alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_samples[0]), spkr_sample_rate);
+//                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_sample_idx + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
+//                    ALint bufSize = spkr_sample_idx + 20 < spkr_buf_size ? spkr_sample_idx * sizeof(spkr_sample_t) + 20 : spkr_buf_alloc_size;
+//                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, bufSize + spkr_extra_buf, spkr_sample_rate);
                     al_check_error();
                     alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                     al_check_error();
@@ -466,6 +483,9 @@ void spkr_update() {
                         
                     default:
                         alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+                        // this is so we will set state to AL_PAUSED immediately
+                        // As a result there will be an extra queued buffer
+                        // which gives us a glitch free sound
                         alSourcePause(spkr_src[SPKR_SRC_GAME_SFX]);
                         break;
                 }
@@ -484,13 +504,13 @@ void spkr_update() {
         
         spkr_clk = 0;
         
-        // free up unused buffers
-        freeBuffers += spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );
-        freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
     }
     else {
         spkr_clk += clkfrm;
     }
+    
+    // free up unused buffers
+    spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );
 }
 
 
@@ -578,9 +598,7 @@ void spkr_stop_sfx( ALuint src ) {
     }
     
     // free up unused buffers
-    freeBuffers += spkr_unqueue( src );
-    freeBuffers = clamp( 1, freeBuffers, BUFFER_COUNT );
-    
+    spkr_unqueue( src );
 }
 
 

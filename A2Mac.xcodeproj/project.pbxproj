@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		32089E4924556DBD0036E667 /* PRNumber3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		320B3FC424AD88B0005EA133 /* power.png in Resources */ = {isa = PBXBuildFile; fileRef = 320B3FC324AD88B0005EA133 /* power.png */; };
+		320B4FC124B182DE00070038 /* Apple Disk II.png in Resources */ = {isa = PBXBuildFile; fileRef = 320B4FC024B182DD00070038 /* Apple Disk II.png */; };
 		3213936624079C30007F5C4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		323D042E248980600086A901 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
@@ -97,6 +98,8 @@
 		32E3126A24A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
 		32E3126D24AC033A00E61891 /* ToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126C24AC033A00E61891 /* ToolBarController.swift */; };
 		32E3127424AC0B2E00E61891 /* doc.on.clipboard.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32E3127224AC0AC400E61891 /* doc.on.clipboard.png */; };
+		32F04B0E24B189D4006B5ECB /* Apple Disk II D1 Open.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F04B0C24B189D3006B5ECB /* Apple Disk II D1 Open.png */; };
+		32F04B0F24B189D4006B5ECB /* Apple Disk II D2 Open.png in Resources */ = {isa = PBXBuildFile; fileRef = 32F04B0D24B189D4006B5ECB /* Apple Disk II D2 Open.png */; };
 		32F8A87C24A3A84300EE6735 /* PrintChar21.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		32F8A87D24A3A84700EE6735 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
@@ -286,6 +289,7 @@
 /* Begin PBXFileReference section */
 		32089E4724556DBD0036E667 /* PRNumber3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PRNumber3.ttf; sourceTree = "<group>"; };
 		320B3FC324AD88B0005EA133 /* power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = power.png; sourceTree = "<group>"; };
+		320B4FC024B182DD00070038 /* Apple Disk II.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple Disk II.png"; sourceTree = "<group>"; };
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -427,6 +431,8 @@
 		32E3126C24AC033A00E61891 /* ToolBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBarController.swift; sourceTree = "<group>"; };
 		32E3127224AC0AC400E61891 /* doc.on.clipboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.on.clipboard.png; sourceTree = "<group>"; };
 		32EDB7A123272CA80073AF2D /* fail1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = fail1.txt; sourceTree = "<group>"; };
+		32F04B0C24B189D3006B5ECB /* Apple Disk II D1 Open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple Disk II D1 Open.png"; sourceTree = "<group>"; };
+		32F04B0D24B189D4006B5ECB /* Apple Disk II D2 Open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple Disk II D2 Open.png"; sourceTree = "<group>"; };
 		32F2C144249218A400FDC61B /* locksmith_v6.0.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = locksmith_v6.0.woz; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -820,6 +826,9 @@
 				326B56E424AD8E89009BA0AC /* gobackward.png */,
 				325DC41124AC692D00EB8858 /* rgb_mono.png */,
 				325DC40F24AC691B00EB8858 /* rgb_color.png */,
+				320B4FC024B182DD00070038 /* Apple Disk II.png */,
+				32F04B0C24B189D3006B5ECB /* Apple Disk II D1 Open.png */,
+				32F04B0D24B189D4006B5ECB /* Apple Disk II D2 Open.png */,
 			);
 			path = img;
 			sourceTree = "<group>";
@@ -1083,6 +1092,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32F04B0E24B189D4006B5ECB /* Apple Disk II D1 Open.png in Resources */,
 				3296223424A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx in Resources */,
 				320B3FC424AD88B0005EA133 /* power.png in Resources */,
 				32877F8D24ADA6AF003A940D /* joystick.png in Resources */,
@@ -1091,8 +1101,10 @@
 				326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				324D15D324ADAC71008AAFB0 /* floppy.png in Resources */,
+				32F04B0F24B189D4006B5ECB /* Apple Disk II D2 Open.png in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
 				326B56E524AD8E89009BA0AC /* gobackward.png in Resources */,
+				320B4FC124B182DE00070038 /* Apple Disk II.png in Resources */,
 				32E3126524A7193700E61891 /* disk_ii_arm.sfx in Resources */,
 				3296223824A710CD002DEB78 /* disk_ii_io_error.sfx in Resources */,
 			);

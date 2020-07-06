@@ -818,6 +818,14 @@ class ViewController: NSViewController  {
         // Mouse 2 JoyStick (Game Controller / Paddle)
         mouseLocation = view.window!.mouseLocationOutsideOfEventStream
         
+        if ( Mouse2Joystick || Keyboard2Joystick ) {
+            if let flags = NSApp.currentEvent?.modifierFlags {
+                if flags.contains(.command){
+                    // somethings
+                }
+            }
+        }
+    
         if ( Mouse2Joystick ) {
             pdl_prevarr[0] = pdl_valarr[0]
             pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
@@ -837,6 +845,7 @@ class ViewController: NSViewController  {
             pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
             pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
         }
+        
     }
 
     

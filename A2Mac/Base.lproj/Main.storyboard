@@ -1685,8 +1685,42 @@
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-pv-iEw" userLabel="Side Panel">
                                 <rect key="frame" x="1160" y="8" width="120" height="784"/>
                                 <subviews>
+                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="-20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-h7-NcU" userLabel="Prefipheries">
+                                        <rect key="frame" x="0.0" y="606" width="120" height="178"/>
+                                        <subviews>
+                                            <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3q5-zS-jTc">
+                                                <rect key="frame" x="0.0" y="79" width="120" height="99"/>
+                                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Disk 1" imagePosition="only" alignment="center" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="1px-15-mLF">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <color key="contentTintColor" red="0.84313725490000002" green="0.0039215686269999999" blue="0.45098039220000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </button>
+                                            <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T0r-xy-OJF">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="99"/>
+                                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Disk 2" imagePosition="only" alignment="center" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="z4y-xq-1UN">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="3q5-zS-jTc" secondAttribute="trailing" id="6ka-qx-fr1"/>
+                                            <constraint firstItem="T0r-xy-OJF" firstAttribute="leading" secondItem="5gO-h7-NcU" secondAttribute="leading" id="N3X-wj-QNL"/>
+                                            <constraint firstItem="3q5-zS-jTc" firstAttribute="leading" secondItem="5gO-h7-NcU" secondAttribute="leading" id="Oq9-9S-Olv"/>
+                                            <constraint firstAttribute="trailing" secondItem="T0r-xy-OJF" secondAttribute="trailing" id="ntu-ND-2Tg"/>
+                                        </constraints>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VKJ-wY-R2U" userLabel="Quick Settings">
-                                        <rect key="frame" x="8" y="730" width="104" height="46"/>
+                                        <rect key="frame" x="0.0" y="552" width="120" height="46"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ab2-by-2SH">
                                                 <rect key="frame" x="-2" y="30" width="69" height="16"/>
@@ -1697,7 +1731,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TEd-9V-yhI">
-                                                <rect key="frame" x="0.0" y="-1" width="104" height="23"/>
+                                                <rect key="frame" x="0.0" y="-1" width="120" height="23"/>
                                                 <popUpButtonCell key="cell" type="roundTextured" title="Normal" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="72n-9g-iH3" id="x7E-wS-qz1">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
@@ -1944,10 +1978,13 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="lVP-FP-u6x" secondAttribute="bottom" constant="8" id="DtK-7e-K5K"/>
-                                    <constraint firstAttribute="trailing" secondItem="VKJ-wY-R2U" secondAttribute="trailing" constant="8" id="HS6-y3-9Zf"/>
+                                    <constraint firstAttribute="trailing" secondItem="VKJ-wY-R2U" secondAttribute="trailing" id="HS6-y3-9Zf"/>
+                                    <constraint firstItem="VKJ-wY-R2U" firstAttribute="top" secondItem="5gO-h7-NcU" secondAttribute="bottom" constant="8" id="Mhw-1T-Z6Q"/>
+                                    <constraint firstItem="5gO-h7-NcU" firstAttribute="leading" secondItem="Fdf-pv-iEw" secondAttribute="leading" id="PKR-Iu-37M"/>
                                     <constraint firstAttribute="width" constant="120" id="Vob-hf-WSu"/>
-                                    <constraint firstItem="VKJ-wY-R2U" firstAttribute="leading" secondItem="Fdf-pv-iEw" secondAttribute="leading" constant="8" id="WV2-0l-Qzh"/>
-                                    <constraint firstItem="VKJ-wY-R2U" firstAttribute="top" secondItem="Fdf-pv-iEw" secondAttribute="top" constant="8" id="dxT-Qs-IeT"/>
+                                    <constraint firstItem="VKJ-wY-R2U" firstAttribute="leading" secondItem="Fdf-pv-iEw" secondAttribute="leading" id="WV2-0l-Qzh"/>
+                                    <constraint firstItem="5gO-h7-NcU" firstAttribute="top" secondItem="Fdf-pv-iEw" secondAttribute="top" id="hLf-YC-yBF"/>
+                                    <constraint firstAttribute="trailing" secondItem="5gO-h7-NcU" secondAttribute="trailing" id="ldB-KD-cfy"/>
                                     <constraint firstAttribute="trailing" secondItem="lVP-FP-u6x" secondAttribute="trailing" constant="8" id="oC3-82-hiy"/>
                                     <constraint firstItem="lVP-FP-u6x" firstAttribute="leading" secondItem="Fdf-pv-iEw" secondAttribute="leading" constant="8" id="tk8-7H-382"/>
                                 </constraints>
@@ -2004,6 +2041,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Disk 1" width="160" height="98.5"/>
+        <image name="Disk 2" width="160" height="98.5"/>
         <image name="NSAdvanced" width="32" height="32"/>
         <image name="NSTouchBarAudioOutputMuteTemplate" width="26" height="30"/>
         <image name="NSTouchBarAudioOutputVolumeLowTemplate" width="23" height="30"/>

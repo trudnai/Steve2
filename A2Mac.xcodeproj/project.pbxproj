@@ -57,6 +57,7 @@
 		325EB6A82401118300C6B4A4 /* ProDOS_402_System.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */; };
 		325EB6AA2401118300C6B4A4 /* Sneakers.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
+		3267641624B6572E000BEA11 /* Merlin Assembler.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 3267641524B6572E000BEA11 /* Merlin Assembler.woz */; };
 		326B56E524AD8E89009BA0AC /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
 		32877F8D24ADA6AF003A940D /* joystick.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32877F8C24ADA6AF003A940D /* joystick.png */; };
@@ -213,6 +214,7 @@
 				32F8A88624A3A91400EE6735 /* Apple DOS 3.3 January 1983.woz in Copy Disk Images */,
 				32F8A88824A3A98D00EE6735 /* Hard Hat Mack - Disk 1, Side A.woz in Copy Disk Images */,
 				32F8A88924A3A98D00EE6735 /* Merlin Pro v1.34.woz in Copy Disk Images */,
+				3267641624B6572E000BEA11 /* Merlin Assembler.woz in Copy Disk Images */,
 				32F8A88A24A3A98D00EE6735 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Copy Disk Images */,
 				32F8A88B24A3A98D00EE6735 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Copy Disk Images */,
 				32F8A88C24A3A98D00EE6735 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Copy Disk Images */,
@@ -395,6 +397,7 @@
 		325EB69B2401118300C6B4A4 /* Xonix.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Xonix.woz; sourceTree = "<group>"; };
 		3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio_8bit_ioaddr.h; sourceTree = "<group>"; };
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
+		3267641524B6572E000BEA11 /* Merlin Assembler.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler.woz"; sourceTree = "<group>"; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
 		326B56E424AD8E89009BA0AC /* gobackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gobackward.png; sourceTree = "<group>"; };
 		326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.text.viewfinder.png; sourceTree = "<group>"; };
@@ -530,6 +533,7 @@
 				325EB68523FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz */,
 				325EB68823FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz */,
 				32440B78247CB2B2000F9DA1 /* Merlin Pro v1.34.woz */,
+				3267641524B6572E000BEA11 /* Merlin Assembler.woz */,
 				32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */,
 				32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */,
 				32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */,

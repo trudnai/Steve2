@@ -1295,9 +1295,52 @@ class ViewController: NSViewController  {
         }
     }
     
-    
-    @IBAction func openDocument(_ sender: Any?) {
-        openDiskImageDialog()
+    @IBAction func Disk1(_ sender: NSPopUpButton) {
+        switch sender.selectedItem?.tag {
+        case 1: // Open
+            openDiskImageDialog()
+            
+        case 2: // Save
+            saveFile()
+            
+        case 3: // Save As...
+            saveFileAs()
+
+        case 4: // Eject
+            woz_eject()
+            
+        case 21: // Quick Disk
+            if diskAccelerator_enabled == 0 {
+                diskAccelerator_enabled = 1;
+            }
+            else {
+                diskAccelerator_enabled = 0;
+            }
+            
+            sender.selectedItem?.state = diskAccelerator_enabled == 1 ? .on : .off
+            break
+
+        case 22: // Disk Sound
+            if disk_sfx_enabled == 0 {
+                disk_sfx_enabled = 1;
+            }
+            else {
+                disk_sfx_enabled = 0;
+            }
+            
+            sender.selectedItem?.state = disk_sfx_enabled == 1 ? .on : .off
+            break
+
+        case 1000: // Open Default Disk Image
+            if let menuIdentifier = sender.selectedItem?.title {
+                let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/" + menuIdentifier + ".woz" )
+                ViewController.current?.chk_woz_load(err: woz_err)
+                woz_flags.image_file_readonly = 1
+            }
+            
+        default:
+            break
+        }
     }
     
     @IBAction func traceEnable(_ sender: NSButton) {

@@ -36,21 +36,23 @@ class ToolBarController: NSWindowController {
     @IBAction func Paste(_ sender: Any) {
     }
     
-    @IBAction func Mono(_ sender: Any) {
-        ViewController.current?.ColorMonitorSelector(color: false)
+    @IBAction func Green(_ sender: Any) {
+        //        print("NSToolbarItem:", sender.tag)
+        ViewController.current?.MonoMonitorChange(color: "Green")
+    }
+    
+    @IBAction func Amber(_ sender: Any) {
+        //        print("NSToolbarItem:", sender.tag)
+        ViewController.current?.MonoMonitorChange(color: "Amber")
+    }
+    
+    @IBAction func White(_ sender: Any) {
+//        print("NSToolbarItem:", sender.tag)
+        ViewController.current?.MonoMonitorChange(color: "White")
     }
     
     @IBAction func Color(_ sender: Any) {
         ViewController.current?.ColorMonitorSelector(color: true)
-    }
-    
-    @IBAction func FGcolor(_ sender: Any) {
-    }
-    
-    @IBAction func BGcolor(_ sender: Any) {
-    }
-    
-    @IBAction func buttonPressed(_ sender: NSButton) {
     }
     
     @IBOutlet weak var SpeedSelector: NSToolbarItem!
@@ -83,10 +85,6 @@ class ToolBarController: NSWindowController {
         }
     }
     
-    @IBAction func CPUMode(_ sender: NSPopUpButton) {
-        ViewController.current?.setSimulationMode( mode: sender.selectedItem?.title ?? "Normal" )
-    }
-    
     @IBAction func Mute(_ sender: Any) {
         spkr_mute()
     }
@@ -97,5 +95,97 @@ class ToolBarController: NSWindowController {
     
     @IBAction func VolUp(_ sender: Any) {
         spkr_vol_up()
+    }
+    
+    
+    @IBAction func GamePort(_ sender: NSPopUpButton) {
+        switch sender.selectedItem?.tag {
+        case 1: // "Keyboard -> Joystick"
+            if let state = ViewController.current?.Keyboard2Joystick {
+                ViewController.current?.Keyboard2Joystick = !state
+                sender.selectedItem?.state = state ? .off : .on
+            }
+            break
+            
+        case 2: // "Mouse -> Joystick"
+            if let state = ViewController.current?.Mouse2Joystick {
+                ViewController.current?.Mouse2Joystick = !state
+                sender.selectedItem?.state = state ? .off : .on
+            }
+            break
+            
+        case 3: // "Mouse Enabled"
+            if let state = ViewController.current?.MouseInterface {
+                ViewController.current?.MouseInterface = !state
+                sender.selectedItem?.state = state ? .off : .on
+            }
+            break
+            
+        default:
+            break
+        }
+    }
+    
+    @IBAction func DiskOptions(_ sender: NSPopUpButton) {
+        switch sender.selectedItem?.tag {
+        case 1: // "Quick Disk"
+            if diskAccelerator_enabled == 0 {
+                diskAccelerator_enabled = 1;
+            }
+            else {
+                diskAccelerator_enabled = 0;
+            }
+
+            sender.selectedItem?.state = diskAccelerator_enabled == 1 ? .on : .off
+            break
+            
+        case 2: // "Disk Sound"
+            if disk_sfx_enabled == 0 {
+                disk_sfx_enabled = 1;
+            }
+            else {
+                disk_sfx_enabled = 0;
+            }
+            
+            sender.selectedItem?.state = disk_sfx_enabled == 1 ? .on : .off
+            break
+            
+        case 3: // "Write Enabled"
+            break
+            
+        default:
+            break
+        }
+    }
+
+    @IBAction func CPUMode(_ sender: NSPopUpButton) {
+        switch sender.selectedItem?.tag {
+        case 1: // "Normal Mode"
+            ViewController.current?.setSimulationMode( mode: "Normal" )
+            for i in sender.itemArray {
+                i.state = .off
+            }
+            sender.selectedItem?.state = .on
+            break
+            
+        case 2: // "Eco Mode"
+            ViewController.current?.setSimulationMode( mode: "Eco" )
+            for i in sender.itemArray {
+                i.state = .off
+            }
+            sender.selectedItem?.state = .on
+            break
+
+        case 3: // "Write Enabled"
+            ViewController.current?.setSimulationMode( mode: "Game" )
+            for i in sender.itemArray {
+                i.state = .off
+            }
+            sender.selectedItem?.state = .on
+            break
+
+        default:
+            break
+        }
     }
 }

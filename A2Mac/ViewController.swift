@@ -1130,31 +1130,40 @@ class ViewController: NSViewController  {
     @IBAction func ColorMonitorOnOff(_ sender: NSButton) {
         ColorMonitorSelector( color: sender.state == .on )
     }
-    
-    @IBAction func MonitorChange(_ sender: NSButton) {
-        switch sender.title {
-        case "White Mono":
-            ColorMonitor = false
-            monoColor = colorWhite
-            hires.monoColor = hires.color_white
 
-        case "Green Mono":
+    func MonoMonitorChange( color: String ) {
+        switch color {
+        case "Green":
             ColorMonitor = false
             monoColor = colorGreen
             hires.monoColor = hires.color_green
-
-        case "Amber Mono":
+            
+        case "Amber":
             ColorMonitor = false
             monoColor = colorOrange
             hires.monoColor = hires.color_orange
-
+            
         default:
-            ColorMonitor = true
+            ColorMonitor = false
             monoColor = colorWhite
+            hires.monoColor = hires.color_white
         }
         
         display.textColor = monoColor
         hires.RenderFullScreen()
+    }
+    
+    @IBAction func MonitorChange(_ sender: NSButton) {
+        switch sender.title {
+        case "Green Mono":
+            MonoMonitorChange(color: "Green")
+            
+        case "Amber Mono":
+            MonoMonitorChange(color: "Amber")
+
+        default:
+            MonoMonitorChange(color: "White")
+        }
     }
     
     @IBAction func Keyboard2JoystickOnOff(_ sender: NSButton) {

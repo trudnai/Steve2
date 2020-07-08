@@ -1213,43 +1213,14 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="D7F4F3E7-F7E8-42A7-9D76-F84781D283E0" centeredItem="djd-zw-gXS" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="CJg-XD-KnO">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="3J5-kY-CUW">
-                                    <connections>
-                                        <action selector="BGcolor:" target="B8D-0N-5wS" id="g9E-z0-hqx"/>
-                                    </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="56069AA8-C4D3-4FC2-8F7A-1478E3B0D08A" label="FG Color" paletteLabel="FG Color" image="NSTouchBarColorPickerFont" id="BlK-ba-7XU">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="30" height="17"/>
-                                    <size key="maxSize" width="30" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="tro-hg-Hm2">
-                                        <rect key="frame" x="12" y="14" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarColorPickerFont" imagePosition="only" alignment="center" inset="2" id="2ly-DW-j4Q">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="FGcolor:" target="B8D-0N-5wS" id="pew-w4-Dyt"/>
-                                    </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="mTT-nm-4hc"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="7QD-9G-t4m"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="JET-xj-qZD"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="BWf-Nj-6Yq"/>
-                                <toolbarItem implicitItemIdentifier="E7B425BC-F405-450B-B13F-BB6F27E0DB9D" label="Settings" paletteLabel="Settings" tag="-1" image="NSAdvanced" id="irj-Ct-iaG">
-                                    <size key="minSize" width="32" height="32"/>
-                                    <size key="maxSize" width="32" height="32"/>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="013D1397-F48F-4180-8F09-FABF3D77AC5A" label="Power" paletteLabel="Power" image="power" id="8WB-26-vb5">
+                                <toolbarItem implicitItemIdentifier="013D1397-F48F-4180-8F09-FABF3D77AC5A" label="Power" paletteLabel="Power" image="Power" id="8WB-26-vb5">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="30" height="43"/>
                                     <button key="view" verticalHuggingPriority="750" id="xQN-Wy-Jjk">
                                         <rect key="frame" x="5" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="power" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="l58-sD-xDQ">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Power" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="l58-sD-xDQ">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1258,19 +1229,6 @@
                                         <action selector="PowerOn:" target="B8D-0N-5wS" id="dRa-XQ-bbM"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="991CD4A3-2DAB-41BC-89E0-DF2F5ED79C4D" label="Off" paletteLabel="Power Off" image="NSTouchBarRecordStopTemplate" id="08w-Rr-BIT">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="30" height="17"/>
-                                    <size key="maxSize" width="30" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="yyh-DS-dM6">
-                                        <rect key="frame" x="15" y="14" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarRecordStopTemplate" imagePosition="only" alignment="center" inset="2" id="JZC-ta-D9c">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="34201AE0-6358-4CC1-A7D5-BEB45E6353C8" label="Pause" paletteLabel="Pause" image="NSTouchBarPauseTemplate" id="QIP-vh-jcn">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="30" height="17"/>
@@ -1278,7 +1236,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="s08-fv-vSO">
                                         <rect key="frame" x="5" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarPauseTemplate" imagePosition="only" alignment="center" inset="2" id="knw-Ib-jcb">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarPauseTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="knw-Ib-jcb">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1287,14 +1245,14 @@
                                         <action selector="Pause:" target="B8D-0N-5wS" id="8y5-LX-pph"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="830F10A7-5FE0-4325-BD47-E08A434B58C1" label="Reset" paletteLabel="Reset" image="gobackward" id="fbL-wV-HQ9">
+                                <toolbarItem implicitItemIdentifier="830F10A7-5FE0-4325-BD47-E08A434B58C1" label="Reset" paletteLabel="Reset" image="Reset" id="fbL-wV-HQ9">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="30" height="43"/>
                                     <button key="view" verticalHuggingPriority="750" id="FgD-BQ-Q0R">
                                         <rect key="frame" x="4" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="gobackward" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="5Hk-Wa-8bM">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Reset" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="5Hk-Wa-8bM">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1303,30 +1261,15 @@
                                         <action selector="Reset:" target="B8D-0N-5wS" id="xJE-Ri-R9Q"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="D00D9DE2-E274-4915-87A5-C94FEDDB6C22" label="Copy" paletteLabel="Copy" image="doc.on.doc" id="fQR-kz-ht6">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="30" height="17"/>
-                                    <size key="maxSize" width="30" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="BHl-CB-9RK">
-                                        <rect key="frame" x="3" y="14" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="doc.on.doc" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wcK-Ms-Q5R">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="Copy:" target="B8D-0N-5wS" id="yGp-P6-Yeu"/>
-                                    </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="9B3244CB-1CE2-4293-9E8C-B9BFD5DD84C4" label="Sel.All" paletteLabel="Sel.All" image="doc.text.viewfinder" id="lzK-Zd-n0z">
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="JET-xj-qZD"/>
+                                <toolbarItem implicitItemIdentifier="9B3244CB-1CE2-4293-9E8C-B9BFD5DD84C4" label="Sel.All" paletteLabel="Sel.All" image="Select All" id="lzK-Zd-n0z">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="30" height="43"/>
                                     <button key="view" verticalHuggingPriority="750" id="Zh1-J3-sp2">
                                         <rect key="frame" x="5" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="doc.text.viewfinder" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GI9-hQ-1du">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Select All" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GI9-hQ-1du">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1335,14 +1278,30 @@
                                         <action selector="Copy:" target="B8D-0N-5wS" id="Zqh-qn-MZ3"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="03044CE5-C6C1-4EDF-B0C7-D6F04AE9C7A0" label="Paste" paletteLabel="Paste" image="doc.on.clipboard" id="LFh-iX-9gH">
+                                <toolbarItem implicitItemIdentifier="D00D9DE2-E274-4915-87A5-C94FEDDB6C22" label="Copy" paletteLabel="Copy" image="Copy" id="fQR-kz-ht6">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="17"/>
+                                    <size key="maxSize" width="30" height="43"/>
+                                    <button key="view" verticalHuggingPriority="750" id="BHl-CB-9RK">
+                                        <rect key="frame" x="3" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Copy" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wcK-Ms-Q5R">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="Copy:" target="B8D-0N-5wS" id="yGp-P6-Yeu"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="03044CE5-C6C1-4EDF-B0C7-D6F04AE9C7A0" label="Paste" paletteLabel="Paste" image="Paste" id="LFh-iX-9gH">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="30" height="43"/>
                                     <button key="view" verticalHuggingPriority="750" id="eHc-dN-1Vp">
                                         <rect key="frame" x="4" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="doc.on.clipboard" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="dwZ-VW-vgx">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Paste" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="dwZ-VW-vgx">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1351,20 +1310,170 @@
                                         <action selector="Paste:" target="B8D-0N-5wS" id="mgz-Oa-pEn"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="04922D68-C70A-4715-8E0D-A3130ABAA295" label="Mono" paletteLabel="Mono" image="mono" id="EXd-yd-Min">
+                                <toolbarItem implicitItemIdentifier="BFA7134C-38B0-453E-9AFB-33B380479DB4" label="Game" paletteLabel="Game" image="Joystick" id="Z5u-WO-FdK">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="43" height="30"/>
+                                    <size key="maxSize" width="43" height="43"/>
+                                    <popUpButton key="view" id="Ktw-L6-kEz">
+                                        <rect key="frame" x="0.0" y="14" width="43" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:A4p-LJ-svz:image" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="A4p-LJ-svz">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="q8R-kX-3jc">
+                                                <items>
+                                                    <menuItem image="Joystick" hidden="YES" id="68y-Qk-eoC">
+                                                        <attributedString key="attributedTitle"/>
+                                                    </menuItem>
+                                                    <menuItem title="Keyboard -&gt; Joystick" state="on" tag="1" id="yzd-yE-031"/>
+                                                    <menuItem title="Mouse -&gt; Joystick" tag="2" id="GSq-wV-Mi3"/>
+                                                    <menuItem title="Mouse Enabled" state="on" tag="3" id="SU1-ku-rTM"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="GamePort:" target="B8D-0N-5wS" id="Hj6-Mo-2qg"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="E8498057-9DDE-45D0-9BD9-3F924022507F" label="Disk" paletteLabel="Disk" image="Quick Disk" id="mbU-2A-hBB">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="43" height="30"/>
+                                    <size key="maxSize" width="43" height="43"/>
+                                    <popUpButton key="view" id="rfS-6q-EKe">
+                                        <rect key="frame" x="0.0" y="14" width="43" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="8bV-Aa-zHf">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="7Vp-Rc-UbT">
+                                                <items>
+                                                    <menuItem image="Quick Disk" hidden="YES" id="5lQ-vF-mCy"/>
+                                                    <menuItem title="Quick Disk" tag="1" id="5rw-3l-Qrj"/>
+                                                    <menuItem title="Disk Sound" state="on" tag="2" id="QZz-cp-OvY"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="DiskOptions:" target="B8D-0N-5wS" id="JQf-Jl-RK4"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="20B6E38E-7310-42B1-B6E5-75F4A6C94291" label="CPU" paletteLabel="CPU" image="Chip" id="q33-dA-1Zf">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="43" height="30"/>
+                                    <size key="maxSize" width="43" height="43"/>
+                                    <popUpButton key="view" id="MAv-S5-diZ">
+                                        <rect key="frame" x="0.0" y="14" width="43" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Chip" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="WVW-Wo-mc9">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="Gc4-Or-LMB">
+                                                <items>
+                                                    <menuItem image="Chip" hidden="YES" id="Hvo-2s-va2"/>
+                                                    <menuItem title="Normal Mode" state="on" tag="1" id="kib-xS-52N"/>
+                                                    <menuItem title="Eco Mode" tag="2" id="pED-ag-e6a"/>
+                                                    <menuItem title="Game Mode" tag="3" id="0Oh-eg-kZK"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <action selector="CPUMode:" target="B8D-0N-5wS" id="xxS-Wk-y7L"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="E2753C36-8694-4741-A90C-F2B8BF32E609" label="1.023 MHz" paletteLabel="MHz" id="djd-zw-gXS">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="100" height="26"/>
+                                    <size key="maxSize" width="120" height="26"/>
+                                    <slider key="view" verticalHuggingPriority="750" id="NiF-yM-eE0">
+                                        <rect key="frame" x="0.0" y="14" width="116" height="26"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="6" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="9W8-sY-vjz"/>
+                                        <connections>
+                                            <action selector="SpeedSelect:" target="B8D-0N-5wS" id="5hj-pt-1k0"/>
+                                        </connections>
+                                    </slider>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="8A3C9390-7708-47D4-A1AB-9B62DD2041C6" label="CRT" paletteLabel="CRT" tag="1" image="Old Monitor" id="7T3-aH-gLv">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="30" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="lVf-Zn-wJX">
-                                        <rect key="frame" x="4" y="14" width="30" height="30"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="1" id="i5C-Pb-8sf">
+                                        <rect key="frame" x="0.0" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="mono" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gTq-5H-sfm">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Old Monitor" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="6x7-Kc-aSn">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
                                     <connections>
-                                        <action selector="Mono:" target="B8D-0N-5wS" id="Jus-64-XLY"/>
+                                        <action selector="Green:" target="B8D-0N-5wS" id="85x-MC-DMh"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="04922D68-C70A-4715-8E0D-A3130ABAA295" label="Green" paletteLabel="Green" tag="1" image="Green" id="EXd-yd-Min">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="17"/>
+                                    <size key="maxSize" width="30" height="43"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="1" id="lVf-Zn-wJX">
+                                        <rect key="frame" x="5" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Green" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gTq-5H-sfm">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="Green:" target="B8D-0N-5wS" id="ji6-nv-2SU"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="AEDFB1F3-F44F-4FFF-AB2C-9527E4B6C39B" label="Amber" paletteLabel="Amber" tag="1" image="Amber" id="08P-C7-p4d">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="17"/>
+                                    <size key="maxSize" width="30" height="43"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="1" id="Q5T-77-a7w">
+                                        <rect key="frame" x="6" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Amber" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="p9p-sD-RYf">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="Amber:" target="B8D-0N-5wS" id="wK0-nU-TBx"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="ACAC1900-6547-4650-B4FE-201766E837C9" label="White" paletteLabel="White" tag="1" image="White" id="UQl-nc-fXN">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="17"/>
+                                    <size key="maxSize" width="30" height="43"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="1" id="9jT-NX-szB">
+                                        <rect key="frame" x="4" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="White" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="K0G-zT-eeW">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="White:" target="B8D-0N-5wS" id="M39-VN-NMx"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="3297641D-868D-45FD-9601-5DC57B05A682" label="Color" paletteLabel="Color" tag="2" image="Color" id="DkF-LW-SE6">
+                                    <nil key="toolTip"/>
+                                    <size key="minSize" width="30" height="17"/>
+                                    <size key="maxSize" width="30" height="43"/>
+                                    <button key="view" verticalHuggingPriority="750" tag="2" id="T0p-ot-wpU">
+                                        <rect key="frame" x="3" y="14" width="30" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Color" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ufB-LD-FUR">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                    <connections>
+                                        <action selector="Color:" target="B8D-0N-5wS" id="X2S-en-E90"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="846BFFC1-D37B-43D0-9C23-F69C84B3AF77" label="Mute" paletteLabel="Mute" image="NSTouchBarAudioOutputMuteTemplate" id="lEI-s6-KQK">
@@ -1415,66 +1524,11 @@
                                         <action selector="VolUp:" target="B8D-0N-5wS" id="nUl-ez-neH"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="3297641D-868D-45FD-9601-5DC57B05A682" label="Color" paletteLabel="Color" image="rgb_color" id="DkF-LW-SE6">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="30" height="17"/>
-                                    <size key="maxSize" width="30" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="T0p-ot-wpU">
-                                        <rect key="frame" x="3" y="14" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="rgb_color" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ufB-LD-FUR">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="Color:" target="B8D-0N-5wS" id="X2S-en-E90"/>
-                                    </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="78DAE6A2-6302-4570-AE0D-86DF6FC4003E" label="Game" paletteLabel="Game" image="joystick" id="EKv-MY-AYy">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="30" height="17"/>
-                                    <size key="maxSize" width="30" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="OIt-J3-sHI">
-                                        <rect key="frame" x="4" y="14" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="joystick" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Rza-nM-he3">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="Mute:" target="B8D-0N-5wS" id="Ras-Xy-psi"/>
-                                    </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="29BE2D3C-C4DC-492E-A3B5-2AB291155EAF" label="Quick" paletteLabel="Quick" image="floppy" id="43q-EJ-Tuf">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="30" height="17"/>
-                                    <size key="maxSize" width="30" height="43"/>
-                                    <button key="view" verticalHuggingPriority="750" id="jWB-Up-pC8">
-                                        <rect key="frame" x="4" y="14" width="30" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="floppy" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="7UB-Md-Mng">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="Mute:" target="B8D-0N-5wS" id="99t-ei-OMs"/>
-                                    </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="E2753C36-8694-4741-A90C-F2B8BF32E609" label="1.023 MHz" paletteLabel="MHz" id="djd-zw-gXS">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="100" height="26"/>
-                                    <size key="maxSize" width="120" height="26"/>
-                                    <slider key="view" verticalHuggingPriority="750" id="NiF-yM-eE0">
-                                        <rect key="frame" x="0.0" y="14" width="116" height="26"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="6" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="9W8-sY-vjz"/>
-                                        <connections>
-                                            <action selector="SpeedSelect:" target="B8D-0N-5wS" id="5hj-pt-1k0"/>
-                                        </connections>
-                                    </slider>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="BWf-Nj-6Yq"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="7QD-9G-t4m"/>
+                                <toolbarItem implicitItemIdentifier="E7B425BC-F405-450B-B13F-BB6F27E0DB9D" label="Settings" paletteLabel="Settings" tag="-1" image="NSActionTemplate" id="irj-Ct-iaG">
+                                    <size key="minSize" width="32" height="32"/>
+                                    <size key="maxSize" width="32" height="32"/>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="75D731EB-3958-43CF-B41F-E9B3CF3DB013" label="Mode" paletteLabel="Mode" sizingBehavior="auto" id="eSg-vU-9jb">
                                     <nil key="toolTip"/>
@@ -1507,20 +1561,22 @@
                                 <toolbarItem reference="fQR-kz-ht6"/>
                                 <toolbarItem reference="LFh-iX-9gH"/>
                                 <toolbarItem reference="JET-xj-qZD"/>
-                                <toolbarItem reference="EKv-MY-AYy"/>
-                                <toolbarItem reference="43q-EJ-Tuf"/>
+                                <toolbarItem reference="Z5u-WO-FdK"/>
+                                <toolbarItem reference="mbU-2A-hBB"/>
+                                <toolbarItem reference="q33-dA-1Zf"/>
                                 <toolbarItem reference="BWf-Nj-6Yq"/>
                                 <toolbarItem reference="djd-zw-gXS"/>
                                 <toolbarItem reference="BWf-Nj-6Yq"/>
+                                <toolbarItem reference="7T3-aH-gLv"/>
                                 <toolbarItem reference="EXd-yd-Min"/>
+                                <toolbarItem reference="08P-C7-p4d"/>
+                                <toolbarItem reference="UQl-nc-fXN"/>
                                 <toolbarItem reference="DkF-LW-SE6"/>
-                                <toolbarItem reference="BlK-ba-7XU"/>
                                 <toolbarItem reference="JET-xj-qZD"/>
                                 <toolbarItem reference="lEI-s6-KQK"/>
                                 <toolbarItem reference="hS6-wo-pAT"/>
                                 <toolbarItem reference="AMa-TQ-7Ol"/>
                                 <toolbarItem reference="JET-xj-qZD"/>
-                                <toolbarItem reference="7QD-9G-t4m"/>
                                 <toolbarItem reference="irj-Ct-iaG"/>
                             </defaultToolbarItems>
                         </toolbar>
@@ -1719,7 +1775,7 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VKJ-wY-R2U" userLabel="Quick Settings">
+                                    <stackView hidden="YES" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VKJ-wY-R2U" userLabel="Quick Settings">
                                         <rect key="frame" x="0.0" y="552" width="120" height="46"/>
                                         <subviews>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ab2-by-2SH">
@@ -1762,13 +1818,13 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
-                                        <rect key="frame" x="8" y="8" width="104" height="343"/>
+                                        <rect key="frame" x="8" y="8" width="104" height="35"/>
                                         <subviews>
-                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7yw-J0-Fmj">
-                                                <rect key="frame" x="0.0" y="340" width="96" height="5"/>
+                                            <box hidden="YES" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="7yw-J0-Fmj">
+                                                <rect key="frame" x="0.0" y="32" width="96" height="5"/>
                                             </box>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="isd-yh-gCV">
-                                                <rect key="frame" x="-2" y="318" width="98" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="isd-yh-gCV">
+                                                <rect key="frame" x="-2" y="19" width="98" height="18"/>
                                                 <buttonCell key="cell" type="check" title="CRT Monitor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="UQ8-Nn-Kt7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1777,8 +1833,8 @@
                                                     <action selector="CRTMonitorOnOff:" target="XfG-lQ-9wD" id="2V4-GI-erE"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kmk-ZV-ubT">
-                                                <rect key="frame" x="-1" y="295" width="105" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kmk-ZV-ubT">
+                                                <rect key="frame" x="-1" y="18" width="105" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="Color Monitor" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" state="on" inset="2" id="dIU-uM-oqn">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1787,8 +1843,8 @@
                                                     <action selector="MonitorChange:" target="XfG-lQ-9wD" id="crt-Cx-eyx"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hi6-xc-XvO">
-                                                <rect key="frame" x="-1" y="271" width="95" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hi6-xc-XvO">
+                                                <rect key="frame" x="-1" y="18" width="95" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="White Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="NOI-xa-uDn">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1797,8 +1853,8 @@
                                                     <action selector="MonitorChange:" target="XfG-lQ-9wD" id="EqE-0v-Uap"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0TV-RF-TRX">
-                                                <rect key="frame" x="-1" y="247" width="97" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0TV-RF-TRX">
+                                                <rect key="frame" x="-1" y="18" width="97" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="Green Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="3IU-9X-jIe">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1807,8 +1863,8 @@
                                                     <action selector="MonitorChange:" target="XfG-lQ-9wD" id="Rbp-fx-YDU"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDL-Db-4L2">
-                                                <rect key="frame" x="-1" y="223" width="100" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDL-Db-4L2">
+                                                <rect key="frame" x="-1" y="18" width="100" height="18"/>
                                                 <buttonCell key="cell" type="radio" title="Amber Mono" bezelStyle="regularSquare" imagePosition="left" alignment="left" refusesFirstResponder="YES" inset="2" id="8c4-i2-4Tf">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1817,11 +1873,11 @@
                                                     <action selector="MonitorChange:" target="XfG-lQ-9wD" id="wrg-jk-a1b"/>
                                                 </connections>
                                             </button>
-                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="t35-xh-L18">
-                                                <rect key="frame" x="0.0" y="213" width="96" height="5"/>
+                                            <box hidden="YES" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="t35-xh-L18">
+                                                <rect key="frame" x="0.0" y="32" width="96" height="5"/>
                                             </box>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e2E-di-h3i">
-                                                <rect key="frame" x="-2" y="191" width="83" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e2E-di-h3i">
+                                                <rect key="frame" x="-2" y="19" width="83" height="18"/>
                                                 <buttonCell key="cell" type="check" title="KeybStick" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="UW9-Bt-pMv">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1830,8 +1886,8 @@
                                                     <action selector="Keyboard2JoystickOnOff:" target="XfG-lQ-9wD" id="8LD-mj-n5E"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wa3-TC-XUI">
-                                                <rect key="frame" x="-2" y="169" width="79" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wa3-TC-XUI">
+                                                <rect key="frame" x="-2" y="19" width="79" height="18"/>
                                                 <buttonCell key="cell" type="check" title="MouStick" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BGz-fX-MyG">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1840,8 +1896,8 @@
                                                     <action selector="Mouse2JoystickOnOff:" target="XfG-lQ-9wD" id="ci4-xN-MVe"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xrz-jA-1Fh">
-                                                <rect key="frame" x="-2" y="147" width="63" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xrz-jA-1Fh">
+                                                <rect key="frame" x="-2" y="19" width="63" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Mouse" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="1RG-zY-mD2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1850,11 +1906,11 @@
                                                     <action selector="MouseOnOff:" target="XfG-lQ-9wD" id="h09-p3-mS4"/>
                                                 </connections>
                                             </button>
-                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xk-n9g">
-                                                <rect key="frame" x="0.0" y="138" width="96" height="5"/>
+                                            <box hidden="YES" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="rIK-Xk-n9g">
+                                                <rect key="frame" x="0.0" y="32" width="96" height="5"/>
                                             </box>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-cj-gLu">
-                                                <rect key="frame" x="-2" y="116" width="87" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ccb-cj-gLu">
+                                                <rect key="frame" x="-2" y="19" width="87" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Quick Disk" bezelStyle="regularSquare" imagePosition="left" inset="2" id="6QV-uF-Gh7">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1863,8 +1919,8 @@
                                                     <action selector="QuickDisk:" target="XfG-lQ-9wD" id="tt5-2M-B2Y"/>
                                                 </connections>
                                             </button>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9nQ-Yf-2xf">
-                                                <rect key="frame" x="-2" y="94" width="91" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9nQ-Yf-2xf">
+                                                <rect key="frame" x="-2" y="19" width="91" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Disk Sound" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="AJi-1B-qeg">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1874,10 +1930,10 @@
                                                 </connections>
                                             </button>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
-                                                <rect key="frame" x="0.0" y="85" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="32" width="96" height="5"/>
                                             </box>
-                                            <splitView dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
-                                                <rect key="frame" x="0.0" y="56" width="104" height="23"/>
+                                            <splitView hidden="YES" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
+                                                <rect key="frame" x="0.0" y="12" width="104" height="23"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>
@@ -1906,7 +1962,7 @@
                                                 </holdingPriorities>
                                             </splitView>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FZk-VW-alq">
-                                                <rect key="frame" x="-2" y="31" width="75" height="17"/>
+                                                <rect key="frame" x="-2" y="9" width="75" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="ai1-6C-5tW"/>
                                                 </constraints>
@@ -1917,10 +1973,10 @@
                                                 </textFieldCell>
                                             </textField>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="G0a-hc-JMD">
-                                                <rect key="frame" x="0.0" y="20" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="-2" width="96" height="5"/>
                                             </box>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ht7-rA-5YN">
-                                                <rect key="frame" x="-2" y="-2" width="56" height="18"/>
+                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ht7-rA-5YN">
+                                                <rect key="frame" x="-2" y="19" width="56" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Trace" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bgY-G9-iDK">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2041,26 +2097,158 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Amber" width="64" height="64"/>
+        <image name="Chip" width="64" height="64"/>
+        <image name="Color" width="64" height="64"/>
+        <image name="Copy" width="64" height="64"/>
         <image name="Disk 1" width="160" height="98.5"/>
         <image name="Disk 2" width="160" height="98.5"/>
-        <image name="NSAdvanced" width="32" height="32"/>
+        <image name="Green" width="64" height="64"/>
+        <image name="Joystick" width="64" height="64"/>
+        <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSTouchBarAudioOutputMuteTemplate" width="26" height="30"/>
         <image name="NSTouchBarAudioOutputVolumeLowTemplate" width="23" height="30"/>
         <image name="NSTouchBarAudioOutputVolumeMediumTemplate" width="23" height="30"/>
-        <image name="NSTouchBarColorPickerFont" width="13" height="30"/>
         <image name="NSTouchBarPauseTemplate" width="11" height="30"/>
-        <image name="NSTouchBarRecordStopTemplate" width="12" height="30"/>
+        <image name="Old Monitor" width="64" height="64"/>
+        <image name="Paste" width="64" height="64"/>
+        <image name="Power" width="64" height="64"/>
+        <image name="Quick Disk" width="160" height="98.5"/>
+        <image name="Reset" width="64" height="64"/>
+        <image name="Select All" width="64" height="64"/>
+        <image name="White" width="64" height="64"/>
         <image name="apple_original_logo_design" width="384" height="307.20001220703125"/>
-        <image name="doc.on.clipboard" width="102.40000152587891" height="102.40000152587891"/>
-        <image name="doc.on.doc" width="102.40000152587891" height="102.40000152587891"/>
-        <image name="doc.text.viewfinder" width="102.40000152587891" height="102.40000152587891"/>
         <image name="dotmatrix_effect" width="268.79998779296875" height="184.32000732421875"/>
-        <image name="floppy" width="64" height="64"/>
-        <image name="gobackward" width="102.40000152587891" height="102.40000152587891"/>
-        <image name="joystick" width="64" height="64"/>
-        <image name="mono" width="102.40000152587891" height="102.40000152587891"/>
-        <image name="power" width="102.40000152587891" height="102.40000152587891"/>
-        <image name="rgb_color" width="102.40000152587891" height="102.40000152587891"/>
+        <image name="popUpButtonCell:A4p-LJ-svz:image" width="1" height="1">
+            <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
+ExQZHh8jJCsuMTtDR0tPUlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdz
+Vk5TUmVwc1dOU0NvbG9ygAKAERIgwwAAgAOAC1Z7MSwgMX3SFQoWGFpOUy5vYmplY3RzoReABIAK0hUK
+Gh2iGxyABYAGgAkQANIgCiEiXxAUTlNUSUZGUmVwcmVzZW50YXRpb26AB4AITxEIxE1NACoAAAAKAAAA
+EAEAAAMAAAABAAEAAAEBAAMAAAABAAEAAAECAAMAAAACAAgACAEDAAMAAAABAAEAAAEGAAMAAAABAAEA
+AAEKAAMAAAABAAEAAAERAAQAAAABAAAACAESAAMAAAABAAEAAAEVAAMAAAABAAIAAAEWAAMAAAABAAEA
+AAEXAAQAAAABAAAAAgEcAAMAAAABAAEAAAEoAAMAAAABAAIAAAFSAAMAAAABAAEAAAFTAAMAAAACAAEA
+AYdzAAcAAAf0AAAA0AAAAAAAAAf0YXBwbAIgAABtbnRyR1JBWVhZWiAH0AACAA4ADAAAAABhY3NwQVBQ
+TAAAAABub25lAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWFwcGwAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVkZXNjAAAAwAAAAG9kc2NtAAABMAAABmZjcHJ0AAAH
+mAAAADh3dHB0AAAH0AAAABRrVFJDAAAH5AAAAA5kZXNjAAAAAAAAABVHZW5lcmljIEdyYXkgUHJvZmls
+ZQAAAAAAAAAAAAAAFUdlbmVyaWMgR3JheSBQcm9maWxlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAbWx1YwAAAAAAAAAfAAAADHNrU0sAAAAqAAABhGVuVVMAAAAoAAAB
+rmNhRVMAAAAsAAAB1nZpVk4AAAAsAAACAnB0QlIAAAAqAAACLnVrVUEAAAAsAAACWGZyRlUAAAAqAAAC
+hGh1SFUAAAAuAAACrnpoVFcAAAAQAAAC3G5iTk8AAAAsAAAC7GtvS1IAAAAYAAADGGNzQ1oAAAAkAAAD
+MGhlSUwAAAAgAAADVHJvUk8AAAAkAAADdGRlREUAAAA6AAADmGl0SVQAAAAuAAAD0nN2U0UAAAAuAAAE
+AHpoQ04AAAAQAAAELmphSlAAAAAWAAAEPmVsR1IAAAAkAAAEVHB0UE8AAAA4AAAEeG5sTkwAAAAqAAAE
+sGVzRVMAAAAoAAAE2nRoVEgAAAAkAAAFAnRyVFIAAAAiAAAFJmZpRkkAAAAsAAAFSGhySFIAAAA6AAAF
+dHBsUEwAAAA2AAAFrnJ1UlUAAAAmAAAF5GFyRUcAAAAoAAAGCmRhREsAAAA0AAAGMgBWAWEAZQBvAGIA
+ZQBjAG4A/QAgAHMAaQB2AP0AIABwAHIAbwBmAGkAbABHAGUAbgBlAHIAaQBjACAARwByAGEAeQAgAFAA
+cgBvAGYAaQBsAGUAUABlAHIAZgBpAGwAIABkAGUAIABnAHIAaQBzACAAZwBlAG4A6AByAGkAYwBDHqUA
+dQAgAGgA7ABuAGgAIABNAOAAdQAgAHgA4QBtACAAQwBoAHUAbgBnAFAAZQByAGYAaQBsACAAQwBpAG4A
+egBhACAARwBlAG4A6QByAGkAYwBvBBcEMAQzBDAEOwRMBD0EOAQ5ACAEPwRABD4ERAQwBDkEOwAgAEcA
+cgBhAHkAUAByAG8AZgBpAGwAIABnAOkAbgDpAHIAaQBxAHUAZQAgAGcAcgBpAHMAwQBsAHQAYQBsAOEA
+bgBvAHMAIABzAHoA/AByAGsAZQAgAHAAcgBvAGYAaQBskBp1KHBwlo6Ccl9pY8+P8ABHAGUAbgBlAHIA
+aQBzAGsAIABnAHIA5QB0AG8AbgBlAHAAcgBvAGYAaQBsx3y8GAAgAEcAcgBhAHkAINUEuFzTDMd8AE8A
+YgBlAGMAbgD9ACABYQBlAGQA/QAgAHAAcgBvAGYAaQBsBeQF6AXVBeQF2QXcACAARwByAGEAeQAgBdsF
+3AXcBdkAUAByAG8AZgBpAGwAIABnAHIAaQAgAGcAZQBuAGUAcgBpAGMAQQBsAGwAZwBlAG0AZQBpAG4A
+ZQBzACAARwByAGEAdQBzAHQAdQBmAGUAbgAtAFAAcgBvAGYAaQBsAFAAcgBvAGYAaQBsAG8AIABnAHIA
+aQBnAGkAbwAgAGcAZQBuAGUAcgBpAGMAbwBHAGUAbgBlAHIAaQBzAGsAIABnAHIA5QBzAGsAYQBsAGUA
+cAByAG8AZgBpAGxmbpAacHBepmPPj/Blh072TgCCLDCwMOwwpDDXMO0w1TChMKQw6wOTA7UDvQO5A7oD
+zAAgA8ADwQO/A8YDrwO7ACADswO6A8EDuQBQAGUAcgBmAGkAbAAgAGcAZQBuAOkAcgBpAGMAbwAgAGQA
+ZQAgAGMAaQBuAHoAZQBuAHQAbwBzAEEAbABnAGUAbQBlAGUAbgAgAGcAcgBpAGoAcwBwAHIAbwBmAGkA
+ZQBsAFAAZQByAGYAaQBsACAAZwByAGkAcwAgAGcAZQBuAOkAcgBpAGMAbw5CDhsOIw5EDh8OJQ5MDioO
+NQ5ADhcOMg4XDjEOSA4nDkQOGwBHAGUAbgBlAGwAIABHAHIAaQAgAFAAcgBvAGYAaQBsAGkAWQBsAGUA
+aQBuAGUAbgAgAGgAYQByAG0AYQBhAHAAcgBvAGYAaQBpAGwAaQBHAGUAbgBlAHIAaQENAGsAaQAgAHAA
+cgBvAGYAaQBsACAAcwBpAHYAaQBoACAAdABvAG4AbwB2AGEAVQBuAGkAdwBlAHIAcwBhAGwAbgB5ACAA
+cAByAG8AZgBpAGwAIABzAHoAYQByAG8BWwBjAGkEHgQxBEkEOAQ5ACAEQQQ1BEAESwQ5ACAEPwRABD4E
+RAQ4BDsETAZFBkQGQQAgBioGOQYxBkoGQQAgAEcAcgBhAHkAIAYnBkQGOQYnBkUARwBlAG4AZQByAGUA
+bAAgAGcAcgDlAHQAbwBuAGUAYgBlAHMAawByAGkAdgBlAGwAcwBlAAB0ZXh0AAAAAENvcHlyaWdodCAy
+MDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQuAFhZWiAAAAAAAADzUQABAAAAARbMY3Vy
+dgAAAAAAAAABAc0AANIlJicoWiRjbGFzc25hbWVYJGNsYXNzZXNfEBBOU0JpdG1hcEltYWdlUmVwoycp
+KlpOU0ltYWdlUmVwWE5TT2JqZWN00iUmLC1XTlNBcnJheaIsKtIlJi8wXk5TTXV0YWJsZUFycmF5oy8s
+KtUyMzQ1CjY3ODk6V05TV2hpdGVcTlNDb21wb25lbnRzXE5TQ29sb3JTcGFjZV8QEk5TQ3VzdG9tQ29s
+b3JTcGFjZUQwIDAAQzAgMBADgAyAENQ8PT4KP0BBQlROU0lEVU5TSUNDV05TTW9kZWwQCYANEACAD9JE
+CkVGV05TLmRhdGFPERFoAAARaGFwcGwCAAAAbW50ckdSQVlYWVogB9wACAAXAA8ALgAPYWNzcEFQUEwA
+AAAAbm9uZQAAAAAAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y1hcHBsAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFZGVzYwAAAMAAAAB5ZHNjbQAAATwAAAfoY3BydAAACSQA
+AAAjd3RwdAAACUgAAAAUa1RSQwAACVwAAAgMZGVzYwAAAAAAAAAfR2VuZXJpYyBHcmF5IEdhbW1hIDIu
+MiBQcm9maWxlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG1sdWMAAAAAAAAAHwAAAAxza1NLAAAALgAAAYRk
+YURLAAAAOAAAAbJjYUVTAAAAOAAAAep2aVZOAAAAQAAAAiJwdEJSAAAASgAAAmJ1a1VBAAAALAAAAqxm
+ckZVAAAAPgAAAthodUhVAAAANAAAAxZ6aFRXAAAAHgAAA0puYk5PAAAAOgAAA2hjc0NaAAAAKAAAA6Jo
+ZUlMAAAAJAAAA8ppdElUAAAATgAAA+5yb1JPAAAAKgAABDxkZURFAAAATgAABGZrb0tSAAAAIgAABLRz
+dlNFAAAAOAAAAbJ6aENOAAAAHgAABNZqYUpQAAAAJgAABPRlbEdSAAAAKgAABRpwdFBPAAAAUgAABURu
+bE5MAAAAQAAABZZlc0VTAAAATAAABdZ0aFRIAAAAMgAABiJ0clRSAAAAJAAABlRmaUZJAAAARgAABnho
+ckhSAAAAPgAABr5wbFBMAAAASgAABvxydVJVAAAAOgAAB0ZlblVTAAAAPAAAB4BhckVHAAAALAAAB7wA
+VgFhAGUAbwBiAGUAYwBuAOEAIABzAGkAdgDhACAAZwBhAG0AYQAgADIALAAyAEcAZQBuAGUAcgBpAHMA
+awAgAGcAcgDlACAAMgAsADIAIABnAGEAbQBtAGEAcAByAG8AZgBpAGwARwBhAG0AbQBhACAAZABlACAA
+ZwByAGkAcwBvAHMAIABnAGUAbgDoAHIAaQBjAGEAIAAyAC4AMgBDHqUAdQAgAGgA7ABuAGgAIABNAOAA
+dQAgAHgA4QBtACAAQwBoAHUAbgBnACAARwBhAG0AbQBhACAAMgAuADIAUABlAHIAZgBpAGwAIABHAGUA
+bgDpAHIAaQBjAG8AIABkAGEAIABHAGEAbQBhACAAZABlACAAQwBpAG4AegBhAHMAIAAyACwAMgQXBDAE
+MwQwBDsETAQ9BDAAIABHAHIAYQB5AC0EMwQwBDwEMAAgADIALgAyAFAAcgBvAGYAaQBsACAAZwDpAG4A
+6QByAGkAcQB1AGUAIABnAHIAaQBzACAAZwBhAG0AbQBhACAAMgAsADIAwQBsAHQAYQBsAOEAbgBvAHMA
+IABzAHoA/AByAGsAZQAgAGcAYQBtAG0AYQAgADIALgAykBp1KHBwlo5RSV6mACAAMgAuADIAIIJyX2lj
+z4/wAEcAZQBuAGUAcgBpAHMAawAgAGcAcgDlACAAZwBhAG0AbQBhACAAMgAsADIALQBwAHIAbwBmAGkA
+bABPAGIAZQBjAG4A4QAgAWEAZQBkAOEAIABnAGEAbQBhACAAMgAuADIF0gXQBd4F1AAgBdAF5AXVBegA
+IAXbBdwF3AXZACAAMgAuADIAUAByAG8AZgBpAGwAbwAgAGcAcgBpAGcAaQBvACAAZwBlAG4AZQByAGkA
+YwBvACAAZABlAGwAbABhACAAZwBhAG0AbQBhACAAMgAsADIARwBhAG0AYQAgAGcAcgBpACAAZwBlAG4A
+ZQByAGkAYwEDACAAMgAsADIAQQBsAGwAZwBlAG0AZQBpAG4AZQBzACAARwByAGEAdQBzAHQAdQBmAGUA
+bgAtAFAAcgBvAGYAaQBsACAARwBhAG0AbQBhACAAMgAsADLHfLwYACDWjMDJACCsELnIACAAMgAuADIA
+INUEuFzTDMd8Zm6QGnBwXqZ8+2VwACAAMgAuADIAIGPPj/Blh072TgCCLDCwMOwwpDCsMPMw3gAgADIA
+LgAyACAw1zDtMNUwoTCkMOsDkwO1A70DuQO6A8wAIAOTA7oDwQO5ACADkwOsA7wDvAOxACAAMgAuADIA
+UABlAHIAZgBpAGwAIABnAGUAbgDpAHIAaQBjAG8AIABkAGUAIABjAGkAbgB6AGUAbgB0AG8AcwAgAGQA
+YQAgAEcAYQBtAG0AYQAgADIALAAyAEEAbABnAGUAbQBlAGUAbgAgAGcAcgBpAGoAcwAgAGcAYQBtAG0A
+YQAgADIALAAyAC0AcAByAG8AZgBpAGUAbABQAGUAcgBmAGkAbAAgAGcAZQBuAOkAcgBpAGMAbwAgAGQA
+ZQAgAGcAYQBtAG0AYQAgAGQAZQAgAGcAcgBpAHMAZQBzACAAMgAsADIOIw4xDgcOKg41DkEOAQ4hDiEO
+Mg5ADgEOIw4iDkwOFw4xDkgOJw5EDhsAIAAyAC4AMgBHAGUAbgBlAGwAIABHAHIAaQAgAEcAYQBtAGEA
+IAAyACwAMgBZAGwAZQBpAG4AZQBuACAAaABhAHIAbQBhAGEAbgAgAGcAYQBtAG0AYQAgADIALAAyACAA
+LQBwAHIAbwBmAGkAaQBsAGkARwBlAG4AZQByAGkBDQBrAGkAIABHAHIAYQB5ACAARwBhAG0AbQBhACAA
+MgAuADIAIABwAHIAbwBmAGkAbABVAG4AaQB3AGUAcgBzAGEAbABuAHkAIABwAHIAbwBmAGkAbAAgAHMA
+egBhAHIAbwFbAGMAaQAgAGcAYQBtAG0AYQAgADIALAAyBB4EMQRJBDAETwAgBEEENQRABDAETwAgBDME
+MAQ8BDwEMAAgADIALAAyAC0EPwRABD4ERAQ4BDsETABHAGUAbgBlAHIAaQBjACAARwByAGEAeQAgAEcA
+YQBtAG0AYQAgADIALgAyACAAUAByAG8AZgBpAGwAZQY6BicGRQYnACAAMgAuADIAIAZEBkgGRgAgBjEG
+RQYnBi8GSgAgBjkGJwZFdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUgSW5jLiwgMjAxMgAAWFlaIAAAAAAA
+APNRAAEAAAABFsxjdXJ2AAAAAAAABAAAAAAFAAoADwAUABkAHgAjACgALQAyADcAOwBAAEUASgBPAFQA
+WQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8ApACpAK4AsgC3ALwAwQDGAMsA0ADVANsA4ADlAOsA
+8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUBTAFSAVkBYAFnAW4BdQF8AYMBiwGSAZoBoQGpAbEB
+uQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8COAJBAksCVAJdAmcCcQJ6AoQCjgKYAqICrAK2AsEC
+ywLVAuAC6wL1AwADCwMWAyEDLQM4A0MDTwNaA2YDcgN+A4oDlgOiA64DugPHA9MD4APsA/kEBgQTBCAE
+LQQ7BEgEVQRjBHEEfgSMBJoEqAS2BMQE0wThBPAE/gUNBRwFKwU6BUkFWAVnBXcFhgWWBaYFtQXFBdUF
+5QX2BgYGFgYnBjcGSAZZBmoGewaMBp0GrwbABtEG4wb1BwcHGQcrBz0HTwdhB3QHhgeZB6wHvwfSB+UH
++AgLCB8IMghGCFoIbgiCCJYIqgi+CNII5wj7CRAJJQk6CU8JZAl5CY8JpAm6Cc8J5Qn7ChEKJwo9ClQK
+agqBCpgKrgrFCtwK8wsLCyILOQtRC2kLgAuYC7ALyAvhC/kMEgwqDEMMXAx1DI4MpwzADNkM8w0NDSYN
+QA1aDXQNjg2pDcMN3g34DhMOLg5JDmQOfw6bDrYO0g7uDwkPJQ9BD14Peg+WD7MPzw/sEAkQJhBDEGEQ
+fhCbELkQ1xD1ERMRMRFPEW0RjBGqEckR6BIHEiYSRRJkEoQSoxLDEuMTAxMjE0MTYxODE6QTxRPlFAYU
+JxRJFGoUixStFM4U8BUSFTQVVhV4FZsVvRXgFgMWJhZJFmwWjxayFtYW+hcdF0EXZReJF64X0hf3GBsY
+QBhlGIoYrxjVGPoZIBlFGWsZkRm3Gd0aBBoqGlEadxqeGsUa7BsUGzsbYxuKG7Ib2hwCHCocUhx7HKMc
+zBz1HR4dRx1wHZkdwx3sHhYeQB5qHpQevh7pHxMfPh9pH5Qfvx/qIBUgQSBsIJggxCDwIRwhSCF1IaEh
+ziH7IiciVSKCIq8i3SMKIzgjZiOUI8Ij8CQfJE0kfCSrJNolCSU4JWgllyXHJfcmJyZXJocmtyboJxgn
+SSd6J6sn3CgNKD8ocSiiKNQpBik4KWspnSnQKgIqNSpoKpsqzysCKzYraSudK9EsBSw5LG4soizXLQwt
+QS12Last4S4WLkwugi63Lu4vJC9aL5Evxy/+MDUwbDCkMNsxEjFKMYIxujHyMioyYzKbMtQzDTNGM38z
+uDPxNCs0ZTSeNNg1EzVNNYc1wjX9Njc2cjauNuk3JDdgN5w31zgUOFA4jDjIOQU5Qjl/Obw5+To2OnQ6
+sjrvOy07azuqO+g8JzxlPKQ84z0iPWE9oT3gPiA+YD6gPuA/IT9hP6I/4kAjQGRApkDnQSlBakGsQe5C
+MEJyQrVC90M6Q31DwEQDREdEikTORRJFVUWaRd5GIkZnRqtG8Ec1R3tHwEgFSEtIkUjXSR1JY0mpSfBK
+N0p9SsRLDEtTS5pL4kwqTHJMuk0CTUpNk03cTiVObk63TwBPSU+TT91QJ1BxULtRBlFQUZtR5lIxUnxS
+x1MTU19TqlP2VEJUj1TbVShVdVXCVg9WXFapVvdXRFeSV+BYL1h9WMtZGllpWbhaB1pWWqZa9VtFW5Vb
+5Vw1XIZc1l0nXXhdyV4aXmxevV8PX2Ffs2AFYFdgqmD8YU9homH1YklinGLwY0Njl2PrZEBklGTpZT1l
+kmXnZj1mkmboZz1nk2fpaD9olmjsaUNpmmnxakhqn2r3a09rp2v/bFdsr20IbWBtuW4SbmtuxG8eb3hv
+0XArcIZw4HE6cZVx8HJLcqZzAXNdc7h0FHRwdMx1KHWFdeF2Pnabdvh3VnezeBF4bnjMeSp5iXnnekZ6
+pXsEe2N7wnwhfIF84X1BfaF+AX5ifsJ/I3+Ef+WAR4CogQqBa4HNgjCCkoL0g1eDuoQdhICE44VHhauG
+DoZyhteHO4efiASIaYjOiTOJmYn+imSKyoswi5aL/IxjjMqNMY2Yjf+OZo7OjzaPnpAGkG6Q1pE/kaiS
+EZJ6kuOTTZO2lCCUipT0lV+VyZY0lp+XCpd1l+CYTJi4mSSZkJn8mmia1ZtCm6+cHJyJnPedZJ3SnkCe
+rp8dn4uf+qBpoNihR6G2oiailqMGo3aj5qRWpMelOKWpphqmi6b9p26n4KhSqMSpN6mpqhyqj6sCq3Wr
+6axcrNCtRK24ri2uoa8Wr4uwALB1sOqxYLHWskuywrM4s660JbSctRO1irYBtnm28Ldot+C4WbjRuUq5
+wro7urW7LrunvCG8m70VvY++Cr6Evv+/er/1wHDA7MFnwePCX8Lbw1jD1MRRxM7FS8XIxkbGw8dBx7/I
+Pci8yTrJuco4yrfLNsu2zDXMtc01zbXONs62zzfPuNA50LrRPNG+0j/SwdNE08bUSdTL1U7V0dZV1tjX
+XNfg2GTY6Nls2fHadtr724DcBdyK3RDdlt4c3qLfKd+v4DbgveFE4cziU+Lb42Pj6+Rz5PzlhOYN5pbn
+H+ep6DLovOlG6dDqW+rl63Dr++yG7RHtnO4o7rTvQO/M8Fjw5fFy8f/yjPMZ86f0NPTC9VD13vZt9vv3
+ivgZ+Kj5OPnH+lf65/t3/Af8mP0p/br+S/7c/23//4AO0iUmSEldTlNNdXRhYmxlRGF0YaNISipWTlNE
+YXRh0iUmTE1cTlNDb2xvclNwYWNlok4qXE5TQ29sb3JTcGFjZdIlJlBRV05TQ29sb3KiUCrSJSZTVFdO
+U0ltYWdlolMqXxAPTlNLZXllZEFyY2hpdmVy0VdYVHJvb3SAAQAIABEAGgAjAC0AMgA3AEwAUgBdAGQA
+awB4AH8AhwCJAIsAkACSAJQAmwCgAKsArQCvALEAtgC5ALsAvQC/AMEAxgDdAN8A4QmpCa4JuQnCCdUJ
+2QnkCe0J8gn6Cf0KAgoRChUKIAooCjUKQgpXClwKYApiCmQKZgpvCnQKegqCCoQKhgqICooKjwqXHAMc
+BRwKHBgcHBwjHCgcNRw4HEUcShxSHFUcWhxiHGUcdxx6HH8AAAAAAAACAQAAAAAAAABZAAAAAAAAAAAA
+AAAAAAAcgQ
+</mutableData>
+        </image>
         <image name="scanlines" width="268.79998779296875" height="184.32000732421875"/>
     </resources>
 </document>

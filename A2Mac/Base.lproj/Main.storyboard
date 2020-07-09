@@ -1741,10 +1741,10 @@
                                 <rect key="frame" x="1160" y="8" width="120" height="784"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="-20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-h7-NcU" userLabel="Prefipheries">
-                                        <rect key="frame" x="0.0" y="681" width="120" height="103"/>
+                                        <rect key="frame" x="0.0" y="598" width="120" height="186"/>
                                         <subviews>
                                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="49f-8R-QCc">
-                                                <rect key="frame" x="0.0" y="0.0" width="120" height="103"/>
+                                                <rect key="frame" x="0.0" y="83" width="120" height="103"/>
                                                 <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" id="CNs-lh-urM">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
@@ -1777,8 +1777,42 @@
                                                     <action selector="Disk1:" target="XfG-lQ-9wD" id="KQY-br-G9Z"/>
                                                 </connections>
                                             </popUpButton>
+                                            <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="QDr-Cp-9QQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="120" height="103"/>
+                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="vmR-CG-qdv" id="8FA-1D-k8p">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="menu"/>
+                                                    <menu key="menu" id="8He-mk-LVI">
+                                                        <items>
+                                                            <menuItem image="Disk 2" allowsKeyEquivalentWhenHidden="YES" id="Ekt-Ja-KwB"/>
+                                                            <menuItem title="Open" tag="1" keyEquivalent="o" id="28N-X8-n7Q"/>
+                                                            <menuItem title="Save" tag="2" keyEquivalent="s" id="fzo-Lm-kkZ"/>
+                                                            <menuItem title="Save As..." tag="3" keyEquivalent="S" id="GAk-R1-u7k"/>
+                                                            <menuItem title="Eject" tag="4" keyEquivalent="e" id="f3Z-8Q-qxb"/>
+                                                            <menuItem isSeparatorItem="YES" id="6Vn-9U-EaO"/>
+                                                            <menuItem title="Quick Disk" tag="21" id="yDH-Ob-i3N"/>
+                                                            <menuItem title="Disk Sound" state="on" tag="22" id="vmR-CG-qdv"/>
+                                                            <menuItem isSeparatorItem="YES" id="T8N-lz-JYX"/>
+                                                            <menuItem title="Apple DOS 3.3 January 1983" tag="1000" keyEquivalent="1" id="P7T-XT-Cdu"/>
+                                                            <menuItem title="Merlin Assembler" tag="1000" keyEquivalent="2" id="tB8-sJ-HlO"/>
+                                                            <menuItem title="Apple II+ Dealer Diagnostics" tag="1000" keyEquivalent="3" id="dGd-Db-yBA"/>
+                                                            <menuItem title="LockSmith v6.0" tag="1000" keyEquivalent="4" id="szs-zR-mkn"/>
+                                                            <menuItem title="XPS Diagnostic IIe" tag="1000" keyEquivalent="5" id="EPI-Ma-d6C"/>
+                                                            <menuItem title="Donkey Kong" tag="1000" keyEquivalent="6" id="XyX-n0-A2F"/>
+                                                            <menuItem title="Qbit" tag="1000" keyEquivalent="7" id="oMK-5v-QR3"/>
+                                                            <menuItem title="Sneakers" tag="1000" keyEquivalent="8" id="dZn-Mw-uXV"/>
+                                                            <menuItem title="Wavy Navy" tag="1000" id="eO9-bs-03B"/>
+                                                            <menuItem title="Xonix" tag="1000" keyEquivalent="9" id="Ui5-Id-ckw"/>
+                                                            <menuItem title="Lode Runner" tag="1000" id="5tF-q8-j5x"/>
+                                                        </items>
+                                                    </menu>
+                                                </popUpButtonCell>
+                                                <connections>
+                                                    <action selector="Disk1:" target="XfG-lQ-9wD" id="ZjR-28-3Rx"/>
+                                                </connections>
+                                            </popUpButton>
                                             <button hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T0r-xy-OJF">
-                                                <rect key="frame" x="0.0" y="4" width="120" height="99"/>
+                                                <rect key="frame" x="0.0" y="87" width="120" height="99"/>
                                                 <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Disk 2" imagePosition="only" alignment="center" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="z4y-xq-1UN">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1792,8 +1826,10 @@
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
@@ -1804,35 +1840,21 @@
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
                                                 <rect key="frame" x="0.0" y="32" width="96" height="5"/>
                                             </box>
-                                            <splitView hidden="YES" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ge3-qD-JO6">
-                                                <rect key="frame" x="0.0" y="12" width="104" height="23"/>
-                                                <subviews>
-                                                    <textField verticalHuggingPriority="750" fixedFrame="YES" id="SNE-lV-JXn" userLabel="SoundGap">
-                                                        <rect key="frame" x="0.0" y="0.0" width="90" height="23"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" title="26" drawsBackground="YES" id="ZKd-sJ-O4U">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" id="uQO-BN-oqa">
-                                                        <rect key="frame" x="88" y="-2" width="19" height="27"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="256" doubleValue="26" id="h0r-W8-egl"/>
-                                                        <connections>
-                                                            <action selector="SoundGapChanged:" target="XfG-lQ-9wD" id="Y1Z-lh-l8u"/>
-                                                        </connections>
-                                                    </stepper>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="23" id="X5P-d2-aYo"/>
-                                                </constraints>
-                                                <holdingPriorities>
-                                                    <real value="250"/>
-                                                    <real value="250"/>
-                                                </holdingPriorities>
-                                            </splitView>
+                                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FFM-zm-Wjx">
+                                                <rect key="frame" x="-2" y="19" width="13" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="0" id="yIR-MN-Hdl">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64O-qO-cQV">
+                                                <rect key="frame" x="-2" y="18" width="96" height="19"/>
+                                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="256" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="hxk-WO-tJf"/>
+                                                <connections>
+                                                    <action selector="extraBuf:" target="XfG-lQ-9wD" id="gEu-yg-udY"/>
+                                                </connections>
+                                            </slider>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FZk-VW-alq">
                                                 <rect key="frame" x="-2" y="9" width="75" height="17"/>
                                                 <constraints>
@@ -1847,21 +1869,7 @@
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="G0a-hc-JMD">
                                                 <rect key="frame" x="0.0" y="-2" width="96" height="5"/>
                                             </box>
-                                            <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ht7-rA-5YN">
-                                                <rect key="frame" x="-2" y="19" width="56" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Trace" bezelStyle="regularSquare" imagePosition="left" inset="2" id="bgY-G9-iDK">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                </buttonCell>
-                                                <connections>
-                                                    <action selector="traceEnable:" target="XfG-lQ-9wD" id="z2w-sG-5c0"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Ge3-qD-JO6" secondAttribute="trailing" id="CjH-r2-t3y"/>
-                                            <constraint firstItem="Ge3-qD-JO6" firstAttribute="leading" secondItem="lVP-FP-u6x" secondAttribute="leading" id="Z0F-GF-dgy"/>
-                                        </constraints>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
@@ -1924,10 +1932,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="SoundGap" destination="ZKd-sJ-O4U" id="IrM-7f-7Nb"/>
+                        <outlet property="DiskSound_Disk1" destination="5cI-3C-PMM" id="ptG-tm-GZs"/>
+                        <outlet property="DiskSound_Disk2" destination="vmR-CG-qdv" id="22u-xi-nHH"/>
+                        <outlet property="QuickDisk_Disk1" destination="cth-H6-Drg" id="cFI-9E-kYv"/>
+                        <outlet property="QuickDisk_Disk2" destination="yDH-Ob-i3N" id="hvi-ZC-Pk4"/>
                         <outlet property="display" destination="pIk-RC-s5g" id="Hvd-DI-h6z"/>
                         <outlet property="displayField" destination="SEL-hl-0c0" id="4Pc-hG-qQf"/>
                         <outlet property="hires" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>
+                        <outlet property="lab" destination="yIR-MN-Hdl" id="9SQ-AJ-W3E"/>
                         <outlet property="lores" destination="Gqh-qw-fjy" id="vOE-5m-Jfi"/>
                         <outlet property="scanLines" destination="dGn-a4-c1t" id="3Xy-Ku-95P"/>
                         <outlet property="speedometer" destination="FBZ-dh-6Fs" id="L0v-RY-xwB"/>
@@ -1935,6 +1947,34 @@
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <popUpButtonCell type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="UVJ-Go-HTV" id="vTR-EZ-zKb">
+                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                    <font key="font" metaFont="menu"/>
+                    <menu key="menu" id="rxy-z9-Sz5">
+                        <items>
+                            <menuItem image="Disk 1" allowsKeyEquivalentWhenHidden="YES" id="KjT-gE-gR2"/>
+                            <menuItem title="Open" tag="1" keyEquivalent="o" id="8Ri-Qe-0g1"/>
+                            <menuItem title="Save" tag="2" keyEquivalent="s" id="yTn-7w-ms8"/>
+                            <menuItem title="Save As..." tag="3" keyEquivalent="S" id="0hY-UG-gx7"/>
+                            <menuItem title="Eject" tag="4" keyEquivalent="e" id="Ic3-rB-s1q"/>
+                            <menuItem isSeparatorItem="YES" id="oql-xu-PZ4"/>
+                            <menuItem title="Quick Disk" tag="21" id="sTO-iZ-hOp"/>
+                            <menuItem title="Disk Sound" state="on" tag="22" id="UVJ-Go-HTV"/>
+                            <menuItem isSeparatorItem="YES" id="KzC-p0-y1P"/>
+                            <menuItem title="Apple DOS 3.3 January 1983" tag="1000" keyEquivalent="1" id="17K-FK-TR3"/>
+                            <menuItem title="Merlin Assembler" tag="1000" keyEquivalent="2" id="qCS-ul-CJP"/>
+                            <menuItem title="Apple II+ Dealer Diagnostics" tag="1000" keyEquivalent="3" id="S4c-ME-ufu"/>
+                            <menuItem title="LockSmith v6.0" tag="1000" keyEquivalent="4" id="oIE-35-KdE"/>
+                            <menuItem title="XPS Diagnostic IIe" tag="1000" keyEquivalent="5" id="uk7-dg-Zo5"/>
+                            <menuItem title="Donkey Kong" tag="1000" keyEquivalent="6" id="EQK-lR-8R0"/>
+                            <menuItem title="Qbit" tag="1000" keyEquivalent="7" id="wnb-FC-Tqe"/>
+                            <menuItem title="Sneakers" tag="1000" keyEquivalent="8" id="uYZ-Dx-9sZ"/>
+                            <menuItem title="Wavy Navy" tag="1000" id="n49-M1-HCJ"/>
+                            <menuItem title="Xonix" tag="1000" keyEquivalent="9" id="p64-at-JRa"/>
+                            <menuItem title="Lode Runner" tag="1000" id="zZE-0d-lDs"/>
+                        </items>
+                    </menu>
+                </popUpButtonCell>
             </objects>
             <point key="canvasLocation" x="11" y="1097"/>
         </scene>

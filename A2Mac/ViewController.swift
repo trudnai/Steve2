@@ -1039,7 +1039,7 @@ class ViewController: NSViewController  {
             switch freq {
             case 2.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
-                spkr_extra_buf = 50
+                spkr_extra_buf = 120
                 break
                 
             case 4.0:
@@ -1058,6 +1058,11 @@ class ViewController: NSViewController  {
         
     }
     
+    @IBOutlet weak var lab: NSTextFieldCell!
+    @IBAction func extraBuf(_ sender: NSSlider) {
+        spkr_extra_buf = sender.intValue
+        lab.title = String( spkr_extra_buf )
+    }
     
     func setSimulationMode( mode : String ) {
         switch ( mode ) {
@@ -1295,6 +1300,11 @@ class ViewController: NSViewController  {
         }
     }
     
+    @IBOutlet weak var QuickDisk_Disk1: NSMenuItem!
+    @IBOutlet weak var QuickDisk_Disk2: NSMenuItem!
+    @IBOutlet weak var DiskSound_Disk1: NSMenuItem!
+    @IBOutlet weak var DiskSound_Disk2: NSMenuItem!
+
     @IBAction func Disk1(_ sender: NSPopUpButton) {
         switch sender.selectedItem?.tag {
         case 1: // Open
@@ -1317,7 +1327,9 @@ class ViewController: NSViewController  {
                 diskAccelerator_enabled = 0;
             }
             
-            sender.selectedItem?.state = diskAccelerator_enabled == 1 ? .on : .off
+            let state : NSControl.StateValue = diskAccelerator_enabled == 1 ? .on : .off
+            QuickDisk_Disk1?.state = state
+            QuickDisk_Disk2?.state = state
             break
 
         case 22: // Disk Sound
@@ -1328,7 +1340,9 @@ class ViewController: NSViewController  {
                 disk_sfx_enabled = 0;
             }
             
-            sender.selectedItem?.state = disk_sfx_enabled == 1 ? .on : .off
+            let state : NSControl.StateValue = disk_sfx_enabled == 1 ? .on : .off
+            DiskSound_Disk1?.state = state
+            DiskSound_Disk2?.state = state
             break
 
         case 1000: // Open Default Disk Image

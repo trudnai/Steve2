@@ -332,7 +332,9 @@ class ViewController: NSViewController  {
     var ddd = 9;
 
     override var acceptsFirstResponder: Bool {
-        return true
+        get {
+            return true
+        }
     }
     
     override func keyDown(with event: NSEvent) {
@@ -1014,7 +1016,11 @@ class ViewController: NSViewController  {
         
 //        #endif
     }
-
+    
+    override func viewDidAppear() {
+        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
+        self.displayField.window?.makeFirstResponder(self)
+    }
 
     
     func setCPUClockSpeed( freq : Double ) {

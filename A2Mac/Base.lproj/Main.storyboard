@@ -1207,11 +1207,11 @@
         <scene sceneID="R2V-B0-nI4">
             <objects>
                 <windowController id="B8D-0N-5wS" customClass="ToolBarController" customModule="Steve___" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" title="Steve ][    ‒    The Apple II Emulator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
+                    <window key="window" title="Steve ][    ‒    The Apple II Emulator" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="Steve ][ Toolbar" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1280" height="840"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="D7F4F3E7-F7E8-42A7-9D76-F84781D283E0" centeredItem="djd-zw-gXS" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="CJg-XD-KnO">
+                        <toolbar key="toolbar" implicitIdentifier="D7F4F3E7-F7E8-42A7-9D76-F84781D283E0" centeredItem="djd-zw-gXS" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="CJg-XD-KnO">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="013D1397-F48F-4180-8F09-FABF3D77AC5A" label="Power" paletteLabel="Power" image="Power" id="8WB-26-vb5">
                                     <nil key="toolTip"/>
@@ -1220,7 +1220,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="xQN-Wy-Jjk">
                                         <rect key="frame" x="5" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Power" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="l58-sD-xDQ">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Power" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="l58-sD-xDQ">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1236,7 +1236,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="s08-fv-vSO">
                                         <rect key="frame" x="5" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarPauseTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="knw-Ib-jcb">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarPauseTemplate" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="knw-Ib-jcb">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1252,7 +1252,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="FgD-BQ-Q0R">
                                         <rect key="frame" x="4" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Reset" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="5Hk-Wa-8bM">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Reset" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="5Hk-Wa-8bM">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1269,7 +1269,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="Zh1-J3-sp2">
                                         <rect key="frame" x="5" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Select All" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="GI9-hQ-1du">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Select All" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="GI9-hQ-1du">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1285,7 +1285,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="BHl-CB-9RK">
                                         <rect key="frame" x="3" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Copy" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="wcK-Ms-Q5R">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Copy" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="wcK-Ms-Q5R">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1301,7 +1301,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="eHc-dN-1Vp">
                                         <rect key="frame" x="4" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Paste" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="dwZ-VW-vgx">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Paste" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="dwZ-VW-vgx">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1317,7 +1317,7 @@
                                     <popUpButton key="view" id="Ktw-L6-kEz">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Joystick" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="A4p-LJ-svz">
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Joystick" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="A4p-LJ-svz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="q8R-kX-3jc">
@@ -1343,7 +1343,7 @@
                                     <popUpButton key="view" id="rfS-6q-EKe">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="8bV-Aa-zHf">
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="8bV-Aa-zHf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="7Vp-Rc-UbT">
@@ -1366,7 +1366,7 @@
                                     <popUpButton key="view" id="MAv-S5-diZ">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Chip" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="WVW-Wo-mc9">
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Chip" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="WVW-Wo-mc9">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="Gc4-Or-LMB">
@@ -1390,7 +1390,7 @@
                                     <slider key="view" verticalHuggingPriority="750" id="NiF-yM-eE0">
                                         <rect key="frame" x="0.0" y="14" width="116" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" continuous="YES" state="on" alignment="left" minValue="1" maxValue="6" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="9W8-sY-vjz"/>
+                                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" alignment="left" minValue="1" maxValue="6" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="9W8-sY-vjz"/>
                                         <connections>
                                             <action selector="SpeedSelect:" target="B8D-0N-5wS" id="5hj-pt-1k0"/>
                                         </connections>
@@ -1403,14 +1403,14 @@
                                     <button key="view" verticalHuggingPriority="750" tag="1" id="i5C-Pb-8sf">
                                         <rect key="frame" x="0.0" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Old Monitor" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="6x7-Kc-aSn">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Old Monitor" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="6x7-Kc-aSn">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
+                                        <connections>
+                                            <action selector="CRTModeOnOff:" target="B8D-0N-5wS" id="DG2-0P-3Eh"/>
+                                        </connections>
                                     </button>
-                                    <connections>
-                                        <action selector="Green:" target="B8D-0N-5wS" id="85x-MC-DMh"/>
-                                    </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="04922D68-C70A-4715-8E0D-A3130ABAA295" label="Green" paletteLabel="Green" tag="1" image="Green" id="EXd-yd-Min">
                                     <nil key="toolTip"/>
@@ -1419,7 +1419,7 @@
                                     <button key="view" verticalHuggingPriority="750" tag="1" id="lVf-Zn-wJX">
                                         <rect key="frame" x="5" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Green" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="gTq-5H-sfm">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Green" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="gTq-5H-sfm">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1435,7 +1435,7 @@
                                     <button key="view" verticalHuggingPriority="750" tag="1" id="Q5T-77-a7w">
                                         <rect key="frame" x="6" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Amber" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="p9p-sD-RYf">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Amber" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="p9p-sD-RYf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1451,7 +1451,7 @@
                                     <button key="view" verticalHuggingPriority="750" tag="1" id="9jT-NX-szB">
                                         <rect key="frame" x="4" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="White" imagePosition="overlaps" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="K0G-zT-eeW">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="White" imagePosition="overlaps" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="K0G-zT-eeW">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1467,7 +1467,7 @@
                                     <button key="view" verticalHuggingPriority="750" tag="2" id="T0p-ot-wpU">
                                         <rect key="frame" x="3" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Color" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="ufB-LD-FUR">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Color" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="ufB-LD-FUR">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1483,7 +1483,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="tie-lD-NFF">
                                         <rect key="frame" x="2" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarAudioOutputMuteTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="hsl-e7-cw1">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarAudioOutputMuteTemplate" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="hsl-e7-cw1">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1499,7 +1499,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="amQ-uj-Tj3">
                                         <rect key="frame" x="6" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarAudioOutputVolumeLowTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="lNO-83-703">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarAudioOutputVolumeLowTemplate" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="lNO-83-703">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1515,7 +1515,7 @@
                                     <button key="view" verticalHuggingPriority="750" id="5X8-Hl-B1g">
                                         <rect key="frame" x="6" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarAudioOutputVolumeMediumTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="jbz-XG-aU0">
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarAudioOutputVolumeMediumTemplate" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="jbz-XG-aU0">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -1535,7 +1535,7 @@
                                     <popUpButton key="view" verticalHuggingPriority="750" id="zbq-Ya-yng">
                                         <rect key="frame" x="0.0" y="14" width="100" height="24"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="roundTextured" title="Normal" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="GOP-dB-hxr" id="gvK-7N-vUR">
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Normal" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="GOP-dB-hxr" id="gvK-7N-vUR">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="zsT-Fq-JjS">
@@ -1596,13 +1596,13 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Steve___" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" wantsLayer="YES" canDrawConcurrently="YES" id="m2S-Jp-Qdl" customClass="MonitorView" customModule="Steve___" customModuleProvider="target">
+                    <view key="view" wantsLayer="YES" canDrawConcurrently="YES" focusRingType="none" id="m2S-Jp-Qdl" customClass="MonitorView" customModule="Steve___" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="1288" height="800"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField canDrawConcurrently="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIF-Q5-Onc">
+                            <textField canDrawConcurrently="YES" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIF-Q5-Onc">
                                 <rect key="frame" x="0.0" y="0.0" width="1152" height="800"/>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" title="Display Background" drawsBackground="YES" id="cIa-Sd-4OZ">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" focusRingType="none" baseWritingDirection="leftToRight" title="Display Background" drawsBackground="YES" id="cIa-Sd-4OZ">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" red="0.078431372549019607" green="0.10980392156862745" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <color key="backgroundColor" red="0.078431372549019607" green="0.10980392156862745" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1611,14 +1611,14 @@
                                     </allowedInputSourceLocales>
                                 </textFieldCell>
                             </textField>
-                            <textField canDrawConcurrently="YES" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" alphaValue="0.0" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEL-hl-0c0">
+                            <textField identifier="DisplayField" canDrawConcurrently="YES" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" alphaValue="0.0" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEL-hl-0c0">
                                 <rect key="frame" x="14" y="16" width="1124" height="768"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="SEL-hl-0c0" secondAttribute="height" multiplier="35:24" id="4LP-hK-Xit"/>
                                     <constraint firstAttribute="width" constant="1120" id="uez-Mi-0Sh"/>
                                     <constraint firstAttribute="height" constant="768" id="zl6-au-oZj"/>
                                 </constraints>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" baseWritingDirection="leftToRight" id="pIk-RC-s5g">
+                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" focusRingType="none" baseWritingDirection="leftToRight" identifier="Display_" id="pIk-RC-s5g">
                                     <font key="font" size="32" name="PrintChar21"/>
                                     <string key="title">1234567890123456789012345678901234567890
 @@@@@@@@@1@@@@@@@@@2@@@@@@@@@3@@@@@@@@@4
@@ -1648,74 +1648,74 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gqh-qw-fjy" userLabel="LoRes" customClass="LoRes" customModule="Steve___" customModuleProvider="target">
+                            <customView hidden="YES" canDrawConcurrently="YES" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="Gqh-qw-fjy" userLabel="LoRes" customClass="LoRes" customModule="Steve___" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                             </customView>
-                            <customView hidden="YES" canDrawConcurrently="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" userLabel="HiRes" customClass="HiRes" customModule="Steve___" customModuleProvider="target">
+                            <customView hidden="YES" canDrawConcurrently="YES" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="LlM-EV-ruZ" userLabel="HiRes" customClass="HiRes" customModule="Steve___" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                             </customView>
-                            <imageView hidden="YES" canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGn-a4-c1t" userLabel="ScanLines">
+                            <imageView hidden="YES" canDrawConcurrently="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dGn-a4-c1t" userLabel="ScanLines">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="scanlines" id="jJ6-qt-oZe"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyUpOrDown" image="scanlines" id="jJ6-qt-oZe"/>
                             </imageView>
-                            <imageView hidden="YES" canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" alphaValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Ghs-c1-ZkA" userLabel="DotmatrixEffect">
+                            <imageView hidden="YES" canDrawConcurrently="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" alphaValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="Ghs-c1-ZkA" userLabel="DotmatrixEffect">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="dotmatrix_effect" id="nPr-Un-zjz"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyUpOrDown" image="dotmatrix_effect" id="nPr-Un-zjz"/>
                             </imageView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="D0w-YC-YlJ" userLabel="Splash Screen">
+                            <customView focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="D0w-YC-YlJ" userLabel="Splash Screen">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9jr-eX-yOC">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9jr-eX-yOC">
                                         <rect key="frame" x="14" y="711" width="291" height="41"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Steve ][" id="Uco-5h-Aii">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" title="Steve ][" id="Uco-5h-Aii">
                                             <font key="font" size="41" name="PrintChar21"/>
                                             <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19A-Bc-mjX">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19A-Bc-mjX">
                                         <rect key="frame" x="16" y="680" width="287" height="19"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Apple ][ Emulator" id="3va-2j-fR7">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" title="Apple ][ Emulator" id="3va-2j-fR7">
                                             <font key="font" size="19" name="PrintChar21"/>
                                             <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uMO-wh-lu4" userLabel="Jobs">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uMO-wh-lu4" userLabel="Jobs">
                                         <rect key="frame" x="16" y="627" width="235" height="13"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="In memoriam Steve Jobs" id="LAy-jD-fLj">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" title="In memoriam Steve Jobs" id="LAy-jD-fLj">
                                             <font key="font" size="12" name="PrintChar21"/>
                                             <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWG-zg-Mnb" userLabel="Wozniak">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WWG-zg-Mnb" userLabel="Wozniak">
                                         <rect key="frame" x="16" y="606" width="235" height="13"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Honoring Steve Wozniak" id="5G1-y6-wdu">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" title="Honoring Steve Wozniak" id="5G1-y6-wdu">
                                             <font key="font" size="12" name="PrintChar21"/>
                                             <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w41-S5-cTL" userLabel="Prompt">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w41-S5-cTL" userLabel="Prompt">
                                         <rect key="frame" x="16" y="553" width="25" height="13"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="]" id="CYs-wL-6Pf">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" title="]" id="CYs-wL-6Pf">
                                             <font key="font" size="12" name="PrintChar21"/>
                                             <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-E1-CYC">
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bUo-E1-CYC">
                                         <rect key="frame" x="860" y="16" width="246" height="13"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="© by Tamas Rudnai, 2020" id="tm6-Cq-r7H">
+                                        <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" title="© by Tamas Rudnai, 2020" id="tm6-Cq-r7H">
                                             <font key="font" size="12" name="PrintChar21"/>
                                             <color key="textColor" red="0.18823529411764706" green="0.83529411764705885" blue="0.84705882352941175" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <imageView canDrawConcurrently="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1E-lz-4q8" userLabel="Splash Logo">
+                                    <imageView canDrawConcurrently="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M1E-lz-4q8" userLabel="Splash Logo">
                                         <rect key="frame" x="45" y="33" width="1120" height="640"/>
-                                        <imageCell key="cell" continuous="YES" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="apple_original_logo_design" id="Zax-kI-rxd"/>
+                                        <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="proportionallyUpOrDown" image="apple_original_logo_design" id="Zax-kI-rxd"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
@@ -1737,20 +1737,20 @@
                                     <constraint firstItem="WWG-zg-Mnb" firstAttribute="leading" secondItem="D0w-YC-YlJ" secondAttribute="leading" constant="18" id="vDf-7B-UwH"/>
                                 </constraints>
                             </customView>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-pv-iEw" userLabel="Side Panel">
+                            <customView focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="Fdf-pv-iEw" userLabel="Side Panel">
                                 <rect key="frame" x="1160" y="8" width="120" height="784"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="-20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-h7-NcU" userLabel="Prefipheries">
+                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="-20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gO-h7-NcU" userLabel="Prefipheries">
                                         <rect key="frame" x="0.0" y="598" width="120" height="186"/>
                                         <subviews>
                                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="49f-8R-QCc">
                                                 <rect key="frame" x="0.0" y="83" width="120" height="103"/>
-                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" id="CNs-lh-urM">
+                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:CNs-lh-urM:image" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" id="CNs-lh-urM">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
                                                     <menu key="menu" id="N33-K0-nba">
                                                         <items>
-                                                            <menuItem image="Disk 1" allowsKeyEquivalentWhenHidden="YES" id="Pnv-mT-M6x"/>
+                                                            <menuItem image="Disk 1" hidden="YES" allowsKeyEquivalentWhenHidden="YES" id="Pnv-mT-M6x"/>
                                                             <menuItem title="Open" tag="1" keyEquivalent="o" id="8fW-mg-fxf"/>
                                                             <menuItem title="Save" tag="2" keyEquivalent="s" id="VfS-zk-mMe"/>
                                                             <menuItem title="Save As..." tag="3" keyEquivalent="S" id="Nge-tO-zbL"/>
@@ -1779,12 +1779,12 @@
                                             </popUpButton>
                                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="QDr-Cp-9QQ">
                                                 <rect key="frame" x="0.0" y="0.0" width="120" height="103"/>
-                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="vmR-CG-qdv" id="8FA-1D-k8p">
+                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:CNs-lh-urM:image" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="vmR-CG-qdv" id="8FA-1D-k8p">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
                                                     <menu key="menu" id="8He-mk-LVI">
                                                         <items>
-                                                            <menuItem image="Disk 2" allowsKeyEquivalentWhenHidden="YES" id="Ekt-Ja-KwB"/>
+                                                            <menuItem image="Disk 2" hidden="YES" allowsKeyEquivalentWhenHidden="YES" id="Ekt-Ja-KwB"/>
                                                             <menuItem title="Open" tag="1" keyEquivalent="o" id="28N-X8-n7Q"/>
                                                             <menuItem title="Save" tag="2" keyEquivalent="s" id="fzo-Lm-kkZ"/>
                                                             <menuItem title="Save As..." tag="3" keyEquivalent="S" id="GAk-R1-u7k"/>
@@ -1813,7 +1813,7 @@
                                             </popUpButton>
                                             <button hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="T0r-xy-OJF">
                                                 <rect key="frame" x="0.0" y="87" width="120" height="99"/>
-                                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Disk 2" imagePosition="only" alignment="center" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="z4y-xq-1UN">
+                                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Disk 2" imagePosition="only" alignment="center" refusesFirstResponder="YES" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="z4y-xq-1UN">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1834,39 +1834,39 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
+                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
                                         <rect key="frame" x="8" y="8" width="104" height="35"/>
                                         <subviews>
-                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
+                                            <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
                                                 <rect key="frame" x="0.0" y="32" width="96" height="5"/>
                                             </box>
-                                            <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FFM-zm-Wjx">
+                                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FFM-zm-Wjx">
                                                 <rect key="frame" x="-2" y="19" width="13" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="0" id="yIR-MN-Hdl">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="0" id="yIR-MN-Hdl">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <slider hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64O-qO-cQV">
+                                            <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64O-qO-cQV">
                                                 <rect key="frame" x="-2" y="18" width="96" height="19"/>
-                                                <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="256" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="hxk-WO-tJf"/>
+                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="256" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="hxk-WO-tJf"/>
                                                 <connections>
                                                     <action selector="extraBuf:" target="XfG-lQ-9wD" id="gEu-yg-udY"/>
                                                 </connections>
                                             </slider>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FZk-VW-alq">
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FZk-VW-alq">
                                                 <rect key="frame" x="-2" y="9" width="75" height="17"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="17" id="ai1-6C-5tW"/>
                                                 </constraints>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" alignment="center" title="0.000 MHz" id="FBZ-dh-6Fs">
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="center" title="0.000 MHz" id="FBZ-dh-6Fs">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="G0a-hc-JMD">
+                                            <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="G0a-hc-JMD">
                                                 <rect key="frame" x="0.0" y="-2" width="96" height="5"/>
                                             </box>
                                         </subviews>
@@ -1947,12 +1947,12 @@
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <popUpButtonCell type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="UVJ-Go-HTV" id="vTR-EZ-zKb">
+                <popUpButtonCell type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:CNs-lh-urM:image" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="UVJ-Go-HTV" id="vTR-EZ-zKb">
                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                     <font key="font" metaFont="menu"/>
                     <menu key="menu" id="rxy-z9-Sz5">
                         <items>
-                            <menuItem image="Disk 1" allowsKeyEquivalentWhenHidden="YES" id="KjT-gE-gR2"/>
+                            <menuItem image="Disk 1" hidden="YES" allowsKeyEquivalentWhenHidden="YES" id="KjT-gE-gR2"/>
                             <menuItem title="Open" tag="1" keyEquivalent="o" id="8Ri-Qe-0g1"/>
                             <menuItem title="Save" tag="2" keyEquivalent="s" id="yTn-7w-ms8"/>
                             <menuItem title="Save As..." tag="3" keyEquivalent="S" id="0hY-UG-gx7"/>

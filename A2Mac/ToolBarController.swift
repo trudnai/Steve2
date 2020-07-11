@@ -188,4 +188,9 @@ class ToolBarController: NSWindowController {
             break
         }
     }
+    
+    @IBAction func CRTModeOnOff(_ sender: NSButton) {
+        ViewController.current?.CRTMonitorOnOff(sender)
+    }
+    
 }

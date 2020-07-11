@@ -336,6 +336,42 @@ class ViewController: NSViewController  {
             return true
         }
     }
+
+    
+    func SelectAll() {
+//        displayField.currentEditor()?.selectAll(nil)
+        displayField.selectText(nil)
+    }
+    
+    func Copy() {
+        let pasteBoard = NSPasteboard.general
+        pasteBoard.clearContents()
+        // TODO: Find a better way to avoid index out of range error when the entire text area is selected
+        let string = display.stringValue + " "
+        if let selectedRange = displayField.currentEditor()?.selectedRange {
+            let startIndex = string.index(string.startIndex, offsetBy: selectedRange.lowerBound)
+            let endIndex = string.index(string.startIndex, offsetBy: selectedRange.upperBound)
+            let selectedString = string[startIndex..<endIndex]
+            pasteBoard.setString(String(selectedString), forType: .string)
+        }
+    }
+    
+    func Paste() {
+        let pasteBoard = NSPasteboard.general
+        if let str = pasteBoard.string( forType: .string ) {
+            print("PASTED:", str)
+
+            DispatchQueue.global(qos: .background).async {
+                for char in str.uppercased() {
+                    if let ascii = char.asciiValue {
+                        // TODO: Write separate Paste Accelerator
+                        disk_accelerator_speedup()
+                        kbdInput(ascii)
+                    }
+                }
+            }
+        }
+    }
     
     override func keyDown(with event: NSEvent) {
         
@@ -366,21 +402,18 @@ class ViewController: NSViewController  {
         if event.modifierFlags.contains(.command) { // .shift, .option, .control ...
             if let chars = event.charactersIgnoringModifiers {
                 switch chars {
-                case "v":
-                    print("CMD + V")
+                case "a":
+//                    print("CMD + A")
+                    SelectAll()
+                    return // to avoid deselect text
                     
-                    let pasteBoard = NSPasteboard.general
-                    if let str = pasteBoard.string( forType: .string ) {
-                        print("PASTED:", str)
-                        
-                        DispatchQueue.global(qos: .background).async {
-                            for char in str.uppercased() {
-                                if let ascii = char.asciiValue {
-                                    kbdInput(ascii)
-                                }
-                            }
-                        }
-                    }
+                case "c":
+//                    print("CMD + C")
+                    Copy()
+                    
+                case "v":
+//                    print("CMD + V")
+                    Paste()
 
                 default:
                     super.keyDown(with: event)

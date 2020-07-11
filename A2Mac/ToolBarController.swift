@@ -30,19 +30,26 @@ class ToolBarController: NSWindowController {
         ViewController.current?.Reset(sender)
     }
     
+    @IBAction func SelectAll(_ sender: Any) {
+//        ViewController.current?.displayField.currentEditor()?.selectAll(nil)
+        ViewController.current?.displayField.selectText(nil)
+    }
+    
     @IBAction func Copy(_ sender: Any) {
+        ViewController.current?.Copy()
     }
     
     @IBAction func Paste(_ sender: Any) {
+        ViewController.current?.Paste()
     }
     
     @IBAction func Green(_ sender: Any) {
-        //        print("NSToolbarItem:", sender.tag)
+//        print("NSToolbarItem:", sender.tag)
         ViewController.current?.MonoMonitorChange(color: "Green")
     }
     
     @IBAction func Amber(_ sender: Any) {
-        //        print("NSToolbarItem:", sender.tag)
+//        print("NSToolbarItem:", sender.tag)
         ViewController.current?.MonoMonitorChange(color: "Amber")
     }
     

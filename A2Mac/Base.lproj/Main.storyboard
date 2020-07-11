@@ -1275,7 +1275,7 @@
                                         </buttonCell>
                                     </button>
                                     <connections>
-                                        <action selector="Copy:" target="B8D-0N-5wS" id="Zqh-qn-MZ3"/>
+                                        <action selector="SelectAll:" target="B8D-0N-5wS" id="OYm-4E-uTr"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="D00D9DE2-E274-4915-87A5-C94FEDDB6C22" label="Copy" paletteLabel="Copy" image="Copy" id="fQR-kz-ht6">

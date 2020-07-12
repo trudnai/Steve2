@@ -1184,21 +1184,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
-				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
-				323D0437248B6BEA0086A901 /* 6502.c in Sources */,
-				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
-				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
-				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
-				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
-				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
-				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
-				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
-				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
-				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
-				323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */,
 				32E3126D24AC033A00E61891 /* ToolBarController.swift in Sources */,
+				323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */,
+				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
+				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
+				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
+				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
+				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
+				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
+				323D0437248B6BEA0086A901 /* 6502.c in Sources */,
+				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
+				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
+				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
+				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

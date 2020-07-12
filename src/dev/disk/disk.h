@@ -68,5 +68,7 @@ extern uint8_t disk_read(void);
 extern void disk_motor_on(void);
 extern void disk_motor_off(void);
 
+extern void disk_accelerator_speedup(void);
+
 
 #endif /* disk_h */

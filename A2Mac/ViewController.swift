@@ -373,6 +373,30 @@ class ViewController: NSViewController  {
         }
     }
     
+    override func mouseMoved(with event: NSEvent) {
+        mouseLocation = event.locationInWindow
+        
+        if ( Mouse2Joystick ) {
+            pdl_prevarr[0] = pdl_valarr[0]
+            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
+            
+            pdl_prevarr[1] = pdl_valarr[1]
+            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
+        }
+        
+        if ( MouseInterface ) {
+            pdl_prevarr[2] = pdl_valarr[2]
+            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
+            
+            pdl_prevarr[3] = pdl_valarr[3]
+            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
+        }
+    }
+    
     override func keyDown(with event: NSEvent) {
         
         if ( cpuMode == cpuMode_eco ) {
@@ -786,28 +810,6 @@ class ViewController: NSViewController  {
             // TODO: Do we need to do this from here?
             //            spkr_update()
             
-            // Mouse 2 JoyStick (Game Controller / Paddle)
-            mouseLocation = view.window!.mouseLocationOutsideOfEventStream
-            
-            if ( Mouse2Joystick ) {
-                pdl_prevarr[0] = pdl_valarr[0]
-                pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
-                pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
-                
-                pdl_prevarr[1] = pdl_valarr[1]
-                pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-                pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
-            }
-            
-            if ( MouseInterface ) {
-                pdl_prevarr[2] = pdl_valarr[2]
-                pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
-                pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
-                
-                pdl_prevarr[3] = pdl_valarr[3]
-                pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-                pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
-            }
         }
     }
     
@@ -848,42 +850,7 @@ class ViewController: NSViewController  {
         }
     }
     
-    
-    func Input() {
-        // Mouse 2 JoyStick (Game Controller / Paddle)
-        mouseLocation = view.window!.mouseLocationOutsideOfEventStream
-        
-//        if ( Mouse2Joystick || Keyboard2Joystick ) {
-//            if let flags = NSApp.currentEvent?.modifierFlags {
-//                if flags.contains(.command){
-//                    // somethings
-//                }
-//            }
-//        }
-    
-        if ( Mouse2Joystick ) {
-            pdl_prevarr[0] = pdl_valarr[0]
-            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
-            pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
-            
-            pdl_prevarr[1] = pdl_valarr[1]
-            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-            pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
-        }
-        
-        if ( MouseInterface ) {
-            pdl_prevarr[2] = pdl_valarr[2]
-            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
-            pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
-            
-            pdl_prevarr[3] = pdl_valarr[3]
-            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
-            pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
-        }
-        
-    }
 
-    
     func Update() {
         switch cpuState {
             case cpuState_running:
@@ -905,7 +872,7 @@ class ViewController: NSViewController  {
                 #else
                 
                 // poll input devices like mouse and joystick
-                Input()
+//                Input()
                 
                 // run some code
                 m6502_Run()
@@ -918,39 +885,11 @@ class ViewController: NSViewController  {
                 #endif
                 
                 break
-            
+
             case cpuState_halting:
                 cpuState = cpuState_halted
-                
-//                clkCounter += Double(clkfrm)
-//                // we start a new frame from here, so CPU is running even while rendering
-//                clkfrm = 0
-//
-//                frameCounter += 1
-//
-//                if ( frameCounter % fps == 0 ) {
-//                    let currentTime = CACurrentMediaTime() as Double
-//                    let elpasedTime = currentTime - lastFrameTime
-//                    lastFrameTime = currentTime
-//                    mhz = Double( clkCounter ) / (elpasedTime * M);
-//                    clkCounter = 0
-//                }
-//
-//                #if SPEEDTEST
-//                #else
-//
-//                // poll input devices like mouse and joystick
-//                Input()
-//
-//                // run some code
-//                m6502_Run()
-//
                 // video rendering
-                //                if ( frameCounter % 5 == 0 ) {
                 Render()
-                //                }
-                
-//                #endif
                 
                 break
             

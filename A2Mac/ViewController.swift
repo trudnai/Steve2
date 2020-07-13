@@ -853,13 +853,13 @@ class ViewController: NSViewController  {
         // Mouse 2 JoyStick (Game Controller / Paddle)
         mouseLocation = view.window!.mouseLocationOutsideOfEventStream
         
-        if ( Mouse2Joystick || Keyboard2Joystick ) {
-            if let flags = NSApp.currentEvent?.modifierFlags {
-                if flags.contains(.command){
-                    // somethings
-                }
-            }
-        }
+//        if ( Mouse2Joystick || Keyboard2Joystick ) {
+//            if let flags = NSApp.currentEvent?.modifierFlags {
+//                if flags.contains(.command){
+//                    // somethings
+//                }
+//            }
+//        }
     
         if ( Mouse2Joystick ) {
             pdl_prevarr[0] = pdl_valarr[0]

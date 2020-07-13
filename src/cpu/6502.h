@@ -3,7 +3,7 @@
 //  6502
 //
 //  Created by Tamas Rudnai on 7/22/19.
-//  Copyright © 2019,2020 Tamas Rudnai. All rights reserved.
+//  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.
 //
 // This file is part of Steve ][ -- The Apple ][ Emulator.
 //

@@ -3,7 +3,7 @@
 //  Steve ][
 //
 //  Created by Tamas Rudnai on 6/30/20.
-//  Copyright © 2019,2020 Tamas Rudnai. All rights reserved.
+//  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.
 //
 // This file is part of Steve ][ -- The Apple ][ Emulator.
 //

@@ -58,6 +58,7 @@
 		325EB6AA2401118300C6B4A4 /* Sneakers.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		3267641624B6572E000BEA11 /* Merlin Assembler.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 3267641524B6572E000BEA11 /* Merlin Assembler.woz */; };
+		3267641824BCC9A5000BEA11 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 3267641724BCC9A5000BEA11 /* COPYING */; };
 		326B56E524AD8E89009BA0AC /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
 		32877F8D24ADA6AF003A940D /* joystick.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32877F8C24ADA6AF003A940D /* joystick.png */; };
@@ -323,7 +324,6 @@
 		32439F7E22ECD8AD0077AAE0 /* 6502_instr_arithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_arithmetic.h; sourceTree = "<group>"; };
 		32439F7F22ECD8AD0077AAE0 /* 6502_instr_transfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_transfer.h; sourceTree = "<group>"; };
 		32439F8022ECD8AD0077AAE0 /* 6502_instr_load_store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_load_store.h; sourceTree = "<group>"; };
-		32439F8122ECD8AD0077AAE0 /* 6502_instr_BACKUP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_BACKUP.h; sourceTree = "<group>"; };
 		32439F8222ECD8AD0077AAE0 /* 6502_instr_call_ret_jump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_call_ret_jump.h; sourceTree = "<group>"; };
 		32439F8322ECD8AD0077AAE0 /* 6502_instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instructions.h; sourceTree = "<group>"; };
 		32439F8422ECD8AD0077AAE0 /* apple.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = apple.rom; sourceTree = "<group>"; };
@@ -398,6 +398,7 @@
 		3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Apple2_mmio_8bit_ioaddr.h; sourceTree = "<group>"; };
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
 		3267641524B6572E000BEA11 /* Merlin Assembler.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler.woz"; sourceTree = "<group>"; };
+		3267641724BCC9A5000BEA11 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
 		326B56E424AD8E89009BA0AC /* gobackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gobackward.png; sourceTree = "<group>"; };
 		326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.text.viewfinder.png; sourceTree = "<group>"; };
@@ -606,7 +607,6 @@
 				32439F7D22ECD8AD0077AAE0 /* 6502_instr_misc.h */,
 				32439F7E22ECD8AD0077AAE0 /* 6502_instr_arithmetic.h */,
 				32439F7F22ECD8AD0077AAE0 /* 6502_instr_transfer.h */,
-				32439F8122ECD8AD0077AAE0 /* 6502_instr_BACKUP.h */,
 				32439F8222ECD8AD0077AAE0 /* 6502_instr_call_ret_jump.h */,
 				32439F8322ECD8AD0077AAE0 /* 6502_instructions.h */,
 			);
@@ -796,6 +796,7 @@
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
 				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
 				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
+				3267641724BCC9A5000BEA11 /* COPYING */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -1102,6 +1103,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3267641824BCC9A5000BEA11 /* COPYING in Resources */,
 				3213936624079C30007F5C4A /* Main.storyboard in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,

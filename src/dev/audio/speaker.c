@@ -1,6 +1,6 @@
 //
 //  speaker.c
-//  A2Mac
+//  Steve ][
 //
 //  Created by Tamas Rudnai on 5/9/20.
 //  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.

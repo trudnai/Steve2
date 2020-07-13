@@ -1,6 +1,6 @@
 //
 //  Shaders.metal
-//  A2Mac
+//  Steve ][
 //
 //  Created by Tamas Rudnai on 9/27/19.
 //  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.

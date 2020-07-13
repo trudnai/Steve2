@@ -1,6 +1,6 @@
 //
 //  A2iOS-Bridging-Header.h
-//  A2Mac
+//  Steve ][
 //
 //  Created by Tamas Rudnai on 2/17/20.
 //  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.

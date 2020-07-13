@@ -1,6 +1,6 @@
 //
 //  paddle.h
-//  A2Mac
+//  Steve ][
 //
 //  Created by Tamas Rudnai on 5/19/20.
 //  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.

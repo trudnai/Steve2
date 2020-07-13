@@ -22,7 +22,7 @@
 //
 
 import XCTest
-@testable import A2Mac
+@testable import Steve___
 
 class A2MacTests: XCTestCase {
 

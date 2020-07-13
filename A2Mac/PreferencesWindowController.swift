@@ -1,6 +1,6 @@
 //
 //  PreferencesWindowController.swift
-//  A2Mac
+//  Steve ][
 //
 //  Created by Tamas Rudnai on 6/4/20.
 //  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.

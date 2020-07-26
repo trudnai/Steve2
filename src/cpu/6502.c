@@ -737,17 +737,10 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 
     
 #ifdef FUNCTIONTEST
-    FILE * f = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/6502_functional_test.bin", "rb");
-    if (f == NULL) {
-        perror("Failed: ");
-        return;
-    }
-    
-    fread( RAM, 1, 65536, f);
-    fclose(f);
+    read_rom( bundlePath, "6502_functional_test.bin", Apple2_64K_RAM, 0);
+    memcpy(Apple2_64K_MEM, Apple2_64K_RAM, 65536);
     
     m6502.PC = 0x400;
-
 #else
     // Apple ][+ ROM
     

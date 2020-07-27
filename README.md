@@ -45,7 +45,7 @@ Open Terminal app and enter the following code:
 After that open ```A2Mac``` project, make sure ```A2Mac > My Mac``` target is selected at the top left corner and hit the Play button or press ⌘R
 
 
-**Im Memoriam**
+**In Memoriam**
 
 I would like to dedicate this project to my Father. He was a mechanical engineer, plumming engineer designing heating and water supply system for large buildings. He bought our first Apple \]\[ computer to help on his projects. He was a dedicated man and even though he was not a software developer, he wrote several programs, most notable a budget caluculator. Budget calculation for plumbing system meant he had to count all components such as different lenght and size of pipes and fittings and count every single bits to the last screw. Then he had to look all the components up one by one for prices and esimated work hours to be able to estimate the financial needs to realize the project. It was a tedious job, and he was able to reduce that work from 3 weeks to 3 days with the computer. This is obvious today, but at that time it was novel. His program on the Apple \]\[ was working on the calculation for 3-4 hours each time. Back then that was considered as small amount of time compared to what it takes to do that manually.
 

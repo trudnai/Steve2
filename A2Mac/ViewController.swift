@@ -941,6 +941,13 @@ class ViewController: NSViewController  {
         }
         upd.resume()
     }
+
+    
+    // Kelvin Sherlock's fix to avoid uninstalled font problems
+    override func awakeFromNib() {
+        self.display.font = NSFont(name: "PrintChar21", size: 32)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

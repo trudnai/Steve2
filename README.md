@@ -67,7 +67,7 @@ Steve \]\[ on my 2015 15" MacBook Pro was able to emulate a 1.3 GHz Apple \]\[. 
 
 ...then it would have lasted for 11 seconds if Apple \]\[ was built today (calculating with the measued 1300x speed increase)
 
-_Disclaimer: This is just an estimation, on a real hardware most probebly it would even faster several times. That is because even if Steve \]\[ very is fast, it is still an emulator -- and an emulator needs to do a lot of things on the host CPU to emulate just a single opcode._
+_Disclaimer: This is just an estimation, on a real hardware most probably it would even faster several times. That is because even if Steve \]\[ very is fast, it is still an emulator -- and an emulator needs to do a lot of things on the host CPU to emulate just a single opcode._
 
 
 

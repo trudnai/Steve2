@@ -10,6 +10,7 @@
 		32089E4924556DBD0036E667 /* PRNumber3.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		320B3FC424AD88B0005EA133 /* power.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B3FC324AD88B0005EA133 /* power.png */; };
 		320B4FC124B182DE00070038 /* Apple Disk II.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B4FC024B182DD00070038 /* Apple Disk II.png */; };
+		320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 320F2A8724CFD74000671B35 /* Steve2Icon.icns */; };
 		3213936624079C30007F5C4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		323D042E248980600086A901 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
@@ -308,6 +309,7 @@
 		32089E4724556DBD0036E667 /* PRNumber3.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = PRNumber3.ttf; sourceTree = "<group>"; };
 		320B3FC324AD88B0005EA133 /* power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = power.png; sourceTree = "<group>"; };
 		320B4FC024B182DD00070038 /* Apple Disk II.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple Disk II.png"; sourceTree = "<group>"; };
+		320F2A8724CFD74000671B35 /* Steve2Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Steve2Icon.icns; sourceTree = "<group>"; };
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -802,6 +804,7 @@
 				323D042D248980600086A901 /* Preferences.storyboard */,
 				32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */,
 				32BFFB6322EACC660003B53F /* Info.plist */,
+				320F2A8724CFD74000671B35 /* Steve2Icon.icns */,
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
 				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
 				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
@@ -1116,6 +1119,7 @@
 				3213936624079C30007F5C4A /* Main.storyboard in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
+				320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

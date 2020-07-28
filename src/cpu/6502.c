@@ -495,7 +495,7 @@ INLINE int m6502_Step() {
         case 0xF7: ISB( addr_zp_X() ); return 6;                       // ISB* zpx 6 (undocumented)
         case 0xF8: SED(); return 2;                                    // SED
         case 0xF9: SBC( src_abs_Y() ); return 4+1;                       // SBC abs,Y
-        case 0xFA: NOP(); return 2;                                    // NOP
+        case 0xFA: NOP(); return 2;                                    // NOP (undocumented)
         case 0xFB: ISB( addr_abs_Y() ); return 7;                      // ISB* aby 7 (undocumented)
         case 0xFC: NOP(); src_abs_X(); return 4;                       // NOP* abx 4 (undocumented)
         case 0xFD: SBC( src_abs_X() ); return 4+1;                       // SBC abs,X

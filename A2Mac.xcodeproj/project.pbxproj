@@ -310,6 +310,8 @@
 		320B3FC324AD88B0005EA133 /* power.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = power.png; sourceTree = "<group>"; };
 		320B4FC024B182DD00070038 /* Apple Disk II.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Apple Disk II.png"; sourceTree = "<group>"; };
 		320F2A8724CFD74000671B35 /* Steve2Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Steve2Icon.icns; sourceTree = "<group>"; };
+		320F2A8924CFFBE300671B35 /* 6502_std.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_std.h; sourceTree = "<group>"; };
+		320F2A8A24D0001600671B35 /* 6502_und.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_und.h; sourceTree = "<group>"; };
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -675,6 +677,8 @@
 				32439F7522ECD8AD0077AAE0 /* instructions */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
+				320F2A8924CFFBE300671B35 /* 6502_std.h */,
+				320F2A8A24D0001600671B35 /* 6502_und.h */,
 				32440B69247CA1CE000F9DA1 /* 65C02.c */,
 				32440B67247CA1AF000F9DA1 /* 6502_vanilla.c */,
 			);

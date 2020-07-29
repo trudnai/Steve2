@@ -42,7 +42,9 @@ Open Terminal app and enter the following code:
 
 ```git clone http://github.com/trudnai/Steve2```
 
-After that open ```A2Mac``` project, make sure ```A2Mac > My Mac``` target is selected at the top left corner and hit the Play button or press ⌘R
+**How to run:**
+
+Open ```A2Mac``` project, make sure ```A2Mac > My Mac``` target is selected at the top left corner and hit the ```Play``` button or press ```⌘R```
 
 
 **In Memoriam**

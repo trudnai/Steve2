@@ -6,8 +6,8 @@
 //  Copyright © 2020 GameAlloy. All rights reserved.
 //
 
-#ifndef _502_und_h
-#define _502_und_h
+#ifndef _6502_und_h
+#define _6502_und_h
 
         case 0x02: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x03: SLO( addr_zp_X() ); return 8;                       // SLO* zpg,X (undocumented)
@@ -180,4 +180,4 @@
         case 0xFF: ISB( addr_abs_X() ); return 7;                      // ISB* abx 7 (undocumented)
 
 
-#endif /* _502_und_h */
+#endif /* _6502_und_h */

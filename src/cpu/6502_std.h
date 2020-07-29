@@ -6,8 +6,8 @@
 //  Copyright © 2020 GameAlloy. All rights reserved.
 //
 
-#ifndef _502_std_h
-#define _502_std_h
+#ifndef _6502_std_h
+#define _6502_std_h
 
         case 0x00: BRK(); return 7;                                    // BRK
         case 0x01: ORA( src_X_ind() ); return 6;                       // ORA X,ind
@@ -226,4 +226,4 @@
         case 0xFE: INC( addr_abs_X() ); return 7;                      // INC abs,X
 
 
-#endif /* _502_std_h */
+#endif /* _6502_std_h */

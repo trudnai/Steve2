@@ -1396,6 +1396,13 @@ INLINE uint8_t src_zp_Y() {
 //    return WRLOMEM + addr_zp_Y();
 //}
 
+/**
+ (zpg)        ....    zeropage         OPC $LL
+ operand is zeropage address;
+ **/
+INLINE uint8_t src_zp_0() {
+    return memread8_low(addr_zp());
+}
 
 #endif // __APPLE2_MMIO_H__
 

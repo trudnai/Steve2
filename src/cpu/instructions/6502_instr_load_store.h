@@ -168,5 +168,24 @@ INLINE void STY( uint16_t addr ) {
     STR(addr, m6502.Y);
 }
 
+/**
+ STZ  Store Zero (0) in Memory
+ 
+ 0 -> M                           N Z C I D V
+ - - - - - -
+ 
+ OP LEN CYC MODE  FLAGS    SYNTAX
+ -- --- --- ----  -----    ------
+ 64 2   3   zp    ........ STZ $12
+ 74 2   4   zp,X  ........ STZ $12,X
+ 9C 3   4   abs   ........ STZ $3456
+ 9E 3   5   abs,X ........ STZ $3456,X
+**/
+INLINE void STZ( uint16_t addr ) {
+    dbgPrintf("STZ ");
+    disPrintf(disassembly.inst, "STZ");
+    STR(addr, 0);
+}
+
 #endif // __6502_INSTR_LOAD_STORE_H__
 

@@ -81,6 +81,23 @@ INLINE void INY() {
 }
 
 /**
+ INA  Increment Accumulator by One
+ 
+ A + 1 -> A                       N Z C I D V
+ + + - - - -
+ 
+ addressing    assembler    opc  bytes  cyles
+ --------------------------------------------
+ implied       INA           C8    1     2
+ **/
+INLINE void INA() {
+    dbgPrintf("INA %02X -> ", m6502.A);
+    disPrintf(disassembly.inst, "INA");
+    set_flags_NZ( ++m6502.A );
+    dbgPrintf("%02X ", m6502.A);
+}
+
+/**
  DEC  Decrement Memory by One
  
  M - 1 -> M                       N Z C I D V
@@ -133,6 +150,23 @@ INLINE void DEY() {
     disPrintf(disassembly.inst, "DEY");
     set_flags_NZ( --m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
+}
+
+/**
+ DEA  Decrement Accumulator by One
+ 
+ A - 1 -> A                       N Z C I D V
+ + + - - - -
+ 
+addressing    assembler    opc  bytes  cyles
+--------------------------------------------
+implied       DEC           88    1     2
+**/
+INLINE void DEA() {
+    dbgPrintf("DEA %02X -> ", m6502.A);
+    disPrintf(disassembly.inst, "DEA");
+    set_flags_NZ( --m6502.A );
+    dbgPrintf("%02X ", m6502.A);
 }
 
 #endif // __6502_INSTR_INC_DEC_H__

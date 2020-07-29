@@ -47,6 +47,62 @@ INLINE void BIT( uint8_t src ) {
 }
 
 /**
+ TRB - Test and Reset Bits
+ 
+ TRB can be one the more confusing instructions for a couple of reasons.
+ 
+ First, the term reset is used to refer to the clearing of a bit, whereas the term clear had been used consistently before, such as CLC
+ which stands for CLear Carry. Second, the effect on the Z flag is determined by a different function than the effect on memory.
+ 
+ TRB has the same effect on the Z flag that a BIT instruction does. Specifically, it is based on whether the result of a bitwise AND of the
+ accumulator with the contents of the memory location specified in the operand is zero. Also, like BIT, the accumulator is not affected.
+ 
+ The accumulator determines which bits in the memory location specified in the operand are cleared and which are not affected.
+ The bits in the accumulator that are ones are cleared (in memory), and the bits that are zeros (in the accumulator) are not affected (in memory).
+ This is the same as saying that the resulting memory contents are the bitwise AND of the memory contents with the complement of the
+ accumulator (i.e. the exclusive-or of the accululator with $FF).
+ 
+ OP LEN CYC MODE FLAGS    SYNTAX
+ -- --- --- ---- -----    ------
+ 14 2   5   zp   ......Z. TRB $12
+ 1C 3   6   abs  ......Z. TRB $3456
+ 
+ **/
+INLINE void TRB( uint16_t addr ) {
+    dbgPrintf("TRB(%02X) ", src);
+    disPrintf(disassembly.inst, "TRB");
+    set_flags_Z( WRLOMEM[addr] & m6502.A );
+    WRLOMEM[addr] &= ~m6502.A;
+}
+
+/**
+ TSB - Test and Set Bits
+ 
+ TSB, like TRB, can be confusing. For one, like TRB, the effect on the Z flag is determined by a different function than the effect on memory.
+ 
+ TSB, like TRB, has the same effect on the Z flag that a BIT instruction does. Specifically, it is based on whether the result of a bitwise AND
+ of the accumulator with the contents of the memory location specified in the operand is zero. Also, like BIT (and TRB), the accumulator is not affected.
+ 
+ The accumulator determines which bits in the memory location specified in the operand are set and which are not affected. The bits in the
+ accumulator that are ones are set to one (in memory), and the bits that are zeros (in the accumulator) are not affected (in memory).
+ This is the same as saying that the resulting memory contents are the bitwise OR of the memory contents with the accumulator.
+ 
+ Flags affected: Z
+ 
+ OP LEN CYC MODE FLAGS    SYNTAX
+ -- --- --- ---- -----    ------
+ 04 2   5   zp   ......Z. TSB $12
+ 0C 3   6   abs  ......Z. TSB $3456
+
+ **/
+INLINE void TSB( uint16_t addr ) {
+    dbgPrintf("TSB(%02X) ", src);
+    disPrintf(disassembly.inst, "TSB");
+    set_flags_Z( WRLOMEM[addr] & m6502.A );
+    WRLOMEM[addr] |= m6502.A;
+}
+
+/**
  CMP  Compare Memory with Accumulator
  
  A - M                            N Z C I D V

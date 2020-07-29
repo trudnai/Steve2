@@ -44,7 +44,7 @@ Open Terminal app and enter the following code:
 
 **How to run:**
 
-Open ```A2Mac``` project, make sure ```A2Mac > My Mac``` target is selected at the top left corner and hit the ```Play``` button or press ```⌘R```
+Open ```A2Mac``` project, make sure ```A2Mac > My Mac``` target is selected at the top left corner and hit the ```►``` button or press ```⌘``` ```R```
 
 
 **In Memoriam**

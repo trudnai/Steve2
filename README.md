@@ -49,13 +49,13 @@ Open ```A2Mac``` project, make sure ```A2Mac > My Mac``` target is selected at t
 
 **In Memoriam**
 
-I would like to dedicate this project to my Father. He was a mechanical engineer, plumming engineer designing heating and water supply system for large buildings. He bought our first Apple \]\[ computer to help on his projects. He was a dedicated man and even though he was not a software developer, he wrote several programs, most notable a budget caluculator. Budget calculation for plumbing system meant he had to count all components such as different lenght and size of pipes and fittings and count every single bits to the last screw. Then he had to look all the components up one by one for prices and esimated work hours to be able to estimate the financial needs to realize the project. It was a tedious job, and he was able to reduce that work from 3 weeks to 3 days with the computer. This is obvious today, but at that time it was novel. His program on the Apple \]\[ was working on the calculation for 3-4 hours each time. Back then that was considered as small amount of time compared to what it takes to do that manually.
+I would like to dedicate this project to my Father. He was a mechanical engineer, plumbing engineer designing heating and water supply system for large buildings. He bought our first Apple \]\[ computer to help on his projects. He was a dedicated man and even though he was not a software developer, he wrote several programs, most notable a budget calculator. Budget calculation for plumbing system meant he had to count all components such as different length and size of pipes and fittings and count every single bits to the last screw. Then he had to look all the components up one by one for prices and estimated work hours to be able to estimate the financial needs to realize the project. It was a tedious job, and he was able to reduce that work from 3 weeks to 3 days with the computer. This is obvious today, but at that time it was novel. His program on the Apple \]\[ was working on the calculation for 3-4 hours each time. Back then that was considered as small amount of time compared to what it takes to do that manually.
 
 When my Father passed away, I have found our old Apple \]\[ in the basement, and many memories rushed into my head from that time. I remembered the times he eagerly waited for the Apple \]\[ to finish a calculation. He had a nice 1.5 hours lunch and coffee and conversation with the family, and the program was still running.
 
 I started to wonder how long that calculation would take on a modern computer -- or more precisely if the Apple \]\[ was built by today's technology. That was the initial goal of this project.
 
-Steve \]\[ on my 2015 15" MacBook Pro was able to emulate a 1.3 GHz Apple \]\[. That is 1300x faster than the original one. So if that claculation is lasted for 4 hours back then:
+Steve \]\[ on my 2015 15" MacBook Pro was able to emulate a 1.3 GHz Apple \]\[. That is 1300x faster than the original one. So if that calculation is lasted for 4 hours back then:
 
 ```
 ]O = 4 * 60 * 60
@@ -67,7 +67,7 @@ Steve \]\[ on my 2015 15" MacBook Pro was able to emulate a 1.3 GHz Apple \]\[. 
 11.0769231
 ```
 
-...then it would have lasted for 11 seconds if Apple \]\[ was built today (calculating with the measued 1300x speed increase)
+...then it would have lasted for 11 seconds if Apple \]\[ was built today (calculating with the measured 1300x speed increase)
 
 _Disclaimer: This is just an estimation, on a real hardware most probably it would even faster several times. That is because even if Steve \]\[ very is fast, it is still an emulator -- and an emulator needs to do a lot of things on the host CPU to emulate just a single opcode._
 

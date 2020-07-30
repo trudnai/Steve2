@@ -2,9 +2,9 @@
 
 **Steve \]\[ - Speedy Apple \]\[ Emulator**
 
-_Pronounciation:_ `Steve Two`
+_Pronunciation:_ `Steve Two`
 
-Steve \]\[ is an [Apple \]\[](https://en.wikipedia.org/wiki/Apple_II) emulator initially developped for Mac under GPL v3 licence. 
+Steve \]\[ is an [Apple \]\[](https://en.wikipedia.org/wiki/Apple_II) emulator initially developped for Mac under GPL v3 license. 
 
 (See licensing and copyright info in COPYING)
 

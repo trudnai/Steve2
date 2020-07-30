@@ -4,7 +4,7 @@
 
 _Pronunciation:_ `Steve Two`
 
-Steve \]\[ is an [Apple \]\[](https://en.wikipedia.org/wiki/Apple_II) emulator initially developped for Mac under GPL v3 license. 
+Steve \]\[ is an [Apple \]\[](https://en.wikipedia.org/wiki/Apple_II) emulator initially developed for Mac under GPL v3 license. 
 
 _Steve \]\[ Project is created by Tamas Rudnai on 7/14/19_
 _Copyright © 2019, 2020 Tamas Rudnai. All rights reserved_

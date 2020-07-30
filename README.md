@@ -29,7 +29,7 @@ At 1.023 MHz operation speed was limited. Just an example of it, if you wrote a 
 - Game Mode with low Input Latency and 60 FPS
 - Eco Mode for fast operation and low energy consumption
 - Natively supports WOZ 1 disk image format
-- DSK / DO / PO disk image support with smoothless internal autoconvert
+- DSK / DO / PO disk image support with smooth internal auto-convert
 
 **Further Features**
 

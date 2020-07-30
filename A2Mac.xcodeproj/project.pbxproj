@@ -1595,7 +1595,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.84;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 0.85;
 				OTHER_CFLAGS = (
 					"-D_NO_DISASSEMBLER",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",
@@ -1633,7 +1634,8 @@
 					"@executable_path/../Frameworks",
 				);
 				LLVM_LTO = YES_THIN;
-				MARKETING_VERSION = 0.84;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MARKETING_VERSION = 0.85;
 				OTHER_CFLAGS = (
 					"-D_NO_DISASSEMBLER",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",

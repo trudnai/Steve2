@@ -6,6 +6,11 @@ _Pronunciation:_ `Steve Two`
 
 Steve \]\[ is an [Apple \]\[](https://en.wikipedia.org/wiki/Apple_II) emulator initially developped for Mac under GPL v3 license. 
 
+_Steve \]\[ Project is created by Tamas Rudnai on 7/14/19_
+_Copyright © 2019, 2020 Tamas Rudnai. All rights reserved_
+
+_This file is part of Steve \]\[ -- The Apple \]\[ Emulator_
+
 (See licensing and copyright info in COPYING)
 
 The name refers to "two Steves", _Steve Wozniak_ and _Steve Jobs_ who created Apple \]\[ and founded Apple.

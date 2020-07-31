@@ -65,16 +65,10 @@ int dsk2woz( const char * filename ) {
 	fclose(dsk_file);
 
 	// Determine from the filename whether to use Pro-DOS sector order.
-	bool has_p = false;
-	bool has_dot = false;
-	const char *extension = filename + strlen(filename);
-	do {
-		has_p = *extension == 'p';
-		has_dot = *extension == '.';
-		--extension;
-	} while(extension > filename && *extension != '/' && *extension != '.');
-	const bool is_prodos = has_p && has_dot;
-
+	const char *extension = filename + strlen(filename) - 3;
+    // for some reason macos does not have stricmp, so we do it in a not-so-efficient way
+    const bool is_prodos = (strcmp(extension, ".po") == 0) || (strcmp(extension, ".PO") == 0);
+    
 	// If the DSK image was too short, announce failure. Some DSK files
 	// seem empirically to be too long, but it's unclear that the extra
 	// bytes actually mean anything — they're usually not many.

@@ -253,7 +253,6 @@ INLINE int m6502_Step() {
             dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
             return 2;
     }
-    //    } // fetch16
     
     return 2;
 }
@@ -443,7 +442,7 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 
 
 void openLog() {
-#ifdef DISASSEMBLY
+#ifdef DISASSEMBLER
     outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
 #endif
     // for DEBUG ONLY!!! -- use stdout if could not create log file

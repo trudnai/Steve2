@@ -67,6 +67,8 @@ func spk_dn_play() {
 
 class ViewController: NSViewController  {
 
+    @IBOutlet weak var textDisplayScroller: NSScrollView!
+    @IBOutlet var textDisplay: NSTextView!
     @IBOutlet weak var displayField: NSTextField!
     @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
@@ -176,8 +178,10 @@ class ViewController: NSViewController  {
         // Animated Splash Screen fade out and (Text) Monitor fade in
         
         hires.isHidden = true
-        displayField.alphaValue = 0
-        displayField.isHidden = false
+//        displayField.alphaValue = 0
+//        displayField.isHidden = false
+        textDisplayScroller.alphaValue = 0
+        textDisplayScroller.isHidden = false
         splashScreen.alphaValue = 1
         splashScreen.isHidden = false
 
@@ -185,11 +189,11 @@ class ViewController: NSViewController  {
             NSAnimationContext.runAnimationGroup({ (context) in
                 context.duration = 0.5
                 // Use the value you want to animate to (NOT the starting value)
-                self.displayField.animator().alphaValue = 1
+                self.textDisplayScroller.animator().alphaValue = 1
                 self.splashScreen.animator().alphaValue = 0
             },
             completionHandler:{ () -> Void in
-                self.displayField.alphaValue = 1
+                self.textDisplayScroller.alphaValue = 1
                 self.splashScreen.isHidden = true
             })
             
@@ -232,8 +236,8 @@ class ViewController: NSViewController  {
         // Animated Splash Screen fade out and (Text) Monitor fade in
         
         hires.isHidden = true
-        displayField.alphaValue = 0
-        displayField.isHidden = false
+        textDisplayScroller.alphaValue = 0
+//        textDisplayScroller.isHidden = false
         splashScreen.alphaValue = 1
         splashScreen.isHidden = false
         
@@ -314,7 +318,7 @@ class ViewController: NSViewController  {
     static let textArraySize = textLines * (textCols + lineEndChars) + textCols * 2
 
     var txtClear = [Character](repeating: " ", count: textArraySize * 2)
-    var txtArr = [Character](repeating: " ", count: textArraySize * 2)
+    var unicodeTextArray = [Character](repeating: " ", count: textArraySize * 2)
 
     var s = String()
     
@@ -354,7 +358,7 @@ class ViewController: NSViewController  {
 
     
     func SelectAll() {
-//        displayField.currentEditor()?.selectAll(nil)
+//        textDisplayScroller.currentEditor()?.selectAll(nil)
         displayField.selectText(nil)
     }
     
@@ -393,21 +397,21 @@ class ViewController: NSViewController  {
         
         if ( Mouse2Joystick ) {
             pdl_prevarr[0] = pdl_valarr[0]
-            pdl_valarr[0] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_valarr[0] = Double(mouseLocation.x / (textDisplayScroller.frame.width) )
             pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
             
             pdl_prevarr[1] = pdl_valarr[1]
-            pdl_valarr[1] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_valarr[1] = 1 - Double(mouseLocation.y / (textDisplayScroller.frame.height) )
             pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
         }
         
         if ( MouseInterface ) {
             pdl_prevarr[2] = pdl_valarr[2]
-            pdl_valarr[2] = Double(mouseLocation.x / (displayField.frame.width) )
+            pdl_valarr[2] = Double(mouseLocation.x / (textDisplayScroller.frame.width) )
             pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
             
             pdl_prevarr[3] = pdl_valarr[3]
-            pdl_valarr[3] = 1 - Double(mouseLocation.y / (displayField.frame.height) )
+            pdl_valarr[3] = 1 - Double(mouseLocation.y / (textDisplayScroller.frame.height) )
             pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
         }
     }
@@ -658,7 +662,6 @@ class ViewController: NSViewController  {
     
     var shadowTxt : String = ""
     
-    
     func Render() {
         
         frameCnt += 1
@@ -675,7 +678,7 @@ class ViewController: NSViewController  {
         //   1. We can update UI elements
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
         DispatchQueue.main.sync {
-            var txt : String = ""
+            var unicodeTextString : String = ""
             
             var fromLines = 0
             var toLines = self.textLines
@@ -689,12 +692,12 @@ class ViewController: NSViewController  {
                 }
             }
             
-            self.txtArr = self.txtClear
+            self.unicodeTextArray = self.txtClear
             
             // render an empty space to eiminate displaying text portion of the screen covered by graphics
             let charDisposition = videoMode.col80 == 0 ? 1 : 2
             for y in 0 ..< fromLines {
-                self.txtArr[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
+                self.unicodeTextArray[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
             }
             
             // 40 col
@@ -712,10 +715,10 @@ class ViewController: NSViewController  {
                         let idx = Int(byte);
                         let chr = ViewController.charConvTbl[idx]
                         
-                        self.txtArr[ y * (self.textCols + self.lineEndChars) + x ] = chr
+                        self.unicodeTextArray[ y * (self.textCols + self.lineEndChars) + x ] = chr
                     }
                     
-                    self.txtArr[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
+                    self.unicodeTextArray[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
                 }
             }
             // 80 col
@@ -732,21 +735,21 @@ class ViewController: NSViewController  {
                         let idx = Int(byte);
                         let chr = ViewController.charConvTbl[idx]
                         
-                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
+                        self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
                         
                         let byte2 = textAuxBuffer[ ViewController.textLineOfs[y] + x ]
                         let idx2 = Int(byte2);
                         let chr2 = ViewController.charConvTbl[idx2]
                         
-                        self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr2
+                        self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr2
                     }
                     
-                    self.txtArr[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
+                    self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
                 }
             }
             
             
-            txt = String(self.txtArr)
+            unicodeTextString = String(self.unicodeTextArray)
             
             // TODO: Render text Screen in native C
             //            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
@@ -764,9 +767,23 @@ class ViewController: NSViewController  {
                 }
             }
             
-            if ( self.shadowTxt != txt ) {
-                self.shadowTxt = txt
-                self.display.stringValue = txt
+            if ( self.shadowTxt != unicodeTextString ) {
+                self.shadowTxt = unicodeTextString
+//                self.display.stringValue = unicodeTextString
+                self.textDisplay.string = unicodeTextString
+
+//                let bold14 = NSFont.boldSystemFont(ofSize: 14.0)
+//                let textColor = NSColor.red
+//                let attribs = [NSAttributedString.Key.font:bold14,NSAttributedString.Key.foregroundColor:textColor,NSAttributedString.Key.paragraphStyle:textParagraph]
+                
+//                let textParagraph = NSMutableParagraphStyle()
+//                textParagraph.lineSpacing = 0
+//                textParagraph.minimumLineHeight = 32.0
+//                textParagraph.maximumLineHeight = 32.0
+//
+//                let attribs = [NSAttributedString.Key.paragraphStyle: textParagraph]
+//                let attrString:NSAttributedString = NSAttributedString.init(string: unicodeTextString, attributes: attribs)
+//                self.display.attributedStringValue = attrString
             }
             //            self.display.stringValue = "testing\nit\nout"
             
@@ -948,12 +965,13 @@ class ViewController: NSViewController  {
         self.display.font = NSFont(name: "PrintChar21", size: 32)
     }
     
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ViewController.current = self
-        
+        openLog()
+
         hires.clearScreen();
         
         spkr_load_sfx( Bundle.main.resourcePath! + "/sfx" )
@@ -966,7 +984,7 @@ class ViewController: NSViewController  {
                 
 //        createHiRes()
         
-        self.displayField.scaleUnitSquare(to: NSSize(width: 1, height: 1))
+        self.textDisplayScroller.scaleUnitSquare(to: NSSize(width: 1, height: 1))
         
 //        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
 //        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
@@ -1116,6 +1134,16 @@ class ViewController: NSViewController  {
     @IBAction func CRTMonitorOnOff(_ sender: NSButton) {
         CRTMonitor = sender.state == .on
         scanLines.isHidden = !CRTMonitor
+        
+        if ( CRTMonitor ) {
+            display.textColor = .white
+            // TODO: Adjust gamma so pixels are brighter
+        }
+        else {
+            display.textColor = colorWhite
+            // TODO: Adjust gamma so pixels are dimmer
+        }
+        
         hires.RenderFullScreen()
     }
     

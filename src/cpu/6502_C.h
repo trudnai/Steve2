@@ -3,7 +3,29 @@
 //  A2Mac
 //
 //  Created by Tamas Rudnai on 7/27/20.
-//  Copyright © 2020 GameAlloy. All rights reserved.
+//  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.
+//
+// This file is part of Steve ][ -- The Apple ][ Emulator.
+//
+// Steve ][ is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Steve ][ is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Steve ][.  If not, see <https://www.gnu.org/licenses/>.
+//
+// Documentations:
+//
+// http://nesdev.com/6502_cpu.txt
+// http://www.oxyron.de/html/opcodes02.html
+// https://macgui.com/kb/article/46
+// https://www.masswerk.at/6502/6502_instruction_set.html
 //
 
 #ifndef _6502_C_h
@@ -36,7 +58,7 @@
 // Additional instructions
 
     // BRA - BRanch Always
-        case 0x80: JMP( rel_addr() ); return 3;                         // BRA reladdr
+        case 0x80: BRA( rel_addr() ); return 3;                         // BRA reladdr
 
     // PHX PHY PLX PLY - PusH or PulL X or Y register
         case 0x5A: PHY(); return 3;                                     // PHY

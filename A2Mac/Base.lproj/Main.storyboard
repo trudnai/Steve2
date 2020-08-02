@@ -1317,7 +1317,7 @@
                                     <popUpButton key="view" id="Ktw-L6-kEz">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Joystick" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="A4p-LJ-svz">
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:A4p-LJ-svz:image" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="A4p-LJ-svz">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="q8R-kX-3jc">
@@ -1343,7 +1343,7 @@
                                     <popUpButton key="view" id="rfS-6q-EKe">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Quick Disk" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="8bV-Aa-zHf">
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:A4p-LJ-svz:image" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="8bV-Aa-zHf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="7Vp-Rc-UbT">
@@ -1366,7 +1366,7 @@
                                     <popUpButton key="view" id="MAv-S5-diZ">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Chip" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="WVW-Wo-mc9">
+                                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:A4p-LJ-svz:image" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" id="WVW-Wo-mc9">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="Gc4-Or-LMB">
@@ -1611,7 +1611,66 @@
                                     </allowedInputSourceLocales>
                                 </textFieldCell>
                             </textField>
-                            <textField identifier="DisplayField" canDrawConcurrently="YES" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" alphaValue="0.0" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEL-hl-0c0">
+                            <scrollView hidden="YES" canDrawConcurrently="YES" borderType="none" horizontalLineScroll="4" horizontalPageScroll="24" verticalLineScroll="1" verticalPageScroll="24" hasHorizontalScroller="NO" hasVerticalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ss1-M1-nGn" userLabel="Scroll View - Display View">
+                                <rect key="frame" x="11" y="16" width="1130" height="768"/>
+                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="1wa-ZE-lex">
+                                    <rect key="frame" x="0.0" y="0.0" width="1130" height="768"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView canDrawConcurrently="YES" editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="ccC-Wu-3za" userLabel="Display">
+                                            <rect key="frame" x="0.0" y="0.0" width="1130" height="768"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="1130" height="768"/>
+                                            <size key="maxSize" width="1152" height="10000000"/>
+                                            <attributedString key="textStorage">
+                                                <fragment>
+                                                    <mutableString key="content">1234567890123456789012345678901234567890@@@@@@@@@1@@@@@@@@@2@@@@@@@@@3@@@@@@@@@4
+@@@@@@@@@@@@@@@@@@@3@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@4@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@5@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@6@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@7@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@8@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@9@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@10@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@11@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@12@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@13@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@14@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@15@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@16@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@17@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@18@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@19@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@20@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@21@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@22@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@23@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@24@@@@@@@@@@@@@@@@@@@@</mutableString>
+                                                    <attributes>
+                                                        <color key="NSColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <font key="NSFont" size="32" name="PrintChar21"/>
+                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tighteningFactorForTruncation="0.0"/>
+                                                    </attributes>
+                                                </fragment>
+                                            </attributedString>
+                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        </textView>
+                                    </subviews>
+                                    <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="nV1-lT-ewY">
+                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="cfR-PX-LW3">
+                                    <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <textField identifier="DisplayField" hidden="YES" canDrawConcurrently="YES" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" alphaValue="0.0" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEL-hl-0c0">
                                 <rect key="frame" x="14" y="16" width="1124" height="768"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="SEL-hl-0c0" secondAttribute="height" multiplier="35:24" id="4LP-hK-Xit"/>
@@ -1745,7 +1804,7 @@
                                         <subviews>
                                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="49f-8R-QCc">
                                                 <rect key="frame" x="0.0" y="83" width="120" height="103"/>
-                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:CNs-lh-urM:image" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" id="CNs-lh-urM">
+                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:A4p-LJ-svz:image" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" id="CNs-lh-urM">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
                                                     <menu key="menu" id="N33-K0-nba">
@@ -1779,7 +1838,7 @@
                                             </popUpButton>
                                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="QDr-Cp-9QQ">
                                                 <rect key="frame" x="0.0" y="0.0" width="120" height="103"/>
-                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:CNs-lh-urM:image" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="vmR-CG-qdv" id="8FA-1D-k8p">
+                                                <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:A4p-LJ-svz:image" imagePosition="only" alignment="left" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" altersStateOfSelectedItem="NO" selectedItem="vmR-CG-qdv" id="8FA-1D-k8p">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="menu"/>
                                                     <menu key="menu" id="8He-mk-LVI">
@@ -1903,9 +1962,11 @@
                             <constraint firstItem="D0w-YC-YlJ" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="5wF-ul-W4h"/>
                             <constraint firstItem="D0w-YC-YlJ" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="8bz-WZ-Szj"/>
                             <constraint firstItem="dGn-a4-c1t" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="8g8-nm-CxE"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="trailing" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="-11" id="AYX-tI-fE9"/>
                             <constraint firstItem="Ghs-c1-ZkA" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="DgS-2W-eVa"/>
                             <constraint firstItem="dGn-a4-c1t" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="EBM-Pm-MJ8"/>
                             <constraint firstItem="Gqh-qw-fjy" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="FF5-Ke-cOk"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="bottom" secondItem="iIF-Q5-Onc" secondAttribute="bottom" constant="-16" id="Gk9-mO-8Dz"/>
                             <constraint firstAttribute="bottom" secondItem="Fdf-pv-iEw" secondAttribute="bottom" constant="8" id="H1Q-Vj-rPM"/>
                             <constraint firstItem="Ghs-c1-ZkA" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="HPu-Oe-CBl"/>
                             <constraint firstItem="iIF-Q5-Onc" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="LGA-tZ-gFh"/>
@@ -1916,6 +1977,7 @@
                             <constraint firstItem="D0w-YC-YlJ" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="SVU-d6-DH1"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="Umg-3A-zmv"/>
                             <constraint firstItem="Gqh-qw-fjy" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="VcW-Wh-wiF"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="top" secondItem="iIF-Q5-Onc" secondAttribute="top" constant="16" id="VdT-jM-SRU"/>
                             <constraint firstItem="dGn-a4-c1t" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="XM9-i5-GOP"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="8" id="Xbh-Ub-1Ng"/>
                             <constraint firstItem="SEL-hl-0c0" firstAttribute="top" secondItem="iIF-Q5-Onc" secondAttribute="top" constant="16" id="aWz-Ad-PIM"/>
@@ -1925,6 +1987,7 @@
                             <constraint firstItem="LlM-EV-ruZ" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="ltj-Ea-Vtb"/>
                             <constraint firstItem="iIF-Q5-Onc" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="m3e-ww-N7S"/>
                             <constraint firstItem="LlM-EV-ruZ" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="nAy-xD-Y3s"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="leading" constant="11" id="nue-HB-5Zo"/>
                             <constraint firstItem="D0w-YC-YlJ" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="qTc-wn-Sqn"/>
                             <constraint firstItem="dGn-a4-c1t" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="xqX-cb-8Hz"/>
                             <constraint firstAttribute="trailing" secondItem="Fdf-pv-iEw" secondAttribute="trailing" constant="8" id="yy6-NU-JJX"/>
@@ -1944,6 +2007,8 @@
                         <outlet property="scanLines" destination="dGn-a4-c1t" id="3Xy-Ku-95P"/>
                         <outlet property="speedometer" destination="FBZ-dh-6Fs" id="L0v-RY-xwB"/>
                         <outlet property="splashScreen" destination="D0w-YC-YlJ" id="WJB-BH-5EP"/>
+                        <outlet property="textDisplay" destination="ccC-Wu-3za" id="2AD-aQ-x6x"/>
+                        <outlet property="textDisplayScroller" destination="ss1-M1-nGn" id="Bbp-M9-REy"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -1974,7 +2039,7 @@
         <image name="White" width="64" height="64"/>
         <image name="apple_original_logo_design" width="384" height="307.20001220703125"/>
         <image name="dotmatrix_effect" width="268.79998779296875" height="184.32000732421875"/>
-        <image name="popUpButtonCell:CNs-lh-urM:image" width="1" height="1">
+        <image name="popUpButtonCell:A4p-LJ-svz:image" width="1" height="1">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
 ExQZHh8jJCsuMTtDR0tPUlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdz

@@ -442,6 +442,23 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
     MEMcfg = newMEMcfg;
 }
 
+void CxMemorySelect( MEMcfg_t newMEMcfg ) {
+    
+    if ( newMEMcfg.int_Cx_ROM ) {
+        // load internal ROM to memory
+        memcpy(Apple2_64K_MEM + 0xC100, Apple2_16K_ROM + 0x100, 16 * KB - 0x100);
+    }
+    else {
+        // load peripheral ROM to memory
+//        memcpy(Apple2_64K_MEM + 0xC100, Apple2_64K_RAM + 0xC100, 16 * KB - 0x100);
+        memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
+    }
+    
+    
+    MEMcfg = newMEMcfg;
+}
+
+
 
 uint8_t * current_RAM_bank = Apple2_64K_AUX + 0xC000;
 
@@ -519,6 +536,10 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
                 break;
         }
         
+        
+        // when was the last time changing LC memory?
+        static uint64_t wram1_clk = 0;
+        
         // is RAM Writeable?
         switch ((uint8_t)addr) {
             case (uint8_t)io_MEM_RDROM_WRAM_2:
@@ -526,8 +547,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
                 
             case (uint8_t)io_MEM_RDROM_WRAM_2_:
             case (uint8_t)io_MEM_RDROM_WRAM_1_:
-                
-                //                        printf("RD_ROM + WR_AUX\n");
+//                printf("RD_ROM + WR_AUX\n");
                 
                 // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
                 MEMcfg.WR_RAM = 0;
@@ -545,13 +565,20 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
                 
             case (uint8_t)io_MEM_RDRAM_WRAM_2_:
             case (uint8_t)io_MEM_RDRAM_WRAM_1_:
-                
-                //                        printf("RD_RAM + WR_RAM\n");
-                
-                // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
-                MEMcfg.WR_RAM = 1;
-                WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
-                WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
+//                printf("RD_RAM + WR_RAM\n");
+                // was this a consequential read?
+                if ( m6502.clktime + clkfrm - wram1_clk < 10 ) {
+                    // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
+                    MEMcfg.WR_RAM = 1;
+                    WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
+                    WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
+                }
+                // it was too long ago, no write
+                else {
+                    WRD0MEM = Apple2_Dummy_RAM;
+                    WRHIMEM = Apple2_Dummy_RAM;
+                }
+                wram1_clk = m6502.clktime + clkfrm;
                 break;
                 
             default:
@@ -911,13 +938,13 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
         case (uint8_t)io_SETSLOTCXROM:
 //            printf("io_SETSLOTCXROM\n");
             MEMcfg.int_Cx_ROM = 0;
-            // TODO: set Cx00 ROM area table to SLOT
+            CxMemorySelect(MEMcfg);
             break;
 
         case (uint8_t)io_SETINTCXROM:
 //            printf("io_SETINTCXROM\n");
             MEMcfg.int_Cx_ROM = 1;
-            // TODO: set Cx00 ROM area table to INT
+            CxMemorySelect(MEMcfg);
             break;
 
         case (uint8_t)io_SETSLOTC3ROM:

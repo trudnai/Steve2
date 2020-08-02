@@ -208,4 +208,79 @@ INLINE void BVS( int8_t reladdr ) {
     }
 }
 
+/**
+ BBR BBS - Branch on Bit Reset or Set
+ 
+ BBR and BBS test the specified zero page location and branch if the specified bit is clear (BBR) or set (BBS).
+ Note that as with TRB, the term reset in BBR is used to mean clear.
+ 
+ On the 6502 and 65C02, bit 7 is typically the most convenient bit to use for I/O and software flags because
+ it can be tested by several instructions, such as BIT and LDA. BBR and BBS can test any of the 8 bits without
+ affecting any flags or using any registers. Unlike other branch instructions, BBR and BBS always take the same
+ number of cycles (five) whether the branch is taken or not. It is often useful to test bit 0, for example, to test
+ whether a byte is even or odd. However, the usefulness of BBR and BBS is somewhat limited for a couple of reasons.
+ First, there is only a single addressing mode for these instructions -- no indexing by X or Y, for instance.
+ Second, they are restricted to zero page locations. For software flags this may be just fine, but it may not be very
+ convenient (or cost effective) to add any additional address decoding hardware that may be necessary to
+ map I/O locations to the zero page.
+ 
+ The addressing mode is a combination of zero page addressing and relative addressing -- really just a juxtaposition of the two.
+ The bit to test is typically specified as part of the instruction name rather than the operand, i.e.
+ 
+ Flags affected: none
+ 
+ OP LEN CYC MODE   FLAGS    SYNTAX
+ -- --- --- ----   -----    ------
+ 0F 3   5   zp,rel ........ BBR0 $12,LABEL
+ 1F 3   5   zp,rel ........ BBR1 $12,LABEL
+ 2F 3   5   zp,rel ........ BBR2 $12,LABEL
+ 3F 3   5   zp,rel ........ BBR3 $12,LABEL
+ 4F 3   5   zp,rel ........ BBR4 $12,LABEL
+ 5F 3   5   zp,rel ........ BBR5 $12,LABEL
+ 6F 3   5   zp,rel ........ BBR6 $12,LABEL
+ 7F 3   5   zp,rel ........ BBR7 $12,LABEL
+ 8F 3   5   zp,rel ........ BBS0 $12,LABEL
+ 9F 3   5   zp,rel ........ BBS1 $12,LABEL
+ AF 3   5   zp,rel ........ BBS2 $12,LABEL
+ BF 3   5   zp,rel ........ BBS3 $12,LABEL
+ CF 3   5   zp,rel ........ BBS4 $12,LABEL
+ DF 3   5   zp,rel ........ BBS5 $12,LABEL
+ EF 3   5   zp,rel ........ BBS6 $12,LABEL
+ FF 3   5   zp,rel ........ BBS7 $12,LABEL
+ 
+**/
+#define BBR(n) INLINE void BBR##n( uint8_t src, int8_t reladdr ) { \
+dbgPrintf("BBR"#n" "); \
+disPrintf(disassembly.inst, "BBR"#n); \
+    if ( ! (src & (1 << n) ) ) { \
+        BRA( reladdr ); \
+    } \
+}
+
+    BBR(0)
+    BBR(1)
+    BBR(2)
+    BBR(3)
+    BBR(4)
+    BBR(5)
+    BBR(6)
+    BBR(7)
+
+#define BBS(n) INLINE void BBS##n( uint8_t src, int8_t reladdr ) { \
+dbgPrintf("BBS"#n" "); \
+disPrintf(disassembly.inst, "BBS"#n); \
+    if ( (src & (1 << n) ) ) { \
+        BRA( reladdr ); \
+    } \
+}
+
+    BBS(0)
+    BBS(1)
+    BBS(2)
+    BBS(3)
+    BBS(4)
+    BBS(5)
+    BBS(6)
+    BBS(7)
+
 #endif // __6502_INSTR_BRANCH_H__

@@ -696,8 +696,8 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 
 
 void openLog() {
-#ifdef DISASSEMBLY
-    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
+#ifdef DISASSEMBLER
+    outdev = fopen("/Users/trudnai/Library/Containers/com.trudnai.steveii/Data/disassembly_new.log", "w+");
 #endif
     // for DEBUG ONLY!!! -- use stdout if could not create log file
 //    if (outdev == NULL) {

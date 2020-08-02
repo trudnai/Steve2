@@ -759,10 +759,10 @@ class ViewController: NSViewController  {
                 
                 if let fontSize = self.display.font?.pointSize {
                     if videoMode.col80 == 1 {
-                        self.display.font = NSFont(name: "PRNumber3", size: fontSize)
+                        self.textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
                     }
                     else {
-                        self.display.font = NSFont(name: "PrintChar21", size: fontSize)
+                        self.textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
                     }
                 }
             }

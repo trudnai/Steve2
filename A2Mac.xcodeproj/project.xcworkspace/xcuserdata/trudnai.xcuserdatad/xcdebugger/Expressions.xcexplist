@@ -115,6 +115,32 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "auxZeropageSelect:mmio.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502">
+            </PersistentString>
+            <PersistentString
+               value = "newMEMcfg.is_80STORE">
+            </PersistentString>
+            <PersistentString
+               value = "Apple2_64K_RAM">
+            </PersistentString>
+            <PersistentString
+               value = "newMEMcfg.ALT_ZP">
+            </PersistentString>
+            <PersistentString
+               value = "currentZeropage">
+            </PersistentString>
+            <PersistentString
+               value = "Apple2_64K_MEM">
+            </PersistentString>
+            <PersistentString
+               value = "Apple2_64K_AUX">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "addr_abs:mmio.h">
          <PersistentStrings>
             <PersistentString

@@ -178,6 +178,7 @@ class ViewController: NSViewController  {
         // Animated Splash Screen fade out and (Text) Monitor fade in
         
         hires.isHidden = true
+        lores.isHidden = true
 //        displayField.alphaValue = 0
 //        displayField.isHidden = false
         textDisplayScroller.alphaValue = 0
@@ -236,6 +237,7 @@ class ViewController: NSViewController  {
         // Animated Splash Screen fade out and (Text) Monitor fade in
         
         hires.isHidden = true
+        lores.isHidden = true
         textDisplayScroller.alphaValue = 0
 //        textDisplayScroller.isHidden = false
         splashScreen.alphaValue = 1

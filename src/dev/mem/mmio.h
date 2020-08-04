@@ -378,6 +378,9 @@ void resetMemory() {
     WRLOMEM = Apple2_64K_MEM;       // for Write $0200 - $BFFF (shadow memory)
     WRD0MEM = Apple2_Dummy_RAM;     // for writing $D000 - $DFFF
     WRHIMEM = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
+    
+    videoMode.text = 1;
+    videoMode.col80 = 0;
 }
 
 
@@ -462,13 +465,16 @@ void auxZeropageSelect( MEMcfg_t newMEMcfg ) {
     // save the content of Shadow Memory
     memcpy( (void*) currentZeropage, shadowZeropage, 0x200);
     
-    if ( newMEMcfg.is_80STORE ) {
+    if ( ! newMEMcfg.is_80STORE ) {
         if ( newMEMcfg.ALT_ZP ) {
             currentZeropage = Apple2_64K_AUX;
         }
         else {
             currentZeropage = Apple2_64K_RAM;
         }
+    }
+    else {
+        currentZeropage = Apple2_64K_RAM;
     }
     
     WRZEROPG = (uint8_t*)shadowZeropage;
@@ -484,11 +490,11 @@ void C3MemorySelect( MEMcfg_t newMEMcfg ) {
     
     if ( newMEMcfg.slot_C3_ROM ) {
         // load internal ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC300, Apple2_16K_ROM + 0x300, 0x100);
+        memcpy(Apple2_64K_MEM + 0xC300, Apple2_64K_RAM + 0xC300, 0x100);
     }
     else {
         // load peripheral ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC300, Apple2_64K_RAM + 0xC300, 0x100);
+        memcpy(Apple2_64K_MEM + 0xC300, Apple2_16K_ROM + 0x300, 0x100);
     }
     
     
@@ -504,8 +510,8 @@ void CxMemorySelect( MEMcfg_t newMEMcfg ) {
     }
     else {
         // load peripheral ROM to memory
-//        memcpy(Apple2_64K_MEM + 0xC100, Apple2_64K_RAM + 0xC100, 0xF00);
-        memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
+        memcpy(Apple2_64K_MEM + 0xC100, Apple2_64K_RAM + 0xC100, 0xF00);
+//        memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
     }
     
     C3MemorySelect( newMEMcfg );

@@ -685,6 +685,7 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     else if ( flen == 16 * KB ) {
         read_rom( bundlePath, filename, Apple2_16K_ROM, 0);
         memcpy(Apple2_64K_MEM + 0xC000, Apple2_16K_ROM, 16 * KB);
+        memcpy(Apple2_64K_RAM + 0xC000, Apple2_16K_ROM, 0x1000);
     }
     
     else if ( flen == 12 * KB ) {

@@ -749,9 +749,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     // Disk ][ ROM in Slot 6
     read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
     memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
-    
-//    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "DISK_II_C600.ROM", Apple2_64K_MEM, 0xC600);
-    
+
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
     m6502.SP = 0xFF; //-3;

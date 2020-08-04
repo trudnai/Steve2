@@ -96,10 +96,21 @@
                value = "m6502.A">
             </PersistentString>
             <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+            <PersistentString
                value = "RAM">
             </PersistentString>
             <PersistentString
                value = "RAM[0x50]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BRK:6502_instr_misc.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

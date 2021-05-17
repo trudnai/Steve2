@@ -47,7 +47,8 @@ class ToolBarController: NSWindowController {
     
     @IBAction func SelectAll(_ sender: Any) {
 //        ViewController.current?.displayField.currentEditor()?.selectAll(nil)
-        ViewController.current?.displayField.selectText(nil)
+//        ViewController.current?.displayField.selectText(nil)
+        ViewController.current?.textDisplay.setSelectedRange(NSRange())
     }
     
     @IBAction func Copy(_ sender: Any) {
@@ -98,7 +99,7 @@ class ToolBarController: NSWindowController {
             SpeedSelector.label = "100 MHz"
             
         case 6:
-            ViewController.current?.setCPUClockSpeed(freq: 1600)
+            ViewController.current?.setCPUClockSpeed(freq: 2000)
             SpeedSelector.label = "MAX Speed"
             
         default:

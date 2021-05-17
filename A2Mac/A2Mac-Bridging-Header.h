@@ -29,8 +29,8 @@
 
 
 #import "6502.h"
-#include "speaker.h" // So we can access to speaker stuff from Swift
-#include "disk.h"
-#include "dsk2woz.h"
+#import "speaker.h" // So we can access to speaker stuff from Swift
+#import "disk.h"
+#import "dsk2woz.h"
 
 #endif /* A2Mac_Bridging_Header_h */

@@ -50,7 +50,7 @@
 //#define SPKR_LEVEL_MAX      (+1000)
 
 
-#define SPKR_FADE_LEADING_EDGE      0.32
+#define SPKR_FADE_LEADING_EDGE      0.40
 #define SPKR_FADE_TRAILING_EDGE     0.16
 #define SPKR_INITIAL_LEADING_EDGE   1.00 // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
 #define SPKR_INITIAL_TRAILING_EDGE  0.88 // need a bit of slope to get Xonix sound good

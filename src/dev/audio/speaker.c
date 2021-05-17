@@ -99,6 +99,7 @@ const unsigned spkr_buf_alloc_size = spkr_seconds * spkr_sample_rate * SPKR_CHAN
 unsigned spkr_buf_size = spkr_buf_alloc_size / sizeof(spkr_sample_t);
 spkr_sample_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT]; // can store up to 1 sec of sound
 unsigned spkr_sample_idx = 0;
+unsigned spkr_sample_last_idx = 0;
 
 unsigned spkr_play_timeout = SPKR_PLAY_TIMEOUT; // increase to 32 for 240 fps, normally 8 for 30 fps
 unsigned spkr_play_time = 0;
@@ -371,7 +372,8 @@ void spkr_toggle() {
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
         spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
-        
+        unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
+                
         spkr_level = spkr_samples[ spkr_sample_idx ];
         
         if ( spkr_state ) {
@@ -380,6 +382,22 @@ void spkr_toggle() {
             
             float dumping = spkr_level - SPKR_LEVEL_MIN;
             dumping *= SPKR_INITIAL_TRAILING_EDGE;
+
+            if ( spkr_sample_idx_diff < 8 ) {
+//                printf("sd:%u\n", spkr_sample_idx_diff);
+                
+                float new_level = SPKR_LEVEL_MIN + dumping;
+                spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
+                while ( spkr_sample_last_idx < spkr_sample_idx ) {
+                    last_level += new_level;
+                    last_level /= 2;
+                    spkr_samples[ spkr_sample_last_idx++ ] = last_level;
+                    spkr_samples[ spkr_sample_last_idx++ ] = last_level; // stereo
+                }
+            }
+            // save last index before we advance it...
+            spkr_sample_last_idx = spkr_sample_idx;
+
 
             while ( dumping > 1 ) {
                 spkr_sample_t level = SPKR_LEVEL_MIN + dumping;
@@ -400,6 +418,22 @@ void spkr_toggle() {
             float dumping = spkr_level - SPKR_LEVEL_MAX;
             dumping *= SPKR_INITIAL_LEADING_EDGE;
 
+            if ( spkr_sample_idx_diff < 8 ) {
+//                printf("sd:%u\n", spkr_sample_idx_diff);
+                
+                float new_level = SPKR_LEVEL_MAX + dumping;
+                spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
+                while ( spkr_sample_last_idx < spkr_sample_idx ) {
+                    last_level += new_level;
+                    last_level /= 2;
+                    spkr_samples[ spkr_sample_last_idx++ ] = last_level;
+                    spkr_samples[ spkr_sample_last_idx++ ] = last_level; // stereo
+                }
+            }
+            // save last index before we advance it...
+            spkr_sample_last_idx = spkr_sample_idx;
+
+            
             while ( dumping < -1 ) {
                 spkr_sample_t level = SPKR_LEVEL_MAX + dumping;
                 spkr_samples[ spkr_sample_idx++ ] = level;

@@ -330,7 +330,8 @@ uint8_t woz_read() {
         uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ1_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ1_TRACK_BYTE_COUNT;
         
         if ( usedBytes ) {
-            uint64_t bitForward = (clkelpased >> 2) + 1;
+            static const int extraForward = 4; // we search for 7 bit high a bit further to speed up disk read...
+            uint64_t bitForward = (clkelpased >> 2) + extraForward;
             
             // Simulate idle spinning until s close point to the actual turn position
             while ( bitForward-- ) {

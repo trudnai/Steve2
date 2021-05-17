@@ -157,15 +157,23 @@ typedef woz1_track_t woz1_trks_t[DISKII_MAXTRACKS];
 
 typedef union {
     struct {
+        // for buffering for shifting during write process
+        // also for debug and diag purposes
+        uint8_t next_next;
+        uint8_t next;
+        
         uint8_t data;
         uint8_t latch;
         
-        // for debug and diag purposes
-        uint8_t out[6];
+        // for buffering for shifting during write process
+        // also for debug and diag purposes
+        uint8_t out[4];
     };
     struct {
+        uint16_t next16; // unused
         uint16_t lower15 : 15;
         uint16_t valid : 1;
+        uint32_t out32; // unused
     };
     uint64_t shift;
 } WOZread_t;

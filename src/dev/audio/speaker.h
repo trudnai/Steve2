@@ -28,6 +28,8 @@
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
 
+#define SPKR_LEVEL_ZERO     0 // as defined in OpenAL documentation for 8bit PCM
+
 // very loud
 //#define SPKR_LEVEL_MIN      (-28000)
 //#define SPKR_LEVEL_MAX      (+28000)
@@ -37,18 +39,24 @@
 //#define SPKR_LEVEL_MAX      (+5000)
 
 // medium
-#define SPKR_LEVEL_MIN      (-3072)
-#define SPKR_LEVEL_MAX      (+3072)
-
-#define SPKR_FADE_LEADING_EDGE      0.32
-#define SPKR_FADE_TRAILING_EDGE     0.16
-#define SPKR_INITIAL_DUMPING        0.90
+//#define SPKR_LEVEL_MIN      (-3072)
+//#define SPKR_LEVEL_MAX      (+3072)
+#define SPKR_LEVEL_MIN      SPKR_LEVEL_ZERO
+#define SPKR_LEVEL_MAX      (+15000)
+#define SPKR_PLAY_TIMEOUT   8U
 
 // quiet
 //#define SPKR_LEVEL_MIN      (-1000)
 //#define SPKR_LEVEL_MAX      (+1000)
 
-#define SPKR_LEVEL_ZERO     0 // as defined in OpenAL documentation for 8bit PCM
+
+#define SPKR_FADE_LEADING_EDGE      0.32
+#define SPKR_FADE_TRAILING_EDGE     0.16
+#define SPKR_INITIAL_LEADING_EDGE   1.00 // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
+#define SPKR_INITIAL_TRAILING_EDGE  0.88 // need a bit of slope to get Xonix sound good
+
+
+
 
 
 enum {

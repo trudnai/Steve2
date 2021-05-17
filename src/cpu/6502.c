@@ -102,6 +102,7 @@ m6502_t m6502 = {
     
     0,      // clktime
     0,      // clklast
+    0,      // clkfrm
 
     0,      // trace
     0,      // step
@@ -261,7 +262,7 @@ INLINE int m6502_Step() {
         case 0x0D: ORA( src_abs() ); return 4;                         // ORA abs
         case 0x0E: ASL( addr_abs() ); return 6;                        // ASL abs
         case 0x0F: SLO( addr_abs() ); return 6;                        // SLO* (undocumented)
-        case 0x10: BPL( rel_addr() ); return 3;                        // BPL rel
+        case 0x10: BPL( rel_addr() ); return 2;                        // BPL rel
         case 0x11: ORA( src_ind_Y() ); return 5;                       // ORA ind,Y
         case 0x12: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x13: SLO( addr_zp_Y() ); return 8;                       // SLO* zpg,Y (undocumented)
@@ -293,7 +294,7 @@ INLINE int m6502_Step() {
         case 0x2D: AND( src_abs() ); return 4;                         // AND abs
         case 0x2E: ROL( addr_abs() ); return 6;                        // ROL abs
         case 0x2F: RLA( addr_abs() ); return 6;                        // RLA* abs 6 (undocumented)
-        case 0x30: BMI( rel_addr() ); return 3;                        // BMI rel
+        case 0x30: BMI( rel_addr() ); return 2;                        // BMI rel
         case 0x31: AND( src_ind_Y() ); return 5;                       // AND ind,Y
         case 0x32: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x33: RLA( addr_ind_Y() ); return 8;                      // RLA* izy 8 (undocumented)
@@ -325,7 +326,7 @@ INLINE int m6502_Step() {
         case 0x4D: EOR( src_abs() ); return 4;                         // EOR abs
         case 0x4E: LSR( addr_abs() ); return 6;                        // LSR abs
         case 0x4F: SRE( abs_addr() ); return 6;                        // SRE* abs 6 (undocumented)
-        case 0x50: BVC( rel_addr() ); return 3;                        // BVC rel
+        case 0x50: BVC( rel_addr() ); return 2;                        // BVC rel
         case 0x51: EOR( src_ind_Y() ); return 5;                       // EOR ind,Y
         case 0x52: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x53: SRE( addr_ind_Y() ); return 8;                      // SRE* izy 8 (undocumented)
@@ -353,11 +354,11 @@ INLINE int m6502_Step() {
         case 0x69: ADC( imm() ); return 2;                             // ADC imm
         case 0x6A: RORA(); return 2;                                   // ROR A
         case 0x6B: ARC( imm() ); return 2;                             // ARR/ARC* imm 2 (undocumented)
-        case 0x6C: JMP( ind_addr() ); return    5;                        // JMP ind
+        case 0x6C: JMP( ind_addr() ); return 5;                        // JMP ind
         case 0x6D: ADC( src_abs() ); return 4;                         // ADC abs
         case 0x6E: ROR( addr_abs() ); return 6;                        // ROR abs
         case 0x6F: RRA( abs_addr() ); return 6;                        // RRA* abs 6 (undocumented)
-        case 0x70: BVS( rel_addr() ); return 3;                        // BVS rel
+        case 0x70: BVS( rel_addr() ); return 2;                        // BVS rel
         case 0x71: ADC( src_ind_Y() ); return 5;                       // ADC ind,Y
         case 0x72: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x73: RRA( addr_ind_Y() ); return 8;                      // RRA* izy 8 (undocumented)
@@ -389,7 +390,7 @@ INLINE int m6502_Step() {
         case 0x8D: STA( addr_abs() ); return 4;                        // STA abs
         case 0x8E: STX( addr_abs() ); return 4;                            // STX abs
         case 0x8F: SAX( addr_abs() ); return 4;                        // SAX* abs 4 (undocumented)
-        case 0x90: BCC( rel_addr() ); return 3;                        // BCC rel
+        case 0x90: BCC( rel_addr() ); return 2;                        // BCC rel
         case 0x91: STA( addr_ind_Y() ); return 6;                      // STA ind,Y
         case 0x92: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x93: SHA( addr_ind_Y() ); return 6;                      // SHA* izy 6 (undocumented, unstable)
@@ -421,7 +422,7 @@ INLINE int m6502_Step() {
         case 0xAD: LDA( src_abs() ); return 4;                         // LDA abs
         case 0xAE: LDX( src_abs() ); return 4;                         // LDX abs
         case 0xAF: LAX( src_abs() ); return 4;                         // LAX* abs 4 (undocumented)
-        case 0xB0: BCS( rel_addr() ); return 3;                        // BCS rel
+        case 0xB0: BCS( rel_addr() ); return 2;                        // BCS rel
         case 0xB1: LDA( src_ind_Y() ); return 5;                       // LDA ind,Y
         case 0xB2: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0xB3: LAX( src_ind_Y() ); return 5;                       // LAX* izy 5 (undocumented)
@@ -453,7 +454,7 @@ INLINE int m6502_Step() {
         case 0xCD: CMP( src_abs() ); return 4;                         // CMP abs
         case 0xCE: DEC( addr_abs() ); return 6;                        // DEC abs
         case 0xCF: DCP( addr_abs() ); return 6;                        // DCP* abs 6 (undocumented)
-        case 0xD0: BNE( rel_addr() ); return 3;                        // BNE rel
+        case 0xD0: BNE( rel_addr() ); return 2;                        // BNE rel
         case 0xD1: CMP( src_ind_Y() ); return 5;                       // CMP ind,Y
         case 0xD2: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0xD3: DCP( addr_ind_Y() ); return 8;                      // DCP* izy 8 (undocumented)
@@ -485,7 +486,7 @@ INLINE int m6502_Step() {
         case 0xED: SBC( src_abs() ); return 4;                         // SBC abs
         case 0xEE: INC( addr_abs() ); return 6;                        // INC abs
         case 0xEF: ISB( addr_abs() ); return 6;                        // ISB* abs 6 (undocumented)
-        case 0xF0: BEQ( rel_addr() ); return 3;                        // BEQ rel
+        case 0xF0: BEQ( rel_addr() ); return 2;                        // BEQ rel
         case 0xF1: SBC( src_ind_Y() ); return 5;                       // SBC ind,Y
         case 0xF2: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0xF3: ISB( addr_ind_Y() ); return 8;                      // ISB* izy 8 (undocumented)
@@ -495,7 +496,7 @@ INLINE int m6502_Step() {
         case 0xF7: ISB( addr_zp_X() ); return 6;                       // ISB* zpx 6 (undocumented)
         case 0xF8: SED(); return 2;                                    // SED
         case 0xF9: SBC( src_abs_Y() ); return 4+1;                       // SBC abs,Y
-        case 0xFA: NOP(); return 2;                                    // NOP
+        case 0xFA: NOP(); return 2;                                    // NOP (undocumented)
         case 0xFB: ISB( addr_abs_Y() ); return 7;                      // ISB* aby 7 (undocumented)
         case 0xFC: NOP(); src_abs_X(); return 4;                       // NOP* abx 4 (undocumented)
         case 0xFD: SBC( src_abs_X() ); return 4+1;                       // SBC abs,X
@@ -522,7 +523,6 @@ double mhz = 0;
 unsigned long long epoch = 0;
 
 
-unsigned int clkfrm = 0;
 
 void interrupt_IRQ() {
     m6502.PC = memread16(IRQ_VECTOR);
@@ -554,10 +554,12 @@ void softReset() {
     setFlags(0x25);
     
     spkr_stopAll();
+    
+    resetMemory();
 }
 
 void m6502_Run() {
-    
+
     // init time
 //#ifdef CLK_WAIT
 //    unsigned long long elpased = (unsigned long long)-1LL;
@@ -568,7 +570,7 @@ void m6502_Run() {
 #elif defined( CLK_WAIT )
         // we clear the clkfrm from ViewController Update()
         // we will also use this to pause the simulation if not finished by the end of the frame
-        for ( clk_6502_per_frm_max = clk_6502_per_frm; clkfrm < clk_6502_per_frm_max ; clkfrm += m6502_Step() )
+        for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() )
 #else
     // this is for max speed only -- WARNING! It works only if simulation runs in a completely different thread from the Update()
     for ( ; ; )
@@ -611,7 +613,7 @@ void m6502_Run() {
         
     }
     
-    // TODO: WHat if we dynamically reduce or increace CPU speed?
+    // TODO: What if we dynamically reduce or increace CPU speed?
     m6502.clktime += clk_6502_per_frm;
     
     if( diskAccelerator_count ) {
@@ -696,8 +698,8 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 
 
 void openLog() {
-#ifdef DISASSEMBLY
-    outdev = fopen("/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/disassembly_new.log", "w+");
+#ifdef DISASSEMBLER
+    outdev = fopen("/Users/trudnai/Library/Containers/com.trudnai.steveii/Data/disassembly_new.log", "w+");
 #endif
     // for DEBUG ONLY!!! -- use stdout if could not create log file
 //    if (outdev == NULL) {
@@ -733,7 +735,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 //    tick_per_sec = e - epoch;
 //    tick_6502_per_sec = tick_per_sec / MHz_6502;
 
-    resetMemory();
+    initMemory();
 
     
 #ifdef FUNCTIONTEST
@@ -749,9 +751,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     // Disk ][ ROM in Slot 6
     read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_RAM, 0xC600);
     memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
-    
-//    read_rom( "/Users/trudnai/Library/Containers/com.gamealloy.A2Mac/Data/", "DISK_II_C600.ROM", Apple2_64K_MEM, 0xC600);
-    
+
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
     m6502.SP = 0xFF; //-3;

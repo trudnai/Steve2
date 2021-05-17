@@ -53,7 +53,6 @@ extern unsigned long long clk_6502_per_frm;
 extern unsigned long long clk_6502_per_frm_set;
 extern unsigned long long clk_6502_per_frm_max;
 extern unsigned long long clk_6502_per_frm_max_sound;
-extern unsigned int clkfrm;
 
 
 typedef enum {
@@ -94,10 +93,11 @@ typedef union flags_u {
 } flags_t;
 
 
+//#pragma pack(1)
 typedef struct m6502_s {
-    uint8_t  A;             // Accumulator
-    uint8_t  X;             // X index register
-    uint8_t  Y;             // Y index register
+    uint8_t  A;       //  0: Accumulator
+    uint8_t  X;       //  1: X index register
+    uint8_t  Y;       //  2: Y index register
 //    union {
 //        uint8_t  instr;         // Instruction
 //        struct {
@@ -107,24 +107,26 @@ typedef struct m6502_s {
 //        };
 //    };
     struct { // no bitfield faster processing
-        uint8_t C;    // Carry Flag
-        uint8_t Z;    // Zero Flag
-        uint8_t I;    // Interrupt Flag
-        uint8_t D;    // Decimal Flag
-        uint8_t B;    // B Flag
-        uint8_t res;  // reserved -- should be always 1
-        uint8_t V;    // Overflow Flag ???
-        uint8_t N;    // Negative Flag
+        uint8_t C;    //  3: Carry Flag
+        uint8_t Z;    //  4: Zero Flag
+        uint8_t I;    //  5: Interrupt Flag
+        uint8_t D;    //  6: Decimal Flag
+        uint8_t B;    //  7: B Flag
+        uint8_t res;  //  8: reserved -- should be always 1
+        uint8_t V;    //  9: Overflow Flag ???
+        uint8_t N;    // 10: Negative Flag
     };
     
-    uint16_t PC;            // Program Counter
-    uint8_t SP;             // Stack Pointer ( stack addr = 0x01 + sp )
+    uint16_t PC;      // 11: Program Counter
+    uint8_t SP;       // 13: Stack Pointer ( stack addr = 0x01 + sp )
 
 //    unsigned clk;           // Clock Counter
-    uint64_t clktime;
-    uint64_t clklast;
+    uint64_t clktime; // 14:
+    uint64_t clklast; // 22:
+    uint32_t clkfrm;  // 30:
 
-    debugLevel_t dbgLevel;  // 0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
+
+    debugLevel_t dbgLevel;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
     
     union {
         unsigned int IF;             // interrut flag
@@ -132,6 +134,7 @@ typedef struct m6502_s {
     };
     
 } m6502_t;
+//#pragma pack()
 
 
 typedef struct disassembly_s {
@@ -196,8 +199,8 @@ extern double mhz;
 #define DEF_VIDEO_DIV 1U
 #define DEF_SPKR_DIV 1U
 
-#define GAME_FPS 600U
-#define GAME_VIDEO_DIV 10U // 600 / 10 = 60 FPS
+#define GAME_FPS 480U
+#define GAME_VIDEO_DIV (GAME_FPS / 60U)
 
 extern unsigned int video_fps_divider;
 extern unsigned int fps;

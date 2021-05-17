@@ -136,5 +136,75 @@ INLINE void SEI() {
     m6502.I = 1;
 }
 
+/**
+ RMB SMB - Reset or Set Memory Bit
+ 
+ RMB and SMB clear (RMB) or set (SMB) the specified bit in the specified zero page location,
+ and can be used in conjuction with the BBR and BBS instructions. Again, note that as with BBR and TRB,
+ the term reset in RMB is used to mean clear.
+ 
+ The function of RMB and SMB is very similar to the function of TRB and TSB, except that RMB and SMB
+ can clear or set only one zero page bit, whereas TRB and TSB can clear or set any number of bits. Also,
+ only zero page addressing is available with RMB and SMB, whereas zero page and absolute addressing
+ are available for both TRB and TSB. As a result, RMB and SMB do not offer much that isn't already available
+ with TRB and TSB (which are available on 65C02s from all manufacturers). The main advantages are that
+ RMB and SMB, unlike TRB and TSB, do not use the accumulator, leaving it available, and do not affect any flags.
+ However, it is worth noting that it is rarely useful to preserve the value of the Z (zero) flag (the only flag affected by
+ TRB and TSB), unlike other flags (such as the carry).
+ 
+ Like BBR and BBS, the bit to test is typically specified as part of the instruction name rather than the operand, i.e.
+ 
+ Flags affected: none
+ 
+ OP LEN CYC MODE FLAGS    SYNTAX
+ -- --- --- ---- -----    ------
+ 07 2   5   zp   ........ RMB0 $12
+ 17 2   5   zp   ........ RMB1 $12
+ 27 2   5   zp   ........ RMB2 $12
+ 37 2   5   zp   ........ RMB3 $12
+ 47 2   5   zp   ........ RMB4 $12
+ 57 2   5   zp   ........ RMB5 $12
+ 67 2   5   zp   ........ RMB6 $12
+ 77 2   5   zp   ........ RMB7 $12
+ 87 2   5   zp   ........ SMB0 $12
+ 97 2   5   zp   ........ SMB1 $12
+ A7 2   5   zp   ........ SMB2 $12
+ B7 2   5   zp   ........ SMB3 $12
+ C7 2   5   zp   ........ SMB4 $12
+ D7 2   5   zp   ........ SMB5 $12
+ E7 2   5   zp   ........ SMB6 $12
+ F7 2   5   zp   ........ SMB7 $12
+**/
+#define RMB(n) INLINE void RMB##n( uint8_t zpg ) { \
+    dbgPrintf("RMB"#n" "); \
+    disPrintf(disassembly.inst, "RMB"#n); \
+    WRLOMEM[zpg] &= ~(1 << n); \
+}
+
+    RMB(0)
+    RMB(1)
+    RMB(2)
+    RMB(3)
+    RMB(4)
+    RMB(5)
+    RMB(6)
+    RMB(7)
+
+#define SMB(n) INLINE void SMB##n( uint8_t zpg ) { \
+    dbgPrintf("SMB"#n" "); \
+    disPrintf(disassembly.inst, "SMB"#n); \
+    WRLOMEM[zpg] |= (1 << n); \
+}
+
+    SMB(0)
+    SMB(1)
+    SMB(2)
+    SMB(3)
+    SMB(4)
+    SMB(5)
+    SMB(6)
+    SMB(7)
+
+
 #endif // __6502_INSTR_SET_CLR_H__
 

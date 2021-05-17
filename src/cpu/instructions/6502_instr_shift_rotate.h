@@ -40,7 +40,7 @@
  absolute,X    ASL oper,X    1E    3     7
 **/
 INLINE void _ASL( uint16_t addr ) {
-    m6502.C = WRLOMEM[addr] & 0x80;
+    m6502.C = memread(addr) & 0x80;
     set_flags_NZ( WRLOMEM[addr] <<= 1 );
 }
 INLINE void ASL( uint16_t addr ) {

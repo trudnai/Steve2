@@ -64,6 +64,38 @@ INLINE void PHA() {
 }
 
 /**
+ PHX  Push index X on Stack
+ 
+ push X                           N Z C I D V
+ - - - - - -
+ 
+ addressing    assembler    opc  bytes  cyles
+ --------------------------------------------
+ implied       PHX           48    1     3
+ **/
+INLINE void PHX() {
+    dbgPrintf("PHX %02X ", m6502.X);
+    disPrintf(disassembly.inst, "PHX");
+    PUSH( m6502.X );
+}
+
+/**
+ PHY  Push index Y on Stack
+ 
+ push Y                           N Z C I D V
+ - - - - - -
+ 
+ addressing    assembler    opc  bytes  cyles
+ --------------------------------------------
+ implied       PHY           48    1     3
+ **/
+INLINE void PHY() {
+    dbgPrintf("PHY %02X ", m6502.Y);
+    disPrintf(disassembly.inst, "PHY");
+    PUSH( m6502.Y );
+}
+
+/**
  PLA  Pull Accumulator from Stack
  
  pull A                           N Z C I D V
@@ -78,6 +110,40 @@ INLINE void PLA() {
     dbgPrintf("PLA %02X ", m6502.A);
     disPrintf(disassembly.inst, "PLA");
     set_flags_NZ( m6502.A );
+}
+
+/**
+ PLX  Pull index X from Stack
+ 
+ pull X                           N Z C I D V
+ + + - - - -
+ 
+ addressing    assembler    opc  bytes  cyles
+ --------------------------------------------
+ implied       PLX           68    1     4
+ **/
+INLINE void PLX() {
+    m6502.X = POP();
+    dbgPrintf("PLX %02X ", m6502.X);
+    disPrintf(disassembly.inst, "PLX");
+    set_flags_NZ( m6502.X );
+}
+
+/**
+ PLY  Pull index Y from Stack
+ 
+ pull Y                           N Z C I D V
+ + + - - - -
+ 
+ addressing    assembler    opc  bytes  cyles
+ --------------------------------------------
+ implied       PLY           68    1     4
+ **/
+INLINE void PLY() {
+    m6502.Y = POP();
+    dbgPrintf("PLY %02X ", m6502.Y);
+    disPrintf(disassembly.inst, "PLY");
+    set_flags_NZ( m6502.Y );
 }
 
 /**

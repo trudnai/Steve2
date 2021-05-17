@@ -45,6 +45,9 @@ INLINE void JMP( uint16_t addr ) {
         dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);
     }
 #endif
+    if (m6502.PC >> 8 != addr >> 8) {
+        m6502.clkfrm += 1;
+    }
     m6502.PC = addr;
 }
 

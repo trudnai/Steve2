@@ -171,19 +171,19 @@ class HiRes: NSView {
     //    let color_orange    : UInt32 = 0xFFEE2211;
     
     // HiRes Colors for the SRGB color space
-    let color_black     : UInt32 = 0x00000000;
-    let color_white     : UInt32 = 0xFFEEEEEE;
-    let color_purple    : UInt32 = 0xFFDD55FF;
-    let color_green     : UInt32 = 0xFF2BD84A;
-    let color_blue      : UInt32 = 0xFF5599FF;
-    let color_orange    : UInt32 = 0xFFFF6302;
+    let color_black     : UInt32 = 0x00000000
+    let color_white     : UInt32 = 0xFFEEEEEE
+    let color_purple    : UInt32 = 0xFFDD55FF
+    let color_green     : UInt32 = 0xFF2BD84A
+    let color_blue      : UInt32 = 0xFF5599FF
+    let color_orange    : UInt32 = 0xFFFF6302
     
     // for debugging only:
-    let color_turquis   : UInt32 = 0xFF11BBBB;
-    let color_yellow    : UInt32 = 0xFFBBBB11;
+    let color_turquis   : UInt32 = 0xFF11BBBB
+    let color_yellow    : UInt32 = 0xFFBBBB11
     
     // default is green
-    var monoColor       : UInt32 = 0xFF2BD84A;
+    var monoColor       : UInt32 = 0xFF2BD84A
     
     
     func refreshChanged( blockSize : Int ) {

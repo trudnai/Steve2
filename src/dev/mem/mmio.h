@@ -59,7 +59,8 @@ uint8_t * const RAM = Apple2_64K_RAM;           // Pointer to the Main Memory so
 uint8_t * const MEM = Apple2_64K_MEM;           // Pointer to the Shadow Memory Map so we can use this from Swift
 
 uint8_t * const RDLOMEM = Apple2_64K_MEM;       // for Read $0000 - $BFFF (shadow memory)
-uint8_t *       WRLOMEM = Apple2_64K_MEM;       // for Write $0000 - $BFFF (shadow memory)
+uint8_t *       WRZEROPG= Apple2_64K_MEM;       // for Write $0000 - $0200 (shadow memory)
+uint8_t *       WRLOMEM = Apple2_64K_MEM;       // for Write $0200 - $BFFF (shadow memory)
 uint8_t * const RDHIMEM = Apple2_64K_MEM;       // for Read / Write $0000 - $BFFF (shadow memory)
 uint8_t *       WRD0MEM = Apple2_Dummy_RAM;     // for writing $D000 - $DFFF
 uint8_t *       WRHIMEM = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
@@ -68,8 +69,12 @@ uint8_t *       WRHIMEM = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
 static uint8_t writeState = 0;                  // 1 if $C08D was written
 
 
-MEMcfg_t MEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-MEMcfg_t newMEMcfg = { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+#define INIT_MEMCFG { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+
+const MEMcfg_t initMEMcfg = INIT_MEMCFG;
+
+MEMcfg_t MEMcfg = INIT_MEMCFG;
+MEMcfg_t newMEMcfg = INIT_MEMCFG;
 
 
 #define DEF_RAM_PAGE(mem,pg) \
@@ -235,6 +240,7 @@ enum mmio {
     io_KBDSTRB          = 0xC010,   // OECG WR   Keyboard Strobe
 
     // Audio
+    io_TAPEOUT          = 0xC020,   // OE    R   Toggle Cassette Tape Output (not on IIe PDS Card)
     io_SPKR             = 0xC030,   // OECG  R   Toggle Speaker
     
     // Video
@@ -246,7 +252,12 @@ enum mmio {
     io_VID_SET80VID     = 0xC00D,   //  ECG W    80 Columns
     io_VID_CLRALTCHAR   = 0xC00E,   //  ECG W    Primary Character Set
     io_VID_SETALTCHAR   = 0xC00F,   //  ECG W    Alternate Character Set
+    io_VID_RDVBL        = 0xC019,   //  E G  R7  Vertical Blanking (E:1=drawing G:0=drawing)
+                       // RSTVBL         C   R   Reset Vertical Blanking Interrupt
     io_VID_RDTEXT       = 0xC01A,   //  ECG  R7  Status of Text/Graphics
+    io_VID_RDMIXED      = 0xC01B,   //  ECG  R7  Status of Full Screen/Mixed Graphics
+    io_VID_RDPAGE2      = 0xC01C,   //  ECG  R7  Status of Page 1/Page 2
+    io_VID_RDHIRES      = 0xC01D,   //  ECG  R7  Status of LoRes/HiRes
     io_VID_ALTCHAR      = 0xC01E,   //  ECG  R7  Status of Primary/Alternate Character Set
     io_VID_RD80VID      = 0xC01F,   //  ECG  R7  Status of 40/80 Columns
     io_VID_Text_OFF     = 0xC050,
@@ -335,25 +346,108 @@ enum mmio {
 #define PAGESIZE 256
 #define PAGES 16
 
+const uint8_t * const shadowLowMEM = Apple2_64K_MEM + 0x200;
+const uint8_t * currentLowMEM = Apple2_64K_RAM + 0x200;
+
+void auxMemorySelect( MEMcfg_t newMEMcfg ) {
+    const uint8_t * newLowMEM = currentLowMEM;
+    
+    if ( newMEMcfg.is_80STORE ) {
+        if ( newMEMcfg.RD_AUX_MEM ) {
+            newLowMEM = Apple2_64K_AUX + 0x200;
+        }
+        else {
+            newLowMEM = Apple2_64K_RAM + 0x200;
+        }
+        
+        if ( newMEMcfg.WR_AUX_MEM ) {
+            if ( newMEMcfg.RD_INT_RAM ) {
+                WRLOMEM = Apple2_64K_AUX;
+            }
+            else {
+                WRLOMEM = Apple2_64K_MEM;
+            }
+        }
+        else {
+            if ( newMEMcfg.RD_INT_RAM ) {
+                WRLOMEM = Apple2_64K_MEM;
+            }
+            else {
+                WRLOMEM = Apple2_64K_RAM;
+            }
+        }
+    }
+    else {
+        newLowMEM = Apple2_64K_RAM + 0x200;
+        WRLOMEM = Apple2_64K_MEM;
+    }
+    
+    // load new content to shadow memory
+    if ( newLowMEM != currentLowMEM ) {
+        // save the content of Shadow Memory
+        memcpy( (void*) currentLowMEM, shadowLowMEM, 0xBE00);
+        // page in the new memory area
+        memcpy( (void*) shadowLowMEM, newLowMEM, 0xBE00);
+        // mark new as the current one
+        currentLowMEM = newLowMEM;
+    }
+    
+    MEMcfg = newMEMcfg;
+}
+
+
+void C3MemorySelect( MEMcfg_t newMEMcfg ) {
+    
+    if ( newMEMcfg.slot_C3_ROM ) {
+        // load internal ROM to memory
+        memcpy(Apple2_64K_MEM + 0xC300, Apple2_64K_RAM + 0xC300, 0x100);
+    }
+    else {
+        // load peripheral ROM to memory
+        memcpy(Apple2_64K_MEM + 0xC300, Apple2_16K_ROM + 0x300, 0x100);
+    }
+    
+    MEMcfg = newMEMcfg;
+}
+
+
+void CxMemorySelect( MEMcfg_t newMEMcfg ) {
+    
+    if ( newMEMcfg.int_Cx_ROM ) {
+        // load internal ROM to memory
+        memcpy(Apple2_64K_MEM + 0xC100, Apple2_16K_ROM + 0x100, 0xF00);
+    }
+    else {
+        // load peripheral ROM to memory
+        memcpy(Apple2_64K_MEM + 0xC100, Apple2_64K_RAM + 0xC100, 0xF00);
+        //        memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
+    }
+    
+    C3MemorySelect( newMEMcfg );
+    
+    MEMcfg = newMEMcfg;
+}
+
 
 void resetMemory() {
+    newMEMcfg = initMEMcfg;
     
-    // Reset memory configuration
-    MEMcfg.RAM_16K      = 0;
-    MEMcfg.RAM_128K     = 1;
-    MEMcfg.RD_INT_RAM   = 0;
-    MEMcfg.WR_RAM       = 0;
-    MEMcfg.RAM_BANK_2   = 0;
-    MEMcfg.AUX_BANK     = 0;
-    MEMcfg.is_80STORE   = 0;
-    MEMcfg.RD_AUX_MEM   = 0;
-    MEMcfg.WR_AUX_MEM   = 0;
-    MEMcfg.int_Cx_ROM   = 0;
-    MEMcfg.slot_C3_ROM  = 0;
-    MEMcfg.ALT_ZP       = 0;
-    MEMcfg.txt_page_2   = 0;
+    WRZEROPG= Apple2_64K_MEM;       // for Write $0000 - $0200 (shadow memory)
+    WRLOMEM = Apple2_64K_MEM;       // for Write $0200 - $BFFF (shadow memory)
+    WRD0MEM = Apple2_Dummy_RAM;     // for writing $D000 - $DFFF
+    WRHIMEM = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
     
+    auxMemorySelect(MEMcfg);
+    CxMemorySelect(MEMcfg);
+    
+    MEMcfg = newMEMcfg;
+    
+    videoMode.text = 1;
+    videoMode.col80 = 0;
+}
 
+
+void initMemory() {
     // Aux Video Memory
     memset( Apple2_64K_AUX, 0, sizeof(Apple2_64K_AUX) );
     // 64K Main Memory Area
@@ -366,7 +460,7 @@ void resetMemory() {
     // I/O area should be 0 -- just in case we decide to init RAM with a different pattern...
     memset( Apple2_64K_RAM + 0xC000, 0, 0x1000 );
     
-    newMEMcfg = MEMcfg;
+    resetMemory();
 }
 
 
@@ -396,50 +490,6 @@ void textPageSelect() {
         
         activeTextPage = newTextPage;
     }
-}
-
-
-const uint8_t * const shadowLowMEM = Apple2_64K_MEM + 0x200;
-const uint8_t * currentLowMEM = Apple2_64K_RAM + 0x200;
-
-void auxMemorySelect( MEMcfg_t newMEMcfg ) {
-    
-    // save the content of Shadow Memory
-    memcpy( (void*) currentLowMEM, shadowLowMEM, 0xBE00);
-    
-    if ( newMEMcfg.is_80STORE ) {
-        if ( newMEMcfg.RD_AUX_MEM ) {
-            currentLowMEM = Apple2_64K_AUX + 0x200;
-        }
-        else {
-            currentLowMEM = Apple2_64K_RAM + 0x200;
-        }
-        
-        if ( MEMcfg.WR_AUX_MEM ) {
-            if ( MEMcfg.RD_INT_RAM ) {
-                WRLOMEM = Apple2_64K_AUX;
-            }
-            else {
-                WRLOMEM = Apple2_64K_MEM;
-            }
-        }
-        else {
-            if ( MEMcfg.RD_INT_RAM ) {
-                WRLOMEM = Apple2_64K_MEM;
-            }
-            else {
-                WRLOMEM = Apple2_64K_RAM;
-            }
-        }
-    }
-    else {
-        WRLOMEM = Apple2_64K_MEM;
-    }
-    
-    // load new content to shadow memory
-    memcpy( (void*) shadowLowMEM, currentLowMEM, 0xBE00);
-    
-    MEMcfg = newMEMcfg;
 }
 
 
@@ -527,7 +577,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
             case (uint8_t)io_MEM_RDROM_WRAM_2_:
             case (uint8_t)io_MEM_RDROM_WRAM_1_:
                 
-                //                        printf("RD_ROM + WR_AUX\n");
+//                printf("RD_ROM + WR_AUX\n");
                 
                 // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
                 MEMcfg.WR_RAM = 0;
@@ -546,12 +596,12 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
             case (uint8_t)io_MEM_RDRAM_WRAM_2_:
             case (uint8_t)io_MEM_RDRAM_WRAM_1_:
                 
-                //                        printf("RD_RAM + WR_RAM\n");
+//                printf("RD_RAM + WR_RAM\n");
                 
-                // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
-                MEMcfg.WR_RAM = 1;
-                WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
-                WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
+                    // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
+                    MEMcfg.WR_RAM = 1;
+                    WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
+                    WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
                 break;
                 
             default:
@@ -579,8 +629,8 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
 //    printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
     
-    unsigned int IOframe = clkfrm - lastIO;
-    lastIO = clkfrm;
+    unsigned int IOframe = m6502.clkfrm - lastIO;
+    lastIO = m6502.clkfrm;
 
     // TODO: This is for speed demo only, should be either removed or the entire ioRead should based on binary search, whatever is faster
     if ( addr == io_KBD ) {
@@ -613,10 +663,14 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
             return Apple2_64K_RAM[io_KBDSTRB];
 
+        case (uint8_t)io_TAPEOUT:
         case (uint8_t)io_SPKR:
             spkr_toggle();
             return Apple2_64K_RAM[io_SPKR];
 
+        case (uint8_t)io_VID_RDVBL:
+            return (m6502.clkfrm < 4550) ? 0x80 : 0;
+            
         case (uint8_t)io_VID_RDTEXT:
             return videoMode.text << 7;
             
@@ -627,6 +681,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return videoMode.col80 << 7;
             
         case (uint8_t)io_TAPEIN:
+            // TODO: this should be only on //c
             return MEMcfg.txt_page_2 << 7;
             
         case (uint8_t)io_RDCXROM:
@@ -665,6 +720,9 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             textPageSelect();
             break;
             
+        case (uint8_t)io_VID_RDPAGE2:
+            return MEMcfg.txt_page_2 << 7;
+            
         case (uint8_t)io_VID_Text_OFF:
             videoMode.text = 0;
             break;
@@ -681,6 +739,9 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             videoMode.mixed = 1;
             break;
             
+        case (uint8_t)io_VID_RDMIXED:
+            return videoMode.mixed << 7;
+            
         case (uint8_t)io_VID_Hires_OFF:
             videoMode.hires = 0;
             break;
@@ -689,7 +750,9 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             videoMode.hires = 1;
             break;
             
-            
+        case (uint8_t)io_VID_RDHIRES:
+            return videoMode.hires << 7;
+
         case (uint8_t)io_PDL0:
         case (uint8_t)io_PDL1:
         case (uint8_t)io_PDL2:
@@ -866,6 +929,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             Apple2_64K_RAM[io_KBD] &= 0x7F;
             break;
             
+        case (uint8_t)io_TAPEOUT:
         case (uint8_t)io_SPKR:
             spkr_toggle();
             break;
@@ -1186,7 +1250,7 @@ INLINE void memwrite( uint16_t addr, uint8_t data ) {
         // RAM
         memwrite8_low(addr, data);
     }
-    
+
 }
 
 /**

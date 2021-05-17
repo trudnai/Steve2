@@ -28,6 +28,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var preferencesController : PreferencesWindowController?
 
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
+    }
+    
     @IBAction func ROM_Selected(_ sender: NSMenuItem) {
         if let menuIdentifier = sender.identifier {
 //            rom_loadFile( Bundle.main.resourcePath, menuIdentifier.rawValue + ".rom" )

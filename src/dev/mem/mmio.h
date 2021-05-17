@@ -47,7 +47,7 @@ videoMode_t videoMode = { 1 }; // 40 col text, page 1
 uint8_t Apple2_Dummy_Page[ 1 * PG ];            // Dummy Page to discard data
 uint8_t Apple2_Dummy_RAM[ 64 * KB ];            // Dummy RAM to discard data
 
-uint8_t Apple2_16K_ROM[ 16 * KB ] = {0};        // ROM C0, C8, D0, D8, E0, E8, F0, F8
+uint8_t Apple2_64K_ROM[ 64 * KB ] = {0};        // ROM C0, C8, D0, D8, E0, E8, F0, F8
 
 uint8_t Apple2_64K_AUX[ 64 * KB ] = {0};        // 64K Expansion Memory
 uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};        // Main Memory
@@ -404,7 +404,7 @@ void C3MemorySelect( MEMcfg_t newMEMcfg ) {
     }
     else {
         // load peripheral ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC300, Apple2_16K_ROM + 0x300, 0x100);
+        memcpy(Apple2_64K_MEM + 0xC300, Apple2_64K_ROM + 0xC300, 0x100);
     }
     
     MEMcfg = newMEMcfg;
@@ -415,7 +415,7 @@ void CxMemorySelect( MEMcfg_t newMEMcfg ) {
     
     if ( newMEMcfg.int_Cx_ROM ) {
         // load internal ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC100, Apple2_16K_ROM + 0x100, 0xF00);
+        memcpy(Apple2_64K_MEM + 0xC100, Apple2_64K_ROM + 0xC100, 0xF00);
     }
     else {
         // load peripheral ROM to memory
@@ -439,6 +439,9 @@ void resetMemory() {
     
     auxMemorySelect(MEMcfg);
     CxMemorySelect(MEMcfg);
+
+    // initializing disk controller
+    memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_ROM + 0xC600, 0x100);
     
     MEMcfg = newMEMcfg;
     
@@ -563,7 +566,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
                 MEMcfg.RD_INT_RAM = 0;
                 
                 // load the content of ROM Memory
-                memcpy(Apple2_64K_MEM + 0xD000, Apple2_16K_ROM + 0x1000, 0x3000);
+                memcpy(Apple2_64K_MEM + 0xD000, Apple2_64K_ROM + 0xD000, 0x3000);
                 
                 // set the ROM to read on the upper memory area
                 break;
@@ -885,6 +888,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 }
 
 // TODO:
+uint8_t getIO ( uint16_t ioaddr ) {
+    return Apple2_64K_RAM[ioaddr];
+}
+
 void setIO ( uint16_t ioaddr, uint8_t val ) {
     Apple2_64K_RAM[ioaddr] = val;
 }

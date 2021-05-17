@@ -373,7 +373,7 @@ void spkr_toggle() {
         // (we will play the entire buffer at the end of the frame)
         spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
         unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
-                
+
         spkr_level = spkr_samples[ spkr_sample_idx ];
         
         if ( spkr_state ) {
@@ -386,11 +386,15 @@ void spkr_toggle() {
             if ( spkr_sample_idx_diff < 8 ) {
 //                printf("sd:%u\n", spkr_sample_idx_diff);
                 
-                float new_level = SPKR_LEVEL_MIN + dumping;
                 spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
+                float new_level = SPKR_LEVEL_MIN + dumping;
+                last_level += new_level;
+                last_level /= 2;
+
+                float dumping = last_level - SPKR_LEVEL_MIN;
+                dumping *= SPKR_INITIAL_TRAILING_EDGE;
+
                 while ( spkr_sample_last_idx < spkr_sample_idx ) {
-                    last_level += new_level;
-                    last_level /= 2;
                     spkr_samples[ spkr_sample_last_idx++ ] = last_level;
                     spkr_samples[ spkr_sample_last_idx++ ] = last_level; // stereo
                 }
@@ -420,12 +424,16 @@ void spkr_toggle() {
 
             if ( spkr_sample_idx_diff < 8 ) {
 //                printf("sd:%u\n", spkr_sample_idx_diff);
-                
-                float new_level = SPKR_LEVEL_MAX + dumping;
+
                 spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
+                float new_level = SPKR_LEVEL_MAX + dumping;
+                last_level += new_level;
+                last_level /= 2;
+
+                float dumping = last_level - SPKR_LEVEL_MIN;
+                dumping *= SPKR_INITIAL_TRAILING_EDGE;
+                
                 while ( spkr_sample_last_idx < spkr_sample_idx ) {
-                    last_level += new_level;
-                    last_level /= 2;
                     spkr_samples[ spkr_sample_last_idx++ ] = last_level;
                     spkr_samples[ spkr_sample_last_idx++ ] = last_level; // stereo
                 }

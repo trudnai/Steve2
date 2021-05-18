@@ -70,7 +70,6 @@ int spkr_level = SPKR_LEVEL_ZERO;
 
 
 #define BUFFER_COUNT 256
-#define SOURCES_COUNT 4
 #define SPKR_CHANNELS 2
 
 ALuint spkr_src [SOURCES_COUNT] = { 0, 0, 0, 0 };
@@ -207,7 +206,7 @@ void spkr_init() {
     al_check_error();
     alSource3f(spkr_src[SPKR_SRC_GAME_SFX], AL_POSITION, 0.0, 0.0, 0.0);
     al_check_error();
-
+    
     
     // Set-up disk motor sound source and play buffer
     alSourcei(spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_SOURCE_RELATIVE, AL_TRUE);
@@ -371,7 +370,7 @@ void spkr_toggle() {
         
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
-        spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
+        spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / (double)spkr_sample_rate)) * SPKR_CHANNELS;
         unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
 
         spkr_level = spkr_samples[ spkr_sample_idx ];
@@ -383,7 +382,7 @@ void spkr_toggle() {
             float dumping = spkr_level - SPKR_LEVEL_MIN;
             dumping *= SPKR_INITIAL_TRAILING_EDGE;
 
-            if ( spkr_sample_idx_diff < 8 ) {
+            if ( spkr_sample_idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
 //                printf("sd:%u\n", spkr_sample_idx_diff);
                 
                 spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
@@ -422,7 +421,7 @@ void spkr_toggle() {
             float dumping = spkr_level - SPKR_LEVEL_MAX;
             dumping *= SPKR_INITIAL_LEADING_EDGE;
 
-            if ( spkr_sample_idx_diff < 8 ) {
+            if ( spkr_sample_idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
 //                printf("sd:%u\n", spkr_sample_idx_diff);
 
                 spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
@@ -433,7 +432,7 @@ void spkr_toggle() {
                 float dumping = last_level - SPKR_LEVEL_MIN;
                 dumping *= SPKR_INITIAL_TRAILING_EDGE;
                 
-                while ( spkr_sample_last_idx < spkr_sample_idx ) {
+                while ( spkr_sample_last_idx < spkr_sample_idx + SPKR_SAMPLE_PWM_THRESHOLD ) {
                     spkr_samples[ spkr_sample_last_idx++ ] = last_level;
                     spkr_samples[ spkr_sample_last_idx++ ] = last_level; // stereo
                 }
@@ -540,11 +539,11 @@ void spkr_update() {
                     alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                     al_check_error();
                 }
-                
+
                 ALenum state;
                 alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
-    //            al_check_error();
-                
+//                al_check_error();
+
                 switch (state) {
                     case AL_PAUSED:
                         if ( --playDelay <= 0 ) {
@@ -566,7 +565,7 @@ void spkr_update() {
                         break;
                 }
                 
-                // clear the slack buffer , so we can fill it up by new data
+                // clear the slack buffer, so we can fill it up by new data
                 for ( int i = 0; i < spkr_buf_size + spkr_extra_buf; i++ ) {
                     spkr_samples[i] = spkr_level;
                 }

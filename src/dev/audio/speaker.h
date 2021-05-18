@@ -55,7 +55,7 @@
 #define SPKR_INITIAL_LEADING_EDGE   0.96 // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
 #define SPKR_INITIAL_TRAILING_EDGE  0.72 // need a bit of slope to get Xonix sound good
 
-
+#define SPKR_SAMPLE_PWM_THRESHOLD   10   // to detect PWM controlled speaker control like in Wavy Navy or Xonix
 
 
 
@@ -64,6 +64,7 @@ enum {
     SPKR_SRC_DISK_MOTOR_SFX,
     SPKR_SRC_DISK_ARM_SFX,
     SPKR_SRC_DISK_IOERR_SFX,
+    SOURCES_COUNT
 };
 
 

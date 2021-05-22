@@ -1458,6 +1458,51 @@ class ViewController: NSViewController  {
     }
     
     
+    func Cheat_Wavy_Navy_Add_3_Ships() {
+        let ships = getMEM( 0x4746 )
+        if ( ships < 7 ) {
+            setMEM( 0x4746, ships + 3 );
+//            CALL( 0x1FDA );
+        }
+    }
+
+    func Cheat_Wavy_Navy_Never_Lose() {
+        // Replace STC / SBC $0x1 to NOPs...
+//        setMEM( 0x1E63, 0xEA );
+//        setMEM( 0x1E64, 0xEA );
+//        setMEM( 0x1E65, 0xEA );
+
+//        // call to decease
+//        setMEM( 0x1556, 0xEA );
+//        setMEM( 0x1557, 0xEA );
+//        setMEM( 0x1558, 0xEA );
+
+//        setMEM( 0x15F3, 0xEA );
+//        setMEM( 0x15F4, 0xEA );
+//        setMEM( 0x15F5, 0xEA );
+
+//        setMEM( 0x15EA, 0xEA );
+//        setMEM( 0x15EB, 0xEA );
+
+//        // no end
+//        setMEM( 0x1515, 0xEA );
+//        setMEM( 0x1516, 0xEA );
+
+//        // no end
+//        setMEM( 0x1537, 0xEA );
+//        setMEM( 0x1538, 0xEA );
+        
+        // lose to win
+        setMEM( 0x1545, 0xEA );
+        setMEM( 0x1546, 0xEA );
+
+//        var i : UInt16 = 0x15EA;
+//        while i < 0x1608 {
+//            setMEM( i, 0xEA )
+//            i += 1
+//        }
+    }
+
 }
 
 

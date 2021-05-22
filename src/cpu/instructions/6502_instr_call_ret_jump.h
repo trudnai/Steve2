@@ -51,6 +51,16 @@ INLINE void JMP( uint16_t addr ) {
     m6502.PC = addr;
 }
 
+
+// for patching game purposes -- it should not be inline!
+void CALL( uint16_t addr ) {
+    dbgPrintf("CALL ");
+    disPrintf(disassembly.inst, "CALL");
+    PUSH_addr(m6502.PC -1);
+    m6502.PC = addr;
+}
+
+
 /**
  JSR  Jump to New Location Saving Return Address
  

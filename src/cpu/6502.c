@@ -208,6 +208,16 @@ INLINE int m6502_Step() {
     
 #ifdef DEBUG___
     switch ( m6502.PC ) {
+        case 0x1E60:
+            printf("Wavy Navy...\n");
+            break;
+            
+        default:
+            break;
+    }
+    
+    
+    switch ( m6502.PC ) {
         case 0xC600:
             printf("DISK...\n");
             break;

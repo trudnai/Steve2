@@ -213,6 +213,9 @@ extern void kbdInput ( uint8_t code );
 extern void kbdUp (void);
 extern uint8_t getIO ( uint16_t ioaddr );
 extern void setIO ( uint16_t ioaddr, uint8_t val );
+extern uint8_t getMEM ( uint16_t ioaddr );
+extern void setMEM ( uint16_t ioaddr, uint8_t val );
+extern void CALL( uint16_t addr );
 
 extern void interrupt_IRQ(void);
 extern void interrupt_NMI(void);

@@ -830,6 +830,83 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Cheat" id="zff-s0-uvd" userLabel="Cheat">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Cheat" id="s4G-Ga-fQB">
+                                    <items>
+                                        <menuItem title="Donkey Kong" id="cxv-HV-gjN">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="PowerOff:" target="Voe-Tx-rLC" id="8HQ-B5-3Tp"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Hard Hat Mack" id="Vx5-kI-CXy">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="Pause:" target="Voe-Tx-rLC" id="A6V-B9-HNV"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Wavy Navy" id="4B8-RN-oiz">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="PowerOn:" target="Voe-Tx-rLC" id="pSr-gV-Oy9"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Wavy Navy" id="uI6-ZH-hM8">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Wavy Navy" id="9QZ-QS-lIo">
+                                                <items>
+                                                    <menuItem title="Add 3 ships" id="d52-dy-S2F">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Cheat_Wavy_Navy_Add_3_Ships:" target="Voe-Tx-rLC" id="phG-QT-Lj6"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Never Lose" id="kIB-C3-0tt">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Cheat_Wavy_Navy_Never_Lose:" target="Voe-Tx-rLC" id="eIU-Ng-IXi"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Nwk-Vi-RD4"/>
+                                        <menuItem title="Cold Reset" id="Hn8-EQ-Pr2">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="ColdReset:" target="Voe-Tx-rLC" id="13q-jW-b7n"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Warm Reset" id="YrR-id-z8i">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="WarmReset:" target="Voe-Tx-rLC" id="DSr-q3-OdR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="E7Z-U1-fJ6"/>
+                                        <menuItem title="Snapshot" enabled="NO" id="3Xy-u4-cj7">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <menu key="submenu" title="Machine" id="Ocs-bf-2a9">
+                                                <items>
+                                                    <menuItem title="Save" enabled="NO" id="BSF-xm-ldk">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Revert" enabled="NO" id="3HI-ow-gm8">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Clone" enabled="NO" id="bSt-X1-zKZ">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                    <menuItem title="Remove" enabled="NO" id="9Kp-2J-tXP">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                    </menuItem>
+                                                </items>
+                                            </menu>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Config" id="xCX-YJ-V4X" userLabel="Config">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Config" id="deK-A1-Cfu">

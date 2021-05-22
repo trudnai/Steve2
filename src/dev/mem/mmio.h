@@ -896,6 +896,13 @@ void setIO ( uint16_t ioaddr, uint8_t val ) {
     Apple2_64K_RAM[ioaddr] = val;
 }
 
+uint8_t getMEM ( uint16_t addr ) {
+    return Apple2_64K_MEM[addr];
+}
+
+void setMEM ( uint16_t addr, uint8_t val ) {
+    Apple2_64K_MEM[addr] = val;
+}
 
 void kbdInput ( uint8_t code ) {
 //    printf("kbdInput: %02X ('%c')\n", code, isprint(code) ? code : ' ');

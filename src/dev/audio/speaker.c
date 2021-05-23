@@ -67,7 +67,7 @@ ALCcontext *ctx = NULL;
 
 #define SPKR_MIN_VOL    0.0001 // OpenAL cannot change volume to 0.0 for some reason, so we just turn volume really low
 int spkr_level = SPKR_LEVEL_ZERO;
-
+int spkr_last_level = SPKR_LEVEL_ZERO;
 
 #define BUFFER_COUNT 256
 #define SPKR_CHANNELS 2
@@ -99,6 +99,7 @@ unsigned spkr_buf_size = spkr_buf_alloc_size / sizeof(spkr_sample_t);
 spkr_sample_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT]; // can store up to 1 sec of sound
 unsigned spkr_sample_idx = 0;
 unsigned spkr_sample_last_idx = 0;
+unsigned spkr_sample_first_pwm_idx = 0;
 
 unsigned spkr_play_timeout = SPKR_PLAY_TIMEOUT; // increase to 32 for 240 fps, normally 8 for 30 fps
 unsigned spkr_play_time = 0;
@@ -353,6 +354,68 @@ void spkr_exit() {
 
 char spkr_state = 0;
 
+
+void spkr_toggle_edge ( const int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
+
+    float dumping = spkr_level - level_max;
+    dumping *= initial_edge;
+
+    if ( idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
+        if ( spkr_sample_first_pwm_idx == 0 ) {
+            spkr_sample_first_pwm_idx = spkr_sample_last_idx;
+        }
+// printf("sd:%u\n", spkr_sample_idx_diff);
+        spkr_last_level = spkr_samples[spkr_sample_last_idx];
+        float new_level = level_max + dumping;
+        spkr_last_level += new_level;
+        spkr_last_level /= 2;
+        
+        while ( spkr_sample_last_idx <= spkr_sample_idx ) {
+            spkr_samples[ spkr_sample_last_idx++ ] = spkr_last_level;
+            spkr_samples[ spkr_sample_last_idx++ ] = spkr_last_level; // stereo
+        }
+    }
+    else {
+//        if ( spkr_sample_first_pwm_idx ) {
+//            // calculate average speaker level
+//            int cnt = 1;
+//            int64_t avg = spkr_samples[spkr_sample_first_pwm_idx];
+//
+//            for ( unsigned i = spkr_sample_first_pwm_idx + 2; i < spkr_sample_idx; i += 2 ) {
+//                cnt++;
+//                avg += spkr_samples[i];
+//            }
+//
+//            avg /= cnt;
+//
+//            // set average speaker level for the entire PWM region
+//            while ( spkr_sample_first_pwm_idx < spkr_sample_idx ) {
+//                spkr_samples[ spkr_sample_first_pwm_idx++ ] = avg;
+//                spkr_samples[ spkr_sample_first_pwm_idx++ ] = avg; // stereo
+//            }
+//
+//            spkr_sample_first_pwm_idx = 0;
+//        }
+        
+        spkr_last_level = spkr_level;
+    }
+    // save last index before we advance it...
+    spkr_sample_last_idx = spkr_sample_idx;
+    
+    
+    while ( fabsf(dumping) > 1 ) {
+        spkr_sample_t level = level_max + dumping;
+        spkr_samples[ spkr_sample_idx++ ] = level;
+        spkr_samples[ spkr_sample_idx++ ] = level; // stereo
+        
+        // how smooth we want the speeker to decay, so we will hear no pops and crackles
+        dumping *= fade_edge;
+    }
+    
+    spkr_level = level_max;
+}
+
+
 void spkr_toggle() {
     // TODO: This is very slow!
     
@@ -379,79 +442,13 @@ void spkr_toggle() {
             // down edge
             spkr_state = 0;
             
-            float dumping = spkr_level - SPKR_LEVEL_MIN;
-            dumping *= SPKR_INITIAL_TRAILING_EDGE;
-
-            if ( spkr_sample_idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
-//                printf("sd:%u\n", spkr_sample_idx_diff);
-                
-                spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
-                float new_level = SPKR_LEVEL_MIN + dumping;
-                last_level += new_level;
-                last_level /= 2;
-
-                float dumping = last_level - SPKR_LEVEL_MIN;
-                dumping *= SPKR_INITIAL_TRAILING_EDGE;
-
-                while ( spkr_sample_last_idx < spkr_sample_idx ) {
-                    spkr_samples[ spkr_sample_last_idx++ ] = last_level;
-                    spkr_samples[ spkr_sample_last_idx++ ] = last_level; // stereo
-                }
-            }
-            // save last index before we advance it...
-            spkr_sample_last_idx = spkr_sample_idx;
-
-
-            while ( dumping > 1 ) {
-                spkr_sample_t level = SPKR_LEVEL_MIN + dumping;
-                spkr_samples[ spkr_sample_idx++ ] = level;
-                spkr_samples[ spkr_sample_idx++ ] = level; // stereo
-                
-                // how smooth we want the speeker to decay, so we will hear no pops and crackles
-                // 0.9 gives you a kind of saw wave at 1KHz (beep)
-                // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-                dumping *= SPKR_FADE_TRAILING_EDGE;
-            }
-            spkr_level = SPKR_LEVEL_MIN;
+            spkr_toggle_edge(SPKR_LEVEL_MIN, SPKR_INITIAL_TRAILING_EDGE, SPKR_FADE_TRAILING_EDGE, spkr_sample_idx_diff);
         }
         else {
             // up edge
             spkr_state = 1;
             
-            float dumping = spkr_level - SPKR_LEVEL_MAX;
-            dumping *= SPKR_INITIAL_LEADING_EDGE;
-
-            if ( spkr_sample_idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
-//                printf("sd:%u\n", spkr_sample_idx_diff);
-
-                spkr_sample_t last_level = spkr_samples[spkr_sample_last_idx];
-                float new_level = SPKR_LEVEL_MAX + dumping;
-                last_level += new_level;
-                last_level /= 2;
-
-                float dumping = last_level - SPKR_LEVEL_MIN;
-                dumping *= SPKR_INITIAL_TRAILING_EDGE;
-                
-                while ( spkr_sample_last_idx < spkr_sample_idx + SPKR_SAMPLE_PWM_THRESHOLD ) {
-                    spkr_samples[ spkr_sample_last_idx++ ] = last_level;
-                    spkr_samples[ spkr_sample_last_idx++ ] = last_level; // stereo
-                }
-            }
-            // save last index before we advance it...
-            spkr_sample_last_idx = spkr_sample_idx;
-
-            
-            while ( dumping < -1 ) {
-                spkr_sample_t level = SPKR_LEVEL_MAX + dumping;
-                spkr_samples[ spkr_sample_idx++ ] = level;
-                spkr_samples[ spkr_sample_idx++ ] = level; // stereo
-                
-                // how smooth we want the speeker to decay, so we will hear no pops and crackles
-                // 0.9 gives you a kind of saw wave at 1KHz (beep)
-                // 0.7 is better, but Xonix gives you a bit distorted speech and Donkey Kong does not sound the same
-                dumping *= SPKR_FADE_LEADING_EDGE;
-            }
-            spkr_level = SPKR_LEVEL_MAX;
+            spkr_toggle_edge(SPKR_LEVEL_MAX, SPKR_INITIAL_LEADING_EDGE, SPKR_FADE_LEADING_EDGE, spkr_sample_idx_diff);
         }
 
         

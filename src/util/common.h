@@ -58,7 +58,7 @@
 
 
 // calculates number of cycles in one frame
-#define MHZ(mhz) ( (mhz) * M )
+#define MHZ(mhz) ( (unsigned)( (mhz) * M ) )
 #define FRAME(mhz) ( MHZ(mhz) / fps )
 #define FRAME_INIT(mhz) ( MHZ(mhz) / DEFAULT_FPS )
 

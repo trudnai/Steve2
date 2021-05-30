@@ -41,8 +41,8 @@
 // medium
 //#define SPKR_LEVEL_MIN      (-3072)
 //#define SPKR_LEVEL_MAX      (+3072)
-#define SPKR_LEVEL_MIN      SPKR_LEVEL_ZERO
-#define SPKR_LEVEL_MAX      (+15000)
+#define SPKR_LEVEL_MAX      8192
+#define SPKR_LEVEL_MIN      (-SPKR_LEVEL_MAX)
 #define SPKR_PLAY_TIMEOUT   8U
 
 // quiet
@@ -50,12 +50,18 @@
 //#define SPKR_LEVEL_MAX      (+1000)
 
 
-#define SPKR_FADE_LEADING_EDGE      0.64
-#define SPKR_FADE_TRAILING_EDGE     0.24
-#define SPKR_INITIAL_LEADING_EDGE   1.00 // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
-#define SPKR_INITIAL_TRAILING_EDGE  0.88 // need a bit of slope to get Xonix sound good
+//#define SPKR_FADE_LEADING_EDGE      0.64
+//#define SPKR_FADE_TRAILING_EDGE     0.32
+//#define SPKR_INITIAL_LEADING_EDGE   0.82 // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
+//#define SPKR_INITIAL_TRAILING_EDGE  0.64 // need a bit of slope to get Xonix sound good
 
-#define SPKR_SAMPLE_PWM_THRESHOLD   12   // to detect PWM controlled speaker control like in Wavy Navy or Xonix
+extern float SPKR_FADE_LEADING_EDGE;
+extern float SPKR_FADE_TRAILING_EDGE;
+extern float SPKR_INITIAL_LEADING_EDGE; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
+extern float SPKR_INITIAL_TRAILING_EDGE; // need a bit of slope to get Xonix sound good
+
+
+#define SPKR_SAMPLE_PWM_THRESHOLD   8    // to detect PWM controlled speaker control like in Wavy Navy or Xonix
 
 
 
@@ -70,7 +76,7 @@ enum {
 
 extern const unsigned spkr_sample_rate;
 extern const unsigned spkr_buf_alloc_size;
-extern unsigned spkr_buf_size;
+extern const unsigned spkr_buf_size;
 extern const unsigned spkr_fps;
 extern unsigned spkr_fps_divider;
 extern int16_t spkr_samples [];

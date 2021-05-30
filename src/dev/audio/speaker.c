@@ -26,6 +26,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <math.h>
+#include "limits.h"
 
 #include "speaker.h"
 #include "6502.h"
@@ -92,10 +93,10 @@ const unsigned spkr_seconds = 1;
 const unsigned spkr_sample_rate = 44100;
 const unsigned sfx_sample_rate =  22050; // original sample rate
 //const unsigned sfx_sample_rate =  26000; // bit higher pitch
-int spkr_extra_buf = 0; // 800 / spkr_fps;
+int spkr_extra_buf = 26; // 800 / spkr_fps;
 typedef int16_t spkr_sample_t;
-const unsigned spkr_buf_alloc_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS * sizeof(spkr_sample_t) / DEFAULT_FPS; // stereo
-unsigned spkr_buf_size = spkr_buf_alloc_size / sizeof(spkr_sample_t);
+const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS; // stereo
+const unsigned spkr_buf_alloc_size = spkr_buf_size * sizeof(spkr_sample_t);
 spkr_sample_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT]; // can store up to 1 sec of sound
 unsigned spkr_sample_idx = 0;
 unsigned spkr_sample_last_idx = 0;
@@ -360,22 +361,37 @@ void spkr_toggle_edge ( const int level_max, const float initial_edge, const flo
     float dumping = spkr_level - level_max;
     dumping *= initial_edge;
 
-    if ( idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
-        if ( spkr_sample_first_pwm_idx == 0 ) {
-            spkr_sample_first_pwm_idx = spkr_sample_last_idx;
-        }
-// printf("sd:%u\n", spkr_sample_idx_diff);
-        spkr_last_level = spkr_samples[spkr_sample_last_idx];
-        float new_level = level_max + dumping;
-        spkr_last_level += new_level;
-        spkr_last_level /= 2;
-        
+    if ( idx_diff <= 4 ) {
         while ( spkr_sample_last_idx <= spkr_sample_idx ) {
-            spkr_samples[ spkr_sample_last_idx++ ] = spkr_last_level;
-            spkr_samples[ spkr_sample_last_idx++ ] = spkr_last_level; // stereo
+            spkr_samples[ spkr_sample_last_idx++ ] = SPKR_LEVEL_ZERO;
+            spkr_samples[ spkr_sample_last_idx++ ] = SPKR_LEVEL_ZERO; // stereo
         }
     }
-    else {
+    else
+//    if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
+//        if ( spkr_sample_first_pwm_idx == 0 ) {
+//            spkr_sample_first_pwm_idx = spkr_sample_last_idx;
+//        }
+//// printf("sd:%u\n", spkr_sample_idx_diff);
+////        spkr_last_level = spkr_samples[spkr_sample_last_idx];
+////        float new_level = level_max + dumping;
+////        spkr_last_level += new_level;
+////        spkr_last_level /= 2;
+//
+//        spkr_last_level = SPKR_LEVEL_MAX * ((idx_diff) / SPKR_SAMPLE_PWM_THRESHOLD);
+//        dumping = spkr_last_level - level_max;
+//        dumping *= initial_edge;
+//
+//        while ( spkr_sample_last_idx <= spkr_sample_idx ) {
+//            spkr_samples[ spkr_sample_last_idx++ ] = spkr_last_level;
+//            spkr_samples[ spkr_sample_last_idx++ ] = spkr_last_level; // stereo
+//
+////            spkr_samples[ spkr_sample_last_idx++ ] = 0;
+////            spkr_samples[ spkr_sample_last_idx++ ] = 0; // stereo
+//        }
+//    }
+//    else
+        {
 //        if ( spkr_sample_first_pwm_idx ) {
 //            // calculate average speaker level
 //            int cnt = 1;
@@ -399,6 +415,7 @@ void spkr_toggle_edge ( const int level_max, const float initial_edge, const flo
         
         spkr_last_level = spkr_level;
     }
+    
     // save last index before we advance it...
     spkr_sample_last_idx = spkr_sample_idx;
     
@@ -414,6 +431,11 @@ void spkr_toggle_edge ( const int level_max, const float initial_edge, const flo
     
     spkr_level = level_max;
 }
+
+float SPKR_FADE_LEADING_EDGE      = 0.32;
+float SPKR_FADE_TRAILING_EDGE     = 0.32;
+float SPKR_INITIAL_LEADING_EDGE   = 0.32; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
+float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix sound good
 
 
 void spkr_toggle() {
@@ -433,8 +455,12 @@ void spkr_toggle() {
         
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
-        spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / (double)spkr_sample_rate)) * SPKR_CHANNELS;
+        spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
         unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
+        if ( (int)spkr_sample_idx_diff < 0 ) {
+//            printf("m:%u\n", spkr_sample_idx_diff);
+            spkr_sample_idx_diff = UINT_MAX - spkr_sample_idx_diff;
+        }
 
         spkr_level = spkr_samples[ spkr_sample_idx ];
         
@@ -509,7 +535,7 @@ void spkr_update() {
                 else {
                     // push a click into the speaker buffer
                     // (we will play the entire buffer at the end of the frame)
-                    spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
+//                    spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
                     
 //                    // DEBUG spike
 //                    spkr_sample_idx = 0;
@@ -553,6 +579,8 @@ void spkr_update() {
                         // already playing
                         break;
                         
+                    case AL_INITIAL:
+                    case AL_STOPPED:
                     default:
                         alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
                         // this is so we will set state to AL_PAUSED immediately
@@ -566,7 +594,10 @@ void spkr_update() {
                 for ( int i = 0; i < spkr_buf_size + spkr_extra_buf; i++ ) {
                     spkr_samples[i] = spkr_level;
                 }
+                spkr_sample_last_idx = 0;
                 
+//                spkr_samples[0] = 10000;
+
             }
             else {
                 printf("No FreeBuffers!\n");

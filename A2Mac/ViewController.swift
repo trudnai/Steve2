@@ -71,8 +71,6 @@ class ViewController: NSViewController  {
     
     @IBOutlet weak var textDisplayScroller: NSScrollView!
     @IBOutlet var textDisplay: NSTextView!
-    @IBOutlet weak var displayField: NSTextField!
-    @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
     @IBOutlet weak var lores: LoRes!
     @IBOutlet weak var hires: HiRes!
@@ -340,7 +338,7 @@ class ViewController: NSViewController  {
         }
         
         DispatchQueue.main.async {
-            self.display.stringValue = txt
+            self.textDisplay.string = txt
             self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
         }
     }
@@ -767,7 +765,7 @@ class ViewController: NSViewController  {
             if videoMode.col80 != self.currentVideoMode.col80 {
                 self.currentVideoMode.col80 = videoMode.col80
                 
-                if let fontSize = self.display.font?.pointSize {
+                if let fontSize = self.textDisplay.font?.pointSize {
                     if videoMode.col80 == 1 {
                             self.textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
                     }
@@ -979,7 +977,7 @@ class ViewController: NSViewController  {
     
     // Kelvin Sherlock's fix to avoid uninstalled font problems
     override func awakeFromNib() {
-        self.display.font = NSFont(name: "PrintChar21", size: 32)
+//        self.display.font = NSFont(name: "PrintChar21", size: 32)
     }
     
     required init?(coder: NSCoder) {
@@ -1076,22 +1074,22 @@ class ViewController: NSViewController  {
             // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
             
 //            spkr_extra_buf = Int32( 780 / fps )
-            spkr_extra_buf = 0
+            spkr_extra_buf = 26
             
             switch freq {
             case 2.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
-                spkr_extra_buf = 120
+                spkr_extra_buf = 20
                 break
                 
             case 4.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
-                spkr_extra_buf = 8
+                spkr_extra_buf = 45
                 break
                 
             default:
 //                spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
-                spkr_extra_buf = 0
+                spkr_extra_buf = 26
                 break
             }
                         
@@ -1104,6 +1102,30 @@ class ViewController: NSViewController  {
     @IBAction func extraBuf(_ sender: NSSlider) {
         spkr_extra_buf = sender.intValue
         lab.title = String( spkr_extra_buf )
+    }
+    
+    @IBOutlet weak var ledingInitEdgeLabel: NSTextFieldCell!
+    @IBAction func leadingInitEdgeSelected(_ sender: NSSlider) {
+        SPKR_INITIAL_LEADING_EDGE = sender.floatValue
+        ledingInitEdgeLabel.title = "ILE: " + String( SPKR_INITIAL_LEADING_EDGE )
+    }
+    
+    @IBOutlet weak var leadingEdgeLabel: NSTextFieldCell!
+    @IBAction func leadingEdgeSelected(_ sender: NSSlider) {
+        SPKR_FADE_LEADING_EDGE = sender.floatValue
+        leadingEdgeLabel.title = "LE: " + String( SPKR_FADE_LEADING_EDGE )
+    }
+    
+    @IBOutlet weak var trailingInitEdgeLabel: NSTextFieldCell!
+    @IBAction func trailingInitEdgeSelected(_ sender: NSSlider) {
+        SPKR_INITIAL_TRAILING_EDGE = sender.floatValue
+        trailingInitEdgeLabel.title = "ITE: " + String( SPKR_INITIAL_TRAILING_EDGE )
+    }
+    
+    @IBOutlet weak var trailingEdgeLabel: NSTextFieldCell!
+    @IBAction func trailingEdgeSelected(_ sender: NSSlider) {
+        SPKR_FADE_TRAILING_EDGE = sender.floatValue
+        trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
     }
     
     func setSimulationMode( mode : String ) {
@@ -1160,11 +1182,11 @@ class ViewController: NSViewController  {
         scanLines.isHidden = !CRTMonitor
         
         if ( CRTMonitor ) {
-            display.textColor = .white
+            textDisplay.textColor = .white
             // TODO: Adjust gamma so pixels are brighter
         }
         else {
-            display.textColor = colorWhite
+            textDisplay.textColor = colorWhite
             // TODO: Adjust gamma so pixels are dimmer
         }
         
@@ -1175,10 +1197,10 @@ class ViewController: NSViewController  {
         ColorMonitor = color
         
         if ( ColorMonitor ) {
-            display.textColor = colorWhite // .white
+            textDisplay.textColor = colorWhite // .white
         }
         else {
-            display.textColor = colorGreen // .green
+            textDisplay.textColor = colorGreen // .green
         }
         
         hires.RenderFullScreen()
@@ -1206,7 +1228,7 @@ class ViewController: NSViewController  {
             hires.monoColor = hires.color_white
         }
         
-        display.textColor = monoColor
+        textDisplay.textColor = monoColor
         hires.RenderFullScreen()
     }
     

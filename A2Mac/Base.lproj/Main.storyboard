@@ -1338,7 +1338,6 @@
                                         <action selector="Reset:" target="B8D-0N-5wS" id="xJE-Ri-R9Q"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="JET-xj-qZD"/>
                                 <toolbarItem implicitItemIdentifier="9B3244CB-1CE2-4293-9E8C-B9BFD5DD84C4" label="Sel.All" paletteLabel="Sel.All" image="Select All" id="lzK-Zd-n0z">
                                     <nil key="toolTip"/>
                                     <size key="minSize" width="30" height="17"/>
@@ -1389,7 +1388,7 @@
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="BFA7134C-38B0-453E-9AFB-33B380479DB4" label="Game" paletteLabel="Game" image="Joystick" id="Z5u-WO-FdK">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="43" height="30"/>
+                                    <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="43" height="43"/>
                                     <popUpButton key="view" id="Ktw-L6-kEz">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
@@ -1415,7 +1414,7 @@
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="E8498057-9DDE-45D0-9BD9-3F924022507F" label="Disk" paletteLabel="Disk" image="Quick Disk" id="mbU-2A-hBB">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="43" height="30"/>
+                                    <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="43" height="43"/>
                                     <popUpButton key="view" id="rfS-6q-EKe">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
@@ -1438,7 +1437,7 @@
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="20B6E38E-7310-42B1-B6E5-75F4A6C94291" label="CPU" paletteLabel="CPU" image="Chip" id="q33-dA-1Zf">
                                     <nil key="toolTip"/>
-                                    <size key="minSize" width="43" height="30"/>
+                                    <size key="minSize" width="30" height="17"/>
                                     <size key="maxSize" width="43" height="43"/>
                                     <popUpButton key="view" id="MAv-S5-diZ">
                                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
@@ -1601,12 +1600,13 @@
                                         <action selector="VolUp:" target="B8D-0N-5wS" id="nUl-ez-neH"/>
                                     </connections>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="BWf-Nj-6Yq"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="7QD-9G-t4m"/>
-                                <toolbarItem implicitItemIdentifier="E7B425BC-F405-450B-B13F-BB6F27E0DB9D" label="Settings" paletteLabel="Settings" tag="-1" image="NSActionTemplate" id="irj-Ct-iaG">
-                                    <size key="minSize" width="32" height="32"/>
-                                    <size key="maxSize" width="32" height="32"/>
+                                <toolbarItem implicitItemIdentifier="C98C0013-54CF-42E5-9633-F3735234750D" label="Settings" paletteLabel="Settings" tag="-1" image="NSActionTemplate" id="irj-Ct-iaG">
+                                    <size key="minSize" width="30" height="17"/>
+                                    <size key="maxSize" width="30" height="43"/>
                                 </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="JET-xj-qZD"/>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="BWf-Nj-6Yq"/>
                                 <toolbarItem implicitItemIdentifier="75D731EB-3958-43CF-B41F-E9B3CF3DB013" label="Mode" paletteLabel="Mode" sizingBehavior="auto" id="eSg-vU-9jb">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="zbq-Ya-yng">
@@ -1633,11 +1633,11 @@
                                 <toolbarItem reference="8WB-26-vb5"/>
                                 <toolbarItem reference="QIP-vh-jcn"/>
                                 <toolbarItem reference="fbL-wV-HQ9"/>
-                                <toolbarItem reference="JET-xj-qZD"/>
+                                <toolbarItem reference="BWf-Nj-6Yq"/>
                                 <toolbarItem reference="lzK-Zd-n0z"/>
                                 <toolbarItem reference="fQR-kz-ht6"/>
                                 <toolbarItem reference="LFh-iX-9gH"/>
-                                <toolbarItem reference="JET-xj-qZD"/>
+                                <toolbarItem reference="BWf-Nj-6Yq"/>
                                 <toolbarItem reference="Z5u-WO-FdK"/>
                                 <toolbarItem reference="q33-dA-1Zf"/>
                                 <toolbarItem reference="BWf-Nj-6Yq"/>
@@ -1648,11 +1648,11 @@
                                 <toolbarItem reference="08P-C7-p4d"/>
                                 <toolbarItem reference="UQl-nc-fXN"/>
                                 <toolbarItem reference="DkF-LW-SE6"/>
-                                <toolbarItem reference="JET-xj-qZD"/>
+                                <toolbarItem reference="BWf-Nj-6Yq"/>
                                 <toolbarItem reference="lEI-s6-KQK"/>
                                 <toolbarItem reference="hS6-wo-pAT"/>
                                 <toolbarItem reference="AMa-TQ-7Ol"/>
-                                <toolbarItem reference="JET-xj-qZD"/>
+                                <toolbarItem reference="BWf-Nj-6Yq"/>
                                 <toolbarItem reference="irj-Ct-iaG"/>
                             </defaultToolbarItems>
                         </toolbar>
@@ -1738,6 +1738,10 @@
                                     </subviews>
                                     <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                 </clipView>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="768" id="gJW-J5-XwT"/>
+                                    <constraint firstAttribute="width" constant="1130" id="mjo-jE-tPG"/>
+                                </constraints>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="nV1-lT-ewY">
                                     <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
@@ -1747,43 +1751,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <textField identifier="DisplayField" hidden="YES" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" alphaValue="0.0" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SEL-hl-0c0">
-                                <rect key="frame" x="14" y="16" width="1124" height="768"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="SEL-hl-0c0" secondAttribute="height" multiplier="35:24" id="4LP-hK-Xit"/>
-                                    <constraint firstAttribute="width" constant="1120" id="uez-Mi-0Sh"/>
-                                    <constraint firstAttribute="height" constant="768" id="zl6-au-oZj"/>
-                                </constraints>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" focusRingType="none" baseWritingDirection="leftToRight" identifier="Display_" id="pIk-RC-s5g">
-                                    <font key="font" size="32" name="PrintChar21"/>
-                                    <string key="title">1234567890123456789012345678901234567890
-@@@@@@@@@1@@@@@@@@@2@@@@@@@@@3@@@@@@@@@4
-@@@@@@@@@@@@@@@@@@@3@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@4@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@5@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@6@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@7@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@8@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@9@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@10@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@11@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@12@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@13@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@14@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@15@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@16@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@17@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@18@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@19@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@20@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@21@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@22@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@23@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@24@@@@@@@@@@@@@@@@@@@@</string>
-                                    <color key="textColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <customView hidden="YES" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="Gqh-qw-fjy" userLabel="LoRes" customClass="LoRes" customModule="Steve___" customModuleProvider="target">
                                 <rect key="frame" x="16" y="16" width="1120" height="768"/>
                             </customView>
@@ -1970,11 +1937,11 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
-                                        <rect key="frame" x="8" y="8" width="104" height="57"/>
+                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" misplaced="YES" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lVP-FP-u6x" userLabel="CPU Speed Selection">
+                                        <rect key="frame" x="8" y="-226" width="104" height="292"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Kym-qZ-Ch2">
-                                                <rect key="frame" x="-2" y="41" width="56" height="18"/>
+                                                <rect key="frame" x="-2" y="276" width="56" height="18"/>
                                                 <buttonCell key="cell" type="check" title="Trace" bezelStyle="regularSquare" imagePosition="left" inset="2" id="cIl-CI-TG2">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1984,19 +1951,79 @@
                                                 </connections>
                                             </button>
                                             <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="wih-Y6-2Bz">
-                                                <rect key="frame" x="0.0" y="32" width="96" height="5"/>
+                                                <rect key="frame" x="0.0" y="267" width="96" height="5"/>
                                             </box>
-                                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FFM-zm-Wjx">
-                                                <rect key="frame" x="-2" y="41" width="13" height="16"/>
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0rh-UD-CfH">
+                                                <rect key="frame" x="-2" y="245" width="47" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="ILE: 0.1" id="Eaz-eQ-aTu">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8yq-X9-qQ4">
+                                                <rect key="frame" x="-2" y="220" width="96" height="19"/>
+                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="1" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="tS0-Xw-KET"/>
+                                                <connections>
+                                                    <action selector="leadingInitEdgeSelected:" target="XfG-lQ-9wD" id="FXh-mX-eVX"/>
+                                                </connections>
+                                            </slider>
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mWJ-H9-Alk">
+                                                <rect key="frame" x="-2" y="198" width="44" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="LE: 0.1" id="aIi-wV-21w">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Fux-hn-RBw">
+                                                <rect key="frame" x="-2" y="173" width="96" height="19"/>
+                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="0.99990000000000001" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="xze-V2-nR4"/>
+                                                <connections>
+                                                    <action selector="leadingEdgeSelected:" target="XfG-lQ-9wD" id="7pV-OO-nhj"/>
+                                                </connections>
+                                            </slider>
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xfd-PR-Oev">
+                                                <rect key="frame" x="-2" y="151" width="48" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="ITE: 0.1" id="e8G-NN-xe8">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P91-Ah-VX6">
+                                                <rect key="frame" x="-2" y="126" width="96" height="19"/>
+                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="1" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="50T-K4-rsM"/>
+                                                <connections>
+                                                    <action selector="trailingInitEdgeSelected:" target="XfG-lQ-9wD" id="zXK-9D-9zH"/>
+                                                </connections>
+                                            </slider>
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WLe-No-XdS">
+                                                <rect key="frame" x="-2" y="104" width="45" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="TE: 0.1" id="uUU-7X-My0">
+                                                    <font key="font" metaFont="system"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <slider focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sn1-VZ-VjW">
+                                                <rect key="frame" x="-2" y="79" width="96" height="19"/>
+                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="0.99990000000000001" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="6HL-sM-Ulk"/>
+                                                <connections>
+                                                    <action selector="trailingEdgeSelected:" target="XfG-lQ-9wD" id="UQ6-Lt-f9t"/>
+                                                </connections>
+                                            </slider>
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FFM-zm-Wjx">
+                                                <rect key="frame" x="-2" y="57" width="13" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="0" id="yIR-MN-Hdl">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64O-qO-cQV">
-                                                <rect key="frame" x="-2" y="40" width="96" height="19"/>
-                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="256" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="hxk-WO-tJf"/>
+                                            <slider focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="64O-qO-cQV">
+                                                <rect key="frame" x="-2" y="32" width="96" height="19"/>
+                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="256" tickMarkPosition="above" sliderType="linear" id="hxk-WO-tJf"/>
                                                 <connections>
                                                     <action selector="extraBuf:" target="XfG-lQ-9wD" id="gEu-yg-udY"/>
                                                 </connections>
@@ -2023,8 +2050,24 @@
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
@@ -2046,41 +2089,41 @@
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="0wI-2W-KUf"/>
-                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="3ps-FB-mdj"/>
-                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="5wF-ul-W4h"/>
-                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="8bz-WZ-Szj"/>
-                            <constraint firstItem="dGn-a4-c1t" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="8g8-nm-CxE"/>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="leading" secondItem="ss1-M1-nGn" secondAttribute="leading" constant="5" id="0wI-2W-KUf"/>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="top" secondItem="ss1-M1-nGn" secondAttribute="top" id="3ps-FB-mdj"/>
+                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="trailing" secondItem="ss1-M1-nGn" secondAttribute="trailing" constant="-5" id="5wF-ul-W4h"/>
+                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="top" secondItem="ss1-M1-nGn" secondAttribute="top" id="8bz-WZ-Szj"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="top" secondItem="ss1-M1-nGn" secondAttribute="top" id="8g8-nm-CxE"/>
                             <constraint firstItem="ss1-M1-nGn" firstAttribute="trailing" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="-11" id="AYX-tI-fE9"/>
-                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="DgS-2W-eVa"/>
-                            <constraint firstItem="dGn-a4-c1t" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="EBM-Pm-MJ8"/>
-                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="FF5-Ke-cOk"/>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="bottom" secondItem="ss1-M1-nGn" secondAttribute="bottom" id="DgS-2W-eVa"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="bottom" secondItem="ss1-M1-nGn" secondAttribute="bottom" id="EBM-Pm-MJ8"/>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="top" secondItem="ss1-M1-nGn" secondAttribute="top" id="FF5-Ke-cOk"/>
                             <constraint firstItem="ss1-M1-nGn" firstAttribute="bottom" secondItem="iIF-Q5-Onc" secondAttribute="bottom" constant="-16" id="Gk9-mO-8Dz"/>
                             <constraint firstAttribute="bottom" secondItem="Fdf-pv-iEw" secondAttribute="bottom" constant="8" id="H1Q-Vj-rPM"/>
-                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="HPu-Oe-CBl"/>
+                            <constraint firstItem="Ghs-c1-ZkA" firstAttribute="trailing" secondItem="ss1-M1-nGn" secondAttribute="trailing" constant="-5" id="HPu-Oe-CBl"/>
                             <constraint firstItem="iIF-Q5-Onc" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="LGA-tZ-gFh"/>
-                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="Mbh-RX-74d"/>
-                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="NJ1-qp-iku"/>
-                            <constraint firstItem="SEL-hl-0c0" firstAttribute="bottom" secondItem="iIF-Q5-Onc" secondAttribute="bottom" constant="-16" id="Q2B-a3-gBp"/>
-                            <constraint firstItem="SEL-hl-0c0" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="leading" constant="16" id="QGx-a9-RR9"/>
-                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="SVU-d6-DH1"/>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="trailing" secondItem="ss1-M1-nGn" secondAttribute="trailing" constant="-5" id="Mbh-RX-74d"/>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="bottom" secondItem="ss1-M1-nGn" secondAttribute="bottom" id="NJ1-qp-iku"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="bottom" secondItem="iIF-Q5-Onc" secondAttribute="bottom" constant="-16" id="Q2B-a3-gBp"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="leading" constant="11" id="QGx-a9-RR9"/>
+                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="leading" secondItem="ss1-M1-nGn" secondAttribute="leading" constant="5" id="SVU-d6-DH1"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="8" id="Umg-3A-zmv"/>
-                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="VcW-Wh-wiF"/>
+                            <constraint firstItem="Gqh-qw-fjy" firstAttribute="leading" secondItem="ss1-M1-nGn" secondAttribute="leading" constant="5" id="VcW-Wh-wiF"/>
                             <constraint firstItem="ss1-M1-nGn" firstAttribute="top" secondItem="iIF-Q5-Onc" secondAttribute="top" constant="16" id="VdT-jM-SRU"/>
-                            <constraint firstItem="dGn-a4-c1t" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="XM9-i5-GOP"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="trailing" secondItem="ss1-M1-nGn" secondAttribute="trailing" constant="-5" id="XM9-i5-GOP"/>
                             <constraint firstItem="Fdf-pv-iEw" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="8" id="Xbh-Ub-1Ng"/>
-                            <constraint firstItem="SEL-hl-0c0" firstAttribute="top" secondItem="iIF-Q5-Onc" secondAttribute="top" constant="16" id="aWz-Ad-PIM"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="top" secondItem="iIF-Q5-Onc" secondAttribute="top" constant="16" id="aWz-Ad-PIM"/>
                             <constraint firstAttribute="bottom" secondItem="iIF-Q5-Onc" secondAttribute="bottom" id="acb-Dy-fu5"/>
-                            <constraint firstItem="SEL-hl-0c0" firstAttribute="trailing" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="-16" id="cmY-Vb-ckJ"/>
-                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="top" secondItem="SEL-hl-0c0" secondAttribute="top" id="lDs-jy-edU"/>
-                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="ltj-Ea-Vtb"/>
+                            <constraint firstItem="ss1-M1-nGn" firstAttribute="trailing" secondItem="iIF-Q5-Onc" secondAttribute="trailing" constant="-11" id="cmY-Vb-ckJ"/>
+                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="top" secondItem="ss1-M1-nGn" secondAttribute="top" id="lDs-jy-edU"/>
+                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="bottom" secondItem="ss1-M1-nGn" secondAttribute="bottom" id="ltj-Ea-Vtb"/>
                             <constraint firstItem="iIF-Q5-Onc" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" id="m3e-ww-N7S"/>
-                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="trailing" secondItem="SEL-hl-0c0" secondAttribute="trailing" id="nAy-xD-Y3s"/>
+                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="trailing" secondItem="ss1-M1-nGn" secondAttribute="trailing" constant="-5" id="nAy-xD-Y3s"/>
                             <constraint firstItem="ss1-M1-nGn" firstAttribute="leading" secondItem="iIF-Q5-Onc" secondAttribute="leading" constant="11" id="nue-HB-5Zo"/>
-                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="bottom" secondItem="SEL-hl-0c0" secondAttribute="bottom" id="qTc-wn-Sqn"/>
-                            <constraint firstItem="dGn-a4-c1t" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="xqX-cb-8Hz"/>
+                            <constraint firstItem="D0w-YC-YlJ" firstAttribute="bottom" secondItem="ss1-M1-nGn" secondAttribute="bottom" id="qTc-wn-Sqn"/>
+                            <constraint firstItem="dGn-a4-c1t" firstAttribute="leading" secondItem="ss1-M1-nGn" secondAttribute="leading" constant="5" id="xqX-cb-8Hz"/>
                             <constraint firstAttribute="trailing" secondItem="Fdf-pv-iEw" secondAttribute="trailing" constant="8" id="yy6-NU-JJX"/>
-                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="leading" secondItem="SEL-hl-0c0" secondAttribute="leading" id="zkY-0O-xcA"/>
+                            <constraint firstItem="LlM-EV-ruZ" firstAttribute="leading" secondItem="ss1-M1-nGn" secondAttribute="leading" constant="5" id="zkY-0O-xcA"/>
                         </constraints>
                     </view>
                     <connections>
@@ -2088,16 +2131,18 @@
                         <outlet property="DiskSound_Disk2" destination="vmR-CG-qdv" id="22u-xi-nHH"/>
                         <outlet property="QuickDisk_Disk1" destination="cth-H6-Drg" id="cFI-9E-kYv"/>
                         <outlet property="QuickDisk_Disk2" destination="yDH-Ob-i3N" id="hvi-ZC-Pk4"/>
-                        <outlet property="display" destination="pIk-RC-s5g" id="Hvd-DI-h6z"/>
-                        <outlet property="displayField" destination="SEL-hl-0c0" id="4Pc-hG-qQf"/>
                         <outlet property="hires" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>
                         <outlet property="lab" destination="yIR-MN-Hdl" id="9SQ-AJ-W3E"/>
+                        <outlet property="leadingEdgeLabel" destination="aIi-wV-21w" id="fbe-gk-pI0"/>
+                        <outlet property="ledingInitEdgeLabel" destination="Eaz-eQ-aTu" id="jsG-f0-dad"/>
                         <outlet property="lores" destination="Gqh-qw-fjy" id="vOE-5m-Jfi"/>
                         <outlet property="scanLines" destination="dGn-a4-c1t" id="3Xy-Ku-95P"/>
                         <outlet property="speedometer" destination="FBZ-dh-6Fs" id="L0v-RY-xwB"/>
                         <outlet property="splashScreen" destination="D0w-YC-YlJ" id="WJB-BH-5EP"/>
                         <outlet property="textDisplay" destination="ccC-Wu-3za" id="2AD-aQ-x6x"/>
                         <outlet property="textDisplayScroller" destination="ss1-M1-nGn" id="Bbp-M9-REy"/>
+                        <outlet property="trailingEdgeLabel" destination="uUU-7X-My0" id="pa6-JG-81g"/>
+                        <outlet property="trailingInitEdgeLabel" destination="e8G-NN-xe8" id="qxA-R1-i6s"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -2106,26 +2151,26 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Amber" width="64" height="64"/>
-        <image name="Chip" width="64" height="64"/>
-        <image name="Color" width="64" height="64"/>
-        <image name="Copy" width="64" height="64"/>
+        <image name="Amber" width="32" height="32"/>
+        <image name="Chip" width="32" height="32"/>
+        <image name="Color" width="32" height="32"/>
+        <image name="Copy" width="32" height="32"/>
         <image name="Disk 1" width="160" height="98.5"/>
         <image name="Disk 2" width="160" height="98.5"/>
-        <image name="Green" width="64" height="64"/>
-        <image name="Joystick" width="64" height="64"/>
+        <image name="Green" width="32" height="32"/>
+        <image name="Joystick" width="32" height="32"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSTouchBarAudioOutputMuteTemplate" width="26" height="30"/>
         <image name="NSTouchBarAudioOutputVolumeLowTemplate" width="23" height="30"/>
         <image name="NSTouchBarAudioOutputVolumeMediumTemplate" width="23" height="30"/>
         <image name="NSTouchBarPauseTemplate" width="11" height="30"/>
-        <image name="Old Monitor" width="64" height="64"/>
-        <image name="Paste" width="64" height="64"/>
-        <image name="Power" width="64" height="64"/>
+        <image name="Old Monitor" width="32" height="32"/>
+        <image name="Paste" width="32" height="32"/>
+        <image name="Power" width="32" height="32"/>
         <image name="Quick Disk" width="160" height="98.5"/>
-        <image name="Reset" width="64" height="64"/>
-        <image name="Select All" width="64" height="64"/>
-        <image name="White" width="64" height="64"/>
+        <image name="Reset" width="32" height="32"/>
+        <image name="Select All" width="32" height="32"/>
+        <image name="White" width="32" height="32"/>
         <image name="apple_original_logo_design" width="384" height="307.20001220703125"/>
         <image name="dotmatrix_effect" width="268.79998779296875" height="184.32000732421875"/>
         <image name="popUpButtonCell:CNs-lh-urM:image" width="1" height="1">

@@ -627,6 +627,8 @@
 		3296223124A6622C002DEB78 /* apple_original_logo_design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple_original_logo_design.png; sourceTree = "<group>"; };
 		3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_motor_w_floppy.sfx; sourceTree = "<group>"; };
 		3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_io_error.sfx; sourceTree = "<group>"; };
+		32A6AA96266187570023257A /* hires.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hires.h; sourceTree = "<group>"; };
+		32A6AA97266187570023257A /* hires.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hires.c; sourceTree = "<group>"; };
 		32A9F7482467B60B004902A1 /* speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speaker.h; sourceTree = "<group>"; };
 		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
 		32AF7C9624AD85E8002D82BF /* select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_all.png; sourceTree = "<group>"; };
@@ -856,6 +858,7 @@
 			isa = PBXGroup;
 			children = (
 				32A9F7472467B5DF004902A1 /* audio */,
+				32A6AA952661871C0023257A /* video */,
 				325EB63323F8863100C6B4A4 /* disk */,
 				3268E68D2474E18F00047474 /* game */,
 				325EB63B23FA57C000C6B4A4 /* mem */,
@@ -962,6 +965,15 @@
 				3268E68E2474E24900047474 /* paddle.h */,
 			);
 			path = game;
+			sourceTree = "<group>";
+		};
+		32A6AA952661871C0023257A /* video */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AA96266187570023257A /* hires.h */,
+				32A6AA97266187570023257A /* hires.c */,
+			);
+			path = video;
 			sourceTree = "<group>";
 		};
 		32A9F7472467B5DF004902A1 /* audio */ = {

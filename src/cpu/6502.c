@@ -62,7 +62,8 @@ unsigned long long int inst_cnt = 0;
 unsigned int video_fps_divider = DEF_VIDEO_DIV;
 unsigned int fps = DEFAULT_FPS;
 
-const double default_MHz_6502 = 1.023; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
+const double default_crystal_MHz = 14.31818;
+const double default_MHz_6502 = default_crystal_MHz / 14; // 1.023; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
 const double iigs_MHz_6502 = 2.8;
 const double iicplus_MHz_6502 = 4;
 const double startup_MHz_6502 = 32;

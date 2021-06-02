@@ -1466,10 +1466,11 @@
                                     <slider key="view" verticalHuggingPriority="750" id="NiF-yM-eE0">
                                         <rect key="frame" x="0.0" y="14" width="116" height="26"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" alignment="left" minValue="1" maxValue="6" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="9W8-sY-vjz"/>
-                                        <connections>
-                                            <action selector="SpeedSelect:" target="B8D-0N-5wS" id="5hj-pt-1k0"/>
-                                        </connections>
+                                        <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" alignment="left" minValue="1" maxValue="6" doubleValue="1" tickMarkPosition="above" numberOfTickMarks="6" allowsTickMarkValuesOnly="YES" sliderType="linear" id="9W8-sY-vjz">
+                                            <connections>
+                                                <action selector="SpeedSelected:" target="B8D-0N-5wS" id="hjq-Fu-6I7"/>
+                                            </connections>
+                                        </sliderCell>
                                     </slider>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="8A3C9390-7708-47D4-A1AB-9B62DD2041C6" label="CRT" paletteLabel="CRT" tag="1" image="Old Monitor" id="7T3-aH-gLv">
@@ -1661,7 +1662,7 @@
                         </connections>
                     </window>
                     <connections>
-                        <outlet property="SpeedSelector" destination="djd-zw-gXS" id="zit-FA-m8j"/>
+                        <outlet property="SpeedSelector" destination="djd-zw-gXS" id="CsA-TF-ozP"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
@@ -2132,13 +2133,18 @@
                         <outlet property="QuickDisk_Disk1" destination="cth-H6-Drg" id="cFI-9E-kYv"/>
                         <outlet property="QuickDisk_Disk2" destination="yDH-Ob-i3N" id="hvi-ZC-Pk4"/>
                         <outlet property="hires" destination="LlM-EV-ruZ" id="E60-pA-HM1"/>
-                        <outlet property="lab" destination="yIR-MN-Hdl" id="9SQ-AJ-W3E"/>
+                        <outlet property="initialLeadEdgeSlider" destination="8yq-X9-qQ4" id="dnS-3t-7u1"/>
+                        <outlet property="initialTailEdgeSlider" destination="P91-Ah-VX6" id="wv4-vA-j9E"/>
+                        <outlet property="leadEdgeSlider" destination="Fux-hn-RBw" id="vCr-f0-g2Z"/>
                         <outlet property="leadingEdgeLabel" destination="aIi-wV-21w" id="fbe-gk-pI0"/>
                         <outlet property="ledingInitEdgeLabel" destination="Eaz-eQ-aTu" id="jsG-f0-dad"/>
                         <outlet property="lores" destination="Gqh-qw-fjy" id="vOE-5m-Jfi"/>
                         <outlet property="scanLines" destination="dGn-a4-c1t" id="3Xy-Ku-95P"/>
+                        <outlet property="soundGapLabel" destination="yIR-MN-Hdl" id="aRe-Mw-oH1"/>
+                        <outlet property="soundGapSlider" destination="64O-qO-cQV" id="2dt-yL-0Pq"/>
                         <outlet property="speedometer" destination="FBZ-dh-6Fs" id="L0v-RY-xwB"/>
                         <outlet property="splashScreen" destination="D0w-YC-YlJ" id="WJB-BH-5EP"/>
+                        <outlet property="tailEdgeSlider" destination="Sn1-VZ-VjW" id="cEi-IA-fwl"/>
                         <outlet property="textDisplay" destination="ccC-Wu-3za" id="2AD-aQ-x6x"/>
                         <outlet property="textDisplayScroller" destination="ss1-M1-nGn" id="Bbp-M9-REy"/>
                         <outlet property="trailingEdgeLabel" destination="uUU-7X-My0" id="pa6-JG-81g"/>

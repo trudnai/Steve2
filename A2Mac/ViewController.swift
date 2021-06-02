@@ -1047,6 +1047,18 @@ class ViewController: NSViewController  {
         newUpdateTimer( timeInterval: 1 / Double(fps) )
         
 //        #endif
+        
+        soundGapSlider.integerValue = Int(spkr_extra_buf)
+        ledingInitEdgeLabel.title = "ILE: " + String( SPKR_INITIAL_LEADING_EDGE )
+        initialLeadEdgeSlider.floatValue = SPKR_INITIAL_LEADING_EDGE
+        leadingEdgeLabel.title = "LE: " + String( SPKR_FADE_LEADING_EDGE )
+        leadEdgeSlider.floatValue = SPKR_FADE_LEADING_EDGE
+        trailingInitEdgeLabel.title = "ITE: " + String( SPKR_INITIAL_TRAILING_EDGE )
+        initialTailEdgeSlider.floatValue = SPKR_INITIAL_TRAILING_EDGE
+        trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
+        tailEdgeSlider.floatValue = SPKR_FADE_TRAILING_EDGE
+
+
     }
     
     override func viewDidAppear() {
@@ -1061,49 +1073,40 @@ class ViewController: NSViewController  {
         MHz_6502 = freq
         clk_6502_per_frm = UInt64( MHz_6502 * M / Double(fps) )
         clk_6502_per_frm_set = clk_6502_per_frm
-    }
-
-    @IBAction func speedSelected(_ sender: NSButton) {
-        if ( sender.title == "MAX" ) {
-            setCPUClockSpeed(freq: 2000)
-        }
-        else if let freq = Double( sender.title ) {
-            setCPUClockSpeed(freq: freq)
+            
+        // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
         
-            
-            // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
-            
 //            spkr_extra_buf = Int32( 780 / fps )
-            spkr_extra_buf = 26
-            
-            switch freq {
-            case 2.0:
+        spkr_extra_buf = 0 // 26
+        
+        switch freq {
+        case 2.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
 //                spkr_extra_buf = 20
-                spkr_extra_buf = 88
-                break
-                
-            case 4.0:
+            spkr_extra_buf = 88
+            break
+            
+        case 4.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
 //                spkr_extra_buf = 45
-                spkr_extra_buf = 20
-                break
-                
-            default:
+            spkr_extra_buf = 20
+            break
+            
+        default:
 //                spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
-                spkr_extra_buf = 26
-                break
-            }
-                        
-            SoundGap.integerValue = Int(spkr_extra_buf)
+            spkr_extra_buf = 0 // 26
+            break
         }
-        
+                    
+        soundGapLabel.title = String( spkr_extra_buf )
+        soundGapSlider.integerValue = Int(spkr_extra_buf)
     }
+
     
-    @IBOutlet weak var lab: NSTextFieldCell!
+    @IBOutlet weak var soundGapLabel: NSTextFieldCell!
     @IBAction func extraBuf(_ sender: NSSlider) {
         spkr_extra_buf = sender.intValue
-        lab.title = String( spkr_extra_buf )
+        soundGapLabel.title = String( spkr_extra_buf )
     }
     
     @IBOutlet weak var ledingInitEdgeLabel: NSTextFieldCell!
@@ -1172,12 +1175,18 @@ class ViewController: NSViewController  {
         setSimulationMode(mode: sender.selectedItem?.title ?? "Normal" )
     }
     
-    @IBOutlet weak var SoundGap: NSTextFieldCell!
-    
-    @IBAction func SoundGapChanged(_ sender: NSStepper) {
-        SoundGap.integerValue = sender.integerValue
-        spkr_extra_buf = Int32( sender.integerValue )
-    }
+    @IBOutlet weak var initialLeadEdgeSlider: NSSlider!
+    @IBOutlet weak var leadEdgeSlider: NSSlider!
+    @IBOutlet weak var initialTailEdgeSlider: NSSlider!
+    @IBOutlet weak var tailEdgeSlider: NSSlider!
+    @IBOutlet weak var soundGapSlider: NSSlider!
+
+//    @IBOutlet weak var soundGap: NSTextFieldCell!
+//
+//    @IBAction func SoundGapChanged(_ sender: NSStepper) {
+//        SoundGap.integerValue = sender.integerValue
+//        spkr_extra_buf = Int32( sender.integerValue )
+//    }
     
     @IBAction func CRTMonitorOnOff(_ sender: NSButton) {
         CRTMonitor = sender.state == .on

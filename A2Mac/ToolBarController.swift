@@ -80,7 +80,7 @@ class ToolBarController: NSWindowController {
     
     @IBOutlet weak var SpeedSelector: NSToolbarItem!
     
-    @IBAction func SpeedSelect(_ slider: NSSlider) {
+    @IBAction func SpeedSelected(_ slider: NSSliderCell) {
         switch slider.intValue {
         case 2:
             ViewController.current?.setCPUClockSpeed(freq: 2)
@@ -103,7 +103,7 @@ class ToolBarController: NSWindowController {
             SpeedSelector.label = "MAX Speed"
             
         default:
-            ViewController.current?.setCPUClockSpeed(freq: 1.023)
+            ViewController.current?.setCPUClockSpeed(freq: 14.31818 / 14.0)
             SpeedSelector.label = "1.023 MHz"
         }
     }

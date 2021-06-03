@@ -1537,11 +1537,26 @@ class ViewController: NSViewController  {
 //        }
     }
 
-    func Cheat_Wavy_Navy_Never_Lose() {
-        // Replace STC / SBC $0x1 to NOPs...
-        setMEM( 0x1E63, 0xEA )
-        setMEM( 0x1E64, 0xEA )
-        setMEM( 0x1E65, 0xEA )
+    func Cheat_Wavy_Navy_Never_Lose()  -> NSControl.StateValue {
+        // Replace STC / SBC #$01 to NOPs...
+//        setMEM( 0x1E63, 0xEA )
+//        setMEM( 0x1E64, 0xEA )
+//        setMEM( 0x1E65, 0xEA )
+
+        if ( getMEM16(0x1E64) == 0x01E9 ) { // SBC #$01
+            // Replace SBC #$01 to SBC #$00...
+            setMEM( 0x1E65, 0 )
+            return .on
+        }
+        else if ( getMEM16(0x1E64) == 0x00E9 ) { // SBC #$00
+            // Replace SBC #$00 to SBC #$01...
+            setMEM( 0x1E65, 1 )
+            return .off
+        }
+        else {
+            print("Not Wavy Navy!")
+            return .off
+        }
     }
     
     func Cheat_Wavy_Navy_Lose_To_Win() -> NSControl.StateValue {

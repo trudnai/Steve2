@@ -79,8 +79,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ViewController.current?.Cheat_Wavy_Navy_Add_3_Ships()
     }
     
-    @IBAction func Cheat_Wavy_Navy_Never_Lose(_ sender: Any) {
-        ViewController.current?.Cheat_Wavy_Navy_Never_Lose()
+    @IBAction func Cheat_Wavy_Navy_Never_Lose(_ menuItem: NSMenuItem) {
+        menuItem.state = (ViewController.current?.Cheat_Wavy_Navy_Never_Lose())!
     }
     
     @IBAction func Cheat_Wavy_Navy_Lose_To_Win(_ menuItem: NSMenuItem) {

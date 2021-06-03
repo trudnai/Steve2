@@ -868,6 +868,12 @@
                                                             <action selector="Cheat_Wavy_Navy_Never_Lose:" target="Voe-Tx-rLC" id="eIU-Ng-IXi"/>
                                                         </connections>
                                                     </menuItem>
+                                                    <menuItem title="Lose to Win" id="sg9-80-u8J">
+                                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                                        <connections>
+                                                            <action selector="Cheat_Wavy_Navy_Lose_To_Win:" target="Voe-Tx-rLC" id="nZA-Yj-MyI"/>
+                                                        </connections>
+                                                    </menuItem>
                                                 </items>
                                             </menu>
                                         </menuItem>

@@ -22,6 +22,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ViewController.extraBuf(_:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "soundGapLabel">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "read_woz:6502.c">
          <PersistentStrings>
             <PersistentString
@@ -385,6 +393,9 @@
             </PersistentString>
             <PersistentString
                value = "view">
+            </PersistentString>
+            <PersistentString
+               value = "ledingInitEdgeLabel">
             </PersistentString>
             <PersistentString
                value = "hires.frame">

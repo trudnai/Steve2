@@ -900,8 +900,24 @@ uint8_t getMEM ( uint16_t addr ) {
     return Apple2_64K_MEM[addr];
 }
 
+uint16_t getMEM16 ( uint16_t addr ) {
+    return *(uint16_t*)(&Apple2_64K_MEM[addr]);
+}
+
+uint32_t getMEM32 ( uint16_t addr ) {
+    return *(uint32_t*)(&Apple2_64K_MEM[addr]);
+}
+
 void setMEM ( uint16_t addr, uint8_t val ) {
     Apple2_64K_MEM[addr] = val;
+}
+
+void setMEM16 ( uint16_t addr, uint16_t val ) {
+    *(uint16_t*)(&Apple2_64K_MEM[addr]) = val;
+}
+
+void setMEM32 ( uint16_t addr, uint32_t val ) {
+    *(uint32_t*)(&Apple2_64K_MEM[addr]) = val;
 }
 
 void kbdInput ( uint8_t code ) {

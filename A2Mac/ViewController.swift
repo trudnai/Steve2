@@ -1492,18 +1492,19 @@ class ViewController: NSViewController  {
     
     
     func Cheat_Wavy_Navy_Add_3_Ships() {
-        let ships = getMEM( 0x4746 )
-        if ( ships < 7 ) {
-            setMEM( 0x4746, ships + 3 );
-//            CALL( 0x1FDA );
-        }
+        let ships = min( getMEM( 0x4746 ) + 3, 9 )
+        setMEM( 0x4746, ships )
+        m6502.A = ships
+//        m6502.X = 0x10
+        setMEM16(0x4728, 0x16F0) // cursor pos: 0x4728:x, 0x4729:y
+        CALL( 0x1FDA ) // position and number needed? A:Number of ships X:0x10
     }
 
-    func Cheat_Wavy_Navy_Never_Lose() {
+    func Cheat_Wavy_Navy_OtherCheats() {
         // Replace STC / SBC $0x1 to NOPs...
-//        setMEM( 0x1E63, 0xEA );
-//        setMEM( 0x1E64, 0xEA );
-//        setMEM( 0x1E65, 0xEA );
+        setMEM( 0x1E63, 0xEA )
+        setMEM( 0x1E64, 0xEA )
+        setMEM( 0x1E65, 0xEA )
 
 //        // call to decease
 //        setMEM( 0x1556, 0xEA );
@@ -1526,8 +1527,8 @@ class ViewController: NSViewController  {
 //        setMEM( 0x1538, 0xEA );
         
         // lose to win
-        setMEM( 0x1545, 0xEA );
-        setMEM( 0x1546, 0xEA );
+        setMEM( 0x1545, 0xEA )
+        setMEM( 0x1546, 0xEA )
 
 //        var i : UInt16 = 0x15EA;
 //        while i < 0x1608 {
@@ -1536,6 +1537,30 @@ class ViewController: NSViewController  {
 //        }
     }
 
+    func Cheat_Wavy_Navy_Never_Lose() {
+        // Replace STC / SBC $0x1 to NOPs...
+        setMEM( 0x1E63, 0xEA )
+        setMEM( 0x1E64, 0xEA )
+        setMEM( 0x1E65, 0xEA )
+    }
+    
+    func Cheat_Wavy_Navy_Lose_To_Win() -> NSControl.StateValue {
+        if ( getMEM16(0x1545) == 0x09F0 ) { // BEQ $1550
+            // lose to win
+            setMEM16( 0x1545, 0xEAEA ) // NOP NOP
+            return .on
+        }
+        else if ( getMEM16(0x1545) == 0xEAEA ) { // NOP NOP
+            // lose to win
+            setMEM16( 0x1545, 0x09F0 ) // BEQ $1550
+            return .off
+        }
+        else {
+            print("Not Wavy Navy!")
+            return .off
+        }
+    }
+    
 }
 
 

@@ -83,6 +83,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ViewController.current?.Cheat_Wavy_Navy_Never_Lose()
     }
     
+    @IBAction func Cheat_Wavy_Navy_Lose_To_Win(_ menuItem: NSMenuItem) {
+        menuItem.state = (ViewController.current?.Cheat_Wavy_Navy_Lose_To_Win())!
+    }
+    
     @IBAction func showPreferences(_ sender: NSMenuItem) {
         
         if ( preferencesController == nil ) {

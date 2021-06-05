@@ -1,8 +1,8 @@
 //
-//  A2Mac-Bridging-Header.h
+//  paddle.h
 //  Steve ][
 //
-//  Created by Tamas Rudnai on 2/17/20.
+//  Created by Tamas Rudnai on 5/19/20.
 //  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.
 //
 // This file is part of Steve ][ -- The Apple ][ Emulator.
@@ -20,18 +20,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Steve ][.  If not, see <https://www.gnu.org/licenses/>.
 //
-//
-//  Use this file to import your target's public headers that you would like to expose to Swift.
-//
 
-#ifndef A2Mac_Bridging_Header_h
-#define A2Mac_Bridging_Header_h
+#include "paddle.h"
 
+uint64_t pdl_reset_time = 0;
+uint64_t pdl_current_time = 0;
+uint64_t pdl_elapsed_time = 0;
 
-#import "6502.h"
-#import "speaker.h" // So we can access to speaker stuff from Swift
-#import "disk.h"
-#import "dsk2woz.h"
-#import "mmio.h"
+double pdl_value[4] = { 0.5, 0.5, 0.5, 0.5 };
+double pdl_prev[4] = { 0.5, 0.5, 0.5, 0.5 };
+double pdl_diff[4] = { 0.0, 0.0, 0.0, 0.0 };
+double * pdl_valarr = pdl_value;
+double * pdl_prevarr = pdl_prev;
+double * pdl_diffarr = pdl_diff;
 
-#endif /* A2Mac_Bridging_Header_h */

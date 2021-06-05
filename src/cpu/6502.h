@@ -177,7 +177,6 @@ typedef union videoMode_u {
     uint8_t mode;
 } videoMode_t;
 
-extern videoMode_t videoMode;
 extern MEMcfg_t MEMcfg;
 
 extern m6502_t m6502;
@@ -209,17 +208,6 @@ extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
 extern void m6502_Run(void);
-extern void kbdInput ( uint8_t code );
-extern void kbdUp (void);
-extern uint8_t getIO ( uint16_t ioaddr );
-extern void setIO ( uint16_t ioaddr, uint8_t val );
-extern uint8_t getMEM ( uint16_t ioaddr );
-extern uint16_t getMEM16 ( uint16_t ioaddr );
-extern uint32_t getMEM32 ( uint16_t ioaddr );
-extern void setMEM ( uint16_t ioaddr, uint8_t val );
-extern void setMEM16 ( uint16_t ioaddr, uint16_t val );
-extern void setMEM32 ( uint16_t ioaddr, uint32_t val );
-extern void CALL( uint16_t addr );
 
 extern void interrupt_IRQ(void);
 extern void interrupt_NMI(void);

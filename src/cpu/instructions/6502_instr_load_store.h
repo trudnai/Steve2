@@ -26,7 +26,7 @@
 #define __6502_INSTR_LOAD_STORE_H__
 
 #include <ctype.h>
-#include "../../dev/mem/mmio.h"
+#include "mmio.h"
 
 /**
  LDA  Load Accumulator with Memory

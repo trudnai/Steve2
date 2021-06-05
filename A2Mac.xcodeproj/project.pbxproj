@@ -152,6 +152,12 @@
 		3296223924A710CD002DEB78 /* disk_ii_io_error.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */; };
 		3296223A24A710E5002DEB78 /* disk_ii_io_error.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */; };
 		329CAA842620FC560039440F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EB64823FBBACF00C6B4A4 /* Main.storyboard */; };
+		32A6AAF0266AEDF40023257A /* mmio.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AABF2669B5480023257A /* mmio.c */; };
+		32A6AAFA266AEDF50023257A /* mmio.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AABF2669B5480023257A /* mmio.c */; };
+		32A6AB04266AEDF60023257A /* mmio.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AABF2669B5480023257A /* mmio.c */; };
+		32A6AB0F266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
+		32A6AB10266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
+		32A6AB11266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
 		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32A9F74B2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32AF7C9724AD85E8002D82BF /* select_all.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32AF7C9624AD85E8002D82BF /* select_all.png */; };
@@ -629,6 +635,8 @@
 		3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_io_error.sfx; sourceTree = "<group>"; };
 		32A6AA96266187570023257A /* hires.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hires.h; sourceTree = "<group>"; };
 		32A6AA97266187570023257A /* hires.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hires.c; sourceTree = "<group>"; };
+		32A6AABF2669B5480023257A /* mmio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mmio.c; sourceTree = "<group>"; };
+		32A6AB0E266AF5160023257A /* paddle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = paddle.c; sourceTree = "<group>"; };
 		32A9F7482467B60B004902A1 /* speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speaker.h; sourceTree = "<group>"; };
 		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
 		32AF7C9624AD85E8002D82BF /* select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_all.png; sourceTree = "<group>"; };
@@ -909,6 +917,7 @@
 			isa = PBXGroup;
 			children = (
 				32439F7322ECD8AD0077AAE0 /* mmio.h */,
+				32A6AABF2669B5480023257A /* mmio.c */,
 				3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */,
 			);
 			path = mem;
@@ -963,6 +972,7 @@
 			isa = PBXGroup;
 			children = (
 				3268E68E2474E24900047474 /* paddle.h */,
+				32A6AB0E266AF5160023257A /* paddle.c */,
 			);
 			path = game;
 			sourceTree = "<group>";
@@ -1441,8 +1451,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32A6AB04266AEDF60023257A /* mmio.c in Sources */,
 				325EB67623FBC44400C6B4A4 /* common.c in Sources */,
 				32A9F74B2467B60B004902A1 /* speaker.c in Sources */,
+				32A6AB11266AF5160023257A /* paddle.c in Sources */,
 				325EB67823FBC45300C6B4A4 /* disk.c in Sources */,
 				325EB64723FBBACF00C6B4A4 /* ViewController.swift in Sources */,
 				325EB64323FBBACF00C6B4A4 /* AppDelegate.swift in Sources */,
@@ -1483,12 +1495,14 @@
 				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
 				32799F81264B1A5700255669 /* disk.c in Sources */,
 				32799F82264B1A5700255669 /* woz.c in Sources */,
+				32A6AB10266AF5160023257A /* paddle.c in Sources */,
 				32799F83264B1A5700255669 /* speaker.c in Sources */,
 				32799F84264B1A5700255669 /* common.c in Sources */,
 				32799F85264B1A5700255669 /* ViewController.swift in Sources */,
 				32799F86264B1A5700255669 /* HiRes.swift in Sources */,
 				32799F87264B1A5700255669 /* LoRes.swift in Sources */,
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
+				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
 				32799F8A264B1A5700255669 /* MonitorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1506,12 +1520,14 @@
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
+				32A6AB0F266AF5160023257A /* paddle.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
+				32A6AAF0266AEDF40023257A /* mmio.c in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

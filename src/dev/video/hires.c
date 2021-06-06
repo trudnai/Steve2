@@ -39,6 +39,38 @@ typedef enum {
 } RGBA_t;
 
 
+// HiRes Colors for the SRGB color space
+const uint32_t color_black      = 0x00000000;
+const uint32_t color_white      = 0xFFEEEEEE;
+const uint32_t color_purple     = 0xFFDD55FF;
+const uint32_t color_green      = 0xFF2BD84A;
+const uint32_t color_blue       = 0xFF5599FF;
+const uint32_t color_orange     = 0xFFFF6302;
+
+// for debugging only:
+const uint32_t color_turquis    = 0xFF11BBBB;
+const uint32_t color_yellow     = 0xFFBBBB11;
+
+// default is green
+const uint32_t color_mono        = 0xFF2BD84A;
+
+static const int ScreenBitmapSize = (PixelWidth * PixelHeight * 4);
+
+const uint8_t color_R = 2;
+const uint8_t color_G = 1;
+const uint8_t color_B = 0;
+const uint8_t color_A = 3;
+
+//static uint32_t pixelsSRGB[blockRows * blockCols];
+uint32_t * pixelsSRGB;
+static uint8_t _blockChanged[blockRows * blockCols];
+uint8_t * blockChanged = _blockChanged;
+static uint8_t _shadowScreen[PageSize];
+uint8_t * shadowScreen = _shadowScreen;
+
+int was = 0;
+
+
 void initHiResLineAddresses() {
     int i = 0;
     
@@ -50,5 +82,70 @@ void initHiResLineAddresses() {
         }
     }
 }
+
+
+void init() {
+    initHiResLineAddresses();
+}
+
+
+void hires_clearChanges() {
+    memset(_blockChanged, 0, sizeof(_blockChanged));
+}
+
+
+void hires_renderMono() {
+    int height = PixelHeight;
+    
+    // do not even render it...
+    if( videoMode.text == 1 ) {
+        return;
+    }
+    else {
+        if( videoMode.mixed == 1 ) {
+            height = MixedHeight;
+        }
+        if( MEMcfg.txt_page_2 == 1 ) {
+            HiResBufferPointer = (uint8_t*)HiResBuffer2;
+        }
+        else {
+            HiResBufferPointer = (uint8_t*)HiResBuffer1;
+        }
+    }
+    
+    int pixelAddr = 0;
+
+    hires_clearChanges();
+    
+    for( int y = 0;  y < height; y++ ) {
+        int lineAddr = HiResLineAddrTbl[y];
+        
+        int blockVertIdx = y / blockHeight * blockCols;
+        
+        for( int blockHorIdx = 0; blockHorIdx < blockCols; blockHorIdx++ ) {
+            int block = HiResBufferPointer[ lineAddr + blockHorIdx ];
+            int screenIdx = y * blockCols + blockHorIdx;
+            
+            // get all changed blocks
+            _blockChanged[ blockVertIdx + blockHorIdx ] |= _shadowScreen[ screenIdx ] != block;
+            _shadowScreen[ screenIdx ] = block;
+            
+            for( int bit = 0; bit <= 6; bit++ ) {
+                uint8_t bitMask = 1 << bit;
+                if ( (block & bitMask) ) {
+                    pixelsSRGB[pixelAddr] = color_mono;
+                }
+                else {
+                    pixelsSRGB[pixelAddr] = color_black;
+                }
+                
+                pixelAddr++;
+            }
+        }
+    }
+    
+//    refreshChanged(blockSize: 1)
+}
+
 
 

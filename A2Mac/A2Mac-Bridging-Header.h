@@ -33,5 +33,7 @@
 #import "disk.h"
 #import "dsk2woz.h"
 #import "mmio.h"
+#import "hires.h"
+
 
 #endif /* A2Mac_Bridging_Header_h */

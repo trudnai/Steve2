@@ -158,6 +158,9 @@
 		32A6AB0F266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
 		32A6AB10266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
 		32A6AB11266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
+		32A6AB1B266B19680023257A /* hires.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AA97266187570023257A /* hires.c */; };
+		32A6AB25266B19680023257A /* hires.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AA97266187570023257A /* hires.c */; };
+		32A6AB26266B196A0023257A /* hires.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AA97266187570023257A /* hires.c */; };
 		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32A9F74B2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32AF7C9724AD85E8002D82BF /* select_all.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32AF7C9624AD85E8002D82BF /* select_all.png */; };
@@ -1455,6 +1458,7 @@
 				325EB67623FBC44400C6B4A4 /* common.c in Sources */,
 				32A9F74B2467B60B004902A1 /* speaker.c in Sources */,
 				32A6AB11266AF5160023257A /* paddle.c in Sources */,
+				32A6AB26266B196A0023257A /* hires.c in Sources */,
 				325EB67823FBC45300C6B4A4 /* disk.c in Sources */,
 				325EB64723FBBACF00C6B4A4 /* ViewController.swift in Sources */,
 				325EB64323FBBACF00C6B4A4 /* AppDelegate.swift in Sources */,
@@ -1504,6 +1508,7 @@
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
 				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
 				32799F8A264B1A5700255669 /* MonitorView.swift in Sources */,
+				32A6AB25266B19680023257A /* hires.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1534,7 @@
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
 				32A6AAF0266AEDF40023257A /* mmio.c in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
+				32A6AB1B266B19680023257A /* hires.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

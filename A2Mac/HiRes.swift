@@ -83,6 +83,8 @@ class HiRes: NSView {
 
 
     required init?(coder aDecoder: NSCoder) {
+        pixelsSRGB = HiRes.context?.data?.bindMemory(to: UInt32.self, capacity: HiRes.ScreenBitmapSize)
+
         super.init(coder: aDecoder)
         initHiResLineAddresses()
         clearScreen()
@@ -150,14 +152,14 @@ class HiRes: NSView {
     static let ScreenBitmapSize = (PixelWidth * PixelHeight * 4)
     static let context = createBitmapContext(pixelsWide: PixelWidth, PixelHeight)
     static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)
-    static var pixelsSRGB = pixels.bindMemory(to: UInt32.self)
+//    static var pixelsSRGB = pixels.bindMemory(to: UInt32.self)
     
     let R = 2
     let G = 1
     let B = 0
     let A = 3
     
-    var blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
+//    var blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
     var shadowScreen = [Int](repeating: 0, count: PageSize)
 
     var was = 0;
@@ -196,7 +198,7 @@ class HiRes: NSView {
         
         for blockVertIdx in 0 ..< HiRes.blockRows {
             for blockHorIdx in 0 ..< HiRes.blockCols / blockSize {
-                if blockChanged[ blockVertIdx * HiRes.blockCols / blockSize + blockHorIdx ] {
+                if blockChanged[ blockVertIdx * HiRes.blockCols / blockSize + blockHorIdx ] != 0 {
                     // refresh the entire screen
                     let boundingBox = CGRect(
                         x: blockHorIdx * blockScreenWidth - screenBlockMargin,
@@ -231,17 +233,24 @@ class HiRes: NSView {
         }
 
         var pixelAddr = 0
-        
+
         var y = 0
-        
-        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
-        
+
+//        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
+
+        if ( ViewController.current?.CRTMonitor ?? false ) {
+            // do not clear the changes table
+        }
+        else {
+            hires_clearChanges()
+        }
+
         for lineAddr in HiResLineAddrTbl {
             if ( height <= 0 ) {
                 break
             }
             height -= 1
-            
+
             let blockVertIdx = y / HiRes.blockHeight * HiRes.blockCols
 
             for blockHorIdx in 0..<HiRes.blockCols {
@@ -249,24 +258,45 @@ class HiRes: NSView {
                 let screenIdx = y * HiRes.blockCols + blockHorIdx
 
                 // get all changed blocks
-                blockChanged[ blockVertIdx + blockHorIdx ] = blockChanged[ blockVertIdx + blockHorIdx ] || shadowScreen[ screenIdx ] != block
+                if shadowScreen[ screenIdx ] != block {
+                    blockChanged[ blockVertIdx + blockHorIdx ] = 8
+                }
+                else if ( ViewController.current?.CRTMonitor ?? false ) {
+                    // slow CRT fade out effect
+                    if (y % HiRes.blockHeight == 0) && (blockChanged[ blockVertIdx + blockHorIdx ] > 0) {
+                        blockChanged[ blockVertIdx + blockHorIdx ] -= 1
+                    }
+                }
+                
                 shadowScreen[ screenIdx ] = block
 
                 for bit in stride(from: 0, through: 6, by: 1) {
                     let bitMask = 1 << bit
                     if (block & bitMask) != 0 {
-                        HiRes.pixelsSRGB[pixelAddr] = monoColor;
+                        pixelsSRGB[pixelAddr] = monoColor;
+                    }
+                    else if ( ViewController.current?.CRTMonitor ?? false ) {
+                        var srgb = pixelsSRGB[pixelAddr]
+                        let s = srgb >> 24 & 0xFF / 2
+                        let r = srgb >> 16 & 0xFF / 2
+                        let g = srgb >>  8 & 0xFF / 2
+                        let b = srgb >>  0 & 0xFF / 2
+                        srgb = s << 24 | r << 16 | g << 8 | b
+                            
+                        pixelsSRGB[pixelAddr] = srgb;
                     }
                     else {
-                        HiRes.pixelsSRGB[pixelAddr] = color_black;
+                        pixelsSRGB[pixelAddr] = color_black;
                     }
 
                     pixelAddr += 1
                 }
             }
-            
+
             y += 1
         }
+
+//        hires_renderMono()
         
         refreshChanged(blockSize: 1)
     }
@@ -277,18 +307,18 @@ class HiRes: NSView {
         
         switch ( pixel ) {
         case 1: // purple (bits are in reverse!)
-            HiRes.pixelsSRGB[colorAddr] = color_purple;
+            pixelsSRGB[colorAddr] = color_purple;
 //            HiRes.pixelsSRGB[colorAddr + 1] = color_purple
             if  (colorAddr >= 1) && (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_purple
+                pixelsSRGB[colorAddr - 1] = color_purple
             }
             
         case 2: // green
             // reducing color bleeding
-            if (colorAddr > 0) && (HiRes.pixelsSRGB[colorAddr - 1] != color_black) {
-                HiRes.pixelsSRGB[colorAddr] = color_green
+            if (colorAddr > 0) && (pixelsSRGB[colorAddr - 1] != color_black) {
+                pixelsSRGB[colorAddr] = color_green
             }
-            HiRes.pixelsSRGB[colorAddr + 1] = color_green
+            pixelsSRGB[colorAddr + 1] = color_green
 
         case 3: // white 1
 //            if ( colorAddr >= 2 ) && ( HiRes.pixelsSRGB[colorAddr - 2] != color_black ) {
@@ -297,43 +327,43 @@ class HiRes: NSView {
 //            if (colorAddr >= 1) {
 //                HiRes.pixelsSRGB[colorAddr - 1] = color_yellow
 //            }
-            HiRes.pixelsSRGB[colorAddr] = color_white
-            HiRes.pixelsSRGB[colorAddr + 1] = color_white
+            pixelsSRGB[colorAddr] = color_white
+            pixelsSRGB[colorAddr + 1] = color_white
 
         case 5: // blue
-            HiRes.pixelsSRGB[colorAddr] = color_blue
+            pixelsSRGB[colorAddr] = color_blue
             if  (colorAddr >= 1) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_blue
+                pixelsSRGB[colorAddr - 1] = color_blue
             }
 
         case 6: // orange
             // reducing color bleeding
-            if (colorAddr > 0) && (HiRes.pixelsSRGB[colorAddr - 1] != color_black) {
-                HiRes.pixelsSRGB[colorAddr] = color_orange
+            if (colorAddr > 0) && (pixelsSRGB[colorAddr - 1] != color_black) {
+                pixelsSRGB[colorAddr] = color_orange
             }
-            HiRes.pixelsSRGB[colorAddr + 1] = color_orange
+            pixelsSRGB[colorAddr + 1] = color_orange
 
         case 7: // white 2
-            HiRes.pixelsSRGB[colorAddr] = color_white
-            HiRes.pixelsSRGB[colorAddr + 1] = color_white
+            pixelsSRGB[colorAddr] = color_white
+            pixelsSRGB[colorAddr + 1] = color_white
 
         default: // 0x00 (black 1), 0x04 (black 2)
-            HiRes.pixelsSRGB[colorAddr] = color_black
-            HiRes.pixelsSRGB[colorAddr + 1] = color_black
+            pixelsSRGB[colorAddr] = color_black
+            pixelsSRGB[colorAddr + 1] = color_black
             break
         }
 
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
-            HiRes.pixelsSRGB[colorAddr] = color_white
+            pixelsSRGB[colorAddr] = color_white
             if (colorAddr >= 1) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_white
+                pixelsSRGB[colorAddr - 1] = color_white
             }
             
             // TODO: Need better check if extra green was created
-            if (colorAddr >= 2) && (HiRes.pixelsSRGB[colorAddr - 2] == color_green ) {
-                if (colorAddr < 3) || (HiRes.pixelsSRGB[colorAddr - 3] != color_green) {
-                    HiRes.pixelsSRGB[colorAddr - 2] = color_black
+            if (colorAddr >= 2) && (pixelsSRGB[colorAddr - 2] == color_green ) {
+                if (colorAddr < 3) || (pixelsSRGB[colorAddr - 3] != color_green) {
+                    pixelsSRGB[colorAddr - 2] = color_black
                 }
             }
         }
@@ -349,8 +379,8 @@ class HiRes: NSView {
             (pixel == 0x03) || (pixel == 0x07)  // white
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
-            if (colorAddr >= 2) && ( HiRes.pixelsSRGB[colorAddr - 2] == color_purple ) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_purple
+            if (colorAddr >= 2) && ( pixelsSRGB[colorAddr - 2] == color_purple ) {
+                pixelsSRGB[colorAddr - 1] = color_purple
             }
         }
 
@@ -359,7 +389,7 @@ class HiRes: NSView {
             (pixel == 0x05) ||
             (pixel == 0x03) || (pixel == 0x07)  // white
         ) {
-            HiRes.pixelsSRGB[colorAddr - 1] = color_blue
+            pixelsSRGB[colorAddr - 1] = color_blue
         }
         
     }
@@ -388,7 +418,10 @@ class HiRes: NSView {
         
         var y = 0
         
-        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols / 2)
+//        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols / 2)
+        
+        hires_clearChanges()
+        
         HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
         
         for lineAddr in HiResLineAddrTbl {
@@ -415,7 +448,7 @@ class HiRes: NSView {
                 let screenIdx = y * HiRes.blockCols + blockHorIdx
                 
                 // get all changed blocks
-                blockChanged[ blockVertIdx + blockHorIdx ] = blockChanged[ blockVertIdx + blockHorIdx ] || shadowScreen[ screenIdx ] != block14
+                blockChanged[ blockVertIdx + blockHorIdx ] = ((blockChanged[ blockVertIdx + blockHorIdx ] != 0) || (shadowScreen[ screenIdx ] != block14)) ? 1 : 0
                 shadowScreen[ screenIdx ] = block14
                 
                 for px in 0 ... 2  {

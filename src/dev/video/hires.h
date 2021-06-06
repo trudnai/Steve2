@@ -11,4 +11,12 @@
 
 #include <stdio.h>
 
+extern uint32_t * pixelsSRGB;
+extern uint8_t * blockChanged;
+extern uint8_t * shadowScreen;
+
+extern void hires_clearChanges(void);
+extern void hires_renderMono(void);
+
+
 #endif /* hires_h */

@@ -213,6 +213,12 @@ class HiRes: NSView {
     }
     
     
+//    let pixelTrail = 2 // maybe too fast?
+    let pixelTrail = 1.5
+//    let pixelTrail = 1.4 // maybe a bit slow?
+//    let pixelTrail = 1.35 // maybe too slow?
+
+
     func RenderMono() {
         var height = HiRes.PixelHeight
 
@@ -259,12 +265,12 @@ class HiRes: NSView {
 
                 // get all changed blocks
                 if shadowScreen[ screenIdx ] != block {
-                    blockChanged[ blockVertIdx + blockHorIdx ] = 8
+                    blockChanged[ blockVertIdx + blockHorIdx ] = 0xFF
                 }
                 else if ( ViewController.current?.CRTMonitor ?? false ) {
                     // slow CRT fade out effect
                     if (y % HiRes.blockHeight == 0) && (blockChanged[ blockVertIdx + blockHorIdx ] > 0) {
-                        blockChanged[ blockVertIdx + blockHorIdx ] -= 1
+                        blockChanged[ blockVertIdx + blockHorIdx ] = UInt8( Double(blockChanged[ blockVertIdx + blockHorIdx ]) / pixelTrail )
                     }
                 }
                 
@@ -277,11 +283,16 @@ class HiRes: NSView {
                     }
                     else if ( ViewController.current?.CRTMonitor ?? false ) {
                         var srgb = pixelsSRGB[pixelAddr]
-                        let s = srgb >> 24 & 0xFF / 2
-                        let r = srgb >> 16 & 0xFF / 2
-                        let g = srgb >>  8 & 0xFF / 2
-                        let b = srgb >>  0 & 0xFF / 2
-                        srgb = s << 24 | r << 16 | g << 8 | b
+                        
+                        let s = srgb >> 24 & 0xFF
+                        let r = srgb >> 16 & 0xFF
+                        let g = srgb >>  8 & 0xFF
+                        let b = srgb >>  0 & 0xFF
+                        
+                        srgb = UInt32(Double(s) / pixelTrail) << 24
+                             | UInt32(Double(r) / pixelTrail) << 16
+                             | UInt32(Double(g) / pixelTrail) << 8
+                             | UInt32(Double(b) / pixelTrail)
                             
                         pixelsSRGB[pixelAddr] = srgb;
                     }

@@ -656,6 +656,7 @@
 		32A6AB512671D0660023257A /* 6502_instr_load_store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_load_store.h; sourceTree = "<group>"; };
 		32A6AB522671D0660023257A /* 6502_instr_call_ret_jump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_call_ret_jump.h; sourceTree = "<group>"; };
 		32A6AB532671D0660023257A /* 6502_instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instructions.h; sourceTree = "<group>"; };
+		32A6AB672671D7880023257A /* 6502.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = 6502.S; sourceTree = "<group>"; };
 		32A9F7482467B60B004902A1 /* speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speaker.h; sourceTree = "<group>"; };
 		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
 		32AF7C9624AD85E8002D82BF /* select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_all.png; sourceTree = "<group>"; };
@@ -1009,6 +1010,7 @@
 		32A6AB362671CED60023257A /* jit */ = {
 			isa = PBXGroup;
 			children = (
+				32A6AB662671D7880023257A /* x86 */,
 				32A6AB452671D0660023257A /* instructions */,
 				32A6AB382671D0570023257A /* 6502.c */,
 				32A6AB372671D0560023257A /* 6502.h */,
@@ -1035,6 +1037,14 @@
 				32A6AB532671D0660023257A /* 6502_instructions.h */,
 			);
 			path = instructions;
+			sourceTree = "<group>";
+		};
+		32A6AB662671D7880023257A /* x86 */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AB672671D7880023257A /* 6502.S */,
+			);
+			path = x86;
 			sourceTree = "<group>";
 		};
 		32A9F7472467B5DF004902A1 /* audio */ = {

@@ -640,6 +640,22 @@
 		32A6AA97266187570023257A /* hires.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hires.c; sourceTree = "<group>"; };
 		32A6AABF2669B5480023257A /* mmio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mmio.c; sourceTree = "<group>"; };
 		32A6AB0E266AF5160023257A /* paddle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = paddle.c; sourceTree = "<group>"; };
+		32A6AB372671D0560023257A /* 6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502.h; sourceTree = "<group>"; };
+		32A6AB382671D0570023257A /* 6502.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502.c; sourceTree = "<group>"; };
+		32A6AB462671D0660023257A /* 6502_instr_set_clr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_set_clr.h; sourceTree = "<group>"; };
+		32A6AB472671D0660023257A /* 6502_instr_stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_stack.h; sourceTree = "<group>"; };
+		32A6AB482671D0660023257A /* 6502_instr_logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_logic.h; sourceTree = "<group>"; };
+		32A6AB492671D0660023257A /* 6502_instr_shift_rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_shift_rotate.h; sourceTree = "<group>"; };
+		32A6AB4A2671D0660023257A /* 6502_instr_inc_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_inc_dec.h; sourceTree = "<group>"; };
+		32A6AB4B2671D0660023257A /* 6502_instr_compare_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_compare_test.h; sourceTree = "<group>"; };
+		32A6AB4C2671D0660023257A /* 6502_instr_branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_branch.h; sourceTree = "<group>"; };
+		32A6AB4D2671D0660023257A /* 6502_instr_misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_misc.h; sourceTree = "<group>"; };
+		32A6AB4E2671D0660023257A /* 6502_instr_arithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_arithmetic.h; sourceTree = "<group>"; };
+		32A6AB4F2671D0660023257A /* 6502_instr_undoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_undoc.h; sourceTree = "<group>"; };
+		32A6AB502671D0660023257A /* 6502_instr_transfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_transfer.h; sourceTree = "<group>"; };
+		32A6AB512671D0660023257A /* 6502_instr_load_store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_load_store.h; sourceTree = "<group>"; };
+		32A6AB522671D0660023257A /* 6502_instr_call_ret_jump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_call_ret_jump.h; sourceTree = "<group>"; };
+		32A6AB532671D0660023257A /* 6502_instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instructions.h; sourceTree = "<group>"; };
 		32A9F7482467B60B004902A1 /* speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speaker.h; sourceTree = "<group>"; };
 		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
 		32AF7C9624AD85E8002D82BF /* select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_all.png; sourceTree = "<group>"; };
@@ -903,6 +919,7 @@
 		325EB63A23FA572000C6B4A4 /* cpu */ = {
 			isa = PBXGroup;
 			children = (
+				32A6AB362671CED60023257A /* jit */,
 				32439F7522ECD8AD0077AAE0 /* instructions */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
@@ -987,6 +1004,37 @@
 				32A6AA97266187570023257A /* hires.c */,
 			);
 			path = video;
+			sourceTree = "<group>";
+		};
+		32A6AB362671CED60023257A /* jit */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AB452671D0660023257A /* instructions */,
+				32A6AB382671D0570023257A /* 6502.c */,
+				32A6AB372671D0560023257A /* 6502.h */,
+			);
+			path = jit;
+			sourceTree = "<group>";
+		};
+		32A6AB452671D0660023257A /* instructions */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AB462671D0660023257A /* 6502_instr_set_clr.h */,
+				32A6AB472671D0660023257A /* 6502_instr_stack.h */,
+				32A6AB482671D0660023257A /* 6502_instr_logic.h */,
+				32A6AB492671D0660023257A /* 6502_instr_shift_rotate.h */,
+				32A6AB4A2671D0660023257A /* 6502_instr_inc_dec.h */,
+				32A6AB4B2671D0660023257A /* 6502_instr_compare_test.h */,
+				32A6AB4C2671D0660023257A /* 6502_instr_branch.h */,
+				32A6AB4D2671D0660023257A /* 6502_instr_misc.h */,
+				32A6AB4E2671D0660023257A /* 6502_instr_arithmetic.h */,
+				32A6AB4F2671D0660023257A /* 6502_instr_undoc.h */,
+				32A6AB502671D0660023257A /* 6502_instr_transfer.h */,
+				32A6AB512671D0660023257A /* 6502_instr_load_store.h */,
+				32A6AB522671D0660023257A /* 6502_instr_call_ret_jump.h */,
+				32A6AB532671D0660023257A /* 6502_instructions.h */,
+			);
+			path = instructions;
 			sourceTree = "<group>";
 		};
 		32A9F7472467B5DF004902A1 /* audio */ = {

@@ -843,7 +843,7 @@
                                         <menuItem title="Hard Hat Mack" id="Vx5-kI-CXy">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="Pause:" target="Voe-Tx-rLC" id="A6V-B9-HNV"/>
+                                                <action selector="Cheat_Hard_Hat_Mack:" target="Voe-Tx-rLC" id="dW7-CN-IrW"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Wavy Navy" id="4B8-RN-oiz">

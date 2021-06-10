@@ -259,7 +259,7 @@ INLINE int m6502_Step() {
     switch ( fetch() ) {
         case 0x00: BRK(); return 7;                                    // BRK
         case 0x01: ORA( src_X_ind() ); return 6;                       // ORA X,ind
-        case 0x02: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x02: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x03: SLO( addr_zp_X() ); return 8;                       // SLO* zpg,X (undocumented)
         case 0x04: NOP(); src_zp(); return 3;                          // NOP* zpg (undocumented)
         case 0x05: ORA( src_zp() ); return 3;                          // ORA zpg
@@ -275,7 +275,7 @@ INLINE int m6502_Step() {
         case 0x0F: SLO( addr_abs() ); return 6;                        // SLO* (undocumented)
         case 0x10: BPL( rel_addr() ); return 2;                        // BPL rel
         case 0x11: ORA( src_ind_Y() ); return 5;                       // ORA ind,Y
-        case 0x12: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x12: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x13: SLO( addr_zp_Y() ); return 8;                       // SLO* zpg,Y (undocumented)
         case 0x14: NOP(); addr_zp_X(); return 4;                       // NOP* zpg,X (undocumented)
         case 0x15: ORA( src_zp_X() ); return 4;                        // ORA zpg,X
@@ -291,7 +291,7 @@ INLINE int m6502_Step() {
         case 0x1F: SLO( addr_abs_X() ); return 7;                      // SLO* abs,X (undocumented)
         case 0x20: JSR( abs_addr() ); return 6;                        // JSR abs
         case 0x21: AND( src_X_ind() ); return 6;                       // AND X,ind
-        case 0x22: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x22: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x23: RLA( addr_ind_X() ); return 8;                      // RLA* ind,X 8 (undocumented)
         case 0x24: BIT( src_zp() ); return 3;                          // BIT zpg
         case 0x25: AND( src_zp() ); return 3;                          // AND zpg
@@ -307,7 +307,7 @@ INLINE int m6502_Step() {
         case 0x2F: RLA( addr_abs() ); return 6;                        // RLA* abs 6 (undocumented)
         case 0x30: BMI( rel_addr() ); return 2;                        // BMI rel
         case 0x31: AND( src_ind_Y() ); return 5;                       // AND ind,Y
-        case 0x32: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x32: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x33: RLA( addr_ind_Y() ); return 8;                      // RLA* izy 8 (undocumented)
         case 0x34: NOP(); src_zp_X(); return 4;                        // NOP* zpx 4 (undocumented)
         case 0x35: AND( src_zp_X() ); return 4;                        // AND zpg,X
@@ -323,23 +323,23 @@ INLINE int m6502_Step() {
         case 0x3F: RLA( addr_abs_X() ); return 7;                      // RLA* abx 7 (undocumented)
         case 0x40: RTI(); return 6;                                    // RTI
         case 0x41: EOR( src_X_ind() ); return 6;                       // EOR X,ind
-        case 0x42: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x42: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x43: SRE( addr_ind_X() ); return 8;                      // SRE* izx 8 (undocumented)
-        case 0x44: NOP(); return 3;                                    // NOP* zp 3 (undocumented)
+        case 0x44: NOP(); src_zp(); return 3;                          // NOP* zp 3 (undocumented)
         case 0x45: EOR( src_zp() ); return 3;                          // EOR zpg
         case 0x46: LSR( addr_zp() ); return 5;                         // LSR zpg
         case 0x47: SRE( addr_zp() ); return 5;                         // SRE* zp 5 (undocumented)
         case 0x48: PHA(); return 3;                                    // PHA
         case 0x49: EOR( imm() ); return 2;                             // EOR imm
         case 0x4A: LSRA(); return 2;                                   // LSR A
-        case 0x4B: ASR( imm() ); return 2;                             // ASR* imm 2 (undocumented)
+        case 0x4B: ASR( imm() ); return 2;                             // TODO: ALR / ASR* imm 2 (undocumented)
         case 0x4C: JMP( abs_addr() ); return 3;                        // JMP abs
         case 0x4D: EOR( src_abs() ); return 4;                         // EOR abs
         case 0x4E: LSR( addr_abs() ); return 6;                        // LSR abs
         case 0x4F: SRE( abs_addr() ); return 6;                        // SRE* abs 6 (undocumented)
         case 0x50: BVC( rel_addr() ); return 2;                        // BVC rel
         case 0x51: EOR( src_ind_Y() ); return 5;                       // EOR ind,Y
-        case 0x52: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x52: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x53: SRE( addr_ind_Y() ); return 8;                      // SRE* izy 8 (undocumented)
         case 0x54: NOP(); src_zp_X(); return 4;                        // NOP* zpx 4 (undocumented)
         case 0x55: EOR( src_zp_X() ); return 4;                        // AND zpg,X
@@ -355,9 +355,9 @@ INLINE int m6502_Step() {
         case 0x5F: SRE( addr_abs_X() ); return 7;                      // SRE* abx 7 (undocumented)
         case 0x60: RTS(); return 6;                                    // RTS
         case 0x61: ADC( src_X_ind() ); return 6;                       // ADC X,ind
-        case 0x62: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x62: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x63: RRA( addr_ind_X() ); return 8;                      // RRA* izx 8 (undocumented)
-        case 0x64: NOP(); return 3;                                    // NOP* zp 3 (undocumented)
+        case 0x64: NOP(); src_zp(); return 3;                          // NOP* zp 3 (undocumented)
         case 0x65: ADC( src_zp() ); return 3;                          // ADC zpg
         case 0x66: ROR( addr_zp() ); return 5;                         // ROR zpg
         case 0x67: RRA( addr_zp() ); return 5;                         // RRA* zp 5 (undocumented)
@@ -371,7 +371,7 @@ INLINE int m6502_Step() {
         case 0x6F: RRA( abs_addr() ); return 6;                        // RRA* abs 6 (undocumented)
         case 0x70: BVS( rel_addr() ); return 2;                        // BVS rel
         case 0x71: ADC( src_ind_Y() ); return 5;                       // ADC ind,Y
-        case 0x72: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x72: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x73: RRA( addr_ind_Y() ); return 8;                      // RRA* izy 8 (undocumented)
         case 0x74: NOP(); src_zp_X(); return 4;                        // NOP* zpx 4 (undocumented)
         case 0x75: ADC( src_zp_X() ); return 4;                        // ADC zpg,X
@@ -396,14 +396,14 @@ INLINE int m6502_Step() {
         case 0x88: DEY(); return 2;                                    // DEY
         case 0x89: NOP(); imm(); return 2;                             // NOP* imm (undocumented)
         case 0x8A: TXA(); return 2;                                    // TXA
-        case 0x8B: XAA( imm() ); return 2;                             // XAA* imm 2 (undocumented, highly unstable!)
+        case 0x8B: XAA( imm() ); return 2;                             // ANE / XAA* imm 2 (undocumented, highly unstable!)
         case 0x8C: STY( addr_abs() ); return 4;                        // STY abs
         case 0x8D: STA( addr_abs() ); return 4;                        // STA abs
         case 0x8E: STX( addr_abs() ); return 4;                            // STX abs
         case 0x8F: SAX( addr_abs() ); return 4;                        // SAX* abs 4 (undocumented)
         case 0x90: BCC( rel_addr() ); return 2;                        // BCC rel
         case 0x91: STA( addr_ind_Y() ); return 6;                      // STA ind,Y
-        case 0x92: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0x92: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x93: SHA( addr_ind_Y() ); return 6;                      // SHA* izy 6 (undocumented, unstable)
         case 0x94: STY( addr_zp_X() ); return 4;                       // STY zpg,X
         case 0x95: STA( addr_zp_X() ); return 4;                       // STA zpg,X
@@ -412,11 +412,11 @@ INLINE int m6502_Step() {
         case 0x98: TYA(); return 2;                                    // TYA
         case 0x99: STA( addr_abs_Y() ); return 5;                      // STA abs,Y
         case 0x9A: TXS(); return 2;                                    // TXS
-        case 0x9B: SAS( addr_abs_Y() ); return 5;                      // SAS* aby 5 (undocumented, unstable)
+        case 0x9B: SAS( addr_abs_Y() ); return 5;                      // TAS / XAS / SHS / SAS* aby 5 (undocumented, unstable)
         case 0x9C: SHY( addr_abs_X() ); return 5;                      // SHY* abx 5 (undocumented, unstable)
         case 0x9D: STA( addr_abs_X() ); return 5;                      // STA abs,X
         case 0x9E: SHX( addr_abs_Y() ); return 5;                      // SHX* aby 5 (undocumented, unstable)
-        case 0x9F: SAX( addr_abs_Y() ); return 5;                      // SAX* aby 5 (undocumented, unstable)
+        case 0x9F: SAX( addr_abs_Y() ); return 5;                      // TODO: SHA / SAX* aby 5 (undocumented, unstable)
         case 0xA0: LDY( imm() ); return 2;                             // LDY imm
         case 0xA1: LDA( src_X_ind() ) ; return 6;                      // LDA X,ind
         case 0xA2: LDX( imm() ); return 2;                             // LDX imm
@@ -435,7 +435,7 @@ INLINE int m6502_Step() {
         case 0xAF: LAX( src_abs() ); return 4;                         // LAX* abs 4 (undocumented)
         case 0xB0: BCS( rel_addr() ); return 2;                        // BCS rel
         case 0xB1: LDA( src_ind_Y() ); return 5;                       // LDA ind,Y
-        case 0xB2: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0xB2: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0xB3: LAX( src_ind_Y() ); return 5;                       // LAX* izy 5 (undocumented)
         case 0xB4: LDY( src_zp_X() ); return 4+1;                        // LDY zpg,X
         case 0xB5: LDA( src_zp_X() ); return 4+1;                        // LDA zpg,X
@@ -444,7 +444,7 @@ INLINE int m6502_Step() {
         case 0xB8: CLV(); return 2;                                    // CLV
         case 0xB9: LDA( src_abs_Y() ); return 4;                       // LDA abs,Y
         case 0xBA: TSX(); return 2;                                    // TSX
-        case 0xBB: LAS( src_abs_Y() ); return 4;                       // LAX* aby 4 (undocumented)
+        case 0xBB: LAS( src_abs_Y() ); return 4;                       // TODO: LAS / LAR / LAX* aby 4 (undocumented)
         case 0xBC: LDY( src_abs_X() ); return 4;                       // LDY abs,X
         case 0xBD: LDA( src_abs_X() ); return 4;                       // LDA abs,X
         case 0xBE: LDX( src_abs_Y() ); return 4;                       // LDX abs,Y
@@ -467,7 +467,7 @@ INLINE int m6502_Step() {
         case 0xCF: DCP( addr_abs() ); return 6;                        // DCP* abs 6 (undocumented)
         case 0xD0: BNE( rel_addr() ); return 2;                        // BNE rel
         case 0xD1: CMP( src_ind_Y() ); return 5;                       // CMP ind,Y
-        case 0xD2: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0xD2: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0xD3: DCP( addr_ind_Y() ); return 8;                      // DCP* izy 8 (undocumented)
         case 0xD4: NOP(); src_zp_X(); return 4;                        // NOP* zpx 4 (undocumented)
         case 0xD5: CMP( src_zp_X() ); return 4;                        // CMP zpg,X
@@ -484,27 +484,27 @@ INLINE int m6502_Step() {
         case 0xE0: CPX( imm() ); return 2;                             // CPX imm
         case 0xE1: SBC( src_X_ind() ) ; return 6;                      // SBC (X,ind)
         case 0xE2: NOP(); imm(); return 2;                             // NOP* imm 2 (undocumented)
-        case 0xE3: ISB( addr_ind_X() ); return 8;                      // ISB* izx 8 (undocumented)
+        case 0xE3: ISB( addr_ind_X() ); return 8;                      // ISC / INS / ISB* izx 8 (undocumented)
         case 0xE4: CPX( src_zp() ); return 3;                          // CPX zpg
         case 0xE5: SBC( src_zp() ); return 3;                          // SBC zpg
         case 0xE6: INC( addr_zp() ); return 5;                         // INC zpg
-        case 0xE7: ISB( addr_zp() ); return 5;                         // ISB* zpg 5 (undocumented)
+        case 0xE7: ISB( addr_zp() ); return 5;                         // ISC / INS / ISB* zpg 5 (undocumented)
         case 0xE8: INX(); return 2;                                    // INX
         case 0xE9: SBC( imm() ); return 2;                             // SBC imm
         case 0xEA: NOP(); return 2;                                    // NOP
-        case 0xEB: SBC( imm() ); return 2;                             // SBC* imm 2 (undocumented)
+        case 0xEB: SBC( imm() ); return 2;                             // USBC / SBC* imm 2 (undocumented)
         case 0xEC: CPX( src_abs() ); return 4;                         // CPX abs
         case 0xED: SBC( src_abs() ); return 4;                         // SBC abs
         case 0xEE: INC( addr_abs() ); return 6;                        // INC abs
-        case 0xEF: ISB( addr_abs() ); return 6;                        // ISB* abs 6 (undocumented)
+        case 0xEF: ISB( addr_abs() ); return 6;                        // ISC / INS / ISB* abs 6 (undocumented)
         case 0xF0: BEQ( rel_addr() ); return 2;                        // BEQ rel
         case 0xF1: SBC( src_ind_Y() ); return 5;                       // SBC ind,Y
-        case 0xF2: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
-        case 0xF3: ISB( addr_ind_Y() ); return 8;                      // ISB* izy 8 (undocumented)
+        case 0xF2: HLT(); return 0;                                     // JAM / KIL / HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
+        case 0xF3: ISB( addr_ind_Y() ); return 8;                      // ISC / INS / ISB* izy 8 (undocumented)
         case 0xF4: NOP(); src_zp_X(); return 4;                        // NOP* zpx 4 (undocumented)
         case 0xF5: SBC( src_zp_X() ); return 4;                        // SBC zpg,X
         case 0xF6: INC( addr_zp_X() ); return 6;                       // INC zpg,X
-        case 0xF7: ISB( addr_zp_X() ); return 6;                       // ISB* zpx 6 (undocumented)
+        case 0xF7: ISB( addr_zp_X() ); return 6;                       // ISC / INS / ISB* zpx 6 (undocumented)
         case 0xF8: SED(); return 2;                                    // SED
         case 0xF9: SBC( src_abs_Y() ); return 4+1;                       // SBC abs,Y
         case 0xFA: NOP(); return 2;                                    // NOP (undocumented)
@@ -512,7 +512,7 @@ INLINE int m6502_Step() {
         case 0xFC: NOP(); src_abs_X(); return 4;                       // NOP* abx 4 (undocumented)
         case 0xFD: SBC( src_abs_X() ); return 4+1;                       // SBC abs,X
         case 0xFE: INC( addr_abs_X() ); return 7;                      // INC abs,X
-        case 0xFF: ISB( addr_abs_X() ); return 7;                      // ISB* abx 7 (undocumented)
+        case 0xFF: ISB( addr_abs_X() ); return 7;                      // ISC / INS / ISB* abx 7 (undocumented)
 
         default:
             dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));

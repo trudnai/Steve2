@@ -214,11 +214,11 @@ class HiRes: NSView {
     
     
 //    let pixelTrail = 2 // maybe too fast?
-    let pixelTrail = 1.5
+//    let pixelTrail = 1.5
 //    let pixelTrail = 1.4 // maybe a bit slow?
 //    let pixelTrail = 1.35 // maybe too slow?
-
-
+//    let pixelTrail = 1.25 // maybe too slow?
+    
     func RenderMono() {
         var height = HiRes.PixelHeight
 

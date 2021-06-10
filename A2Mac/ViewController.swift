@@ -1162,6 +1162,8 @@ class ViewController: NSViewController  {
         spkr_fps_divider = fps / spkr_fps
         spkr_play_timeout = SPKR_PLAY_TIMEOUT * spkr_fps_divider
 
+        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
+
 //        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
         newUpdateTimer( timeInterval: 1 / Double(fps) )
         setCPUClockSpeed(freq: MHz_6502)
@@ -1576,6 +1578,16 @@ class ViewController: NSViewController  {
         }
     }
     
+    func Cheat_Hard_Hat_Mack() -> NSControl.StateValue {
+        setMEM( 0x0503, 0x18 )
+        setMEM( 0x0504, 0x60 )
+        
+        setMEM( 0x50A5, 0xEA )
+        setMEM( 0x50A6, 0xEA )
+        setMEM( 0x50A7, 0xEA )
+        
+        return .on
+    }
 }
 
 

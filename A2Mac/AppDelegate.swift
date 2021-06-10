@@ -87,6 +87,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menuItem.state = (ViewController.current?.Cheat_Wavy_Navy_Lose_To_Win())!
     }
     
+    @IBAction func Cheat_Hard_Hat_Mack(_ menuItem: NSMenuItem) {
+        menuItem.state = (ViewController.current?.Cheat_Hard_Hat_Mack())!
+    }
+    
     @IBAction func showPreferences(_ sender: NSMenuItem) {
         
         if ( preferencesController == nil ) {

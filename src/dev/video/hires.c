@@ -31,6 +31,10 @@ uint8_t* HiResBufferPointer = Apple2_64K_MEM + Page1Addr;
 // holds the starting addresses for each lines minus the screen page starting address
 uint16_t HiResLineAddrTbl[PixelHeight];
 
+
+double pixelTrail = 15;
+
+
 typedef enum {
     _B = 0,
     _G = 1,

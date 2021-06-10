@@ -15,6 +15,9 @@ extern uint32_t * pixelsSRGB;
 extern uint8_t * blockChanged;
 extern uint8_t * shadowScreen;
 
+extern double pixelTrail;
+
+
 extern void hires_clearChanges(void);
 extern void hires_renderMono(void);
 

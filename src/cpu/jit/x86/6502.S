@@ -32,6 +32,17 @@
 
 
 #define m6502       r8
+#define reg_A       0
+#define reg_X       1
+#define reg_Y       2
+
+#define flag_C      3
+#define flag_Z      4
+#define flag_D      6
+#define flag_O      9
+#define flag_N      10
+
+#define s_clkfrm    30
 
 
 .file "src/cpu/jit/x64/6502.s"
@@ -51,29 +62,29 @@ _jit_prologue2:
 
 _jit_prologue2_addr_m6502:
 
-        mov     REG_A, byte ptr [m6502 + 6]     // m6502.D - Decimal flag
+        mov     REG_A, byte ptr [m6502 + flag_D]     // m6502.D - Decimal flag
         mov     FLG_D, REG_A
-        mov     REG_A, byte ptr [m6502 + 0]     // m6502.A
-        mov     REG_XY, word ptr [m6502 + 1]    // m6502.X & m6502.Y
+        mov     REG_A, byte ptr [m6502 + reg_A]     // m6502.A
+        mov     REG_XY, word ptr [m6502 + reg_X]    // m6502.X & m6502.Y
 
         xor     cx, cx                          // temp x86 flags
 
-        cmp     byte ptr [m6502 + 3], 0         // m6502.C - Carry flag
+        cmp     byte ptr [m6502 + flag_C], 0         // m6502.C - Carry flag
         jz      .c0
         or      cx, 1 << 0
 .c0:
 
-        cmp     byte ptr [m6502 + 4], 0         // m6502.Z - Zero flag
+        cmp     byte ptr [m6502 + flag_Z], 0         // m6502.Z - Zero flag
         jz      .z0
         or      cx, 1 << 6
 .z0:
 
-        cmp     byte ptr [m6502 + 10], 0        // m6502.N - Negative flag
+        cmp     byte ptr [m6502 + flag_N], 0        // m6502.N - Negative flag
         jz      .n0
         or      cx, 1 << 7
 .n0:
 
-        cmp     byte ptr [m6502 + 9], 0         // m6502.O - Overflow flag
+        cmp     byte ptr [m6502 + flag_O], 0         // m6502.O - Overflow flag
         jz      .o0
         or      cx, 1 << 11
 .o0:
@@ -81,7 +92,7 @@ _jit_prologue2_addr_m6502:
         push    cx                              // commit converted x86 flags
         popfw
 
-        mov     ecx, dword ptr [m6502 + 30]     // m6502.clkfrm
+        mov     ecx, dword ptr [m6502 + s_clkfrm]     // m6502.clkfrm
 
         jmp     ARG_3
 _jit_prologue2_end:

@@ -1,9 +1,9 @@
 //
-//  main.c
-//  6502
+//  jit_6502.c
+//  Steve ][
 //
-//  Created by Tamas Rudnai on 7/14/19.
-//  Copyright © 2019, 2020 Tamas Rudnai. All rights reserved.
+//  Created by Tamas Rudnai on 4/14/21.
+//  Copyright © 2021 GameAlloy. All rights reserved.
 //
 // This file is part of Steve ][ -- The Apple ][ Emulator.
 //
@@ -35,8 +35,26 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
-#include "6502.h"
+#include <sys/mman.h>
+
+#include "jit_6502.h"
 #include "speaker.h"
+
+
+#define CLK_WAIT
+
+
+const size_t JIT_MEM_SIZE = 1024;
+typedef __attribute((noinline, naked)) long (*jit_function)(uint8_t*, uint8_t*, m6502_t*);
+uint8_t * jit_mem = NULL;
+
+static const uint8_t jit_prologue [] = {
+    0xC3
+};
+
+static const uint8_t jit_epilogue [] = {
+    0xC3
+};
 
 
 void ViewController_spk_up_play(void);
@@ -47,7 +65,7 @@ volatile cpuMode_s cpuMode = cpuMode_normal;
 volatile cpuState_s cpuState = cpuState_unknown;
 
 
-#include "../util/common.h"
+#include "../../util/common.h"
 
 
 #define SOFTRESET_VECTOR    0x3F2
@@ -97,14 +115,14 @@ m6502_t m6502 = {
     0,      // res
     0,      // V
     0,      // N
-
+    
     0,      // PC
     0,      // SP
     
     0,      // clktime
     0,      // clklast
     0,      // clkfrm
-
+    
     0,      // trace
     0,      // step
     0,      // brk
@@ -119,8 +137,8 @@ m6502_t m6502 = {
 
 disassembly_t disassembly;
 
-#include "../util/disassembler.h"
-#include "../dev/mem/mmio.h"
+#include "../../util/disassembler.h"
+#include "../../dev/mem/mmio.h"
 
 
 INLINE void set_flags_N( const uint8_t test ) {
@@ -171,7 +189,7 @@ typedef struct {
  !!!! `his has to be here!!!
  This idea is that "INLINE" would work only if it is
  located in the same source file -- hence the include...
-**/
+ **/
 
 INLINE flags_t getFlags() {
     flags_t f = {
@@ -184,7 +202,7 @@ INLINE flags_t getFlags() {
         m6502.V != 0,    // Overflow Flag ???
         m6502.N != 0,    // Negative Flag
     };
-
+    
     return f;
 }
 
@@ -202,22 +220,26 @@ INLINE void setFlags( uint8_t byte ) {
     m6502.N = flags.N;      // Negative Flag
 }
 
+
+typedef enum {
+    jit_state_init = 0,
+    jit_state_prologue,
+    jit_state_compiling,
+    jit_state_epilogue,
+    
+    jit_state_max,
+    jit_state_invalid = 999999
+} jit_state_t;
+
+
+static jit_state_t jit_state = jit_state_init;
+
 #include "6502_instructions.h"
 
 INLINE int m6502_Step() {
-
+    
     
 #ifdef DEBUG___
-    switch ( m6502.PC ) {
-        case 0x1E60:
-            printf("Wavy Navy...\n");
-            break;
-            
-        default:
-            break;
-    }
-    
-    
     switch ( m6502.PC ) {
         case 0xC600:
             printf("DISK...\n");
@@ -230,7 +252,7 @@ INLINE int m6502_Step() {
         default:
             break;
     }
-
+    
     
     switch ( m6502.PC ) {
         case 0xE000:
@@ -513,12 +535,12 @@ INLINE int m6502_Step() {
         case 0xFD: SBC( src_abs_X() ); return 4+1;                       // SBC abs,X
         case 0xFE: INC( addr_abs_X() ); return 7;                      // INC abs,X
         case 0xFF: ISB( addr_abs_X() ); return 7;                      // ISC / INS / ISB* abx 7 (undocumented)
-
+            
         default:
             dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
             return 2;
     }
-//    } // fetch16
+    //    } // fetch16
     
     return 2;
 }
@@ -556,7 +578,7 @@ void hardReset() {
 }
 
 void softReset() {
-//    m6502.PC = memread16(SOFTRESET_VECTOR);
+    //    m6502.PC = memread16(SOFTRESET_VECTOR);
     m6502.PC = memread16( RESET_VECTOR );
     
     m6502.SP = 0xFF;
@@ -569,59 +591,72 @@ void softReset() {
     resetMemory();
 }
 
+#include "jit_6502.h"
+
 void m6502_Run() {
-
+    
+    // Testin JIT
+    //    run_from_rwx(5);
+    //    run_from_rwx(15);
+    //    test_asm();
+    
     // init time
-//#ifdef CLK_WAIT
-//    unsigned long long elpased = (unsigned long long)-1LL;
-//#endif
-
+    //#ifdef CLK_WAIT
+    //    unsigned long long elpased = (unsigned long long)-1LL;
+    //#endif
+    
+#define run_1_times m6502_Step()
+#define run_2_times run_1_times + run_1_times
+#define run_4_times run_2_times + run_2_times
+#define run_8_times run_4_times + run_4_times
+    
+    
 #ifdef SPEEDTEST
     for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
 #elif defined( CLK_WAIT )
-        // we clear the clkfrm from ViewController Update()
-        // we will also use this to pause the simulation if not finished by the end of the frame
-        for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() )
+    // we clear the clkfrm from ViewController Update()
+    // we will also use this to pause the simulation if not finished by the end of the frame
+    for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() )
 #else
     // this is for max speed only -- WARNING! It works only if simulation runs in a completely different thread from the Update()
     for ( ; ; )
 #endif
     {
-
+    
     // TODO: clkfrm is already increamented!!!
     printDisassembly(outdev);
-        
+    
 #ifdef INTERRUPT_CHECK_PER_STEP
-        if ( m6502.IF ) {
-            switch (m6502.interrupt) {
-                case HALT:
-                    // CPU is haletd, nothing to do here...
-                    return;
-                    
-                case IRQ:
-                    interrupt_IRQ();
-                    break;
-                    
-                case NMI:
-                    interrupt_NMI();
-                    break;
-                    
-                case HARDRESET:
-                    hardReset();
-                    break;
-                    
-                case SOFTRESET:
-                    softReset();
-                    break;
-                    
-                default:
-                    break;
-            }
-            
-            m6502.IF = 0;
+    if ( m6502.IF ) {
+        switch (m6502.interrupt) {
+            case HALT:
+                // CPU is haletd, nothing to do here...
+                return;
+                
+            case IRQ:
+                interrupt_IRQ();
+                break;
+                
+            case NMI:
+                interrupt_NMI();
+                break;
+                
+            case HARDRESET:
+                hardReset();
+                break;
+                
+            case SOFTRESET:
+                softReset();
+                break;
+                
+            default:
+                break;
         }
-#endif // INTERRUPT_CHECK_PER_STEP
         
+        m6502.IF = 0;
+    }
+#endif // INTERRUPT_CHECK_PER_STEP
+    
     }
     
     // TODO: What if we dynamically reduce or increace CPU speed?
@@ -634,7 +669,7 @@ void m6502_Run() {
             clk_6502_per_frm = clk_6502_per_frm_set;
         }
     }
-
+    
     // play the entire sound buffer for this frame
     spkr_update();
     // this will take care of turning off disk motor sound when time is up
@@ -648,7 +683,7 @@ void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, co
     strcpy( fullPath, bundlePath );
     strcat( fullPath, "/");
     strcat( fullPath, filename );
-        
+    
     FILE * f = fopen(fullPath, "rb");
     if (f == NULL) {
         perror("Failed to read ROM: ");
@@ -658,10 +693,10 @@ void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, co
     fseek(f, 0L, SEEK_END);
     uint16_t flen = ftell(f);
     fseek(f, 0L, SEEK_SET);
-
+    
     fread( rom + addr, 1, flen, f);
     fclose(f);
-
+    
 }
 
 
@@ -675,7 +710,7 @@ size_t getFileSize ( const char * fullPath ) {
     fseek(f, 0L, SEEK_END);
     size_t flen = ftell(f);
     fseek(f, 0L, SEEK_SET);
-
+    
     fclose(f);
     
     return flen;
@@ -688,7 +723,7 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     strcpy( fullPath, bundlePath );
     strcat( fullPath, "/");
     strcat( fullPath, filename );
-
+    
     size_t flen = getFileSize(fullPath);
     
     if ( flen == 0 ) {
@@ -704,18 +739,18 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
         read_rom( bundlePath, filename, Apple2_64K_ROM + 0xD000, 0x1000);
         memcpy(Apple2_64K_MEM + 0xD000, Apple2_64K_ROM + 0xD000, 12 * KB);
     }
-
+    
 }
 
 
 void openLog() {
 #ifdef DISASSEMBLER
-    outdev = fopen("/Users/trudnai/Library/Containers/com.trudnai.steveii/Data/disassembly_new.log", "w+");
+    outdev = fopen("/Users/trudnai/Library/Containers/com.trudnai.steveii/Data/disassembly_woz.log", "w+");
 #endif
     // for DEBUG ONLY!!! -- use stdout if could not create log file
-//    if (outdev == NULL) {
-//        outdev = stdout;
-//    }
+    //    if (outdev == NULL) {
+    //        outdev = stdout;
+    //    }
 }
 
 
@@ -738,16 +773,16 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     // wait 100ms to be sure simulation has been halted
     usleep(100000);
     
-//    printf("Bundlepath: %s\n", bundlePath);
-
-//    epoch = rdtsc();
-//    sleep(1);
-//    unsigned long long e = rdtsc();
-//    tick_per_sec = e - epoch;
-//    tick_6502_per_sec = tick_per_sec / MHz_6502;
-
+    //    printf("Bundlepath: %s\n", bundlePath);
+    
+    //    epoch = rdtsc();
+    //    sleep(1);
+    //    unsigned long long e = rdtsc();
+    //    tick_per_sec = e - epoch;
+    //    tick_6502_per_sec = tick_per_sec / MHz_6502;
+    
     initMemory();
-
+    
     
 #ifdef FUNCTIONTEST
     read_rom( bundlePath, "6502_functional_test.bin", Apple2_64K_RAM, 0);
@@ -762,7 +797,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     // Disk ][ ROM in Slot 6
     read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_ROM, 0xC600);
     memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_ROM + 0xC600, 0x100);
-
+    
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector
     m6502.SP = 0xFF; //-3;
@@ -775,30 +810,30 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     
     // memory size
     //*((uint16_t*)(&RAM[0x73])) = 0xC000;
-
+    
     m6502.PC = memread16( RESET_VECTOR );
 #endif
     
     
     uint8_t counter[] = {
-                           // 1    * COUNTER2
-                           // 2
-                           // 3             ORG   $1000
-                           // 4    SCREEN   EQU   $400
-                           // 5    HOME     EQU   $FC58
-                           // 6    DIGITS   EQU   $06
-                           // 7    ZERO     EQU   $B0
-                           // 8    CARRY    EQU   $BA
-                           // 9    RDKEY    EQU   $FD0C
-                           //10
-
+        // 1    * COUNTER2
+        // 2
+        // 3             ORG   $1000
+        // 4    SCREEN   EQU   $400
+        // 5    HOME     EQU   $FC58
+        // 6    DIGITS   EQU   $06
+        // 7    ZERO     EQU   $B0
+        // 8    CARRY    EQU   $BA
+        // 9    RDKEY    EQU   $FD0C
+        //10
+        
         // I have placed NOP to keep addresses
         
         0xA0, 0x09, 0xEA,  //11            LDY   #$09 ; NOP
         0x84, 0x06,        //12            STY   #DIGITS
         0xEA, 0xEA,        //13            NOP NOP
         0xEA, 0xEA, 0xEA,  //14            NOP NOP NOP
-
+        
         0xA6, 0x06,        //15            LDY   DIGITS
         0xA9, 0xB0,        //16   CLEAR    LDA   #ZERO
         0x99, 0x00, 0x04,  //17            STA   SCREEN,Y
@@ -823,7 +858,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
         
         0x4C, 0x20, 0x10,  //33            JMP   NEXT
         0x60,              //34   END      RTS
-
+        
         0xB9, 0x00, 0x04,  //36   INC      LDA   SCREEN,Y
         0xAA,              //37            TAX
         0xE8,              //38            INX
@@ -831,7 +866,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
         0x99, 0x00, 0x04,  //40            STA   SCREEN,Y
         0x60,              //41            RTS
     };
-
+    
     
     uint8_t counter_fast[] = {
         // 1    * COUNTER2
@@ -844,7 +879,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
         // 8    CARRY    EQU   $BA
         // 9    RDKEY    EQU   $FD0C
         //10
-
+        
         // I have placed NOP to keep addresses
         
         0xA0, 0x06,        // 00            LDY   #$09
@@ -877,8 +912,8 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
         0x60,              // 2E   END      RTS
         
     };
-
-
+    
+    
     // set the default speed
     clk_6502_per_frm_set = clk_6502_per_frm = FRAME(default_MHz_6502);
     
@@ -887,7 +922,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     setIO(0xC061, 0);
     setIO(0xC062, 0);
     setIO(0xC063, 1 << 7); // inverted (bit 7: not pressed)
-
+    
 }
 
 
@@ -898,7 +933,7 @@ void tst6502() {
     m6502_ColdReset( "", "" );
     
     //    clock_t start = clock();
-//    epoch = rdtsc();
+    //    epoch = rdtsc();
     m6502_Run();
     //    clock_t end = clock();
     //    double execution_time = ((double) (end - start)) / CLOCKS_PER_SEC;
@@ -911,7 +946,7 @@ void tst6502() {
     double mips = inst_cnt / (execution_time * M);
     double mhz = m6502.clktime / (execution_time * M);
     printf("clk:%llu Elpased time: (%llu / %u / %llu), %.3lfs (%.3lf MIPS, %.3lf MHz)\n", iterations *3, tick_per_sec, MHz_6502, tick_6502_per_sec, execution_time, mips, mhz);
-//    printf("  dd:%llu  ee:%llu  nn:%llu\n", dd, ee, ee - dd);
+    //    printf("  dd:%llu  ee:%llu  nn:%llu\n", dd, ee, ee - dd);
 #endif
 }
 
@@ -919,4 +954,275 @@ int ___main(int argc, const char * argv[]) {
     tst6502();
     return 0;
 }
+
+
+
+
+// Allocates RWX memory of given size and returns a pointer to it. On failure,
+// prints out the error and returns NULL.
+void* jit_malloc(size_t size) {
+    void* ptr = mmap(0, size,
+                     PROT_READ | PROT_WRITE,
+                     MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+    
+    if (ptr == (void*)-1) {
+        perror("mmap");
+        return NULL;
+    }
+    
+    return ptr;
+}
+
+// Allocates RWX memory of given size and returns a pointer to it. On failure,
+// prints out the error and returns NULL.
+void jit_free(void* ptr, size_t size) {
+    // Release the mapped memory
+    munmap(ptr, size);
+}
+
+
+// Sets a RX permission on the given memory, which must be page-aligned. Returns
+// 0 on success. On failure, prints out the error and returns -1.
+int jit_mprotect_exec(void* mem, size_t size) {
+    if (mprotect(mem, size, PROT_READ | PROT_EXEC) == -1) {
+        perror("mprotect RX");
+        return -1;
+    }
+    return 0;
+}
+
+
+// Sets a RW permission on the given memory, which must be page-aligned. Returns
+// 0 on success. On failure, prints out the error and returns -1.
+int jit_mprotect_write(void* mem, size_t size) {
+    if (mprotect(mem, size, PROT_READ | PROT_WRITE) == -1) {
+        perror("mprotect RW");
+        return -1;
+    }
+    return 0;
+}
+
+
+#define JIT_LDA_MEM     0x48, 0x89, 0xf8                    // mov rax, rdi
+#define JIT_ADC(imm)    0x48, 0x83, 0xc0, imm               // add rax, #imm
+#define JIT_RTS         0xc3                                // ret
+
+#define JIT_MOV_ECX_32099   0xB9, 0x63, 0x7D, 0x00, 0x00
+#define JIT_MOV_RCX_32099   0x48, 0xC7, 0xC1, 0x63, 0x7D, 0x00, 0x00
+#define JIT_DEC_ECX         0xFF, 0xC9
+#define JIT_JNE_START       0x75, 0xF8
+
+
+//unsigned char code[] = {
+//    JIT_LDA_MEM,
+//
+//    JIT_MOV_ECX_32099,
+//
+//    JIT_ADC(4),
+//    JIT_DEC_ECX,
+//    JIT_JNE_START,
+//
+//    JIT_RTS
+//};
+
+//    int ret;
+//    int x = 9;
+//    int y = 8;
+//    asm volatile (
+//        "add %w[ret], %w[x], %w[y]"
+//        // outputs
+//        : [ret]"=r"(ret)
+//        // inputs
+//        : [x]"r"(x), [y]"r"(y)
+//    );
+
+
+// moves content of an 8 bit variable to memory e.g. an immediate operand
+#define jit_var2mem8(val, code, ofs) *(uint8_t*)((code) + (ofs)) = (uint8_t)(val)
+// moves content of a 16 bit variable to memory e.g. an immediate operand
+#define jit_var2mem16(val, code, ofs) *(uint16_t*)((code) + (ofs)) = (uint16_t)(val)
+// moves content of a 32 bit variable to memory e.g. an immediate operand
+#define jit_var2mem32(val, code, ofs) *(uint32_t*)((code) + (ofs)) = (uint32_t)(val)
+// moves content of a 64 bit variable to memory e.g. an immediate operand
+#define jit_var2mem64(val, code, ofs) *(uint64_t*)((code) + (ofs)) = (uint64_t)(val)
+// converts absolute mmeory address to relative RIP address
+#define jit_abs2rip(var, code, ofs, rip) jit_var2mem32( (uint8_t*)&(var) - (code) - (rip), code, ofs )
+
+// get offset of a struct member
+#define jit_getOffsetOf(str, mem) ((uint64_t)((void*)&(mem) - (void*)&(str)))
+// inserts an 8 bit offset to code
+#define jit_putoffs8(str, mem, code, ofs, rip) jit_var2mem8( jit_getOffsetOf( str, mem ), code, ofs )
+// inserts an 16 bit offset to code
+#define jit_putoffs16(str, mem, code, ofs, rip) jit_var2mem16( jit_getOffsetOf( str, mem ), code, ofs )
+// inserts an 32 bit offset to code
+#define jit_putoffs32(str, mem, code, ofs, rip) jit_var2mem32( jit_getOffsetOf( str, mem ), code, ofs )
+// inserts an 64 bit offset to code
+#define jit_putoffs64(str, mem, code, ofs, rip) jit_var2mem64( jit_getOffsetOf( str, mem ), code, ofs )
+
+
+
+void jit_emit_prologue() {
+    //    static uint8_t code[] = { 0xC6, 0x05, 0, 0, 0, 0, 0xAB, 0xC3 };
+    
+    static const uint8_t code[] = {
+        0x9c,                           // 00: pushf
+        0x50,                           // 01: push   rax
+        0x53,                           // 02: push   rbx
+        0x51,                           // 03: push   rcx
+        0x52,                           // 04: push   rdx
+        0x57,                           // 05: push   rdi
+        
+        0x48, 0xbf, 0,0,0,0,0,0,0,0,    // 06: movabs rdi,0x1122334455667788
+        
+        0x8a, 0x47, 0x01,               // 10: mov    al,BYTE PTR [rdi+0x1]     ; A
+        0x8a, 0x5f, 0x02,               // 13: mov    bl,BYTE PTR [rdi+0x2]     ; X
+        0x8a, 0x57, 0x03,               // 16: mov    dl,BYTE PTR [rdi+0x3]     ; Y
+        
+        0x8a, 0x77, 0x04,               // 19: mov    dh,BYTE PTR [rdi+0x4]     ; D flag
+        
+        0x66, 0x31, 0xc9,               // 1C: xor    cx,cx                     ; prepare x86 flags
+        
+        0x80, 0x4f, 0x01, 0xff,         // 1F: or     BYTE PTR [rdi+0x1],0xff
+        0x74, 0x04,                     // 23: je     28 <C0>
+        0x66, 0x83, 0xc9, 0x01,         // 25: or     cx,0x1
+                                        // 29: <C0>:
+        
+        0x80, 0x4f, 0x02, 0xff,         // 29: or     BYTE PTR [rdi+0x2],0xff
+        0x74, 0x04,                     // 2D: je     32 <Z0>
+        0x66, 0x83, 0xc9, 0x40,         // 2F: or     cx,0x40
+                                        // 33: <Z0>:
+        
+        0x80, 0x4f, 0x03, 0xff,         // 33: or     BYTE PTR [rdi+0x3],0xff
+        0x74, 0x05,                     // 37: je     3d <N0>
+        0x66, 0x81, 0xc9, 0x80, 0x00,   // 39: or     cx,0x80
+                                        // 3E: <N0>:
+        
+        0x80, 0x4f, 0x04, 0xff,         // 3E: or     BYTE PTR [rdi+0x4],0xff
+        0x74, 0x05,                     // 42: je     48 <O0>
+        0x66, 0x81, 0xc9, 0x00, 0x08,   // 44 or     cx,0x800
+                                        // 49: <O0>:
+        
+        0x66, 0x51,                     // 49: push   cx
+        0x66, 0x9d,                     // 4B: popfw
+        0x8b, 0x0d, 0,0,0,0             // 4D: mov    ecx,DWORD PTR [rip+0x0]        # 52 <O0+0xa>    };
+    };
+    
+    //    // address of m6502.D in relative RIP addressing mode
+    //    jit_abs2rip(m6502.A, code, 0x02, 0x06);
+    //    jit_abs2rip(m6502.X, code, 0x08, 0x0C);
+    //    jit_abs2rip(m6502.Y, code, 0x0E, 0x12);
+    //    jit_abs2rip(m6502.D, code, 0x1A, 0x1E); // Decimal Flag is simulated through DH register
+    //    jit_abs2rip(m6502.clkfrm, code, 0x14, 0x18);
+    //
+    //    jit_mem = jit_malloc(JIT_MEM_SIZE);
+    
+    dbgPrintf("CLD ");
+    disPrintf(disassembly.inst, "CLD");
+    m6502.D = 0;
+    
+    //    jit_emit_code(jit_mem, code, sizeof(code));
+}
+
+
+// PROLOGUE
+// - Copies over registers from the virtual CPU (6502) to host CPU (x64)
+//      - A -> AL
+//      - X -> BL
+//      - Y -> BH
+//      - Read MEM -> eSI
+//      - Write MEM -> eDI
+// - Restores flags from the Virtual 6502 to x64
+// - Sets clkfrm -> eCX
+
+// START
+//      LDX #$20        MOV BL, [MEM + 20]
+//      LDA $26         MOV AL, 26h
+//      CLC             CLC
+//      ADC #$5         ADC AL, 05h
+//      DEX             DEC BL
+//      BNE START       BEQ __CONT              ; compile
+//                      SUB eCX, 4+2+2+3...     ; all cycles for the block...
+//                      BNE START
+// __END                CALL EQPILOGUE
+// __CONT
+//      ...
+
+// EPILOGUE
+// - Copies back registers from the host CPU (x64) to the virtual CPU (6502)
+//      - AL -> A
+//      - BL -> X
+//      - BH -> Y
+// - Save flags from the x64 to Virtual 6502
+// - Copies eCX -> clkfrm
+//
+void jit_emit_code(void* mem, const void* code, const size_t size) {
+    size_t offset = 0;
+    
+    switch (jit_state) {
+        case jit_state_init:
+            if ( jit_mem ) {
+                jit_free(jit_mem, JIT_MEM_SIZE);
+            }
+            mem = jit_mem = jit_malloc(JIT_MEM_SIZE);
+            
+            jit_state = jit_state_prologue;
+            // no break needed here, should flow to jit_state_prologue
+            
+        case jit_state_prologue:
+            memcpy(mem, jit_prologue, sizeof(jit_prologue));
+            //            offset += sizeof(jit_prologue);
+            jit_state = jit_state_compiling;
+            // no break needed here, should flow to jit_state_compiling
+            
+        case jit_state_compiling:
+            memcpy(mem + offset, code, size);
+            offset += size;
+            break;
+            
+        case jit_state_epilogue:
+            memcpy(mem, jit_epilogue, sizeof(jit_epilogue));
+            offset += sizeof(jit_epilogue);
+            jit_state = jit_state_prologue;
+            break;
+            
+        default:
+            // something is wrong!
+            fprintf(stderr, "Error: Invalid jit_state (%i)\n", jit_state);
+            break;
+    }
+    
+}
+
+
+
+
+__attribute((noinline, naked)) long jit_prologue2(uint8_t*, uint8_t*, m6502_t* m6502);
+
+
+// Allocates RWX memory directly.
+void run_from_rwx(long i) {
+    jit_mem = jit_malloc(JIT_MEM_SIZE);
+    //    jit_emit_code(jit_mem, );
+    jit_mprotect_exec(jit_mem, JIT_MEM_SIZE);
+    
+    jit_function func = jit_prologue2; //jit_mem;
+    long result = func( Apple2_64K_MEM, Apple2_64K_MEM, &m6502);
+    printf("result = %ld\n", result);
+    
+    jit_free(jit_mem, JIT_MEM_SIZE);
+}
+
+
+unsigned long long test_asm(void)
+{
+    unsigned hi, lo;
+    __asm__ __volatile__ (
+                          "ret \n\t"
+                          "ret \n\t"
+                          : "=r"(lo)
+                          : "r"(lo)
+                          );
+    return ( (unsigned long long)lo) | ( ((unsigned long long)hi) << 32 );
+}
+
 

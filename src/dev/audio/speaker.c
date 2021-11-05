@@ -396,13 +396,8 @@ void spkr_toggle_edge_old ( const int level_max, const float initial_edge, const
 int ema( int val, int prev ) {
     static const float ema_sensitivity = 2;
     static const float ema_len = 14;
-    
-    float m = ema_sensitivity / ema_len;
-    float n = 1 - m;
-    
-    if ( prev == 0 ) {
-        prev = 1;
-    }
+    static const float m = ema_sensitivity / ema_len;
+    static const float n = 1 - m;
     
     // calculate the multiplier for smoothing (weighting) the EMA,
     // which typically follows the formula: [2 ÷ (number of observations + 1)].

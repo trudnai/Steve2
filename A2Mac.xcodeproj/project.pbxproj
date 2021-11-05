@@ -2044,6 +2044,7 @@
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_MATH = YES;
 				GCC_UNROLL_LOOPS = NO;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2084,6 +2085,7 @@
 				GCC_FAST_MATH = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_UNROLL_LOOPS = NO;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -356,21 +356,21 @@ void spkr_exit() {
 char spkr_state = 0;
 
 
-void spkr_toggle_edge ( const int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
-
+void spkr_toggle_edge_old ( const int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
+    
     float dumping = spkr_level - level_max;
     dumping *= initial_edge;
-
+    
     if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
         while ( spkr_sample_last_idx <= spkr_sample_idx ) {
             spkr_samples[ spkr_sample_last_idx++ ] = SPKR_LEVEL_ZERO;
             spkr_samples[ spkr_sample_last_idx++ ] = SPKR_LEVEL_ZERO; // stereo
         }
-//        if ( idx_diff <= 2 ) {
-//            spkr_last_level = spkr_level;
-//            // save last index before we advance it...
-//            spkr_sample_last_idx = spkr_sample_idx;
-//        }
+        //        if ( idx_diff <= 2 ) {
+        //            spkr_last_level = spkr_level;
+        //            // save last index before we advance it...
+        //            spkr_sample_last_idx = spkr_sample_idx;
+        //        }
     }
     else {
         spkr_last_level = spkr_level;
@@ -390,6 +390,44 @@ void spkr_toggle_edge ( const int level_max, const float initial_edge, const flo
     }
     
     spkr_level = level_max;
+}
+
+
+int ema( int val, int prev ) {
+    static const float ema_sensitivity = 2;
+    static const float ema_len = 14;
+    
+    float m = ema_sensitivity / ema_len;
+    float n = 1 - m;
+    
+    if ( prev == 0 ) {
+        prev = 1;
+    }
+    
+    // calculate the multiplier for smoothing (weighting) the EMA,
+    // which typically follows the formula: [2 ÷ (number of observations + 1)].
+    // For a 20-day moving average, the multiplier would be [2/(20+1)]= 0.0952
+
+    return m * val + n * prev;
+}
+
+
+void spkr_toggle_edge ( const int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
+    if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
+        while ( spkr_sample_last_idx <= spkr_sample_idx ) {
+            spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
+            spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
+            spkr_level = ema(level_max / 5, spkr_level);
+        }
+    }
+
+    while ( spkr_sample_last_idx <= spkr_sample_idx ) {
+        spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
+        spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
+        spkr_level = ema(level_max, spkr_level);
+    }
+    
+//    spkr_level = level_max;
 }
 
 float SPKR_FADE_LEADING_EDGE      = 0.16;
@@ -458,12 +496,12 @@ void spkr_update() {
         
         // Fix: Unqueue was not working properly some cases, so we need to monitor
         //      queued elements and if there are too many, let's just wait
-        #define SPKR_MAX_QUEUED 10
+#define SPKR_MAX_QUEUED 10
         ALint queued = 0;
         alGetSourcei ( spkr_src[SPKR_SRC_GAME_SFX], AL_BUFFERS_QUEUED, &queued );
         al_check_error();
-//        printf("q:%d clkfrm:%d frm:%llu max:%llu\n", queued, clkfrm, clk_6502_per_frm, clk_6502_per_frm_max);
-
+        //        printf("q:%d clkfrm:%d frm:%llu max:%llu\n", queued, clkfrm, clk_6502_per_frm, clk_6502_per_frm_max);
+        
         if ( ( spkr_play_time ) && ( queued < SPKR_MAX_QUEUED ) ) {
             if ( freeBuffers ) {
                 // in Game Mode do not fade out and stop playing
@@ -472,7 +510,7 @@ void spkr_update() {
                     
                     if ( spkr_level != SPKR_LEVEL_ZERO ) {
                         spkr_sample_idx = 0;
-
+                        
                         while ( ( fadeLevel < -1 ) || ( fadeLevel > 1 ) ) {
                             spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
                             spkr_samples[ spkr_sample_idx++ ] = SPKR_LEVEL_ZERO + fadeLevel; // stereo
@@ -481,10 +519,10 @@ void spkr_update() {
                             fadeLevel *= 0.999;
                         }
                         spkr_level = SPKR_LEVEL_ZERO;
-
+                        
                         //spkr_samples[sample_idx] = spkr_level;
                         memset(spkr_samples + spkr_sample_idx, SPKR_LEVEL_ZERO, spkr_extra_buf * sizeof(spkr_sample_t));
-
+                        
                         freeBuffers--;
                         alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_sample_t), spkr_sample_rate);
                         al_check_error();
@@ -495,38 +533,38 @@ void spkr_update() {
                 else {
                     // push a click into the speaker buffer
                     // (we will play the entire buffer at the end of the frame)
-//                    spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
+                    //                    spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
                     
-//                    // DEBUG spike
-//                    spkr_sample_idx = 0;
-//                    spkr_samples[ spkr_sample_idx++ ] = -28000;
-//                    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
-//                    spkr_samples[ spkr_sample_idx++ ] = -28000;
-//                    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
-//                    spkr_samples[ spkr_sample_idx++ ] = spkr_level;
-//                    spkr_samples[ spkr_sample_idx++ ] = spkr_level; // stereo
-
+                    //                    // DEBUG spike
+                    //                    spkr_sample_idx = 0;
+                    //                    spkr_samples[ spkr_sample_idx++ ] = -28000;
+                    //                    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
+                    //                    spkr_samples[ spkr_sample_idx++ ] = -28000;
+                    //                    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
+                    //                    spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+                    //                    spkr_samples[ spkr_sample_idx++ ] = spkr_level; // stereo
                     
-//                    //spkr_samples[sample_idx] = spkr_level;
-//                     memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_alloc_size * DEFAULT_FPS - spkr_sample_idx);
-
+                    
+                    //                    //spkr_samples[sample_idx] = spkr_level;
+                    //                     memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_alloc_size * DEFAULT_FPS - spkr_sample_idx);
+                    
                     freeBuffers--;
                     if (freeBuffers < 0) {
                         printf("freeBuffer < 0 (%i)\n", freeBuffers);
                     }
                     alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
-//                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_sample_idx + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
-//                    ALint bufSize = spkr_sample_idx + 20 < spkr_buf_size ? spkr_sample_idx * sizeof(spkr_sample_t) + 20 : spkr_buf_alloc_size;
-//                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, bufSize + spkr_extra_buf, spkr_sample_rate);
+                    //                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_sample_idx + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
+                    //                    ALint bufSize = spkr_sample_idx + 20 < spkr_buf_size ? spkr_sample_idx * sizeof(spkr_sample_t) + 20 : spkr_buf_alloc_size;
+                    //                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, bufSize + spkr_extra_buf, spkr_sample_rate);
                     al_check_error();
                     alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                     al_check_error();
                 }
-
+                
                 ALenum state;
                 alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
-//                al_check_error();
-
+                //                al_check_error();
+                
                 switch (state) {
                     case AL_PAUSED:
                         if ( --playDelay <= 0 ) {
@@ -534,7 +572,7 @@ void spkr_update() {
                             playDelay = SPKR_PLAY_DELAY;
                         }
                         break;
-
+                        
                     case AL_PLAYING:
                         // already playing
                         break;
@@ -556,20 +594,20 @@ void spkr_update() {
                 }
                 spkr_sample_last_idx = 0;
                 
-//                spkr_samples[0] = 10000;
-
+                //                spkr_samples[0] = 10000;
+                
             }
             else {
                 printf("No FreeBuffers!\n");
             }
             
             // start from the beginning
-    //        spkr_sample_idx = 0;
-
+            //        spkr_sample_idx = 0;
+            
         }
-//        else {
-//            printf("spkr_play_time: %u, queued: %i\n", spkr_play_time, queued);
-//        }
+        //        else {
+        //            printf("spkr_play_time: %u, queued: %i\n", spkr_play_time, queued);
+        //        }
         
         spkr_clk = 0;
         

@@ -393,7 +393,7 @@ void spkr_toggle_edge_old ( const int level_max, const float initial_edge, const
 }
 
 
-int ema( int val, int prev ) {
+INLINE int ema( int val, int prev ) {
     static const float ema_sensitivity = 2;
     static const float ema_len = 14;
     static const float m = ema_sensitivity / ema_len;

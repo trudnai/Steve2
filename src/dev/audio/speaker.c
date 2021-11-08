@@ -372,10 +372,10 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
     float dumping = spkr_level - level_max;
     dumping *= initial_edge;
     
-    float ema_len = 15;
+    float ema_len = 7;
     
     if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
-        ema_len = 41;
+        ema_len = 21;
     }
         
     spkr_level = spkr_samples[ spkr_sample_idx ];
@@ -396,10 +396,10 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
 }
 
 
-float SPKR_FADE_LEADING_EDGE      = 0.32;
-float SPKR_FADE_TRAILING_EDGE     = 0.32;
-float SPKR_INITIAL_LEADING_EDGE   = 0.32; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
-float SPKR_INITIAL_TRAILING_EDGE  = 0.32; // need a bit of slope to get Xonix sound good
+float SPKR_FADE_LEADING_EDGE      = 0.90;
+float SPKR_FADE_TRAILING_EDGE     = 0.90;
+float SPKR_INITIAL_LEADING_EDGE   = 0.64; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
+float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix sound good
 
 
 void spkr_toggle() {

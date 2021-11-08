@@ -24,6 +24,8 @@
 #ifndef disassembler_h
 #define disassembler_h
 
+#undef DISASSEMBLER
+
 #ifdef DISASSEMBLER
 
 //extern unsigned long long int clktime;

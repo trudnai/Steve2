@@ -34,3 +34,15 @@ double * pdl_valarr = pdl_value;
 double * pdl_prevarr = pdl_prev;
 double * pdl_diffarr = pdl_diff;
 
+INLINE uint8_t pdl_reset() {
+    pdl_reset_time = m6502.clktime + m6502.clkfrm;
+    return 0;
+}
+
+INLINE uint8_t pdl_read( uint8_t pdl ) {
+    pdl_current_time = m6502.clktime + m6502.clkfrm;
+    pdl_elapsed_time = pdl_current_time - pdl_reset_time;
+    double normalized_time = pdl_elapsed_time / PDL_MAX_TIME; // 0: started, >= 1 ended
+    return normalized_time >= pdl_value[pdl] ? 0 : 1 << 7; // TODO: better pdl value simulation, not only the bit 7
+}
+

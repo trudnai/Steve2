@@ -31,7 +31,8 @@
 #ifdef DEBUG
 #define INLINE
 #else
-#define INLINE static __attribute__((always_inline))
+// #define INLINE static __attribute__((always_inline))
+#define INLINE __attribute__((always_inline))
 #endif
 
 

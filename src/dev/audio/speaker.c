@@ -97,7 +97,7 @@ int spkr_extra_buf = 0; // 26; // 800 / spkr_fps;
 typedef int16_t spkr_sample_t;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS; // stereo
 const unsigned spkr_buf_alloc_size = spkr_buf_size * sizeof(spkr_sample_t);
-spkr_sample_t spkr_samples [ spkr_buf_alloc_size * DEFAULT_FPS * BUFFER_COUNT]; // can store up to 1 sec of sound
+spkr_sample_t spkr_samples [ spkr_buf_size * DEFAULT_FPS * BUFFER_COUNT]; // can store up to 1 sec of sound
 unsigned spkr_sample_idx = 0;
 unsigned spkr_sample_last_idx = 0;
 unsigned spkr_sample_first_pwm_idx = 0;
@@ -181,7 +181,7 @@ void spkr_init() {
     alcMakeContextCurrent(ctx);
     
     // Fill buffer with zeros
-    memset( spkr_samples, SPKR_LEVEL_ZERO, spkr_buf_alloc_size + spkr_extra_buf * sizeof(spkr_sample_t));
+    memset( spkr_samples, 0, spkr_buf_alloc_size + spkr_extra_buf * sizeof(spkr_sample_t));
     
     // Create buffer to store samples
     alGenBuffers(BUFFER_COUNT, spkr_buffers);
@@ -356,74 +356,45 @@ void spkr_exit() {
 char spkr_state = 0;
 
 
-void spkr_toggle_edge_old ( const int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
-    
-    float dumping = spkr_level - level_max;
-    dumping *= initial_edge;
-    
-    if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
-        while ( spkr_sample_last_idx <= spkr_sample_idx ) {
-            spkr_samples[ spkr_sample_last_idx++ ] = SPKR_LEVEL_ZERO;
-            spkr_samples[ spkr_sample_last_idx++ ] = SPKR_LEVEL_ZERO; // stereo
-        }
-        //        if ( idx_diff <= 2 ) {
-        //            spkr_last_level = spkr_level;
-        //            // save last index before we advance it...
-        //            spkr_sample_last_idx = spkr_sample_idx;
-        //        }
-    }
-    else {
-        spkr_last_level = spkr_level;
-        // save last index before we advance it...
-        spkr_sample_last_idx = spkr_sample_idx;
-        
-    }
-    
-    
-    while ( fabsf(dumping) > 1 ) {
-        spkr_sample_t level = level_max + dumping;
-        spkr_samples[ spkr_sample_idx++ ] = level;
-        spkr_samples[ spkr_sample_idx++ ] = level; // stereo
-        
-        // how smooth we want the speeker to decay, so we will hear no pops and crackles
-        dumping *= fade_edge;
-    }
-    
-    spkr_level = level_max;
-}
-
-
-INLINE int ema( int val, int prev ) {
+// Exponential Moving Average
+INLINE int ema( int val, int prev, float ema_len ) {
     static const float ema_sensitivity = 2;
-    static const float ema_len = 14;
-    static const float m = ema_sensitivity / ema_len;
-    static const float n = 1 - m;
+//    static const float ema_len = 42;
+    float m = ema_sensitivity / ema_len;
+    float n = 1 - m;
     
-    // calculate the multiplier for smoothing (weighting) the EMA,
-    // which typically follows the formula: [2 ÷ (number of observations + 1)].
-    // For a 20-day moving average, the multiplier would be [2/(20+1)]= 0.0952
-
     return m * val + n * prev;
 }
 
 
-void spkr_toggle_edge ( const int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
+void spkr_toggle_edge ( int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
+
+    float dumping = spkr_level - level_max;
+    dumping *= initial_edge;
+    
+    float ema_len = 15;
+    
     if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
-        while ( spkr_sample_last_idx <= spkr_sample_idx ) {
-            spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
-            spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
-            spkr_level = ema(level_max / 5, spkr_level);
-        }
+        ema_len = 41;
+    }
+        
+    spkr_level = spkr_samples[ spkr_sample_idx ];
+    
+    while ( fabsf(dumping) > 1 ) {
+        spkr_sample_t level = level_max + dumping;
+        spkr_level = ema(level, spkr_level, ema_len);
+        spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+        spkr_samples[ spkr_sample_idx++ ] = spkr_level; // stereo
+        
+        // how smooth we want the speeker to decay, so we will hear no pops and crackles
+        dumping *= fade_edge;
     }
 
-    while ( spkr_sample_last_idx <= spkr_sample_idx ) {
-        spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
-        spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
-        spkr_level = ema(level_max, spkr_level);
-    }
-    
-//    spkr_level = level_max;
+    spkr_last_level = spkr_level;
+    // save last index before we advance it...
+    spkr_sample_last_idx = spkr_sample_idx;
 }
+
 
 float SPKR_FADE_LEADING_EDGE      = 0.16;
 float SPKR_FADE_TRAILING_EDGE     = 0.32;
@@ -516,7 +487,7 @@ void spkr_update() {
                         spkr_level = SPKR_LEVEL_ZERO;
                         
                         //spkr_samples[sample_idx] = spkr_level;
-                        memset(spkr_samples + spkr_sample_idx, SPKR_LEVEL_ZERO, spkr_extra_buf * sizeof(spkr_sample_t));
+                        memset(spkr_samples + spkr_sample_idx, 0, spkr_extra_buf * sizeof(spkr_sample_t));
                         
                         freeBuffers--;
                         alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_sample_t), spkr_sample_rate);
@@ -583,10 +554,19 @@ void spkr_update() {
                         break;
                 }
                 
-                // clear the slack buffer, so we can fill it up by new data
-                for ( int i = 0; i < spkr_buf_size + spkr_extra_buf; i++ ) {
-                    spkr_samples[i] = spkr_level;
+                int src = spkr_buf_size + spkr_extra_buf;
+                int dst = 0;
+                
+                // copy the buffer leftover -- needed to finish wave form
+                while( src < spkr_sample_idx ) {
+                    spkr_samples[dst++] = spkr_samples[src++];
                 }
+
+                // clear the slack buffer, so we can fill it up by new data
+                while( dst < spkr_buf_size + spkr_extra_buf ) {
+                    spkr_samples[dst++] = spkr_level;
+                }
+                
                 spkr_sample_last_idx = 0;
                 
                 //                spkr_samples[0] = 10000;

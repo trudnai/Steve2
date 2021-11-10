@@ -30,6 +30,62 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
         return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
     }
+    
+    var sideBarWidth = CGFloat()
+    
+    func windowWillEnterFullScreen(_ notification: Notification) {
+        if let view = window?.contentView {
+            for constraint in view.constraints {
+                switch constraint.identifier {
+                case "Display Background Trailing":
+                    constraint.constant = 0
+                case "Display Margin Leading":
+                    constraint.constant = 0
+                case "Display Margin Trailing":
+                    constraint.constant = 0
+                case "Display Margin Top":
+                    constraint.constant = 0
+                case "Display Margin Bottom":
+                    constraint.constant = 0
+                default:
+                    continue
+                }
+            }
+            
+            for subview in view.subviews {
+                if subview.identifier?.rawValue == "Side Panel" {
+                    subview.isHidden = true
+                }
+            }
+        }
+    }
+    
+    func windowWillExitFullScreen(_ notification: Notification) {
+        if let view = window?.contentView {
+            for constraint in view.constraints {
+                switch constraint.identifier {
+                case "Display Background Trailing":
+                    constraint.constant = 120
+                case "Display Margin Leading":
+                    constraint.constant = 11
+                case "Display Margin Trailing":
+                    constraint.constant = 11
+                case "Display Margin Top":
+                    constraint.constant = 16
+                case "Display Margin Bottom":
+                    constraint.constant = -16
+                default:
+                    continue
+                }
+            }
+            
+            for subview in view.subviews {
+                if subview.identifier?.rawValue == "Side Panel" {
+                    subview.isHidden = false
+                }
+            }
+        }
+    }
         
     @IBAction func PowerOn(_ sender: Any) {
         switch cpuState {

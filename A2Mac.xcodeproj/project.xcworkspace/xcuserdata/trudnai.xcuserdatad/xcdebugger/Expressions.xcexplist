@@ -196,6 +196,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ToolBarController.windowWillEnterFullScreen(_:):ToolBarController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "subview.identifier?.rawValue">
+            </PersistentString>
+            <PersistentString
+               value = "constraint.identifier">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "AppDelegate.Disk1_Selected(_:):AppDelegate.swift">
          <PersistentStrings>
             <PersistentString

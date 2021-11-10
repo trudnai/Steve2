@@ -25,8 +25,12 @@ import Cocoa
 import AVFoundation
 
 
-class ToolBarController: NSWindowController {
+class ToolBarController: NSWindowController, NSWindowDelegate {
     
+    func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
+        return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
+    }
+        
     @IBAction func PowerOn(_ sender: Any) {
         switch cpuState {
         case cpuState_inited, cpuState_unknown:

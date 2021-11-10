@@ -22,10 +22,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.extraBuf(_:):ViewController.swift">
+         contextName = "BRA:6502_instr_branch.h">
          <PersistentStrings>
             <PersistentString
-               value = "soundGapLabel">
+               value = "">
+            </PersistentString>
+            <PersistentString
+               value = "RAM[0x346f]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -72,7 +75,7 @@
          contextName = "closure #1 in ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "txtArr">
+               value = "MEMcfg.is_80STORE">
             </PersistentString>
             <PersistentString
                value = "self.shadowTxt">
@@ -84,7 +87,7 @@
                value = "MEMcfg.txt_page_2">
             </PersistentString>
             <PersistentString
-               value = "MEMcfg.is_80STORE">
+               value = "txtArr">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -148,6 +151,20 @@
             </PersistentString>
             <PersistentString
                value = "Apple2_64K_AUX">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HiRes.refreshChanged(blockSize:):HiRes.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "frame">
+            </PersistentString>
+            <PersistentString
+               value = "bounds">
+            </PersistentString>
+            <PersistentString
+               value = "frame.width / Float(HiRes.blockCols)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -286,10 +303,10 @@
          contextName = "spkr_update:speaker.c">
          <PersistentStrings>
             <PersistentString
-               value = "clk_6502_per_frm_max">
+               value = "(uint8_t)spkr_samples[452]">
             </PersistentString>
             <PersistentString
-               value = "(uint8_t)spkr_samples[452]">
+               value = "clk_6502_per_frm_max">
             </PersistentString>
             <PersistentString
                value = "spkr_sample_idx">
@@ -298,13 +315,13 @@
                value = "(uint8_t)spkr_samples[451]">
             </PersistentString>
             <PersistentString
+               value = "clkfrm">
+            </PersistentString>
+            <PersistentString
                value = "(uint8_t)spkr_samples[455]">
             </PersistentString>
             <PersistentString
                value = "clk_6502_per_frm">
-            </PersistentString>
-            <PersistentString
-               value = "clkfrm">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -351,6 +368,20 @@
          contextName = "set_flags_NZ:common.h">
       </ContextState>
       <ContextState
+         contextName = "MonitorView.frameDidChange(notification:):MonitorView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "frame.size">
+            </PersistentString>
+            <PersistentString
+               value = "textDisplay.bounds">
+            </PersistentString>
+            <PersistentString
+               value = "textDisplay.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "pdl_read:paddle.h">
          <PersistentStrings>
             <PersistentString
@@ -360,7 +391,7 @@
                value = "pdl_value[pdl]">
             </PersistentString>
             <PersistentString
-               value = "normalized_time &gt;= pdl_value[pdl] ? 255 : 0">
+               value = "normalized_time">
             </PersistentString>
             <PersistentString
                value = "(3300 * 255/3300)">
@@ -372,7 +403,7 @@
                value = "1 * 512 * (1  - ( 3300 / 3300.0  ))">
             </PersistentString>
             <PersistentString
-               value = "normalized_time">
+               value = "normalized_time &gt;= pdl_value[pdl] ? 255 : 0">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -386,19 +417,25 @@
                value = "y">
             </PersistentString>
             <PersistentString
-               value = "textLines">
+               value = "hires.frame">
             </PersistentString>
             <PersistentString
-               value = "hires.layer">
+               value = "textDisplay.bounds">
             </PersistentString>
             <PersistentString
                value = "view">
             </PersistentString>
             <PersistentString
-               value = "ledingInitEdgeLabel">
+               value = "hires.layer">
             </PersistentString>
             <PersistentString
-               value = "hires.frame">
+               value = "textDisplay.frame">
+            </PersistentString>
+            <PersistentString
+               value = "textLines">
+            </PersistentString>
+            <PersistentString
+               value = "ledingInitEdgeLabel">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -414,7 +451,7 @@
          contextName = "LoRes.Update():LoRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "blockChanged[ screenIdx ]">
+               value = "UInt8( (block &gt;&gt; 4) &amp; 0x0F )">
             </PersistentString>
             <PersistentString
                value = "UInt8(block)">
@@ -423,7 +460,7 @@
                value = "UInt8(block &amp; 4)">
             </PersistentString>
             <PersistentString
-               value = "UInt8( (block &gt;&gt; 4) &amp; 0x0F )">
+               value = "blockChanged[ screenIdx ]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -458,10 +495,10 @@
          contextName = "set_flags_NZC:common.h">
          <PersistentStrings>
             <PersistentString
-               value = "(unsigned)test ">
+               value = "(unsigned)0xFF">
             </PersistentString>
             <PersistentString
-               value = "(unsigned)0xFF">
+               value = "(unsigned)test ">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -528,14 +565,6 @@
          contextName = "rel_addr:Apple2_mmio.h">
       </ContextState>
       <ContextState
-         contextName = "ViewController.Reset(_:):ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "m6502.pc">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "ViewController.setCPUClockSpeed(freq:):ViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -549,6 +578,14 @@
             </PersistentString>
             <PersistentString
                value = "clk_6502_per_frm">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.Reset(_:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.pc">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -591,16 +628,16 @@
          contextName = "spkr_toggle:speaker.c">
          <PersistentStrings>
             <PersistentString
-               value = "( (spkr_clk + m6502.clkfrm) / ( 1024000 / spkr_sample_rate ) ) * 2">
+               value = "(int16_t)28000 + (int16_t)-32768">
             </PersistentString>
             <PersistentString
                value = "spkr_level">
             </PersistentString>
             <PersistentString
-               value = "spkr_sample_idx">
+               value = "( (spkr_clk + m6502.clkfrm) / ( 1024000 / spkr_sample_rate ) ) * 2">
             </PersistentString>
             <PersistentString
-               value = "(int16_t)28000 + (int16_t)-32768">
+               value = "spkr_sample_idx">
             </PersistentString>
             <PersistentString
                value = "28000 + fadeLevel">
@@ -614,10 +651,10 @@
          contextName = "HiRes.draw(_:):HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "linAddr">
+               value = "ctx?.height">
             </PersistentString>
             <PersistentString
-               value = "ctx?.bitsPerComponent">
+               value = "ctx?.data">
             </PersistentString>
             <PersistentString
                value = "ctx?.width">
@@ -641,13 +678,13 @@
                value = "(blockH7 | ( block &amp; bitMask ))">
             </PersistentString>
             <PersistentString
+               value = "ctx?.bitsPerComponent">
+            </PersistentString>
+            <PersistentString
+               value = "linAddr">
+            </PersistentString>
+            <PersistentString
                value = "HiRes.blockCols">
-            </PersistentString>
-            <PersistentString
-               value = "ctx?.height">
-            </PersistentString>
-            <PersistentString
-               value = "ctx?.data">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -663,13 +700,13 @@
          contextName = "HiRes.compute():HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "computePipelineState.maxTotalThreadsPerThreadgroup">
+               value = "UnsafeRawBufferPointer(result)">
             </PersistentString>
             <PersistentString
                value = "result[2]">
             </PersistentString>
             <PersistentString
-               value = "UnsafeRawBufferPointer(result)">
+               value = "computePipelineState.maxTotalThreadsPerThreadgroup">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -718,6 +755,9 @@
                value = "m6502">
             </PersistentString>
             <PersistentString
+               value = "(void*)Apple2_64K_RAM">
+            </PersistentString>
+            <PersistentString
                value = "m6502.PC">
             </PersistentString>
             <PersistentString
@@ -725,9 +765,6 @@
             </PersistentString>
             <PersistentString
                value = "Apple2_64K_RAM + 0x3600">
-            </PersistentString>
-            <PersistentString
-               value = "(void*)Apple2_64K_RAM">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -783,7 +820,7 @@
                value = "new">
             </PersistentString>
             <PersistentString
-               value = "WOZwrite.shift16">
+               value = "WOZtmp.shift16">
             </PersistentString>
             <PersistentString
                value = "WOZwrite.shift">
@@ -795,7 +832,7 @@
                value = "(1 &lt;&lt; i) - 1">
             </PersistentString>
             <PersistentString
-               value = "WOZtmp.shift16">
+               value = "WOZwrite.shift16">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -810,6 +847,17 @@
             </PersistentString>
             <PersistentString
                value = "wram1_clk">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DisplayView.frameDidChange(notification:):DisplayView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "frame.size">
+            </PersistentString>
+            <PersistentString
+               value = "bounds">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -831,10 +879,10 @@
                value = "Apple2_64K_AUX + 0xC600">
             </PersistentString>
             <PersistentString
-               value = "(void*)rom">
+               value = "Apple2_64K_RAM + 0xC600">
             </PersistentString>
             <PersistentString
-               value = "Apple2_64K_RAM + 0xC600">
+               value = "(void*)rom">
             </PersistentString>
             <PersistentString
                value = "strlen(fullPath)">
@@ -873,13 +921,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "BRA:6502_instr_branch.h">
+         contextName = "MonitorView.init(coder:):MonitorView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "">
+               value = "frame.size">
             </PersistentString>
             <PersistentString
-               value = "RAM[0x346f]">
+               value = "textDisplay">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.extraBuf(_:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "soundGapLabel">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

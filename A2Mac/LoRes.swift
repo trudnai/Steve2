@@ -401,19 +401,19 @@ class LoRes: NSView {
         
         let screenBlockMargin = 6
         
-        let blockScreenWidth = Int(frame.width) / LoRes.blockCols
-        let blockScreenHeigth = Int(frame.height) / LoRes.blockRows
+        let blockScreenWidth = CGFloat(frame.width) / CGFloat(HiRes.blockCols)
+        let blockScreenHeigth = CGFloat(frame.height) / CGFloat(HiRes.blockRows)
 
         for blockVertIdx in 0 ..< LoRes.blockRows {
             for blockHorIdx in 0 ..< LoRes.blockCols {
                 if blockChanged[ blockVertIdx * LoRes.blockCols + blockHorIdx ] {
                     // refresh the entire screen
-                    let boundingBox = CGRect(
-                        x: blockHorIdx * blockScreenWidth - screenBlockMargin,
-                        y: Int(frame.height) - blockVertIdx * blockScreenHeigth - blockScreenHeigth - screenBlockMargin,
-                        width: blockScreenWidth + screenBlockMargin * 2,
-                        height: blockScreenHeigth + screenBlockMargin * 2)
+                    let x = CGFloat(blockHorIdx) * blockScreenWidth - CGFloat(screenBlockMargin)
+                    let y = frame.height - CGFloat(blockVertIdx) * blockScreenHeigth - blockScreenHeigth - CGFloat(screenBlockMargin)
+                    let w = blockScreenWidth + CGFloat(screenBlockMargin) * 2
+                    let h = blockScreenHeigth + CGFloat(screenBlockMargin) * 2
                     
+                    let boundingBox = CGRect(x: x, y: y, width: w, height: h)
                     self.setNeedsDisplay( boundingBox )
                 }
             }

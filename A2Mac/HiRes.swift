@@ -193,19 +193,19 @@ class HiRes: NSView {
         
         let screenBlockMargin = 12 / blockSize
         
-        let blockScreenWidth = Int(frame.width) / HiRes.blockCols * blockSize
-        let blockScreenHeigth = Int(frame.height) / HiRes.blockRows
+        let blockScreenWidth = CGFloat(frame.width) / CGFloat(HiRes.blockCols) * CGFloat(blockSize)
+        let blockScreenHeigth = CGFloat(frame.height) / CGFloat(HiRes.blockRows)
         
         for blockVertIdx in 0 ..< HiRes.blockRows {
             for blockHorIdx in 0 ..< HiRes.blockCols / blockSize {
                 if blockChanged[ blockVertIdx * HiRes.blockCols / blockSize + blockHorIdx ] != 0 {
                     // refresh the entire screen
-                    let boundingBox = CGRect(
-                        x: blockHorIdx * blockScreenWidth - screenBlockMargin,
-                        y: Int(frame.height) - blockVertIdx * blockScreenHeigth - blockScreenHeigth - screenBlockMargin,
-                        width: blockScreenWidth + screenBlockMargin * blockSize,
-                        height: blockScreenHeigth + screenBlockMargin * blockSize)
+                    let x = CGFloat(blockHorIdx) * blockScreenWidth - CGFloat(screenBlockMargin)
+                    let y = frame.height - CGFloat(blockVertIdx) * blockScreenHeigth - blockScreenHeigth - CGFloat(screenBlockMargin)
+                    let w = blockScreenWidth + CGFloat(screenBlockMargin) * CGFloat(blockSize)
+                    let h = blockScreenHeigth + CGFloat(screenBlockMargin) * CGFloat(blockSize)
                     
+                    let boundingBox = CGRect(x: x, y: y, width: w, height: h)
                     self.setNeedsDisplay( boundingBox )
                 }
             }

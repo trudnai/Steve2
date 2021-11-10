@@ -24,6 +24,39 @@
 import Cocoa
 
 class MonitorView: NSView {
+    
+    @IBOutlet var textDisplay: DisplayView!
+    
+    var textDisplay_boundsSize = NSSize()
+    var textDisplay_width_diff : CGFloat?
+    var textDisplay_height_diff : CGFloat?
+
+    @objc func frameDidChange(notification: NSNotification) {
+        var textFrameSize = frame.size
+        
+        if textDisplay_width_diff == nil {
+            textDisplay_width_diff = textFrameSize.width - textDisplay.frame.width
+            textDisplay_height_diff = textFrameSize.height - textDisplay.frame.height
+            textDisplay_boundsSize = textDisplay.bounds.size
+        }
+        
+        textFrameSize.width -= textDisplay_width_diff!
+        textFrameSize.height -= textDisplay_height_diff!
+        textDisplay.setFrameSize(textFrameSize)
+        textDisplay.setBoundsSize(textDisplay_boundsSize)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        postsFrameChangedNotifications = true
+        NotificationCenter.default.addObserver(self, selector: #selector(frameDidChange), name: NSView.frameDidChangeNotification, object: self)
+    }
+    
+    override func viewDidChangeEffectiveAppearance() {
+        postsFrameChangedNotifications = true
+    }
+
 //    override func performKeyEquivalent(with event: NSEvent) -> Bool {
 //        return true
 //    }

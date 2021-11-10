@@ -20,7 +20,6 @@
 		323E2DD1245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
 		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
 		324D15D324ADAC71008AAFB0 /* floppy.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 324D15D224ADAC71008AAFB0 /* floppy.png */; };
-		3254418B264A6A9D00B7E3ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32544195264A6C1600B7E3ED /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
 		325DC40E24AC5ABC00EB8858 /* doc.on.doc.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */; };
 		325DC41024AC691B00EB8858 /* rgb_color.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40F24AC691B00EB8858 /* rgb_color.png */; };
@@ -61,6 +60,8 @@
 		3267641824BCC9A5000BEA11 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 3267641724BCC9A5000BEA11 /* COPYING */; };
 		326B56E524AD8E89009BA0AC /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
+		3277D779273AE0DA00749544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		3277D783273AE0DC00749544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32799F7A264B1A5700255669 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
 		32799F7B264B1A5700255669 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32799F7C264B1A5700255669 /* ToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126C24AC033A00E61891 /* ToolBarController.swift */; };
@@ -77,7 +78,6 @@
 		32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */; };
 		32799F8A264B1A5700255669 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32799F8D264B1A5700255669 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 3267641724BCC9A5000BEA11 /* COPYING */; };
-		32799F8E264B1A5700255669 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32799F8F264B1A5700255669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
 		32799F90264B1A5700255669 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		32799F91264B1A5700255669 /* Steve2Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 320F2A8724CFD74000671B35 /* Steve2Icon.icns */; };
@@ -1448,8 +1448,8 @@
 			files = (
 				32BCCD1A2650D3B1002151C5 /* Debug-Info.plist in Resources */,
 				32799F8D264B1A5700255669 /* COPYING in Resources */,
-				32799F8E264B1A5700255669 /* Main.storyboard in Resources */,
 				32799F8F264B1A5700255669 /* Assets.xcassets in Resources */,
+				3277D783273AE0DC00749544 /* Main.storyboard in Resources */,
 				32799F90264B1A5700255669 /* Preferences.storyboard in Resources */,
 				32799F91264B1A5700255669 /* Steve2Icon.icns in Resources */,
 			);
@@ -1461,8 +1461,8 @@
 			files = (
 				32BCCD192650D3B1002151C5 /* Debug-Info.plist in Resources */,
 				3267641824BCC9A5000BEA11 /* COPYING in Resources */,
-				3254418B264A6A9D00B7E3ED /* Main.storyboard in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
+				3277D779273AE0DA00749544 /* Main.storyboard in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
 				320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */,
 			);

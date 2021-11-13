@@ -191,7 +191,7 @@ class HiRes: NSView {
     func refreshChanged( blockSize : Int ) {
         // refresh changed block only
         
-        let screenBlockMargin = 12 / blockSize
+        let screenBlockMargin = 14 / blockSize
         
         let blockScreenWidth = CGFloat(frame.width) / CGFloat(HiRes.blockCols) * CGFloat(blockSize)
         let blockScreenHeigth = CGFloat(frame.height) / CGFloat(HiRes.blockRows)
@@ -211,7 +211,7 @@ class HiRes: NSView {
             }
         }
     }
-    
+
     
 //    let pixelTrail = 2 // maybe too fast?
 //    let pixelTrail = 1.5

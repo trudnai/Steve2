@@ -32,21 +32,29 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     }
     
     var sideBarWidth = CGFloat()
+
     
-    func windowWillEnterFullScreen(_ notification: Notification) {
+    func setDisplaySize(
+        leading: CGFloat,
+        trailing: CGFloat,
+        top: CGFloat,
+        bottom: CGFloat,
+        sidePanelSize: CGFloat,
+        sidePanelHidden: Bool
+    ) {
         if let view = window?.contentView {
             for constraint in view.constraints {
                 switch constraint.identifier {
                 case "Display Background Trailing":
-                    constraint.constant = 0
+                    constraint.constant = sidePanelSize
                 case "Display Margin Leading":
-                    constraint.constant = 0
+                    constraint.constant = leading
                 case "Display Margin Trailing":
-                    constraint.constant = 0
+                    constraint.constant = trailing
                 case "Display Margin Top":
-                    constraint.constant = 0
+                    constraint.constant = top
                 case "Display Margin Bottom":
-                    constraint.constant = 0
+                    constraint.constant = bottom
                 default:
                     continue
                 }
@@ -54,36 +62,48 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             
             for subview in view.subviews {
                 if subview.identifier?.rawValue == "Side Panel" {
-                    subview.isHidden = true
+                    subview.isHidden = sidePanelHidden
                 }
             }
         }
     }
     
+    func setDisplayFullscreen() {
+        print("setDisplayFullscreen")
+        setDisplaySize(
+            leading: 0,
+            trailing: 0,
+            top: 0,
+            bottom: 0,
+            sidePanelSize: 0,
+            sidePanelHidden: true
+        )
+    }
+    
+    func setDisplayWindowed() {
+        print("setDisplayWindowed")
+        setDisplaySize(
+            leading: 11,
+            trailing: 11,
+            top: 16,
+            bottom: -16,
+            sidePanelSize: 136,
+            sidePanelHidden: false
+        )
+    }
+    
+    func windowWillEnterFullScreen(_ notification: Notification) {
+        setDisplayFullscreen()
+    }
+    
     func windowWillExitFullScreen(_ notification: Notification) {
-        if let view = window?.contentView {
-            for constraint in view.constraints {
-                switch constraint.identifier {
-                case "Display Background Trailing":
-                    constraint.constant = 120
-                case "Display Margin Leading":
-                    constraint.constant = 11
-                case "Display Margin Trailing":
-                    constraint.constant = 11
-                case "Display Margin Top":
-                    constraint.constant = 16
-                case "Display Margin Bottom":
-                    constraint.constant = -16
-                default:
-                    continue
-                }
-            }
-            
-            for subview in view.subviews {
-                if subview.identifier?.rawValue == "Side Panel" {
-                    subview.isHidden = false
-                }
-            }
+        setDisplayWindowed()
+    }
+    
+    override func windowDidLoad() {
+        let isWindowFullscreen = window?.styleMask.contains(.fullSizeContentView) ?? false
+        if isWindowFullscreen {
+            window?.toggleFullScreen(self)
         }
     }
         

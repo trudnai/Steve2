@@ -639,19 +639,19 @@
          contextName = "spkr_toggle:speaker.c">
          <PersistentStrings>
             <PersistentString
+               value = "( (spkr_clk + m6502.clkfrm) / ( default_MHz_6502 * 1000 * 1000 / spkr_sample_rate)) * 2">
+            </PersistentString>
+            <PersistentString
                value = "(int16_t)28000 + (int16_t)-32768">
             </PersistentString>
             <PersistentString
-               value = "spkr_level">
+               value = "default_MHz_6502 * 1000 * 1000 / spkr_sample_rate">
             </PersistentString>
             <PersistentString
                value = "( (spkr_clk + m6502.clkfrm) / ( 1024000 / spkr_sample_rate ) ) * 2">
             </PersistentString>
             <PersistentString
-               value = "spkr_sample_idx">
-            </PersistentString>
-            <PersistentString
-               value = "28000 + fadeLevel">
+               value = "(spkr_clk + m6502.clkfrm)">
             </PersistentString>
             <PersistentString
                value = "spkr_samples[spkr_sample_last_idx]">
@@ -880,6 +880,14 @@
             </PersistentString>
             <PersistentString
                value = "WRHIMEM">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MonitorView.adjustTextDisplaySize():MonitorView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "frame.size">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

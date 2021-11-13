@@ -62,6 +62,8 @@
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
 		3277D779273AE0DA00749544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		3277D783273AE0DC00749544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
+		3277D7A4273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
 		32799F7A264B1A5700255669 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
 		32799F7B264B1A5700255669 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32799F7C264B1A5700255669 /* ToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126C24AC033A00E61891 /* ToolBarController.swift */; };
@@ -630,6 +632,7 @@
 		326B56E424AD8E89009BA0AC /* gobackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gobackward.png; sourceTree = "<group>"; };
 		326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.text.viewfinder.png; sourceTree = "<group>"; };
 		326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = 6502_functional_test.bin; path = Resources/rom/6502_functional_test.bin; sourceTree = SOURCE_ROOT; };
+		3277D7A2273C603600749544 /* DisplayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayScrollView.swift; sourceTree = "<group>"; };
 		32799FDA264B1A5700255669 /* Steve ][ Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][ Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32799FDB264B1A5700255669 /* Steve ][ copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Steve ][ copy-Info.plist"; path = "/Users/trudnai/Dropbox/Projects/A2Mac/Steve ][ copy-Info.plist"; sourceTree = "<absolute>"; };
 		32877F8C24ADA6AF003A940D /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
@@ -1117,6 +1120,7 @@
 				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
 				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
 				3267641724BCC9A5000BEA11 /* COPYING */,
+				3277D7A2273C603600749544 /* DisplayScrollView.swift */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -1566,6 +1570,7 @@
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
 				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
 				32799F8A264B1A5700255669 /* MonitorView.swift in Sources */,
+				3277D7A4273C603600749544 /* DisplayScrollView.swift in Sources */,
 				32A6AB25266B19680023257A /* hires.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1592,6 +1597,7 @@
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
 				32A6AAF0266AEDF40023257A /* mmio.c in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
+				3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */,
 				32A6AB1B266B19680023257A /* hires.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

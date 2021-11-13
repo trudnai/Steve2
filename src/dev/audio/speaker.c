@@ -375,9 +375,9 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
     float ema_len = 7;
     
     if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
-        ema_len = 21;
+        ema_len = 120;
     }
-        
+
     spkr_level = spkr_samples[ spkr_sample_idx ];
     
     while ( fabsf(dumping) > 1 ) {
@@ -396,8 +396,8 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
 }
 
 
-float SPKR_FADE_LEADING_EDGE      = 0.90;
-float SPKR_FADE_TRAILING_EDGE     = 0.90;
+float SPKR_FADE_LEADING_EDGE      = 0.92;
+float SPKR_FADE_TRAILING_EDGE     = 0.92;
 float SPKR_INITIAL_LEADING_EDGE   = 0.64; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
 float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix sound good
 
@@ -420,6 +420,7 @@ void spkr_toggle() {
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
         spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
+        spkr_sample_idx &= UINTMAX_MAX - 1;
         unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
         if ( (int)spkr_sample_idx_diff < 0 ) {
 //            printf("m:%u\n", spkr_sample_idx_diff);
@@ -488,7 +489,7 @@ void spkr_update() {
                         
                         //spkr_samples[sample_idx] = spkr_level;
                         memset(spkr_samples + spkr_sample_idx, 0, spkr_extra_buf * sizeof(spkr_sample_t));
-                        
+
                         freeBuffers--;
                         alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_sample_t), spkr_sample_rate);
                         al_check_error();
@@ -554,7 +555,8 @@ void spkr_update() {
                         break;
                 }
                 
-                int src = spkr_buf_size + spkr_extra_buf;
+                int size = spkr_buf_size + spkr_extra_buf;
+                int src = size;
                 int dst = 0;
                 
                 // copy the buffer leftover -- needed to finish wave form
@@ -563,11 +565,17 @@ void spkr_update() {
                 }
 
                 // clear the slack buffer, so we can fill it up by new data
-                while( dst < spkr_buf_size + spkr_extra_buf ) {
+                while( dst < size ) {
                     spkr_samples[dst++] = spkr_level;
                 }
                 
-                spkr_sample_last_idx = 0;
+                if ( spkr_sample_idx >= size ) {
+                    spkr_sample_idx -= size;
+                }
+                else {
+                    spkr_sample_idx = 0;
+                }
+                spkr_sample_last_idx = spkr_sample_idx;
                 
                 //                spkr_samples[0] = 10000;
                 

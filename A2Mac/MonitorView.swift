@@ -27,23 +27,39 @@ class MonitorView: NSView {
     
     @IBOutlet var textDisplay: DisplayView!
     
+    let textViewBounds = NSSize(width: 1130, height: 768)
     var textDisplay_boundsSize = NSSize()
     var textDisplay_width_diff : CGFloat?
     var textDisplay_height_diff : CGFloat?
-
-    @objc func frameDidChange(notification: NSNotification) {
+    
+    
+    override func viewDidMoveToWindow() {
+        print("Added to NEW window")
+    }
+    
+    func adjustTextDisplaySize() {
         var textFrameSize = frame.size
+        textFrameSize.width += 1
         
         if textDisplay_width_diff == nil {
             textDisplay_width_diff = textFrameSize.width - textDisplay.frame.width
             textDisplay_height_diff = textFrameSize.height - textDisplay.frame.height
             textDisplay_boundsSize = textDisplay.bounds.size
         }
-        
+
         textFrameSize.width -= textDisplay_width_diff!
         textFrameSize.height -= textDisplay_height_diff!
-        textDisplay.setFrameSize(textFrameSize)
-        textDisplay.setBoundsSize(textDisplay_boundsSize)
+
+        // BUGFIX: I am not sure why but if I do not adjust the frame and bounds size
+        //         couple of times, Cocoa miscalculates them
+        for _ in 0...5 {
+            textDisplay.setFrameSize(textFrameSize)
+            textDisplay.setBoundsSize(textViewBounds)
+        }
+    }
+    
+    @objc func frameDidChange(notification: NSNotification) {
+        adjustTextDisplaySize()
     }
     
     required init?(coder: NSCoder) {

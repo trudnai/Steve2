@@ -90,7 +90,7 @@ unsigned spkr_frame_cntr = 0;
 unsigned spkr_clk = 0;
 
 const unsigned spkr_seconds = 1;
-const unsigned spkr_sample_rate = 44100;
+const unsigned spkr_sample_rate = 192000;
 const unsigned sfx_sample_rate =  22050; // original sample rate
 //const unsigned sfx_sample_rate =  26000; // bit higher pitch
 int spkr_extra_buf = 0; // 26; // 800 / spkr_fps;
@@ -372,10 +372,10 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
     float dumping = spkr_level - level_max;
     dumping *= initial_edge;
     
-    float ema_len = 7;
+    float ema_len = 21;
     
     if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
-        ema_len = 120;
+        ema_len = 200;
     }
 
     spkr_level = spkr_samples[ spkr_sample_idx ];
@@ -396,8 +396,27 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
 }
 
 
-float SPKR_FADE_LEADING_EDGE      = 0.92;
-float SPKR_FADE_TRAILING_EDGE     = 0.92;
+void spkr_toggle_tick ( int level_max, const unsigned idx_diff ) {
+    spkr_level = SPKR_LEVEL_ZERO;
+    spkr_samples[ spkr_sample_idx++ ] = level_max;
+    spkr_samples[ spkr_sample_idx++ ] = level_max; // stereo
+    spkr_sample_last_idx = spkr_sample_idx;
+    spkr_last_level = spkr_level;
+}
+
+
+//float SPKR_FADE_LEADING_EDGE      = 0.92;
+//float SPKR_FADE_TRAILING_EDGE     = 0.92;
+//float SPKR_INITIAL_LEADING_EDGE   = 0.64; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
+//float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix sound good
+
+//float SPKR_FADE_LEADING_EDGE      = 0.82;
+//float SPKR_FADE_TRAILING_EDGE     = 0.82;
+//float SPKR_INITIAL_LEADING_EDGE   = 0.82; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
+//float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix sound good
+
+float SPKR_FADE_LEADING_EDGE      = 0.64;
+float SPKR_FADE_TRAILING_EDGE     = 0.64;
 float SPKR_INITIAL_LEADING_EDGE   = 0.64; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
 float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix sound good
 
@@ -422,6 +441,10 @@ void spkr_toggle() {
         spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
         spkr_sample_idx &= UINTMAX_MAX - 1;
         unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
+//        if ( (int)spkr_sample_idx_diff == 0 ) {
+//            //            printf("m:%u\n", spkr_sample_idx_diff);
+//            spkr_sample_idx_diff = UINT_MAX - spkr_sample_idx_diff;
+//        }
         if ( (int)spkr_sample_idx_diff < 0 ) {
 //            printf("m:%u\n", spkr_sample_idx_diff);
             spkr_sample_idx_diff = UINT_MAX - spkr_sample_idx_diff;
@@ -434,12 +457,14 @@ void spkr_toggle() {
             spkr_state = 0;
             
             spkr_toggle_edge(SPKR_LEVEL_MIN, SPKR_INITIAL_TRAILING_EDGE, SPKR_FADE_TRAILING_EDGE, spkr_sample_idx_diff);
+//            spkr_toggle_tick(SPKR_LEVEL_MIN, spkr_sample_idx_diff);
         }
         else {
             // up edge
             spkr_state = 1;
             
             spkr_toggle_edge(SPKR_LEVEL_MAX, SPKR_INITIAL_LEADING_EDGE, SPKR_FADE_LEADING_EDGE, spkr_sample_idx_diff);
+//            spkr_toggle_tick(SPKR_LEVEL_MAX, spkr_sample_idx_diff);
         }
 
         
@@ -569,6 +594,8 @@ void spkr_update() {
                     spkr_samples[dst++] = spkr_level;
                 }
                 
+                // TODO: Problems on Wavy Navy
+//                if ( ( spkr_sample_idx >= size ) && ( spkr_level == SPKR_LEVEL_ZERO ) ) {
                 if ( spkr_sample_idx >= size ) {
                     spkr_sample_idx -= size;
                 }

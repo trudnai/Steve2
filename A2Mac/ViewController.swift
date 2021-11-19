@@ -1058,7 +1058,21 @@ class ViewController: NSViewController  {
         trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
         tailEdgeSlider.floatValue = SPKR_FADE_TRAILING_EDGE
 
-
+        
+//        // BUGFIX: I am not sure why but if I do not adjust the frame and bounds size
+//        //         couple of times, Cocoa miscalculates them
+//        var size = MonitorView.textViewBounds
+//        size.width /= 2
+//        size.height /= 2
+//        textDisplay.setFrameSize(size)
+//        textDisplay.setBoundsSize(size)
+//
+//        size.width += 136 + 11 * 2
+//        size.height += 64 + 11 * 2
+//        view.setFrameSize(size)
+//        view.setBoundsSize(size)
+        
+        
     }
     
     override func viewDidAppear() {

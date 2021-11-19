@@ -27,7 +27,7 @@ class MonitorView: NSView {
     
     @IBOutlet var textDisplay: DisplayView!
     
-    let textViewBounds = NSSize(width: 1130, height: 768)
+    static let textViewBounds = NSSize(width: 280 * 4, height: 192 * 4)
     var textDisplay_boundsSize = NSSize()
     var textDisplay_width_diff : CGFloat?
     var textDisplay_height_diff : CGFloat?
@@ -39,7 +39,7 @@ class MonitorView: NSView {
     
     func adjustTextDisplaySize() {
         var textFrameSize = frame.size
-        textFrameSize.width += 1
+//        textFrameSize.width += 1
         
         if textDisplay_width_diff == nil {
             textDisplay_width_diff = textFrameSize.width - textDisplay.frame.width
@@ -54,7 +54,7 @@ class MonitorView: NSView {
         //         couple of times, Cocoa miscalculates them
         for _ in 0...5 {
             textDisplay.setFrameSize(textFrameSize)
-            textDisplay.setBoundsSize(textViewBounds)
+            textDisplay.setBoundsSize(MonitorView.textViewBounds)
         }
     }
     

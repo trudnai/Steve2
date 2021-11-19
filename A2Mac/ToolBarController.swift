@@ -84,9 +84,9 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
         print("setDisplayWindowed")
         setDisplaySize(
             leading: 11,
-            trailing: 11,
+            trailing: -11,
             top: 16,
-            bottom: -16,
+            bottom: 16,
             sidePanelSize: 136,
             sidePanelHidden: false
         )

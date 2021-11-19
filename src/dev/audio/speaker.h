@@ -41,7 +41,7 @@
 // medium
 //#define SPKR_LEVEL_MIN      (-3072)
 //#define SPKR_LEVEL_MAX      (+3072)
-#define SPKR_LEVEL_MAX      8192
+#define SPKR_LEVEL_MAX      32767 // 8192
 #define SPKR_LEVEL_MIN      (-SPKR_LEVEL_MAX)
 #define SPKR_PLAY_TIMEOUT   8U
 

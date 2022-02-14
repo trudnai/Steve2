@@ -86,7 +86,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             leading: 11,
             trailing: -11,
             top: 16,
-            bottom: 16,
+            bottom: -16,
             sidePanelSize: 136,
             sidePanelHidden: false
         )

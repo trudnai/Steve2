@@ -61,9 +61,9 @@ func spk_dn_play() {
 }
 
 
-//#if METAL_YES
-//import Metal
-//#endif
+#if METAL_YES
+import Metal
+#endif
 
 class ViewController: NSViewController  {
 
@@ -310,7 +310,9 @@ class ViewController: NSViewController  {
     static let textPage2Pointer = UnsafeRawBufferPointer(start: MEM + textPage2Addr, count: textBufferSize)
     static let textIntBufferPointer = UnsafeRawBufferPointer(start: RAM + textPage1Addr, count: textBufferSize)
     static let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textPage1Addr, count: textBufferSize)
-
+    
+    static let textPageShadowBuffer = UnsafeMutableRawBufferPointer.allocate(byteCount: textBufferSize, alignment: 1)
+    
     // TODO: Render text screen in native C
 //    static let textScreen = UnsafeMutableRawPointer(mutating: testText)
 
@@ -479,8 +481,7 @@ class ViewController: NSViewController  {
                     // Keyboard 2 JoyStick (Game Controller / Paddle)
                     pdl_valarr[0] = 0
                 }
-                kbdInput(0x08)
-                
+                kbdInput(0x88)
                 
             case rightArrowKey:
 //                print("RIGHT")
@@ -488,8 +489,8 @@ class ViewController: NSViewController  {
                 if ( Keyboard2Joystick ) {
                     pdl_valarr[0] = 1
                 }
-                kbdInput(0x15)
-
+                kbdInput(0x95)
+                
             case downArrowKey:
 //                print("DOWN")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
@@ -497,8 +498,9 @@ class ViewController: NSViewController  {
                     pdl_valarr[1] = 1
                 }
                 else {
-                    kbdInput(0x0B)
+                    kbdInput(0x8A)
                 }
+                
             case upArrowKey:
 //                print("UP")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
@@ -506,9 +508,9 @@ class ViewController: NSViewController  {
                     pdl_valarr[1] = 0
                 }
                 else {
-                    kbdInput(0x0A)
+                    kbdInput(0x8B)
                 }
-
+                
             default:
     //            print("keycode: %d", keyCode)
                 if let chars = event.characters {
@@ -667,51 +669,59 @@ class ViewController: NSViewController  {
     var mouseLocation = NSPoint.zero
     
     var shadowTxt : String = ""
-    
+    var unicodeTextString : String = ""
+
     func Render() {
         
 //        DispatchQueue.global(qos: .background).async {
             
-            self.frameCnt += 1
+        self.frameCnt += 1
         
-            if ( self.frameCnt == fps / 2 ) {
+        if ( self.frameCnt == fps / video_fps_divider / 2 ) {
             ViewController.charConvTbl = ViewController.charConvTblFlashOn
         }
-            else if ( self.frameCnt >= fps ) {
+        else if ( self.frameCnt >= fps / video_fps_divider ) {
+            self.frameCnt = 0
             ViewController.charConvTbl = ViewController.charConvTblFlashOff
-                self.frameCnt = 0
+        }
+
+        var textNeedRender = false
+        
+        var fromLines = 0
+        var toLines = self.textLines
+        
+        if videoMode.text == 0 {
+            if videoMode.mixed == 1 {
+                fromLines = toLines - 4
+            }
+            else {
+                toLines = 0
+            }
         }
         
-            var unicodeTextString : String = ""
-            
-            var fromLines = 0
-            var toLines = self.textLines
-            
-            if videoMode.text == 0 {
-                if videoMode.mixed == 1 {
-                    fromLines = toLines - 4
-                }
-                else {
-                    toLines = 0
-                }
+        self.unicodeTextArray = NSArray(array: self.txtClear, copyItems: true) as! [Character]
+        
+        // render an empty space to eiminate displaying text portion of the screen covered by graphics
+        let charDisposition = videoMode.col80 == 0 ? 1 : 2
+        for y in 0 ..< fromLines {
+            self.unicodeTextArray[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
+        }
+        
+        // 40 col
+        if videoMode.col80 == 0 {
+            if MEMcfg.txt_page_2 == 0 {
+                self.textBufferPointer = ViewController.textPage1Pointer
+            }
+            else {
+                self.textBufferPointer = ViewController.textPage2Pointer
             }
             
-            self.unicodeTextArray = NSArray(array: self.txtClear, copyItems: true) as! [Character]
-            
-            // render an empty space to eiminate displaying text portion of the screen covered by graphics
-            let charDisposition = videoMode.col80 == 0 ? 1 : 2
-            for y in 0 ..< fromLines {
-                self.unicodeTextArray[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
+            if self.textBufferPointer.elementsEqual(ViewController.textPageShadowBuffer) {
             }
-            
-            // 40 col
-            if videoMode.col80 == 0 {
-                if MEMcfg.txt_page_2 == 0 {
-                    self.textBufferPointer = ViewController.textPage1Pointer
-                }
-                else {
-                    self.textBufferPointer = ViewController.textPage2Pointer
-                }
+            else {
+                ViewController.textPage1Pointer.copyBytes(to: ViewController.textPageShadowBuffer)
+                textNeedRender = true
+
                 // render the rest of the text screen
                 for y in fromLines ..< toLines {
                     for x in 0 ..< self.textCols {
@@ -724,41 +734,44 @@ class ViewController: NSViewController  {
                     
                     self.unicodeTextArray[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
                 }
+
+                unicodeTextString = String(self.unicodeTextArray)
             }
-            // 80 col
-            else {
-                let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
-                
-                let textIntBuffer = auxPage ?  ViewController.textIntBufferPointer : ViewController.textPage1Pointer
-                let textAuxBuffer = auxPage ?  ViewController.textPage1Pointer : ViewController.textAuxBufferPointer
-                
-                // render the rest of the text screen
-                for y in fromLines ..< toLines {
-                    for x in 0 ..< self.textCols {
-                        let byte = textIntBuffer[ ViewController.textLineOfs[y] + x ]
-                        let idx = Int(byte);
-                        let chr = ViewController.charConvTbl[idx]
-                        
-                        self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
-                        
-                        let byte2 = textAuxBuffer[ ViewController.textLineOfs[y] + x ]
-                        let idx2 = Int(byte2);
-                        let chr2 = ViewController.charConvTbl[idx2]
-                        
-                        self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr2
-                    }
-                    
-                    self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
-                }
-            }
+        }
+        // 80 col
+        else {
+            let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
             
+            let textIntBuffer = auxPage ?  ViewController.textIntBufferPointer : ViewController.textPage1Pointer
+            let textAuxBuffer = auxPage ?  ViewController.textPage1Pointer : ViewController.textAuxBufferPointer
+            
+            // render the rest of the text screen
+            for y in fromLines ..< toLines {
+                for x in 0 ..< self.textCols {
+                    let byte = textIntBuffer[ ViewController.textLineOfs[y] + x ]
+                    let idx = Int(byte);
+                    let chr = ViewController.charConvTbl[idx]
+                    
+                    self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
+                    
+                    let byte2 = textAuxBuffer[ ViewController.textLineOfs[y] + x ]
+                    let idx2 = Int(byte2);
+                    let chr2 = ViewController.charConvTbl[idx2]
+                    
+                    self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr2
+                }
+                
+                self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
+            }
             
             unicodeTextString = String(self.unicodeTextArray)
-                
-            // Rendering is happening in the main thread, which has two implications:
-            //   1. We can update UI elements
-            //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
-            DispatchQueue.main.sync {
+        }
+
+        // Rendering is happening in the main thread, which has two implications:
+        //   1. We can update UI elements
+        //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
+        DispatchQueue.main.sync {
+
             // TODO: Render text Screen in native C
             //            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
             
@@ -770,22 +783,22 @@ class ViewController: NSViewController  {
                             self.textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
                     }
                     else {
-                            self.textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
-                        }
+                        self.textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
                     }
                 }
-                
-                if ( self.shadowTxt != unicodeTextString ) {
-                    self.shadowTxt = unicodeTextString
+            }
+                    
+            if textNeedRender || self.shadowTxt != unicodeTextString {
+                self.shadowTxt = unicodeTextString
     //                self.display.stringValue = unicodeTextString
-                    let selectedRange = self.textDisplay.selectedRange()
-                    self.textDisplay.string = unicodeTextString
-                    self.textDisplay.setSelectedRange(selectedRange)
+                let selectedRange = self.textDisplay.selectedRange()
+                self.textDisplay.string = unicodeTextString
+                self.textDisplay.setSelectedRange(selectedRange)
 
     //                let bold14 = NSFont.boldSystemFont(ofSize: 14.0)
     //                let textColor = NSColor.red
     //                let attribs = [NSAttributedString.Key.font:bold14,NSAttributedString.Key.foregroundColor:textColor,NSAttributedString.Key.paragraphStyle:textParagraph]
-            
+        
     //                let textParagraph = NSMutableParagraphStyle()
     //                textParagraph.lineSpacing = 0
     //                textParagraph.minimumLineHeight = 32.0
@@ -796,17 +809,14 @@ class ViewController: NSViewController  {
     //                self.display.attributedStringValue = attrString
             }
             //            self.display.stringValue = "testing\nit\nout"
-            
+                
             if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
                 self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
             }
             else {
                 self.speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
             }
-            //            else {
-            //                self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
-            //            }
-            
+                
             #if HIRES
             
             // only refresh graphics view when needed (aka not in text mode)
@@ -820,6 +830,7 @@ class ViewController: NSViewController  {
                         self.lores.clearScreen()
                         self.lores.isHidden = false
                         self.hires.isHidden = true
+                        unicodeTextString = String(self.unicodeTextArray)
                     }
                     
                     self.lores.Render()
@@ -833,15 +844,17 @@ class ViewController: NSViewController  {
                         self.hires.clearScreen()
                         self.hires.isHidden = false
                         self.lores.isHidden = true
+                        unicodeTextString = String(self.unicodeTextArray)
                     }
                     
-                        self.hires.Render()
+                    self.hires.Render()
                 }
             }
             else if ( self.savedVideoMode.text == 0 ) {
                 // we just switched from grahics to text
                 self.lores.isHidden = true
                 self.hires.isHidden = true
+                unicodeTextString = String(self.unicodeTextArray)
             }
             
             self.savedVideoMode = videoMode
@@ -851,7 +864,7 @@ class ViewController: NSViewController  {
             // stream speaker from a separate thread from the simulation
             // TODO: Do we need to do this from here?
             //            spkr_update()
-            
+                
         }
 //        }
     }
@@ -1176,7 +1189,7 @@ class ViewController: NSViewController  {
         spkr_fps_divider = fps / spkr_fps
         spkr_play_timeout = SPKR_PLAY_TIMEOUT * spkr_fps_divider
 
-        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
+//        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
 
 //        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
         newUpdateTimer( timeInterval: 1 / Double(fps) )

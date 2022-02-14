@@ -191,7 +191,7 @@ class HiRes: NSView {
     func refreshChanged( blockSize : Int ) {
         // refresh changed block only
         
-        let screenBlockMargin = 14 / blockSize
+        let screenBlockMargin = 16 / blockSize
         
         let blockScreenWidth = CGFloat(frame.width) / CGFloat(HiRes.blockCols) * CGFloat(blockSize)
         let blockScreenHeigth = CGFloat(frame.height) / CGFloat(HiRes.blockRows)
@@ -281,21 +281,21 @@ class HiRes: NSView {
                     if (block & bitMask) != 0 {
                         pixelsSRGB[pixelAddr] = monoColor;
                     }
-                    else if ( ViewController.current?.CRTMonitor ?? false ) {
-                        var srgb = pixelsSRGB[pixelAddr]
-                        
-                        let s = srgb >> 24 & 0xFF
-                        let r = srgb >> 16 & 0xFF
-                        let g = srgb >>  8 & 0xFF
-                        let b = srgb >>  0 & 0xFF
-                        
-                        srgb = UInt32(Double(s) / pixelTrail) << 24
-                             | UInt32(Double(r) / pixelTrail) << 16
-                             | UInt32(Double(g) / pixelTrail) << 8
-                             | UInt32(Double(b) / pixelTrail)
-                            
-                        pixelsSRGB[pixelAddr] = srgb;
-                    }
+//                    else if ( ViewController.current?.CRTMonitor ?? false ) {
+//                        var srgb = pixelsSRGB[pixelAddr]
+//
+//                        let s = srgb >> 24 & 0xFF
+//                        let r = srgb >> 16 & 0xFF
+//                        let g = srgb >>  8 & 0xFF
+//                        let b = srgb >>  0 & 0xFF
+//
+//                        srgb = UInt32(Double(s) / pixelTrail) << 24
+//                             | UInt32(Double(r) / pixelTrail) << 16
+//                             | UInt32(Double(g) / pixelTrail) << 8
+//                             | UInt32(Double(b) / pixelTrail)
+//
+//                        pixelsSRGB[pixelAddr] = srgb;
+//                    }
                     else {
                         pixelsSRGB[pixelAddr] = color_black;
                     }

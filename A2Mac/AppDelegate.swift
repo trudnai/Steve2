@@ -66,7 +66,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ViewController.current?.openDiskImage(url: URL(fileURLWithPath: filename))
         return true;
     }
-    
+
+    @IBAction func openFile(_ sender: NSMenuItem) {
+        ViewController.current?.openDiskImageDialog()
+    }
+
     @IBAction func saveFile(_ sender: NSMenuItem) {
         ViewController.current?.saveFile()
     }

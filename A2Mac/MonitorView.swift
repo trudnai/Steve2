@@ -26,50 +26,126 @@ import Cocoa
 class MonitorView: NSView {
     
     @IBOutlet var textDisplay: DisplayView!
+    @IBOutlet weak var clipView: NSClipView!
+    @IBOutlet weak var scanlinesView: NSImageView!
     
-    static let textViewBounds = NSSize(width: 280 * 4, height: 192 * 4)
-    var textDisplay_boundsSize = NSSize()
+    static let overscan_h = CGFloat(25)
+    static let overscan_v = CGFloat(60)
+    
+    static let textViewBounds = NSSize(width: 280 * 4 + overscan_h, height: 192 * 4)
     var textDisplay_width_diff : CGFloat?
     var textDisplay_height_diff : CGFloat?
     
-    
+    let monitorView_textViewBounds = NSSize(width: 1120, height: 768)
+    let textDisplay_frameSize = NSSize(width: 1120 + overscan_h, height: 768 + overscan_v)
+
     override func viewDidMoveToWindow() {
         print("Added to NEW window")
     }
     
     func adjustTextDisplaySize() {
         var textFrameSize = frame.size
-//        textFrameSize.width += 1
         
         if textDisplay_width_diff == nil {
-            textDisplay_width_diff = textFrameSize.width - textDisplay.frame.width
-            textDisplay_height_diff = textFrameSize.height - textDisplay.frame.height
-            textDisplay_boundsSize = textDisplay.bounds.size
+            textDisplay_width_diff = textFrameSize.width - textDisplay_frameSize.width
+            textDisplay_height_diff = textFrameSize.height - textDisplay_frameSize.height
         }
 
         textFrameSize.width -= textDisplay_width_diff!
-        textFrameSize.height -= textDisplay_height_diff!
+//        textFrameSize.height -= textDisplay_height_diff!
+        textFrameSize.height = scanlinesView.frame.size.height
+
+//        print( String(
+//            format: "MonitorView fw:%.2f fh:%.2f bw:%.2f bh:%.2f to fw:%.2f fh:%.2f bw:%.2f bh:%.2f",
+//            textDisplay.frame.size.width,
+//            textDisplay.frame.size.height,
+//            textFrameSize.width,
+//            textFrameSize.height,
+//            textDisplay.bounds.size.width,
+//            textDisplay.bounds.size.height,
+//            MonitorView.textViewBounds.width,
+//            MonitorView.textViewBounds.height
+//        ))
+//        print( String(
+//            format: "scrollView  fw:%.2f fh:%.2f bw:%.2f bh:%.2f",
+//            scrollView.frame.size.width,
+//            scrollView.frame.size.height,
+//            scrollView.bounds.size.width,
+//            scrollView.bounds.size.height
+//        ))
+//        print( String(
+//            format: "hiresView  fw:%.2f fh:%.2f bw:%.2f bh:%.2f",
+//            hiresView.frame.size.width,
+//            hiresView.frame.size.height,
+//            hiresView.bounds.size.width,
+//            hiresView.bounds.size.height
+//        ))
+//        print( String(
+//            format: "scanlinesView  fw:%.2f fh:%.2f bw:%.2f bh:%.2f",
+//            scanlinesView.frame.size.width,
+//            scanlinesView.frame.size.height,
+//            scanlinesView.bounds.size.width,
+//            scanlinesView.bounds.size.height
+//        ))
 
         // BUGFIX: I am not sure why but if I do not adjust the frame and bounds size
         //         couple of times, Cocoa miscalculates them
-        for _ in 0...5 {
+        for _ in 0...15 {
             textDisplay.setFrameSize(textFrameSize)
+//            textDisplay.setBoundsSize(MonitorView.textViewBounds)
+//            textDisplay.setFrameSize(scanlinesView.frame.size)
             textDisplay.setBoundsSize(MonitorView.textViewBounds)
         }
     }
     
     @objc func frameDidChange(notification: NSNotification) {
+//        NSLog("MonitorView:frameDidChange")
         adjustTextDisplaySize()
     }
     
+//    @objc func globalFrameDidChange(notification: NSNotification) {
+//        NSLog("MonitorView:globalFrameDidChange")
+//        adjustTextDisplaySize()
+//    }
+//
+//    @objc func boundsDidChange(notification: NSNotification) {
+//        NSLog("MonitorView:boundsDidChange")
+//        adjustTextDisplaySize()
+//    }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
         postsFrameChangedNotifications = true
         NotificationCenter.default.addObserver(self, selector: #selector(frameDidChange), name: NSView.frameDidChangeNotification, object: self)
+//        NotificationCenter.default.addObserver(self, selector: #selector(globalFrameDidChange), name: NSView.globalFrameDidChangeNotification, object: self)
+//        NotificationCenter.default.addObserver(self, selector: #selector(boundsDidChange), name: NSView.boundsDidChangeNotification, object: self)
+    }
+    
+    override func viewDidEndLiveResize() {
+//        NSLog("MonitorView:viewDidEndLiveResize")
+        adjustTextDisplaySize()
+        
+//        print( String(
+//            format: "MonitorView1 fw:%.2f fh:%.2f bw:%.2f bh:%.2f",
+//            textDisplay.frame.size.width,
+//            textDisplay.frame.size.height,
+//            textDisplay.bounds.size.width,
+//            textDisplay.bounds.size.height
+//        ))
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//            print( String(
+//                format: "MonitorView2 fw:%.2f fh:%.2f bw:%.2f bh:%.2f",
+//                self.textDisplay.frame.size.width,
+//                self.textDisplay.frame.size.height,
+//                self.textDisplay.bounds.size.width,
+//                self.textDisplay.bounds.size.height
+//            ))
+//        }
     }
     
     override func viewDidChangeEffectiveAppearance() {
+//        NSLog("StringviewDidChangeEffectiveAppearance")
         postsFrameChangedNotifications = true
     }
 

@@ -1190,7 +1190,7 @@ void kbdInput ( uint8_t code ) {
             code = 0x0D;
             break;
             
-        case 0x7F: // BackSlash
+        case 0x7F: // BackSpace
             code = 0x08;
             break;
             

@@ -68,6 +68,10 @@ ALCcontext *ctx = NULL;
 
 #define SPKR_MIN_VOL    0.0001 // OpenAL cannot change volume to 0.0 for some reason, so we just turn volume really low
 int spkr_level = SPKR_LEVEL_ZERO;
+int spkr_level_ema = SPKR_LEVEL_ZERO;
+int spkr_level_dema = SPKR_LEVEL_ZERO;
+int spkr_level_tema = SPKR_LEVEL_ZERO;
+int spkr_level_qema = SPKR_LEVEL_ZERO;
 int spkr_last_level = SPKR_LEVEL_ZERO;
 
 #define BUFFER_COUNT 256
@@ -97,7 +101,8 @@ int spkr_extra_buf = 0; // 26; // 800 / spkr_fps;
 typedef int16_t spkr_sample_t;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS; // stereo
 const unsigned spkr_buf_alloc_size = spkr_buf_size * sizeof(spkr_sample_t);
-spkr_sample_t spkr_samples [ spkr_buf_size * DEFAULT_FPS * BUFFER_COUNT]; // can store up to 1 sec of sound
+const unsigned sample_buf_array_len = spkr_buf_size * DEFAULT_FPS * BUFFER_COUNT;
+spkr_sample_t spkr_samples [ sample_buf_array_len ]; // can store up to 1 sec of sound
 unsigned spkr_sample_idx = 0;
 unsigned spkr_sample_last_idx = 0;
 unsigned spkr_sample_first_pwm_idx = 0;
@@ -168,10 +173,14 @@ void spkr_load_sfx( const char * bundlePath ) {
 }
 
 
+FILE * af = NULL;
+
 // initialize OpenAL
 void spkr_init() {
     const char *defname = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
     printf( "Default device: %s\n", defname );
+    
+//    af = fopen("steve2_audio_debug.bin", "w+");
 
     // restart OpenAL when restarting the virtual machine
     spkr_exit();
@@ -369,30 +378,61 @@ INLINE int ema( int val, int prev, float ema_len ) {
 
 void spkr_toggle_edge ( int level_max, const float initial_edge, const float fade_edge, const unsigned idx_diff ) {
 
-    float dumping = spkr_level - level_max;
-    dumping *= initial_edge;
+//    float dumping = spkr_level - level_max;
+//    dumping *= initial_edge;
     
-    float ema_len = 21;
+//    float ema_len = 21;
+    int ema_len = 7; // 8;
+
+    // save last index before we advance it...
+    spkr_sample_last_idx = spkr_sample_idx;
     
     if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
-        ema_len = 200;
+//        ema_len = 200;
+//        ema_len = 64;
+//        spkr_sample_idx -= SPKR_SAMPLE_PWM_THRESHOLD * 6;
+//        if ( spkr_sample_idx > spkr_buf_size ) {
+//            spkr_sample_idx = 0;
+//        }
+//        spkr_toggle_edge(spkr_samples[spkr_sample_idx], initial_edge, fade_edge, SPKR_SAMPLE_PWM_THRESHOLD+1);
+//        spkr_sample_idx = spkr_sample_last_idx;
     }
 
     spkr_level = spkr_samples[ spkr_sample_idx ];
-    
-    while ( fabsf(dumping) > 1 ) {
-        spkr_sample_t level = level_max + dumping;
-        spkr_level = ema(level, spkr_level, ema_len);
-        spkr_samples[ spkr_sample_idx++ ] = spkr_level;
-        spkr_samples[ spkr_sample_idx++ ] = spkr_level; // stereo
+    spkr_level_ema = spkr_level;
+    spkr_level_dema = spkr_level;
+    spkr_level_tema = spkr_level;
+    spkr_level_qema = spkr_level;
+
+    if ( idx_diff < 30 ) {
+        ema_len = 10;
+//        spkr_level_ema = SPKR_LEVEL_ZERO;
+//        spkr_level_dema = SPKR_LEVEL_ZERO;
+//        spkr_level_tema = SPKR_LEVEL_ZERO;
+    }
+
+//    while ( fabsf(dumping) > 1 ) {
+//    while ( (abs(spkr_level - level_max) > 50) && (spkr_sample_idx < sample_buf_array_len - 2) ) {
+    for ( int i = 0; (i < spkr_buf_size * 2) && (abs(spkr_level - level_max) > 1500); i++ ) {
+//        spkr_sample_t level = level_max + dumping;
+
+        // smoothing with Exponential Moving Average
+//        spkr_level_ema = ema(level, spkr_level_ema, ema_len);
+        spkr_level_ema  = ema(level_max, spkr_level_ema, ema_len);
+        spkr_level_dema = ema(spkr_level_ema, spkr_level_dema, ema_len);
+        spkr_level_tema = ema(spkr_level_dema, spkr_level_tema, ema_len);
+        spkr_level_qema = ema(spkr_level_tema, spkr_level_tema, ema_len);
+
+        spkr_level = spkr_level_ema;
+                
+        spkr_samples[ spkr_sample_idx++ ] = spkr_level_qema;
+        spkr_samples[ spkr_sample_idx++ ] = spkr_level_qema; // stereo
         
         // how smooth we want the speeker to decay, so we will hear no pops and crackles
-        dumping *= fade_edge;
+//        dumping *= fade_edge;
     }
 
     spkr_last_level = spkr_level;
-    // save last index before we advance it...
-    spkr_sample_last_idx = spkr_sample_idx;
 }
 
 
@@ -451,7 +491,7 @@ void spkr_toggle() {
         }
 
         spkr_level = spkr_samples[ spkr_sample_idx ];
-        
+
         if ( spkr_state ) {
             // down edge
             spkr_state = 0;
@@ -511,11 +551,13 @@ void spkr_update() {
                             fadeLevel *= 0.999;
                         }
                         spkr_level = SPKR_LEVEL_ZERO;
-                        
+
                         //spkr_samples[sample_idx] = spkr_level;
                         memset(spkr_samples + spkr_sample_idx, 0, spkr_extra_buf * sizeof(spkr_sample_t));
 
                         freeBuffers--;
+//                        fwrite(spkr_samples, sizeof(spkr_sample_t), spkr_sample_idx, af);
+//                        fflush(af);
                         alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, spkr_sample_idx * sizeof(spkr_sample_t), spkr_sample_rate);
                         al_check_error();
                         alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
@@ -544,6 +586,8 @@ void spkr_update() {
                     if (freeBuffers < 0) {
                         printf("freeBuffer < 0 (%i)\n", freeBuffers);
                     }
+//                    fwrite(spkr_samples, sizeof(spkr_sample_t), (spkr_buf_size + spkr_extra_buf), af);
+//                    fflush(af);
                     alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
                     //                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_sample_idx + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
                     //                    ALint bufSize = spkr_sample_idx + 20 < spkr_buf_size ? spkr_sample_idx * sizeof(spkr_sample_t) + 20 : spkr_buf_alloc_size;

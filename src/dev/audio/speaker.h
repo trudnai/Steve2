@@ -61,7 +61,7 @@ extern float SPKR_INITIAL_LEADING_EDGE; // leading edge should be pretty steep t
 extern float SPKR_INITIAL_TRAILING_EDGE; // need a bit of slope to get Xonix sound good
 
 
-#define SPKR_SAMPLE_PWM_THRESHOLD   5    // to detect PWM controlled speaker control like in Wavy Navy or Xonix
+#define SPKR_SAMPLE_PWM_THRESHOLD   32    // to detect PWM controlled speaker control like in Wavy Navy or Xonix
 
 
 

@@ -67,6 +67,7 @@ ALCcontext *ctx = NULL;
 
 
 #define SPKR_MIN_VOL    0.0001 // OpenAL cannot change volume to 0.0 for some reason, so we just turn volume really low
+int spkr_att = 0;
 int spkr_level = SPKR_LEVEL_ZERO;
 int spkr_level_ema = SPKR_LEVEL_ZERO;
 int spkr_level_dema = SPKR_LEVEL_ZERO;
@@ -387,49 +388,34 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
     // save last index before we advance it...
     spkr_sample_last_idx = spkr_sample_idx;
     
-    if ( idx_diff <= SPKR_SAMPLE_PWM_THRESHOLD ) {
-//        ema_len = 200;
-//        ema_len = 64;
-//        spkr_sample_idx -= SPKR_SAMPLE_PWM_THRESHOLD * 6;
-//        if ( spkr_sample_idx > spkr_buf_size ) {
-//            spkr_sample_idx = 0;
-//        }
-//        spkr_toggle_edge(spkr_samples[spkr_sample_idx], initial_edge, fade_edge, SPKR_SAMPLE_PWM_THRESHOLD+1);
-//        spkr_sample_idx = spkr_sample_last_idx;
-    }
-
     spkr_level = spkr_samples[ spkr_sample_idx ];
     spkr_level_ema = spkr_level;
     spkr_level_dema = spkr_level;
     spkr_level_tema = spkr_level;
     spkr_level_qema = spkr_level;
 
-    if ( idx_diff < 30 ) {
-        ema_len = 10;
-//        spkr_level_ema = SPKR_LEVEL_ZERO;
-//        spkr_level_dema = SPKR_LEVEL_ZERO;
-//        spkr_level_tema = SPKR_LEVEL_ZERO;
+    if ( idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
+        ema_len = 8;
+        
+        if ( --spkr_att < 0 ) {
+            level_max = SPKR_LEVEL_ZERO;
+        }
     }
+    else {
+        spkr_att = 1024;
+    }
+    
 
-//    while ( fabsf(dumping) > 1 ) {
-//    while ( (abs(spkr_level - level_max) > 50) && (spkr_sample_idx < sample_buf_array_len - 2) ) {
-    for ( int i = 0; (i < spkr_buf_size * 2) && (abs(spkr_level - level_max) > 1500); i++ ) {
-//        spkr_sample_t level = level_max + dumping;
-
-        // smoothing with Exponential Moving Average
-//        spkr_level_ema = ema(level, spkr_level_ema, ema_len);
+    for ( int i = 0; (i < spkr_buf_size * 2) && (abs(spkr_level - level_max) > 100); i++ ) {
         spkr_level_ema  = ema(level_max, spkr_level_ema, ema_len);
         spkr_level_dema = ema(spkr_level_ema, spkr_level_dema, ema_len);
         spkr_level_tema = ema(spkr_level_dema, spkr_level_tema, ema_len);
-        spkr_level_qema = ema(spkr_level_tema, spkr_level_tema, ema_len);
+        spkr_level_qema = ema(spkr_level_tema, spkr_level_qema, ema_len);
 
         spkr_level = spkr_level_ema;
-                
+        
         spkr_samples[ spkr_sample_idx++ ] = spkr_level_qema;
         spkr_samples[ spkr_sample_idx++ ] = spkr_level_qema; // stereo
-        
-        // how smooth we want the speeker to decay, so we will hear no pops and crackles
-//        dumping *= fade_edge;
     }
 
     spkr_last_level = spkr_level;

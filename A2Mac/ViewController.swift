@@ -1097,6 +1097,8 @@ class ViewController: NSViewController  {
 
     
     func setCPUClockSpeed( freq : Double ) {
+        spkr_stopAll();
+        
         MHz_6502 = freq
         clk_6502_per_frm = UInt64( MHz_6502 * M / Double(fps) )
         clk_6502_per_frm_set = clk_6502_per_frm
@@ -1107,16 +1109,24 @@ class ViewController: NSViewController  {
         spkr_extra_buf = 0 // 26
         
         switch freq {
+        case 1.5:
+            spkr_extra_buf = 256
+            break
+            
         case 2.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
 //                spkr_extra_buf = 20
-            spkr_extra_buf = 0 // -25 // 88
+            spkr_extra_buf = -25 // 88
+            break
+            
+        case 2.8:
+            spkr_extra_buf = 185
             break
             
         case 4.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
 //                spkr_extra_buf = 45
-            spkr_extra_buf = 0 // 80 // 20
+            spkr_extra_buf = 90 // 80 // 20
             break
             
         default:

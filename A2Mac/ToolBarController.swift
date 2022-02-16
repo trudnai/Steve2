@@ -162,23 +162,39 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     
     @IBAction func SpeedSelected(_ slider: NSSliderCell) {
         switch slider.intValue {
+        case 1:
+            ViewController.current?.setCPUClockSpeed(freq: 0.25)
+            SpeedSelector.label = "0.25 MHz"
+            
         case 2:
+            ViewController.current?.setCPUClockSpeed(freq: 0.5)
+            SpeedSelector.label = "0.5 MHz"
+            
+        case 4:
+            ViewController.current?.setCPUClockSpeed(freq: 1.5)
+            SpeedSelector.label = "1.5 MHz"
+            
+        case 5:
             ViewController.current?.setCPUClockSpeed(freq: 2)
             SpeedSelector.label = "2 MHz"
             
-        case 3:
+        case 6:
+            ViewController.current?.setCPUClockSpeed(freq: 2.8)
+            SpeedSelector.label = "2.8 MHz"
+            
+        case 7:
             ViewController.current?.setCPUClockSpeed(freq: 4)
             SpeedSelector.label = "4 MHz"
             
-        case 4:
+        case 8:
             ViewController.current?.setCPUClockSpeed(freq: 10)
             SpeedSelector.label = "10 MHz"
             
-        case 5:
+        case 9:
             ViewController.current?.setCPUClockSpeed(freq: 100)
             SpeedSelector.label = "100 MHz"
             
-        case 6:
+        case 10:
             ViewController.current?.setCPUClockSpeed(freq: 2000)
             SpeedSelector.label = "MAX Speed"
             

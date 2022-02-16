@@ -425,7 +425,29 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
     
 //    float ema_len = 21;
     int ema_len = 7; // 8;
-
+    int ema_len_smooth = 8;
+    unsigned threshold = SPKR_SAMPLE_PWM_THRESHOLD;
+    unsigned limiter = 150;
+    
+    switch ((int)MHz_6502) {
+        case 2:
+            ema_len = 4;
+            ema_len_smooth = 5;
+            threshold = SPKR_SAMPLE_PWM_THRESHOLD / 2;
+            limiter = 512;
+            break;
+            
+        case 4:
+            ema_len = 3;
+            ema_len_smooth = 5;
+            threshold = SPKR_SAMPLE_PWM_THRESHOLD / 4;
+            limiter = 1024;
+            break;
+            
+        default:
+            break;
+    }
+    
     // save last index before we advance it...
     spkr_sample_last_idx = spkr_sample_idx;
     
@@ -435,8 +457,8 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
     spkr_level_tema = spkr_level;
     spkr_level_qema = spkr_level;
 
-    if ( idx_diff < SPKR_SAMPLE_PWM_THRESHOLD ) {
-        ema_len = 8;
+    if ( idx_diff < threshold ) {
+        ema_len = ema_len_smooth;
         
         if ( --spkr_att < 0 ) {
             level_max = SPKR_LEVEL_ZERO;
@@ -447,7 +469,7 @@ void spkr_toggle_edge ( int level_max, const float initial_edge, const float fad
     }
     
 
-    for ( int i = 0; (i < spkr_buf_size * 2) && (abs(spkr_level - level_max) > 100); i++ ) {
+    for ( int i = 0; (i < spkr_buf_size * 2) && (abs(spkr_level - level_max) > limiter); i++ ) {
         spkr_level_ema  = ema(level_max, spkr_level_ema, ema_len);
         spkr_level_dema = ema(spkr_level_ema, spkr_level_dema, ema_len);
         spkr_level_tema = ema(spkr_level_dema, spkr_level_tema, ema_len);
@@ -505,7 +527,7 @@ void spkr_toggle() {
         
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
-        spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
+        spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
         spkr_sample_idx &= UINTMAX_MAX - 1;
         unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
 //        if ( (int)spkr_sample_idx_diff == 0 ) {
@@ -627,10 +649,13 @@ void spkr_update() {
 //                        fwrite(spkr_samples, sizeof(spkr_sample_t), (spkr_buf_size + spkr_extra_buf), af);
 //                        fflush(af);
                         
-                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
+                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t) / (MHz_6502 / default_MHz_6502), spkr_sample_rate / (MHz_6502 / default_MHz_6502));
+//                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
+
                         //                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_sample_idx + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
                         //                    ALint bufSize = spkr_sample_idx + 20 < spkr_buf_size ? spkr_sample_idx * sizeof(spkr_sample_t) + 20 : spkr_buf_alloc_size;
                         //                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, bufSize + spkr_extra_buf, spkr_sample_rate);
+                        
                         al_check_error();
                         alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
                         al_check_error();

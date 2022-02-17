@@ -546,6 +546,7 @@ void spkr_toggle() {
         double indexer = (double)spkr_sample_rate / MHZ(MHz_6502);
         if ( MHz_6502 < default_MHz_6502 ) {
             indexer = (double)spkr_sample_rate / MHZ(default_MHz_6502);
+//            indexer = (double)spkr_sample_rate / MHZ(default_MHz_6502) * MHz_6502;
         }
         
         spkr_sample_idx = round( (double)(spkr_clk + m6502.clkfrm) * indexer ) * SPKR_CHANNELS;
@@ -682,10 +683,10 @@ void spkr_update() {
 
                         double multiplier = default_MHz_6502 / MHz_6502;
                         if (MHz_6502 < default_MHz_6502 ) {
-                            multiplier = 1;
+                            multiplier = MHz_6502;
                         }
                         
-                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t) * multiplier, spkr_sample_rate * multiplier);
+                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size * multiplier + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate * multiplier);
 //                        alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);
 
                         //                    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, (spkr_sample_idx + spkr_extra_buf) * sizeof(spkr_sample_t), spkr_sample_rate);

@@ -1109,24 +1109,32 @@ class ViewController: NSViewController  {
         spkr_extra_buf = 0 // 26
         
         switch freq {
+        case 0.25:
+            spkr_extra_buf = -65
+            break
+            
+        case 0.5:
+            spkr_extra_buf = -140
+            break
+            
         case 1.5:
-            spkr_extra_buf = 256
+            spkr_extra_buf = 175
             break
             
         case 2.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
 //                spkr_extra_buf = 20
-            spkr_extra_buf = -25 // 88
+            spkr_extra_buf = 195 // 88
             break
             
         case 2.8:
-            spkr_extra_buf = 185
+            spkr_extra_buf = 65 // 185
             break
             
         case 4.0:
 //                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
 //                spkr_extra_buf = 45
-            spkr_extra_buf = 90 // 80 // 20
+            spkr_extra_buf = 25 // 90 // 80 // 20
             break
             
         default:

@@ -25,14 +25,35 @@
 using namespace metal;
 
 
-vertex float4 basic_vertex(                           // 1
+// triangles
+vertex float4 basic_vertex(                                 // 1
   const device packed_float3* vertex_array [[ buffer(0) ]], // 2
-  unsigned int vid [[ vertex_id ]]) {                 // 3
-  return float4(vertex_array[vid], 1.0);              // 4
+  unsigned int vid [[ vertex_id ]]                          // 3
+){
+  return float4(vertex_array[vid], 1.0);                    // 4
 }
 
+//struct Vertex {
+//    float4 position;
+//    float4 color;
+//};
+//
+//struct VertexOut {
+//    float4 position [[position]];
+//    float4 color;
+//};
+//
+//vertex VertexOut myVertexOut (
+//    const Vertex* vertexArray [[ buffer(0) ]],
+//    unsigned int vid                 [[ vertex_id ]]
+//){
+//    VSO
+//}
+
+
+// color of triangles
 fragment half4 basic_fragment() { // 1
-  return half4(0.7);              // 2
+    return half4( 255.0/255.0, 127.0/255.0, 255.0/255.0, 1.0); // half4(1.0);              // 2
 }
 
 
@@ -46,4 +67,13 @@ kernel void add_arrays(device const float* inA,
     result[index] = inA[index] + inB[index] + 1;
 }
 
+//vertex float4 basic_vertex(                           // 1
+//    const device packed_float3* vertex_array [[ buffer(0) ]], // 2
+//    unsigned int vid [[ vertex_id ]]) {                 // 3
+//    return float4(vertex_array[vid], 1.0);              // 4
+//}
+//
+//fragment half4 basic_fragment() { // 1
+//    return half4(1.0);              // 2
+//}
 

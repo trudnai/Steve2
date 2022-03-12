@@ -25,6 +25,16 @@
 import Cocoa
 import AVFoundation
 
+//import Metal
+//
+//var device : MTLDevice!
+//var metalLayer: CAMetalLayer!
+//var vertexBuffer: MTLBuffer!
+//var pipelineState: MTLRenderPipelineState!
+//var commandQueue: MTLCommandQueue!
+////var timer: CADisplayLink!
+
+
 
 let K : Double = 1000.0
 let M : Double = (K * K)
@@ -867,6 +877,8 @@ class ViewController: NSViewController  {
                 
         }
 //        }
+        
+//        render()
     }
     
     
@@ -1000,8 +1012,84 @@ class ViewController: NSViewController  {
         ViewController.current = self
     }
     
+    
+//    func render() {
+//
+//        var x = vertexData[2 * 3 + 0]
+//        x -= 0.01
+//        if x < -1 {
+//            x = 1
+//        }
+//        vertexData[2 * 3 + 0] = x
+//
+//        guard let drawable = metalLayer?.nextDrawable() else { return }
+//        let renderPassDescriptor = MTLRenderPassDescriptor()
+//        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
+//        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+//        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(
+//            red: 0.0,
+//            green: 104.0/255.0,
+//            blue: 55.0/255.0,
+//            alpha: 0.3)
+//
+//        if let commandBuffer = commandQueue.makeCommandBuffer() {
+//            if let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) {
+//                renderEncoder.setRenderPipelineState(pipelineState)
+//                let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]) // 1
+//                vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: []) // 2
+//                renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+//                renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+//                renderEncoder.endEncoding()
+//                commandBuffer.present(drawable)
+//                commandBuffer.commit()
+//            }
+//        }
+//    }
+//
+//
+//    var vertexData: [Float] = [
+//        0.0,  1.0, 0.0,
+//        -1.0, -1.0, 0.0,
+//        1.0, -1.0, 0.0
+//    ]
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        let layer = CALayer()
+//        hires.layer = layer
+//        hires.wantsLayer = true
+        
+//        device = MTLCreateSystemDefaultDevice()
+//        metalLayer = CAMetalLayer()          // 1
+//        metalLayer.device = device           // 2
+//        metalLayer.pixelFormat = .bgra8Unorm // 3
+//        metalLayer.framebufferOnly = true    // 4
+//        metalLayer.frame = hires.layer!.frame  // 5
+//        hires.layer!.addSublayer(metalLayer)   // 6
+//
+//        let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]) // 1
+//        vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: []) // 2
+//
+//        // 1
+//        let defaultLibrary = device.makeDefaultLibrary()!
+//        let fragmentProgram = defaultLibrary.makeFunction(name: "basic_fragment")
+//        let vertexProgram = defaultLibrary.makeFunction(name: "basic_vertex")
+//
+//        // 2
+//        let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
+//        pipelineStateDescriptor.vertexFunction = vertexProgram
+//        pipelineStateDescriptor.fragmentFunction = fragmentProgram
+//        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+//
+//        // 3
+//        pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
+//
+//        commandQueue = device.makeCommandQueue()
+
+//        timer = CADisplayLink(target: self, selector: #selector(gameloop))
+//        timer.add(to: RunLoop.main, forMode: .default)
+
         
         openLog()
         
@@ -1108,40 +1196,40 @@ class ViewController: NSViewController  {
 //            spkr_extra_buf = Int32( 780 / fps )
         spkr_extra_buf = 0 // 26
         
-        switch freq {
-        case 0.25:
-            spkr_extra_buf = -65
-            break
-            
-        case 0.5:
-            spkr_extra_buf = -140
-            break
-            
-        case 1.5:
-            spkr_extra_buf = 175
-            break
-            
-        case 2.0:
-//                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
-//                spkr_extra_buf = 20
-            spkr_extra_buf = 195 // 88
-            break
-            
-        case 2.8:
-            spkr_extra_buf = 65 // 185
-            break
-            
-        case 4.0:
-//                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
-//                spkr_extra_buf = 45
-            spkr_extra_buf = 25 // 90 // 80 // 20
-            break
-            
-        default:
-//                spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
-            spkr_extra_buf = 0 // 26
-            break
-        }
+//        switch freq {
+//        case 0.25:
+//            spkr_extra_buf = -65
+//            break
+//
+//        case 0.5:
+//            spkr_extra_buf = -140
+//            break
+//
+//        case 1.5:
+//            spkr_extra_buf = 175
+//            break
+//
+//        case 2.0:
+////                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
+////                spkr_extra_buf = 20
+//            spkr_extra_buf = 195 // 88
+//            break
+//
+//        case 2.8:
+//            spkr_extra_buf = 65 // 185
+//            break
+//
+//        case 4.0:
+////                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
+////                spkr_extra_buf = 45
+//            spkr_extra_buf = 25 // 90 // 80 // 20
+//            break
+//
+//        default:
+////                spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
+//            spkr_extra_buf = 0 // 26
+//            break
+//        }
                     
         soundGapLabel.title = String( spkr_extra_buf )
         soundGapSlider.integerValue = Int(spkr_extra_buf)
@@ -1177,6 +1265,14 @@ class ViewController: NSViewController  {
         SPKR_FADE_TRAILING_EDGE = sender.floatValue
         trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
     }
+    
+    
+    @IBOutlet weak var wozExtraLabel: NSTextFieldCell!
+    @IBAction func wozExtraSelected(_ sender: NSSlider) {
+        extraForward = Int32(sender.floatValue)
+        wozExtraLabel.title = "WE: " + String( extraForward )
+    }
+    
     
     func setSimulationMode( mode : String ) {
         switch ( mode ) {

@@ -191,6 +191,10 @@
 		32C4532E233345430000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C4532F233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C45330233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
+		32C6995227C5439300D0F25D /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C6995127C5439300D0F25D /* Debugger.swift */; };
+		32C6995327C5439300D0F25D /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C6995127C5439300D0F25D /* Debugger.swift */; };
+		32C6995D27C548C800D0F25D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32B18435233F10BC00DBB4AB /* Shaders.metal */; };
+		32C6996727C548C900D0F25D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32B18435233F10BC00DBB4AB /* Shaders.metal */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
@@ -628,6 +632,7 @@
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
 		3267641524B6572E000BEA11 /* Merlin Assembler.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler.woz"; sourceTree = "<group>"; };
 		3267641724BCC9A5000BEA11 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert_spkr_buf_to_wav.py; sourceTree = SOURCE_ROOT; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
 		326B56E424AD8E89009BA0AC /* gobackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gobackward.png; sourceTree = "<group>"; };
 		326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.text.viewfinder.png; sourceTree = "<group>"; };
@@ -686,6 +691,7 @@
 		32C4532B2331FED90000EBA1 /* Functiontest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Functiontest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4532C2331FEDA0000EBA1 /* A2Mac copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "A2Mac copy2-Info.plist"; path = "/Users/trudnai/Projects/A2Mac/A2Mac copy2-Info.plist"; sourceTree = "<absolute>"; };
 		32C4532D233345420000EBA1 /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
+		32C6995127C5439300D0F25D /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
 		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
@@ -1101,10 +1107,12 @@
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
+				32C6995127C5439300D0F25D /* Debugger.swift */,
 				323D042F24898AB70086A901 /* PreferencesViewController.swift */,
 				323D04312489BFD80086A901 /* PreferencesWindowController.swift */,
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,
 				32C4532D233345420000EBA1 /* MonitorView.swift */,
+				3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */,
 				32544194264A6C1600B7E3ED /* DisplayView.swift */,
 				32C453072331C0910000EBA1 /* NSLayoutManager-Extension.swift */,
 				32440BA22480D5C0000F9DA1 /* LoRes.swift */,
@@ -1560,6 +1568,7 @@
 				32799F7E264B1A5700255669 /* PreferencesWindowController.swift in Sources */,
 				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
 				32799F81264B1A5700255669 /* disk.c in Sources */,
+				32C6996727C548C900D0F25D /* Shaders.metal in Sources */,
 				32799F82264B1A5700255669 /* woz.c in Sources */,
 				32A6AB10266AF5160023257A /* paddle.c in Sources */,
 				32799F83264B1A5700255669 /* speaker.c in Sources */,
@@ -1567,6 +1576,7 @@
 				32799F85264B1A5700255669 /* ViewController.swift in Sources */,
 				32799F86264B1A5700255669 /* HiRes.swift in Sources */,
 				32799F87264B1A5700255669 /* LoRes.swift in Sources */,
+				32C6995327C5439300D0F25D /* Debugger.swift in Sources */,
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
 				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
 				32799F8A264B1A5700255669 /* MonitorView.swift in Sources */,
@@ -1587,6 +1597,7 @@
 				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				32A6AB0F266AF5160023257A /* paddle.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
@@ -1594,6 +1605,7 @@
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
+				32C6995227C5439300D0F25D /* Debugger.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
 				32A6AAF0266AEDF40023257A /* mmio.c in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,

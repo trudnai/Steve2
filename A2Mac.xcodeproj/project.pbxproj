@@ -17,7 +17,7 @@
 		323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D04312489BFD80086A901 /* PreferencesWindowController.swift */; };
 		323D04442490B3930086A901 /* dotmatrix_effect.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04432490B3930086A901 /* dotmatrix_effect.png */; };
 		323E2DCF245531E600156805 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
-		323E2DD1245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
+		323E2DD1245531E600156805 /* Apple2e_16k.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e_16k.rom */; };
 		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
 		324D15D324ADAC71008AAFB0 /* floppy.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 324D15D224ADAC71008AAFB0 /* floppy.png */; };
 		32544195264A6C1600B7E3ED /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
@@ -58,6 +58,16 @@
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		3267641624B6572E000BEA11 /* Merlin Assembler.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 3267641524B6572E000BEA11 /* Merlin Assembler.woz */; };
 		3267641824BCC9A5000BEA11 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 3267641724BCC9A5000BEA11 /* COPYING */; };
+		3268B97A27DE7D6A003FBDCC /* disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* disassembler.c */; };
+		3268B97B27DE7D6B003FBDCC /* disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* disassembler.c */; };
+		3268B97C27DE7D6B003FBDCC /* disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* disassembler.c */; };
+		3268B99127DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B99227DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B99327DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B9A627DEAD44003FBDCC /* Apple2e_32k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */; };
+		3268B9B027DEAD51003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B9C327DEAE37003FBDCC /* Apple2e_32k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */; };
+		3268B9E927DEDD61003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
 		326B56E524AD8E89009BA0AC /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
 		3277D779273AE0DA00749544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
@@ -87,7 +97,7 @@
 		32799F94264B1A5700255669 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		32799F96264B1A5700255669 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
 		32799F97264B1A5700255669 /* Apple2e_Enhanced.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
-		32799F98264B1A5700255669 /* Apple2e.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
+		32799F98264B1A5700255669 /* Apple2e_16k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e_16k.rom */; };
 		32799F99264B1A5700255669 /* Apple2Plus.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */; };
 		32799F9A264B1A5700255669 /* DISK_II_C600.ROM in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */; };
 		32799F9C264B1A5700255669 /* blank.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B9C247F9DC7000F9DA1 /* blank.woz */; };
@@ -218,7 +228,7 @@
 		32F8A87D24A3A84700EE6735 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
 		32F8A88024A3A8A300EE6735 /* Apple2e_Enhanced.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
-		32F8A88124A3A8A600EE6735 /* Apple2e.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
+		32F8A88124A3A8A600EE6735 /* Apple2e_16k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e_16k.rom */; };
 		32F8A88224A3A8AA00EE6735 /* Apple2Plus.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */; };
 		32F8A88324A3A8B200EE6735 /* DISK_II_C600.ROM in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */; };
 		32F8A88524A3A91100EE6735 /* blank.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B9C247F9DC7000F9DA1 /* blank.woz */; };
@@ -310,9 +320,11 @@
 			dstPath = rom;
 			dstSubfolderSpec = 7;
 			files = (
+				3268B9E927DEDD61003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */,
 				32799F96264B1A5700255669 /* apple.rom in Copy ROM Images */,
 				32799F97264B1A5700255669 /* Apple2e_Enhanced.rom in Copy ROM Images */,
-				32799F98264B1A5700255669 /* Apple2e.rom in Copy ROM Images */,
+				32799F98264B1A5700255669 /* Apple2e_16k.rom in Copy ROM Images */,
+				3268B9C327DEAE37003FBDCC /* Apple2e_32k.rom in Copy ROM Images */,
 				32799F99264B1A5700255669 /* Apple2Plus.rom in Copy ROM Images */,
 				32799F9A264B1A5700255669 /* DISK_II_C600.ROM in Copy ROM Images */,
 			);
@@ -424,9 +436,11 @@
 			dstPath = rom;
 			dstSubfolderSpec = 7;
 			files = (
+				3268B9B027DEAD51003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */,
 				32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */,
 				32F8A88024A3A8A300EE6735 /* Apple2e_Enhanced.rom in Copy ROM Images */,
-				32F8A88124A3A8A600EE6735 /* Apple2e.rom in Copy ROM Images */,
+				32F8A88124A3A8A600EE6735 /* Apple2e_16k.rom in Copy ROM Images */,
+				3268B9A627DEAD44003FBDCC /* Apple2e_32k.rom in Copy ROM Images */,
 				32F8A88224A3A8AA00EE6735 /* Apple2Plus.rom in Copy ROM Images */,
 				32F8A88324A3A8B200EE6735 /* DISK_II_C600.ROM in Copy ROM Images */,
 			);
@@ -541,7 +555,7 @@
 		323D04432490B3930086A901 /* dotmatrix_effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmatrix_effect.png; sourceTree = "<group>"; };
 		323D04452490BA1E0086A901 /* scanlines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanlines.png; sourceTree = "<group>"; };
 		323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e_Enhanced.rom; sourceTree = "<group>"; };
-		323E2DCD245531E500156805 /* Apple2e.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e.rom; sourceTree = "<group>"; };
+		323E2DCD245531E500156805 /* Apple2e_16k.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e_16k.rom; sourceTree = "<group>"; };
 		32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "A2Mac-Bridging-Header.h"; sourceTree = "<group>"; };
 		32439F7322ECD8AD0077AAE0 /* mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmio.h; sourceTree = "<group>"; };
 		32439F7422ECD8AD0077AAE0 /* 6502.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502.c; sourceTree = "<group>"; };
@@ -633,6 +647,9 @@
 		3267641524B6572E000BEA11 /* Merlin Assembler.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler.woz"; sourceTree = "<group>"; };
 		3267641724BCC9A5000BEA11 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert_spkr_buf_to_wav.py; sourceTree = SOURCE_ROOT; };
+		3268B97927DE7D6A003FBDCC /* disassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = disassembler.c; sourceTree = "<group>"; };
+		3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e_32k.rom; path = Resources/rom/Apple2e_32k.rom; sourceTree = SOURCE_ROOT; };
+		3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = "077-0019 Apple IIe Diagnostic Card - English.rom"; sourceTree = "<group>"; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
 		326B56E424AD8E89009BA0AC /* gobackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gobackward.png; sourceTree = "<group>"; };
 		326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.text.viewfinder.png; sourceTree = "<group>"; };
@@ -843,8 +860,10 @@
 			children = (
 				326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */,
 				32439F8422ECD8AD0077AAE0 /* apple.rom */,
+				3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */,
 				323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */,
-				323E2DCD245531E500156805 /* Apple2e.rom */,
+				323E2DCD245531E500156805 /* Apple2e_16k.rom */,
+				3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */,
 				325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */,
 				325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */,
 			);
@@ -922,6 +941,7 @@
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				325EB63823F9E48100C6B4A4 /* common.c */,
 				32DBF76723373FB400DD50E7 /* disassembler.h */,
+				3268B97927DE7D6A003FBDCC /* disassembler.c */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -1419,6 +1439,7 @@
 				325EB68423FBDFBB00C6B4A4 /* DISK_II_C600.ROM in Resources */,
 				325EB69E2401118300C6B4A4 /* Lode Runner.woz in Resources */,
 				325EB68123FBDF8F00C6B4A4 /* Apple2Plus.rom in Resources */,
+				3268B99327DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
 				325EB6AA2401118300C6B4A4 /* Sneakers.woz in Resources */,
 				32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */,
 				32089E4924556DBD0036E667 /* PRNumber3.ttf in Resources */,
@@ -1428,7 +1449,7 @@
 				325EB68A23FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */,
 				325EB6A02401118300C6B4A4 /* Crossfire.woz in Resources */,
 				325EB64C23FBBAD100C6B4A4 /* Assets.xcassets in Resources */,
-				323E2DD1245531E600156805 /* Apple2e.rom in Resources */,
+				323E2DD1245531E600156805 /* Apple2e_16k.rom in Resources */,
 				325EB68D23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */,
 				325EB6A62401118300C6B4A4 /* ProDOS_312.woz in Resources */,
 				325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */,
@@ -1461,6 +1482,7 @@
 				32BCCD1A2650D3B1002151C5 /* Debug-Info.plist in Resources */,
 				32799F8D264B1A5700255669 /* COPYING in Resources */,
 				32799F8F264B1A5700255669 /* Assets.xcassets in Resources */,
+				3268B99227DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
 				3277D783273AE0DC00749544 /* Main.storyboard in Resources */,
 				32799F90264B1A5700255669 /* Preferences.storyboard in Resources */,
 				32799F91264B1A5700255669 /* Steve2Icon.icns in Resources */,
@@ -1474,6 +1496,7 @@
 				32BCCD192650D3B1002151C5 /* Debug-Info.plist in Resources */,
 				3267641824BCC9A5000BEA11 /* COPYING in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
+				3268B99127DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
 				3277D779273AE0DA00749544 /* Main.storyboard in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
 				320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */,
@@ -1529,6 +1552,7 @@
 				32A9F74B2467B60B004902A1 /* speaker.c in Sources */,
 				32A6AB11266AF5160023257A /* paddle.c in Sources */,
 				32A6AB26266B196A0023257A /* hires.c in Sources */,
+				3268B97C27DE7D6B003FBDCC /* disassembler.c in Sources */,
 				325EB67823FBC45300C6B4A4 /* disk.c in Sources */,
 				325EB64723FBBACF00C6B4A4 /* ViewController.swift in Sources */,
 				325EB64323FBBACF00C6B4A4 /* AppDelegate.swift in Sources */,
@@ -1568,6 +1592,7 @@
 				32799F7E264B1A5700255669 /* PreferencesWindowController.swift in Sources */,
 				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
 				32799F81264B1A5700255669 /* disk.c in Sources */,
+				3268B97B27DE7D6B003FBDCC /* disassembler.c in Sources */,
 				32C6996727C548C900D0F25D /* Shaders.metal in Sources */,
 				32799F82264B1A5700255669 /* woz.c in Sources */,
 				32A6AB10266AF5160023257A /* paddle.c in Sources */,
@@ -1597,6 +1622,7 @@
 				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				3268B97A27DE7D6A003FBDCC /* disassembler.c in Sources */,
 				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				32A6AB0F266AF5160023257A /* paddle.c in Sources */,
@@ -2073,7 +2099,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = 0.86;
 				OTHER_CFLAGS = (
-					"-D_NO_DISASSEMBLER",
+					"-DDISASSEMBLER",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",
 					"-D_NO_CLK_ABSOLUTE_PRECISE",
 				);
@@ -2115,7 +2141,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MARKETING_VERSION = 0.86;
 				OTHER_CFLAGS = (
-					"-D_NO_DISASSEMBLER",
+					"-DDISASSEMBLER",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",
 					"-D_NO_CLK_ABSOLUTE_PRECISE",
 				);

@@ -462,6 +462,11 @@
       </ContextState>
       <ContextState
          contextName = "PUSH:6502_instr_stack.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.SP">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ViewController.viewDidLoad():ViewController.swift">

@@ -50,7 +50,8 @@ extern videoMode_t videoMode; // 40 col text, page 1
 extern uint8_t Apple2_Dummy_Page[ 1 * PG ];            // Dummy Page to discard data
 extern uint8_t Apple2_Dummy_RAM[ 64 * KB ];            // Dummy RAM to discard data
 
-extern uint8_t Apple2_64K_ROM[ 64 * KB ];        // ROM C0, C8, D0, D8, E0, E8, F0, F8
+extern uint8_t INT_64K_ROM[ 64 * KB ];        // ROM C0, C8, D0, D8, E0, E8, F0, F8
+extern uint8_t EXP_64K_ROM[ 64 * KB ];        // ROM C0, C8, D0, D8, E0, E8, F0, F8
 
 extern uint8_t Apple2_64K_AUX[ 64 * KB ];        // 64K Expansion Memory
 extern uint8_t Apple2_64K_RAM[ 64 * KB ];        // Main Memory
@@ -390,7 +391,7 @@ INLINE uint16_t memread16_low( uint16_t addr );
 INLINE uint16_t memread16( uint16_t addr );
 INLINE uint8_t memread( uint16_t addr );
 INLINE void memwrite8_low( uint16_t addr, uint8_t data );
-INLINE void memwrite8_bank2( uint16_t addr, uint8_t data );
+INLINE void memwrite8_bank( uint16_t addr, uint8_t data );
 INLINE void memwrite8_high( uint16_t addr, uint8_t data );
 INLINE void memwrite( uint16_t addr, uint8_t data );
 INLINE uint8_t fetch(void);

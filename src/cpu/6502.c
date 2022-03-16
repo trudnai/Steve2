@@ -117,7 +117,6 @@ m6502_t m6502 = {
     
 };
 
-disassembly_t disassembly;
 
 #include "../util/disassembler.h"
 #include "../dev/mem/mmio.h"
@@ -641,17 +640,17 @@ void m6502_Run() {
     spkr_update_disk_sfx();
 }
 
-void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, const uint16_t addr ) {
+void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, const uint16_t addr, const uint16_t size ) {
     
     char fullPath[256];
     
     strcpy( fullPath, bundlePath );
     strcat( fullPath, "/");
     strcat( fullPath, filename );
-        
+    
     FILE * f = fopen(fullPath, "rb");
     if (f == NULL) {
-        perror("Failed to read ROM: ");
+        perror("Failed to read ROM image: ");
         return;
     }
     
@@ -659,7 +658,12 @@ void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, co
     uint16_t flen = ftell(f);
     fseek(f, 0L, SEEK_SET);
 
-    fread( rom + addr, 1, flen, f);
+    if ( size && (size > flen) ) {
+        printf("ROM image is too small (size:0x%04X  flen:0x04X)\n", size, flen);
+        return;
+    }
+    
+    fread( rom + addr, 1, size, f);
     fclose(f);
 
 }
@@ -668,7 +672,7 @@ void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, co
 size_t getFileSize ( const char * fullPath ) {
     FILE * f = fopen(fullPath, "rb");
     if (f == NULL) {
-        perror("Failed to read ROM: ");
+        perror("Failed to get filesize for ROM image: ");
         return 0;
     }
     
@@ -689,20 +693,27 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
     strcat( fullPath, "/");
     strcat( fullPath, filename );
 
+    printf("Loading ROM: %s\n", filename);
+    
     size_t flen = getFileSize(fullPath);
     
     if ( flen == 0 ) {
         return; // there was an error
     }
     
+    else if ( flen == 32 * KB ) {
+        read_rom( bundlePath, filename, INT_64K_ROM + 0x8000, 0, 32 * KB);
+        memcpy(Apple2_64K_MEM + 0xC000, INT_64K_ROM + 0xC000, 16 * KB); // activate the upper ROM
+    }
+    
     else if ( flen == 16 * KB ) {
-        read_rom( bundlePath, filename, Apple2_64K_ROM + 0xC000, 0);
-        memcpy(Apple2_64K_MEM + 0xC000, Apple2_64K_ROM + 0xC000, 16 * KB);
+        read_rom( bundlePath, filename, INT_64K_ROM + 0xC000, 0, 16 * KB);
+        memcpy(Apple2_64K_MEM + 0xC000, INT_64K_ROM + 0xC000, 16 * KB);
     }
     
     else if ( flen == 12 * KB ) {
-        read_rom( bundlePath, filename, Apple2_64K_ROM + 0xD000, 0x1000);
-        memcpy(Apple2_64K_MEM + 0xD000, Apple2_64K_ROM + 0xD000, 12 * KB);
+        read_rom( bundlePath, filename, INT_64K_ROM + 0xD000, 0x1000, 12 * KB);
+        memcpy(Apple2_64K_MEM + 0xD000, INT_64K_ROM + 0xD000, 12 * KB);
     }
 
 }
@@ -750,7 +761,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 
     
 #ifdef FUNCTIONTEST
-    read_rom( bundlePath, "6502_functional_test.bin", Apple2_64K_RAM, 0);
+    read_rom( bundlePath, "6502_functional_test.bin", Apple2_64K_RAM, 0, 0);
     memcpy(Apple2_64K_MEM, Apple2_64K_RAM, 65536);
     
     m6502.PC = 0x400;
@@ -760,8 +771,8 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
     rom_loadFile(bundlePath, romFileName);
     
     // Disk ][ ROM in Slot 6
-    read_rom( bundlePath, "DISK_II_C600.ROM", Apple2_64K_ROM, 0xC600);
-    memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_ROM + 0xC600, 0x100);
+    read_rom( bundlePath, "DISK_II_C600.ROM", EXP_64K_ROM, 0xC600, 0x100);
+    memcpy(Apple2_64K_MEM + 0xC600, EXP_64K_ROM + 0xC600, 0x100);
 
     m6502.A = m6502.X = m6502.Y = 0xFF;
     // reset vector

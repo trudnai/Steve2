@@ -195,6 +195,7 @@ extern woz_flags_t woz_flags;
 extern size_t woz_file_size;
 extern uint8_t * woz_file_buffer;
 
+extern int extraForward;
 
 //extern woz_header_t woz_header;
 //extern woz_chunk_header_t woz_chunk_header;

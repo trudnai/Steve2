@@ -124,7 +124,8 @@ typedef struct m6502_s {
     uint64_t clktime; // 14:
     uint64_t clklast; // 22:
     uint32_t clkfrm;  // 30:
-
+    
+    uint64_t clk_wrenable; // CPU clock when WRITE RAM is triggered
 
     debugLevel_t dbgLevel;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
     
@@ -135,17 +136,6 @@ typedef struct m6502_s {
     
 } m6502_t;
 //#pragma pack()
-
-
-typedef struct disassembly_s {
-    uint64_t clk;                   // clock time
-    char addr[5];                   // 4 digits + \0
-    char opcode[4 * 3 + 1];         // max 4 bytes * (2 digits + 1 space) + \0
-    char * pOpcode;                 // pointer for opcode string builder
-    char inst[6 + 1];               // 3 char (unknown instr? -- give it 6 chars) + \0
-    char oper[14 + 2 + 1 + 1 + 1];  // 4 digits + 2 brackets + 1 comma + 1 index + \0
-    char comment[256];              // to be able to add some comments
-} disassembly_t;
 
 
 // Memory Config

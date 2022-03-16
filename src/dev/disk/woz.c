@@ -39,6 +39,7 @@ unsigned trackOffset = 0;
 unsigned bitOffset = 0;
 uint64_t clkelpased;
 
+int extraForward = 6; // we search for 7 bit high a bit further to speed up disk read...
 
 char woz_filename[MAXFILENAME];
 woz_flags_t woz_flags = {0,0,0,0};
@@ -330,10 +331,13 @@ uint8_t woz_read() {
         uint16_t usedBytes = (*woz_trks)[track].bytes_used < WOZ1_TRACK_BYTE_COUNT ? (*woz_trks)[track].bytes_used : WOZ1_TRACK_BYTE_COUNT;
         
         if ( usedBytes ) {
-            static const int extraForward = 4; // we search for 7 bit high a bit further to speed up disk read...
+//            static const int extraForward = 4; // we search for 7 bit high a bit further to speed up disk read...
             uint64_t bitForward = (clkelpased >> 2) + extraForward;
+            if ( bitForward > 100000000 ) {
+                bitForward = 4;
+            }
             
-            // Simulate idle spinning until s close point to the actual turn position
+            // Simulate idle spinning until a close point to the actual turn position
             while ( bitForward-- ) {
                 if ( ++bitOffset > 7 ) {
                     bitOffset = 0;
@@ -355,7 +359,7 @@ uint8_t woz_read() {
                     WOZread.latch = 0;
                     // but we do not want to miss that latch valid nibble...
                     // in other words synchronization is needed because of imperfect cycle calculation
-                    if ( bitForward < 8 ) {
+                    if ( bitForward < 18 ) {
                         return latch;
                     }
                 }

@@ -675,13 +675,7 @@ void spkr_update() {
                 
                 memset(spkr_samples + size, 0, spkr_buf_size * sizeof(spkr_sample_t));
                 
-//                if ( spkr_sample_idx >= size ) {
-//                    spkr_sample_idx -= size;
-//                }
-//                else {
-                    spkr_sample_idx = 0;
-//                }
-                
+                spkr_sample_idx = 0;
                 spkr_sample_last_idx = 0;
                 
             }
@@ -801,6 +795,7 @@ void spkr_play_disk_motor() {
     }
 }
 
+
 void spkr_stop_disk_motor( int time ) {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_play_disk_motor_time = time;
@@ -832,6 +827,7 @@ void spkr_stopAll() {
     }
 }
 
+
 void update_disk_sfx( unsigned * time, ALuint src ) {
     if ( *time ) {
         if ( --*time == 0 ) {
@@ -839,6 +835,7 @@ void update_disk_sfx( unsigned * time, ALuint src ) {
         }
     }
 }
+
 
 void spkr_update_disk_sfx() {
     // is user speeds up the machine, disk sfx needs to be stopped

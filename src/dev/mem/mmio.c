@@ -34,10 +34,12 @@
 videoMode_t videoMode = { 1 }; // 40 col text, page 1
 
 
+uint8_t INT_64K_ROM[ 64 * KB ] = {0};           // ROM C0, C8, D0, D8, E0, E8, F0, F8
+uint8_t AUX_64K_ROM[ 64 * KB ] = {0};           // ROM C0, C8, D0, D8, E0, E8, F0, F8
+uint8_t EXP_64K_ROM[ 64 * KB ] = {0};           // ROM C0, C8, D0, D8, E0, E8, F0, F8
+
 uint8_t Apple2_Dummy_Page[ 1 * PG ];            // Dummy Page to discard data
 uint8_t Apple2_Dummy_RAM[ 64 * KB ];            // Dummy RAM to discard data
-
-uint8_t Apple2_64K_ROM[ 64 * KB ] = {0};        // ROM C0, C8, D0, D8, E0, E8, F0, F8
 
 uint8_t Apple2_64K_AUX[ 64 * KB ] = {0};        // 64K Expansion Memory
 uint8_t Apple2_64K_RAM[ 64 * KB ] = {0};        // Main Memory
@@ -79,13 +81,62 @@ const uint8_t * const shadowLowMEM = Apple2_64K_MEM + 0x200;
 const uint8_t * currentLowMEM = Apple2_64K_RAM + 0x200;
 
 
+/// No writing (Readonly), and mark it as NO need to commit from Shadow RAM
+INLINE void set_MEM_readonly() {
+    printf("NOWR_AUX\n");
+    
+    MEMcfg.WR_RAM = 0;
+    WRD0MEM = Apple2_Dummy_RAM;   // for Discarding any writes to $D000 - $DFFF - BANK X
+    WRHIMEM = Apple2_Dummy_RAM;   // for Discarding any writes to $E000 - $FFFF
+}
+
+
+/// Make AUX RAM writeable -- This is when AUX is also readable, othwrwise use set_AUX_write...
+INLINE void set_MEM_write() {
+    // two consecutive read or write needs for write enable
+    // Note: if it is already writeable and was previously a ROM read + RAM write, then we also need to bound AUX to MEM
+    if ( ( (m6502.clktime + m6502.clkfrm - m6502.clk_wrenable) < 8 ) || (MEMcfg.WR_RAM) ) {
+        printf("WR_AUX\n");
+        
+        // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
+        MEMcfg.WR_RAM = 1;
+        WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
+        WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
+    }
+
+    m6502.clk_wrenable = m6502.clktime + m6502.clkfrm;
+}
+
+
+/// Make AUX RAM writeable -- This is when ROM is readable, othwrwise use set_MEM_write...
+INLINE void set_AUX_write() {
+    // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
+    // Note: if it is already writeable and was previously a RAM read + RAM write, then we also need to bound AUX to MEM
+    if ( ( (m6502.clktime + m6502.clkfrm - m6502.clk_wrenable) < 8 ) || (MEMcfg.WR_RAM) ) {
+        printf("WR_AUX\n");
+        
+        MEMcfg.WR_RAM = 1;
+        if ( MEMcfg.RAM_BANK_2 ) {
+            WRD0MEM = Apple2_64K_AUX;   // for Write $D000 - $DFFF (shadow memory) - BANK 2 at 0xD000
+        }
+        else {
+            WRD0MEM = Apple2_64K_AUX - 0x1000;   // for Write $D000 - $DFFF (shadow memory) - BANK 1 at 0xC000
+        }
+        WRHIMEM = Apple2_64K_AUX;   // for Write $E000 - $FFFF (shadow memory)
+    }
+    
+    m6502.clk_wrenable = m6502.clktime + m6502.clkfrm;
+}
+
+
 INLINE void io_RAM_EXP( uint16_t addr ) {
     
     if ( MEMcfg.RAM_16K || MEMcfg.RAM_128K ) {
-        uint8_t * RAM_BANK = Apple2_64K_AUX + 0xC000;
+        // TODO: store 0xD000 BANK 1 at 0xC000 -- might be a problem emulating 64k/128k Saturn cards
+//        uint8_t * RAM_BANK = Apple2_64K_AUX + 0xC000;
         
         // save the content of Shadow Memory in needed
-        if ( MEMcfg.WR_RAM ) {
+        if ( MEMcfg.WR_RAM && MEMcfg.RD_INT_RAM ) {
             //                    printf("Saving RAM Bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
             memcpy(current_RAM_bank, Apple2_64K_MEM + 0xD000, 0x1000);
             memcpy(Apple2_64K_AUX + 0xE000, Apple2_64K_MEM + 0xE000, 0x2000);
@@ -103,17 +154,17 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
             case (uint8_t)io_MEM_RDROM_NOWR_2_:
             case (uint8_t)io_MEM_RDRAM_WRAM_2_:
                 
-                //                        printf("RAM_BANK_2\n");
+                printf("RAM_BANK_2\n");
                 
                 MEMcfg.RAM_BANK_2 = 1;
-                RAM_BANK = Apple2_64K_AUX + 0xD000;
+                current_RAM_bank = Apple2_64K_AUX + 0xD000;
                 break;
                 
             default:
-                //                        printf("RAM_BANK_1\n");
+                printf("RAM_BANK_1\n");
                 
                 MEMcfg.RAM_BANK_2 = 0;
-                RAM_BANK = Apple2_64K_AUX + 0xC000;
+                current_RAM_bank = Apple2_64K_AUX + 0xC000;
                 break;
         }
         
@@ -129,24 +180,24 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
             case (uint8_t)io_MEM_RDRAM_NOWR_1_:
             case (uint8_t)io_MEM_RDRAM_WRAM_1_:
                 
-                //                        printf("RD_RAM\n");
+                printf("RD_RAM\n");
                 
                 MEMcfg.RD_INT_RAM = 1;
                 
                 // load the content of Aux Memory
-                memcpy(Apple2_64K_MEM + 0xD000, RAM_BANK, 0x1000);
+                memcpy(Apple2_64K_MEM + 0xD000, current_RAM_bank, 0x1000);
                 memcpy(Apple2_64K_MEM + 0xE000, Apple2_64K_AUX + 0xE000, 0x2000);
                 
                 // set the RAM extension to read on the upper memory area
                 break;
                 
             default:
-                //                        printf("RD_ROM\n");
+                printf("RD_ROM\n");
                 
                 MEMcfg.RD_INT_RAM = 0;
                 
                 // load the content of ROM Memory
-                memcpy(Apple2_64K_MEM + 0xD000, Apple2_64K_ROM + 0xD000, 0x3000);
+                memcpy(Apple2_64K_MEM + 0xD000, INT_64K_ROM + 0xD000, 0x3000);
                 
                 // set the ROM to read on the upper memory area
                 break;
@@ -160,17 +211,10 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
             case (uint8_t)io_MEM_RDROM_WRAM_2_:
             case (uint8_t)io_MEM_RDROM_WRAM_1_:
                 
-                //                printf("RD_ROM + WR_AUX\n");
+                printf("RD_ROM + WR_AUX\n");
+
+                set_AUX_write();
                 
-                // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
-                MEMcfg.WR_RAM = 0;
-                if ( MEMcfg.RAM_BANK_2 ) {
-                    WRD0MEM = Apple2_64K_AUX;   // for Write $D000 - $DFFF (shadow memory) - BANK 2
-                }
-                else {
-                    WRD0MEM = Apple2_64K_AUX - 0x1000;   // for Write $D000 - $DFFF (shadow memory) - BANK 1
-                }
-                WRHIMEM = Apple2_64K_AUX;   // for Write $E000 - $FFFF (shadow memory)
                 break;
                 
             case (uint8_t)io_MEM_RDRAM_WRAM_2:
@@ -179,25 +223,21 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
             case (uint8_t)io_MEM_RDRAM_WRAM_2_:
             case (uint8_t)io_MEM_RDRAM_WRAM_1_:
                 
-                //                printf("RD_RAM + WR_RAM\n");
+                printf("RD_RAM + WR_RAM\n");
                 
-                // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
-                MEMcfg.WR_RAM = 1;
-                WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
-                WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
+                set_MEM_write();
+
                 break;
                 
             default:
-                //                        printf("RD_ROM + NO_WR\n");
-                
-                // No writing (Readonly), and mark it as NO need to commit from Shadow RAM
-                MEMcfg.WR_RAM = 0;
-                WRD0MEM = Apple2_Dummy_RAM;   // for Discarding any writes to $D000 - $DFFF - BANK X
-                WRHIMEM = Apple2_Dummy_RAM;   // for Discarding any writes to $E000 - $FFFF
+                printf("RD_ROM + NO_WR\n");
+
+                set_MEM_readonly();
+
                 break;
         }
         
-        current_RAM_bank = RAM_BANK;
+//        current_RAM_bank = RAM_BANK;
         //                printf("Set current_RAM_bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
         
         
@@ -208,7 +248,15 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
 
 INLINE uint8_t ioRead( uint16_t addr ) {
     //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
-    //    printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
+    
+//    switch(addr) {
+//        case io_KBD:
+//        case io_KBDSTRB:
+//        case io_SPKR:
+//            break;
+//        default:
+//            printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
+//    }
     
     unsigned int IOframe = m6502.clkfrm - lastIO;
     lastIO = m6502.clkfrm;
@@ -229,6 +277,25 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     }
     
     switch ( (uint8_t)addr ) {
+//        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+        case 0x27:
+        case 0x28:
+        case 0x29:
+        case 0x2A:
+        case 0x2B:
+        case 0x2C:
+        case 0x2D:
+        case 0x2E:
+        case 0x2F:
+            printf("RD TAPEIO: %04X\n", addr);
+            return 0;
+            
         case (uint8_t)io_KBD:
             
             return Apple2_64K_RAM[io_KBD];
@@ -282,7 +349,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
         case (uint8_t)io_RDALTZP:
             return MEMcfg.ALT_ZP << 7;
-            
+                
         case (uint8_t)io_RDC3ROM:
             return MEMcfg.slot_C3_ROM << 7;
             
@@ -469,7 +536,36 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {
     //    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
     
+//    switch(addr) {
+//        case io_KBD:
+//        case io_KBDSTRB:
+//        case io_SPKR:
+//            break;
+//        default:
+//            printf("ioWrite:%04X (PC:%04X, val:%02X)\n", addr, m6502.PC, val);
+//    }
+    
+
     switch ( (uint8_t)addr ) {
+//        case 0x20:
+        case 0x21:
+        case 0x22:
+        case 0x23:
+        case 0x24:
+        case 0x25:
+        case 0x26:
+        case 0x27:
+        case 0x28:
+        case 0x29:
+        case 0x2A:
+        case 0x2B:
+        case 0x2C:
+        case 0x2D:
+        case 0x2E:
+        case 0x2F:
+            printf("WR TAPEIO: %04X\n", addr);
+            return;
+            
         case (uint8_t)io_KBDSTRB:
             Apple2_64K_RAM[io_KBD] &= 0x7F;
             break;
@@ -765,7 +861,7 @@ INLINE uint8_t memread( uint16_t addr ) {
 INLINE void memwrite8_low( uint16_t addr, uint8_t data ) {
     WRLOMEM[addr] = data;
 }
-INLINE void memwrite8_bank2( uint16_t addr, uint8_t data ) {
+INLINE void memwrite8_bank( uint16_t addr, uint8_t data ) {
     WRD0MEM[addr] = data;
 }
 INLINE void memwrite8_high( uint16_t addr, uint8_t data ) {
@@ -782,7 +878,7 @@ INLINE void memwrite( uint16_t addr, uint8_t data ) {
         }
         else if (addr < 0xE000) {
             // Aux RAM Bank 1 or 2
-            memwrite8_bank2(addr, data);
+            memwrite8_bank(addr, data);
         }
         else {
             // ROM (dummy memory to screape writings) or Aux RAM
@@ -1057,11 +1153,11 @@ void C3MemorySelect( MEMcfg_t newMEMcfg ) {
     
     if ( newMEMcfg.slot_C3_ROM ) {
         // load internal ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC300, Apple2_64K_RAM + 0xC300, 0x100);
+        memcpy(Apple2_64K_MEM + 0xC300, INT_64K_ROM + 0xC300, 0x100);
     }
     else {
         // load peripheral ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC300, Apple2_64K_ROM + 0xC300, 0x100);
+        memcpy(Apple2_64K_MEM + 0xC300, EXP_64K_ROM + 0xC300, 0x100);
     }
     
     MEMcfg = newMEMcfg;
@@ -1072,11 +1168,11 @@ void CxMemorySelect( MEMcfg_t newMEMcfg ) {
     
     if ( newMEMcfg.int_Cx_ROM ) {
         // load internal ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC100, Apple2_64K_ROM + 0xC100, 0xF00);
+        memcpy(Apple2_64K_MEM + 0xC100, INT_64K_ROM + 0xC100, 0xF00);
     }
     else {
         // load peripheral ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC100, Apple2_64K_RAM + 0xC100, 0xF00);
+        memcpy(Apple2_64K_MEM + 0xC100, EXP_64K_ROM + 0xC100, 0xF00);
         //        memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_RAM + 0xC600, 0x100);
     }
     
@@ -1098,7 +1194,7 @@ void resetMemory() {
     CxMemorySelect(MEMcfg);
 
     // initializing disk controller
-    memcpy(Apple2_64K_MEM + 0xC600, Apple2_64K_ROM + 0xC600, 0x100);
+    memcpy(Apple2_64K_MEM + 0xC600, EXP_64K_ROM + 0xC600, 0x100);
     
     MEMcfg = newMEMcfg;
     

@@ -34,14 +34,14 @@
 // 6502 instructions with additional addressing modes
 
     // ADC AND CMP EOR LDA ORA SBC STA - (zp) addressing mode
-        case 0x12: ORA( src_zp_0() ); return 5;                         // ORA (zpg)
-        case 0x32: AND( src_zp_0() ); return 5;                         // AND (zpg)
-        case 0x52: EOR( src_zp_0() ); return 5;                         // EOR (zpg)
-        case 0x72: ADC( src_zp_0() ); return 5;                         // ADC (zpg)
-        case 0x92: STA( src_zp_0() ); return 5;                         // STA (zpg)
-        case 0xB2: LDA( src_zp_0() ); return 5;                         // LDA (zpg)
-        case 0xD2: CMP( src_zp_0() ); return 5;                         // CMP (zpg)
-        case 0xF2: SBC( src_zp_0() ); return 5;                         // SBC (zpg)
+        case 0x12: ORA( src_ind() ); return 5;                          // ORA (zpg)
+        case 0x32: AND( src_ind() ); return 5;                          // AND (zpg)
+        case 0x52: EOR( src_ind() ); return 5;                          // EOR (zpg)
+        case 0x72: ADC( src_ind() ); return 5;                          // ADC (zpg)
+        case 0x92: STA( src_ind() ); return 5;                          // STA (zpg)
+        case 0xB2: LDA( src_ind() ); return 5;                          // LDA (zpg)
+        case 0xD2: CMP( src_ind() ); return 5;                          // CMP (zpg)
+        case 0xF2: SBC( src_ind() ); return 5;                          // SBC (zpg)
 
     // BIT - imm abs,X zp,X addressing modes
         case 0x34: BIT( src_zp_X() ); return 4;                         // BIT zpg,X

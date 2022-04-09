@@ -290,6 +290,16 @@ enum mmio {
                                     //   C   R7  Status of 80/40 Column Switch
 
     // Game Controller
+    io_STROBE           = 0xC040,
+    io_CLRAN0           = 0xC058,
+    io_SETAN0           = 0xC059,
+    io_CLRAN1           = 0xC05A,
+    io_SETAN1           = 0xC05B,
+    io_CLRAN2           = 0xC05C,
+    io_SETAN2           = 0xC05D,
+    io_CLRAN3           = 0xC05E,
+    io_SETAN3           = 0xC05F,
+
     io_PDL0             = 0xC064,
     io_PDL1             = 0xC065,
     io_PDL2             = 0xC066,
@@ -363,7 +373,8 @@ enum mmio {
 #define PAGES 16
 
 extern const uint8_t * const shadowLowMEM;
-extern const uint8_t * currentLowMEM;
+extern const uint8_t * currentLowRDMEM;
+extern uint8_t * currentLowWRMEM;
 
 extern uint8_t activeTextAuxPage;
 extern uint8_t * activeTextPage;
@@ -371,6 +382,8 @@ extern uint8_t * shadowTextPage;
 extern uint8_t * current_RAM_bank;
 
 extern void auxMemorySelect( MEMcfg_t newMEMcfg );
+//extern void (*auxMemorySelect)( MEMcfg_t newMEMcfg );
+
 extern void C3MemorySelect( MEMcfg_t newMEMcfg );
 extern void CxMemorySelect( MEMcfg_t newMEMcfg );
 extern void resetMemory(void);
@@ -408,6 +421,8 @@ INLINE uint8_t src_abs_Y(void);
 INLINE uint8_t imm(void);
 INLINE uint8_t addr_zp(void);
 INLINE uint8_t src_zp(void);
+INLINE uint16_t addr_ind(void);
+INLINE uint8_t src_ind(void);
 INLINE uint16_t addr_ind_X(void);
 INLINE uint8_t src_X_ind(void);
 INLINE uint16_t addr_ind_Y(void);

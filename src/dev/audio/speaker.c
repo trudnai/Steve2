@@ -70,6 +70,8 @@ ALCcontext *ctx = NULL;
 int spkr_att = 0;
 int spkr_level = SPKR_LEVEL_ZERO;
 int spkr_level_ema = SPKR_LEVEL_ZERO;
+int spkr_level_dema = SPKR_LEVEL_ZERO;
+int spkr_level_tema = SPKR_LEVEL_ZERO;
 int spkr_last_level = SPKR_LEVEL_ZERO;
 
 #define BUFFER_COUNT 256
@@ -170,9 +172,11 @@ void spkr_load_sfx( const char * bundlePath ) {
     diskioerr_sfx_len = load_sfx(bundlePath, "disk_ii_io_error.sfx", &diskioerr_sfx);
 }
 
-#define NO_SPKR_KEEP_PITCH
+#undef SPKR_KEEP_PITCH
 
-#define NO_SPKR_DEBUG
+#undef SPKR_DEBUG
+#undef SPKR_DEBUG_BEFORE_EMA
+
 #ifdef SPKR_DEBUG
 static const char * spkr_debug_filename = "steve2_audio_debug.bin";
 FILE * spkr_debug_file = NULL;
@@ -475,7 +479,8 @@ void spkr_toggle() {
 //            indexer = (double)spkr_sample_rate / MHZ(default_MHz_6502) * MHz_6502;
         }
 #endif
-        
+
+//        spkr_sample_idx = round( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / (double)spkr_sample_rate)) * SPKR_CHANNELS;
         spkr_sample_idx = round( (double)(spkr_clk + m6502.clkfrm) * multiplier ) * SPKR_CHANNELS;
         spkr_sample_idx &= UINTMAX_MAX - 1;
         
@@ -568,7 +573,9 @@ void spkr_update() {
                     spkr_sample_last_idx = 0;
                     spkr_level = SPKR_LEVEL_ZERO;
                     spkr_level_ema = SPKR_LEVEL_ZERO;
-                    
+                    spkr_level_dema = SPKR_LEVEL_ZERO;
+                    spkr_level_tema = SPKR_LEVEL_ZERO;
+
 //                    spkr_last_level = SPKR_LEVEL_ZERO;
                     
                 }
@@ -613,15 +620,34 @@ void spkr_update() {
 #endif
 #endif
 
-                        static const int ema_len = 30; // soft: 70;
+                        // to use with EMA
+//                        static const int ema_len_sharper = 30;
+//                        static const int ema_len_soft = 70;
+//                        static const int ema_len_supersoft = 200;
+                        
+                        // to use with TEMA
+                        static const int ema_len_sharper = 7;
+                        static const int ema_len_sharp = 14;
+                        static const int ema_len_normal = 20;
+                        static const int ema_len_soft = 30;
+                        static const int ema_len_supersoft = 40;
+                        
+                        static const int ema_len = ema_len_normal;
                         
                         int i = 0;
                         while ( i <= spkr_buf_size ) {
                             spkr_level_ema  = ema(spkr_samples[i], spkr_level_ema, ema_len);
+                            spkr_level_dema  = ema(spkr_level_ema, spkr_level_dema, ema_len);
+                            spkr_level_tema  = ema(spkr_level_dema, spkr_level_tema, ema_len);
 
-                            // super smooth Quadratic EMA
-                            spkr_samples[i++] = spkr_level_ema;
-                            spkr_samples[i++] = spkr_level_ema;
+//                            int level = spkr_level_tema;
+//                            if (abs(spkr_level_ema) < 1000 ) {
+//                                level = 0;
+//                            }
+
+                            // smoothing with Tripple  EMA
+                            spkr_samples[i++] = spkr_level_tema;
+                            spkr_samples[i++] = spkr_level_tema;
                         }
                         
 #ifdef SPKR_DEBUG // Debug SPKR Buffer After EMA

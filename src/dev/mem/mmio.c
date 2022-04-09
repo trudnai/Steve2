@@ -22,6 +22,8 @@
 //
 
 
+#include <stdlib.h>
+
 #include "mmio.h"
 #include "common.h"
 #include "6502.h"
@@ -78,7 +80,8 @@ MEMcfg_t newMEMcfg = INIT_MEMCFG;
 
 
 const uint8_t * const shadowLowMEM = Apple2_64K_MEM + 0x200;
-const uint8_t * currentLowMEM = Apple2_64K_RAM + 0x200;
+const uint8_t * currentLowRDMEM = Apple2_64K_RAM + 0x200;
+uint8_t * currentLowWRMEM = Apple2_64K_RAM;
 
 
 /// No writing (Readonly), and mark it as NO need to commit from Shadow RAM
@@ -91,11 +94,24 @@ INLINE void set_MEM_readonly() {
 }
 
 
+/// Returns TRUE if already writeable or second of the "two consecutive" reads on appropriate soft switches
+INLINE int is_wr_enabled() {
+    uint64_t clk = m6502.clktime + m6502.clkfrm;
+    uint64_t elapsed = clk - m6502.clk_wrenable;
+    int is_enabled = ( elapsed < 16 ) || MEMcfg.WR_RAM;
+    
+    printf("is_wr_enabled elapsed:%llu  was_enabled:%i  to_be_enabled:%i\n", elapsed, MEMcfg.WR_RAM, is_enabled);
+    
+    m6502.clk_wrenable = clk;
+    return is_enabled;
+}
+
+
 /// Make AUX RAM writeable -- This is when AUX is also readable, othwrwise use set_AUX_write...
 INLINE void set_MEM_write() {
     // two consecutive read or write needs for write enable
     // Note: if it is already writeable and was previously a ROM read + RAM write, then we also need to bound AUX to MEM
-    if ( ( (m6502.clktime + m6502.clkfrm - m6502.clk_wrenable) < 8 ) || (MEMcfg.WR_RAM) ) {
+    if ( is_wr_enabled() ) {
         printf("WR_AUX\n");
         
         // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
@@ -103,8 +119,6 @@ INLINE void set_MEM_write() {
         WRD0MEM = Apple2_64K_MEM;   // for Write $D000 - $DFFF (shadow memory) - BANK X
         WRHIMEM = Apple2_64K_MEM;   // for Write $E000 - $FFFF (shadow memory)
     }
-
-    m6502.clk_wrenable = m6502.clktime + m6502.clkfrm;
 }
 
 
@@ -112,7 +126,7 @@ INLINE void set_MEM_write() {
 INLINE void set_AUX_write() {
     // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
     // Note: if it is already writeable and was previously a RAM read + RAM write, then we also need to bound AUX to MEM
-    if ( ( (m6502.clktime + m6502.clkfrm - m6502.clk_wrenable) < 8 ) || (MEMcfg.WR_RAM) ) {
+    if ( is_wr_enabled() ) {
         printf("WR_AUX\n");
         
         MEMcfg.WR_RAM = 1;
@@ -124,8 +138,6 @@ INLINE void set_AUX_write() {
         }
         WRHIMEM = Apple2_64K_AUX;   // for Write $E000 - $FFFF (shadow memory)
     }
-    
-    m6502.clk_wrenable = m6502.clktime + m6502.clkfrm;
 }
 
 
@@ -196,6 +208,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
                 
                 MEMcfg.RD_INT_RAM = 0;
                 
+                // TODO: What about CX (Slot) ROM?
                 // load the content of ROM Memory
                 memcpy(Apple2_64K_MEM + 0xD000, INT_64K_ROM + 0xD000, 0x3000);
                 
@@ -246,16 +259,48 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
 }
 
 
+INLINE int is_io_interesting(addr) {
+    switch(addr) {
+        case io_KBD:
+        case io_KBDSTRB:
+        case io_TAPEOUT:
+        case io_SPKR:
+        case io_VID_ALTCHAR:
+        case io_VID_RD80VID:
+        case io_RDCXROM:
+            
+        // Ignore Disk IO
+        case 0xC0E0:
+        case 0xC0E1:
+        case 0xC0E2:
+        case 0xC0E3:
+        case 0xC0E4:
+        case 0xC0E5:
+        case 0xC0E6:
+        case 0xC0E7:
+        case 0xC0E8:
+        case 0xC0E9:
+        case 0xC0EA:
+        case 0xC0EB:
+        case 0xC0EC:
+        case 0xC0ED:
+        case 0xC0EE:
+        case 0xC0EF:
+            return 0;
+            
+        default:
+            break;
+    }
+
+    return 1;
+}
+
+
 INLINE uint8_t ioRead( uint16_t addr ) {
     //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
-    
-//    switch(addr) {
-//        case io_KBD:
-//        case io_KBDSTRB:
-//        case io_SPKR:
-//            break;
-//        default:
-//            printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
+
+//    if ( is_io_interesting(addr) ) {
+//        printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
 //    }
     
     unsigned int IOframe = m6502.clkfrm - lastIO;
@@ -277,25 +322,6 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     }
     
     switch ( (uint8_t)addr ) {
-//        case 0x20:
-        case 0x21:
-        case 0x22:
-        case 0x23:
-        case 0x24:
-        case 0x25:
-        case 0x26:
-        case 0x27:
-        case 0x28:
-        case 0x29:
-        case 0x2A:
-        case 0x2B:
-        case 0x2C:
-        case 0x2D:
-        case 0x2E:
-        case 0x2F:
-            printf("RD TAPEIO: %04X\n", addr);
-            return 0;
-            
         case (uint8_t)io_KBD:
             
             return Apple2_64K_RAM[io_KBD];
@@ -312,9 +338,25 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return Apple2_64K_RAM[io_KBDSTRB];
             
         case (uint8_t)io_TAPEOUT:
+            // TODO: 1. Sound problem in Castle Wolfensein if we output this to speaker all the time
+            //       2. Implement Tape
+            return rand(); // no tape, floating I/O
+
         case (uint8_t)io_SPKR:
             spkr_toggle();
-            return Apple2_64K_RAM[io_SPKR];
+            return rand(); // Floating I/O -- used for random number genet=ration in Games
+            
+        case (uint8_t)io_STROBE:
+        case (uint8_t)io_CLRAN0:
+        case (uint8_t)io_SETAN0:
+        case (uint8_t)io_CLRAN1:
+        case (uint8_t)io_SETAN1:
+        case (uint8_t)io_CLRAN2:
+        case (uint8_t)io_SETAN2:
+        case (uint8_t)io_CLRAN3:
+        case (uint8_t)io_SETAN3:
+            // TODO: Simulate Attenuator
+            return rand(); // Apple2_64K_RAM[io_SPKR];
             
         case (uint8_t)io_VID_RDVBL:
             return (m6502.clkfrm < 4550) ? 0x80 : 0;
@@ -536,43 +578,26 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 INLINE void ioWrite( uint16_t addr, uint8_t val ) {
     //    if (outdev) fprintf(outdev, "ioWrite:%04X (A:%02X)\n", addr, m6502.A);
     
-//    switch(addr) {
-//        case io_KBD:
-//        case io_KBDSTRB:
-//        case io_SPKR:
-//            break;
-//        default:
-//            printf("ioWrite:%04X (PC:%04X, val:%02X)\n", addr, m6502.PC, val);
+//    if ( is_io_interesting(addr) ) {
+//        printf("ioWrite:%04X (PC:%04X, val:%02X)\n", addr, m6502.PC, val);
 //    }
     
 
     switch ( (uint8_t)addr ) {
-//        case 0x20:
-        case 0x21:
-        case 0x22:
-        case 0x23:
-        case 0x24:
-        case 0x25:
-        case 0x26:
-        case 0x27:
-        case 0x28:
-        case 0x29:
-        case 0x2A:
-        case 0x2B:
-        case 0x2C:
-        case 0x2D:
-        case 0x2E:
-        case 0x2F:
-            printf("WR TAPEIO: %04X\n", addr);
-            return;
-            
         case (uint8_t)io_KBDSTRB:
             Apple2_64K_RAM[io_KBD] &= 0x7F;
             break;
             
         case (uint8_t)io_TAPEOUT:
+            // TODO: 1. Sound problem in Castle Wolfensein if we output this to speaker all the time
+            //       2. Implement Tape
+            break;
+            
         case (uint8_t)io_SPKR:
             spkr_toggle();
+            // TODO: Theoretically it toggles the speaker twice
+//            m6502.clkfrm++; // to simulate RMW
+//            spkr_toggle();
             break;
             
         case (uint8_t)io_RDMAINRAM:
@@ -614,27 +639,39 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             break;
             
         case (uint8_t)io_SETSLOTCXROM:
-            //            printf("io_SETSLOTCXROM\n");
-            MEMcfg.int_Cx_ROM = 0;
-            // TODO: set Cx00 ROM area table to SLOT
+//            printf("io_SETSLOTCXROM\n");
+
+            newMEMcfg = MEMcfg;
+            newMEMcfg.int_Cx_ROM = 0;
+            auxMemorySelect(newMEMcfg);
+            CxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_SETINTCXROM:
             //            printf("io_SETINTCXROM\n");
-            MEMcfg.int_Cx_ROM = 1;
-            // TODO: set Cx00 ROM area table to INT
+
+            newMEMcfg = MEMcfg;
+            newMEMcfg.int_Cx_ROM = 1;
+            auxMemorySelect(newMEMcfg);
+            CxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_SETSLOTC3ROM:
             //            printf("io_SETSLOTC3ROM\n");
-            MEMcfg.slot_C3_ROM = 1;
-            // TODO: set C300 ROM area table to SLOT
+
+            newMEMcfg = MEMcfg;
+            newMEMcfg.slot_C3_ROM = 1;
+            auxMemorySelect(newMEMcfg);
+            C3MemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_SETINTC3ROM:
             //            printf("io_SETINTC3ROM\n");
-            MEMcfg.slot_C3_ROM = 0;
-            // TODO: set C300 ROM area table to INT
+
+            newMEMcfg = MEMcfg;
+            newMEMcfg.slot_C3_ROM = 0;
+            auxMemorySelect(newMEMcfg);
+            C3MemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_VID_CLR80VID:
@@ -1033,6 +1070,21 @@ INLINE uint8_t src_zp() {
 //}
 
 /**
+ ind        ....    indirect         OPC ($LL)
+ operand is zeropage address;
+ effective address is word in (LL, LL + 1), inc. without carry: C.w($00LL)
+ **/
+INLINE uint16_t addr_ind() {
+    dbgPrintf("zpi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
+    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) )
+    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC)) );
+    return memread16( fetch() );
+}
+INLINE uint8_t src_ind() {
+    return memread( addr_ind() );
+}
+
+/**
  X,ind        ....    X-indexed, indirect         OPC ($LL,X)
  operand is zeropage address;
  effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
@@ -1069,6 +1121,7 @@ INLINE uint8_t src_ind_Y() {
 //    return WRLOMEM + addr_ind_Y();
 //}
 
+
 /**
  zpg,X        ....    zeropage, X-indexed         OPC $LL,X
  operand is zeropage address;
@@ -1103,7 +1156,70 @@ INLINE uint8_t src_zp_Y() {
 
 
 void auxMemorySelect( MEMcfg_t newMEMcfg ) {
-    const uint8_t * newLowMEM = currentLowMEM;
+    const uint8_t * newReadMEM = currentLowRDMEM;
+    uint8_t * newWriteMEM = currentLowWRMEM;
+    
+    if ( newMEMcfg.is_80STORE ) {
+        if ( newMEMcfg.RD_AUX_MEM ) {
+            newReadMEM = Apple2_64K_AUX + 0x200;
+        }
+        else {
+            newReadMEM = Apple2_64K_RAM + 0x200;
+        }
+        
+        if ( newMEMcfg.WR_AUX_MEM ) {
+            newWriteMEM = Apple2_64K_AUX;
+        }
+        else {
+            newWriteMEM = Apple2_64K_RAM;
+        }
+    }
+    else {
+        newReadMEM = Apple2_64K_RAM + 0x200;
+        newWriteMEM = Apple2_64K_RAM;
+    }
+    
+    
+    // save old content to shadow memory
+    if ( ( newWriteMEM != currentLowWRMEM ) && (WRLOMEM == Apple2_64K_MEM) ) {
+        // save the content of Shadow Memory
+        memcpy( (void*) currentLowWRMEM + 0x200, WRLOMEM + 0x200, 0xBE00);
+    }
+    
+    //    else {
+    //        // page in the new memory area
+    //        memcpy( (void*) shadowLowMEM + 0x200, newWriteMEM + 0x200, 0xBE00);
+    //        // mark new as the current one
+    //    }
+    
+    currentLowWRMEM = newWriteMEM;
+    
+//    printf("nrm:%p  nwm:%p\n", newReadMEM, newWriteMEM + 0x200);
+    
+    // we are reading and writing to the same memory (either Internal or Aux)
+    if ( newReadMEM == newWriteMEM + 0x200 ) {
+        WRLOMEM = Apple2_64K_MEM;
+    }
+    else {
+        WRLOMEM = newWriteMEM;
+    }
+    
+    // load new content to shadow memory
+    if ( newReadMEM != currentLowRDMEM ) {
+        // page in the new memory area
+        memcpy( (void*) shadowLowMEM, newReadMEM, 0xBE00);
+        // mark new as the current one
+        currentLowRDMEM = newReadMEM;
+    }
+    
+    MEMcfg = newMEMcfg;
+}
+
+
+
+
+void auxMemorySelect_old( MEMcfg_t newMEMcfg ) {
+    const uint8_t * newLowMEM = currentLowRDMEM;
     
     if ( newMEMcfg.is_80STORE ) {
         if ( newMEMcfg.RD_AUX_MEM ) {
@@ -1114,19 +1230,19 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
         }
         
         if ( newMEMcfg.WR_AUX_MEM ) {
-            if ( newMEMcfg.RD_INT_RAM ) {
+            if ( newMEMcfg.RD_AUX_MEM ) {
+                WRLOMEM = Apple2_64K_MEM;
+            }
+            else {
+                WRLOMEM = Apple2_64K_AUX;
+            }
+        }
+        else {
+            if ( newMEMcfg.RD_AUX_MEM ) {
                 WRLOMEM = Apple2_64K_AUX;
             }
             else {
                 WRLOMEM = Apple2_64K_MEM;
-            }
-        }
-        else {
-            if ( newMEMcfg.RD_INT_RAM ) {
-                WRLOMEM = Apple2_64K_MEM;
-            }
-            else {
-                WRLOMEM = Apple2_64K_RAM;
             }
         }
     }
@@ -1136,28 +1252,31 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
     }
     
     // load new content to shadow memory
-    if ( newLowMEM != currentLowMEM ) {
+    if ( newLowMEM != currentLowRDMEM ) {
         // save the content of Shadow Memory
-        memcpy( (void*) currentLowMEM, shadowLowMEM, 0xBE00);
+        memcpy( (void*) currentLowRDMEM, shadowLowMEM, 0xBE00);
         // page in the new memory area
         memcpy( (void*) shadowLowMEM, newLowMEM, 0xBE00);
         // mark new as the current one
-        currentLowMEM = newLowMEM;
+        currentLowRDMEM = newLowMEM;
     }
     
     MEMcfg = newMEMcfg;
 }
 
 
+//void (*auxMemorySelect)( MEMcfg_t newMEMcfg ) = & auxMemorySelect_new;
+
+
 void C3MemorySelect( MEMcfg_t newMEMcfg ) {
     
     if ( newMEMcfg.slot_C3_ROM ) {
-        // load internal ROM to memory
-        memcpy(Apple2_64K_MEM + 0xC300, INT_64K_ROM + 0xC300, 0x100);
-    }
-    else {
         // load peripheral ROM to memory
         memcpy(Apple2_64K_MEM + 0xC300, EXP_64K_ROM + 0xC300, 0x100);
+    }
+    else {
+        // load internal ROM to memory
+        memcpy(Apple2_64K_MEM + 0xC300, INT_64K_ROM + 0xC300, 0x100);
     }
     
     MEMcfg = newMEMcfg;

@@ -37,7 +37,7 @@ class MonitorView: NSView {
     var textDisplay_height_diff : CGFloat?
     
     let monitorView_textViewBounds = NSSize(width: 1120, height: 768)
-    let textDisplay_frameSize = NSSize(width: 1120 + overscan_h, height: 768 + overscan_v)
+    static let textDisplay_frameSize = NSSize(width: 1120 + overscan_h, height: 768 + overscan_v)
 
     override func viewDidMoveToWindow() {
         print("Added to NEW window")
@@ -47,12 +47,13 @@ class MonitorView: NSView {
         var textFrameSize = frame.size
         
         if textDisplay_width_diff == nil {
-            textDisplay_width_diff = textFrameSize.width - textDisplay_frameSize.width
-            textDisplay_height_diff = textFrameSize.height - textDisplay_frameSize.height
+            textDisplay_width_diff = textFrameSize.width - MonitorView.textDisplay_frameSize.width
+            textDisplay_height_diff = textFrameSize.height - MonitorView.textDisplay_frameSize.height
         }
 
-        textFrameSize.width -= textDisplay_width_diff!
+//        textFrameSize.width -= textDisplay_width_diff!
 //        textFrameSize.height -= textDisplay_height_diff!
+        textFrameSize.width = scanlinesView.frame.size.width
         textFrameSize.height = scanlinesView.frame.size.height
 
 //        print( String(

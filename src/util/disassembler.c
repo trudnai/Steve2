@@ -67,40 +67,41 @@ void printDisassembly( FILE * f ) {
         //            disassembly.comment
         //        );
         
-        // Virtual ][ Style
-        fprintf( f, "%llu\t%llu\t%s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\n", // Virtual ][ style
-            ++discnt,
-            disassembly.clk,
-            disassembly.addr,
-            disassembly.opcode,
-            disassembly.inst,
-            disassembly.oper,
-            m6502.A,
-            m6502.X,
-            m6502.Y,
-            getFlags2().SR,
-            m6502.SP
-        );
-        
-//        static char line[256];
-//        // Steve ][ Style
-//        snprintf( line, sizeof(line), "%10llu %10llu %s: %-11s%-4s%s", // Steve ][ style
-//             ++discnt,
-//             disassembly.clk,
-//             disassembly.addr,
-//             disassembly.opcode,
-//             disassembly.inst,
-//             disassembly.oper
-//         );
-//
-//        fprintf( f, "%-55s; 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X\n", // Steve ][ style
-//            line,
+//        // Virtual ][ Style
+//        fprintf( f, "%llu\t%llu\t%s: %-11s%-4s%s\t0x%02X\t0x%02X\t0x%02X\t0x%02X\t0x%02X\n", // Virtual ][ style
+//            ++discnt,
+//            disassembly.clk,
+//            disassembly.addr,
+//            disassembly.opcode,
+//            disassembly.inst,
+//            disassembly.oper,
 //            m6502.A,
 //            m6502.X,
 //            m6502.Y,
 //            getFlags2().SR,
 //            m6502.SP
 //        );
+        
+        static char line[256];
+        // Steve ][ Style
+        snprintf( line, sizeof(line), "%10llu %10llu %s: %-11s%-4s%s", // Steve ][ style
+             ++discnt,
+             disassembly.clk,
+             disassembly.addr,
+             disassembly.opcode,
+             disassembly.inst,
+             disassembly.oper
+         );
+
+        fprintf( f, "%-55s; 0x%02X 0x%02X 0x%02X 0x%02X 0x%02X  ;  %s\n", // Steve ][ style
+            line,
+            m6502.A,
+            m6502.X,
+            m6502.Y,
+            getFlags2().SR,
+            m6502.SP,
+            disassembly.comment
+        );
         
     }
 }

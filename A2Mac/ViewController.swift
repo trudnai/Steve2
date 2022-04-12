@@ -1636,6 +1636,10 @@ class ViewController: NSViewController  {
     }
     
     
+    func Cheat_Wavy_Navy_Victory() {
+        JUMP( 0x1528 ) // called when player clears the level
+    }
+    
     func Cheat_Wavy_Navy_Add_3_Ships() {
         let ships = min( getMEM( 0x4746 ) + 3, 9 )
         setMEM( 0x4746, ships )

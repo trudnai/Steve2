@@ -185,12 +185,20 @@ FILE * spkr_debug_file = NULL;
 
 void spkr_fade(float fadeLevel, unsigned idx) {
     // Fade
-    while ( ( fadeLevel < -1 ) || ( fadeLevel > 1 ) ) {
+    
+    float fadeSlope = 8;
+    
+    if ( fadeLevel < 0 ) {
+        fadeSlope = -fadeSlope;
+    }
+    
+    while ( ( fabs(fadeLevel) > 1 ) && ( idx < spkr_buf_size ) ) {
         spkr_samples[ idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
         spkr_samples[ idx++ ] = SPKR_LEVEL_ZERO + fadeLevel; // stereo
         
         // how smooth we want the speeker to decay, so we will hear no pops and crackles
-        fadeLevel *= 0.999;
+//        fadeLevel *= 0.999;
+        fadeLevel -= fadeSlope;
     }
     
     // Fill with Zero to avoid pops
@@ -517,6 +525,68 @@ void spkr_toggle() {
 int playDelay = SPKR_PLAY_DELAY;
 
 
+INLINE void filter_reset() {
+    spkr_level = SPKR_LEVEL_ZERO;
+    spkr_level_ema = SPKR_LEVEL_ZERO;
+    spkr_level_dema = SPKR_LEVEL_ZERO;
+    spkr_level_tema = SPKR_LEVEL_ZERO;
+}
+
+
+INLINE void filter() {
+
+#ifdef SPKR_DEBUG // Debug SPKR Buffer Before EMA
+#ifdef SPKR_DEBUG_BEFORE_EMA
+    fwrite(spkr_samples, 1, buf_len, spkr_debug_file);
+    fflush(spkr_debug_file);
+#endif
+#endif
+    
+    // to use with EMA
+//    static const int ema_len_sharper = 30;
+//    static const int ema_len_soft = 70;
+//    static const int ema_len_supersoft = 200;
+    
+    // to use with TEMA
+    static const int ema_len_sharper = 7;
+    static const int ema_len_sharp = 14;
+    static const int ema_len_normal = 20;
+    static const int ema_len_soft = 30;
+    static const int ema_len_supersoft = 40;
+    
+    static const int ema_len = ema_len_normal;
+
+    for ( int i = 0; i <= spkr_buf_size; ) {
+        spkr_level_ema  = ema(spkr_samples[i], spkr_level_ema, ema_len);
+        spkr_level_dema  = ema(spkr_level_ema, spkr_level_dema, ema_len);
+        spkr_level_tema  = ema(spkr_level_dema, spkr_level_tema, ema_len);
+        
+        // smoothing with Tripple  EMA
+        spkr_samples[i++] = spkr_level_tema;
+        spkr_samples[i++] = spkr_level_tema;
+    }
+
+#ifdef SPKR_DEBUG // Debug SPKR Buffer After EMA
+#ifdef SPKR_DEBUG_AFTER_EMA
+    fwrite(spkr_samples, 1, buf_len, spkr_debug_file);
+    fflush(spkr_debug_file);
+#endif
+#endif
+    
+}
+
+
+INLINE void debug_spike() {
+    spkr_sample_idx = 0;
+    spkr_samples[ spkr_sample_idx++ ] = -28000;
+    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
+    spkr_samples[ spkr_sample_idx++ ] = -28000;
+    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
+    spkr_samples[ spkr_sample_idx++ ] = spkr_level;
+    spkr_samples[ spkr_sample_idx++ ] = spkr_level; // stereo
+}
+
+
 void spkr_update() {
     if ( ++spkr_frame_cntr >= spkr_fps_divider ) {
         spkr_frame_cntr = 0;
@@ -571,28 +641,15 @@ void spkr_update() {
                     memset(spkr_samples, 0, sample_buf_array_len * sizeof(spkr_sample_t)); // spkr_buf_size * sizeof(spkr_sample_t) * SPKR_CHANNELS);
                     spkr_sample_idx = 0;
                     spkr_sample_last_idx = 0;
-                    spkr_level = SPKR_LEVEL_ZERO;
-                    spkr_level_ema = SPKR_LEVEL_ZERO;
-                    spkr_level_dema = SPKR_LEVEL_ZERO;
-                    spkr_level_tema = SPKR_LEVEL_ZERO;
 
-//                    spkr_last_level = SPKR_LEVEL_ZERO;
-                    
+                    filter_reset();
                 }
                 else {
 // push a click into the speaker buffer
 // (we will play the entire buffer at the end of the frame)
 //                    spkr_sample_idx = ( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / spkr_sample_rate)) * SPKR_CHANNELS;
 
-//                    // DEBUG spike
-//                    spkr_sample_idx = 0;
-//                    spkr_samples[ spkr_sample_idx++ ] = -28000;
-//                    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
-//                    spkr_samples[ spkr_sample_idx++ ] = -28000;
-//                    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
-//                    spkr_samples[ spkr_sample_idx++ ] = spkr_level;
-//                    spkr_samples[ spkr_sample_idx++ ] = spkr_level; // stereo
-
+//                    debug_spike();
 
 //                    //spkr_samples[sample_idx] = spkr_level;
 //                     memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_alloc_size * DEFAULT_FPS - spkr_sample_idx);
@@ -613,50 +670,9 @@ void spkr_update() {
 
                         int buf_len = round((double)spkr_buf_size * multiplier + spkr_extra_buf) * sizeof(spkr_sample_t);
                         
-#ifdef SPKR_DEBUG // Debug SPKR Buffer Before EMA
-#ifdef SPKR_DEBUG_BEFORE_EMA
-                        fwrite(spkr_samples, 1, buf_len, spkr_debug_file);
-                        fflush(spkr_debug_file);
-#endif
-#endif
-
-                        // to use with EMA
-//                        static const int ema_len_sharper = 30;
-//                        static const int ema_len_soft = 70;
-//                        static const int ema_len_supersoft = 200;
+                        // digital filtering the audio stream -- most notably smoothing
+                        filter();
                         
-                        // to use with TEMA
-                        static const int ema_len_sharper = 7;
-                        static const int ema_len_sharp = 14;
-                        static const int ema_len_normal = 20;
-                        static const int ema_len_soft = 30;
-                        static const int ema_len_supersoft = 40;
-                        
-                        static const int ema_len = ema_len_normal;
-                        
-                        int i = 0;
-                        while ( i <= spkr_buf_size ) {
-                            spkr_level_ema  = ema(spkr_samples[i], spkr_level_ema, ema_len);
-                            spkr_level_dema  = ema(spkr_level_ema, spkr_level_dema, ema_len);
-                            spkr_level_tema  = ema(spkr_level_dema, spkr_level_tema, ema_len);
-
-//                            int level = spkr_level_tema;
-//                            if (abs(spkr_level_ema) < 1000 ) {
-//                                level = 0;
-//                            }
-
-                            // smoothing with Tripple  EMA
-                            spkr_samples[i++] = spkr_level_tema;
-                            spkr_samples[i++] = spkr_level_tema;
-                        }
-                        
-#ifdef SPKR_DEBUG // Debug SPKR Buffer After EMA
-#ifdef SPKR_DEBUG_AFTER_EMA
-                        fwrite(spkr_samples, 1, buf_len, spkr_debug_file);
-                        fflush(spkr_debug_file);
-#endif
-#endif
-
                         alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, buf_len, spkr_sample_rate * multiplier);
                         al_check_error();
                         alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);

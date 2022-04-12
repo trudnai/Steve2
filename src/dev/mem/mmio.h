@@ -91,7 +91,7 @@ extern void setMEM ( uint16_t ioaddr, uint8_t val );
 extern void setMEM16 ( uint16_t ioaddr, uint16_t val );
 extern void setMEM32 ( uint16_t ioaddr, uint32_t val );
 extern void CALL( uint16_t addr );
-
+extern void JUMP( uint16_t addr );
 
 #define DEF_RAM_PAGE(mem,pg) \
     (mem) + ((pg) << 8)

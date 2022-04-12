@@ -79,6 +79,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ViewController.current?.saveFileAs()
     }
     
+    @IBAction func Cheat_Wavy_Navy_Vitroy(_ sender: Any) {
+        ViewController.current?.Cheat_Wavy_Navy_Victory()
+    }
+    
     @IBAction func Cheat_Wavy_Navy_Add_3_Ships(_ sender: Any) {
         ViewController.current?.Cheat_Wavy_Navy_Add_3_Ships()
     }

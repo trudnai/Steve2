@@ -601,6 +601,80 @@ INLINE void spkr_debug_spike() {
 }
 
 
+void spkr_play_with_prebuf() {
+    ALenum state;
+    alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
+    //                al_check_error();
+    
+    switch (state) {
+        case AL_PAUSED:
+            // should not be paused
+            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+            break;
+            
+        case AL_PLAYING:
+            // already playing, no need to do anything
+            break;
+            
+        case AL_INITIAL:
+        case AL_STOPPED:
+        default:
+            if (--freeBuffers < 0) {
+                printf("freeBuffer < 0 (%i)\n", freeBuffers);
+                freeBuffers = 0;
+            }
+            
+            // Normal Sound Buffer Feed
+            else {
+                const int buf_len = round((double)spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t) * 2;
+//                const int buf_len = 500;
+//                printf("buf_len=%i\n", buf_len);
+                const spkr_sample_t * silent_samples = spkr_samples + spkr_buf_size * 100;
+                
+                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, silent_samples, buf_len, spkr_sample_rate);
+                al_check_error();
+                alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
+                al_check_error();
+            }
+
+            // no we can play this empty buffer first and then later on the real one
+            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+            break;
+    }
+}
+
+
+void spkr_play_with_pause() {
+    ALenum state;
+    alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
+    //                al_check_error();
+    
+    switch (state) {
+        case AL_PAUSED:
+            if ( --playDelay < 0 ) {
+                alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+                playDelay = SPKR_PLAY_DELAY;
+            }
+            break;
+            
+        case AL_PLAYING:
+            // already playing
+            break;
+            
+        case AL_INITIAL:
+        case AL_STOPPED:
+        default:
+            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+            // this is so we will set state to AL_PAUSED immediately
+            // As a result there will be an extra queued buffer
+            // which gives us a glitch free sound
+            alSourcePause(spkr_src[SPKR_SRC_GAME_SFX]);
+            playDelay = SPKR_PLAY_DELAY;
+            break;
+    }
+}
+
+
 void spkr_update() {
     if ( ++spkr_frame_cntr >= spkr_fps_divider ) {
         spkr_frame_cntr = 0;
@@ -669,6 +743,8 @@ void spkr_update() {
     //                    //spkr_samples[sample_idx] = spkr_level;
     //                     memset(spkr_samples + spkr_sample_idx, spkr_level, spkr_buf_alloc_size * DEFAULT_FPS - spkr_sample_idx);
                         
+                        spkr_play_with_prebuf();
+                        
                         if (--freeBuffers < 0) {
                             printf("freeBuffer < 0 (%i)\n", freeBuffers);
                             freeBuffers = 0;
@@ -682,8 +758,7 @@ void spkr_update() {
                                 spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
                             }
 
-
-                            int buf_len = round((double)spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t);
+                            const int buf_len = round((double)spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t);
                             
                             // digital filtering the audio stream -- most notably smoothing
                             spkr_filter(buf_len);
@@ -694,34 +769,8 @@ void spkr_update() {
                             al_check_error();
                         }
                     }
-                    
-                    ALenum state;
-                    alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
-    //                al_check_error();
-                    
-                    switch (state) {
-                        case AL_PAUSED:
-                            if ( --playDelay < 0 ) {
-                                alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
-                                playDelay = SPKR_PLAY_DELAY;
-                            }
-                            break;
-                            
-                        case AL_PLAYING:
-                            // already playing
-                            break;
-                            
-                        case AL_INITIAL:
-                        case AL_STOPPED:
-                        default:
-                            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
-                            // this is so we will set state to AL_PAUSED immediately
-                            // As a result there will be an extra queued buffer
-                            // which gives us a glitch free sound
-                            alSourcePause(spkr_src[SPKR_SRC_GAME_SFX]);
-                            playDelay = SPKR_PLAY_DELAY;
-                            break;
-                    }
+
+//                    spkr_play_with_pause();
                     
     //                int dst = 0;
                     int src = spkr_buf_size + spkr_extra_buf;

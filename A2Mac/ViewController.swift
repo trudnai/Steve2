@@ -683,10 +683,8 @@ class ViewController: NSViewController  {
     var shadowTxt : String = ""
     var unicodeTextString : String = ""
 
-    func Render() {
-        
-//        DispatchQueue.global(qos: .background).async {
-            
+    
+    func Flash() {
         self.frameCnt += 1
         
         if ( self.frameCnt == fps / video_fps_divider / 2 ) {
@@ -696,11 +694,18 @@ class ViewController: NSViewController  {
             self.frameCnt = 0
             ViewController.charConvTbl = ViewController.charConvTblFlashOff
         }
+    }
 
-        var textNeedRender = false
+    
+    var textNeedRender = false
+    
+    func RenderText() {
+        Flash()
+
+        textNeedRender = false
         
         var fromLines = 0
-        var toLines = self.textLines
+        var toLines = textLines
         
         if videoMode.text == 0 {
             if videoMode.mixed == 1 {
@@ -711,43 +716,43 @@ class ViewController: NSViewController  {
             }
         }
         
-        self.unicodeTextArray = NSArray(array: self.txtClear, copyItems: true) as! [Character]
+        unicodeTextArray = NSArray(array: txtClear, copyItems: true) as! [Character]
         
         // render an empty space to eiminate displaying text portion of the screen covered by graphics
         let charDisposition = videoMode.col80 == 0 ? 1 : 2
         for y in 0 ..< fromLines {
-            self.unicodeTextArray[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
+            unicodeTextArray[ y * (textCols * charDisposition + lineEndChars) + textCols * charDisposition] = "\n"
         }
         
         // 40 col
         if videoMode.col80 == 0 {
             if MEMcfg.txt_page_2 == 0 {
-                self.textBufferPointer = ViewController.textPage1Pointer
+                textBufferPointer = ViewController.textPage1Pointer
             }
             else {
-                self.textBufferPointer = ViewController.textPage2Pointer
+                textBufferPointer = ViewController.textPage2Pointer
             }
             
-            if self.textBufferPointer.elementsEqual(ViewController.textPageShadowBuffer) {
+            if textBufferPointer.elementsEqual(ViewController.textPageShadowBuffer) {
             }
             else {
                 ViewController.textPage1Pointer.copyBytes(to: ViewController.textPageShadowBuffer)
                 textNeedRender = true
-
+                
                 // render the rest of the text screen
                 for y in fromLines ..< toLines {
-                    for x in 0 ..< self.textCols {
-                        let byte = self.textBufferPointer[ ViewController.textLineOfs[y] + x ]
+                    for x in 0 ..< textCols {
+                        let byte = textBufferPointer[ ViewController.textLineOfs[y] + x ]
                         let idx = Int(byte);
                         let chr = ViewController.charConvTbl[idx]
                         
-                        self.unicodeTextArray[ y * (self.textCols + self.lineEndChars) + x ] = chr
+                        unicodeTextArray[ y * (textCols + lineEndChars) + x ] = chr
                     }
                     
-                    self.unicodeTextArray[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
+                    unicodeTextArray[ y * (textCols + lineEndChars) + textCols ] = "\n"
                 }
-
-                unicodeTextString = String(self.unicodeTextArray)
+                
+                unicodeTextString = String(unicodeTextArray)
             }
         }
         // 80 col
@@ -759,128 +764,137 @@ class ViewController: NSViewController  {
             
             // render the rest of the text screen
             for y in fromLines ..< toLines {
-                for x in 0 ..< self.textCols {
+                for x in 0 ..< textCols {
                     let byte = textIntBuffer[ ViewController.textLineOfs[y] + x ]
                     let idx = Int(byte);
                     let chr = ViewController.charConvTbl[idx]
                     
-                    self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
+                    unicodeTextArray[ y * (textCols * 2 + lineEndChars) + x * 2 + 1] = chr
                     
                     let byte2 = textAuxBuffer[ ViewController.textLineOfs[y] + x ]
                     let idx2 = Int(byte2);
                     let chr2 = ViewController.charConvTbl[idx2]
                     
-                    self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr2
+                    unicodeTextArray[ y * (textCols * 2 + lineEndChars) + x * 2] = chr2
                 }
                 
-                self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
+                unicodeTextArray[ y * (textCols * 2 + lineEndChars) + textCols * 2] = "\n"
             }
             
-            unicodeTextString = String(self.unicodeTextArray)
+            unicodeTextString = String(unicodeTextArray)
         }
+    }
+
+    
+    func UpdateText() {
+
+// TODO: Render text Screen in native C
+//            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
+        
+        if videoMode.col80 != currentVideoMode.col80 {
+            currentVideoMode.col80 = videoMode.col80
+            
+            if let fontSize = textDisplay.font?.pointSize {
+                if videoMode.col80 == 1 {
+                    textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
+                }
+                else {
+                    textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
+                }
+            }
+        }
+        
+        if textNeedRender || shadowTxt != unicodeTextString {
+            shadowTxt = unicodeTextString
+            //                display.stringValue = unicodeTextString
+            let selectedRange = textDisplay.selectedRange()
+            textDisplay.string = unicodeTextString
+            textDisplay.setSelectedRange(selectedRange)
+            
+//                let bold14 = NSFont.boldSystemFont(ofSize: 14.0)
+//                let textColor = NSColor.red
+//                let attribs = [NSAttributedString.Key.font:bold14,NSAttributedString.Key.foregroundColor:textColor,NSAttributedString.Key.paragraphStyle:textParagraph]
+
+//                let textParagraph = NSMutableParagraphStyle()
+//                textParagraph.lineSpacing = 0
+//                textParagraph.minimumLineHeight = 32.0
+//                textParagraph.maximumLineHeight = 32.0
+//
+//                let attribs = [NSAttributedString.Key.paragraphStyle: textParagraph]
+//                let attrString:NSAttributedString = NSAttributedString.init(string: unicodeTextString, attributes: attribs)
+//                display.attributedStringValue = attrString
+        }
+//            display.stringValue = "testing\nit\nout"
+    }
+    
+    
+    func UpdateCPUspeed() {
+        if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
+            speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+        }
+        else {
+            speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
+        }
+    }
+    
+    
+    func RenderGraphics() {
+        // only refresh graphics view when needed (aka not in text mode)
+        if ( videoMode.text == 0 ) {
+            if ( videoMode.hires == 0 ) {
+                // when we change video mode, buffer needs to be cleared to avoid artifacts
+                if ( savedVideoMode.text == 1 )
+                    || ( savedVideoMode.mixed != videoMode.mixed )
+                    || ( savedVideoMode.hires != videoMode.hires )
+                {
+                    lores.clearScreen()
+                    lores.isHidden = false
+                    hires.isHidden = true
+                    unicodeTextString = String(unicodeTextArray)
+                }
+                
+                lores.Render()
+            }
+            else {
+                // when we change video mode, buffer needs to be cleared to avoid artifacts
+                if ( savedVideoMode.text == 1 )
+                    || ( savedVideoMode.mixed != videoMode.mixed )
+                    || ( savedVideoMode.hires != videoMode.hires )
+                {
+                    hires.clearScreen()
+                    hires.isHidden = false
+                    lores.isHidden = true
+                    unicodeTextString = String(unicodeTextArray)
+                }
+                
+                hires.Render()
+            }
+        }
+        else if ( savedVideoMode.text == 0 ) {
+            // we just switched from grahics to text
+            lores.isHidden = true
+            hires.isHidden = true
+            unicodeTextString = String(unicodeTextArray)
+        }
+        
+        savedVideoMode = videoMode
+    }
+    
+    
+    func Render() {
+        self.RenderText()
 
         // Rendering is happening in the main thread, which has two implications:
         //   1. We can update UI elements
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
         DispatchQueue.main.sync {
-
-            // TODO: Render text Screen in native C
-            //            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
-            
-            if videoMode.col80 != self.currentVideoMode.col80 {
-                self.currentVideoMode.col80 = videoMode.col80
-                
-                if let fontSize = self.textDisplay.font?.pointSize {
-                    if videoMode.col80 == 1 {
-                            self.textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
-                    }
-                    else {
-                        self.textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
-                    }
-                }
-            }
-                    
-            if textNeedRender || self.shadowTxt != unicodeTextString {
-                self.shadowTxt = unicodeTextString
-    //                self.display.stringValue = unicodeTextString
-                let selectedRange = self.textDisplay.selectedRange()
-                self.textDisplay.string = unicodeTextString
-                self.textDisplay.setSelectedRange(selectedRange)
-
-    //                let bold14 = NSFont.boldSystemFont(ofSize: 14.0)
-    //                let textColor = NSColor.red
-    //                let attribs = [NSAttributedString.Key.font:bold14,NSAttributedString.Key.foregroundColor:textColor,NSAttributedString.Key.paragraphStyle:textParagraph]
-        
-    //                let textParagraph = NSMutableParagraphStyle()
-    //                textParagraph.lineSpacing = 0
-    //                textParagraph.minimumLineHeight = 32.0
-    //                textParagraph.maximumLineHeight = 32.0
-    //
-    //                let attribs = [NSAttributedString.Key.paragraphStyle: textParagraph]
-    //                let attrString:NSAttributedString = NSAttributedString.init(string: unicodeTextString, attributes: attribs)
-    //                self.display.attributedStringValue = attrString
-            }
-            //            self.display.stringValue = "testing\nit\nout"
-                
-            if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
-                self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
-            }
-            else {
-                self.speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
-            }
+            self.UpdateText()
+            self.UpdateCPUspeed()
                 
             #if HIRES
-            
-            // only refresh graphics view when needed (aka not in text mode)
-            if ( videoMode.text == 0 ) {
-                if ( videoMode.hires == 0 ) {
-                    // when we change video mode, buffer needs to be cleared to avoid artifacts
-                    if ( self.savedVideoMode.text == 1 )
-                        || ( self.savedVideoMode.mixed != videoMode.mixed )
-                        || ( self.savedVideoMode.hires != videoMode.hires )
-                    {
-                        self.lores.clearScreen()
-                        self.lores.isHidden = false
-                        self.hires.isHidden = true
-                        unicodeTextString = String(self.unicodeTextArray)
-                    }
-                    
-                    self.lores.Render()
-                }
-                else {
-                    // when we change video mode, buffer needs to be cleared to avoid artifacts
-                    if ( self.savedVideoMode.text == 1 )
-                        || ( self.savedVideoMode.mixed != videoMode.mixed )
-                        || ( self.savedVideoMode.hires != videoMode.hires )
-                    {
-                        self.hires.clearScreen()
-                        self.hires.isHidden = false
-                        self.lores.isHidden = true
-                        unicodeTextString = String(self.unicodeTextArray)
-                    }
-                    
-                    self.hires.Render()
-                }
-            }
-            else if ( self.savedVideoMode.text == 0 ) {
-                // we just switched from grahics to text
-                self.lores.isHidden = true
-                self.hires.isHidden = true
-                unicodeTextString = String(self.unicodeTextArray)
-            }
-            
-            self.savedVideoMode = videoMode
-            
-            #endif
-            
-            // stream speaker from a separate thread from the simulation
-            // TODO: Do we need to do this from here?
-            //            spkr_update()
-                
+            self.RenderGraphics()
+            #endif // HIRES
         }
-//        }
-        
-//        render()
     }
     
     

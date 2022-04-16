@@ -28,6 +28,7 @@ INLINE flags_t getFlags2() {
 }
 
 
+#ifdef DISASSEMBLER
 void printDisassembly( FILE * f ) {
     if ( m6502.dbgLevel.trace && f ) {
         //        fprintf( f, "%s: %-14s%-6s%-14s%-16s A:%02X X:%02X Y:%02X S:%02X P:%02X (%c%c%c%c%c%c%c%c)\n",
@@ -105,4 +106,6 @@ void printDisassembly( FILE * f ) {
         
     }
 }
+#endif // DISASSEMBLER
+
 

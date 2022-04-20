@@ -112,31 +112,55 @@ class ViewController: NSViewController  {
 //        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
 //        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
     
-    static let charConvStrFlashOff : String =
+    // TODO: On 80n col mode no flash + small caps are inversed on the Flash map
+    
+    static let charConvStrFlashOff40 : String =
+        // INVERSE
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
             
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" + // FL
-            
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
-            
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+        // FLASH
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" + // FL
 
-    static let charConvStrFlashOn : String =
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+            
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+
+    static let charConvStrFlashOn40 : String =
+        // INVERSE
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+
+        // FLASH
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
            
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
             
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
 
-    static let charConvTblFlashOn  = Array( charConvStrFlashOn  )
-    static let charConvTblFlashOff = Array( charConvStrFlashOff )
+    
+    static let charConvStrCol80 : String =
+        // INVERSE
+        "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+        
+        // INVERSE 2 with small caps
+        "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E160}\u{E161}\u{E162}\u{E163}\u{E164}\u{E165}\u{E166}\u{E167}\u{E168}\u{E169}\u{E16A}\u{E16B}\u{E16C}\u{E16D}\u{E16E}\u{E16F}\u{E170}\u{E171}\u{E172}\u{E173}\u{E174}\u{E175}\u{E176}\u{E177}\u{E178}\u{E179}\u{E17A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+        
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+    
+    
+    static let charConvTblFlashOn40  = Array( charConvStrFlashOn40  )
+    static let charConvTblFlashOff40 = Array( charConvStrFlashOff40 )
+    static let charConvTblCol80  = Array( charConvStrCol80  )
+    
+    static var charConvTblFlashOn  = charConvTblFlashOn40
+    static var charConvTblFlashOff = charConvTblFlashOff40
     
     static var charConvTbl = charConvTblFlashOn
     
-//    static var romFileName = "Apple2e_Enhanced.rom";
-    static var romFileName = "Apple2e_32k.rom";
-//    static var romFileName = "077-0019 Apple IIe Diagnostic Card - English.rom";
+//    static var romFileName = "Apple2e_Enhanced.rom"
+    static var romFileName = "Apple2e_32k.rom"
+//    static var romFileName = "077-0019 Apple IIe Diagnostic Card - English.rom"
 
     static let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
@@ -797,9 +821,13 @@ class ViewController: NSViewController  {
             if let fontSize = textDisplay.font?.pointSize {
                 if videoMode.col80 == 1 {
                     textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
+                    ViewController.charConvTblFlashOn = ViewController.charConvTblCol80
+                    ViewController.charConvTblFlashOff = ViewController.charConvTblCol80
                 }
                 else {
                     textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
+                    ViewController.charConvTblFlashOn = ViewController.charConvTblFlashOn40
+                    ViewController.charConvTblFlashOff = ViewController.charConvTblFlashOff40
                 }
             }
         }

@@ -79,6 +79,8 @@ MEMcfg_t MEMcfg = INIT_MEMCFG;
 MEMcfg_t newMEMcfg = INIT_MEMCFG;
 
 
+const uint8_t * const shadowZPSTCKMEM = Apple2_64K_MEM;
+const uint8_t * currentZPSTCKMEM = Apple2_64K_RAM;
 const uint8_t * const shadowLowMEM = Apple2_64K_MEM + 0x200;
 const uint8_t * currentLowRDMEM = Apple2_64K_RAM + 0x200;
 uint8_t * currentLowWRMEM = Apple2_64K_RAM;
@@ -112,7 +114,7 @@ INLINE void set_MEM_write() {
     // two consecutive read or write needs for write enable
     // Note: if it is already writeable and was previously a ROM read + RAM write, then we also need to bound AUX to MEM
     if ( is_wr_enabled() ) {
-        printf("WR_AUX\n");
+        printf("WR_MEM\n");
         
         // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
         MEMcfg.WR_RAM = 1;
@@ -149,7 +151,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
         
         // save the content of Shadow Memory in needed
         if ( MEMcfg.WR_RAM && MEMcfg.RD_INT_RAM ) {
-            //                    printf("Saving RAM Bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
+//                    printf("Saving RAM Bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
             memcpy(current_RAM_bank, Apple2_64K_MEM + 0xD000, 0x1000);
             memcpy(Apple2_64K_AUX + 0xE000, Apple2_64K_MEM + 0xE000, 0x2000);
         }
@@ -629,13 +631,21 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             break;
             
         case (uint8_t)io_SETSTDZP:
-            MEMcfg.ALT_ZP = 0;
+            newMEMcfg = MEMcfg;
+            newMEMcfg.ALT_ZP = 0;
+            auxMemorySelect(newMEMcfg);
+            
             // TODO: set zero page table to RAM
+            printf("TODO: set zero page table to RAM\n");
             break;
             
         case (uint8_t)io_SETALTZP:
-            MEMcfg.ALT_ZP = 1;
+            newMEMcfg = MEMcfg;
+            newMEMcfg.ALT_ZP = 1;
+            auxMemorySelect(newMEMcfg);
+            
             // TODO: set zero page table to AUX
+            printf("TODO: set zero page table to AUX\n");
             break;
             
         case (uint8_t)io_SETSLOTCXROM:
@@ -1211,7 +1221,26 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
         // mark new as the current one
         currentLowRDMEM = newReadMEM;
     }
+
     
+    // save old content to shadow memory
+    if ( newMEMcfg.ALT_ZP != MEMcfg.ALT_ZP ) {
+        // save the content of Shadow ZP + Stack
+        memcpy( (void*) currentZPSTCKMEM, shadowZPSTCKMEM, 0x200);
+        
+        // which ZP & Stack shall we use now?
+        if ( newMEMcfg.ALT_ZP ) {
+            currentZPSTCKMEM = Apple2_64K_AUX;
+        }
+        else {
+            currentZPSTCKMEM = Apple2_64K_RAM;
+        }
+        
+        // load content of SP & Stack
+        memcpy( shadowZPSTCKMEM, (void*) currentZPSTCKMEM, 0x200);
+    }
+    
+    // finally we can mark change
     MEMcfg = newMEMcfg;
 }
 

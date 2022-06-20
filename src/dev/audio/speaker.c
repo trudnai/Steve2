@@ -734,7 +734,7 @@ void spkr_buffer_with_pause(int buf_len) {
         case AL_INITIAL:
         case AL_STOPPED:
         default:
-            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples + SPKR_BUF_SLOT(BUFFER_COUNT - 2), buf_len * 2, spkr_sample_rate);
+            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples + SPKR_BUF_SLOT(BUFFER_COUNT - 2), buf_len, spkr_sample_rate);
             al_check_error();
             alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
             al_check_error();

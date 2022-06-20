@@ -44,6 +44,8 @@
 #define SPKR_LEVEL_MAX      32767 // 8192
 #define SPKR_LEVEL_MIN      (-SPKR_LEVEL_MAX)
 #define SPKR_PLAY_TIMEOUT   8U
+#define SPKR_PLAY_QUIET     0
+//#define SPKR_PLAY_QUIET     (SPKR_PLAY_TIMEOUT - 2)
 
 // quiet
 //#define SPKR_LEVEL_MIN      (-1000)
@@ -59,6 +61,8 @@ extern float SPKR_FADE_LEADING_EDGE;
 extern float SPKR_FADE_TRAILING_EDGE;
 extern float SPKR_INITIAL_LEADING_EDGE; // leading edge should be pretty steep to get sharp sound plus to avoid Wavy Navy high pitch sound
 extern float SPKR_INITIAL_TRAILING_EDGE; // need a bit of slope to get Xonix sound good
+
+extern int spkr_ema_len;
 
 
 #define SPKR_SAMPLE_PWM_THRESHOLD   32    // to detect PWM controlled speaker control like in Wavy Navy or Xonix

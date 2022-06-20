@@ -153,6 +153,8 @@ typedef struct MEMcfg_s {
     unsigned RD_AUX_MEM  : 1;
     unsigned WR_AUX_MEM  : 1;
     unsigned ALT_ZP      : 1;
+    
+    unsigned WR_RAM_cntr;       // min 2 I/O to enable mem write
 } MEMcfg_t;
 
 

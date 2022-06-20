@@ -1318,6 +1318,13 @@ class ViewController: NSViewController  {
     }
     
     
+    @IBOutlet weak var EMALabel: NSTextFieldCell!
+    @IBAction func EMASelected(_ sender: NSSlider) {
+        spkr_ema_len = Int32(sender.floatValue)
+        EMALabel.title = "EMA: " + String( spkr_ema_len )
+    }
+    
+    
     func setSimulationMode( mode : String ) {
         switch ( mode ) {
         case "Eco":

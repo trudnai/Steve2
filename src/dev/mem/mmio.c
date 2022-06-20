@@ -88,9 +88,10 @@ uint8_t * currentLowWRMEM = Apple2_64K_RAM;
 
 /// No writing (Readonly), and mark it as NO need to commit from Shadow RAM
 INLINE void set_MEM_readonly() {
-    printf("NOWR_AUX\n");
+    printf("NOWR_AUX (pc:$%04X)\n", m6502.PC);
     
     MEMcfg.WR_RAM = 0;
+    MEMcfg.WR_RAM_cntr = 0;
     WRD0MEM = Apple2_Dummy_RAM;   // for Discarding any writes to $D000 - $DFFF - BANK X
     WRHIMEM = Apple2_Dummy_RAM;   // for Discarding any writes to $E000 - $FFFF
 }
@@ -99,11 +100,13 @@ INLINE void set_MEM_readonly() {
 /// Returns TRUE if already writeable or second of the "two consecutive" reads on appropriate soft switches
 INLINE int is_wr_enabled() {
     uint64_t clk = m6502.clktime + m6502.clkfrm;
-    uint64_t elapsed = clk - m6502.clk_wrenable;
-    int is_enabled = ( elapsed < 16 ) || MEMcfg.WR_RAM;
-    
-    printf("is_wr_enabled elapsed:%llu  was_enabled:%i  to_be_enabled:%i\n", elapsed, MEMcfg.WR_RAM, is_enabled);
-    
+//    uint64_t elapsed = clk - m6502.clk_wrenable;
+//    int is_enabled = ( elapsed < 16 ) || MEMcfg.WR_RAM;
+    int is_enabled = ++MEMcfg.WR_RAM_cntr >= 1 || MEMcfg.WR_RAM;
+
+//    printf("is_wr_enabled elapsed:%llu  was_enabled:%i  to_be_enabled:%i\n", elapsed, MEMcfg.WR_RAM, is_enabled);
+    printf("is_wr_enabled WR_RAM_cntr:%u  was_enabled:%i  to_be_enabled:%i\n", MEMcfg.WR_RAM_cntr, MEMcfg.WR_RAM, is_enabled);
+
     m6502.clk_wrenable = clk;
     return is_enabled;
 }
@@ -115,7 +118,7 @@ INLINE void set_AUX_read_write() {
     // two consecutive read or write needs for write enable
     // Note: if it is already writeable and was previously a ROM read + RAM write, then we also need to bound AUX to MEM
     if ( is_wr_enabled() ) {
-        printf("WR_MEM\n");
+        printf("WR_MEM (pc:$%04X)\n", m6502.PC);
         
         // will write to Shadow RAM, and mark it as need to commit from Shadow RAM
         MEMcfg.WR_RAM = 1;
@@ -131,7 +134,7 @@ INLINE void set_AUX_write() {
     // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
     // Note: if it is already writeable and was previously a RAM read + RAM write, then we also need to bound AUX to MEM
     if ( is_wr_enabled() ) {
-        printf("WR_AUX\n");
+        printf("WR_AUX (pc:$%04X)\n", m6502.PC);
         
         MEMcfg.WR_RAM = 1;
         if ( MEMcfg.RAM_BANK_2 ) {
@@ -148,8 +151,10 @@ INLINE void set_AUX_write() {
 // save the content of Shadow Memory in needed
 INLINE void save_AUX() {
     if ( MEMcfg.WR_RAM && MEMcfg.RD_INT_RAM ) {
-//        printf("Saving RAM Bank %d to %p\n", MEMcfg.RAM_BANK_2 + 1, current_RAM_bank);
+        printf("Saving RAM Bank %d to %d (pc:$%04X)\n", MEMcfg.RAM_BANK_2 + 1, (current_RAM_bank == Apple2_64K_AUX + 0xD000) + 1, m6502.PC);
+        // save LC Bank 1 or 2
         memcpy(current_RAM_bank, Apple2_64K_MEM + 0xD000, 0x1000);
+        // save rest of LC RAM
         memcpy(Apple2_64K_AUX + 0xE000, Apple2_64K_MEM + 0xE000, 0x2000);
     }
 }
@@ -168,14 +173,14 @@ INLINE void select_RAM_BANK( uint16_t addr ) {
         case (uint8_t)io_MEM_RDROM_NOWR_2_:
         case (uint8_t)io_MEM_RDRAM_WRAM_2_:
             
-            printf("RAM_BANK_2\n");
+            printf("RAM_BANK_2 (pc:$%04X)\n", m6502.PC);
             
             MEMcfg.RAM_BANK_2 = 1;
             current_RAM_bank = Apple2_64K_AUX + 0xD000;
             break;
             
         default:
-            printf("RAM_BANK_1\n");
+            printf("RAM_BANK_1 (pc:$%04X)\n", m6502.PC);
             
             MEMcfg.RAM_BANK_2 = 0;
             current_RAM_bank = Apple2_64K_AUX + 0xC000;
@@ -197,7 +202,7 @@ INLINE void read_RAM_or_ROM( uint16_t addr ) {
         case (uint8_t)io_MEM_RDRAM_NOWR_1_:
         case (uint8_t)io_MEM_RDRAM_WRAM_1_:
             
-            printf("RD_RAM\n");
+            printf("RD_RAM (pc:$%04X)\n", m6502.PC);
             
             MEMcfg.RD_INT_RAM = 1;
             
@@ -209,7 +214,7 @@ INLINE void read_RAM_or_ROM( uint16_t addr ) {
             break;
             
         default:
-            printf("RD_ROM\n");
+            printf("RD_ROM (pc:$%04X)\n", m6502.PC);
             
             MEMcfg.RD_INT_RAM = 0;
             
@@ -232,7 +237,7 @@ INLINE void write_RAM_or_NOT( uint16_t addr ) {
         case (uint8_t)io_MEM_RDROM_WRAM_2_:
         case (uint8_t)io_MEM_RDROM_WRAM_1_:
             
-            printf("RD_ROM + WR_AUX\n");
+            printf("RD_ROM + WR_AUX (pc:$%04X)\n", m6502.PC);
             
             set_AUX_write();
             
@@ -244,14 +249,14 @@ INLINE void write_RAM_or_NOT( uint16_t addr ) {
         case (uint8_t)io_MEM_RDRAM_WRAM_2_:
         case (uint8_t)io_MEM_RDRAM_WRAM_1_:
             
-            printf("RD_RAM + WR_RAM\n");
+            printf("RD_RAM + WR_RAM (pc:$%04X)\n", m6502.PC);
             
             set_AUX_read_write();
             
             break;
             
         default:
-            printf("RD_ROM + NO_WR\n");
+            printf("NO_WR (pc:$%04X)\n", m6502.PC);
             
             set_MEM_readonly();
             
@@ -275,7 +280,7 @@ INLINE void io_RAM_EXP( uint16_t addr ) {
 }
 
 
-INLINE int is_io_interesting(addr) {
+INLINE int is_io_interesting( uint16_t addr ) {
     switch(addr) {
         case io_KBD:
         case io_KBDSTRB:
@@ -354,13 +359,12 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return Apple2_64K_RAM[io_KBDSTRB];
             
         case (uint8_t)io_TAPEOUT:
-            // TODO: 1. Sound problem in Castle Wolfensein if we output this to speaker all the time
-            //       2. Implement Tape
-            return rand(); // no tape, floating I/O
+            // TODO: 1. Implement Tape
+            return rand(); // Floating I/O -- used for random number generation in Games
 
         case (uint8_t)io_SPKR:
             spkr_toggle();
-            return rand(); // Floating I/O -- used for random number genet=ration in Games
+            return rand(); // Floating I/O -- used for random number generation in Games
             
         case (uint8_t)io_STROBE:
         case (uint8_t)io_CLRAN0:
@@ -375,7 +379,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return rand(); // Apple2_64K_RAM[io_SPKR];
             
         case (uint8_t)io_VID_RDVBL:
-            return (m6502.clkfrm < 4550) ? 0x80 : 0;
+            return (m6502.clkfrm > 4550) ? 0x80 : 0;
             
         case (uint8_t)io_VID_RDTEXT:
             return videoMode.text << 7;
@@ -463,35 +467,35 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_PDL1:
         case (uint8_t)io_PDL2:
         case (uint8_t)io_PDL3:
-            //            printf("PDL%d: %d\n", addr - io_PDL0, pdl_read( addr - io_PDL0 ));
+//            printf("PDL%d: %d\n", addr - io_PDL0, pdl_read( addr - io_PDL0 ));
             return pdl_read( addr - io_PDL0 );
             
         case (uint8_t)io_PDL_STROBE:
             return pdl_reset();
             
         case (uint8_t)io_RDMAINRAM:
-            //            printf("io_RDMAINRAM\n");
+            printf("R:io_RDMAINRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.RD_AUX_MEM = 0;
             auxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_RDCARDRAM:
-            //            printf("io_RDCARDRAM\n");
+            printf("R:io_RDCARDRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.RD_AUX_MEM = 1;
             auxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_WRMAINRAM:
-            //            printf("io_WRMAINRAM\n");
+            printf("R:io_WRMAINRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.WR_AUX_MEM = 0;
             auxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_WRCARDRAM:
-            //            printf("io_WRCARDRAM\n");
+            printf("R:io_WRCARDRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.WR_AUX_MEM = 1;
             auxMemorySelect(newMEMcfg);
@@ -519,7 +523,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             io_RAM_EXP(addr);
             break;
             
-            // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
+        // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
         case (uint8_t)io_DISK_PHASE0_OFF + SLOT6:
         case (uint8_t)io_DISK_PHASE1_OFF + SLOT6:
         case (uint8_t)io_DISK_PHASE2_OFF + SLOT6:
@@ -617,49 +621,47 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             break;
             
         case (uint8_t)io_RDMAINRAM:
-            //            printf("io_RDMAINRAM\n");
+            printf("W:io_RDMAINRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.RD_AUX_MEM = 0;
             auxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_RDCARDRAM:
-            //            printf("io_RDCARDRAM\n");
+            printf("W:io_RDCARDRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.RD_AUX_MEM = 1;
             auxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_WRMAINRAM:
-            //            printf("io_WRMAINRAM\n");
+            printf("W:io_WRMAINRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.WR_AUX_MEM = 0;
             auxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_WRCARDRAM:
-            //            printf("io_WRCARDRAM\n");
+            printf("W:io_WRCARDRAM (pc:$%04X)\n", m6502.PC);
             newMEMcfg = MEMcfg;
             newMEMcfg.WR_AUX_MEM = 1;
             auxMemorySelect(newMEMcfg);
             break;
             
         case (uint8_t)io_SETSTDZP:
+            printf("INT ZP (pc:$%04X)\n", m6502.PC);
+
             newMEMcfg = MEMcfg;
             newMEMcfg.ALT_ZP = 0;
             auxMemorySelect(newMEMcfg);
-            
-            // TODO: set zero page table to RAM
-            printf("TODO: set zero page table to RAM\n");
             break;
             
         case (uint8_t)io_SETALTZP:
+            printf("AUX ZP (pc:$%04X)\n", m6502.PC);
+
             newMEMcfg = MEMcfg;
             newMEMcfg.ALT_ZP = 1;
             auxMemorySelect(newMEMcfg);
-            
-            // TODO: set zero page table to AUX
-            printf("TODO: set zero page table to AUX\n");
             break;
             
         case (uint8_t)io_SETSLOTCXROM:
@@ -716,25 +718,25 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             break;
             
         case (uint8_t)io_80STOREOFF:
-            //            printf("io_80STOREOFF\n");
+            printf("io_80STOREOFF (pc:$%04X)\n", m6502.PC);
             MEMcfg.is_80STORE = 0;
             textPageSelect();
             break;
             
         case (uint8_t)io_80STOREON:
-            //            printf("io_80STOREON\n");
+            printf("io_80STOREON (pc:$%04X)\n", m6502.PC);
             MEMcfg.is_80STORE = 1;
             textPageSelect();
             break;
             
         case (uint8_t)io_VID_TXTPAGE1:
-            //            printf("io_VID_TXTPAGE1\n");
+            printf("io_VID_TXTPAGE1 (pc:$%04X)\n", m6502.PC);
             MEMcfg.txt_page_2 = 0;
             textPageSelect();
             break;
             
         case (uint8_t)io_VID_TXTPAGE2:
-            //            printf("io_VID_TXTPAGE2\n");
+            printf("io_VID_TXTPAGE2 (pc:$%04X)\n", m6502.PC);
             MEMcfg.txt_page_2 = 1;
             textPageSelect();
             break;
@@ -785,7 +787,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
             io_RAM_EXP(addr);
             break;
             
-            // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
+        // TODO: Make code "card insertable to slot" / aka slot independent and dynamically add/remove
         case (uint8_t)io_DISK_PHASE0_OFF + SLOT6:
         case (uint8_t)io_DISK_PHASE1_OFF + SLOT6:
         case (uint8_t)io_DISK_PHASE2_OFF + SLOT6:
@@ -1182,25 +1184,26 @@ INLINE uint8_t src_zp_Y() {
 void auxMemorySelect( MEMcfg_t newMEMcfg ) {
     const uint8_t * newReadMEM = currentLowRDMEM;
     uint8_t * newWriteMEM = currentLowWRMEM;
-    
+
+    // TODO: Check if this is supposed to be the opposite
     if ( newMEMcfg.is_80STORE ) {
         if ( newMEMcfg.RD_AUX_MEM ) {
             newReadMEM = Apple2_64K_AUX + 0x200;
         }
         else {
-            newReadMEM = Apple2_64K_RAM + 0x200;
+            newReadMEM = Apple2_64K_MEM + 0x200;
         }
         
         if ( newMEMcfg.WR_AUX_MEM ) {
             newWriteMEM = Apple2_64K_AUX;
         }
         else {
-            newWriteMEM = Apple2_64K_RAM;
+            newWriteMEM = Apple2_64K_MEM;
         }
     }
     else {
-        newReadMEM = Apple2_64K_RAM + 0x200;
-        newWriteMEM = Apple2_64K_RAM;
+        newReadMEM = Apple2_64K_MEM + 0x200;
+        newWriteMEM = Apple2_64K_MEM;
     }
     
     
@@ -1251,7 +1254,7 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
         }
         
         // load content of SP & Stack
-        memcpy( shadowZPSTCKMEM, (void*) currentZPSTCKMEM, 0x200);
+        memcpy( (void*) shadowZPSTCKMEM, (void*) currentZPSTCKMEM, 0x200);
     }
     
     // finally we can mark change

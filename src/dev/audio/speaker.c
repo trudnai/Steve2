@@ -209,23 +209,18 @@ FILE * spkr_debug_ema_file = NULL;
 void spkr_fade(float fadeLevel, unsigned idx) {
     // Fade
     
-    float fadeSlope = 8;
+    float fadeSlope = fadeLevel / ( SPKR_BUF_SLOT(1) / 2 ) - idx;
     
-    if ( fadeLevel < 0 ) {
-        fadeSlope = -fadeSlope;
-    }
-    
-    while ( ( fabs(fadeLevel) > 1 ) && ( idx < spkr_buf_size ) ) {
-        spkr_samples[ idx++ ] = SPKR_LEVEL_ZERO + fadeLevel;
-        spkr_samples[ idx++ ] = SPKR_LEVEL_ZERO + fadeLevel; // stereo
+    while ( ( fabs(fadeLevel) >= fabs(fadeSlope) ) && ( idx < spkr_buf_size ) ) {
+        spkr_samples[ idx++ ] = fadeLevel;
+        spkr_samples[ idx++ ] = fadeLevel; // stereo
         
         // how smooth we want the speeker to decay, so we will hear no pops and crackles
-//        fadeLevel *= 0.999;
         fadeLevel -= fadeSlope;
     }
     
     // Fill with Zero to avoid pops
-    memset(spkr_samples + idx, 0, spkr_buf_size * sizeof(spkr_sample_t) * SPKR_CHANNELS);
+    memset(spkr_samples + idx, 0, SPKR_SLOT_SIZE(1));
 }
 
 

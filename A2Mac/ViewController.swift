@@ -208,7 +208,7 @@ class ViewController: NSViewController  {
     var workItem : DispatchWorkItem? = nil;
     @IBAction func PowerOn(_ sender: Any) {
         
-        upd.suspend()
+        CVDisplayLinkStop(displayLink!)
         cpuState = cpuState_inited;
         spkr_stopAll()
 
@@ -239,7 +239,7 @@ class ViewController: NSViewController  {
             m6502_ColdReset( Bundle.main.resourcePath! + "/rom/", ViewController.romFileName )
             
             cpuState = cpuState_running;
-            self.upd.resume()
+            CVDisplayLinkStart(self.displayLink!)
         }
         //------------------------------------------------------------
         
@@ -267,7 +267,7 @@ class ViewController: NSViewController  {
     
     @IBAction func PowerOff(_ sender: Any) {
         
-        upd.suspend()
+        CVDisplayLinkStop(displayLink!)
         cpuState = cpuState_inited;
         spkr_stopAll()
         
@@ -290,12 +290,12 @@ class ViewController: NSViewController  {
 
         switch ( cpuState ) {
         case cpuState_halted:
-            upd.resume()
+            CVDisplayLinkStart(displayLink!)
             cpuState = cpuState_running
             break
             
         case cpuState_running:
-            upd.suspend()
+            CVDisplayLinkStop(displayLink!)
             cpuState = cpuState_halted
             break
             
@@ -337,6 +337,8 @@ class ViewController: NSViewController  {
     let lineEndChars = ViewController.lineEndChars
 
     var frameCnt = 0
+    var flashInverted = false
+    
 //    let spaceChar : Character = "\u{E17F}"
 //    let blockChar : Character = "\u{E07F}"
 //    static let spaceChar : Character = " "
@@ -465,7 +467,7 @@ class ViewController: NSViewController  {
         
         if ( cpuMode == cpuMode_eco ) {
             cpuState = cpuState_running;
-            upd.resume()
+            CVDisplayLinkStart(displayLink!)
         }
         
 //        print("keyDown")
@@ -714,11 +716,18 @@ class ViewController: NSViewController  {
         self.frameCnt += 1
         
         if ( self.frameCnt == fps / video_fps_divider / 2 ) {
-            ViewController.charConvTbl = ViewController.charConvTblFlashOn
+            if !flashInverted {
+                ViewController.charConvTbl = ViewController.charConvTblFlashOn
+                flashInverted = true
+            }
         }
         else if ( self.frameCnt >= fps / video_fps_divider ) {
             self.frameCnt = 0
-            ViewController.charConvTbl = ViewController.charConvTblFlashOff
+            
+            if flashInverted {
+                ViewController.charConvTbl = ViewController.charConvTblFlashOff
+                flashInverted = false
+            }
         }
     }
 
@@ -1008,13 +1017,13 @@ class ViewController: NSViewController  {
 
             case cpuState_halting:
                 cpuState = cpuState_halted
-                // video rendering
+                // last video rendering before halt
                 Render()
                 
                 break
             
             case cpuState_halted:
-                upd.suspend()
+                CVDisplayLinkStop(displayLink!)
                 break
                 
             default:
@@ -1034,17 +1043,6 @@ class ViewController: NSViewController  {
 //    }
     
     
-    var upd = RepeatingTimer(timeInterval: 1)
-    
-//    func newUpdateTimer( timeInterval : Double ) {
-//        upd.kill()
-//        upd = RepeatingTimer(timeInterval: timeInterval)
-//        upd.eventHandler = {
-//            self.Update()
-//        }
-//        upd.resume()
-//    }
-
     
     // Kelvin Sherlock's fix to avoid uninstalled font problems
     override func awakeFromNib() {
@@ -1144,7 +1142,7 @@ class ViewController: NSViewController  {
         
         let unsafeSelf: UnsafeMutableRawPointer = Unmanaged.passUnretained(self).toOpaque()
         CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, unsafeSelf)
-        CVDisplayLinkStart(displayLink!)
+//        CVDisplayLinkStart(displayLink!)
     }
     
 
@@ -1399,7 +1397,7 @@ class ViewController: NSViewController  {
             cpuMode = cpuMode_eco
 
             fps = DEFAULT_FPS
-            video_fps_divider = DEF_VIDEO_DIV
+            video_fps_divider = ECO_VIDEO_DIV
             break
             
         case "Game":

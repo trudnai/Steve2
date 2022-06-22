@@ -868,11 +868,21 @@ class ViewController: NSViewController  {
     
     
     func UpdateCPUspeed() {
-        if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
+        // under ~1.5 MHz -- 3 decimals to be able to display 1.023 MHz
+        if ( (mhz < 1.4) && (mhz != floor(mhz)) ) {
             speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
         }
-        else {
+        // under ~100 MHz -- 1 decimal
+        else if (mhz < 95) {
             speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
+        }
+        // over ~1000 MHz -- 1 decimal GHz
+        else if (mhz > 950) {
+            speedometer.stringValue = String(format: "%0.1lf GHz", mhz / 1000);
+        }
+        // hundreds -- no decimals
+        else {
+            speedometer.stringValue = String(format: "%0.0lf MHz", mhz);
         }
     }
     
@@ -1004,7 +1014,11 @@ class ViewController: NSViewController  {
 //                Input()
                 
                 // run some code
-                m6502_Run()
+                cpuState = cpuState_executing
+//                DispatchQueue.global(qos: .userInitiated).async {
+                    m6502_Run()
+                    cpuState = cpuState_running
+//                }
                 
                 // video rendering
                 if ( frameCounter % video_fps_divider == 0 ) {
@@ -1013,6 +1027,11 @@ class ViewController: NSViewController  {
                 
                 #endif
                 
+                break
+                
+            case cpuState_executing:
+                // prevent running more instances per session
+//                setCPUClockSpeed(freq: MHz_6502 - 1)
                 break
 
             case cpuState_halting:

@@ -38,6 +38,7 @@ typedef enum cpuState_e {
     cpuState_unknown = 0,
     cpuState_inited,
     cpuState_running,
+    cpuState_executing,
     cpuState_halting,
     cpuState_halted,
 } cpuState_s;

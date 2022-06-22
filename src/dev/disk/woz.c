@@ -333,7 +333,7 @@ uint8_t woz_read() {
         if ( usedBytes ) {
 //            static const int extraForward = 4; // we search for 7 bit high a bit further to speed up disk read...
             uint64_t bitForward = (clkelpased >> 2) + extraForward;
-            if ( bitForward > 100000000 ) {
+            if ( bitForward > 1000 ) {
                 bitForward = 4;
             }
             
@@ -359,7 +359,7 @@ uint8_t woz_read() {
                     WOZread.latch = 0;
                     // but we do not want to miss that latch valid nibble...
                     // in other words synchronization is needed because of imperfect cycle calculation
-                    if ( bitForward < 18 ) {
+                    if ( bitForward < 18 ) { // for 30 Hz FPS 18 is better ) {
                         return latch;
                     }
                 }

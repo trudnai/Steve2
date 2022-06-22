@@ -79,6 +79,8 @@ class ViewController: NSViewController  {
 
     static var current : ViewController? = nil
     
+    var displayLink: CVDisplayLink?
+    
     @IBOutlet weak var textDisplayScroller: NSScrollView!
     @IBOutlet var textDisplay: NSTextView!
     @IBOutlet weak var speedometer: NSTextFieldCell!
@@ -1033,15 +1035,15 @@ class ViewController: NSViewController  {
     
     
     var upd = RepeatingTimer(timeInterval: 1)
-
-    func newUpdateTimer( timeInterval : Double ) {
-        upd.kill()
-        upd = RepeatingTimer(timeInterval: timeInterval)
-        upd.eventHandler = {
-            self.Update()
-        }
-        upd.resume()
-    }
+    
+//    func newUpdateTimer( timeInterval : Double ) {
+//        upd.kill()
+//        upd = RepeatingTimer(timeInterval: timeInterval)
+//        upd.eventHandler = {
+//            self.Update()
+//        }
+//        upd.resume()
+//    }
 
     
     // Kelvin Sherlock's fix to avoid uninstalled font problems
@@ -1096,6 +1098,55 @@ class ViewController: NSViewController  {
 //        -1.0, -1.0, 0.0,
 //        1.0, -1.0, 0.0
 //    ]
+    
+    //  The callback function is called everytime CVDisplayLink says its time to get a new frame.
+    let displayLinkOutputCallback : CVDisplayLinkOutputCallback = { (displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ vController: UnsafeMutableRawPointer?) -> CVReturn in
+        
+        /*  The displayLinkContext is CVDisplayLink's parameter definition of the view in which we are working.
+         In order to access the methods of a given view we need to specify what kind of view it is as right
+         now the UnsafeMutablePointer<Void> just means we have a pointer to "something".  To cast the pointer
+         such that the compiler at runtime can access the methods associated with our SwiftOpenGLView, we use
+         an unsafeBitCast.  The definition of which states, "Returns the the bits of x, interpreted as having
+         type U."  We may then call any of that view's methods.  Here we call drawView() which we draw a
+         frame for rendering.  */
+        //            unsafeBitCast(displayLinkContext, SwiftOpenGLView.self).renderFrame()
+
+/// This can be a precise FPS updater so MHz would be dead perfect pitch -- however, it makes things worse
+//        let now : CVTimeStamp = inNow.pointee
+////            print( "RateScaler:", now.rateScalar )
+//        if (mySelf.last_frame_time != 0) {
+//            let videoTimeDiff = now.videoTime - mySelf.last_frame_time
+//            let currentFPS = Double(now.videoTimeScale) / Double(videoTimeDiff)
+//
+//            fps = currentFPS
+//            //                mySelf.setCPUClockSpeed(freq: MHz_6502)
+//            clk_6502_per_frm = UInt64( MHz_6502 * M / currentFPS )
+//            clk_6502_per_frm_set = clk_6502_per_frm
+//
+//        }
+//        mySelf.last_frame_time = now.videoTime;
+
+        let mySelf = Unmanaged<ViewController>.fromOpaque(vController!).takeUnretainedValue()
+        mySelf.Update();
+
+        //  We are going to assume that everything went well for this mock up, and pass success as the CVReturn
+        return kCVReturnSuccess
+    }
+    
+
+    // sets a callback at every screen refresh (normally 60Hz)
+    func setupDisplayLink() {
+        //  Grab the a link to the active displays, set the callback defined above, and start the link.
+        /*  An alternative to a nested function is a global function or a closure passed as the argument--a local function
+         (i.e. a function defined within the class) is NOT allowed. */
+        //  The UnsafeMutablePointer<Void>(unsafeAddressOf(self)) passes a pointer to the instance of our class.
+        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+        
+        let unsafeSelf: UnsafeMutableRawPointer = Unmanaged.passUnretained(self).toOpaque()
+        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, unsafeSelf)
+        CVDisplayLinkStart(displayLink!)
+    }
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -1189,7 +1240,24 @@ class ViewController: NSViewController  {
 //        }
 //        upd.resume()
         
-        newUpdateTimer( timeInterval: 1 / Double(fps) )
+//        newUpdateTimer( timeInterval: 1 / Double(fps) )
+        
+        
+//        let displayLink = CADisplayLink(target: self, selector: #selector(Update))
+//        displayLink.add(to: .current, forMode: .common)
+
+        
+//        CVDisplayLinkOutputCallback
+        
+        //  Grab the a link to the active displays, set the callback defined above, and start the link.
+        /*  An alternative to a nested function is a global function or a closure passed as the argument--a local function
+         (i.e. a function defined within the class) is NOT allowed. */
+        //  The UnsafeMutablePointer<Void>(unsafeAddressOf(self)) passes a pointer to the instance of our class.
+        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+        let unsafeSelf: UnsafeMutableRawPointer = Unmanaged.passUnretained(self).toOpaque()
+        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, unsafeSelf)
+        CVDisplayLinkStart(displayLink!)
+            
         
 //        #endif
         
@@ -1357,7 +1425,7 @@ class ViewController: NSViewController  {
 //        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
 
 //        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
-        newUpdateTimer( timeInterval: 1 / Double(fps) )
+//        newUpdateTimer( timeInterval: 1 / Double(fps) )
         setCPUClockSpeed(freq: MHz_6502)
         
         // TODO: Better way to deal with speaker!!!

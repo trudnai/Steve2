@@ -370,7 +370,7 @@ void m6502_Run() {
     }
     
     // TODO: What if we dynamically reduce or increace CPU speed?
-    m6502.clktime += clk_6502_per_frm;
+    m6502.clktime += m6502.clkfrm;
     
     if( diskAccelerator_count ) {
         if( --diskAccelerator_count <= 0 ) {

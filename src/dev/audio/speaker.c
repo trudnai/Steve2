@@ -84,11 +84,11 @@ int spkr_level_tema = SPKR_LEVEL_ZERO;
 int spkr_last_level = SPKR_LEVEL_ZERO;
 
 
-static const int ema_len_sharper = 7;
-static const int ema_len_sharp = 14;
+//static const int ema_len_sharper = 7;
+//static const int ema_len_sharp = 14;
 static const int ema_len_normal = 18;
-static const int ema_len_soft = 20;
-static const int ema_len_supersoft = 40;
+//static const int ema_len_soft = 20;
+//static const int ema_len_supersoft = 40;
 
 int spkr_ema_len = ema_len_normal;
 
@@ -113,6 +113,7 @@ unsigned spkr_clk = 0;
 
 #define SPKR_BUF_SLOT(n)    ( spkr_buf_size * (n) )
 #define SPKR_SLOT_SIZE(n)   ( spkr_buf_size * sizeof(spkr_sample_t) )
+#define SPKR_SILENT_SLOT    1
 
 const unsigned spkr_seconds = 1;
 const unsigned spkr_sample_rate = 192000;
@@ -122,9 +123,9 @@ int spkr_extra_buf = 0; // 26; // 800 / spkr_fps;
 typedef int16_t spkr_sample_t;
 const unsigned spkr_buf_size = spkr_seconds * spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS; // stereo
 const unsigned spkr_buf_alloc_size = spkr_buf_size * sizeof(spkr_sample_t);
-const unsigned sample_buf_array_len = SPKR_BUF_SLOT(BUFFER_COUNT + 1);
+const unsigned sample_buf_array_len = SPKR_BUF_SLOT(BUFFER_COUNT + SPKR_SILENT_SLOT);
 spkr_sample_t spkr_sample_buf [ sample_buf_array_len ]; // can store up to 1 sec of sound
-spkr_sample_t * spkr_samples = spkr_sample_buf + SPKR_BUF_SLOT(1); // keep 1 "empty" frame ahead
+spkr_sample_t * spkr_samples = spkr_sample_buf + SPKR_BUF_SLOT(SPKR_SILENT_SLOT); // keep 1 "empty" frame ahead
 unsigned spkr_sample_idx = 0;
 unsigned spkr_sample_last_idx = 0;
 unsigned spkr_sample_first_pwm_idx = 0;
@@ -262,7 +263,7 @@ void spkr_init() {
     alcMakeContextCurrent(ctx);
     
     // Fill buffer with zeros
-    memset( spkr_sample_buf, 0, SPKR_SLOT_SIZE(BUFFER_COUNT + 1) ); // spkr_buf_alloc_size + spkr_extra_buf * sizeof(spkr_sample_t));
+    memset( spkr_sample_buf, 0, SPKR_SLOT_SIZE(BUFFER_COUNT + SPKR_SILENT_SLOT) ); // spkr_buf_alloc_size + spkr_extra_buf * sizeof(spkr_sample_t));
     
 //    memset(spkr_samples + spkr_sample_idx * sizeof(spkr_sample_t), 0, (sample_buf_array_len - spkr_sample_idx) * sizeof(spkr_sample_t));
     
@@ -725,6 +726,7 @@ void spkr_buffer_with_pause(int buf_len) {
     switch (state) {
         case AL_PAUSED:
         case AL_PLAYING:
+            // it is already playing so we can just simply feed the next sound block
             alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, buf_len, spkr_sample_rate);
             al_check_error();
             alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
@@ -734,7 +736,8 @@ void spkr_buffer_with_pause(int buf_len) {
         case AL_INITIAL:
         case AL_STOPPED:
         default:
-            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_sample_buf, buf_len * 2, spkr_sample_rate);
+            // start with a silent sound block so later on we will not roun out of buffer that easy
+            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_sample_buf, buf_len * (1 + SPKR_SILENT_SLOT), spkr_sample_rate);
             al_check_error();
             alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
             al_check_error();
@@ -991,7 +994,7 @@ void spkr_play_disk_arm() {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         if ( spkr_play_disk_ioerr_time == 0 ) {
             spkr_play_sfx( spkr_src[SPKR_SRC_DISK_ARM_SFX], diskarm_sfx, diskarm_sfx_len );
-            spkr_play_disk_arm_time = 2;
+            spkr_play_disk_arm_time = fps / 15;
         }
     }
 }
@@ -1000,7 +1003,7 @@ void spkr_play_disk_arm() {
 void spkr_play_disk_ioerr() {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_playqueue_sfx( spkr_src[SPKR_SRC_DISK_IOERR_SFX], diskioerr_sfx, diskioerr_sfx_len);
-        spkr_play_disk_ioerr_time = 4;
+        spkr_play_disk_ioerr_time = fps / 10; // 4 for 30 FPS, 8 for 60 FPS
     }
 }
 

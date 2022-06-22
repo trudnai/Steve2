@@ -186,12 +186,12 @@ extern double * pdl_diffarr;
 extern double mips;
 extern double mhz;
 
-#define DEFAULT_FPS 30U
+#define DEFAULT_FPS 60U
 #define DEF_VIDEO_DIV 1U
 #define DEF_SPKR_DIV 1U
 
 #define GAME_FPS 180U // 480U
-#define GAME_VIDEO_DIV (GAME_FPS / 60U)
+#define GAME_VIDEO_DIV (GAME_FPS / DEFAULT_FPS)
 
 extern unsigned int video_fps_divider;
 extern unsigned int fps;

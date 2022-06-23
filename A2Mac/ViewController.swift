@@ -208,7 +208,12 @@ class ViewController: NSViewController  {
     var workItem : DispatchWorkItem? = nil;
     @IBAction func PowerOn(_ sender: Any) {
         
+        #if SCHEDULER_CVDISPLAYLINK
         CVDisplayLinkStop(displayLink!)
+        #else
+        upd.suspend()
+        #endif
+
         cpuState = cpuState_inited;
         spkr_stopAll()
 
@@ -239,7 +244,11 @@ class ViewController: NSViewController  {
             m6502_ColdReset( Bundle.main.resourcePath! + "/rom/", ViewController.romFileName )
             
             cpuState = cpuState_running;
+            #if SCHEDULER_CVDISPLAYLINK
             CVDisplayLinkStart(self.displayLink!)
+            #else
+            self.upd.resume()
+            #endif
         }
         //------------------------------------------------------------
         
@@ -267,7 +276,12 @@ class ViewController: NSViewController  {
     
     @IBAction func PowerOff(_ sender: Any) {
         
+        #if SCHEDULER_CVDISPLAYLINK
         CVDisplayLinkStop(displayLink!)
+        #else
+        upd.suspend()
+        #endif
+
         cpuState = cpuState_inited;
         spkr_stopAll()
         
@@ -290,12 +304,22 @@ class ViewController: NSViewController  {
 
         switch ( cpuState ) {
         case cpuState_halted:
+            #if SCHEDULER_CVDISPLAYLINK
             CVDisplayLinkStart(displayLink!)
+            #else
+            upd.resume()
+            #endif
+
             cpuState = cpuState_running
             break
             
         case cpuState_running:
+            #if SCHEDULER_CVDISPLAYLINK
             CVDisplayLinkStop(displayLink!)
+            #else
+            upd.suspend()
+            #endif
+
             cpuState = cpuState_halted
             break
             
@@ -467,7 +491,11 @@ class ViewController: NSViewController  {
         
         if ( cpuMode == cpuMode_eco ) {
             cpuState = cpuState_running;
+            #if SCHEDULER_CVDISPLAYLINK
             CVDisplayLinkStart(displayLink!)
+            #else
+            upd.resume()
+            #endif
         }
         
 //        print("keyDown")
@@ -1062,6 +1090,11 @@ class ViewController: NSViewController  {
 //    }
     
     
+    #if SCHEDULER_CVDISPLAYLINK
+    #else
+    var upd = RepeatingTimer(timeInterval: 1)
+    #endif
+
     
     // Kelvin Sherlock's fix to avoid uninstalled font problems
     override func awakeFromNib() {
@@ -1150,7 +1183,7 @@ class ViewController: NSViewController  {
         return kCVReturnSuccess
     }
     
-
+#if SCHEDULER_CVDISPLAYLINK
     // sets a callback at every screen refresh (normally 60Hz)
     func setupDisplayLink() {
         //  Grab the a link to the active displays, set the callback defined above, and start the link.
@@ -1163,7 +1196,7 @@ class ViewController: NSViewController  {
         CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, unsafeSelf)
 //        CVDisplayLinkStart(displayLink!)
     }
-    
+#endif
 
     override func viewDidLoad() {
         super.viewDidLoad()

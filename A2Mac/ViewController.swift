@@ -1479,7 +1479,11 @@ class ViewController: NSViewController  {
 //        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
 
 //        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
+        #if SCHEDULER_CVDISPLAYLINK
+        #else
         newUpdateTimer( timeInterval: 1 / Double(fps) )
+        #endif
+        
         setCPUClockSpeed(freq: MHz_6502)
         
         // TODO: Better way to deal with speaker!!!

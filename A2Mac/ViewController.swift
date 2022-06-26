@@ -1093,6 +1093,16 @@ class ViewController: NSViewController  {
     #if SCHEDULER_CVDISPLAYLINK
     #else
     var upd = RepeatingTimer(timeInterval: 1)
+    
+    func newUpdateTimer( timeInterval : Double ) {
+        upd.kill()
+        upd = RepeatingTimer(timeInterval: timeInterval)
+        upd.eventHandler = {
+            self.Update()
+        }
+        upd.resume()
+    }
+
     #endif
 
     
@@ -1149,6 +1159,8 @@ class ViewController: NSViewController  {
 //        1.0, -1.0, 0.0
 //    ]
     
+#if SCHEDULER_CVDISPLAYLINK
+
     //  The callback function is called everytime CVDisplayLink says its time to get a new frame.
     let displayLinkOutputCallback : CVDisplayLinkOutputCallback = { (displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ vController: UnsafeMutableRawPointer?) -> CVReturn in
         
@@ -1183,7 +1195,6 @@ class ViewController: NSViewController  {
         return kCVReturnSuccess
     }
     
-#if SCHEDULER_CVDISPLAYLINK
     // sets a callback at every screen refresh (normally 60Hz)
     func setupDisplayLink() {
         //  Grab the a link to the active displays, set the callback defined above, and start the link.
@@ -1290,15 +1301,9 @@ class ViewController: NSViewController  {
 //        }
 //        upd.resume()
         
-//        newUpdateTimer( timeInterval: 1 / Double(fps) )
         
         
-//        let displayLink = CADisplayLink(target: self, selector: #selector(Update))
-//        displayLink.add(to: .current, forMode: .common)
-
-        
-//        CVDisplayLinkOutputCallback
-        
+#if SCHEDULER_CVDISPLAYLINK
         //  Grab the a link to the active displays, set the callback defined above, and start the link.
         /*  An alternative to a nested function is a global function or a closure passed as the argument--a local function
          (i.e. a function defined within the class) is NOT allowed. */
@@ -1307,9 +1312,9 @@ class ViewController: NSViewController  {
         let unsafeSelf: UnsafeMutableRawPointer = Unmanaged.passUnretained(self).toOpaque()
         CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, unsafeSelf)
         CVDisplayLinkStart(displayLink!)
-            
-        
-//        #endif
+#else
+        newUpdateTimer( timeInterval: 1 / Double(fps) )
+#endif
         
         soundGapSlider.integerValue = Int(spkr_extra_buf)
         ledingInitEdgeLabel.title = "ILE: " + String( SPKR_INITIAL_LEADING_EDGE )
@@ -1334,7 +1339,6 @@ class ViewController: NSViewController  {
 //        size.height += 64 + 11 * 2
 //        view.setFrameSize(size)
 //        view.setBoundsSize(size)
-        
         
     }
     
@@ -1475,7 +1479,7 @@ class ViewController: NSViewController  {
 //        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
 
 //        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
-//        newUpdateTimer( timeInterval: 1 / Double(fps) )
+        newUpdateTimer( timeInterval: 1 / Double(fps) )
         setCPUClockSpeed(freq: MHz_6502)
         
         // TODO: Better way to deal with speaker!!!

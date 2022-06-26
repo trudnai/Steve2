@@ -225,6 +225,8 @@ void spkr_fade(float fadeLevel) {
     
 //    // Fill with Zero to avoid pops
 //    memset(spkr_samples + idx, 0, SPKR_SLOT_SIZE(1));
+    
+    spkr_level = fadeLevel;
 }
 
 
@@ -838,7 +840,7 @@ void spkr_update() {
                         // Need to Cool Down Speaker -- Soft Fade to Zero
                         else {
                             
-                            spkr_fade(spkr_level_tema);
+                            spkr_fade(spkr_level);
                             spkr_filter(SPKR_SLOT_SIZE(1));
 
     #ifdef SPKR_DEBUG
@@ -855,7 +857,7 @@ void spkr_update() {
                         spkr_sample_idx = 0;
                         spkr_sample_last_idx = 0;
 
-                        spkr_filter_reset();
+//                        spkr_filter_reset();
                     }
                     else {
     // push a click into the speaker buffer
@@ -901,8 +903,15 @@ void spkr_update() {
                     
                     memset(spkr_samples + SPKR_SLOT_SIZE(1), 0, SPKR_SLOT_SIZE(1) );
                     
-                    spkr_sample_idx = 0;
-                    spkr_sample_last_idx = 0;
+                    spkr_sample_idx -= SPKR_SLOT_SIZE(1);
+                    if ((int)spkr_sample_idx < 0) {
+                        spkr_sample_idx = 0;
+                    }
+                    
+                    spkr_sample_last_idx -= SPKR_SLOT_SIZE(1);
+                    if ((int)spkr_sample_last_idx < 0) {
+                        spkr_sample_last_idx = 0;
+                    }
                     
                     // make sure it never goes below 0 (never overflows)
                     if ( (int)spkr_play_time < 0 ) {

@@ -43,7 +43,7 @@
 //#define SPKR_LEVEL_MAX      (+3072)
 #define SPKR_LEVEL_MAX      32767 // 8192
 #define SPKR_LEVEL_MIN      (-SPKR_LEVEL_MAX)
-#define SPKR_PLAY_TIMEOUT   8U
+#define SPKR_PLAY_TIMEOUT   (2 * DEFAULT_FPS) // 2 seconds until make it super quiet
 #define SPKR_PLAY_QUIET     0
 //#define SPKR_PLAY_QUIET     (SPKR_PLAY_TIMEOUT - 2)
 

@@ -457,28 +457,30 @@ void spkr_exit() {
 char spkr_state = 0;
 
 
-// Exponential Moving Average
-INLINE int ema( int val, int prev, float ema_len ) {
-    static const float ema_sensitivity = 2;
-//    static const float ema_len = 42;
-    float m = ema_sensitivity / ema_len;
-    float n = 1 - m;
-    
-    return m * val + n * prev;
+#define _NO_SPKR_EARLY_ZERO_LEVEL 500
+
+INLINE void spkr_finish_square(const unsigned new_idx) {
+    // only fill small enough gaps and larger ones will go back to 0
+#ifdef SPKR_EARLY_ZERO_LEVEL
+    if ( (new_idx - spkr_sample_last_idx) < SPKR_EARLY_ZERO_LEVEL ) {
+#endif
+        // finish the aquare wave
+        while ( spkr_sample_last_idx < new_idx ) {
+            spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
+            spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
+        }
+#ifdef SPKR_EARLY_ZERO_LEVEL
+    }
+    else {
+        spkr_sample_last_idx = new_idx;
+        spkr_level = 0;
+    }
+#endif
 }
 
 
-void spkr_toggle_square ( int level_max, const unsigned idx_diff ) {
-    // finish the aquare wave
-    while ( spkr_sample_last_idx < spkr_sample_idx ) {
-        spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
-        spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
-    }
-    
-    // start a new speaker level -- it might not be necessary, but...
-//    spkr_samples[ spkr_sample_idx++ ] = level_max;
-//    spkr_samples[ spkr_sample_idx++ ] = level_max; // stereo
-    
+INLINE void spkr_toggle_square ( const int level_max ) {
+    spkr_finish_square(spkr_sample_idx);
     spkr_level = level_max;
 }
 
@@ -549,14 +551,14 @@ void spkr_toggle() {
             spkr_state = 0;
             
 //            spkr_toggle_tick(SPKR_LEVEL_MIN, spkr_sample_idx_diff);
-            spkr_toggle_square(SPKR_LEVEL_MIN, spkr_sample_idx_diff);
+            spkr_toggle_square(SPKR_LEVEL_MIN);
         }
         else {
             // up edge
             spkr_state = 1;
             
 //            spkr_toggle_tick(SPKR_LEVEL_MAX, spkr_sample_idx_diff);
-            spkr_toggle_square(SPKR_LEVEL_MAX, spkr_sample_idx_diff);
+            spkr_toggle_square(SPKR_LEVEL_MAX);
         }
         
         //spkr_samples[sample_idx] = spkr_level;
@@ -579,25 +581,33 @@ INLINE static void spkr_filter_reset() {
 }
 
 
-INLINE static void spkr_filter(int buf_len) {
+// Exponential Moving Average
+INLINE int ema( int val, int prev, float ema_len ) {
+    static const float ema_sensitivity = 2;
+    //    static const float ema_len = 42;
+    float m = ema_sensitivity / ema_len;
+    float n = 1 - m;
+    
+    return m * val + n * prev;
+}
 
-    // Debug SPKR Buffer Before EMA
-    spkr_debug(spkr_debug_raw_file);
+
+INLINE static void spkr_filter_ema(int buf_len) {
     
     // to use with EMA
-//    static const int ema_len_sharper = 30;
-//    static const int ema_len_soft = 70;
-//    static const int ema_len_supersoft = 200;
+    //    static const int ema_len_sharper = 30;
+    //    static const int ema_len_soft = 70;
+    //    static const int ema_len_supersoft = 200;
     
     // to use with TEMA
-//    static const int ema_len_sharper = 7;
-//    static const int ema_len_sharp = 14;
-//    static const int ema_len_normal = 18;
-//    static const int ema_len_soft = 20;
-//    static const int ema_len_supersoft = 40;
-//
-//    static const int ema_len = ema_len_soft;
-
+    //    static const int ema_len_sharper = 7;
+    //    static const int ema_len_sharp = 14;
+    //    static const int ema_len_normal = 18;
+    //    static const int ema_len_soft = 20;
+    //    static const int ema_len_supersoft = 40;
+    //
+    //    static const int ema_len = ema_len_soft;
+    
     for ( int i = 0; i < spkr_buf_size; ) {
         spkr_level_ema  = ema(spkr_samples[i], spkr_level_ema, spkr_ema_len);
         spkr_level_dema  = ema(spkr_level_ema, spkr_level_dema, spkr_ema_len);
@@ -607,9 +617,42 @@ INLINE static void spkr_filter(int buf_len) {
         spkr_samples[i++] = spkr_level_tema;
         spkr_samples[i++] = spkr_level_tema;
     }
-
+    
     // Debug SPKR Buffer After EMA
     spkr_debug(spkr_debug_ema_file);
+    
+//    spkr_level = spkr_level_tema;
+}
+
+
+INLINE static void spkr_filter_sma(int buf_len) {
+    static const unsigned sma_len = 35;
+    static spkr_sample_t sma_buf [ sma_len ] = {0};
+    static int64_t sum = 0;
+
+    for ( int i = 0; i < spkr_buf_size; ) {
+        // before we feed the value, remove the one that comes out
+        sum -= sma_buf[0];
+        // move array down
+        memcpy(sma_buf, sma_buf + sizeof(spkr_sample_t), (sma_len - 1) * sizeof(spkr_sample_t));
+        // add new value
+        sma_buf[sma_len - 1] = spkr_samples[i];
+        sum += spkr_samples[i];
+        // calculate average
+        spkr_sample_t spkr_level = (int)(sum / sma_len);
+        
+        spkr_samples[i++] = spkr_level;
+        spkr_samples[i++] = spkr_level;
+    }
+}
+
+
+INLINE static void spkr_filter(int buf_len) {
+    // Debug SPKR Buffer Before filters
+    spkr_debug(spkr_debug_raw_file);
+    
+    spkr_filter_ema(buf_len);
+//    spkr_filter_sma(buf_len);
 }
 
 
@@ -795,15 +838,16 @@ void spkr_update() {
                         // Need to Cool Down Speaker -- Soft Fade to Zero
                         else {
                             
-                            spkr_fade(spkr_level);
-                            
+                            spkr_fade(spkr_level_tema);
+                            spkr_filter(SPKR_SLOT_SIZE(1));
+
     #ifdef SPKR_DEBUG
                             spkr_debug(spkr_debug_raw_file);
                             spkr_debug(spkr_debug_ema_file);
     #endif
 
                             spkr_buffer_with_pause(SPKR_SLOT_SIZE(1));
-
+                            
                             
                         }
                         
@@ -833,10 +877,7 @@ void spkr_update() {
                         // Normal Sound Buffer Feed
                         else {
                             // finish the aquare wave
-                            while ( spkr_sample_last_idx < spkr_buf_size ) {
-                                spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
-                                spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
-                            }
+                            spkr_finish_square(spkr_buf_size);
 
                             const int buf_len = round((double)spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t);
                             

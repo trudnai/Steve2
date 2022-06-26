@@ -105,20 +105,51 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
         if isWindowFullscreen {
             window?.toggleFullScreen(self)
         }
+        
+        PauseToolbarItem.isEnabled = false;
+        PauseButton.state = .off
+        PauseToolbarItem.label = "Off"
     }
         
     @IBAction func PowerOn(_ sender: Any) {
         switch cpuState {
         case cpuState_inited, cpuState_unknown:
+            PauseToolbarItem.isEnabled = true;
+            PauseButton.state = .on
+            PauseToolbarItem.label = "Pause"
+            
             ViewController.current?.PowerOn(sender)
 
         default:
+            PauseToolbarItem.isEnabled = false;
+            PauseButton.state = .off
+            PauseToolbarItem.label = "Off"
+            
             ViewController.current?.PowerOff(sender)
         }
     }
     
+    @IBOutlet weak var PauseToolbarItem: NSToolbarItem!
+    @IBOutlet weak var PauseButton: NSButton!
     @IBAction func Pause(_ sender: Any) {
-        ViewController.current?.Pause(sender)
+        switch cpuState {
+        case cpuState_halted:
+            PauseButton.state = .on
+            PauseToolbarItem.label = "Pause"
+            ViewController.current?.Pause(sender)
+
+        case cpuState_running:
+            PauseButton.state = .off
+            PauseToolbarItem.label = "Resume"
+            ViewController.current?.Pause(sender)
+            
+        default:
+            PauseToolbarItem.isEnabled = false;
+            PauseButton.state = .off
+            PauseToolbarItem.label = "Off"
+            break
+        }
+        
     }
     
     @IBAction func Reset(_ sender: Any) {

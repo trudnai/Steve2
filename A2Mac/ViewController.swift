@@ -23,7 +23,7 @@
 
 
 import Cocoa
-import AVFoundation
+//import AVFoundation
 
 //import Metal
 //
@@ -53,22 +53,22 @@ let colorOrange =  NSColor.init( red:1, green:0.38671875, blue:0.0078125, alpha:
 
 var monoColor = colorGreen;
 
-var spk_up: AVAudioPlayer?
-var spk_dn: AVAudioPlayer?
-
-@_cdecl("ViewController_spk_up_play")
-func spk_up_play() {
-    spk_up?.stop()
-    spk_dn?.stop()
-    spk_up?.play()
-}
-
-@_cdecl("ViewController_spk_dn_play")
-func spk_dn_play() {
-    spk_up?.stop()
-    spk_dn?.stop()
-    spk_dn?.play()
-}
+//var spk_up: AVAudioPlayer?
+//var spk_dn: AVAudioPlayer?
+//
+//@_cdecl("ViewController_spk_up_play")
+//func spk_up_play() {
+//    spk_up?.stop()
+//    spk_dn?.stop()
+//    spk_up?.play()
+//}
+//
+//@_cdecl("ViewController_spk_dn_play")
+//func spk_dn_play() {
+//    spk_up?.stop()
+//    spk_dn?.stop()
+//    spk_dn?.play()
+//}
 
 
 #if METAL_YES

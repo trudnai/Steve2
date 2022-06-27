@@ -13,14 +13,14 @@ static const uint16_t PageSize  = 0x2000;
 static const uint16_t Page1Addr = 0x2000;
 static const uint16_t Page2Addr = 0x4000;
 
-static const uint16_t PixelWidth  = 280;
-static const uint16_t PixelMixedHeight = 160;
+//static const uint16_t PixelWidth  = 280;
+//static const uint16_t PixelMixedHeight = 160;
 static const uint16_t PixelHeight = 192;
 static const uint16_t MixedHeight = 160;
-static const uint8_t MixedTextHeight = 4;
+//static const uint8_t MixedTextHeight = 4;
 static const uint8_t blockRows = 24;
 static const uint8_t blockCols = 40;
-static const uint8_t blockWidth = PixelWidth / blockCols;
+//static const uint8_t blockWidth = PixelWidth / blockCols;
 static const uint8_t blockHeight = PixelHeight / blockRows;
 
 const uint8_t* HiResRawPointer = Apple2_64K_RAM + Page1Addr;
@@ -58,7 +58,7 @@ const uint32_t color_yellow     = 0xFFBBBB11;
 // default is green
 const uint32_t color_mono        = 0xFF2BD84A;
 
-static const int ScreenBitmapSize = (PixelWidth * PixelHeight * 4);
+//static const int ScreenBitmapSize = (PixelWidth * PixelHeight * 4);
 
 const uint8_t color_R = 2;
 const uint8_t color_G = 1;

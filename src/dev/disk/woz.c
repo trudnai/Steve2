@@ -541,7 +541,7 @@ int woz_parseBuffer() {
         printf("WOZ Invalid CRC (%u vs %u)\n", woz_header->crc, crc);
     }
     else {
-        printf("WOZ valid CRC (%u vs %u)\n", woz_header->crc, crc);
+        dbgPrintf2("WOZ valid CRC (%u vs %u)\n", woz_header->crc, crc);
     }
 
 

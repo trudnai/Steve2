@@ -405,7 +405,7 @@ void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, co
     fseek(f, 0L, SEEK_SET);
 
     if ( size && (size > flen) ) {
-        printf("ROM image is too small (size:0x%04X  flen:0x04X)\n", size, flen);
+        printf("ROM image is too small (size:0x%04X  flen:0x%04X)\n", size, flen);
         return;
     }
     
@@ -540,6 +540,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 #endif
     
     
+#ifdef DEBUG_COUNTER_TEST
     uint8_t counter[] = {
                            // 1    * COUNTER2
                            // 2
@@ -637,7 +638,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
         0x60,              // 2E   END      RTS
         
     };
-
+#endif
 
     // set the default speed
     clk_6502_per_frm_set = clk_6502_per_frm = FRAME(default_MHz_6502);

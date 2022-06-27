@@ -40,7 +40,7 @@ class MonitorView: NSView {
     static let textDisplay_frameSize = NSSize(width: 1120 + overscan_h, height: 768 + overscan_v)
 
     override func viewDidMoveToWindow() {
-        print("Added to NEW window")
+//        print("Added to NEW window")
     }
     
     func adjustTextDisplaySize() {

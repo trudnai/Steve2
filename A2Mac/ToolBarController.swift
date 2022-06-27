@@ -22,7 +22,6 @@
 //
 
 import Cocoa
-import AVFoundation
 
 
 class ToolBarController: NSWindowController, NSWindowDelegate {

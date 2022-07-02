@@ -33,6 +33,9 @@
 #include "disk.h" // to be able to disable disk acceleration
 
 
+#define SPKR_OVERSAMPLING 8 // 16 is little better, 32 is really good but have a weird effect
+
+
 #define min(x,y) (x) < (y) ? (x) : (y)
 #define max(x,y) (x) > (y) ? (x) : (y)
 #define clamp(min,num,max) (num) < (min) ? (min) : (num) > (max) ? (max) : (num)
@@ -86,13 +89,24 @@ int spkr_last_level = SPKR_LEVEL_ZERO;
 
 //static const int ema_len_sharper = 7;
 //static const int ema_len_sharp = 14;
-static const int ema_len_normal = 18;
+//static const int ema_len_oversampled = 80;
+//static const int ema_len_normal = 16; // 18
 //static const int ema_len_soft = 20;
 //static const int ema_len_supersoft = 40;
 
-int spkr_ema_len = ema_len_normal;
+#if (SPKR_OVERSAMPLING >= 32)
+int spkr_ema_len = 64
+#elif (SPKR_OVERSAMPLING >= 16)
+int spkr_ema_len = 32;
+#elif (SPKR_OVERSAMPLING >= 8)
+int spkr_ema_len = 24;
+#elif (SPKR_OVERSAMPLING >= 2)
+int spkr_ema_len = 20;
+#else
+int spkr_ema_len = 16;
+#endif
 
-#define BUFFER_COUNT 256
+#define BUFFER_COUNT 16
 #define SPKR_CHANNELS 2
 
 ALuint spkr_src [SOURCES_COUNT] = { 0, 0, 0, 0 };
@@ -111,12 +125,27 @@ unsigned spkr_fps_divider = 1;
 unsigned spkr_frame_cntr = 0;
 unsigned spkr_clk = 0;
 
-#define SPKR_BUF_SLOT(n)    ( spkr_buf_size * (n) )
-#define SPKR_SLOT_SIZE(n)   ( spkr_buf_size * sizeof(spkr_sample_t) )
+#define SPKR_BUF_SIZE           ( spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS ) // stereo
+#define SPKR_BUF_SLOT(n)        ( SPKR_BUF_SIZE * (n) )
+#define SPKR_BUF_SLOT_SIZE(n)   ( SPKR_BUF_SLOT(n) * sizeof(spkr_sample_t) )
+
+#define SPKR_STRM_SIZE          ( spkr_stream_rate * SPKR_CHANNELS / DEFAULT_FPS ) // stereo
+#define SPKR_STRM_SLOT(n)       ( SPKR_STRM_SIZE * (n) )
+#define SPKR_STRM_SLOT_SIZE(n)  ( SPKR_STRM_SLOT(n) * sizeof(spkr_sample_t) )
+
 #define SPKR_SILENT_SLOT    1
 
+
+
 const unsigned spkr_seconds = 1;
-const unsigned spkr_sample_rate = 192000;
+
+#ifdef SPKR_OVERSAMPLING
+const unsigned spkr_stream_rate = 44100; // Optimal? 220500; // Best: 321000; // Acceptable: 192000; // higher the sample rate, the better the sound gets
+const unsigned spkr_sample_rate = spkr_stream_rate * SPKR_OVERSAMPLING;
+#else
+const unsigned spkr_sample_rate = 321000; // Optimal? 220500; // Best: 321000; // Acceptable: 192000; // higher the sample rate, the better
+#endif
+
 const unsigned sfx_sample_rate =  22050; // original sample rate
 //const unsigned sfx_sample_rate =  26000; // bit higher pitch
 int spkr_extra_buf = 0; // 26; // 800 / spkr_fps;
@@ -126,6 +155,13 @@ const unsigned spkr_buf_alloc_size = spkr_buf_size * sizeof(spkr_sample_t);
 const unsigned sample_buf_array_len = SPKR_BUF_SLOT(BUFFER_COUNT + SPKR_SILENT_SLOT);
 spkr_sample_t spkr_sample_buf [ sample_buf_array_len ]; // can store up to 1 sec of sound
 spkr_sample_t * spkr_samples = spkr_sample_buf + SPKR_BUF_SLOT(SPKR_SILENT_SLOT); // keep 1 "empty" frame ahead
+
+#ifdef SPKR_OVERSAMPLING
+const unsigned sample_strm_array_len = SPKR_STRM_SLOT(BUFFER_COUNT + SPKR_SILENT_SLOT);
+spkr_sample_t spkr_stream_buf [ sample_strm_array_len ]; // can store up to 1 sec of sound
+spkr_sample_t * spkr_stream = spkr_stream_buf + SPKR_STRM_SLOT(SPKR_SILENT_SLOT); // keep 1 "empty" frame ahead
+#endif
+
 unsigned spkr_sample_idx = 0;
 unsigned spkr_sample_last_idx = 0;
 unsigned spkr_sample_first_pwm_idx = 0;
@@ -214,8 +250,8 @@ void spkr_fade(float fadeLevel) {
     
     float fadeSlope = fadeLevel / spkr_buf_size * SPKR_CHANNELS;
     
-//    while ( ( fabs(fadeLevel) >= fabs(fadeSlope) ) && ( idx < SPKR_SLOT_SIZE(1) ) ) {
-    while ( idx < SPKR_SLOT_SIZE(1) ) {
+//    while ( ( fabs(fadeLevel) >= fabs(fadeSlope) ) && ( idx < SPKR_BUF_SLOT_SIZE(1) ) ) {
+    while ( idx < SPKR_BUF_SLOT_SIZE(1) ) {
         spkr_samples[ idx++ ] = fadeLevel;
         spkr_samples[ idx++ ] = fadeLevel; // stereo
         
@@ -224,7 +260,7 @@ void spkr_fade(float fadeLevel) {
     }
     
 //    // Fill with Zero to avoid pops
-//    memset(spkr_samples + idx, 0, SPKR_SLOT_SIZE(1));
+//    memset(spkr_samples + idx, 0, SPKR_BUF_SLOT_SIZE(1));
     
     spkr_level = fadeLevel;
 }
@@ -268,7 +304,7 @@ void spkr_init() {
     alcMakeContextCurrent(ctx);
     
     // Fill buffer with zeros
-    memset( spkr_sample_buf, 0, SPKR_SLOT_SIZE(BUFFER_COUNT + SPKR_SILENT_SLOT) );
+    memset( spkr_sample_buf, 0, SPKR_BUF_SLOT_SIZE(BUFFER_COUNT + SPKR_SILENT_SLOT) );
     
 //    freeBuffers--;
     
@@ -276,7 +312,7 @@ void spkr_init() {
     spkr_debug(spkr_debug_raw_file);
     spkr_debug(spkr_debug_ema_file);
 
-//    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, SPKR_SLOT_SIZE(1), spkr_sample_rate); // spkr_sample_idx * sizeof(spkr_sample_t), spkr_sample_rate);
+//    alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, SPKR_BUF_SLOT_SIZE(1), spkr_sample_rate); // spkr_sample_idx * sizeof(spkr_sample_t), spkr_sample_rate);
 //    al_check_error();
 //    alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
 //    al_check_error();
@@ -575,6 +611,8 @@ void spkr_toggle() {
 int playDelay = SPKR_PLAY_DELAY;
 
 
+#define SPKR_FILTER_RESET
+
 #ifdef SPKR_FILTER_RESET
 INLINE static void spkr_filter_reset() {
     spkr_level = SPKR_LEVEL_ZERO;
@@ -595,7 +633,7 @@ INLINE int ema( int val, int prev, float ema_len ) {
 }
 
 
-INLINE static void spkr_filter_ema(int buf_len) {
+INLINE static void spkr_filter_ema(spkr_sample_t * buf, int buf_size) {
     
     // to use with EMA
     //    static const int ema_len_sharper = 30;
@@ -611,14 +649,14 @@ INLINE static void spkr_filter_ema(int buf_len) {
     //
     //    static const int ema_len = ema_len_soft;
     
-    for ( int i = 0; i < spkr_buf_size; ) {
-        spkr_level_ema  = ema(spkr_samples[i], spkr_level_ema, spkr_ema_len);
+    for ( int i = 0; i < buf_size; ) {
+        spkr_level_ema  = ema(buf[i], spkr_level_ema, spkr_ema_len);
         spkr_level_dema  = ema(spkr_level_ema, spkr_level_dema, spkr_ema_len);
         spkr_level_tema  = ema(spkr_level_dema, spkr_level_tema, spkr_ema_len);
         
         // smoothing with Tripple EMA
-        spkr_samples[i++] = spkr_level_tema;
-        spkr_samples[i++] = spkr_level_tema;
+        buf[i++] = spkr_level_tema;
+        buf[i++] = spkr_level_tema;
     }
     
     // Debug SPKR Buffer After EMA
@@ -652,12 +690,40 @@ INLINE static void spkr_filter_sma(int buf_len) {
 #endif
 
 
-INLINE static void spkr_filter(int buf_len) {
+#ifdef SPKR_OVERSAMPLING
+INLINE static void spkr_downsample() {
+    for (int i = 0; i < SPKR_STRM_SLOT_SIZE(1); ) {
+        int level = 0;
+        int buf_idx = i * SPKR_OVERSAMPLING;
+        
+        // get the sum for that section
+        for (int j = 0; j < SPKR_OVERSAMPLING; j++) {
+            level += spkr_samples[ buf_idx + j * SPKR_CHANNELS ];
+        }
+        // get the average for that section
+        level /= SPKR_OVERSAMPLING;
+
+        // fill the downsampled version
+        spkr_stream[i++] = level;
+        spkr_stream[i++] = level;
+    }
+}
+#endif
+
+
+INLINE static void spkr_filter() {
     // Debug SPKR Buffer Before filters
     spkr_debug(spkr_debug_raw_file);
     
-    spkr_filter_ema(buf_len);
+
+#ifdef SPKR_OVERSAMPLING
+    spkr_filter_ema( spkr_samples, SPKR_BUF_SIZE );
+    spkr_downsample();
+#else
+    spkr_filter_ema( spkr_samples, SPKR_BUF_SIZE );
+#endif
     
+
 #ifdef SPKR_FILTER_SMA
     spkr_filter_sma(buf_len);
 #endif
@@ -665,13 +731,15 @@ INLINE static void spkr_filter(int buf_len) {
 
 
 INLINE void spkr_debug_spike() {
-    spkr_sample_idx = 0;
-    spkr_samples[ spkr_sample_idx++ ] = -28000;
-    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
-    spkr_samples[ spkr_sample_idx++ ] = -28000;
-    spkr_samples[ spkr_sample_idx++ ] = 28000; // stereo
-    spkr_samples[ spkr_sample_idx++ ] = spkr_level;
-    spkr_samples[ spkr_sample_idx++ ] = spkr_level; // stereo
+//    printf("spkr_debug_spike: %llu\n", m6502.clktime + m6502.clkfrm);
+    int level = 28000;
+    
+    for (int i = 0; i < 20;) {
+        spkr_samples[i++] = level;
+        spkr_samples[i++] = level; // stereo
+        
+        level *= -1;
+    }
 }
 
 
@@ -696,47 +764,47 @@ void spkr_play() {
 }
 
 
-void spkr_play_with_prebuf() {
-    ALenum state;
-    alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
-    //                al_check_error();
-    
-    switch (state) {
-        case AL_PAUSED:
-            // should not be paused
-            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
-            break;
-            
-        case AL_PLAYING:
-            // already playing, no need to do anything
-            break;
-            
-        case AL_INITIAL:
-        case AL_STOPPED:
-        default:
-            if (--freeBuffers < 0) {
-                printf("freeBuffer < 0 (%i)\n", freeBuffers);
-                freeBuffers = 0;
-            }
-            
-            // Normal Sound Buffer Feed
-            else {
-                const int buf_len = round((double)spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t) * 2;
-//                const int buf_len = 500;
-//                printf("buf_len=%i\n", buf_len);
-                const spkr_sample_t * silent_samples = spkr_samples + spkr_buf_size * 100;
-                
-                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, silent_samples, buf_len, spkr_sample_rate);
-                al_check_error();
-                alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
-                al_check_error();
-            }
-
-            // no we can play this empty buffer first and then later on the real one
-            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
-            break;
-    }
-}
+//void spkr_play_with_prebuf() {
+//    ALenum state;
+//    alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
+//    //                al_check_error();
+//
+//    switch (state) {
+//        case AL_PAUSED:
+//            // should not be paused
+//            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+//            break;
+//
+//        case AL_PLAYING:
+//            // already playing, no need to do anything
+//            break;
+//
+//        case AL_INITIAL:
+//        case AL_STOPPED:
+//        default:
+//            if (--freeBuffers < 0) {
+//                printf("freeBuffer < 0 (%i)\n", freeBuffers);
+//                freeBuffers = 0;
+//            }
+//
+//            // Normal Sound Buffer Feed
+//            else {
+//                const int buf_len = round((double)spkr_buf_size + spkr_extra_buf) * sizeof(spkr_sample_t) * 2;
+////                const int buf_len = 500;
+////                printf("buf_len=%i\n", buf_len);
+//                const spkr_sample_t * silent_samples = spkr_samples + spkr_buf_size * 100;
+//
+//                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, silent_samples, buf_len, spkr_stream_rate);
+//                al_check_error();
+//                alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
+//                al_check_error();
+//            }
+//
+//            // no we can play this empty buffer first and then later on the real one
+//            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+//            break;
+//    }
+//}
 
 
 void spkr_play_with_pause() {
@@ -772,34 +840,64 @@ void spkr_play_with_pause() {
 }
 
 
-void spkr_buffer_with_prebuf(int buf_len) {
+void spkr_buffer_with_prebuf() {
     ALenum state;
     alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
 //    al_check_error();
 
     switch (state) {
         case AL_PAUSED:
+//            printf("spkr_buffer_with_prebuf: AL_PAUSED %llu\n", m6502.clktime + m6502.clkfrm);
         case AL_PLAYING:
+//            printf("spkr_buffer_with_prebuf: AL_PLAYING %llu\n", m6502.clktime + m6502.clkfrm);
             // it is already playing so we can just simply feed the next sound block
-            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, buf_len, spkr_sample_rate);
+#ifdef SPKR_OVERSAMPLING
+            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_stream, SPKR_STRM_SLOT_SIZE(1), spkr_stream_rate);
+#else
+            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, SPKR_BUF_SLOT_SIZE(1), spkr_sample_rate);
+#endif
             al_check_error();
             alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
             al_check_error();
             break;
 
         case AL_INITIAL:
+//            printf("spkr_buffer_with_prebuf: AL_INITIAL %llu\n", m6502.clktime + m6502.clkfrm);
         case AL_STOPPED:
         default:
-            // start with a silent sound block so later on we will not roun out of buffer that easy
-            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_sample_buf, buf_len * (1 + SPKR_SILENT_SLOT), spkr_sample_rate);
+//            printf("spkr_buffer_with_prebuf: AL_STOPPED %llu\n", m6502.clktime + m6502.clkfrm);
+            // start with a silent sound block so later on we will not run out of buffer that easy
+#ifdef SPKR_OVERSAMPLING
+            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_stream_buf, SPKR_STRM_SLOT_SIZE(SPKR_SILENT_SLOT + 1), spkr_stream_rate);
+#else
+            alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_sample_buf, SPKR_BUF_SLOT_SIZE(SPKR_SILENT_SLOT + 1), spkr_sample_rate);
+#endif
             al_check_error();
             alSourceQueueBuffers(spkr_src[SPKR_SRC_GAME_SFX], 1, &spkr_buffers[freeBuffers]);
             al_check_error();
             
             break;
     }
+    
+    // play if needed
+    switch (state) {
+        case AL_PLAYING:
+            break;
+            
+        case AL_INITIAL:
+        case AL_PAUSED:
+        case AL_STOPPED:
+        default:
+            // no we can play this empty buffer first and then later on the real one
+            alSourcePlay(spkr_src[SPKR_SRC_GAME_SFX]);
+            break;
+    }
 
-    memset(spkr_samples, 0, buf_len);
+#ifdef SPKR_OVERSAMPLING
+    memset(spkr_stream, 0, SPKR_STRM_SLOT_SIZE(1));
+#else
+    memset(spkr_samples, 0, SPKR_BUF_SLOT_SIZE(1));
+#endif
 }
 
 
@@ -809,7 +907,7 @@ void spkr_update() {
         
         // Fix: Unqueue was not working properly some cases, so we need to monitor
         //      queued elements and if there are too many, let's just wait
-#define SPKR_MAX_QUEUED 10
+#define SPKR_MAX_QUEUED 100
         ALint queued = 0;
         alGetSourcei ( spkr_src[SPKR_SRC_GAME_SFX], AL_BUFFERS_QUEUED, &queued );
         al_check_error();
@@ -837,21 +935,23 @@ void spkr_update() {
                         else {
                             
                             spkr_fade(spkr_level);
-                            spkr_filter(SPKR_SLOT_SIZE(1));
+                            spkr_filter();
 
     #ifdef SPKR_DEBUG
                             spkr_debug(spkr_debug_raw_file);
                             spkr_debug(spkr_debug_ema_file);
     #endif
 
-                            spkr_buffer_with_prebuf(SPKR_SLOT_SIZE(1));
+                            spkr_buffer_with_prebuf();
                         }
                         
-                        memset(spkr_samples, 0, SPKR_SLOT_SIZE(BUFFER_COUNT) );
+                        memset(spkr_samples, 0, SPKR_BUF_SLOT_SIZE(BUFFER_COUNT) );
                         spkr_sample_idx = 0;
                         spkr_sample_last_idx = 0;
 
-//                        spkr_filter_reset();
+#ifdef SPKR_FILTER_RESET
+                        spkr_filter_reset();
+#endif
                     }
                     else {
                         // push a click into the speaker buffer
@@ -867,29 +967,43 @@ void spkr_update() {
                             // finish the aquare wave
                             spkr_finish_square(spkr_buf_size);
                             // digital filtering the audio stream -- most notably smoothing
-                            spkr_filter(SPKR_SLOT_SIZE(1));
+                            spkr_filter();
+                            
+//                            spkr_debug_spike();
+                            
                             // play slot
-                            spkr_buffer_with_prebuf(SPKR_SLOT_SIZE(1));
+                            spkr_buffer_with_prebuf();
                         }
                     }
 
-                    spkr_play();
+//                    spkr_play();
 //                    spkr_play_with_pause();
 
                     // shift sample buffer
-                    memcpy(spkr_samples, spkr_samples + SPKR_SLOT_SIZE(1), SPKR_SLOT_SIZE(1) );
-                    memset(spkr_samples + SPKR_SLOT_SIZE(1), 0, SPKR_SLOT_SIZE(1) );
+                    memcpy(spkr_samples, spkr_samples + SPKR_BUF_SLOT_SIZE(1), SPKR_BUF_SLOT_SIZE(1) );
+                    memset(spkr_samples + SPKR_BUF_SLOT_SIZE(1), 0, SPKR_BUF_SLOT_SIZE(1) );
                     
-                    spkr_sample_idx -= SPKR_SLOT_SIZE(1);
+                    spkr_sample_idx -= spkr_buf_size;
+                    while (spkr_sample_idx >= spkr_buf_size) {
+                        spkr_sample_idx -= spkr_buf_size;
+                    }
                     if ((int)spkr_sample_idx < 0) {
                         spkr_sample_idx = 0;
                     }
                     
-                    spkr_sample_last_idx -= SPKR_SLOT_SIZE(1);
+                    spkr_sample_last_idx -= spkr_buf_size;
+                    while (spkr_sample_last_idx >= spkr_buf_size) {
+                        spkr_sample_last_idx -= spkr_buf_size;
+                    }
+                    
                     if ((int)spkr_sample_last_idx < 0) {
                         spkr_sample_last_idx = 0;
                     }
                     
+                    if (spkr_sample_last_idx >= spkr_buf_size) {
+                        printf("spkr_sample_last_idx >= spkr_buf_size\n");
+                    }
+
                     // make sure it never goes below 0 (never overflows)
                     if ( (int)spkr_play_time < 0 ) {
                         spkr_play_time = 0;

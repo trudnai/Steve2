@@ -62,16 +62,16 @@ unsigned long long int inst_cnt = 0;
 unsigned int video_fps_divider = DEF_VIDEO_DIV;
 unsigned int fps = DEFAULT_FPS;
 
-const double default_crystal_MHz = 14.31818;
+const double default_crystal_MHz = 14.31818; // NTSC version (original)
 const double default_MHz_6502 = default_crystal_MHz / 14; // 1.023; // 2 * M; // 4 * M; // 8 * M; // 16 * M; // 128 * M; // 256 * M; // 512 * M;
 const double iigs_MHz_6502 = 2.8;
 const double iicplus_MHz_6502 = 4;
 const double startup_MHz_6502 = 32;
 double MHz_6502 = default_MHz_6502;
-unsigned long long clk_6502_per_frm =  FRAME_INIT( default_MHz_6502 );
-unsigned long long clk_6502_per_frm_set = FRAME_INIT( default_MHz_6502 );
-unsigned long long clk_6502_per_frm_max_sound = 4 * FRAME_INIT( default_MHz_6502 );
-unsigned long long clk_6502_per_frm_max = 0;
+unsigned int clk_6502_per_frm =  FRAME_INIT( default_MHz_6502 );
+unsigned int clk_6502_per_frm_set = FRAME_INIT( default_MHz_6502 );
+unsigned int clk_6502_per_frm_max_sound = 4 * FRAME_INIT( default_MHz_6502 );
+unsigned int clk_6502_per_frm_max = 0;
 
 
 unsigned long long tick_per_sec = G;
@@ -314,19 +314,31 @@ void softReset() {
     resetMemory();
 }
 
+
 void m6502_Run() {
 
     // init time
 //#ifdef CLK_WAIT
 //    unsigned long long elpased = (unsigned long long)-1LL;
 //#endif
+    
+    m6502.clktime += m6502.clkfrm;
+    m6502.clkfrm = decrement(m6502.clkfrm, clk_6502_per_frm_max);
+    
+    if( diskAccelerator_count ) {
+        if( --diskAccelerator_count <= 0 ) {
+            // make sure we only adjust clock once to get back to normal
+            diskAccelerator_count = 0;
+            clk_6502_per_frm = clk_6502_per_frm_set;
+        }
+    }
 
 #ifdef SPEEDTEST
     for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
 #elif defined( CLK_WAIT )
         // we clear the clkfrm from ViewController Update()
         // we will also use this to pause the simulation if not finished by the end of the frame
-        for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() )
+    for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() )
 #else
     // this is for max speed only -- WARNING! It works only if simulation runs in a completely different thread from the Update()
     for ( ; ; )
@@ -369,17 +381,6 @@ void m6502_Run() {
         
     }
     
-    // TODO: What if we dynamically reduce or increace CPU speed?
-    m6502.clktime += m6502.clkfrm;
-    
-    if( diskAccelerator_count ) {
-        if( --diskAccelerator_count <= 0 ) {
-            // make sure we only adjust clock once to get back to normal
-            diskAccelerator_count = 0;
-            clk_6502_per_frm = clk_6502_per_frm_set;
-        }
-    }
-
     // play the entire sound buffer for this frame
     spkr_update();
     // this will take care of turning off disk motor sound when time is up

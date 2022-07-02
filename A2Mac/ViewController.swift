@@ -1023,7 +1023,7 @@ class ViewController: NSViewController  {
             case cpuState_running:
                 clkCounter += Double(m6502.clkfrm)
                 // we start a new frame from here, so CPU is running even while rendering
-                m6502.clkfrm = 0
+//                m6502.clkfrm = 0
                 
                 frameCounter += 1
                 
@@ -1354,7 +1354,7 @@ class ViewController: NSViewController  {
         spkr_stopAll();
         
         MHz_6502 = freq
-        clk_6502_per_frm = UInt64( MHz_6502 * M / Double(fps) )
+        clk_6502_per_frm = UInt32( MHz_6502 * M / Double(fps) )
         clk_6502_per_frm_set = clk_6502_per_frm
             
         // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq

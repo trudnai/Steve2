@@ -33,7 +33,7 @@
 #include "disk.h" // to be able to disable disk acceleration
 
 
-#define SPKR_OVERSAMPLING 10 // 8 sounds like optimal, 16 is better, 32 is really good but have a weird effect
+#define SPKR_OVERSAMPLING 32 // 8 sounds like optimal, 16 is better, 32 is really good but have a weird effect
 
 
 #define min(x,y) (x) < (y) ? (x) : (y)
@@ -95,7 +95,7 @@ int spkr_last_level = SPKR_LEVEL_ZERO;
 //static const int ema_len_supersoft = 40;
 
 #if (SPKR_OVERSAMPLING >= 32)
-int spkr_ema_len = 64
+int spkr_ema_len = 64;
 #elif (SPKR_OVERSAMPLING >= 16)
 int spkr_ema_len = 32;
 #elif (SPKR_OVERSAMPLING >= 8)

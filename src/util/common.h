@@ -86,6 +86,6 @@ union {
 
 
 extern FILE * outdev;
-
+INLINE int decrement(int num, const int dec);
 
 #endif // __COMMON_H__

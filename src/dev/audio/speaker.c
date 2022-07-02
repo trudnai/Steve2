@@ -33,7 +33,7 @@
 #include "disk.h" // to be able to disable disk acceleration
 
 
-#define SPKR_OVERSAMPLING 8 // 16 is little better, 32 is really good but have a weird effect
+#define SPKR_OVERSAMPLING 10 // 8 sounds like optimal, 16 is better, 32 is really good but have a weird effect
 
 
 #define min(x,y) (x) < (y) ? (x) : (y)

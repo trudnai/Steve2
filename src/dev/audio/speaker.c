@@ -907,7 +907,7 @@ void spkr_update() {
         
         // Fix: Unqueue was not working properly some cases, so we need to monitor
         //      queued elements and if there are too many, let's just wait
-#define SPKR_MAX_QUEUED 100
+#define SPKR_MAX_QUEUED 10
         ALint queued = 0;
         alGetSourcei ( spkr_src[SPKR_SRC_GAME_SFX], AL_BUFFERS_QUEUED, &queued );
         al_check_error();
@@ -1113,6 +1113,8 @@ void spkr_stop_sfx( ALuint src ) {
         case AL_PAUSED:
         case AL_PLAYING:
             alSourceStop( src );
+            spkr_unqueue(src);
+            alSourcei(src, AL_BUFFER, 0);
             break;
             
         default:
@@ -1163,6 +1165,18 @@ void spkr_stopAll() {
 }
 
 
+void spkr_stop_game_sfx() {
+    spkr_stop_sfx( spkr_src[SPKR_SRC_GAME_SFX] );
+}
+
+
+void spkr_stop_disk_sfx() {
+    spkr_stop_sfx( spkr_src[SPKR_SRC_DISK_ARM_SFX] );
+    spkr_stop_sfx( spkr_src[SPKR_SRC_DISK_MOTOR_SFX] );
+    spkr_stop_sfx( spkr_src[SPKR_SRC_DISK_IOERR_SFX] );
+}
+
+
 void update_disk_sfx( unsigned * time, ALuint src ) {
     if ( *time ) {
         if ( --*time == 0 ) {
@@ -1183,8 +1197,8 @@ void spkr_update_disk_sfx() {
         }
     }
     
-    update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[SPKR_SRC_DISK_MOTOR_SFX] );
     update_disk_sfx( &spkr_play_disk_arm_time, spkr_src[SPKR_SRC_DISK_ARM_SFX] );
+    update_disk_sfx( &spkr_play_disk_motor_time, spkr_src[SPKR_SRC_DISK_MOTOR_SFX] );
     update_disk_sfx( &spkr_play_disk_ioerr_time, spkr_src[SPKR_SRC_DISK_IOERR_SFX] );
 
 }

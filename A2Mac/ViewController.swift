@@ -462,31 +462,84 @@ class ViewController: NSViewController  {
         }
     }
     
+    let mouseCursorJoystickEmulation = NSCursor.crosshair
+    
+    func getScreenWithMouse() -> NSScreen? {
+        let mouseLocation = NSEvent.mouseLocation
+        let screens = NSScreen.screens
+        let screenWithMouse = (screens.first { NSMouseInRect(mouseLocation, $0.frame, false) })
+        
+        return screenWithMouse
+    }
+    
+    
+    func convertPoint(toCG : NSPoint) -> CGPoint {
+        /// Cocoa and Core Graphics (a.k.a. Quartz) use different coordinate systems. In Cocoa, the origin is at the lower left of the primary screen and y increases as you go up. In Core Graphics, the origin is at the top left of the primary screen and y increases as you go down.
+        /// Need to convert coordinates from Cocoa to Core Graphics
+        var CGPoint = view.window!.convertPoint(toScreen: toCG)
+        if let screen = getScreenWithMouse() {
+            CGPoint.y = NSHeight(screen.frame) - CGPoint.y;
+        }
+        return CGPoint
+    }
+    
+    
     override func mouseMoved(with event: NSEvent) {
 //        print(#function)
-        mouseLocation = event.locationInWindow
+        var location = event.locationInWindow
+//        displayOrigin = textDisplayScroller.frame.origin.
+//        print("mx:", location.x, " my:", location.y)
+                
+        var mouseCursorNeedsReplace = false
         
+        if location.x < 8 {
+            mouseCursorNeedsReplace = true
+            location.x = 8
+        }
+        if location.x >= textDisplay.frame.width - 7 {
+            mouseCursorNeedsReplace = true
+            location.x = textDisplay.frame.width - 8
+        }
+        if location.y < 8 {
+            mouseCursorNeedsReplace = true
+            location.y = 8
+        }
+        if location.y >= textDisplay.frame.height - 7 {
+            mouseCursorNeedsReplace = true
+            location.y = textDisplay.frame.height - 8
+        }
+
         if ( Mouse2Joystick ) {
+            mouseCursorJoystickEmulation.set()
+
+            if mouseCursorNeedsReplace {
+                CGWarpMouseCursorPosition(convertPoint(toCG: location))
+            }
+            
             pdl_prevarr[0] = pdl_valarr[0]
-            pdl_valarr[0] = Double(mouseLocation.x / (textDisplayScroller.frame.width) )
+            pdl_valarr[0] = Double(location.x / (textDisplay.frame.width) )
             pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
             
             pdl_prevarr[1] = pdl_valarr[1]
-            pdl_valarr[1] = 1 - Double(mouseLocation.y / (textDisplayScroller.frame.height) )
+            pdl_valarr[1] = 1 - Double(location.y / (textDisplay.frame.height) )
             pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
+        }
+        else {
+            NSCursor.arrow.set()
         }
         
         if ( MouseInterface ) {
             pdl_prevarr[2] = pdl_valarr[2]
-            pdl_valarr[2] = Double(mouseLocation.x / (textDisplayScroller.frame.width) )
+            pdl_valarr[2] = Double(location.x / (textDisplay.frame.width) )
             pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
             
             pdl_prevarr[3] = pdl_valarr[3]
-            pdl_valarr[3] = 1 - Double(mouseLocation.y / (textDisplayScroller.frame.height) )
+            pdl_valarr[3] = 1 - Double(location.y / (textDisplay.frame.height) )
             pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
         }
     }
     
+
     override func keyDown(with event: NSEvent) {
         
         if ( cpuMode == cpuMode_eco ) {
@@ -734,8 +787,6 @@ class ViewController: NSViewController  {
     var frameCounter : UInt32 = 0
     var clkCounter : Double = 0
     
-    var mouseLocation = NSPoint.zero
-    
     var shadowTxt : String = ""
     var unicodeTextString : String = ""
 
@@ -977,9 +1028,27 @@ class ViewController: NSViewController  {
     
     override func mouseDown(with event: NSEvent) {
 //        print(#function)
+        
+        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        case [.control, .command, .option]:
+            Mouse2Joystick = !Mouse2Joystick
+            
+            if Mouse2Joystick {
+                ToolBarController.current?.MouseToJoystickMenuItem.state = .on
+                mouseCursorJoystickEmulation.set()
+            }
+            else {
+                ToolBarController.current?.MouseToJoystickMenuItem.state = .off
+                NSCursor.arrow.set()
+            }
+        default:
+            break
+        }
+
         if ( Mouse2Joystick ) {
             setIO(0xC061, 1 << 7)
         }
+        
     }
 
     override func mouseUp(with event: NSEvent) {

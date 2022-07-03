@@ -26,6 +26,13 @@ import Cocoa
 
 class ToolBarController: NSWindowController, NSWindowDelegate {
     
+    static var current : ToolBarController? = nil
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        ToolBarController.current = self
+    }
+
     func window(_ window: NSWindow, willUseFullScreenPresentationOptions proposedOptions: NSApplication.PresentationOptions = []) -> NSApplication.PresentationOptions {
         return [.autoHideToolbar, .autoHideMenuBar, .fullScreen]
     }
@@ -260,6 +267,16 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             if let state = ViewController.current?.Mouse2Joystick {
                 ViewController.current?.Mouse2Joystick = !state
                 sender.selectedItem?.state = state ? .off : .on
+                
+                if !state {
+//                    NSCursor.hide()
+                    ViewController.current?.mouseCursorJoystickEmulation.set()
+                }
+                else {
+                    NSCursor.unhide()
+//                    NSCursor.arrow.set()
+                }
+
             }
             break
             
@@ -274,6 +291,8 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             break
         }
     }
+    
+    @IBOutlet weak var MouseToJoystickMenuItem: NSMenuItem!
     
     @IBAction func DiskOptions(_ sender: NSPopUpButton) {
         switch sender.selectedItem?.tag {

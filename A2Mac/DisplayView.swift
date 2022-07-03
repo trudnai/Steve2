@@ -16,6 +16,28 @@ class DisplayView: NSTextView {
 //        }
 //    }
     
+    var trackingArea: NSTrackingArea?
+    
+    /// Install tracking area if window is set, remove previous one if needed.
+    func installTrackingArea() {
+        guard let window = window else { return }
+        window.acceptsMouseMovedEvents = true
+        if trackingArea != nil { removeTrackingArea(trackingArea!) }
+        let trackingOptions : NSTrackingArea.Options = [.activeAlways, .mouseEnteredAndExited, .mouseMoved]
+        trackingArea = NSTrackingArea(rect: bounds,
+                                      options: trackingOptions,
+                                      owner: self, userInfo: nil)
+        self.addTrackingArea(trackingArea!)
+    }
+    
+    
+    // Called when layout is modified
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        installTrackingArea()
+    }
+
+    
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
         return true
     }

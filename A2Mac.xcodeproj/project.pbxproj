@@ -1899,7 +1899,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 0.85;
 				OTHER_CFLAGS = (
 					"-DDISASSEMBLER",
@@ -1942,7 +1942,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LLVM_LTO = YES_THIN;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 0.85;
 				OTHER_CFLAGS = (
 					"-DDISASSEMBLER",
@@ -2096,7 +2096,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 0.86;
 				OTHER_CFLAGS = (
 					"-D_NO_DISASSEMBLER",
@@ -2138,7 +2138,7 @@
 					"@executable_path/../Frameworks",
 				);
 				LLVM_LTO = YES_THIN;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = 0.86;
 				OTHER_CFLAGS = (
 					"-D_NO_DISASSEMBLER",

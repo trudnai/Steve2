@@ -33,7 +33,7 @@
 #include "disk.h" // to be able to disable disk acceleration
 
 
-#define SPKR_OVERSAMPLING 32 // 8 sounds like optimal, 16 is better, 32 is really good but have a weird effect
+#define SPKR_OVERSAMPLING 32 // 8 and 10 sounds ok, 16 is better, 32 is really good, 64 is not better than 32
 
 
 #define min(x,y) (x) < (y) ? (x) : (y)
@@ -94,7 +94,9 @@ int spkr_last_level = SPKR_LEVEL_ZERO;
 //static const int ema_len_soft = 20;
 //static const int ema_len_supersoft = 40;
 
-#if (SPKR_OVERSAMPLING >= 32)
+#if (SPKR_OVERSAMPLING >= 64)
+int spkr_ema_len = 128;
+#elif (SPKR_OVERSAMPLING >= 32)
 int spkr_ema_len = 64;
 #elif (SPKR_OVERSAMPLING >= 16)
 int spkr_ema_len = 32;
@@ -691,17 +693,24 @@ INLINE static void spkr_filter_sma(int buf_len) {
 
 
 #ifdef SPKR_OVERSAMPLING
+INLINE static spkr_sample_t spkr_avg(const spkr_sample_t * buf, const int len) {
+    long sum = 0;
+
+    // get the sum for that section
+    for (int i = 0; i < len; i++) {
+        sum += buf[ i * SPKR_CHANNELS ];
+    }
+
+    // get the average for that section
+    return sum / len;
+}
+
 INLINE static void spkr_downsample() {
     for (int i = 0; i < SPKR_STRM_SLOT_SIZE(1); ) {
-        int level = 0;
         int buf_idx = i * SPKR_OVERSAMPLING;
         
-        // get the sum for that section
-        for (int j = 0; j < SPKR_OVERSAMPLING; j++) {
-            level += spkr_samples[ buf_idx + j * SPKR_CHANNELS ];
-        }
         // get the average for that section
-        level /= SPKR_OVERSAMPLING;
+        spkr_sample_t level = spkr_avg(spkr_samples + buf_idx, SPKR_OVERSAMPLING);
 
         // fill the downsampled version
         spkr_stream[i++] = level;

@@ -473,14 +473,14 @@ class ViewController: NSViewController  {
     }
     
     
-    func convertPoint(toCG : NSPoint) -> CGPoint {
+    func convertPoint(toCG point : NSPoint) -> CGPoint {
         /// Cocoa and Core Graphics (a.k.a. Quartz) use different coordinate systems. In Cocoa, the origin is at the lower left of the primary screen and y increases as you go up. In Core Graphics, the origin is at the top left of the primary screen and y increases as you go down.
         /// Need to convert coordinates from Cocoa to Core Graphics
-        var CGPoint = view.window!.convertPoint(toScreen: toCG)
+        var cgpoint = view.window!.convertPoint(toScreen: point)
         if let screen = getScreenWithMouse() {
-            CGPoint.y = NSHeight(screen.frame) - CGPoint.y;
+            cgpoint.y = NSHeight(screen.frame) - cgpoint.y;
         }
-        return CGPoint
+        return cgpoint
     }
     
     
@@ -496,7 +496,7 @@ class ViewController: NSViewController  {
             mouseCursorNeedsReplace = true
             location.x = 8
         }
-        if location.x >= textDisplay.frame.width - 7 {
+        if location.x > textDisplay.frame.width - 8 {
             mouseCursorNeedsReplace = true
             location.x = textDisplay.frame.width - 8
         }
@@ -504,7 +504,7 @@ class ViewController: NSViewController  {
             mouseCursorNeedsReplace = true
             location.y = 8
         }
-        if location.y >= textDisplay.frame.height - 7 {
+        if location.y > textDisplay.frame.height - 8 {
             mouseCursorNeedsReplace = true
             location.y = textDisplay.frame.height - 8
         }

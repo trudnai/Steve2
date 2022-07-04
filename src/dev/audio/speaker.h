@@ -111,8 +111,8 @@ extern void spkr_play_disk_motor(void);
 extern void spkr_stop_disk_motor( int time );
 extern void spkr_update_disk_sfx(void);
 extern void spkr_stop_sfx( ALuint src );
-extern void spkr_stop_game_sfx();
-extern void spkr_stop_disk_sfx();
+extern void spkr_stop_game_sfx(void);
+extern void spkr_stop_disk_sfx(void);
 extern void spkr_stopAll(void);
 
 extern void spkr_play_disk_arm(void);

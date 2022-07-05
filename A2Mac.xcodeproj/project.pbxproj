@@ -11,6 +11,8 @@
 		320B3FC424AD88B0005EA133 /* power.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B3FC324AD88B0005EA133 /* power.png */; };
 		320B4FC124B182DE00070038 /* Apple Disk II.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B4FC024B182DD00070038 /* Apple Disk II.png */; };
 		320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 320F2A8724CFD74000671B35 /* Steve2Icon.icns */; };
+		321D9C3B287373D20036E22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		321D9C45287373D30036E22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32326B0C2630A1910076F839 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		323D042E248980600086A901 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
@@ -70,8 +72,6 @@
 		3268B9E927DEDD61003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
 		326B56E524AD8E89009BA0AC /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
-		3277D779273AE0DA00749544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
-		3277D783273AE0DC00749544 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
 		3277D7A4273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
 		32799F7A264B1A5700255669 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
@@ -545,6 +545,7 @@
 		320F2A8A24D0001600671B35 /* 6502_und.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_und.h; sourceTree = "<group>"; };
 		320F2A8B24D0828600671B35 /* 6502_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_C.h; sourceTree = "<group>"; };
 		320F2A9924D4DE8400671B35 /* 6502_C_Rockwell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_C_Rockwell.h; sourceTree = "<group>"; };
+		321D9BDC287373000036E22F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = A2Mac/Base.lproj/Main_copy.storyboard; sourceTree = "<group>"; };
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -1132,13 +1133,13 @@
 				323D04312489BFD80086A901 /* PreferencesWindowController.swift */,
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,
 				32C4532D233345420000EBA1 /* MonitorView.swift */,
-				3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */,
 				32544194264A6C1600B7E3ED /* DisplayView.swift */,
 				32C453072331C0910000EBA1 /* NSLayoutManager-Extension.swift */,
 				32440BA22480D5C0000F9DA1 /* LoRes.swift */,
 				32DBF7632334657900DD50E7 /* HiRes.swift */,
 				32EDB7A123272CA80073AF2D /* fail1.txt */,
 				32BFFB6022EACC660003B53F /* Main.storyboard */,
+				321D9BDB287373000036E22F /* Main_copy.storyboard */,
 				323D042D248980600086A901 /* Preferences.storyboard */,
 				32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */,
 				32BFFB6322EACC660003B53F /* Info.plist */,
@@ -1149,6 +1150,7 @@
 				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
 				3267641724BCC9A5000BEA11 /* COPYING */,
 				3277D7A2273C603600749544 /* DisplayScrollView.swift */,
+				3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -1479,11 +1481,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321D9C3B287373D20036E22F /* Main.storyboard in Resources */,
 				32BCCD1A2650D3B1002151C5 /* Debug-Info.plist in Resources */,
 				32799F8D264B1A5700255669 /* COPYING in Resources */,
 				32799F8F264B1A5700255669 /* Assets.xcassets in Resources */,
 				3268B99227DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
-				3277D783273AE0DC00749544 /* Main.storyboard in Resources */,
 				32799F90264B1A5700255669 /* Preferences.storyboard in Resources */,
 				32799F91264B1A5700255669 /* Steve2Icon.icns in Resources */,
 			);
@@ -1493,11 +1495,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321D9C45287373D30036E22F /* Main.storyboard in Resources */,
 				32BCCD192650D3B1002151C5 /* Debug-Info.plist in Resources */,
 				3267641824BCC9A5000BEA11 /* COPYING in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
 				3268B99127DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
-				3277D779273AE0DA00749544 /* Main.storyboard in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
 				320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */,
 			);
@@ -1712,6 +1714,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		321D9BDB287373000036E22F /* Main_copy.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				321D9BDC287373000036E22F /* Base */,
+			);
+			name = Main_copy.storyboard;
+			sourceTree = "<group>";
+		};
 		325EB64823FBBACF00C6B4A4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

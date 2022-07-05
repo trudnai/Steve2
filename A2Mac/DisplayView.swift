@@ -18,6 +18,15 @@ class DisplayView: NSTextView {
     
     var trackingArea: NSTrackingArea?
     
+    func debugDisplayContraints() {
+        print( "debugDisplayContraints ----------------------------------" )
+        if let view = window?.contentView {
+            for constraint in view.constraints {
+                print( "debugDisplayContraints:", constraint.identifier ?? "{Constaint has no identifier}", constraint.constant )
+            }
+        }
+    }
+    
     /// Install tracking area if window is set, remove previous one if needed.
     func installTrackingArea() {
         guard let window = window else { return }
@@ -45,6 +54,8 @@ class DisplayView: NSTextView {
     override func mouseDown(with event: NSEvent) {
 //        print(#function + "DisplayView")
         ViewController.current?.mouseDown(with: event)
+        
+        // debugDisplayContraints()
     }
     
     override func mouseUp(with event: NSEvent) {

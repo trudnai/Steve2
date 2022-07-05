@@ -231,13 +231,17 @@ class ViewController: NSViewController  {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             NSAnimationContext.runAnimationGroup({ (context) in
-                context.duration = 0.5
+                context.duration = 1.0
                 // Use the value you want to animate to (NOT the starting value)
                 self.textDisplayScroller.animator().alphaValue = 1
+                self.hires.animator().alphaValue = 1
+                self.lores.animator().alphaValue = 1
                 self.splashScreen.animator().alphaValue = 0
             },
             completionHandler:{ () -> Void in
                 self.textDisplayScroller.alphaValue = 1
+                self.hires.alphaValue = 1
+                self.lores.alphaValue = 1
                 self.splashScreen.isHidden = true
             })
             
@@ -288,12 +292,39 @@ class ViewController: NSViewController  {
         //------------------------------------------------------------
         // Animated Splash Screen fade out and (Text) Monitor fade in
         
-        hires.isHidden = true
-        lores.isHidden = true
-        textDisplayScroller.alphaValue = 0
-//        textDisplayScroller.isHidden = false
-        splashScreen.alphaValue = 1
-        splashScreen.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+            self.splashScreen.alphaValue = 0
+            self.splashScreen.isHidden = false
+
+            NSAnimationContext.runAnimationGroup({ (context) in
+                context.duration = 0.5
+                // Use the value you want to animate to (NOT the starting value)
+                self.textDisplayScroller.animator().alphaValue = 0
+                self.hires.animator().alphaValue = 0
+                self.lores.animator().alphaValue = 0
+                self.splashScreen.animator().alphaValue = 1
+            },
+            completionHandler:{ () -> Void in
+                self.textDisplayScroller.alphaValue = 0
+                self.textDisplayScroller.isHidden = true
+                self.splashScreen.isHidden = false
+                
+                self.hires.alphaValue = 0
+                self.lores.alphaValue = 0
+                self.hires.isHidden = true
+                self.lores.isHidden = true
+                
+                self.splashScreen.isHidden = false
+            })
+        }
+
+        
+//        hires.isHidden = true
+//        lores.isHidden = true
+//        textDisplayScroller.alphaValue = 0
+////        textDisplayScroller.isHidden = false
+//        splashScreen.alphaValue = 1
+//        splashScreen.isHidden = false
         
         //------------------------------------------------------------
         

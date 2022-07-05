@@ -26,7 +26,6 @@ import Cocoa
 class MonitorView: NSView {
     
     @IBOutlet var textDisplay: DisplayView!
-    @IBOutlet weak var clipView: NSClipView!
     @IBOutlet weak var scanlinesView: NSImageView!
     
     static let overscan_h = CGFloat(25)

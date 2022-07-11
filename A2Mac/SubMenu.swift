@@ -10,11 +10,7 @@ import Cocoa
 import Foundation
 
 
-class MainMenu: NSMenu {
-    
-    override func submenuAction(_ sender: Any?) {
-        super.submenuAction(sender)
-        print("MainMenu submenuAction")
-    }
+class SubMenu: NSMenuItem {
+
     
 }

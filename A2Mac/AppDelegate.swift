@@ -22,10 +22,12 @@
 //
 
 import Cocoa
+import Foundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    static var current : AppDelegate?
     var preferencesController : PreferencesWindowController?
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -51,6 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        AppDelegate.current = self
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -64,6 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
         ViewController.current?.openDiskImage(url: URL(fileURLWithPath: filename))
+        
         return true;
     }
 
@@ -95,8 +99,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menuItem.state = (ViewController.current?.Cheat_Wavy_Navy_Lose_To_Win())!
     }
     
+    @IBOutlet weak var MenuItem_Cheat: NSMenuItem!
+    @IBOutlet weak var MenuItem_Hard_Hat_Mack: NSMenuItem!
+    @IBOutlet weak var MenuItem_Hard_Hat_Mack_Add_3_Macks: NSMenuItem!
+    
+    func Cheat_Menu() {
+//        print("Cheat_Menu Menu")
+        let ships = ViewController.current?.Get_Hard_Hat_Mack()
+        MenuItem_Hard_Hat_Mack_Add_3_Macks.title =  String(format: "Add 3 Macks (%d)", ships!)
+    }
+    
     @IBAction func Cheat_Hard_Hat_Mack(_ menuItem: NSMenuItem) {
-        menuItem.state = (ViewController.current?.Cheat_Hard_Hat_Mack())!
+        print("Cheat_Hard_Hat_Mack SubMenu")
+        let ships = ViewController.current?.Get_Hard_Hat_Mack()
+        MenuItem_Hard_Hat_Mack_Add_3_Macks.title =  String(format: "Add 3 Macks (%d)", ships!)
+    }
+    @IBAction func Cheat_Hard_Hat_Mack_Add_3_Macks(_ menuItem: NSMenuItem) {
+        let _ = ViewController.current?.Cheat_Hard_Hat_Mack(add: 3)
+    }
+    
+    @IBAction func Cheat_Hard_Hat_Mack_Never_Lose(_ menuItem: NSMenuItem) {
+        menuItem.state = (ViewController.current?.Cheat_Hard_Hat_Mack_Never_Lose())!
     }
     
     @IBAction func showPreferences(_ sender: NSMenuItem) {

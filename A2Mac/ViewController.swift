@@ -2000,7 +2000,22 @@ class ViewController: NSViewController  {
         }
     }
     
-    func Cheat_Hard_Hat_Mack() -> NSControl.StateValue {
+    
+    func Get_Hard_Hat_Mack() -> UInt8 {
+        return getMEM( 0x4EDF )
+    }
+    
+    func Cheat_Hard_Hat_Mack(add : UInt8) -> UInt8 {
+        let ships = min( getMEM( 0x4EDF ) + add, 9 )
+        setMEM( 0x4EDF, ships )
+//        CALL( 0x1219 ) // starts from the beginning
+        CALL( 0x1A2B ) // refresh Mack counter on screen
+        
+        return ships
+    }
+
+    
+    func Cheat_Hard_Hat_Mack_Never_Lose() -> NSControl.StateValue {
         setMEM( 0x0503, 0x18 )
         setMEM( 0x0504, 0x60 )
         

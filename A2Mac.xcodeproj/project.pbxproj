@@ -11,6 +11,10 @@
 		320B3FC424AD88B0005EA133 /* power.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B3FC324AD88B0005EA133 /* power.png */; };
 		320B4FC124B182DE00070038 /* Apple Disk II.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B4FC024B182DD00070038 /* Apple Disk II.png */; };
 		320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 320F2A8724CFD74000671B35 /* Steve2Icon.icns */; };
+		32100A8B2875387300D894EE /* CheatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A8A2875387300D894EE /* CheatMenu.swift */; };
+		32100A9F28753AAA00D894EE /* SubMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A9E28753AAA00D894EE /* SubMenu.swift */; };
+		32100AB42877AB8600D894EE /* scsi.c in Sources */ = {isa = PBXBuildFile; fileRef = 32100AB32877AB8600D894EE /* scsi.c */; };
+		32100AB52877AB8600D894EE /* scsi.c in Sources */ = {isa = PBXBuildFile; fileRef = 32100AB32877AB8600D894EE /* scsi.c */; };
 		321D9C3B287373D20036E22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		321D9C45287373D30036E22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
 		32326B0C2630A1910076F839 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
@@ -545,6 +549,10 @@
 		320F2A8A24D0001600671B35 /* 6502_und.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_und.h; sourceTree = "<group>"; };
 		320F2A8B24D0828600671B35 /* 6502_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_C.h; sourceTree = "<group>"; };
 		320F2A9924D4DE8400671B35 /* 6502_C_Rockwell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_C_Rockwell.h; sourceTree = "<group>"; };
+		32100A8A2875387300D894EE /* CheatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatMenu.swift; sourceTree = "<group>"; };
+		32100A9E28753AAA00D894EE /* SubMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubMenu.swift; sourceTree = "<group>"; };
+		32100AB22877AB8600D894EE /* scsi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scsi.h; sourceTree = "<group>"; };
+		32100AB32877AB8600D894EE /* scsi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scsi.c; sourceTree = "<group>"; };
 		321D9BDC287373000036E22F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = A2Mac/Base.lproj/Main_copy.storyboard; sourceTree = "<group>"; };
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
@@ -932,6 +940,8 @@
 				325EB63523F8F78300C6B4A4 /* disk.c */,
 				32E3126B24A9928F00E61891 /* dsk2woz.h */,
 				32E3126824A98B9300E61891 /* dsk2woz.c */,
+				32100AB22877AB8600D894EE /* scsi.h */,
+				32100AB32877AB8600D894EE /* scsi.c */,
 			);
 			path = disk;
 			sourceTree = "<group>";
@@ -1127,6 +1137,8 @@
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
+				32100A8A2875387300D894EE /* CheatMenu.swift */,
+				32100A9E28753AAA00D894EE /* SubMenu.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
 				32C6995127C5439300D0F25D /* Debugger.swift */,
 				323D042F24898AB70086A901 /* PreferencesViewController.swift */,
@@ -1595,6 +1607,7 @@
 				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
 				32799F81264B1A5700255669 /* disk.c in Sources */,
 				3268B97B27DE7D6B003FBDCC /* disassembler.c in Sources */,
+				32100AB52877AB8600D894EE /* scsi.c in Sources */,
 				32C6996727C548C900D0F25D /* Shaders.metal in Sources */,
 				32799F82264B1A5700255669 /* woz.c in Sources */,
 				32A6AB10266AF5160023257A /* paddle.c in Sources */,
@@ -1620,13 +1633,16 @@
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
 				32E3126D24AC033A00E61891 /* ToolBarController.swift in Sources */,
 				323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */,
+				32100A9F28753AAA00D894EE /* SubMenu.swift in Sources */,
 				32BCCCE9264DBDC8002151C5 /* 6502.c in Sources */,
 				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				32100A8B2875387300D894EE /* CheatMenu.swift in Sources */,
 				3268B97A27DE7D6A003FBDCC /* disassembler.c in Sources */,
 				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
+				32100AB42877AB8600D894EE /* scsi.c in Sources */,
 				32A6AB0F266AF5160023257A /* paddle.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,

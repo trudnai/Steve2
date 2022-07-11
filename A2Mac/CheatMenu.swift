@@ -10,15 +10,21 @@ import Cocoa
 import Foundation
 
 
-class MainMenu: NSMenu {
+class CheatMenu: NSMenu {
     override func update() {
         super.update()
-        print("MainMenu update")
+        print("CheatMenu update")
+        
+//        AppDelegate.current?.Cheat_Menu()
+        
+        let ships = ViewController.current?.Get_Hard_Hat_Mack()
+//        AppDelegate.current?.MenuItem_Hard_Hat_Mack_Add_3_Macks.title =  String(format: "Add 3 Macks (%d)", ships!)
+
     }
     
-    override func submenuAction(_ sender: Any?) {
-        super.submenuAction(sender)
-        print("MainMenu submenuAction")
+    override func itemChanged(_ item: NSMenuItem) {
+        super.itemChanged(item)
+        print("CheatMenu itemChanged")
     }
     
 }

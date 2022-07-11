@@ -1444,6 +1444,12 @@ void setMEM32 ( uint16_t addr, uint32_t val ) {
     *(uint32_t*)(&Apple2_64K_MEM[addr]) = val;
 }
 
+void setMEMarray ( uint16_t addr, uint8_t * arr, int len ) {
+    while (len--) {
+        Apple2_64K_MEM[addr++] = *arr++;
+    }
+}
+
 void kbdInput ( uint8_t code ) {
     //    printf("kbdInput: %02X ('%c')\n", code, isprint(code) ? code : ' ');
     switch ( code ) {

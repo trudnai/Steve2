@@ -187,6 +187,8 @@ class HiRes: NSView {
     // default is green
     var monoColor       : UInt32 = 0xFF2BD84A
     
+    static let refreshUnderscan: CGFloat = 1;
+    static let refreshOverscan : CGFloat = refreshUnderscan * 2;
     
     func refreshChanged( blockSize : Int ) {
         // refresh changed block only
@@ -205,7 +207,12 @@ class HiRes: NSView {
                     let w = blockScreenWidth + CGFloat(screenBlockMargin) * CGFloat(blockSize)
                     let h = blockScreenHeigth + CGFloat(screenBlockMargin) * CGFloat(blockSize)
                     
-                    let boundingBox = CGRect(x: x, y: y, width: w, height: h)
+                    let boundingBox = CGRect(
+                        x: x - HiRes.refreshUnderscan,
+                        y: y - HiRes.refreshUnderscan,
+                        width: w + HiRes.refreshOverscan,
+                        height: h + HiRes.refreshOverscan
+                    )
                     self.setNeedsDisplay( boundingBox )
                 }
             }

@@ -164,9 +164,9 @@ spkr_sample_t spkr_stream_buf [ sample_strm_array_len ]; // can store up to 1 se
 spkr_sample_t * spkr_stream = spkr_stream_buf + SPKR_STRM_SLOT(SPKR_SILENT_SLOT); // keep 1 "empty" frame ahead
 #endif
 
-unsigned spkr_sample_idx = 0;
-unsigned spkr_sample_last_idx = 0;
-unsigned spkr_sample_first_pwm_idx = 0;
+int spkr_sample_idx = 0;
+int spkr_sample_last_idx = 0;
+int spkr_sample_first_pwm_idx = 0;
 
 unsigned spkr_play_timeout = SPKR_PLAY_TIMEOUT; // increase to 32 for 240 fps, normally 8 for 30 fps
 unsigned spkr_play_time = 0;
@@ -499,7 +499,14 @@ char spkr_state = 0;
 
 #define _NO_SPKR_EARLY_ZERO_LEVEL 500
 
-INLINE void spkr_finish_square(const unsigned new_idx) {
+INLINE void spkr_finish_square(const int new_idx) {
+
+    // avoid buffer under/over runs
+    if ( (new_idx < 0) || (new_idx >= SPKR_BUF_SLOT_SIZE(BUFFER_COUNT)) ) {
+        return;
+    }
+
+    
     // only fill small enough gaps and larger ones will go back to 0
 #ifdef SPKR_EARLY_ZERO_LEVEL
     if ( (new_idx - spkr_sample_last_idx) < SPKR_EARLY_ZERO_LEVEL ) {
@@ -571,7 +578,7 @@ void spkr_toggle() {
 
 //        spkr_sample_idx = round( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / (double)spkr_sample_rate)) * SPKR_CHANNELS;
         spkr_sample_idx = round( (double)(spkr_clk + m6502.clkfrm) * multiplier ) * SPKR_CHANNELS;
-        spkr_sample_idx &= UINTMAX_MAX - 1;
+        spkr_sample_idx %= SPKR_BUF_SLOT_SIZE(BUFFER_COUNT);
         
         // if play stopped, we should make sure we are not creating a false initial quare wave
         if (spkr_play_time <= 0) {

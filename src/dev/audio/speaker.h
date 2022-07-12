@@ -86,7 +86,7 @@ extern const unsigned spkr_buf_size;
 extern const unsigned spkr_fps;
 extern unsigned spkr_fps_divider;
 extern spkr_sample_t * spkr_samples;
-extern unsigned spkr_sample_idx;
+extern int spkr_sample_idx;
 extern int spkr_level;
 extern int freeBuffers;
 extern int spkr_extra_buf;

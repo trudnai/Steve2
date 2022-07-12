@@ -493,7 +493,29 @@ class ViewController: NSViewController  {
         }
     }
     
+    let mouseCursorHidden = true;
     let mouseCursorJoystickEmulation = NSCursor.crosshair
+    let mouseCursorHiddenJoystickEmulation = NSCursor.init(image: NSImage.init(size: NSSize(width: 1, height: 1)), hotSpot: NSPoint(x: 0, y: 0))
+
+    
+    func mouseCursor(hide : Bool) {
+        if hide {
+            if mouseCursorHidden {
+                // NSCursor.hide() is working weird, better to set a 1px transparent cursor
+                mouseCursorHiddenJoystickEmulation.set()
+            }
+            else {
+                mouseCursorJoystickEmulation.set()
+            }
+        }
+        else {
+//            if mouseCursorHidden {
+//                NSCursor.unhide()
+//            }
+            NSCursor.arrow.set()
+        }
+    }
+
     
     func getScreenWithMouse() -> NSScreen? {
         let mouseLocation = NSEvent.mouseLocation
@@ -540,9 +562,9 @@ class ViewController: NSViewController  {
             location.y = textDisplay.frame.height - 8
         }
 
+        mouseCursor(hide: Mouse2Joystick)
+        
         if ( Mouse2Joystick ) {
-            mouseCursorJoystickEmulation.set()
-
             if mouseCursorNeedsReplace {
                 CGWarpMouseCursorPosition(convertPoint(toCG: location))
             }
@@ -554,9 +576,6 @@ class ViewController: NSViewController  {
             pdl_prevarr[1] = pdl_valarr[1]
             pdl_valarr[1] = 1 - Double(location.y / (textDisplay.frame.height) )
             pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
-        }
-        else {
-            NSCursor.arrow.set()
         }
         
         if ( MouseInterface ) {
@@ -1063,15 +1082,9 @@ class ViewController: NSViewController  {
         switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
         case [.control, .command, .option]:
             Mouse2Joystick = !Mouse2Joystick
-            
-            if Mouse2Joystick {
-                ToolBarController.current?.MouseToJoystickMenuItem.state = .on
-                mouseCursorJoystickEmulation.set()
-            }
-            else {
-                ToolBarController.current?.MouseToJoystickMenuItem.state = .off
-                NSCursor.arrow.set()
-            }
+            mouseCursor(hide: Mouse2Joystick)
+            ToolBarController.current?.MouseToJoystickMenuItem.state = Mouse2Joystick ? .on : .off
+
         default:
             break
         }

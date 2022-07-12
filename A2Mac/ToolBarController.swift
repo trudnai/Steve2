@@ -268,15 +268,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
                 ViewController.current?.Mouse2Joystick = !state
                 sender.selectedItem?.state = state ? .off : .on
                 
-                if !state {
-//                    NSCursor.hide()
-                    ViewController.current?.mouseCursorJoystickEmulation.set()
-                }
-                else {
-                    NSCursor.unhide()
-//                    NSCursor.arrow.set()
-                }
-
+                ViewController.current?.mouseCursor(hide: !state)                
             }
             break
             

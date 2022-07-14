@@ -33,7 +33,13 @@
 #include "disk.h" // to be able to disable disk acceleration
 
 
-#define SPKR_OVERSAMPLING 32 // 8 and 10 sounds ok, 16 is better, 32 is really good, 64 is not better than 32
+//   8 and 10 sounds ok
+//  16 is better
+//  32 is really good
+//  64 dow not sound better much than 32
+// 128 Relally good!
+// 256 sounds really amazing!
+#define SPKR_OVERSAMPLING 128
 
 
 #define min(x,y) (x) < (y) ? (x) : (y)
@@ -94,7 +100,9 @@ int spkr_last_level = SPKR_LEVEL_ZERO;
 //static const int ema_len_soft = 20;
 //static const int ema_len_supersoft = 40;
 
-#if (SPKR_OVERSAMPLING >= 64)
+#if (SPKR_OVERSAMPLING >= 128)
+int spkr_ema_len = 256;
+#elif (SPKR_OVERSAMPLING >= 64)
 int spkr_ema_len = 128;
 #elif (SPKR_OVERSAMPLING >= 32)
 int spkr_ema_len = 64;
@@ -108,7 +116,7 @@ int spkr_ema_len = 20;
 int spkr_ema_len = 16;
 #endif
 
-#define BUFFER_COUNT 16
+#define BUFFER_COUNT 32
 #define SPKR_CHANNELS 2
 
 ALuint spkr_src [SOURCES_COUNT] = { 0, 0, 0, 0 };
@@ -245,12 +253,10 @@ FILE * spkr_debug_ema_file = NULL;
 #endif
 
 
-void spkr_fade(float fadeLevel) {
+void spkr_fade(float fadeLevel, int idx) {
     // Fade
     
-    int idx = 0;
-    
-    float fadeSlope = fadeLevel / spkr_buf_size * SPKR_CHANNELS;
+    float fadeSlope = fadeLevel / (spkr_buf_size - idx) * SPKR_CHANNELS;
     
 //    while ( ( fabs(fadeLevel) >= fabs(fadeSlope) ) && ( idx < SPKR_BUF_SLOT_SIZE(1) ) ) {
     while ( idx < SPKR_BUF_SLOT_SIZE(1) ) {
@@ -264,7 +270,7 @@ void spkr_fade(float fadeLevel) {
 //    // Fill with Zero to avoid pops
 //    memset(spkr_samples + idx, 0, SPKR_BUF_SLOT_SIZE(1));
     
-    spkr_level = fadeLevel;
+    spkr_level = SPKR_LEVEL_ZERO;
 }
 
 
@@ -578,6 +584,7 @@ void spkr_toggle() {
 
 //        spkr_sample_idx = round( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / (double)spkr_sample_rate)) * SPKR_CHANNELS;
         spkr_sample_idx = round( (double)(spkr_clk + m6502.clkfrm) * multiplier ) * SPKR_CHANNELS;
+        
         spkr_sample_idx %= SPKR_BUF_SLOT_SIZE(BUFFER_COUNT);
         
         // if play stopped, we should make sure we are not creating a false initial quare wave
@@ -587,12 +594,6 @@ void spkr_toggle() {
         
         spkr_play_time = spkr_play_timeout;
         
-        unsigned spkr_sample_idx_diff = spkr_sample_idx - spkr_sample_last_idx;
-
-        if ( (int)spkr_sample_idx_diff < 0 ) {
-            spkr_sample_idx_diff = UINT_MAX - spkr_sample_idx_diff;
-        }
-
         if ( spkr_state ) {
             // down edge
             spkr_state = 0;
@@ -608,10 +609,6 @@ void spkr_toggle() {
             spkr_toggle_square(SPKR_LEVEL_MAX);
         }
         
-        //spkr_samples[sample_idx] = spkr_level;
-        for ( int i = spkr_sample_idx; i < spkr_buf_size + spkr_extra_buf; i++ ) {
-            spkr_samples[i] = spkr_level;
-        }
     }
 }
 
@@ -923,7 +920,7 @@ void spkr_update() {
         
         // Fix: Unqueue was not working properly some cases, so we need to monitor
         //      queued elements and if there are too many, let's just wait
-#define SPKR_MAX_QUEUED 10
+#define SPKR_MAX_QUEUED 25
         ALint queued = 0;
         alGetSourcei ( spkr_src[SPKR_SRC_GAME_SFX], AL_BUFFERS_QUEUED, &queued );
         al_check_error();
@@ -950,7 +947,7 @@ void spkr_update() {
                         // Need to Cool Down Speaker -- Soft Fade to Zero
                         else {
                             
-                            spkr_fade(spkr_level);
+                            spkr_fade(spkr_level, 0);
                             spkr_filter();
 
     #ifdef SPKR_DEBUG
@@ -980,7 +977,7 @@ void spkr_update() {
                         
                         // Normal Sound Buffer Feed
                         else {
-                            // finish the aquare wave
+                            // finish square wave
                             spkr_finish_square(spkr_buf_size);
                             // digital filtering the audio stream -- most notably smoothing
                             spkr_filter();
@@ -999,27 +996,9 @@ void spkr_update() {
                     memcpy(spkr_samples, spkr_samples + SPKR_BUF_SLOT_SIZE(1), SPKR_BUF_SLOT_SIZE(1) );
                     memset(spkr_samples + SPKR_BUF_SLOT_SIZE(1), 0, SPKR_BUF_SLOT_SIZE(1) );
                     
-                    spkr_sample_idx -= spkr_buf_size;
-                    while (spkr_sample_idx >= spkr_buf_size) {
-                        spkr_sample_idx -= spkr_buf_size;
-                    }
-                    if ((int)spkr_sample_idx < 0) {
-                        spkr_sample_idx = 0;
-                    }
+                    spkr_sample_idx = 0;
+                    spkr_sample_last_idx = 0;
                     
-                    spkr_sample_last_idx -= spkr_buf_size;
-                    while (spkr_sample_last_idx >= spkr_buf_size) {
-                        spkr_sample_last_idx -= spkr_buf_size;
-                    }
-                    
-                    if ((int)spkr_sample_last_idx < 0) {
-                        spkr_sample_last_idx = 0;
-                    }
-                    
-                    if (spkr_sample_last_idx >= spkr_buf_size) {
-                        printf("spkr_sample_last_idx >= spkr_buf_size\n");
-                    }
-
                     // make sure it never goes below 0 (never overflows)
                     if ( (int)spkr_play_time < 0 ) {
                         spkr_play_time = 0;

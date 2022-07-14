@@ -321,10 +321,10 @@ void m6502_Run() {
 //#ifdef CLK_WAIT
 //    unsigned long long elpased = (unsigned long long)-1LL;
 //#endif
-    
+
     m6502.clktime += m6502.clkfrm;
-    m6502.clkfrm = decrement(m6502.clkfrm, clk_6502_per_frm_max);
-    
+    m6502.clkfrm = 0;
+
     if( diskAccelerator_count ) {
         if( --diskAccelerator_count <= 0 ) {
             // make sure we only adjust clock once to get back to normal

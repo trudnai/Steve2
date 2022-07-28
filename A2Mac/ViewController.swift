@@ -763,7 +763,8 @@ class ViewController: NSViewController  {
     }
     
     override func flagsChanged(with event: NSEvent) {
-        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+        switch flags {
         case [.shift]:
             setIO(0xC061, 0)
             setIO(0xC062, 0)
@@ -819,6 +820,12 @@ class ViewController: NSViewController  {
 //            print("function key is pressed")
 //        case [.capsLock]:
 //            print("capsLock key is pressed")
+        
+        case [.control, .command, .option]:
+            Mouse2Joystick = !Mouse2Joystick
+            mouseCursor(hide: Mouse2Joystick)
+            ToolBarController.current?.MouseToJoystickMenuItem.state = Mouse2Joystick ? .on : .off
+
         default:
             setIO(0xC061, 0)
             setIO(0xC062, 0)
@@ -1586,8 +1593,10 @@ class ViewController: NSViewController  {
             break
         }
 
-        spkr_fps_divider = fps / spkr_fps
-        spkr_play_timeout = SPKR_PLAY_TIMEOUT * spkr_fps_divider
+//        spkr_fps_divider = fps / spkr_fps
+        spkr_fps = fps;
+        
+        spkr_play_timeout = SPKR_PLAY_TIMEOUT // * spkr_fps_divider
 
 //        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
 

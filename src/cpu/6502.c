@@ -131,7 +131,7 @@ INLINE void set_flags_V( const uint8_t test ) {
 }
 
 INLINE void set_flags_Z( const uint8_t test ) {
-    m6502.Z = test == 0;
+    m6502.Z = !test;
 }
 
 INLINE void set_flags_C( const int16_t test ) {

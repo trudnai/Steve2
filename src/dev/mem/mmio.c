@@ -344,9 +344,16 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     
     switch ( (uint8_t)addr ) {
         case (uint8_t)io_KBD:
-            
+        case (uint8_t)io_80STOREON:
+        case (uint8_t)io_SETSLOTCXROM:
+        case (uint8_t)io_SETINTCXROM:
+        case (uint8_t)io_SETSTDZP:
+        case (uint8_t)io_SETALTZP:
+        case (uint8_t)io_SETINTC3ROM:
+        case (uint8_t)io_SETSLOTC3ROM:
+            // we have to return keybard not only for $C000 but for ports all the way till $C00F
             return Apple2_64K_RAM[io_KBD];
-            
+
         case (uint8_t)io_KBDSTRB:
             Apple2_64K_RAM[io_KBD] &= ~(1 << 7);
             
@@ -478,6 +485,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             newMEMcfg = MEMcfg;
             newMEMcfg.RD_AUX_MEM = 0;
             auxMemorySelect(newMEMcfg);
+
+            // still need to return keyboard
+            return Apple2_64K_RAM[io_KBD];
+
             break;
             
         case (uint8_t)io_RDCARDRAM:
@@ -485,6 +496,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             newMEMcfg = MEMcfg;
             newMEMcfg.RD_AUX_MEM = 1;
             auxMemorySelect(newMEMcfg);
+            
+            // still need to return keyboard
+            return Apple2_64K_RAM[io_KBD];
+
             break;
             
         case (uint8_t)io_WRMAINRAM:
@@ -492,6 +507,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             newMEMcfg = MEMcfg;
             newMEMcfg.WR_AUX_MEM = 0;
             auxMemorySelect(newMEMcfg);
+
+            // still need to return keyboard
+            return Apple2_64K_RAM[io_KBD];
+
             break;
             
         case (uint8_t)io_WRCARDRAM:
@@ -499,6 +518,10 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             newMEMcfg = MEMcfg;
             newMEMcfg.WR_AUX_MEM = 1;
             auxMemorySelect(newMEMcfg);
+            
+            // still need to return keyboard
+            return Apple2_64K_RAM[io_KBD];
+
             break;
             
         case (uint8_t)io_MEM_RDRAM_NOWR_2:

@@ -270,7 +270,7 @@ enum mmio {
     io_VID_SET80VID     = 0xC00D,   //  ECG W    80 Columns
     io_VID_CLRALTCHAR   = 0xC00E,   //  ECG W    Primary Character Set
     io_VID_SETALTCHAR   = 0xC00F,   //  ECG W    Alternate Character Set
-    io_VID_RDVBL        = 0xC019,   //  E G  R7  Vertical Blanking (E:1=drawing G:0=drawing)
+    io_VID_RDVBL        = 0xC019,   //  E G  R7  Vertical Blanking (E:1=drawing G:0=drawing) VSYNC
                        // RSTVBL         C   R   Reset Vertical Blanking Interrupt
     io_VID_RDTEXT       = 0xC01A,   //  ECG  R7  Status of Text/Graphics
     io_VID_RDMIXED      = 0xC01B,   //  ECG  R7  Status of Full Screen/Mixed Graphics
@@ -278,10 +278,10 @@ enum mmio {
     io_VID_RDHIRES      = 0xC01D,   //  ECG  R7  Status of LoRes/HiRes
     io_VID_ALTCHAR      = 0xC01E,   //  ECG  R7  Status of Primary/Alternate Character Set
     io_VID_RD80VID      = 0xC01F,   //  ECG  R7  Status of 40/80 Columns
-    io_VID_Text_OFF     = 0xC050,
-    io_VID_Text_ON      = 0xC051,
-    io_VID_Mixed_OFF    = 0xC052,
-    io_VID_Mixed_ON     = 0xC053,
+    io_VID_Text_OFF     = 0xC050,   // TODO: floating I/O --> actual character / byte displayed by video?
+    io_VID_Text_ON      = 0xC051,   // TODO: floating I/O --> actual character / byte displayed by video?
+    io_VID_Mixed_OFF    = 0xC052,   // TODO: floating I/O --> actual character / byte displayed by video?
+    io_VID_Mixed_ON     = 0xC053,   // TODO: floating I/O --> actual character / byte displayed by video?
     io_VID_TXTPAGE1     = 0xC054,   // OECG WR   Display Page 1
     io_VID_TXTPAGE2     = 0xC055,   // OECG WR   If 80STORE Off: Display Page 2
                                     //  ECG WR   If 80STORE On: Read/Write Aux Display Mem

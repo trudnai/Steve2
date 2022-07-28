@@ -60,10 +60,10 @@
                value = "(int)spkr_sample_idx_diff">
             </PersistentString>
             <PersistentString
-               value = "(spkr_clk + m6502.clkfrm)">
+               value = "m6502.clkfrm">
             </PersistentString>
             <PersistentString
-               value = "m6502.clkfrm">
+               value = "(spkr_clk + m6502.clkfrm)">
             </PersistentString>
             <PersistentString
                value = "( (spkr_clk + m6502.clkfrm) / ( 1024000 / spkr_sample_rate ) ) * 2">
@@ -155,7 +155,7 @@
          contextName = "closure #1 in ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "MEMcfg.is_80STORE">
+               value = "MEMcfg.txt_page_2">
             </PersistentString>
             <PersistentString
                value = "self.shadowTxt">
@@ -164,7 +164,7 @@
                value = "txt">
             </PersistentString>
             <PersistentString
-               value = "MEMcfg.txt_page_2">
+               value = "MEMcfg.is_80STORE">
             </PersistentString>
             <PersistentString
                value = "txtArr">
@@ -195,6 +195,9 @@
          <PersistentStrings>
             <PersistentString
                value = "txtArr">
+            </PersistentString>
+            <PersistentString
+               value = "video_fps_divider">
             </PersistentString>
             <PersistentString
                value = "textLines * (textCols+1) + textCols">
@@ -378,6 +381,22 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "m6502_Step:6502_std.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "_DEC:6502_instr_inc_dec.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "WRLOMEM[addr]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in AppDelegate.saveFile(_:):AppDelegate.swift">
          <PersistentStrings>
             <PersistentString
@@ -530,6 +549,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ToolBarController.GamePort(_:):ToolBarController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ViewController.current?.mouseCursorHidden">
+            </PersistentString>
+            <PersistentString
+               value = "ViewController.current?.mouseCursorJoystickEmulation">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ToolBarController.windowWillEnterFullScreen(_:):ToolBarController.swift">
          <PersistentStrings>
             <PersistentString
@@ -571,17 +601,6 @@
             </PersistentString>
             <PersistentString
                value = "computePipelineState.maxTotalThreadsPerThreadgroup">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ToolBarController.GamePort(_:):ToolBarController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "ViewController.current?.mouseCursorHidden">
-            </PersistentString>
-            <PersistentString
-               value = "ViewController.current?.mouseCursorJoystickEmulation">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -809,10 +828,36 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ViewController.RenderText():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "videoMode.hires">
+            </PersistentString>
+            <PersistentString
+               value = "videoMode.col80">
+            </PersistentString>
+            <PersistentString
+               value = "txtClear">
+            </PersistentString>
+            <PersistentString
+               value = "videoMode.mixed">
+            </PersistentString>
+            <PersistentString
+               value = "videoMode.text">
+            </PersistentString>
+            <PersistentString
+               value = "unicodeTextArray">
+            </PersistentString>
+            <PersistentString
+               value = "videoMode.altChr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "HiRes.draw(_:):HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "ctx?.height">
+               value = "ctx?.bitsPerComponent">
             </PersistentString>
             <PersistentString
                value = "ctx?.data">
@@ -833,19 +878,19 @@
                value = "ctx?.bitmapInfo">
             </PersistentString>
             <PersistentString
+               value = "(blockH7 | ( block &amp; bitMask ))">
+            </PersistentString>
+            <PersistentString
                value = "HiRes.blockCols">
             </PersistentString>
             <PersistentString
                value = "shadowScreen">
             </PersistentString>
             <PersistentString
-               value = "ctx?.bitsPerComponent">
-            </PersistentString>
-            <PersistentString
                value = "linAddr">
             </PersistentString>
             <PersistentString
-               value = "(blockH7 | ( block &amp; bitMask ))">
+               value = "ctx?.height">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -870,7 +915,7 @@
                value = "textDisplay_height_diff">
             </PersistentString>
             <PersistentString
-               value = "textDisplay_width_diff">
+               value = "MonitorView.textViewBounds">
             </PersistentString>
             <PersistentString
                value = "frame.size">
@@ -879,7 +924,7 @@
                value = "textDisplay.bounds">
             </PersistentString>
             <PersistentString
-               value = "MonitorView.textViewBounds">
+               value = "textDisplay_width_diff">
             </PersistentString>
             <PersistentString
                value = "textDisplay.frame">
@@ -893,16 +938,16 @@
                value = "m6502">
             </PersistentString>
             <PersistentString
-               value = "(void*)Apple2_64K_RAM">
+               value = "Apple2_64K_AUX + 0x3600">
             </PersistentString>
             <PersistentString
                value = "m6502.PC">
             </PersistentString>
             <PersistentString
-               value = "Apple2_64K_AUX + 0x3600">
+               value = "Apple2_64K_RAM + 0x3600">
             </PersistentString>
             <PersistentString
-               value = "Apple2_64K_RAM + 0x3600">
+               value = "(void*)Apple2_64K_RAM">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -911,6 +956,17 @@
          <PersistentStrings>
             <PersistentString
                value = "upd">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "addr_abs:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "*((uint16_t*)&amp;RAM[m6502.PC])">
+            </PersistentString>
+            <PersistentString
+               value = "RAM[*((uint16_t*)&amp;RAM[m6502.PC])]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

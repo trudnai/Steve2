@@ -317,6 +317,33 @@ INLINE int is_io_interesting( uint16_t addr ) {
 }
 
 
+INLINE uint8_t kbdRead( const unsigned IOframe ) {
+    if ( cpuMode == cpuMode_eco ) {
+        // check if this is a busy keyboard poll (aka waiting for user input)
+        if ( IOframe < 16 ) {
+            clk_6502_per_frm_max = 6502; // Let it run for a bit to display character -- nerd number :-)
+            cpuState = cpuState_halting;
+        }
+    }
+    
+    // we have to return keybard not only for $C000 but for ports all the way till $C00F
+    return Apple2_64K_RAM[io_KBD];
+}
+
+
+INLINE uint8_t kbdStrobe() {
+    Apple2_64K_RAM[io_KBD] &= ~(1 << 7);
+    
+    if ( cpuMode == cpuMode_eco ) {
+        // check if this is a busy keyboard poll (aka waiting for user input)
+        clk_6502_per_frm_max = clk_6502_per_frm; // Absolute low mode
+        cpuState = cpuState_running;
+    }
+    
+    return Apple2_64K_RAM[io_KBDSTRB];
+}
+
+
 INLINE uint8_t ioRead( uint16_t addr ) {
     //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
 
@@ -327,20 +354,20 @@ INLINE uint8_t ioRead( uint16_t addr ) {
     unsigned int IOframe = m6502.clkfrm - lastIO;
     lastIO = m6502.clkfrm;
     
-    // TODO: This is for speed demo only, should be either removed or the entire ioRead should based on binary search, whatever is faster
-    if ( addr == io_KBD ) {
-        //        clk_6502_per_frm_max = clk_6502_per_frm_max > 32768 ? clk_6502_per_frm_max - 32768 : 0; // ECO Mode!
-        
-        if ( cpuMode == cpuMode_eco ) {
-            // check if this is a busy keyboard poll (aka waiting for user input)
-            if ( IOframe < 16 ) {
-                clk_6502_per_frm_max = 6502; // Let it run for a bit to display character -- nerd number :-)
-                cpuState = cpuState_halting;
-            }
-        }
-        
-        return Apple2_64K_RAM[io_KBD];
-    }
+//    // TODO: This is for speed demo only, should be either removed or the entire ioRead should based on binary search, whatever is faster
+//    if ( addr == io_KBD ) {
+//        //        clk_6502_per_frm_max = clk_6502_per_frm_max > 32768 ? clk_6502_per_frm_max - 32768 : 0; // ECO Mode!
+//
+//        if ( cpuMode == cpuMode_eco ) {
+//            // check if this is a busy keyboard poll (aka waiting for user input)
+//            if ( IOframe < 16 ) {
+//                clk_6502_per_frm_max = 6502; // Let it run for a bit to display character -- nerd number :-)
+//                cpuState = cpuState_halting;
+//            }
+//        }
+//
+//        return Apple2_64K_RAM[io_KBD];
+//    }
     
     switch ( (uint8_t)addr ) {
         case (uint8_t)io_KBD:
@@ -351,20 +378,11 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_SETALTZP:
         case (uint8_t)io_SETINTC3ROM:
         case (uint8_t)io_SETSLOTC3ROM:
-            // we have to return keybard not only for $C000 but for ports all the way till $C00F
-            return Apple2_64K_RAM[io_KBD];
+            return kbdRead(IOframe);
 
         case (uint8_t)io_KBDSTRB:
-            Apple2_64K_RAM[io_KBD] &= ~(1 << 7);
-            
-            if ( cpuMode == cpuMode_eco ) {
-                // check if this is a busy keyboard poll (aka waiting for user input)
-                clk_6502_per_frm_max = clk_6502_per_frm; // Absolute low mode
-                cpuState = cpuState_running;
-            }
-            
-            return Apple2_64K_RAM[io_KBDSTRB];
-            
+            return kbdStrobe();
+
         case (uint8_t)io_TAPEOUT:
             // TODO: 1. Implement Tape
             return rand(); // Floating I/O -- used for random number generation in Games
@@ -386,16 +404,16 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return rand(); // Apple2_64K_RAM[io_SPKR];
             
         case (uint8_t)io_VID_RDVBL:
-            return (m6502.clkfrm > 4550 ? 0x80 : 0) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (m6502.clkfrm > 4550 ? 0x80 : 0) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_VID_RDTEXT:
-            return (videoMode.text << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (videoMode.text << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_VID_ALTCHAR:
-            return (videoMode.altChr << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (videoMode.altChr << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_VID_RD80VID:
-            return (videoMode.col80 << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (videoMode.col80 << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_TAPEIN:
             // TODO: this should be only on //c
@@ -403,29 +421,29 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             
         case (uint8_t)io_RDCXROM:
             // TODO: Implement Reset Mouse X0 Interrupt (io_RSTXINT)
-            return (MEMcfg.int_Cx_ROM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.int_Cx_ROM << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_RDLCBNK2:
-            return (MEMcfg.RAM_BANK_2 << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.RAM_BANK_2 << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_RDLCRAM:
-            return (MEMcfg.RD_INT_RAM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.RD_INT_RAM << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_RDRAMRD:
-            return (MEMcfg.RD_AUX_MEM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.RD_AUX_MEM << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_RDRAMWR:
-            return (MEMcfg.WR_AUX_MEM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.WR_AUX_MEM << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_RDALTZP:
             // TODO: Implement Reset Mouse Y0 Interrupt (io_RSTYINT)
-            return (MEMcfg.ALT_ZP << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.ALT_ZP << 7) | (kbdStrobe() & 0x7F);
                 
         case (uint8_t)io_RDC3ROM:
             return MEMcfg.slot_C3_ROM << 7;
             
         case (uint8_t)io_RD80STORE:
-            return (MEMcfg.is_80STORE << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.is_80STORE << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_VID_TXTPAGE1:
             //            printf("io_VID_TXTPAGE1\n");
@@ -440,7 +458,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
             
         case (uint8_t)io_VID_RDPAGE2:
-            return (MEMcfg.txt_page_2 << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (MEMcfg.txt_page_2 << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_VID_Text_OFF:
             videoMode.text = 0;
@@ -459,7 +477,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
             
         case (uint8_t)io_VID_RDMIXED:
-            return (videoMode.mixed << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (videoMode.mixed << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_VID_Hires_OFF:
             videoMode.hires = 0;
@@ -470,7 +488,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
             
         case (uint8_t)io_VID_RDHIRES:
-            return (videoMode.hires << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
+            return (videoMode.hires << 7) | (kbdStrobe() & 0x7F);
             
         case (uint8_t)io_PDL0:
         case (uint8_t)io_PDL1:
@@ -489,7 +507,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
 
             // still need to return keyboard
-            return Apple2_64K_RAM[io_KBD];
+            return kbdRead(IOframe);
 
             break;
             
@@ -500,7 +518,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
             
             // still need to return keyboard
-            return Apple2_64K_RAM[io_KBD];
+            return kbdRead(IOframe);
 
             break;
             
@@ -511,7 +529,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
 
             // still need to return keyboard
-            return Apple2_64K_RAM[io_KBD];
+            return kbdRead(IOframe);
 
             break;
             
@@ -522,7 +540,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
             
             // still need to return keyboard
-            return Apple2_64K_RAM[io_KBD];
+            return kbdRead(IOframe);
 
             break;
             
@@ -630,7 +648,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
 
     switch ( (uint8_t)addr ) {
         case (uint8_t)io_KBDSTRB:
-            Apple2_64K_RAM[io_KBD] &= 0x7F;
+            kbdStrobe();
             break;
             
         case (uint8_t)io_TAPEOUT:
@@ -1490,18 +1508,27 @@ void kbdInput ( uint8_t code ) {
             break;
     }
     
-    code |= 0x80;
-    
-    // timeout with linearly increasing sleep
+    code |= 1<<7;
+
+    // wait for previous key read out from the latch
+    // Note: timeout with linearly increasing sleep
     for( int i = 1; i < 100 && ( RAM[io_KBD] > 0x7F ); i++ ) {
         usleep( i * 2 );
     }
     
-    RAM[io_KBD] = RAM[io_KBDSTRB] = code;
+    for (int i = 0; i <= 0xF; i++) {
+        RAM[io_KBD + i] = code;
+        // most significant bit is a status bit of other things
+        RAM[io_KBDSTRB + i] = (RAM[io_KBDSTRB + i] & (1<<7)) | (code & ~(1<<7));
+    }
+    
+    // mark key pressed
+    RAM[io_KBDSTRB] |= 1<<7;
 }
 
 
 void kbdUp () {
+    // mark key depressed
     RAM[io_KBDSTRB] &= 0x7F;
 }
 

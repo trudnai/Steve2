@@ -386,44 +386,46 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             return rand(); // Apple2_64K_RAM[io_SPKR];
             
         case (uint8_t)io_VID_RDVBL:
-            return (m6502.clkfrm > 4550) ? 0x80 : 0;
+            return (m6502.clkfrm > 4550 ? 0x80 : 0) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_VID_RDTEXT:
-            return videoMode.text << 7;
+            return (videoMode.text << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_VID_ALTCHAR:
-            return videoMode.altChr << 7;
+            return (videoMode.altChr << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_VID_RD80VID:
-            return videoMode.col80 << 7;
+            return (videoMode.col80 << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_TAPEIN:
             // TODO: this should be only on //c
             return MEMcfg.txt_page_2 << 7;
             
         case (uint8_t)io_RDCXROM:
-            return MEMcfg.int_Cx_ROM << 7;
+            // TODO: Implement Reset Mouse X0 Interrupt (io_RSTXINT)
+            return (MEMcfg.int_Cx_ROM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_RDLCBNK2:
-            return MEMcfg.RAM_BANK_2 << 7;
+            return (MEMcfg.RAM_BANK_2 << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_RDLCRAM:
-            return MEMcfg.RD_INT_RAM << 7;
+            return (MEMcfg.RD_INT_RAM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_RDRAMRD:
-            return MEMcfg.RD_AUX_MEM << 7;
+            return (MEMcfg.RD_AUX_MEM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_RDRAMWR:
-            return MEMcfg.WR_AUX_MEM << 7;
+            return (MEMcfg.WR_AUX_MEM << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_RDALTZP:
-            return MEMcfg.ALT_ZP << 7;
+            // TODO: Implement Reset Mouse Y0 Interrupt (io_RSTYINT)
+            return (MEMcfg.ALT_ZP << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
                 
         case (uint8_t)io_RDC3ROM:
             return MEMcfg.slot_C3_ROM << 7;
             
         case (uint8_t)io_RD80STORE:
-            return MEMcfg.is_80STORE << 7;
+            return (MEMcfg.is_80STORE << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_VID_TXTPAGE1:
             //            printf("io_VID_TXTPAGE1\n");
@@ -438,7 +440,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
             
         case (uint8_t)io_VID_RDPAGE2:
-            return MEMcfg.txt_page_2 << 7;
+            return (MEMcfg.txt_page_2 << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_VID_Text_OFF:
             videoMode.text = 0;
@@ -457,7 +459,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
             
         case (uint8_t)io_VID_RDMIXED:
-            return videoMode.mixed << 7;
+            return (videoMode.mixed << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_VID_Hires_OFF:
             videoMode.hires = 0;
@@ -468,7 +470,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             break;
             
         case (uint8_t)io_VID_RDHIRES:
-            return videoMode.hires << 7;
+            return (videoMode.hires << 7) | (Apple2_64K_RAM[io_KBDSTRB] & 0x7F);
             
         case (uint8_t)io_PDL0:
         case (uint8_t)io_PDL1:

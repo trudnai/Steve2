@@ -39,20 +39,28 @@
  absolute      ASL oper      0E    3     6
  absolute,X    ASL oper,X    1E    3     7
 **/
+#ifndef DEBUGGER
 INLINE void _ASL( uint16_t addr ) {
     m6502.C = memread(addr) & 0x80;
     set_flags_NZ( WRLOMEM[addr] <<= 1 );
 }
+#endif
 INLINE void ASL( uint16_t addr ) {
     dbgPrintf("ASL ");
     disPrintf(disassembly.inst, "ASL");
+
+#ifndef DEBUGGER
     _ASL(addr);
+#endif
 }
 INLINE void ASLA() {
     dbgPrintf("ASL ");
     disPrintf(disassembly.inst, "ASL");
+
+#ifndef DEBUGGER
     m6502.C = m6502.A & 0x80;
     set_flags_NZ( m6502.A <<= 1 );
+#endif
 }
 
 /**
@@ -72,14 +80,20 @@ INLINE void ASLA() {
 INLINE void LSR( uint16_t addr ) {
     dbgPrintf("LSR ");
     disPrintf(disassembly.inst, "LSR");
+
+#ifndef DEBUGGER
     m6502.C = WRLOMEM[addr] & 1;
     set_flags_NZ( WRLOMEM[addr] >>= 1 );
+#endif
 }
 INLINE void LSRA() {
     dbgPrintf("LSR ");
     disPrintf(disassembly.inst, "LSR");
+
+#ifndef DEBUGGER
     m6502.C = m6502.A & 1;
     set_flags_NZ( m6502.A >>= 1 );
+#endif
 }
 
 /**
@@ -96,24 +110,32 @@ INLINE void LSRA() {
  absolute      ROL oper      2E    3     6
  absolute,X    ROL oper,X    3E    3     7
 **/
+#ifndef DEBUGGER
 INLINE void _ROL( uint16_t addr ) {
     uint8_t C = m6502.C != 0;
     m6502.C = WRLOMEM[addr] & 0x80;
     WRLOMEM[addr] <<= 1;
     set_flags_NZ( WRLOMEM[addr] |= C );
 }
+#endif
 INLINE void ROL( uint16_t addr ) {
     dbgPrintf("ROL ");
     disPrintf(disassembly.inst, "ROL");
+
+#ifndef DEBUGGER
     _ROL(addr);
+#endif
 }
 INLINE void ROLA() {
     dbgPrintf("ROL ");
     disPrintf(disassembly.inst, "ROL");
+
+#ifndef DEBUGGER
     uint8_t C = m6502.C != 0;
     m6502.C = m6502.A & 0x80;
     m6502.A <<= 1;
     set_flags_NZ( m6502.A |= C );
+#endif
 }
 
 /**
@@ -130,24 +152,32 @@ INLINE void ROLA() {
  absolute      ROR oper      6E    3     6
  absolute,X    ROR oper,X    7E    3     7
 **/
+#ifndef DEBUGGER
 INLINE void _ROR( uint16_t addr ) {
     uint8_t C = m6502.C != 0;
     m6502.C = WRLOMEM[addr] & 1;
     WRLOMEM[addr] >>= 1;
     set_flags_NZ( WRLOMEM[addr] |= C  << 7 );
 }
+#endif
 INLINE void ROR( uint16_t addr ) {
     dbgPrintf("ROR ");
     disPrintf(disassembly.inst, "ROR");
+    
+#ifndef DEBUGGER
     _ROR(addr);
+#endif
 }
 INLINE void RORA() {
     dbgPrintf("ROR ");
     disPrintf(disassembly.inst, "ROR");
+
+#ifndef DEBUGGER
     uint8_t C = m6502.C != 0;
     m6502.C = m6502.A & 1;
     m6502.A >>= 1;
     set_flags_NZ( m6502.A |= C << 7);
+#endif
 }
 
 

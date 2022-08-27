@@ -42,8 +42,11 @@
 INLINE void BIT( uint8_t src ) {
     dbgPrintf("BIT(%02X) ", src);
     disPrintf(disassembly.inst, "BIT");
+    
+#ifndef DEBUGGER
     set_flags_NV(src);
     set_flags_Z(m6502.A & src);
+#endif
 }
 
 /**
@@ -71,8 +74,11 @@ INLINE void BIT( uint8_t src ) {
 INLINE void TRB( uint16_t addr ) {
     dbgPrintf("TRB(%02X) ", src);
     disPrintf(disassembly.inst, "TRB");
+
+#ifndef DEBUGGER
     set_flags_Z( WRLOMEM[addr] & m6502.A );
     WRLOMEM[addr] &= ~m6502.A;
+#endif
 }
 
 /**
@@ -98,8 +104,11 @@ INLINE void TRB( uint16_t addr ) {
 INLINE void TSB( uint16_t addr ) {
     dbgPrintf("TSB(%02X) ", src);
     disPrintf(disassembly.inst, "TSB");
+
+#ifndef DEBUGGER
     set_flags_Z( WRLOMEM[addr] & m6502.A );
     WRLOMEM[addr] |= m6502.A;
+#endif
 }
 
 /**
@@ -119,13 +128,18 @@ INLINE void TSB( uint16_t addr ) {
  (indirect,X)  CMP (oper,X)  C1    2     6
  (indirect),Y  CMP (oper),Y  D1    2     5*
  **/
+#ifndef DEBUGGER
 INLINE void _CMP( uint8_t src ) {
     set_flags_NZC( (int16_t)m6502.A - src );
 }
+#endif
 INLINE void CMP( uint8_t src ) {
     dbgPrintf("CMP(%02X) ", src);
     disPrintf(disassembly.inst, "CMP");
+
+#ifndef DEBUGGER
     _CMP(src);
+#endif
 }
 
 /**
@@ -143,7 +157,10 @@ INLINE void CMP( uint8_t src ) {
 INLINE void CPX( uint8_t src ) {
     dbgPrintf("CPX(%02X) ", src);
     disPrintf(disassembly.inst, "CPX");
+
+#ifndef DEBUGGER
     set_flags_NZC( (int16_t)m6502.X - src );
+#endif
 }
 
 /**
@@ -161,7 +178,10 @@ INLINE void CPX( uint8_t src ) {
 INLINE void CPY( uint8_t src ) {
     dbgPrintf("CPY(%02X) ", src);
     disPrintf(disassembly.inst, "CPY");
+
+#ifndef DEBUGGER
     set_flags_NZC( (int16_t)m6502.Y - src );
+#endif
 }
 
 #endif // __6502_INSTR_COMPARE_TEST_H__

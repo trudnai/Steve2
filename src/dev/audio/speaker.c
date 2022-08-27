@@ -39,7 +39,9 @@
 //  64 dow not sound better much than 32
 // 128 Relally good!
 // 256 sounds really amazing!
-#define SPKR_OVERSAMPLING 128
+//#define SPKR_OVERSAMPLING 128
+#define SPKR_OVERSAMPLING 160
+//#define SPKR_OVERSAMPLING 256
 
 
 #define min(x,y) (x) < (y) ? (x) : (y)
@@ -111,7 +113,11 @@ int spkr_last_level = SPKR_LEVEL_ZERO;
 //static const int ema_len_soft = 20;
 //static const int ema_len_supersoft = 40;
 
-#if (SPKR_OVERSAMPLING >= 128)
+#if (SPKR_OVERSAMPLING >= 256)
+int spkr_ema_len = 480;
+#elif (SPKR_OVERSAMPLING >= 160)
+int spkr_ema_len = 480;
+#elif (SPKR_OVERSAMPLING >= 128)
 int spkr_ema_len = 256;
 #elif (SPKR_OVERSAMPLING >= 64)
 int spkr_ema_len = 128;
@@ -575,6 +581,9 @@ float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix so
 
 
 void spkr_toggle() {
+    // do not sleep while sound is playing
+    m6502.ecoSpindown = ecoSpindown;
+    
     if ( diskAccelerator_count ) {
         // turn off disk acceleration immediately
         diskAccelerator_count = 0;

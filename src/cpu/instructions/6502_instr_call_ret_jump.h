@@ -39,7 +39,9 @@
 INLINE void JMP( uint16_t addr ) {
     dbgPrintf("JMP %04X ", addr);
     disPrintf(disassembly.inst, "JMP");
-//    disPrintf(disassembly.comment, "to:%04X", addr)
+
+#ifndef DEBUGGER
+    //    disPrintf(disassembly.comment, "to:%04X", addr)
 #ifdef DEBUG
     if ( addr == m6502.PC - 3 ) {
         dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);
@@ -49,6 +51,7 @@ INLINE void JMP( uint16_t addr ) {
         m6502.clkfrm += 1;
     }
     m6502.PC = addr;
+#endif
 }
 
 
@@ -56,10 +59,19 @@ INLINE void JMP( uint16_t addr ) {
 void CALL( uint16_t addr ) {
     dbgPrintf("CALL ");
     disPrintf(disassembly.inst, "CALL");
+
+#ifndef DEBUGGER
     PUSH_addr(m6502.PC -1);
     m6502.PC = addr;
+#endif
 }
 
+// for patching game purposes -- it should not be inline!
+void JUMP( uint16_t addr ) {
+    dbgPrintf("JUMP ");
+    disPrintf(disassembly.inst, "JUMP");
+    m6502.PC = addr;
+}
 
 /**
  JSR  Jump to New Location Saving Return Address
@@ -75,8 +87,11 @@ void CALL( uint16_t addr ) {
 INLINE void JSR( uint16_t addr ) {
     dbgPrintf("JSR ");
     disPrintf(disassembly.inst, "JSR");
+
+#ifndef DEBUGGER
     PUSH_addr(m6502.PC -1);
     m6502.PC = addr;
+#endif
 }
 
 /**
@@ -92,6 +107,8 @@ INLINE void JSR( uint16_t addr ) {
 INLINE void RTS() {
     dbgPrintf("RTS ");
     disPrintf(disassembly.inst, "RTS");
+
+#ifndef DEBUGGER
     m6502.PC = POP_addr() +1;
 
     // disk accelerator would only work for a certain amount of time
@@ -99,6 +116,7 @@ INLINE void RTS() {
 //    if ( m6502.clktime - disk.clk_last_access > clk_diskAcceleratorTimeout ) {
 //        clk_6502_per_frm = clk_6502_per_frm_set;
 //    }
+#endif
 }
 
 /**
@@ -114,9 +132,12 @@ INLINE void RTS() {
 INLINE void RTI() {
     dbgPrintf("RTI ");
     disPrintf(disassembly.inst, "RTI");
+
+#ifndef DEBUGGER
     setFlags( POP() );
 //    m6502.I = 0;
     m6502.PC = POP_addr();
+#endif
 }
 
 

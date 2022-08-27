@@ -27,6 +27,7 @@
 static const uint16_t stack_base_addr = 0x100;
 
 
+#ifndef DEBUGGER
 INLINE void PUSH( uint8_t src ) {
     // DO NOT MAKE IT NICER! faster this way!
     WRLOMEM[ stack_base_addr | m6502.SP-- ] = src;
@@ -45,7 +46,7 @@ INLINE void PUSH_addr( uint16_t addr ) {
 INLINE uint16_t POP_addr() {
     return  POP() + ( POP() << 8 );
 }
-
+#endif
 
 /**
  PHA  Push Accumulator on Stack
@@ -60,7 +61,10 @@ INLINE uint16_t POP_addr() {
 INLINE void PHA() {
     dbgPrintf("PHA %02X ", m6502.A);
     disPrintf(disassembly.inst, "PHA");
+
+#ifndef DEBUGGER
     PUSH( m6502.A );
+#endif
 }
 
 /**
@@ -76,7 +80,10 @@ INLINE void PHA() {
 INLINE void PHX() {
     dbgPrintf("PHX %02X ", m6502.X);
     disPrintf(disassembly.inst, "PHX");
+
+#ifndef DEBUGGER
     PUSH( m6502.X );
+#endif
 }
 
 /**
@@ -92,7 +99,10 @@ INLINE void PHX() {
 INLINE void PHY() {
     dbgPrintf("PHY %02X ", m6502.Y);
     disPrintf(disassembly.inst, "PHY");
+
+#ifndef DEBUGGER
     PUSH( m6502.Y );
+#endif
 }
 
 /**
@@ -106,10 +116,16 @@ INLINE void PHY() {
  implied       PLA           68    1     4
  **/
 INLINE void PLA() {
+#ifndef DEBUGGER
     m6502.A = POP();
+#endif
+
     dbgPrintf("PLA %02X ", m6502.A);
     disPrintf(disassembly.inst, "PLA");
+
+#ifndef DEBUGGER
     set_flags_NZ( m6502.A );
+#endif
 }
 
 /**
@@ -123,10 +139,16 @@ INLINE void PLA() {
  implied       PLX           68    1     4
  **/
 INLINE void PLX() {
+#ifndef DEBUGGER
     m6502.X = POP();
+#endif
+
     dbgPrintf("PLX %02X ", m6502.X);
     disPrintf(disassembly.inst, "PLX");
+
+#ifndef DEBUGGER
     set_flags_NZ( m6502.X );
+#endif
 }
 
 /**
@@ -140,10 +162,16 @@ INLINE void PLX() {
  implied       PLY           68    1     4
  **/
 INLINE void PLY() {
+#ifndef DEBUGGER
     m6502.Y = POP();
+#endif
+
     dbgPrintf("PLY %02X ", m6502.Y);
     disPrintf(disassembly.inst, "PLY");
+
+#ifndef DEBUGGER
     set_flags_NZ( m6502.Y );
+#endif
 }
 
 /**
@@ -159,7 +187,10 @@ INLINE void PLY() {
 INLINE void PHP() {
     dbgPrintf("PHP %02X ", m6502.SR);
     disPrintf(disassembly.inst, "PHP");
+
+#ifndef DEBUGGER
     PUSH( getFlags().SR ); // res and B flag should be set
+#endif
 }
 
 /**
@@ -173,7 +204,10 @@ INLINE void PHP() {
  implied       PLP           28    1     4
  **/
 INLINE void PLP() {
+#ifndef DEBUGGER
     setFlags(POP() | 0x30); // res and B flag should be set
+#endif
+
     dbgPrintf("PLP %02X ", m6502.SR);
     disPrintf(disassembly.inst, "PLP");
 }

@@ -68,9 +68,6 @@ uint8_t activeTextAuxPage = 0;
 uint8_t * activeTextPage = Apple2_64K_RAM + 0x400;
 uint8_t * shadowTextPage = Apple2_64K_MEM + 0x400;
 
-unsigned int lastIO = 0;
-
-
 #define INIT_MEMCFG { 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
 
 const MEMcfg_t initMEMcfg = INIT_MEMCFG;
@@ -317,14 +314,14 @@ INLINE int is_io_interesting( uint16_t addr ) {
 }
 
 
-INLINE uint8_t kbdRead( const unsigned IOframe ) {
-    if ( cpuMode == cpuMode_eco ) {
+INLINE uint8_t kbdRead() {
+//    if ( cpuMode == cpuMode_eco ) {
         // check if this is a busy keyboard poll (aka waiting for user input)
-        if ( IOframe < 16 ) {
-            clk_6502_per_frm_max = 6502; // Let it run for a bit to display character -- nerd number :-)
-            cpuState = cpuState_halting;
-        }
-    }
+//        if ( IOframe < 16 ) {
+//            clk_6502_per_frm_max = 6502; // Let it run for a bit to display character -- nerd number :-)
+//            cpuState = cpuState_halting;
+//        }
+//    }
     
     // we have to return keybard not only for $C000 but for ports all the way till $C00F
     return Apple2_64K_RAM[io_KBD];
@@ -334,16 +331,17 @@ INLINE uint8_t kbdRead( const unsigned IOframe ) {
 INLINE uint8_t kbdStrobe() {
     Apple2_64K_RAM[io_KBD] &= ~(1 << 7);
     
-    if ( cpuMode == cpuMode_eco ) {
-        // check if this is a busy keyboard poll (aka waiting for user input)
-        clk_6502_per_frm_max = clk_6502_per_frm; // Absolute low mode
-        cpuState = cpuState_running;
-    }
+//    if ( cpuMode == cpuMode_eco ) {
+//        // check if this is a busy keyboard poll (aka waiting for user input)
+//        clk_6502_per_frm_max = clk_6502_per_frm; // Absolute low mode
+//        cpuState = cpuState_halting; // cpuState_running;
+//    }
     
     return Apple2_64K_RAM[io_KBDSTRB];
 }
 
 
+#ifndef DEBUGGER
 INLINE uint8_t ioRead( uint16_t addr ) {
     //    if (outdev) fprintf(outdev, "ioRead:%04X\n", addr);
 
@@ -351,8 +349,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
 //        printf("ioRead:%04X (PC:%04X)\n", addr, m6502.PC);
 //    }
     
-    unsigned int IOframe = m6502.clkfrm - lastIO;
-    lastIO = m6502.clkfrm;
+    m6502.lastIO = m6502.clkfrm;
     
 //    // TODO: This is for speed demo only, should be either removed or the entire ioRead should based on binary search, whatever is faster
 //    if ( addr == io_KBD ) {
@@ -378,7 +375,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
         case (uint8_t)io_SETALTZP:
         case (uint8_t)io_SETINTC3ROM:
         case (uint8_t)io_SETSLOTC3ROM:
-            return kbdRead(IOframe);
+            return kbdRead();
 
         case (uint8_t)io_KBDSTRB:
             return kbdStrobe();
@@ -507,7 +504,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
 
             // still need to return keyboard
-            return kbdRead(IOframe);
+            return kbdRead();
 
             break;
             
@@ -518,7 +515,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
             
             // still need to return keyboard
-            return kbdRead(IOframe);
+            return kbdRead();
 
             break;
             
@@ -529,7 +526,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
 
             // still need to return keyboard
-            return kbdRead(IOframe);
+            return kbdRead();
 
             break;
             
@@ -540,7 +537,7 @@ INLINE uint8_t ioRead( uint16_t addr ) {
             auxMemorySelect(newMEMcfg);
             
             // still need to return keyboard
-            return kbdRead(IOframe);
+            return kbdRead();
 
             break;
             
@@ -891,7 +888,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
     }
     return;
 }
-
+#endif
 
 /**
  Naive implementation of RAM read from address
@@ -903,10 +900,11 @@ INLINE uint8_t memread8_high( uint16_t addr ) {
     return RDHIMEM[addr];
 }
 INLINE uint8_t memread8( uint16_t addr ) {
+#ifndef DEBUGGER
     if (addr >= 0xC000) {
         return memread8_high(addr);
     }
-    
+#endif
     return memread8_low(addr);
 }
 /**
@@ -928,6 +926,7 @@ INLINE uint16_t memread16( uint16_t addr ) {
 }
 
 INLINE uint8_t memread( uint16_t addr ) {
+#ifndef DEBUGGER
     if (addr >= 0xC000) {
         if (addr < 0xC100) {
             return ioRead(addr);
@@ -936,7 +935,7 @@ INLINE uint8_t memread( uint16_t addr ) {
         //        return memread8_paged(addr);
         return memread8_high(addr);
     }
-    
+#endif
     //    return memread8_paged(addr);
     return memread8_low(addr);
     
@@ -965,15 +964,22 @@ INLINE uint8_t memread( uint16_t addr ) {
  **/
 
 INLINE void memwrite8_low( uint16_t addr, uint8_t data ) {
+#ifndef DEBUGGER
     WRLOMEM[addr] = data;
+#endif
 }
 INLINE void memwrite8_bank( uint16_t addr, uint8_t data ) {
+#ifndef DEBUGGER
     WRD0MEM[addr] = data;
+#endif
 }
 INLINE void memwrite8_high( uint16_t addr, uint8_t data ) {
+#ifndef DEBUGGER
     WRHIMEM[addr] = data;
+#endif
 }
 INLINE void memwrite( uint16_t addr, uint8_t data ) {
+#ifndef DEBUGGER
     if (addr >= 0xC000) {
         if (addr < 0xC100) {
             ioWrite(addr, data);
@@ -995,7 +1001,7 @@ INLINE void memwrite( uint16_t addr, uint8_t data ) {
         // RAM
         memwrite8_low(addr, data);
     }
-    
+#endif
 }
 
 /**
@@ -1048,11 +1054,15 @@ INLINE uint16_t fetch16() {
  **/
 INLINE uint16_t addr_abs() {
     dbgPrintf("abs:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC));
     return fetch16();
 }
 INLINE uint8_t src_abs() {
+#ifndef DEBUGGER
     return memread( addr_abs() );
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_abs() {
 //    return WRLOMEM + addr_abs();
@@ -1060,17 +1070,22 @@ INLINE uint8_t src_abs() {
 
 
 INLINE int8_t rel_addr() {
-    disPrintf(disassembly.oper, "$%04X", m6502.PC + 1 + (int8_t)memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X", m6502.PC + 1 + (int8_t)memread8(m6502.PC));
     return fetch();
 }
 INLINE uint16_t abs_addr() {
-    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC));
     return fetch16();
 }
 INLINE uint16_t ind_addr() {
-    disPrintf(disassembly.oper, "($%04X)", memread16(m6502.PC))
-    disPrintf(disassembly.comment, "ind_addr:%04X", memread16(memread16(m6502.PC)))
+    disPrintf(disassembly.oper, "($%04X)", memread16(m6502.PC));
+    disPrintf(disassembly.comment, "ind_addr:%04X", memread16(memread16(m6502.PC)));
+
+#ifndef DEBUGGER
     return memread16( fetch16() );
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -1083,7 +1098,11 @@ INLINE uint16_t addr_abs_X() {
     return fetch16() + m6502.X;
 }
 INLINE uint8_t src_abs_X() {
+#ifndef DEBUGGER
     return memread( addr_abs_X() );
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_abs_X() {
 //    return WRLOMEM + addr_abs_X();
@@ -1096,18 +1115,22 @@ INLINE uint8_t src_abs_X() {
  **/
 INLINE uint16_t addr_abs_Y() {
     dbgPrintf("abs,Y:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]) + m6502.Y, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.Y]);
-    disPrintf(disassembly.oper, "$%04X,Y", memread16(m6502.PC))
+    disPrintf(disassembly.oper, "$%04X,Y", memread16(m6502.PC));
     return fetch16() + m6502.Y;
 }
 INLINE uint8_t src_abs_Y() {
+#ifndef DEBUGGER
     return memread(addr_abs_Y());
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_abs_Y() {
 //    return WRLOMEM + addr_abs_Y();
 //}
 
 INLINE uint8_t imm() {
-    disPrintf(disassembly.oper, "#$%02X", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "#$%02X", memread8(m6502.PC));
     return fetch();
 }
 
@@ -1118,11 +1141,15 @@ INLINE uint8_t imm() {
  **/
 INLINE uint8_t addr_zp() {
     dbgPrintf("zp:%02X(%02X) ", RAM[m6502.PC], RAM[ RAM[m6502.PC]] );
-    disPrintf(disassembly.oper, "$%02X", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%02X", memread8(m6502.PC));
     return fetch();
 }
 INLINE uint8_t src_zp() {
+#ifndef DEBUGGER
     return memread8_low(addr_zp());
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_zp() {
 //    return WRLOMEM + addr_zp();
@@ -1145,12 +1172,21 @@ INLINE uint8_t src_zp() {
  **/
 INLINE uint16_t addr_ind() {
     dbgPrintf("zpi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) )
+    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) );
     disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC)) );
+
+#ifndef DEBUGGER
     return memread16( fetch() );
+#else
+    return 0;
+#endif
 }
 INLINE uint8_t src_ind() {
+#ifndef DEBUGGER
     return memread( addr_ind() );
+#else
+    return 0;
+#endif
 }
 
 /**
@@ -1160,12 +1196,21 @@ INLINE uint8_t src_ind() {
  **/
 INLINE uint16_t addr_ind_X() {
     dbgPrintf("zpXi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
-    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) )
+    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) );
     disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) + m6502.X) );
+
+#ifndef DEBUGGER
     return memread16( fetch() + m6502.X );
+#else
+    return 0;
+#endif
 }
 INLINE uint8_t src_X_ind() {
+#ifndef DEBUGGER
     return memread( addr_ind_X() );
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_X_ind() {
 //    return WRLOMEM + addr_ind_X();
@@ -1179,12 +1224,21 @@ INLINE uint8_t src_X_ind() {
 INLINE uint16_t addr_ind_Y() {
     //    uint8_t a = fetch();
     //    dbgPrintf("addr_ind_Y: %04X + %02X = %04X ", addr_zpg_ind( a ), m6502.Y, addr_zpg_ind( a ) + m6502.Y);
-    disPrintf(disassembly.oper, "($%02X),Y", memread8(m6502.PC) )
+    disPrintf(disassembly.oper, "($%02X),Y", memread8(m6502.PC) );
     disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) ) + m6502.Y );
+
+#ifndef DEBUGGER
     return memread16( fetch() ) + m6502.Y;
+#else
+    return 0;
+#endif
 }
 INLINE uint8_t src_ind_Y() {
+#ifndef DEBUGGER
     return memread( addr_ind_Y() );
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_ind_Y() {
 //    return WRLOMEM + addr_ind_Y();
@@ -1197,11 +1251,20 @@ INLINE uint8_t src_ind_Y() {
  effective address is address incremented by X without carry **
  **/
 INLINE uint8_t addr_zp_X() {
-    disPrintf(disassembly.oper, "$%02X,X", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%02X,X", memread8(m6502.PC));
+
+#ifndef DEBUGGER
     return fetch() + m6502.X;
+#else
+    return 0;
+#endif
 }
 INLINE uint8_t src_zp_X() {
+#ifndef DEBUGGER
     return memread8_low(addr_zp_X());
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_zp_X() {
 //    return WRLOMEM + addr_zp_X();
@@ -1213,17 +1276,27 @@ INLINE uint8_t src_zp_X() {
  effective address is address incremented by Y without carry **
  **/
 INLINE uint8_t addr_zp_Y() {
-    disPrintf(disassembly.oper, "$%02X,Y", memread8(m6502.PC))
+    disPrintf(disassembly.oper, "$%02X,Y", memread8(m6502.PC));
+
+#ifndef DEBUGGER
     return fetch() + m6502.Y;
+#else
+    return 0;
+#endif
 }
 INLINE uint8_t src_zp_Y() {
+#ifndef DEBUGGER
     return memread8_low(addr_zp_Y());
+#else
+    return 0;
+#endif
 }
 //INLINE uint8_t * dest_zp_Y() {
 //    return WRLOMEM + addr_zp_Y();
 //}
 
 
+#ifndef DEBUGGER
 void auxMemorySelect( MEMcfg_t newMEMcfg ) {
     const uint8_t * newReadMEM = currentLowRDMEM;
     uint8_t * newWriteMEM = currentLowWRMEM;
@@ -1532,7 +1605,7 @@ void kbdUp () {
     RAM[io_KBDSTRB] &= 0x7F;
 }
 
-
+#endif
 
 
 

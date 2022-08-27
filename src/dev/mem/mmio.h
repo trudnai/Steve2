@@ -84,9 +84,12 @@ extern void kbdInput ( uint8_t code );
 extern void kbdUp (void);
 extern uint8_t getIO ( uint16_t ioaddr );
 extern void setIO ( uint16_t ioaddr, uint8_t val );
+
+#ifndef DEBUGGER
 extern uint8_t getMEM ( uint16_t ioaddr );
 extern uint16_t getMEM16 ( uint16_t ioaddr );
 extern uint32_t getMEM32 ( uint16_t ioaddr );
+
 extern void setMEM ( uint16_t ioaddr, uint8_t val );
 extern void setMEM16 ( uint16_t ioaddr, uint16_t val );
 extern void setMEM32 ( uint16_t ioaddr, uint32_t val );
@@ -94,6 +97,8 @@ extern void setMEMarray ( uint16_t addr, uint8_t * arr, int len );
 
 extern void CALL( uint16_t addr );
 extern void JUMP( uint16_t addr );
+#endif
+
 
 #define DEF_RAM_PAGE(mem,pg) \
     (mem) + ((pg) << 8)
@@ -392,9 +397,6 @@ extern void resetMemory(void);
 extern void initMemory(void);
 extern inline uint8_t *extracted(void);
 extern void textPageSelect(void);
-
-extern unsigned int lastIO;
-
 
 INLINE void io_RAM_EXP( uint16_t addr );
 INLINE uint8_t ioRead( uint16_t addr );

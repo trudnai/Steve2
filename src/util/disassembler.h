@@ -48,43 +48,23 @@ extern disassembly_t disassembly;
 //extern unsigned long long int clktime;
 extern unsigned long long discnt;
 
-#define disHexB( to, b ) \
-    if ( m6502.dbgLevel.trace ) { \
-        snprintf((to), 4, "%02X ", (b)); \
-        to += 3; \
-    }
+extern void _disHexB( char ** s, const uint8_t b );
+#define disHexB( s, b ) _disHexB( &(s), (b) )
 
-#define disHexW( to, w ) \
-    if ( m6502.dbgLevel.trace ) { \
-        snprintf((to), 6, "%04X ", (w)); \
-        to += 5; \
-    }
+extern void _disHexW( char ** s, const uint16_t w );
+#define disHexW( s, w ) _disHexW( &(s), (w) )
 
-#define disPuts( to, from ) { \
-    char * s = from; \
-    if ( m6502.dbgLevel.trace ) { \
-        while ( (*(to)++ = *s++) ); \
-    } \
-}
+extern void _disPuts( char ** s, const char * from );
+#define disPuts( s, from ) _disPuts( &(s), (from) )
 
-#define disPrintf( to, fmt, args... ) { \
-    if ( m6502.dbgLevel.trace ) { \
-        snprintf( (to), sizeof(to), fmt, ##args ); \
-    } \
-}
+extern void _disPrintf( char * s, const size_t n, const char * fmt, ... );
+#define disPrintf( s, fmt, args... ) _disPrintf( (s), sizeof(s), (fmt), ##args )
+
 
 // TODO: We should add a new field for clk counter, so we can print that out _before_ execution, not after...
-#define disNewInstruction() { \
-    if ( m6502.dbgLevel.trace ) { \
-        disassembly.clk = m6502.clktime + m6502.clkfrm; \
-        snprintf(disassembly.addr, 5, "%04X ", m6502.PC); \
-        disassembly.opcode[0] = '\0'; \
-        disassembly.pOpcode = disassembly.opcode; \
-        disassembly.inst[0] = '\0'; \
-        disassembly.oper[0] = '\0'; \
-        disassembly.comment[0] = '\0'; \
-    } \
-}
+extern void _disNewInstruction();
+#define disNewInstruction() _disNewInstruction()
+
 
 extern void printDisassembly( FILE * f );
 
@@ -93,7 +73,7 @@ extern void printDisassembly( FILE * f );
 #define disHexB( to, b )
 #define disHexW( to, w )
 #define disPuts( to, from )
-#define disPrintf( to, fmt, args... )
+#define disPrintf( s, fmt, args... )
 #define disNewInstruction()
 #define printDisassembly( f )
 

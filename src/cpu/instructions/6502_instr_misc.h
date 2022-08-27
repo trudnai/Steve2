@@ -38,13 +38,15 @@
 INLINE int BRK() {
     dbgPrintf("BRK ");
     disPrintf(disassembly.inst, "BRK");
+
+#ifndef DEBUGGER
     PUSH_addr(m6502.PC +1); // PC +2, however, fetch already incremented it by 1
     // B flag should be set before pushing flags onto the stack
     m6502.B = 1;
     PUSH( getFlags().SR );
     m6502.I = 1;
     m6502.PC = memread16(IRQ_VECTOR);
-    
+#endif
     return 7;
 }
 
@@ -53,7 +55,10 @@ INLINE int BRK() {
  **/
 INLINE void HLT() {
     disPrintf(disassembly.inst, "HLT");
+
+#ifndef DEBUGGER
     m6502.interrupt = HALT;
+#endif
 }
 
 /**

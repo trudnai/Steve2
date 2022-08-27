@@ -104,7 +104,12 @@ m6502_t m6502 = {
     0,      // clktime
     0,      // clklast
     0,      // clkfrm
-
+    
+    0,      // clk_wrenable
+    
+    0,      // lastIO
+    0,      // ecoSpindown
+    
     0,      // trace
     0,      // step
     0,      // brk
@@ -113,9 +118,11 @@ m6502_t m6502 = {
     0,      // bra_true
     0,      // bra_false
     0,      // compile
-    HALT,   // IF
     
+    HALT,   // IF
 };
+
+const int ecoSpindown = 25; // initial value of ECO Spingdown Counter
 
 
 #include "../util/disassembler.h"
@@ -324,6 +331,7 @@ void m6502_Run() {
 
     m6502.clktime += m6502.clkfrm;
     m6502.clkfrm = 0;
+    m6502.lastIO = 0;
 
     if( diskAccelerator_count ) {
         if( --diskAccelerator_count <= 0 ) {
@@ -380,6 +388,19 @@ void m6502_Run() {
 #endif // INTERRUPT_CHECK_PER_STEP
         
     }
+    
+    if ( cpuMode == cpuMode_eco ) {
+    // check if this is a busy keyboard poll (aka waiting for user input)
+        if ( m6502.clkfrm - m6502.lastIO < 16 ) {
+            if (m6502.ecoSpindown) {
+                m6502.ecoSpindown--;
+            }
+            else {
+                cpuState = cpuState_halting;
+            }
+        }
+    }
+
     
     // play the entire sound buffer for this frame
     spkr_update();

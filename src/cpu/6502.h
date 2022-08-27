@@ -126,7 +126,10 @@ typedef struct m6502_s {
     uint64_t clklast; // 22:
     uint32_t clkfrm;  // 30:
     
-    uint64_t clk_wrenable; // CPU clock when WRITE RAM is triggered
+    uint64_t clk_wrenable;  // CPU clock when WRITE RAM is triggered
+    
+    uint64_t lastIO;  // Last time I/O accessed
+    int ecoSpindown;  // spindown counter for eco mode
 
     debugLevel_t dbgLevel;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
     
@@ -137,6 +140,8 @@ typedef struct m6502_s {
     
 } m6502_t;
 //#pragma pack()
+
+extern const int ecoSpindown;   // initial value of ECO Spingdown Counter
 
 
 // Memory Config

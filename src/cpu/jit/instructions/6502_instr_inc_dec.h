@@ -38,12 +38,17 @@
  absolute      INC oper      EE    3     6
  absolute,X    INC oper,X    FE    3     7
 **/
+#ifndef DEBUGGER
 INLINE void _INC( uint16_t addr ) {
     set_flags_NZ( ++(WRLOMEM[addr]) );
 }
+#endif
 INLINE void INC( uint16_t addr ) {
     disPrintf(disassembly.inst, "INC");
+
+#ifndef DEBUGGER
     _INC(addr);
+#endif
 }
 
 /**
@@ -59,8 +64,11 @@ INLINE void INC( uint16_t addr ) {
 INLINE void INX() {
     dbgPrintf("INX %02X -> ", m6502.X);
     disPrintf(disassembly.inst, "INX");
+
+#ifndef DEBUGGER
     set_flags_NZ( ++m6502.X );
     dbgPrintf("%02X ", m6502.X);
+#endif
 }
 
 /**
@@ -76,8 +84,11 @@ INLINE void INX() {
 INLINE void INY() {
     dbgPrintf("INY %02X -> ", m6502.Y);
     disPrintf(disassembly.inst, "INY");
+
+#ifndef DEBUGGER
     set_flags_NZ( ++m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
+#endif
 }
 
 /**
@@ -93,8 +104,11 @@ INLINE void INY() {
 INLINE void INA() {
     dbgPrintf("INA %02X -> ", m6502.A);
     disPrintf(disassembly.inst, "INA");
+
+#ifndef DEBUGGER
     set_flags_NZ( ++m6502.A );
     dbgPrintf("%02X ", m6502.A);
+#endif
 }
 
 /**
@@ -110,12 +124,17 @@ INLINE void INA() {
  absolute      DEC oper      CE    3     3
  absolute,X    DEC oper,X    DE    3     7
 **/
+#ifndef DEBUGGER
 INLINE void _DEC( uint16_t addr ) {
     set_flags_NZ( --(WRLOMEM[addr]) );
 }
+#endif
 INLINE void DEC( uint16_t addr ) {
     disPrintf(disassembly.inst, "DEC");
+
+#ifndef DEBUGGER
     _DEC(addr);
+#endif
 }
 
 /**
@@ -131,8 +150,11 @@ INLINE void DEC( uint16_t addr ) {
 INLINE void DEX() {
     dbgPrintf("DEX %02X -> ", m6502.X);
     disPrintf(disassembly.inst, "DEX");
+
+#ifndef DEBUGGER
     set_flags_NZ( --m6502.X );
     dbgPrintf("%02X ", m6502.X);
+#endif
 }
 
 /**
@@ -148,8 +170,11 @@ INLINE void DEX() {
 INLINE void DEY() {
     dbgPrintf("DEY %02X -> ", m6502.Y);
     disPrintf(disassembly.inst, "DEY");
+
+#ifndef DEBUGGER
     set_flags_NZ( --m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
+#endif
 }
 
 /**
@@ -165,8 +190,11 @@ implied       DEC           88    1     2
 INLINE void DEA() {
     dbgPrintf("DEA %02X -> ", m6502.A);
     disPrintf(disassembly.inst, "DEA");
+
+#ifndef DEBUGGER
     set_flags_NZ( --m6502.A );
     dbgPrintf("%02X ", m6502.A);
+#endif
 }
 
 #endif // __6502_INSTR_INC_DEC_H__

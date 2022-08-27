@@ -44,6 +44,7 @@
  (indirect,X)  ADC (oper,X)  61    2     6
  (indirect),Y  ADC (oper),Y  71    2     5*
 **/
+#ifndef DEBUGGER
 INLINE void _ADC( uint8_t src ) {
     uint16_t tmp;
     
@@ -79,11 +80,14 @@ INLINE void _ADC( uint8_t src ) {
     //    set_flags_NZ( m6502.A = tmp );
     
 }
+#endif
 INLINE void ADC( uint8_t src ) {
     dbgPrintf("ADC(%02X) ", src);
     disPrintf(disassembly.inst, "ADC");
     
+#ifndef DEBUGGER
     _ADC(src);
+#endif
 }
 
 /**
@@ -103,6 +107,7 @@ INLINE void ADC( uint8_t src ) {
  (indirect,X)  SBC (oper,X)  E1    2     6
  (indirect),Y  SBC (oper),Y  F1    2     5*
 **/
+#ifndef DEBUGGER
 INLINE void _SBC( uint8_t src ) {
     uint16_t tmp;
     
@@ -128,10 +133,14 @@ INLINE void _SBC( uint8_t src ) {
     m6502.V = ( (m6502.A ^ tmp) & 0x80 ) && ( (m6502.A ^ src) & 0x80 );
     set_flags_NZ( m6502.A = tmp );
 }
+#endif
 INLINE void SBC( uint8_t src ) {
     dbgPrintf("SBC(%02X) ", src);
     disPrintf(disassembly.inst, "SBC");
+
+#ifndef DEBUGGER
     _SBC(src);
+#endif
 }
 
 #endif // __6502_INSTR_ARITHMETIC_H__

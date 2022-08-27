@@ -35,8 +35,10 @@ ANC -     "AND" Memory with Accumulator
 INLINE void ANC ( uint8_t src ) {
     disPrintf(disassembly.inst, "ANC");
     
+#ifndef DEBUGGER
     set_flags_NZ( m6502.A &= src );
     m6502.C = m6502.A >> 7;
+#endif
 }
 
 
@@ -53,6 +55,7 @@ INLINE void ANC ( uint8_t src ) {
 INLINE void ARC ( uint8_t src ) {
     disPrintf(disassembly.inst, "ARC");
 
+#ifndef DEBUGGER
     _AND(src);
     m6502.C = m6502.A >> 7;
 
@@ -60,6 +63,7 @@ INLINE void ARC ( uint8_t src ) {
     uint8_t C = m6502.C != 0;
     m6502.A >>= 1;
     set_flags_NZ( m6502.A |= C << 7);
+#endif
 }
 
 
@@ -73,12 +77,14 @@ INLINE void ARC ( uint8_t src ) {
 INLINE void ASR ( uint8_t src ) {
     disPrintf(disassembly.inst, "ASR");
     
+#ifndef DEBUGGER
     // AND
     m6502.A &= src;
 
     // LSR A
     m6502.C = m6502.A & 1;
     set_flags_NZ( m6502.A >>= 1 );
+#endif
 }
 
 
@@ -91,8 +97,10 @@ INLINE void ASR ( uint8_t src ) {
  **/
 INLINE void DCP ( uint16_t addr ) {
     disPrintf(disassembly.inst, "DCP");
+#ifndef DEBUGGER
     _DEC(addr);
     _CMP(WRLOMEM[addr]);
+#endif
 }
 
 
@@ -101,7 +109,9 @@ INLINE void DCP ( uint16_t addr ) {
  **/
 INLINE void LAS ( uint8_t src ) {
     disPrintf(disassembly.inst, "LAS");
+#ifndef DEBUGGER
     set_flags_NZ( m6502.A = m6502.X = m6502.SP = m6502.SP & src );
+#endif
 }
 
 
@@ -114,8 +124,10 @@ INLINE void LAS ( uint8_t src ) {
  **/
 INLINE void ISB ( uint16_t addr ) {
     disPrintf(disassembly.inst, "ISB");
+#ifndef DEBUGGER
     _INC(addr);
     _SBC(WRLOMEM[addr]);
+#endif
 }
 
 
@@ -126,7 +138,9 @@ INLINE void ISB ( uint16_t addr ) {
  **/
 INLINE void LAX ( uint8_t src ) {
     disPrintf(disassembly.inst, "LAX");
+#ifndef DEBUGGER
     set_flags_NZ(m6502.A = m6502.X = src);
+#endif
 }
 
 
@@ -140,8 +154,10 @@ INLINE void LAX ( uint8_t src ) {
 INLINE void RLA ( uint16_t addr ) {
     disPrintf(disassembly.inst, "RLA");
 
+#ifndef DEBUGGER
     _ROL(addr);
     _AND(WRLOMEM[addr]);
+#endif
 }
 
 
@@ -154,8 +170,10 @@ INLINE void RLA ( uint16_t addr ) {
  **/
 INLINE void RRA ( uint16_t addr ) {
     disPrintf(disassembly.inst, "RRA");
+#ifndef DEBUGGER
     _ROR(addr);
     _ADC(WRLOMEM[addr]);
+#endif
 }
 
 
@@ -169,8 +187,10 @@ INLINE void RRA ( uint16_t addr ) {
 
 INLINE void SAS ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SAS");
+#ifndef DEBUGGER
     m6502.SP = m6502.A & m6502.X;
     set_flags_NZ( WRLOMEM[addr] = m6502.SP & ((addr >> 8) + 1) );
+#endif
 }
 
 
@@ -198,6 +218,7 @@ INLINE void SAS ( uint16_t addr ) {
 INLINE void SBX ( uint8_t src ) {
     disPrintf(disassembly.inst, "SBX");
 
+#ifndef DEBUGGER
     uint16_t tmp;
 
     // Decimal flag is ignored
@@ -206,6 +227,7 @@ INLINE void SBX ( uint8_t src ) {
     m6502.C = tmp < 0x100;
     m6502.V = ( (m6502.A ^ tmp) & 0x80 ) && ( (m6502.A ^ src) & 0x80 );
     set_flags_NZ( m6502.X = tmp );
+#endif
 }
 
 
@@ -217,7 +239,9 @@ INLINE void SBX ( uint8_t src ) {
 
 INLINE void SHA ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SHA");
+#ifndef DEBUGGER
     set_flags_NZ( WRLOMEM[addr] = m6502.X & m6502.A & ((addr >> 8) + 1) );
+#endif
 }
 
 
@@ -229,7 +253,9 @@ INLINE void SHA ( uint16_t addr ) {
 
 INLINE void SHY ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SHY");
+#ifndef DEBUGGER
     set_flags_NZ( WRLOMEM[addr] = m6502.Y &((addr >> 8) + 1) );
+#endif
 }
 
 
@@ -241,7 +267,9 @@ INLINE void SHY ( uint16_t addr ) {
 
 INLINE void SHX ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SHX");
+#ifndef DEBUGGER
     set_flags_NZ( WRLOMEM[addr] = m6502.X &((addr >> 8) + 1) );
+#endif
 }
 
 
@@ -258,9 +286,11 @@ INLINE void SHX ( uint16_t addr ) {
 INLINE void SLO ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SLO");
     
+#ifndef DEBUGGER
     _ASL(addr);
     _ORA( WRLOMEM[addr] );
     set_flags_NZ( WRLOMEM[addr] = m6502.A );    // A -> M
+#endif
 }
 
 
@@ -272,7 +302,9 @@ INLINE void SLO ( uint16_t addr ) {
 
 INLINE void SAX ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SAX");
+#ifndef DEBUGGER
     set_flags_NZ( WRLOMEM[addr] = m6502.A & m6502.X );
+#endif
 }
 
 
@@ -287,13 +319,14 @@ INLINE void SAX ( uint16_t addr ) {
 INLINE void SRE ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SRE");
 
+#ifndef DEBUGGER
     // LSR
     m6502.C = WRLOMEM[addr] & 1;
     set_flags_NZ( WRLOMEM[addr] >>= 1 );
     
     // EOR M
     set_flags_NZ( m6502.A |= WRLOMEM[addr] );
-
+#endif
 }
 
 
@@ -304,7 +337,9 @@ XAA -     "AND" Memory with Index X into Accumulator
 **/
 INLINE void XAA ( uint8_t src ) {
     disPrintf(disassembly.inst, "XAA");
+#ifndef DEBUGGER
     set_flags_NZ( m6502.A = m6502.X & src );
+#endif
 }
 
 

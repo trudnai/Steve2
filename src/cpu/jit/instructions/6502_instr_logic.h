@@ -42,13 +42,18 @@
  (indirect,X)  ORA (oper,X)  01    2     6
  (indirect),Y  ORA (oper),Y  11    2     5*
 **/
+#ifndef DEBUGGER
 INLINE void _ORA( uint8_t src ) {
     set_flags_NZ( m6502.A |= src );
 }
+#endif
 INLINE void ORA( uint8_t src ) {
     dbgPrintf("ORA(%02X) ", src);
     disPrintf(disassembly.inst, "ORA");
+
+#ifndef DEBUGGER
     _ORA(src);
+#endif
 }
 
 /**
@@ -68,13 +73,18 @@ INLINE void ORA( uint8_t src ) {
  (indirect,X)  AND (oper,X)  21    2     6
  (indirect),Y  AND (oper),Y  31    2     5*
  **/
+#ifndef DEBUGGER
 INLINE void _AND( uint8_t src ) {
     set_flags_NZ( m6502.A &= src );
 }
+#endif
 INLINE void AND( uint8_t src ) {
     dbgPrintf("AND(%02X) ", src);
     disPrintf(disassembly.inst, "AND");
+
+#ifndef DEBUGGER
     _AND(src);
+#endif
 }
 
 /**
@@ -97,7 +107,10 @@ INLINE void AND( uint8_t src ) {
 INLINE void EOR( uint8_t src ) {
     dbgPrintf("EOR(%02X) ", src);
     disPrintf(disassembly.inst, "EOR");
+
+#ifndef DEBUGGER
     set_flags_NZ( m6502.A ^= src );
+#endif
 }
 
 #endif // __6502_INSTR_LOGIC_H__

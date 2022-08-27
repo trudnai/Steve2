@@ -102,6 +102,9 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "set_flags_N:6502.c">
+      </ContextState>
+      <ContextState
          contextName = "rel_addr:Apple2_mmio.h">
       </ContextState>
       <ContextState
@@ -225,6 +228,9 @@
             </PersistentString>
             <PersistentString
                value = "m6502.clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "cpuState">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -941,6 +947,12 @@
                value = "Apple2_64K_AUX + 0x3600">
             </PersistentString>
             <PersistentString
+               value = "m6502.clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.ecoSpindown">
+            </PersistentString>
+            <PersistentString
                value = "m6502.PC">
             </PersistentString>
             <PersistentString
@@ -1074,6 +1086,20 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ioRead:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "(int)IOframe">
+            </PersistentString>
+            <PersistentString
+               value = "lastIO">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "pdl_read:paddle.h">
          <PersistentStrings>
             <PersistentString
@@ -1181,6 +1207,9 @@
       </ContextState>
       <ContextState
          contextName = "STA:6502_instr_load_store.h">
+      </ContextState>
+      <ContextState
+         contextName = "set_flags_Z:6502.c">
       </ContextState>
       <ContextState
          contextName = "textPageSelect:mmio.h">

@@ -592,6 +592,8 @@ class ViewController: NSViewController  {
 
     override func keyDown(with event: NSEvent) {
         
+        m6502.ecoSpindown = ecoSpindown;
+        
         if ( cpuMode == cpuMode_eco ) {
             cpuState = cpuState_running;
             #if SCHEDULER_CVDISPLAYLINK
@@ -1162,10 +1164,10 @@ class ViewController: NSViewController  {
 //                Input()
                 
                 // run some code
-                cpuState = cpuState_executing
+                // cpuState = cpuState_executing
 //                DispatchQueue.global(qos: .userInitiated).async {
                     m6502_Run()
-                    cpuState = cpuState_running
+                    // cpuState = cpuState_running
 //                }
                 
                 // video rendering
@@ -1190,7 +1192,12 @@ class ViewController: NSViewController  {
                 break
             
             case cpuState_halted:
+                #if SCHEDULER_CVDISPLAYLINK
                 CVDisplayLinkStop(displayLink!)
+                #else
+                upd.suspend()
+                #endif
+                
                 break
                 
             default:
@@ -1934,19 +1941,24 @@ class ViewController: NSViewController  {
     
     
     func Cheat_Wavy_Navy_Victory() {
+#if !DEBUGGER
         JUMP( 0x1528 ) // called when player clears the level
+#endif
     }
     
     func Cheat_Wavy_Navy_Add_3_Ships() {
+#if !DEBUGGER
         let ships = min( getMEM( 0x4746 ) + 3, 9 )
         setMEM( 0x4746, ships )
         m6502.A = ships
 //        m6502.X = 0x10
         setMEM16(0x4728, 0x16F0) // cursor pos: 0x4728:x, 0x4729:y
         CALL( 0x1FDA ) // position and number needed? A:Number of ships X:0x10
+#endif
     }
 
     func Cheat_Wavy_Navy_OtherCheats() {
+#if !DEBUGGER
         // Replace STC / SBC $0x1 to NOPs...
         setMEM( 0x1E63, 0xEA )
         setMEM( 0x1E64, 0xEA )
@@ -1981,9 +1993,11 @@ class ViewController: NSViewController  {
 //            setMEM( i, 0xEA )
 //            i += 1
 //        }
+#endif
     }
 
     func Cheat_Wavy_Navy_Never_Lose()  -> NSControl.StateValue {
+#if !DEBUGGER
         // Replace STC / SBC #$01 to NOPs...
 //        setMEM( 0x1E63, 0xEA )
 //        setMEM( 0x1E64, 0xEA )
@@ -2003,9 +2017,13 @@ class ViewController: NSViewController  {
             print("Not Wavy Navy!")
             return .off
         }
+#else
+        return .off
+#endif
     }
     
     func Cheat_Wavy_Navy_Lose_To_Win() -> NSControl.StateValue {
+#if !DEBUGGER
         if ( getMEM16(0x1545) == 0x09F0 ) { // BEQ $1550
             // lose to win
             setMEM16( 0x1545, 0xEAEA ) // NOP NOP
@@ -2020,31 +2038,43 @@ class ViewController: NSViewController  {
             print("Not Wavy Navy!")
             return .off
         }
+#else
+        return .off
+#endif
     }
     
     
     func Get_Hard_Hat_Mack() -> UInt8 {
+#if !DEBUGGER
         return getMEM( 0x4EDF )
+#else
+        return 0
+#endif
     }
     
     func Cheat_Hard_Hat_Mack(add : UInt8) -> UInt8 {
+#if !DEBUGGER
         let ships = min( getMEM( 0x4EDF ) + add, 9 )
         setMEM( 0x4EDF, ships )
 //        CALL( 0x1219 ) // starts from the beginning
         CALL( 0x1A2B ) // refresh Mack counter on screen
         
         return ships
+#else
+        return 0
+#endif
     }
 
     
     func Cheat_Hard_Hat_Mack_Never_Lose() -> NSControl.StateValue {
+#if !DEBUGGER
         setMEM( 0x0503, 0x18 )
         setMEM( 0x0504, 0x60 )
         
         setMEM( 0x50A5, 0xEA )
         setMEM( 0x50A6, 0xEA )
         setMEM( 0x50A7, 0xEA )
-        
+#endif
         return .on
     }
 }

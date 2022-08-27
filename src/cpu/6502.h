@@ -28,6 +28,10 @@
 #include "common.h"
 #include "woz.h"
 
+#define CRYSTAL_MHZ 14.31818                // NTSC version (original)
+#define DEFAULT_MHZ_6502 (CRYSTAL_MHZ / 14) // 1.023 MHz
+
+
 typedef enum cpuMode_e {
     cpuMode_normal = 0,
     cpuMode_eco,

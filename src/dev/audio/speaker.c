@@ -33,15 +33,9 @@
 #include "disk.h" // to be able to disable disk acceleration
 
 
-//   8 and 10 sounds ok
-//  16 is better
-//  32 is really good
-//  64 dow not sound better much than 32
-// 128 Relally good!
-// 256 sounds really amazing!
-//#define SPKR_OVERSAMPLING 128
-#define SPKR_OVERSAMPLING 160
-//#define SPKR_OVERSAMPLING 256
+#define SPKR_STREAM_RATE 44100
+#define SPKR_OVERSAMPLING ( MHZ(DEFAULT_MHZ_6502) / SPKR_STREAM_RATE )
+
 
 
 #define min(x,y) (x) < (y) ? (x) : (y)
@@ -106,32 +100,13 @@ int spkr_level_ema6 = SPKR_LEVEL_ZERO;
 int spkr_last_level = SPKR_LEVEL_ZERO;
 
 
-//static const int ema_len_sharper = 7;
-//static const int ema_len_sharp = 14;
-//static const int ema_len_oversampled = 80;
-//static const int ema_len_normal = 16; // 18
-//static const int ema_len_soft = 20;
-//static const int ema_len_supersoft = 40;
+//static const int ema_len_sharper = 16;
+//static const int ema_len_sharp = 32;
+//static const int ema_len_normal = 45;
+//static const int ema_len_soft = 64;
+//static const int ema_len_supersoft = 80;
 
-#if (SPKR_OVERSAMPLING >= 256)
-int spkr_ema_len = 480;
-#elif (SPKR_OVERSAMPLING >= 160)
-int spkr_ema_len = 480;
-#elif (SPKR_OVERSAMPLING >= 128)
-int spkr_ema_len = 256;
-#elif (SPKR_OVERSAMPLING >= 64)
-int spkr_ema_len = 128;
-#elif (SPKR_OVERSAMPLING >= 32)
-int spkr_ema_len = 64;
-#elif (SPKR_OVERSAMPLING >= 16)
-int spkr_ema_len = 32;
-#elif (SPKR_OVERSAMPLING >= 8)
-int spkr_ema_len = 24;
-#elif (SPKR_OVERSAMPLING >= 2)
-int spkr_ema_len = 20;
-#else
-int spkr_ema_len = 16;
-#endif
+int spkr_ema_len = 45;
 
 #define BUFFER_COUNT 32
 #define SPKR_CHANNELS 2
@@ -156,7 +131,7 @@ unsigned spkr_clk = 0;
 #define SPKR_BUF_SLOT(n)        ( SPKR_BUF_SIZE * (n) )
 #define SPKR_BUF_SLOT_SIZE(n)   ( SPKR_BUF_SLOT(n) * sizeof(spkr_sample_t) )
 
-#define SPKR_STRM_SIZE          ( spkr_stream_rate * SPKR_CHANNELS / DEFAULT_FPS ) // stereo
+#define SPKR_STRM_SIZE          ( SPKR_STREAM_RATE * SPKR_CHANNELS / DEFAULT_FPS ) // stereo
 #define SPKR_STRM_SLOT(n)       ( SPKR_STRM_SIZE * (n) )
 #define SPKR_STRM_SLOT_SIZE(n)  ( SPKR_STRM_SLOT(n) * sizeof(spkr_sample_t) )
 
@@ -167,8 +142,8 @@ unsigned spkr_clk = 0;
 const unsigned spkr_seconds = 1;
 
 #ifdef SPKR_OVERSAMPLING
-const unsigned spkr_stream_rate = 44100; // Optimal? 220500; // Best: 321000; // Acceptable: 192000; // higher the sample rate, the better the sound gets
-const unsigned spkr_sample_rate = spkr_stream_rate * SPKR_OVERSAMPLING;
+//const unsigned spkr_stream_rate = SPKR_STREAM_RATE; // Optimal? 220500; // Best: 321000; // Acceptable: 192000; // higher the sample rate, the better the sound gets
+const unsigned spkr_sample_rate = SPKR_STREAM_RATE * SPKR_OVERSAMPLING;
 #else
 const unsigned spkr_sample_rate = 321000; // Optimal? 220500; // Best: 321000; // Acceptable: 192000; // higher the sample rate, the better
 #endif
@@ -1022,7 +997,7 @@ void spkr_buffer_with_prebuf() {
 #ifdef SPKR_OVERSAMPLING
 //                alSourcef(spkr_src[SPKR_SRC_GAME_SFX], AL_PITCH, 0.5);
                 
-                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_stream, SPKR_STRM_SLOT_SIZE(1), spkr_stream_rate);
+                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_stream, SPKR_STRM_SLOT_SIZE(1), SPKR_STREAM_RATE);
 #else
                 alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_samples, SPKR_BUF_SLOT_SIZE(1), spkr_sample_rate);
 #endif
@@ -1038,7 +1013,7 @@ void spkr_buffer_with_prebuf() {
     //            printf("spkr_buffer_with_prebuf: AL_STOPPED %llu\n", m6502.clktime + m6502.clkfrm);
                 // start with a silent sound block so later on we will not run out of buffer that easy
 #ifdef SPKR_OVERSAMPLING
-                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_stream_buf, SPKR_STRM_SLOT_SIZE(SPKR_SILENT_SLOT + 1), spkr_stream_rate);
+                alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_stream_buf, SPKR_STRM_SLOT_SIZE(SPKR_SILENT_SLOT + 1), SPKR_STREAM_RATE);
 #else
                 alBufferData(spkr_buffers[freeBuffers], AL_FORMAT_STEREO16, spkr_sample_buf, SPKR_BUF_SLOT_SIZE(SPKR_SILENT_SLOT + 1), spkr_sample_rate);
 #endif

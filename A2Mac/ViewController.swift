@@ -958,7 +958,45 @@ class ViewController: NSViewController  {
         }
     }
 
-    
+    func SetSplashScreenFont() {
+        for view in splashScreen.subviews {
+            if view is NSTextField {
+                let textField = view as! NSTextField
+                if let fontSize = textField.font?.pointSize {
+                    textField.font = NSFont(name: "PrintChar21", size: fontSize)
+                }
+            }
+        }
+
+        // Set Apple ][ font
+        if let fontSize = textDisplay.font?.pointSize {
+            textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
+            ViewController.charConvTblFlashOn = ViewController.charConvTblFlashOn40
+            ViewController.charConvTblFlashOff = ViewController.charConvTblFlashOff40
+        }
+    }
+
+
+    func SetCol40() {
+        // Set Apple ][ font
+        if let fontSize = textDisplay.font?.pointSize {
+            textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
+            ViewController.charConvTblFlashOn = ViewController.charConvTblFlashOn40
+            ViewController.charConvTblFlashOff = ViewController.charConvTblFlashOff40
+        }
+    }
+
+
+    func SetCol80() {
+        // Set Apple ][ font
+        if let fontSize = textDisplay.font?.pointSize {
+            textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
+            ViewController.charConvTblFlashOn = ViewController.charConvTblCol80
+            ViewController.charConvTblFlashOff = ViewController.charConvTblCol80
+        }
+    }
+
+
     func UpdateText() {
 
 // TODO: Render text Screen in native C
@@ -967,17 +1005,11 @@ class ViewController: NSViewController  {
         if videoMode.col80 != currentVideoMode.col80 {
             currentVideoMode.col80 = videoMode.col80
             
-            if let fontSize = textDisplay.font?.pointSize {
-                if videoMode.col80 == 1 {
-                    textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
-                    ViewController.charConvTblFlashOn = ViewController.charConvTblCol80
-                    ViewController.charConvTblFlashOff = ViewController.charConvTblCol80
-                }
-                else {
-                    textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
-                    ViewController.charConvTblFlashOn = ViewController.charConvTblFlashOn40
-                    ViewController.charConvTblFlashOff = ViewController.charConvTblFlashOff40
-                }
+            if videoMode.col80 == 1 {
+                SetCol80()
+            }
+            else {
+                SetCol40()
             }
         }
         
@@ -1373,7 +1405,11 @@ class ViewController: NSViewController  {
 //        timer = CADisplayLink(target: self, selector: #selector(gameloop))
 //        timer.add(to: RunLoop.main, forMode: .default)
 
-        
+
+        // Set Apple ][ font
+        SetCol40()
+        SetSplashScreenFont()
+
         openLog()
         
         hires.clearScreen();

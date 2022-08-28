@@ -37,7 +37,6 @@
 #define SPKR_OVERSAMPLING ( MHZ(DEFAULT_MHZ_6502) / SPKR_STREAM_RATE )
 
 
-
 #define min(x,y) (x) < (y) ? (x) : (y)
 #define max(x,y) (x) > (y) ? (x) : (y)
 #define clamp(min,num,max) (num) < (min) ? (min) : (num) > (max) ? (max) : (num)
@@ -106,7 +105,9 @@ int spkr_last_level = SPKR_LEVEL_ZERO;
 //static const int ema_len_soft = 64;
 //static const int ema_len_supersoft = 80;
 
-int spkr_ema_len = 45;
+int spkr_ema_len = 640; // with EMA
+//int spkr_ema_len = 45; // with EMA3
+
 
 #define BUFFER_COUNT 32
 #define SPKR_CHANNELS 2
@@ -633,6 +634,29 @@ INLINE int ema( int val, int prev, float ema_len ) {
     return m * val + n * prev;
 }
 
+
+/// calculate the multiplier for smoothing (weighting) the EMA,
+/// which typically follows the formula: [2 ÷ (number of observations + 1)].
+///
+/// IMPORTANT!: ema1 must be precalculated!
+///    * You Must Call ema() before this to get ema1
+///    * ema2 is updated!
+INLINE static const double dema ( const double ema1, double ema2 ) {
+    return 2 * ema1 - ema2;
+}
+
+
+/// Calculate the multiplier for smoothing (weighting) the EMA,
+/// which typically follows the formula: [2 ÷ (number of observations + 1)].
+///
+/// IMPORTANT!: ema1 and ema2 must be precalculated!
+///    * You Must Call dema() before this to get ema2 and ema() to get ema1
+///    * ema3 is updated!
+INLINE static const double tema ( const double ema1, const double ema2, double ema3 ) {
+    return 3 * ema1 - 3 * ema2 + ema3;
+}
+
+
 /// T3 Moving Average
 ///
 /// Tillson's T3 is a kind of Moving average. Tim Tillson described it in "Technical Analysis of Stocks and Commodities", January 1998.
@@ -678,57 +702,32 @@ INLINE static const double t3 (
 
 
 INLINE static void spkr_filter_ema(spkr_sample_t * buf, int buf_size) {
-    
-    // to use with EMA
-    //    static const int ema_len_sharper = 30;
-    //    static const int ema_len_soft = 70;
-    //    static const int ema_len_supersoft = 200;
-    
-    // to use with TEMA
-    //    static const int ema_len_sharper = 7;
-    //    static const int ema_len_sharp = 14;
-    //    static const int ema_len_normal = 18;
-    //    static const int ema_len_soft = 20;
-    //    static const int ema_len_supersoft = 40;
-    //
-    //    static const int ema_len = ema_len_soft;
-    
     for ( int i = 0; i < buf_size; ) {
         spkr_level_ema  = ema(buf[i], spkr_level_ema, spkr_ema_len);
-        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema_len);
-        spkr_level_ema3  = ema(spkr_level_ema2, spkr_level_ema3, spkr_ema_len);
-        
-        // smoothing with Tripple EMA
-        buf[i++] = spkr_level_ema3;
-        buf[i++] = spkr_level_ema3;
+
+        // smoothing with EMA
+        buf[i++] = spkr_level_ema;
+        buf[i++] = spkr_level_ema;
     }
     
     // Debug SPKR Buffer After EMA
     spkr_debug(spkr_debug_ema_file);
-    
-//    spkr_level = spkr_level_tema;
 }
 
 
-/// calculate the multiplier for smoothing (weighting) the EMA,
-/// which typically follows the formula: [2 ÷ (number of observations + 1)].
-///
-/// IMPORTANT!: ema1 must be precalculated!
-///    * You Must Call ema() before this to get ema1
-///    * ema2 is updated!
-static const double dema ( const double ema1, double ema2 ) {
-    return 2 * ema1 - ema2;
-}
+INLINE static void spkr_filter_ema3(spkr_sample_t * buf, int buf_size) {
+    for ( int i = 0; i < buf_size; ) {
+        spkr_level_ema  = ema(buf[i], spkr_level_ema, spkr_ema_len);
+        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema_len);
+        spkr_level_ema3  = ema(spkr_level_ema2, spkr_level_ema3, spkr_ema_len);
 
+        // smoothing with EMA3
+        buf[i++] = spkr_level_ema3;
+        buf[i++] = spkr_level_ema3;
+    }
 
-/// Calculate the multiplier for smoothing (weighting) the EMA,
-/// which typically follows the formula: [2 ÷ (number of observations + 1)].
-///
-/// IMPORTANT!: ema1 and ema2 must be precalculated!
-///    * You Must Call dema() before this to get ema2 and ema() to get ema1
-///    * ema3 is updated!
-static const double tema ( const double ema1, const double ema2, double ema3 ) {
-    return 3 * ema1 - 3 * ema2 + ema3;
+    // Debug SPKR Buffer After EMA
+    spkr_debug(spkr_debug_ema_file);
 }
 
 
@@ -827,6 +826,36 @@ INLINE static spkr_sample_t spkr_avg(const spkr_sample_t * buf, const int len) {
     // get the average for that section
     return sum / len;
 }
+
+
+INLINE static spkr_sample_t spkr_avg_new(const spkr_sample_t * buf, int len) {
+    long sum = 0;
+
+    int buf_idx = (int)(buf - spkr_samples);
+    int buf_size = SPKR_BUF_SIZE - buf_idx;
+    if (spkr_sample_idx > SPKR_BUF_SIZE) {
+        buf_size = spkr_sample_idx - buf_idx;
+    }
+
+    len *= SPKR_CHANNELS;
+
+    if (len > buf_size) {
+        len = buf_size;
+    }
+
+    if (len) {
+        // get the sum for that section
+        for (int i = 0; i < len; i += SPKR_CHANNELS) {
+            sum += buf[i];
+        }
+
+        // get the average for that section
+        return sum / len / SPKR_CHANNELS;
+    }
+
+    return 0;
+}
+
 
 INLINE static void spkr_downsample() {
     for (int i = 0; i < SPKR_STRM_SLOT_SIZE(1); ) {

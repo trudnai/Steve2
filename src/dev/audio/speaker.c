@@ -106,7 +106,7 @@ int spkr_last_level = SPKR_LEVEL_ZERO;
 //static const int ema_len_supersoft = 80;
 
 int spkr_ema_len = 640; // with EMA
-//int spkr_ema_len = 45; // with EMA3
+int spkr_ema3_len = 50; // with EMA3
 
 
 #define BUFFER_COUNT 32
@@ -717,9 +717,9 @@ INLINE static void spkr_filter_ema(spkr_sample_t * buf, int buf_size) {
 
 INLINE static void spkr_filter_ema3(spkr_sample_t * buf, int buf_size) {
     for ( int i = 0; i < buf_size; ) {
-        spkr_level_ema  = ema(buf[i], spkr_level_ema, spkr_ema_len);
-        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema_len);
-        spkr_level_ema3  = ema(spkr_level_ema2, spkr_level_ema3, spkr_ema_len);
+        spkr_level_ema  = ema(buf[i], spkr_level_ema, spkr_ema3_len);
+        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema3_len);
+        spkr_level_ema3  = ema(spkr_level_ema2, spkr_level_ema3, spkr_ema3_len);
 
         // smoothing with EMA3
         buf[i++] = spkr_level_ema3;
@@ -878,7 +878,8 @@ INLINE static void spkr_filter() {
     
 
 #ifdef SPKR_OVERSAMPLING
-    spkr_filter_ema( spkr_samples, SPKR_BUF_SIZE );
+//    spkr_filter_ema( spkr_samples, SPKR_BUF_SIZE );
+    spkr_filter_ema3( spkr_samples, SPKR_BUF_SIZE );
 //    spkr_filter_dema( spkr_samples, SPKR_BUF_SIZE );
 //    spkr_filter_tema( spkr_samples, SPKR_BUF_SIZE );
 //    spkr_filter_t3( spkr_samples, SPKR_BUF_SIZE );

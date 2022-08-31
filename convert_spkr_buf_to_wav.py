@@ -17,7 +17,7 @@ import struct
 def convert_bin_to_audio(filename):
     data_size = os.path.getsize(filename)
     channels = 2
-    sample_rate = 192000 # must be the same as in speaker.c : spkr_sample_rate
+    sample_rate = 1023000 # 192000 # must be the same as in speaker.c : spkr_sample_rate
     bits_per_sample = 16
     header_size = 44
 

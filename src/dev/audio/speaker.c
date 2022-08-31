@@ -91,6 +91,7 @@ ALCcontext *ctx = NULL;
 int spkr_att = 0;
 int spkr_level = SPKR_LEVEL_ZERO;
 int spkr_level_ema = SPKR_LEVEL_ZERO;
+int spkr_level_ema1 = SPKR_LEVEL_ZERO;
 int spkr_level_ema2 = SPKR_LEVEL_ZERO;
 int spkr_level_ema3 = SPKR_LEVEL_ZERO;
 int spkr_level_ema4 = SPKR_LEVEL_ZERO;
@@ -128,7 +129,7 @@ unsigned spkr_fps = DEFAULT_FPS;
 unsigned spkr_frame_cntr = 0;
 unsigned spkr_clk = 0;
 
-#define SPKR_BUF_SIZE           ( spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS ) // stereo
+#define SPKR_BUF_SIZE           ( (int)(spkr_sample_rate * SPKR_CHANNELS / DEFAULT_FPS) ) // stereo
 #define SPKR_BUF_SLOT(n)        ( SPKR_BUF_SIZE * (n) )
 #define SPKR_BUF_SLOT_SIZE(n)   ( SPKR_BUF_SLOT(n) * sizeof(spkr_sample_t) )
 
@@ -144,7 +145,7 @@ const unsigned spkr_seconds = 1;
 
 #ifdef SPKR_OVERSAMPLING
 //const unsigned spkr_stream_rate = SPKR_STREAM_RATE; // Optimal? 220500; // Best: 321000; // Acceptable: 192000; // higher the sample rate, the better the sound gets
-const unsigned spkr_sample_rate = SPKR_STREAM_RATE * SPKR_OVERSAMPLING;
+const double spkr_sample_rate = MHZ(DEFAULT_MHZ_6502); // SPKR_STREAM_RATE * SPKR_OVERSAMPLING;
 #else
 const unsigned spkr_sample_rate = 321000; // Optimal? 220500; // Best: 321000; // Acceptable: 192000; // higher the sample rate, the better
 #endif
@@ -559,7 +560,7 @@ float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix so
 void spkr_toggle() {
     // do not sleep while sound is playing
     m6502.ecoSpindown = ecoSpindown;
-    
+
     if ( diskAccelerator_count ) {
         // turn off disk acceleration immediately
         diskAccelerator_count = 0;
@@ -570,16 +571,15 @@ void spkr_toggle() {
         
         // push a click into the speaker buffer
         // (we will play the entire buffer at the end of the frame)
-        double multiplier = (double)spkr_sample_rate / MHZ(MHz_6502);
 #ifdef SPKR_KEEP_PITCH
         if ( MHz_6502 < default_MHz_6502 ) {
-            multiplier = (double)spkr_sample_rate / MHZ(default_MHz_6502);
+            multiplier = spkr_sample_rate / MHZ(default_MHz_6502);
 //            indexer = (double)spkr_sample_rate / MHZ(default_MHz_6502) * MHz_6502;
         }
 #endif
 
 //        spkr_sample_idx = round( (spkr_clk + m6502.clkfrm) / ( MHZ(default_MHz_6502) / (double)spkr_sample_rate)) * SPKR_CHANNELS;
-        spkr_sample_idx = round( (double)(spkr_clk + m6502.clkfrm) * multiplier ) * SPKR_CHANNELS;
+        spkr_sample_idx = round( (double)(spkr_clk + m6502.clkfrm) ) * SPKR_CHANNELS;
         
         spkr_sample_idx %= SPKR_BUF_SLOT_SIZE(BUFFER_COUNT);
         
@@ -613,53 +613,76 @@ void spkr_toggle() {
 int playDelay = SPKR_PLAY_DELAY;
 
 
-#define SPKR_FILTER_RESET
+#undef SPKR_FILTER_RESET
 
 #ifdef SPKR_FILTER_RESET
 INLINE static void spkr_filter_reset() {
     spkr_level = SPKR_LEVEL_ZERO;
     spkr_level_ema = SPKR_LEVEL_ZERO;
+    spkr_level_ema1 = SPKR_LEVEL_ZERO;
     spkr_level_ema2 = SPKR_LEVEL_ZERO;
     spkr_level_ema3 = SPKR_LEVEL_ZERO;
 }
 #endif
 
-// Exponential Moving Average
-INLINE int ema( int val, int prev, float ema_len ) {
-    static const float ema_sensitivity = 2;
-    //    static const float ema_len = 42;
-    float m = ema_sensitivity / ema_len;
-    float n = 1 - m;
-    
+/// Exponential Moving Average - general implementation
+/// @note Calculate the multiplier for smoothing (weighting) the EMA,
+/// which typically follows the formula: [2 ÷ (number of observations + 1)].
+/// @param val Current value
+/// @param prev Previous value
+/// @param len Length of the period
+/// @param sensitivity Sensitivity (1: Wilders, 2: Exponential)
+INLINE int exp_ma( const int val, const int prev, const float len, const float sensitivity ) {
+    const float m = sensitivity / len;
+    const float n = 1 - m;
     return m * val + n * prev;
 }
 
 
-/// calculate the multiplier for smoothing (weighting) the EMA,
-/// which typically follows the formula: [2 ÷ (number of observations + 1)].
-///
-/// IMPORTANT!: ema1 must be precalculated!
+/// Exponential Moving Average
+/// @param val Current value
+/// @param prev Previous value
+/// @param len Length of the period
+INLINE int ema( const int val, const int prev, const float len ) {
+    return exp_ma(val, prev, len, 2);
+}
+
+
+/// Wilders Moving Average
+/// @param val Current value
+/// @param prev Previous value
+/// @param len Length of the period
+INLINE int wma( const int val, const int prev, const float len ) {
+    return exp_ma(val, prev, len, 1);
+}
+
+
+/// Double EMA
+/// @note ema1 must be precalculated!
 ///    * You Must Call ema() before this to get ema1
 ///    * ema2 is updated!
-INLINE static const double dema ( const double ema1, double ema2 ) {
+/// @param ema1 EMA (must be precalculated)
+/// @param ema2 EMA of EMA (must be precalculated)
+INLINE static const double dema ( const double ema1, const double ema2 ) {
     return 2 * ema1 - ema2;
 }
 
 
-/// Calculate the multiplier for smoothing (weighting) the EMA,
-/// which typically follows the formula: [2 ÷ (number of observations + 1)].
-///
-/// IMPORTANT!: ema1 and ema2 must be precalculated!
+/// Tripple EMA
+/// @note ema1 and ema2 must be precalculated!
 ///    * You Must Call dema() before this to get ema2 and ema() to get ema1
 ///    * ema3 is updated!
-INLINE static const double tema ( const double ema1, const double ema2, double ema3 ) {
+/// @param ema1 EMA (must be precalculated)
+/// @param ema2 EMA of EMA (must be precalculated)
+/// @param ema3 EMA of EMA of EMA (must be precalculated)
+INLINE static const double tema ( const double ema1, const double ema2, const double ema3 ) {
     return 3 * ema1 - 3 * ema2 + ema3;
 }
 
 
 /// T3 Moving Average
 ///
-/// Tillson's T3 is a kind of Moving average. Tim Tillson described it in "Technical Analysis of Stocks and Commodities", January 1998.
+/// @note Tillson's T3 is a kind of Moving average. Tim Tillson described it in "Technical Analysis of Stocks and Commodities", January 1998.
 /// He named his article "Better Moving Averages". Tillson’s moving average becomes a popular indicator of technical analysis.
 /// Its advantage is that it gets less lag with the price chart and its curve is considerably smoother. By using it, the trader can get
 /// early entry and less number of false signals.
@@ -679,6 +702,11 @@ INLINE static const double tema ( const double ema1, const double ema2, double e
 ///
 /// IMPORTANT!: ema1, ema2 ema3, ema4, ame5 and ema6 must be precalculated!
 ///    * You Must Call dema() before this to get ema2 and ema() to get ema1
+/// @param ema3 ema3 = ema (ema2)
+/// @param ema4 ema4 = ema (ema3)
+/// @param ema5 ema5 = ema (ema4)
+/// @param ema6 ema6 = ema (ema5)
+/// @param a Volume factor (typical: 0.7)
 INLINE static const double t3 (
     const double ema3,
     const double ema4,
@@ -701,7 +729,56 @@ INLINE static const double t3 (
 }
 
 
-INLINE static void spkr_filter_ema(spkr_sample_t * buf, int buf_size) {
+/// Generalized Dema - GD (n,v) = EMA (n)*(1+v)-EMA( EMA (n))*v,
+/// @note Where v ranges between 0 and 1. When v=0, GD is just an EMA , and when v=1, GD is DEMA . In between, GD is a cooler DEMA . By using a value for v less than 1 (I like .7), we cure the multiple DEMA overshoot problem, at the cost of accepting some additional phase delay. Now we can run GD through itself multiple times to define a new, smoother moving average T3 that does not overshoot the data:
+///
+/// @param val Value to filter
+/// @param ema1 Pointer to EMA - will be updated
+/// @param ema2 Pointer to EMA of EMA - will be updated
+/// @param len EMA length of period
+/// @param v Volume Factor
+INLINE static const double gd ( const double val, double * ema1, double * ema2, const double len, const double v ) {
+    *ema1 = ema(val, *ema1, len);
+    *ema2 = ema(*ema1, *ema2, len);
+    return *ema1 * (1 + v) - *ema2 * v;
+}
+
+
+/// T3 Moving Average - T3(n) = GD ( GD ( GD (n)))
+///
+/// @note Tillson's T3 is a kind of Moving average. Tim Tillson described it in "Technical Analysis of Stocks and Commodities", January 1998.
+/// He named his article "Better Moving Averages". Tillson’s moving average becomes a popular indicator of technical analysis.
+/// Its advantage is that it gets less lag with the price chart and its curve is considerably smoother. By using it, the trader can get
+/// early entry and less number of false signals.
+///
+/// In filter theory parlance, T3 is a six-pole non-linear Kalman filter. Kalman filters are ones which use the error (in this case (time series - EMA (n)) to correct themselves. In Technical Analysis , these are called Adaptive Moving Averages; they track the time series more aggressively when it is making large moves
+///
+/// @param val Value to filter
+/// @param ema1 Pointer to first EMA - will be updated
+/// @param ema2 Pointer to first EMA of EMA - will be updated
+/// @param ema3 Pointer to second EMA - will be updated
+/// @param ema4 Pointer to second EMA of EMA - will be updated
+/// @param ema5 Pointer to third EMA - will be updated
+/// @param ema6 Pointer to third EMA of EMA - will be updated
+/// @param len EMA length of period
+INLINE static const double t3_new(
+    const double val,
+    double * ema1,
+    double * ema2,
+    double * ema3,
+    double * ema4,
+    double * ema5,
+    double * ema6,
+    const double len
+) {
+    double gd1 = gd(val, ema1, ema2, len, 0.7);
+    double gd2 = gd(gd1, ema3, ema4, len, 0.7);
+    double gd3 = gd(gd2, ema5, ema6, len, 0.7);
+    return gd3;
+}
+
+
+INLINE static void spkr_filter_ema(spkr_sample_t * buf, const int buf_size) {
     for ( int i = 0; i < buf_size; ) {
         spkr_level_ema  = ema(buf[i], spkr_level_ema, spkr_ema_len);
 
@@ -715,10 +792,10 @@ INLINE static void spkr_filter_ema(spkr_sample_t * buf, int buf_size) {
 }
 
 
-INLINE static void spkr_filter_ema3(spkr_sample_t * buf, int buf_size) {
+INLINE static void spkr_filter_ema3(spkr_sample_t * buf, const int buf_size) {
     for ( int i = 0; i < buf_size; ) {
-        spkr_level_ema  = ema(buf[i], spkr_level_ema, spkr_ema3_len);
-        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema3_len);
+        spkr_level_ema1  = ema(buf[i], spkr_level_ema1, spkr_ema3_len);
+        spkr_level_ema2  = ema(spkr_level_ema1, spkr_level_ema2, spkr_ema3_len);
         spkr_level_ema3  = ema(spkr_level_ema2, spkr_level_ema3, spkr_ema3_len);
 
         // smoothing with EMA3
@@ -731,12 +808,12 @@ INLINE static void spkr_filter_ema3(spkr_sample_t * buf, int buf_size) {
 }
 
 
-INLINE static void spkr_filter_dema(spkr_sample_t * buf, int buf_size) {
+INLINE static void spkr_filter_dema(spkr_sample_t * buf, const int buf_size) {
     for ( int i = 0; i < buf_size; ) {
-        spkr_level_ema   = ema(buf[i], spkr_level_ema, spkr_ema_len);
-        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema_len);
+        spkr_level_ema1  = ema(buf[i], spkr_level_ema1, spkr_ema_len);
+        spkr_level_ema2  = ema(spkr_level_ema1, spkr_level_ema2, spkr_ema_len);
         
-        double level = dema(spkr_level_ema, spkr_level_ema2);
+        double level = dema(spkr_level_ema1, spkr_level_ema2);
         // smoothing with DEMA
         buf[i++] = level;
         buf[i++] = level;
@@ -749,13 +826,13 @@ INLINE static void spkr_filter_dema(spkr_sample_t * buf, int buf_size) {
 }
 
 
-INLINE static void spkr_filter_tema(spkr_sample_t * buf, int buf_size) {
+INLINE static void spkr_filter_tema(spkr_sample_t * buf, const int buf_size) {
     for ( int i = 0; i < buf_size; ) {
-        spkr_level_ema   = ema(buf[i], spkr_level_ema, spkr_ema_len);
-        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema_len);
+        spkr_level_ema1  = ema(buf[i], spkr_level_ema1, spkr_ema_len);
+        spkr_level_ema2  = ema(spkr_level_ema1, spkr_level_ema2, spkr_ema_len);
         spkr_level_ema3  = ema(spkr_level_ema2, spkr_level_ema3, spkr_ema_len);
         
-        double level = tema(spkr_level_ema, spkr_level_ema2, spkr_level_ema3);
+        double level = tema(spkr_level_ema1, spkr_level_ema2, spkr_level_ema3);
         // smoothing with TEMA
         buf[i++] = level;
         buf[i++] = level;
@@ -768,10 +845,10 @@ INLINE static void spkr_filter_tema(spkr_sample_t * buf, int buf_size) {
 }
 
 
-INLINE static void spkr_filter_t3(spkr_sample_t * buf, int buf_size) {
+INLINE static void spkr_filter_t3(spkr_sample_t * buf, const int buf_size) {
     for ( int i = 0; i < buf_size; ) {
-        spkr_level_ema   = ema(buf[i], spkr_level_ema, spkr_ema_len);
-        spkr_level_ema2  = ema(spkr_level_ema, spkr_level_ema2, spkr_ema_len);
+        spkr_level_ema1  = ema(buf[i], spkr_level_ema1, spkr_ema_len);
+        spkr_level_ema2  = ema(spkr_level_ema1, spkr_level_ema2, spkr_ema_len);
         spkr_level_ema3  = ema(spkr_level_ema2, spkr_level_ema3, spkr_ema_len);
         spkr_level_ema4  = ema(spkr_level_ema3, spkr_level_ema4, spkr_ema_len);
         spkr_level_ema5  = ema(spkr_level_ema4, spkr_level_ema5, spkr_ema_len);
@@ -858,7 +935,7 @@ INLINE static spkr_sample_t spkr_avg_new(const spkr_sample_t * buf, int len) {
 
 
 INLINE static void spkr_downsample() {
-    for (int i = 0; i < SPKR_STRM_SLOT_SIZE(1); ) {
+    for (int i = 0; i < SPKR_BUF_SIZE; ) {
         int buf_idx = i * SPKR_OVERSAMPLING;
         
         // get the average for that section
@@ -884,6 +961,7 @@ INLINE static void spkr_filter() {
 //    spkr_filter_tema( spkr_samples, SPKR_BUF_SIZE );
 //    spkr_filter_t3( spkr_samples, SPKR_BUF_SIZE );
     spkr_downsample();
+//    spkr_filter_ema( spkr_stream, SPKR_STRM_SLOT_SIZE(1) );
 #else
     spkr_filter_ema( spkr_samples, SPKR_BUF_SIZE );
 //    spkr_filter_dema( spkr_samples, SPKR_BUF_SIZE );
@@ -1105,10 +1183,7 @@ void spkr_update() {
                         spkr_fade(spkr_level, 0);
                         spkr_filter();
 
-#ifdef SPKR_DEBUG
                         spkr_debug(spkr_debug_raw_file);
-                        spkr_debug(spkr_debug_ema_file);
-#endif
 
                         spkr_buffer_with_prebuf();
                         
@@ -1145,7 +1220,13 @@ void spkr_update() {
                     
                     spkr_sample_idx = 0;
                     spkr_sample_last_idx = 0;
-                    
+
+//                    spkr_sample_idx -= SPKR_BUF_SLOT_SIZE(1);
+//                    if ( spkr_sample_idx < 0 ) spkr_sample_idx = 0;
+//                    spkr_sample_last_idx -= SPKR_BUF_SLOT_SIZE(1);
+//                    if ( spkr_sample_last_idx < 0 ) spkr_sample_last_idx = 0;
+
+
                     // make sure it never goes below 0 (never overflows)
                     if ( (int)spkr_play_time < 0 ) {
                         spkr_play_time = 0;

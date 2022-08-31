@@ -80,7 +80,7 @@ enum {
 
 typedef int16_t spkr_sample_t;
 
-extern const unsigned spkr_sample_rate;
+extern const double spkr_sample_rate;
 extern const unsigned spkr_buf_alloc_size;
 extern const unsigned spkr_buf_size;
 extern unsigned spkr_fps;

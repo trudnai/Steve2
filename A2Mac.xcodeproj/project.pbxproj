@@ -76,6 +76,8 @@
 		3268B9E927DEDD61003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
 		326B56E524AD8E89009BA0AC /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
+		3270432F28ECF0E50077E2BC /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
+		3270433928ECF0E80077E2BC /* HiRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DBF7632334657900DD50E7 /* HiRes.swift */; };
 		3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
 		3277D7A4273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
 		32799F7A264B1A5700255669 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
@@ -1562,8 +1564,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				32A6AB04266AEDF60023257A /* mmio.c in Sources */,
+				3270433928ECF0E80077E2BC /* HiRes.swift in Sources */,
 				325EB67623FBC44400C6B4A4 /* common.c in Sources */,
 				32A9F74B2467B60B004902A1 /* speaker.c in Sources */,
+				3270432F28ECF0E50077E2BC /* LoRes.swift in Sources */,
 				32A6AB11266AF5160023257A /* paddle.c in Sources */,
 				32A6AB26266B196A0023257A /* hires.c in Sources */,
 				3268B97C27DE7D6B003FBDCC /* disassembler.c in Sources */,
@@ -1771,6 +1775,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1793,6 +1798,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (

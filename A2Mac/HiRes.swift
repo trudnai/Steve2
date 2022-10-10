@@ -25,7 +25,7 @@
 import AppKit
 
 class HiRes: NSView {
-    
+
     static let PageSize  = 0x2000
     static let Page1Addr = 0x2000
     static let Page2Addr = 0x4000
@@ -63,7 +63,7 @@ class HiRes: NSView {
     
     
     var HiResSubView = [[NSView]]()
-    
+
     func createHiRes() {
         for y in 0 ..< HiRes.blockRows {
             HiResSubView.append([NSView]())

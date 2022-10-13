@@ -1173,6 +1173,26 @@ class ViewController: NSViewController  {
     
 
     func Update() {
+        // Disk Motor LED
+        if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
+            if spkr_is_disk_motor_playing() {
+                if disk1_img.image != Disk1_open_on_img {
+                    DispatchQueue.main.sync {
+    //                NSLog("Disk1_open_on_img: %@", Disk1_open_on_img ?? "NIL")
+                        self.disk1_img.image = self.Disk1_open_on_img
+                    }
+                }
+            }
+            else {
+                if disk1_img.image != Disk1_open_off_img {
+                    DispatchQueue.main.sync {
+    //                NSLog("Disk1_open_off_img: %@", Disk1_open_off_img ?? "NIL")
+                        self.disk1_img.image = self.Disk1_open_off_img
+                    }
+                }
+            }
+        }
+
         switch cpuState {
             case cpuState_running:
                 clkCounter += Double(m6502.clkfrm)
@@ -1368,9 +1388,20 @@ class ViewController: NSViewController  {
     }
 #endif
 
+    @IBOutlet weak var disk1_img: NSImageView!
+    @IBOutlet weak var Disk1_Button: NSPopUpButton!
+    @IBOutlet var Disk1_ButtonCell: NSPopUpButtonCell!
+    var Disk1_open_on_img  = NSImage(named: "disk1 open on")
+    var Disk1_open_off_img = NSImage(named: "disk1 open off")
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+//        if let image = Disk1_open_on_img {
+//            Disk1_ButtonCell.alternateImage = image
+//            NSLog("Disk1_ButtonCell:%@", Disk1_ButtonCell)
+//        }
+
 //        let layer = CALayer()
 //        hires.layer = layer
 //        hires.wantsLayer = true
@@ -1652,7 +1683,7 @@ class ViewController: NSViewController  {
         setCPUClockSpeed(freq: MHz_6502)
         
         // TODO: Better way to deal with speaker!!!
-        spkr_play_timeout = SPKR_PLAY_TIMEOUT * video_fps_divider
+        spkr_play_timeout = SPKR_PLAY_TIMEOUT * Int32(video_fps_divider)
     }
     
     

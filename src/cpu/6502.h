@@ -199,6 +199,7 @@ extern double mhz;
 #define DEFAULT_FPS 60U
 #define DEF_VIDEO_DIV 2U
 #define DEF_SPKR_DIV 2U
+#define DEF_DRV_LED_DIV 4U
 
 #define ECO_VIDEO_DIV 4U
 

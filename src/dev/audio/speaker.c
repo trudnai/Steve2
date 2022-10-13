@@ -170,11 +170,11 @@ int spkr_sample_idx = 0;
 int spkr_sample_last_idx = 0;
 int spkr_sample_first_pwm_idx = 0;
 
-unsigned spkr_play_timeout = SPKR_PLAY_TIMEOUT; // increase to 32 for 240 fps, normally 8 for 30 fps
-unsigned spkr_play_time = 0;
-unsigned spkr_play_disk_motor_time = 0;
-unsigned spkr_play_disk_arm_time = 0;
-unsigned spkr_play_disk_ioerr_time = 0;
+int spkr_play_timeout = SPKR_PLAY_TIMEOUT; // increase to 32 for 240 fps, normally 8 for 30 fps
+int spkr_play_time = 0;
+int spkr_play_disk_motor_time = 0;
+int spkr_play_disk_arm_time = 0;
+int spkr_play_disk_ioerr_time = 0;
 
 uint8_t * diskmotor_sfx = NULL;
 int       diskmotor_sfx_len = 0;
@@ -1351,6 +1351,17 @@ void spkr_stop_sfx( ALuint src ) {
 }
 
 
+bool spkr_is_disk_motor_playing() {
+    if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
+        ALenum state;
+        alGetSourcei( spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_SOURCE_STATE, &state );
+        return state == AL_PLAYING;
+    }
+
+    return 0;
+}
+
+
 void spkr_play_disk_motor() {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_play_sfx( spkr_src[SPKR_SRC_DISK_MOTOR_SFX], diskmotor_sfx, diskmotor_sfx_len );
@@ -1402,11 +1413,14 @@ void spkr_stop_disk_sfx() {
 }
 
 
-void update_disk_sfx( unsigned * time, ALuint src ) {
-    if ( *time ) {
+void update_disk_sfx( int * time, ALuint src ) {
+    if ( *time > 0 ) {
         if ( --*time == 0 ) {
             spkr_stop_sfx( src );
         }
+    }
+    else {
+        *time = 0;
     }
 }
 

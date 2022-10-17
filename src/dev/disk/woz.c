@@ -489,7 +489,7 @@ void woz_write( uint8_t data ) {
 }
 
 
-void woz_free_buffer() {
+void woz_free_buffer(void) {
     if ( woz_file_buffer ) {
         free(woz_file_buffer);
         woz_file_buffer = NULL;
@@ -505,7 +505,7 @@ int woz_parseBuffer() {
     woz_flags.disk_modified = 0;
     woz_flags.disk_write_protected = 0;
     woz_flags.image_file_readonly = 0;
-    woz_flags.image_loaded = 1;
+    woz_flags.image_loaded = 0;
     
     woz_header = (woz_header_t*)woz_file_buffer;
     
@@ -578,6 +578,8 @@ int woz_parseBuffer() {
     // DO NOT COMMIT THIS! ONLY FOR DEBUG!!!
 //    woz_loadTrack(0x11);
 
+    woz_flags.image_loaded = 1;
+
     return WOZ_ERR_OK;
 }
 
@@ -638,6 +640,11 @@ void woz_eject() {
     woz_file_size = 0;
 
     woz_free_buffer();
+}
+
+
+uint8_t woz_is_loaded(void) {
+    return woz_flags.image_loaded;
 }
 
 

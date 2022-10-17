@@ -1191,6 +1191,24 @@ class ViewController: NSViewController  {
             }
         }
 
+        // Disk Loaded
+        if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
+            if woz_is_loaded() > 0 {
+                if disk1_closed.isHidden {
+                    DispatchQueue.main.sync {
+                        disk1_closed.isHidden = false
+                    }
+                }
+            }
+            else {
+                if !disk1_closed.isHidden {
+                    DispatchQueue.main.sync {
+                        disk1_closed.isHidden = true
+                    }
+                }
+            }
+        }
+
         switch cpuState {
             case cpuState_running:
                 clkCounter += Double(m6502.clkfrm)

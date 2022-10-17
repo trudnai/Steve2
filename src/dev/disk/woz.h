@@ -209,5 +209,7 @@ extern int woz_parseBuffer(void);
 extern int woz_loadFile( const char * filename );
 extern int woz_saveFile( const char * filename );
 extern void woz_eject(void);
+extern uint8_t woz_is_loaded(void);
+
 
 #endif /* woz_h */

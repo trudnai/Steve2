@@ -1176,18 +1176,16 @@ class ViewController: NSViewController  {
         // Disk Motor LED
         if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
             if spkr_is_disk_motor_playing() {
-                if disk1_img.image != Disk1_open_on_img {
+                if disk1_led.isHidden {
                     DispatchQueue.main.sync {
-    //                NSLog("Disk1_open_on_img: %@", Disk1_open_on_img ?? "NIL")
-                        self.disk1_img.image = self.Disk1_open_on_img
+                        disk1_led.isHidden = false
                     }
                 }
             }
             else {
-                if disk1_img.image != Disk1_open_off_img {
+                if !disk1_led.isHidden {
                     DispatchQueue.main.sync {
-    //                NSLog("Disk1_open_off_img: %@", Disk1_open_off_img ?? "NIL")
-                        self.disk1_img.image = self.Disk1_open_off_img
+                        disk1_led.isHidden = true
                     }
                 }
             }
@@ -1388,11 +1386,10 @@ class ViewController: NSViewController  {
     }
 #endif
 
-    @IBOutlet weak var disk1_img: NSImageView!
-    @IBOutlet weak var Disk1_Button: NSPopUpButton!
-    @IBOutlet var Disk1_ButtonCell: NSPopUpButtonCell!
-    var Disk1_open_on_img  = NSImage(named: "disk1 open on")
-    var Disk1_open_off_img = NSImage(named: "disk1 open off")
+    @IBOutlet weak var disk1_led: NSImageView!
+    @IBOutlet weak var disk2_led: NSImageView!
+    @IBOutlet weak var disk1_closed: NSImageView!
+    @IBOutlet weak var disk2_closed: NSImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()

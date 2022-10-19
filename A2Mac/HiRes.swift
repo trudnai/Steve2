@@ -286,7 +286,8 @@ class HiRes: NSView {
                 for bit in stride(from: 0, through: 6, by: 1) {
                     let bitMask = 1 << bit
                     if (block & bitMask) != 0 {
-                        pixelsSRGB[pixelAddr] = monoColor;
+                        pixelsSRGB[pixelAddr]     = monoColor;
+                        pixelsSRGB[pixelAddr + 1] = monoColor;
                     }
 //                    else if ( ViewController.current?.CRTMonitor ?? false ) {
 //                        var srgb = pixelsSRGB[pixelAddr]
@@ -304,10 +305,11 @@ class HiRes: NSView {
 //                        pixelsSRGB[pixelAddr] = srgb;
 //                    }
                     else {
-                        pixelsSRGB[pixelAddr] = color_black;
+                        pixelsSRGB[pixelAddr]     = color_black;
+                        pixelsSRGB[pixelAddr + 1] = color_black;
                     }
 
-                    pixelAddr += 1
+                    pixelAddr += 2 // two physical pixels per logical pixel
                 }
             }
 
@@ -372,13 +374,13 @@ class HiRes: NSView {
             pixelsSRGB[colorAddr + 3] = color_orange
 
         case 7: // white 2
-            pixelsSRGB[colorAddr] = color_white
+            pixelsSRGB[colorAddr]     = color_white
             pixelsSRGB[colorAddr + 1] = color_white
             pixelsSRGB[colorAddr + 2] = color_white
             pixelsSRGB[colorAddr + 3] = color_white
 
         default: // 0x00 (black 1), 0x04 (black 2)
-            pixelsSRGB[colorAddr] = color_black
+            pixelsSRGB[colorAddr]     = color_black
             pixelsSRGB[colorAddr + 1] = color_black
             pixelsSRGB[colorAddr + 2] = color_black
             pixelsSRGB[colorAddr + 3] = color_black

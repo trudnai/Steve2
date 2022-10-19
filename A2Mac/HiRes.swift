@@ -366,7 +366,7 @@ class HiRes: NSView {
             pixelsSRGB[colorAddr + 3] = color_white
 
         case 5: // blue
-            pixelsSRGB[colorAddr + 1]     = color_blue
+            pixelsSRGB[colorAddr + 1] = color_blue
             pixelsSRGB[colorAddr + 2] = color_blue
             if  (colorAddr >= 2) && (prev != 0x00) && (prev != 0x04) {
                 pixelsSRGB[colorAddr]     = color_blue
@@ -384,25 +384,53 @@ class HiRes: NSView {
             pixelsSRGB[colorAddr + 4] = color_orange
 
         case 7: // white 2
+//            pixelsSRGB[colorAddr + 0] = color_white
             pixelsSRGB[colorAddr + 1] = color_white
             pixelsSRGB[colorAddr + 2] = color_white
             pixelsSRGB[colorAddr + 3] = color_white
             pixelsSRGB[colorAddr + 4] = color_white
 
-        default: // 0x00 (black 1), 0x04 (black 2)
+        case 0: // 0x00 (black 1), 0x04 (black 2)
+            pixelsSRGB[colorAddr + 0] = color_black
+            pixelsSRGB[colorAddr + 1] = color_black
+            pixelsSRGB[colorAddr + 2] = color_black
+            pixelsSRGB[colorAddr + 3] = color_black
+
+            // white adjustment
+            if (colorAddr >= 2) && (prev == 7) {
+                pixelsSRGB[colorAddr - 1] = color_black
+            }
+
+        case 4: // 0x00 (black 1), 0x04 (black 2)
             pixelsSRGB[colorAddr + 1] = color_black
             pixelsSRGB[colorAddr + 2] = color_black
             pixelsSRGB[colorAddr + 3] = color_black
             pixelsSRGB[colorAddr + 4] = color_black
+
+            if (colorAddr >= 2) && (prev == 7) {
+                pixelsSRGB[colorAddr - 0] = color_black
+            }
+            if (colorAddr >= 2) && (prev == 5) {
+                pixelsSRGB[colorAddr - 0] = color_black
+            }
+
+        default:
             break
         }
 
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
-            pixelsSRGB[colorAddr] = color_white
-            if (colorAddr >= 2) {
+            pixelsSRGB[colorAddr]     = color_white
+            pixelsSRGB[colorAddr + 1] = color_white
+            if colorAddr >= 2 {
                 pixelsSRGB[colorAddr - 1] = color_white
                 pixelsSRGB[colorAddr - 2] = color_white
+            }
+            // blue expansion
+            if pixel == 5 {
+                pixelsSRGB[colorAddr + 2] = color_black
+                pixelsSRGB[colorAddr + 3] = color_black
+                pixelsSRGB[colorAddr + 4] = color_black
             }
             
             // TODO: Need better check if extra green was created
@@ -436,6 +464,7 @@ class HiRes: NSView {
             (pixel == 0x05) ||
             (pixel == 0x03) || (pixel == 0x07)  // white
         ) {
+            pixelsSRGB[colorAddr - 0] = color_blue
             pixelsSRGB[colorAddr - 1] = color_blue
             pixelsSRGB[colorAddr - 2] = color_blue
         }

@@ -1585,10 +1585,13 @@ void kbdInput ( uint8_t code ) {
 
     // wait for previous key read out from the latch
     // Note: timeout with linearly increasing sleep
-    for( int i = 1; i < 100 && ( RAM[io_KBD] > 0x7F ); i++ ) {
-        usleep( i * 2 );
+    if( RAM[io_KBD] > 0x7F ) {
+        for( int i = 1; i < 10000 && ( RAM[io_KBD] > 0x7F ); i++ ) {
+            usleep( 100 );
+        }
+        usleep( 250 );
     }
-    
+
     for (int i = 0; i <= 0xF; i++) {
         RAM[io_KBD + i] = code;
         // most significant bit is a status bit of other things

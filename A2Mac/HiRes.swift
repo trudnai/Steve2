@@ -384,7 +384,7 @@ class HiRes: NSView {
             pixelsSRGB[colorAddr + 4] = color_orange
 
         case 7: // white 2
-//            pixelsSRGB[colorAddr + 0] = color_white
+//            pixelsSRGB[colorAddr + 0] = color_white // Donkey Kong would be perfect but problem in Sneakers
             pixelsSRGB[colorAddr + 1] = color_white
             pixelsSRGB[colorAddr + 2] = color_white
             pixelsSRGB[colorAddr + 3] = color_white
@@ -400,6 +400,10 @@ class HiRes: NSView {
             if (colorAddr >= 2) && (prev == 7) {
                 pixelsSRGB[colorAddr - 1] = color_black
             }
+            // blue adjustment
+            if (colorAddr >= 2) && (prev == 5) {
+                pixelsSRGB[colorAddr - 1] = color_black
+            }
 
         case 4: // 0x00 (black 1), 0x04 (black 2)
             pixelsSRGB[colorAddr + 1] = color_black
@@ -407,11 +411,15 @@ class HiRes: NSView {
             pixelsSRGB[colorAddr + 3] = color_black
             pixelsSRGB[colorAddr + 4] = color_black
 
+            // white adjustment
             if (colorAddr >= 2) && (prev == 7) {
                 pixelsSRGB[colorAddr - 0] = color_black
             }
+            // blue adjustment
             if (colorAddr >= 2) && (prev == 5) {
                 pixelsSRGB[colorAddr - 0] = color_black
+                pixelsSRGB[colorAddr - 1] = color_black
+//                pixelsSRGB[colorAddr - 2] = color_black // if i put that in there is ladder on Donkey Kong is too thin
             }
 
         default:

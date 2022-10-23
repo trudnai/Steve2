@@ -314,7 +314,49 @@ INLINE int is_io_interesting( uint16_t addr ) {
 }
 
 
-INLINE uint8_t kbdRead() {
+const int pasteBufferSize = 100;
+int pasteBufferIdx = 0;
+uint8_t pasteBuffer[pasteBufferSize];
+
+
+uint8_t kbdCodeConvert( uint8_t code ) {
+    //    printf("kbdInput: %02X ('%c')\n", code, isprint(code) ? code : ' ');
+    switch ( code ) {
+        case '\n':
+            code = 0x0D;
+            break;
+
+        case 0x7F: // BackSpace
+            code = 0x08;
+            break;
+
+        default:
+            break;
+    }
+
+    // mark as valie keyboard input
+    code |= 1<<7;
+
+    return code;
+}
+
+
+void kbdClearPasteBuffer(void) {
+    pasteBufferIdx = 0;
+}
+
+
+void kbdPaste ( uint8_t code ) {
+    while (pasteBufferIdx >= pasteBufferSize) {
+        usleep(100);
+    }
+
+    pasteBuffer[pasteBufferIdx++] = code;
+}
+
+
+uint8_t pasted = 0;
+INLINE uint8_t kbdRead(void) {
 //    if ( cpuMode == cpuMode_eco ) {
         // check if this is a busy keyboard poll (aka waiting for user input)
 //        if ( IOframe < 16 ) {
@@ -322,21 +364,41 @@ INLINE uint8_t kbdRead() {
 //            cpuState = cpuState_halting;
 //        }
 //    }
-    
+
+    // check pasted buffer
+    if ( pasted ) {
+        pasted--;
+    }
+    // check paste buffer
+    else if (pasteBufferIdx) {
+        if ( Apple2_64K_RAM[io_KBD] < 0x80 ) {
+            kbdInput(pasteBuffer[0]);
+//            memcpy(pasteBuffer, pasteBuffer + 1, pasteBufferSize -1);
+            for (int i = 0; i < pasteBufferSize - 1; i++) {
+                pasteBuffer[i] = pasteBuffer[i+1];
+            }
+            pasteBufferIdx--;
+            // delay keyboard input to avoid weird character loss (KBDSTRB called many times for example when RETURN pressed)
+            pasted = 10;
+            // to make paste even faster
+            disk_accelerator_speedup();
+        }
+    }
+
     // we have to return keybard not only for $C000 but for ports all the way till $C00F
     return Apple2_64K_RAM[io_KBD];
 }
 
 
-INLINE uint8_t kbdStrobe() {
+INLINE uint8_t kbdStrobe(void) {
     Apple2_64K_RAM[io_KBD] &= ~(1 << 7);
-    
+
 //    if ( cpuMode == cpuMode_eco ) {
 //        // check if this is a busy keyboard poll (aka waiting for user input)
 //        clk_6502_per_frm_max = clk_6502_per_frm; // Absolute low mode
 //        cpuState = cpuState_halting; // cpuState_running;
 //    }
-    
+
     return Apple2_64K_RAM[io_KBDSTRB];
 }
 
@@ -1567,45 +1629,22 @@ void setMEMarray ( uint16_t addr, uint8_t * arr, int len ) {
 }
 
 void kbdInput ( uint8_t code ) {
-    //    printf("kbdInput: %02X ('%c')\n", code, isprint(code) ? code : ' ');
-    switch ( code ) {
-        case '\n':
-            code = 0x0D;
-            break;
-            
-        case 0x7F: // BackSpace
-            code = 0x08;
-            break;
-            
-        default:
-            break;
-    }
-    
-    code |= 1<<7;
-
-    // wait for previous key read out from the latch
-    // Note: timeout with linearly increasing sleep
-    if( RAM[io_KBD] > 0x7F ) {
-        for( int i = 1; i < 10000 && ( RAM[io_KBD] > 0x7F ); i++ ) {
-            usleep( 100 );
-        }
-        usleep( 250 );
-    }
+    code = kbdCodeConvert(code);
 
     for (int i = 0; i <= 0xF; i++) {
-        RAM[io_KBD + i] = code;
+        Apple2_64K_RAM[io_KBD + i] = code;
         // most significant bit is a status bit of other things
-        RAM[io_KBDSTRB + i] = (RAM[io_KBDSTRB + i] & (1<<7)) | (code & ~(1<<7));
+        Apple2_64K_RAM[io_KBDSTRB + i] = (Apple2_64K_RAM[io_KBDSTRB + i] & (1<<7)) | (code & ~(1<<7));
     }
     
-    // mark key pressed
-    RAM[io_KBDSTRB] |= 1<<7;
+//    // mark key pressed
+//    Apple2_64K_RAM[io_KBDSTRB] |= 1<<7;
 }
 
 
 void kbdUp () {
     // mark key depressed
-    RAM[io_KBDSTRB] &= 0x7F;
+    Apple2_64K_RAM[io_KBDSTRB] &= 0x7F;
 }
 
 #endif

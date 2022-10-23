@@ -485,8 +485,8 @@ class ViewController: NSViewController  {
                 for char in str.uppercased() {
                     if let ascii = char.asciiValue {
                         // TODO: Write separate Paste Accelerator
-                        disk_accelerator_speedup()
-                        kbdInput(ascii)
+//                        disk_accelerator_speedup()
+                        kbdPaste(ascii)
                     }
                 }
             }

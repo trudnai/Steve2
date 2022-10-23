@@ -81,6 +81,7 @@ extern MEMcfg_t MEMcfg;
 extern MEMcfg_t newMEMcfg;
 
 extern void kbdInput ( uint8_t code );
+extern void kbdPaste ( uint8_t code );
 extern void kbdUp (void);
 extern uint8_t getIO ( uint16_t ioaddr );
 extern void setIO ( uint16_t ioaddr, uint8_t val );

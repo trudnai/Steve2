@@ -128,10 +128,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             let storyboard = NSStoryboard(name: NSStoryboard.Name("Preferences"), bundle: nil)
             preferencesController = storyboard.instantiateInitialController() as? PreferencesWindowController
         }
-        
-        if ( preferencesController != nil ) {
-            preferencesController?.showWindow(sender)
-        }
+
+//        let debuggerStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Debugger"), bundle: nil)
+//        let debuggerControler = debuggerStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("debuggerWindowController")) as! NSWindowController
+//        debuggerControler.showWindow(self)
     }
     
     @IBAction func PowerOn(_ sender: Any) {

@@ -163,6 +163,14 @@
 		32799FD4264B1A5700255669 /* doc.on.clipboard.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32E3127224AC0AC400E61891 /* doc.on.clipboard.png */; };
 		32799FD5264B1A5700255669 /* dotmatrix_effect.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04432490B3930086A901 /* dotmatrix_effect.png */; };
 		32799FD6264B1A5700255669 /* scanlines.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04452490BA1E0086A901 /* scanlines.png */; };
+		327B75C0290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75C1290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75C2290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75C3290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75D729064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
+		327B75D829064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
+		327B75D929064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
+		327B75DA29064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
 		32877F8D24ADA6AF003A940D /* joystick.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32877F8C24ADA6AF003A940D /* joystick.png */; };
 		3296223224A6622C002DEB78 /* apple_original_logo_design.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 3296223124A6622C002DEB78 /* apple_original_logo_design.png */; };
 		3296223524A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */; };
@@ -668,6 +676,8 @@
 		3277D7A2273C603600749544 /* DisplayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayScrollView.swift; sourceTree = "<group>"; };
 		32799FDA264B1A5700255669 /* Steve ][ Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][ Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32799FDB264B1A5700255669 /* Steve ][ copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Steve ][ copy-Info.plist"; path = "/Users/trudnai/Dropbox/Projects/A2Mac/Steve ][ copy-Info.plist"; sourceTree = "<absolute>"; };
+		327B75BF290645EC00A86A71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Debugger.storyboard; sourceTree = "<group>"; };
+		327B75D629064FDC00A86A71 /* DebuggerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebuggerViewController.swift; sourceTree = "<group>"; };
 		32877F8C24ADA6AF003A940D /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
 		3296223124A6622C002DEB78 /* apple_original_logo_design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple_original_logo_design.png; sourceTree = "<group>"; };
 		3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_motor_w_floppy.sfx; sourceTree = "<group>"; };
@@ -1144,6 +1154,7 @@
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
 				32C6995127C5439300D0F25D /* Debugger.swift */,
 				323D042F24898AB70086A901 /* PreferencesViewController.swift */,
+				327B75D629064FDC00A86A71 /* DebuggerViewController.swift */,
 				323D04312489BFD80086A901 /* PreferencesWindowController.swift */,
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,
 				32C4532D233345420000EBA1 /* MonitorView.swift */,
@@ -1153,6 +1164,7 @@
 				32DBF7632334657900DD50E7 /* HiRes.swift */,
 				32EDB7A123272CA80073AF2D /* fail1.txt */,
 				32BFFB6022EACC660003B53F /* Main.storyboard */,
+				327B75BE290645EC00A86A71 /* Debugger.storyboard */,
 				321D9BDB287373000036E22F /* Main_copy.storyboard */,
 				323D042D248980600086A901 /* Preferences.storyboard */,
 				32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */,
@@ -1502,6 +1514,7 @@
 				3268B99227DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
 				32799F90264B1A5700255669 /* Preferences.storyboard in Resources */,
 				32799F91264B1A5700255669 /* Steve2Icon.icns in Resources */,
+				327B75C1290645EC00A86A71 /* Debugger.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1516,6 +1529,7 @@
 				3268B99127DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
 				320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */,
+				327B75C0290645EC00A86A71 /* Debugger.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1523,6 +1537,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				327B75C2290645EC00A86A71 /* Debugger.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1530,6 +1545,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				327B75C3290645EC00A86A71 /* Debugger.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1621,6 +1637,7 @@
 				32799F86264B1A5700255669 /* HiRes.swift in Sources */,
 				32799F87264B1A5700255669 /* LoRes.swift in Sources */,
 				32C6995327C5439300D0F25D /* Debugger.swift in Sources */,
+				327B75D829064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
 				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
 				32799F8A264B1A5700255669 /* MonitorView.swift in Sources */,
@@ -1656,6 +1673,7 @@
 				32C6995227C5439300D0F25D /* Debugger.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
 				32A6AAF0266AEDF40023257A /* mmio.c in Sources */,
+				327B75D729064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
 				3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */,
 				32A6AB1B266B19680023257A /* hires.c in Sources */,
@@ -1667,6 +1685,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BFFB6E22EACC660003B53F /* A2MacTests.swift in Sources */,
+				327B75D929064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1675,6 +1694,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BFFB7922EACC660003B53F /* A2MacUITests.swift in Sources */,
+				327B75DA29064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1756,6 +1776,14 @@
 				325EB64E23FBBAD100C6B4A4 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		327B75BE290645EC00A86A71 /* Debugger.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				327B75BF290645EC00A86A71 /* Base */,
+			);
+			name = Debugger.storyboard;
 			sourceTree = "<group>";
 		};
 		32BFFB6022EACC660003B53F /* Main.storyboard */ = {

@@ -105,7 +105,13 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     func windowWillExitFullScreen(_ notification: Notification) {
         setDisplayWindowed()
     }
-    
+
+
+    let offLabel = "Off\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}"
+    let pauseLabel = "Pause\u{A0}\u{A0}\u{A0}"
+    let resumeLabel = "Resume"
+
+
     override func windowDidLoad() {
         let isWindowFullscreen = window?.styleMask.contains(.fullSizeContentView) ?? false
         if isWindowFullscreen {
@@ -114,7 +120,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
         
         PauseToolbarItem.isEnabled = false;
         PauseButton.state = .off
-        PauseToolbarItem.label = "Off"
+        PauseToolbarItem.label = offLabel
     }
         
     @IBAction func PowerOn(_ sender: Any) {
@@ -122,14 +128,14 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
         case cpuState_inited, cpuState_unknown:
             PauseToolbarItem.isEnabled = true;
             PauseButton.state = .on
-            PauseToolbarItem.label = "Pause"
+            PauseToolbarItem.label = pauseLabel
             
             ViewController.current?.PowerOn(sender)
 
         default:
             PauseToolbarItem.isEnabled = false;
             PauseButton.state = .off
-            PauseToolbarItem.label = "Off"
+            PauseToolbarItem.label = offLabel
             
             ViewController.current?.PowerOff(sender)
         }
@@ -141,18 +147,18 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
         switch cpuState {
         case cpuState_halted:
             PauseButton.state = .on
-            PauseToolbarItem.label = "Pause"
+            PauseToolbarItem.label = pauseLabel
             ViewController.current?.Pause(sender)
 
         case cpuState_running:
             PauseButton.state = .off
-            PauseToolbarItem.label = "Resume"
+            PauseToolbarItem.label = resumeLabel
             ViewController.current?.Pause(sender)
             
         default:
             PauseToolbarItem.isEnabled = false;
             PauseButton.state = .off
-            PauseToolbarItem.label = "Off"
+            PauseToolbarItem.label = offLabel
             break
         }
         

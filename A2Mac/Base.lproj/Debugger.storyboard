@@ -385,7 +385,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <textField identifier="Display Background" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7g-L7-qJA" userLabel="Background Color">
-                                <rect key="frame" x="0.0" y="0.0" width="776" height="800"/>
+                                <rect key="frame" x="0.0" y="0.0" width="738" height="800"/>
                                 <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" focusRingType="none" baseWritingDirection="leftToRight" drawsBackground="YES" id="luF-8X-8lL">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" red="0.078431372550000003" green="0.10980392160000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -396,17 +396,17 @@
                                 </textFieldCell>
                             </textField>
                             <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Scroll View - Display View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="16" width="792" height="768"/>
+                                <rect key="frame" x="0.0" y="16" width="754" height="768"/>
                                 <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9iz-cs-4As">
-                                    <rect key="frame" x="0.0" y="0.0" width="792" height="768"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="754" height="768"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="267" width="792" height="768"/>
+                                            <rect key="frame" x="0.0" y="267" width="754" height="768"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <size key="minSize" width="792" height="768"/>
+                                            <size key="minSize" width="754" height="768"/>
                                             <size key="maxSize" width="3840" height="58101"/>
                                             <attributedString key="textStorage">
                                                 <fragment>
@@ -436,78 +436,274 @@
                                 </scroller>
                             </scrollView>
                             <customView hidden="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tUb-nQ-RcC" userLabel="LoRes" customClass="LoRes" customModule="A2MacTests" customModuleProvider="target">
-                                <rect key="frame" x="5" y="16" width="782" height="768"/>
+                                <rect key="frame" x="5" y="16" width="744" height="768"/>
                             </customView>
                             <customView hidden="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Zq0-2c-Rq7" userLabel="HiRes" customClass="HiRes" customModule="A2MacTests" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="16" width="792" height="768"/>
+                                <rect key="frame" x="0.0" y="16" width="754" height="768"/>
                             </customView>
                             <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Fnv-hb-dxd" userLabel="ScanLines">
-                                <rect key="frame" x="0.0" y="16" width="792" height="768"/>
+                                <rect key="frame" x="0.0" y="16" width="754" height="768"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="axesIndependently" image="scanlines" id="zzj-a1-eYf"/>
                             </imageView>
                             <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" alphaValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="bAH-rz-vVg" userLabel="DotmatrixEffect">
-                                <rect key="frame" x="5" y="16" width="782" height="768"/>
+                                <rect key="frame" x="5" y="16" width="744" height="768"/>
                                 <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="axesIndependently" image="dotmatrix_effect" id="Em8-MO-YvM"/>
                             </imageView>
                             <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Side Panel">
-                                <rect key="frame" x="784" y="8" width="496" height="784"/>
+                                <rect key="frame" x="746" y="8" width="534" height="784"/>
                                 <subviews>
-                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="-20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
-                                        <rect key="frame" x="0.0" y="584" width="496" height="200"/>
+                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
+                                        <rect key="frame" x="0.0" y="72" width="534" height="712"/>
                                         <subviews>
-                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="9iv-ei-1ZP" userLabel="Scroll View - Display View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="496" height="200"/>
-                                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="6Nu-3U-YdZ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="496" height="200"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                    <subviews>
-                                                        <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="R7P-cc-Dgl" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="66" width="496" height="464"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <size key="minSize" width="496" height="200"/>
-                                                            <size key="maxSize" width="3840" height="58101"/>
-                                                            <attributedString key="textStorage">
-                                                                <fragment>
-                                                                    <mutableString key="content">01234567890123456789012345678901234567891@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@3@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@4@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@5@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@6@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@7@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@8@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@9@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@10@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@11@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@12@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@13@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@14@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@15@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@16@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@17@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@18@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@19@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@20@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@21@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@22@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@23@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</mutableString>
-                                                                    <attributes>
-                                                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                        <font key="NSFont" size="16" name="PrintChar21"/>
-                                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" tighteningFactorForTruncation="0.0"/>
-                                                                    </attributes>
-                                                                </fragment>
-                                                            </attributedString>
-                                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                        </textView>
-                                                    </subviews>
-                                                </clipView>
+                                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="9" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
+                                                <rect key="frame" x="0.0" y="527" width="534" height="185"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKO-8T-LZ7">
+                                                        <rect key="frame" x="4" y="169" width="532" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="16" id="kwa-Y6-h52"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="CPU: 6502" id="B1S-HT-k8a">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Z1-95-RLw" userLabel="CPU" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="534" height="160"/>
+                                                        <clipView key="contentView" copiesOnScroll="NO" id="tqk-6Q-HpG">
+                                                            <rect key="frame" x="1" y="1" width="532" height="158"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Wrs-Qt-Kmd" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="52" width="532" height="158"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <size key="minSize" width="532" height="158"/>
+                                                                    <size key="maxSize" width="3840" height="58101"/>
+                                                                    <attributedString key="textStorage">
+                                                                        <fragment content="A:A0   160   1010 0000 X:01     1   0000 0001 Y:10    16   0001 0000  SP:F0 PC:FD18  N V - B D I Z C 0 0 1 0 0 1 1 0">
+                                                                            <attributes>
+                                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                                                            </attributes>
+                                                                        </fragment>
+                                                                    </attributedString>
+                                                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                </textView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </clipView>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="160" id="SX5-Sa-JJZ"/>
+                                                        </constraints>
+                                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ZRA-0X-qL7">
+                                                            <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="OYf-lc-jhd">
+                                                            <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                    </scrollView>
+                                                </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="200" id="3xW-DE-PmR"/>
+                                                    <constraint firstItem="XKO-8T-LZ7" firstAttribute="top" secondItem="Crh-BM-MCy" secondAttribute="top" id="QMW-GI-j1g"/>
+                                                    <constraint firstItem="XKO-8T-LZ7" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" constant="6" id="SqI-vz-Ayj"/>
+                                                    <constraint firstItem="9Z1-95-RLw" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" id="Y46-UQ-uKd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="9Z1-95-RLw" secondAttribute="trailing" id="YhB-6g-e4y"/>
+                                                    <constraint firstAttribute="trailing" secondItem="XKO-8T-LZ7" secondAttribute="trailing" id="ndK-yc-rrg"/>
                                                 </constraints>
-                                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="gqM-Xq-POI">
-                                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </scroller>
-                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="pIc-oR-wgR">
-                                                    <rect key="frame" x="-100" y="-100" width="15" height="135"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </scroller>
-                                            </scrollView>
+                                                <visibilityPriorities>
+                                                    <integer value="1000"/>
+                                                    <integer value="1000"/>
+                                                </visibilityPriorities>
+                                                <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                </customSpacing>
+                                            </stackView>
+                                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="9" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkP-fH-zDU">
+                                                <rect key="frame" x="0.0" y="322" width="534" height="185"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ugZ-j3-huv">
+                                                        <rect key="frame" x="4" y="169" width="532" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="16" id="OVy-Wd-oXn"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Stack" id="wrU-aU-GPZ">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="534" height="160"/>
+                                                        <clipView key="contentView" copiesOnScroll="NO" id="Fuu-ZX-arY">
+                                                            <rect key="frame" x="1" y="1" width="532" height="158"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="52" width="532" height="281"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <size key="minSize" width="532" height="158"/>
+                                                                    <size key="maxSize" width="3840" height="58101"/>
+                                                                    <attributedString key="textStorage">
+                                                                        <fragment>
+                                                                            <mutableString key="content">   0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F 0 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 1 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 3 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 5 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 6 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 7 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 8 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 9 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 A 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 B 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 C 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 D 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 E 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 F 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</mutableString>
+                                                                            <attributes>
+                                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                                                            </attributes>
+                                                                        </fragment>
+                                                                    </attributedString>
+                                                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                </textView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </clipView>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="160" id="wPj-Ga-QuT"/>
+                                                        </constraints>
+                                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="uYL-9G-QAi">
+                                                            <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="dcm-z5-VNG">
+                                                            <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                    </scrollView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="ugZ-j3-huv" firstAttribute="leading" secondItem="tkP-fH-zDU" secondAttribute="leading" constant="6" id="1Wz-Ok-FTm"/>
+                                                    <constraint firstAttribute="trailing" secondItem="YLL-6E-LGQ" secondAttribute="trailing" id="EEv-Kd-YNU"/>
+                                                    <constraint firstItem="YLL-6E-LGQ" firstAttribute="leading" secondItem="tkP-fH-zDU" secondAttribute="leading" id="HIC-KZ-1CC"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ugZ-j3-huv" secondAttribute="trailing" id="xA2-eT-csP"/>
+                                                </constraints>
+                                                <visibilityPriorities>
+                                                    <integer value="1000"/>
+                                                    <integer value="1000"/>
+                                                </visibilityPriorities>
+                                                <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                </customSpacing>
+                                            </stackView>
+                                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="9" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
+                                                <rect key="frame" x="0.0" y="0.0" width="534" height="302"/>
+                                                <subviews>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="08L-qW-l2D" userLabel="Memory1">
+                                                        <rect key="frame" x="4" y="286" width="80" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="16" id="gj1-T9-yAz"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Mem 1" id="3Un-jU-O0b">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="I">
+                                                        <rect key="frame" x="80" y="283" width="456" height="16"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="452" id="9Bo-rj-pCo"/>
+                                                            <constraint firstAttribute="height" constant="16" id="cbC-f3-JsA"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F" id="ECg-7L-hRs">
+                                                            <font key="font" size="11" name="PrintChar21"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="534" height="274"/>
+                                                        <clipView key="contentView" copiesOnScroll="NO" id="Jy3-yS-sE4">
+                                                            <rect key="frame" x="1" y="1" width="532" height="272"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <subviews>
+                                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="qqp-t0-j4i" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="89" width="532" height="272"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <size key="minSize" width="532" height="272"/>
+                                                                    <size key="maxSize" width="3840" height="58101"/>
+                                                                    <attributedString key="textStorage">
+                                                                        <fragment>
+                                                                            <mutableString key="content">2000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20A0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20B0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20C0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20D0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20E0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 20F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</mutableString>
+                                                                            <attributes>
+                                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                                                            </attributes>
+                                                                        </fragment>
+                                                                    </attributedString>
+                                                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                </textView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
+                                                        </clipView>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="274" id="6Ya-GA-z0A"/>
+                                                        </constraints>
+                                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="5vz-OF-VRE">
+                                                            <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="z8t-Mj-Ja9">
+                                                            <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </scroller>
+                                                    </scrollView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="DiM-zp-wCg" firstAttribute="firstBaseline" secondItem="08L-qW-l2D" secondAttribute="firstBaseline" id="1MC-PZ-0uD"/>
+                                                    <constraint firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="trailing" id="7b8-T1-ViL"/>
+                                                    <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" id="CnA-zf-PRO"/>
+                                                    <constraint firstItem="dzC-sA-aHa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="Ze8-Ir-2gQ"/>
+                                                    <constraint firstItem="08L-qW-l2D" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="6" id="kxm-zh-cum"/>
+                                                    <constraint firstItem="DiM-zp-wCg" firstAttribute="leading" secondItem="08L-qW-l2D" secondAttribute="trailing" id="zxO-h0-wFG"/>
+                                                </constraints>
+                                                <visibilityPriorities>
+                                                    <integer value="1000"/>
+                                                    <integer value="1000"/>
+                                                    <integer value="1000"/>
+                                                </visibilityPriorities>
+                                                <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                    <real value="3.4028234663852886e+38"/>
+                                                </customSpacing>
+                                            </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="9iv-ei-1ZP" secondAttribute="trailing" id="0KV-qM-rxR"/>
-                                            <constraint firstItem="9iv-ei-1ZP" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="scS-WI-cOV"/>
+                                            <constraint firstItem="Crh-BM-MCy" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="9Dc-Z6-Lkx"/>
+                                            <constraint firstItem="tkP-fH-zDU" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="DGE-vd-lsL"/>
+                                            <constraint firstItem="Crh-BM-MCy" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" id="Dfe-hd-Ksp"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZWI-gS-oPs" secondAttribute="trailing" id="pgn-YI-oKb"/>
+                                            <constraint firstItem="ZWI-gS-oPs" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="sPE-Nn-wNX"/>
+                                            <constraint firstAttribute="trailing" secondItem="Crh-BM-MCy" secondAttribute="trailing" id="u9T-tw-QCO"/>
+                                            <constraint firstAttribute="trailing" secondItem="tkP-fH-zDU" secondAttribute="trailing" id="xOH-fK-HBj"/>
                                         </constraints>
                                         <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
                                             <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
                                             <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQ2-04-lPn" userLabel="Bottom Selection">
-                                        <rect key="frame" x="8" y="8" width="480" height="57"/>
+                                        <rect key="frame" x="8" y="8" width="518" height="57"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HN2-Eb-6Ht">
                                                 <rect key="frame" x="-2" y="41" width="56" height="18"/>
@@ -670,7 +866,7 @@
                             <constraint firstItem="Zq0-2c-Rq7" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="NKv-Zw-C9B"/>
                             <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="8" id="OaJ-lc-b0j"/>
                             <constraint firstItem="Pcn-4j-EEM" firstAttribute="trailing" secondItem="s7g-L7-qJA" secondAttribute="trailing" constant="16" identifier="Display Margin Trailing" id="T76-JP-7lQ"/>
-                            <constraint firstAttribute="trailing" secondItem="s7g-L7-qJA" secondAttribute="trailing" constant="512" identifier="Display Background Trailing" id="Xv8-db-uje"/>
+                            <constraint firstAttribute="trailing" secondItem="s7g-L7-qJA" secondAttribute="trailing" constant="550" identifier="Display Background Trailing" id="Xv8-db-uje"/>
                             <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="8" id="Y4T-sR-Hag"/>
                             <constraint firstItem="tUb-nQ-RcC" firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" constant="-5" id="cEm-NJ-RNR"/>
                             <constraint firstItem="s7g-L7-qJA" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" identifier="Display Background Top" id="dTj-1D-mCu"/>

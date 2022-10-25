@@ -378,37 +378,40 @@
         <scene sceneID="TCG-Cv-QBI">
             <objects>
                 <viewController title="Debugger Controller Scene" id="R5e-co-cXs" customClass="DebuggerViewController" customModule="A2MacTests" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" identifier="Monitor View" wantsLayer="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" id="Myj-W6-YvY" customClass="MonitorView" customModule="A2MacTests" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="1100" height="600"/>
+                    <view key="view" identifier="Monitor View" wantsLayer="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" misplaced="YES" id="Myj-W6-YvY" customClass="MonitorView" customModule="A2MacTests" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="622"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <textField identifier="Display Background" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" mirrorLayoutDirectionWhenInternationalizing="never" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s7g-L7-qJA" userLabel="Background Color">
-                                <rect key="frame" x="0.0" y="0.0" width="374" height="600"/>
-                                <textFieldCell key="cell" lineBreakMode="truncatingTail" enabled="NO" refusesFirstResponder="YES" allowsUndo="NO" sendsActionOnEndEditing="YES" state="on" focusRingType="none" baseWritingDirection="leftToRight" drawsBackground="YES" id="luF-8X-8lL">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" red="0.078431372550000003" green="0.10980392160000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <color key="backgroundColor" red="0.078431372550000003" green="0.10980392160000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <allowedInputSourceLocales>
-                                        <string>NSAllRomanInputSourcesLocaleIdentifier</string>
-                                    </allowedInputSourceLocales>
-                                </textFieldCell>
-                            </textField>
-                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="none" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Scroll View - Display View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="16" width="382" height="568"/>
-                                <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9iz-cs-4As">
-                                    <rect key="frame" x="0.0" y="0.0" width="382" height="568"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="172" width="382" height="1270"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                            <size key="minSize" width="382" height="568"/>
-                                            <size key="maxSize" width="3840" height="58101"/>
-                                            <attributedString key="textStorage">
-                                                <fragment>
-                                                    <mutableString key="content">FA62: D8         CLD
+                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
+                                <rect key="frame" x="8" y="10" width="290" height="600"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M3T-0I-hdp">
+                                        <rect key="frame" x="-2" y="584" width="81" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="16" id="Nho-aF-T9F"/>
+                                        </constraints>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Disassembly" id="g1c-cQ-eDu">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Scroll View - Display View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="290" height="576"/>
+                                        <clipView key="contentView" copiesOnScroll="NO" id="9iz-cs-4As">
+                                            <rect key="frame" x="1" y="1" width="288" height="574"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="173" width="288" height="1271"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <size key="minSize" width="288" height="574"/>
+                                                    <size key="maxSize" width="3840" height="58101"/>
+                                                    <attributedString key="textStorage">
+                                                        <fragment>
+                                                            <mutableString key="content">FA62: D8         CLD
 FA63: 20 84 FE   JSR $FE84
 FE84: A0 FF      LDY #$FF
 FE86: 84 32      STY $32
@@ -484,65 +487,67 @@ C20A: 28         PLP
 C20B: 30 03      BMI $C210
 C20D: 4C C5 FE   JMP $FEC5
 </mutableString>
-                                                    <attributes>
-                                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                        <font key="NSFont" size="11" name="PrintChar21"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                                <fragment content="FEC5: 8D 06 C0   STA $C006">
-                                                    <attributes>
-                                                        <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                        <font key="NSFont" size="11" name="PrintChar21"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
-                                            <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                        </textView>
-                                    </subviews>
-                                </clipView>
+                                                            <attributes>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content="FEC5: 8D 06 C0   STA $C006">
+                                                            <attributes>
+                                                                <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                </textView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                                        </clipView>
+                                        <constraints>
+                                            <constraint firstAttribute="width" priority="100" constant="200" id="fYt-BF-DLx"/>
+                                        </constraints>
+                                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="hWJ-vf-oXk">
+                                            <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
+                                            <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
+                                    </scrollView>
+                                </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="width" priority="100" constant="200" id="fYt-BF-DLx"/>
-                                    <constraint firstAttribute="height" priority="100" constant="768" id="p09-8p-4Bg"/>
+                                    <constraint firstAttribute="height" constant="600" id="32e-qn-VpW"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" id="9dB-f0-xxS"/>
+                                    <constraint firstItem="Pcn-4j-EEM" firstAttribute="leading" secondItem="jY7-ZU-I4z" secondAttribute="leading" id="SAn-3M-8BI"/>
+                                    <constraint firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="qhK-AR-32Y"/>
                                 </constraints>
-                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="hWJ-vf-oXk">
-                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
-                                    <rect key="frame" x="-100" y="-100" width="15" height="135"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </scroller>
-                            </scrollView>
-                            <customView hidden="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="tUb-nQ-RcC" userLabel="LoRes" customClass="LoRes" customModule="A2MacTests" customModuleProvider="target">
-                                <rect key="frame" x="5" y="16" width="372" height="568"/>
-                            </customView>
-                            <customView hidden="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Zq0-2c-Rq7" userLabel="HiRes" customClass="HiRes" customModule="A2MacTests" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="16" width="382" height="568"/>
-                            </customView>
-                            <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Fnv-hb-dxd" userLabel="ScanLines">
-                                <rect key="frame" x="0.0" y="16" width="382" height="568"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="axesIndependently" image="scanlines" id="zzj-a1-eYf"/>
-                            </imageView>
-                            <imageView hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" alphaValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="bAH-rz-vVg" userLabel="DotmatrixEffect">
-                                <rect key="frame" x="5" y="16" width="372" height="568"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" focusRingType="none" alignment="left" imageScaling="axesIndependently" image="dotmatrix_effect" id="Em8-MO-YvM"/>
-                            </imageView>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
                             <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Side Panel">
-                                <rect key="frame" x="382" y="8" width="710" height="584"/>
+                                <rect key="frame" x="306" y="12" width="710" height="598"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
-                                        <rect key="frame" x="0.0" y="55" width="710" height="529"/>
+                                        <rect key="frame" x="0.0" y="72" width="710" height="526"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvo-4B-v1R" userLabel="CPU Stack View">
-                                                <rect key="frame" x="0.0" y="344" width="710" height="185"/>
+                                                <rect key="frame" x="0.0" y="342" width="710" height="184"/>
                                                 <subviews>
-                                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="9" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="351" height="185"/>
+                                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
+                                                        <rect key="frame" x="0.0" y="0.0" width="351" height="184"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKO-8T-LZ7">
-                                                                <rect key="frame" x="4" y="169" width="349" height="16"/>
+                                                                <rect key="frame" x="4" y="168" width="349" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="kwa-Y6-h52"/>
                                                                 </constraints>
@@ -608,11 +613,11 @@ C20D: 4C C5 FE   JMP $FEC5
                                                             <real value="3.4028234663852886e+38"/>
                                                         </customSpacing>
                                                     </stackView>
-                                                    <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="9" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkP-fH-zDU">
-                                                        <rect key="frame" x="359" y="0.0" width="351" height="185"/>
+                                                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkP-fH-zDU">
+                                                        <rect key="frame" x="359" y="0.0" width="351" height="184"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ugZ-j3-huv">
-                                                                <rect key="frame" x="4" y="169" width="349" height="16"/>
+                                                                <rect key="frame" x="4" y="168" width="349" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="OVy-Wd-oXn"/>
                                                                 </constraints>
@@ -697,11 +702,11 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     <real value="3.4028234663852886e+38"/>
                                                 </customSpacing>
                                             </stackView>
-                                            <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="9" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
-                                                <rect key="frame" x="0.0" y="0.0" width="710" height="324"/>
+                                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
+                                                <rect key="frame" x="0.0" y="0.0" width="710" height="322"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="08L-qW-l2D" userLabel="Memory1">
-                                                        <rect key="frame" x="4" y="308" width="44" height="16"/>
+                                                        <rect key="frame" x="4" y="306" width="44" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="gj1-T9-yAz"/>
                                                         </constraints>
@@ -712,7 +717,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="I">
-                                                        <rect key="frame" x="78" y="283" width="634" height="16"/>
+                                                        <rect key="frame" x="78" y="282" width="634" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="cbC-f3-JsA"/>
                                                         </constraints>
@@ -950,33 +955,13 @@ C20D: 4C C5 FE   JMP $FEC5
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="Zq0-2c-Rq7" firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" id="26v-gq-VHk"/>
-                            <constraint firstItem="bAH-rz-vVg" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="4GY-bA-Fbz"/>
-                            <constraint firstItem="Pcn-4j-EEM" firstAttribute="bottom" secondItem="s7g-L7-qJA" secondAttribute="bottom" constant="-16" identifier="Display Margin Bottom" id="4gy-Ii-t7V"/>
-                            <constraint firstItem="Fnv-hb-dxd" firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" id="7at-Yy-lUX"/>
-                            <constraint firstItem="tUb-nQ-RcC" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="7tq-Lc-LGt"/>
-                            <constraint firstAttribute="bottom" secondItem="s7g-L7-qJA" secondAttribute="bottom" identifier="Display Background Bottom" id="Dfk-bJ-keb"/>
-                            <constraint firstItem="Zq0-2c-Rq7" firstAttribute="leading" secondItem="Pcn-4j-EEM" secondAttribute="leading" id="EWV-Yr-DmY"/>
-                            <constraint firstItem="Zq0-2c-Rq7" firstAttribute="top" secondItem="Pcn-4j-EEM" secondAttribute="top" id="FYC-bZ-LYt"/>
-                            <constraint firstItem="JUf-qx-iuW" firstAttribute="leading" secondItem="Pcn-4j-EEM" secondAttribute="trailing" id="HN1-a9-d4b"/>
-                            <constraint firstItem="bAH-rz-vVg" firstAttribute="top" secondItem="Pcn-4j-EEM" secondAttribute="top" id="IH1-W2-gDo"/>
-                            <constraint firstItem="Fnv-hb-dxd" firstAttribute="top" secondItem="Pcn-4j-EEM" secondAttribute="top" id="Ich-oV-4Z6"/>
-                            <constraint firstItem="Zq0-2c-Rq7" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="NKv-Zw-C9B"/>
-                            <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="8" id="OaJ-lc-b0j"/>
-                            <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="8" id="Y4T-sR-Hag"/>
-                            <constraint firstItem="tUb-nQ-RcC" firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" constant="-5" id="cEm-NJ-RNR"/>
-                            <constraint firstItem="s7g-L7-qJA" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" identifier="Display Background Top" id="dTj-1D-mCu"/>
-                            <constraint firstItem="Pcn-4j-EEM" firstAttribute="top" secondItem="s7g-L7-qJA" secondAttribute="top" constant="16" identifier="Display Margin Top" id="eer-op-pCt"/>
-                            <constraint firstItem="JUf-qx-iuW" firstAttribute="leading" secondItem="s7g-L7-qJA" secondAttribute="trailing" constant="8" id="f1C-UJ-Pbn"/>
-                            <constraint firstItem="Pcn-4j-EEM" firstAttribute="leading" secondItem="s7g-L7-qJA" secondAttribute="leading" identifier="Display Margin Leading" id="fRc-Ul-dE2"/>
-                            <constraint firstItem="Fnv-hb-dxd" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="hCC-qV-kIj"/>
-                            <constraint firstItem="Fnv-hb-dxd" firstAttribute="leading" secondItem="Pcn-4j-EEM" secondAttribute="leading" id="iV1-TH-OKu"/>
-                            <constraint firstItem="s7g-L7-qJA" firstAttribute="leading" secondItem="Myj-W6-YvY" secondAttribute="leading" identifier="Display Background Leading" id="jxu-fG-MeE"/>
+                            <constraint firstAttribute="bottom" secondItem="jY7-ZU-I4z" secondAttribute="bottom" constant="10" id="8jC-7G-Ofh"/>
+                            <constraint firstItem="JUf-qx-iuW" firstAttribute="leading" secondItem="jY7-ZU-I4z" secondAttribute="trailing" constant="8" id="ARC-gJ-JMB"/>
+                            <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" id="OaJ-lc-b0j"/>
+                            <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="12" id="Y4T-sR-Hag"/>
+                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" id="cCh-QQ-pyz"/>
+                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="leading" secondItem="Myj-W6-YvY" secondAttribute="leading" constant="8" id="gka-CA-9WG"/>
                             <constraint firstAttribute="trailing" secondItem="JUf-qx-iuW" secondAttribute="trailing" constant="8" id="kwa-ri-Rtq"/>
-                            <constraint firstItem="tUb-nQ-RcC" firstAttribute="top" secondItem="Pcn-4j-EEM" secondAttribute="top" id="lp0-5V-JHb"/>
-                            <constraint firstItem="bAH-rz-vVg" firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" constant="-5" id="oUE-Jv-xMY"/>
-                            <constraint firstItem="bAH-rz-vVg" firstAttribute="leading" secondItem="Pcn-4j-EEM" secondAttribute="leading" constant="5" id="v01-gV-aQp"/>
-                            <constraint firstItem="tUb-nQ-RcC" firstAttribute="leading" secondItem="Pcn-4j-EEM" secondAttribute="leading" constant="5" id="zlp-YO-3x0"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1000,7 +985,7 @@ C20D: 4C C5 FE   JMP $FEC5
                     <popUpButton key="view" id="wee-Ro-RWP">
                         <rect key="frame" x="0.0" y="14" width="43" height="30"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="popUpButtonCell:0qv-E9-TgB:image" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" selectedItem="nmF-Lh-lDV" id="ew6-Z3-VYc">
+                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Joystick" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" selectedItem="nmF-Lh-lDV" id="ew6-Z3-VYc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="menu"/>
                             <menu key="menu" id="92q-SB-kUO">
@@ -1039,7 +1024,6 @@ C20D: 4C C5 FE   JMP $FEC5
         <image name="NSTrashEmpty" width="32" height="32"/>
         <image name="Old Monitor" width="32" height="32"/>
         <image name="White" width="32" height="32"/>
-        <image name="dotmatrix_effect" width="268.79998779296875" height="184.32000732421875"/>
         <image name="popUpButtonCell:0qv-E9-TgB:image" width="1" height="1">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
@@ -1304,6 +1288,5 @@ KeYp+yoAKgQqBioIKgoqEyoYKh4qJiooKioqLCouO5o7nzusO687vDvBO8k7zDvRO9kAAAAAAAACAQAA
 AAAAAABnAAAAAAAAAAAAAAAAAAA73A
 </mutableData>
         </image>
-        <image name="scanlines" width="268.79998779296875" height="184.32000732421875"/>
     </resources>
 </document>

@@ -52,9 +52,10 @@ class MonitorView: NSView {
 
 //        textFrameSize.width -= textDisplay_width_diff!
 //        textFrameSize.height -= textDisplay_height_diff!
-        textFrameSize.width = scanlinesView.frame.size.width
-        textFrameSize.height = scanlinesView.frame.size.height
-
+        if let scanlinesView = scanlinesView {
+            textFrameSize.width = scanlinesView.frame.size.width
+            textFrameSize.height = scanlinesView.frame.size.height
+        }
 //        print( String(
 //            format: "MonitorView fw:%.2f fh:%.2f bw:%.2f bh:%.2f to fw:%.2f fh:%.2f bw:%.2f bh:%.2f",
 //            textDisplay.frame.size.width,
@@ -90,11 +91,13 @@ class MonitorView: NSView {
 
         // BUGFIX: I am not sure why but if I do not adjust the frame and bounds size
         //         couple of times, Cocoa miscalculates them
-        for _ in 0...15 {
-            textDisplay.setFrameSize(textFrameSize)
-//            textDisplay.setBoundsSize(MonitorView.textViewBounds)
-//            textDisplay.setFrameSize(scanlinesView.frame.size)
-            textDisplay.setBoundsSize(MonitorView.textViewBounds)
+        if let textDisplay = textDisplay {
+            for _ in 0...15 {
+                textDisplay.setFrameSize(textFrameSize)
+    //            textDisplay.setBoundsSize(MonitorView.textViewBounds)
+    //            textDisplay.setFrameSize(scanlinesView.frame.size)
+                textDisplay.setBoundsSize(MonitorView.textViewBounds)
+            }
         }
     }
     

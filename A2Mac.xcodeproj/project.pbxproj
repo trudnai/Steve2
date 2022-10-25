@@ -219,6 +219,9 @@
 		32C6995327C5439300D0F25D /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C6995127C5439300D0F25D /* Debugger.swift */; };
 		32C6995D27C548C800D0F25D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32B18435233F10BC00DBB4AB /* Shaders.metal */; };
 		32C6996727C548C900D0F25D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32B18435233F10BC00DBB4AB /* Shaders.metal */; };
+		32C8233A2908822E0018438F /* DebuggerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C823392908822E0018438F /* DebuggerWindowController.swift */; };
+		32C82356290888C50018438F /* DebuggerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C823392908822E0018438F /* DebuggerWindowController.swift */; };
+		32C82360290888D10018438F /* CheatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A8A2875387300D894EE /* CheatMenu.swift */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
@@ -730,6 +733,7 @@
 		32C4532C2331FEDA0000EBA1 /* A2Mac copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "A2Mac copy2-Info.plist"; path = "/Users/trudnai/Projects/A2Mac/A2Mac copy2-Info.plist"; sourceTree = "<absolute>"; };
 		32C4532D233345420000EBA1 /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
 		32C6995127C5439300D0F25D /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		32C823392908822E0018438F /* DebuggerWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebuggerWindowController.swift; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
 		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
@@ -1174,6 +1178,7 @@
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
 				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
 				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
+				32C823392908822E0018438F /* DebuggerWindowController.swift */,
 				3267641724BCC9A5000BEA11 /* COPYING */,
 				3277D7A2273C603600749544 /* DisplayScrollView.swift */,
 				3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */,
@@ -1620,6 +1625,7 @@
 			files = (
 				32799F7A264B1A5700255669 /* DisplayView.swift in Sources */,
 				32799F7B264B1A5700255669 /* AppDelegate.swift in Sources */,
+				32C82356290888C50018438F /* DebuggerWindowController.swift in Sources */,
 				32799F7C264B1A5700255669 /* ToolBarController.swift in Sources */,
 				32799F7D264B1A5700255669 /* PreferencesViewController.swift in Sources */,
 				32BCCCFC2650D275002151C5 /* 6502.c in Sources */,
@@ -1627,6 +1633,7 @@
 				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
 				32799F81264B1A5700255669 /* disk.c in Sources */,
 				3268B97B27DE7D6B003FBDCC /* disassembler.c in Sources */,
+				32C82360290888D10018438F /* CheatMenu.swift in Sources */,
 				32100AB52877AB8600D894EE /* scsi.c in Sources */,
 				32C6996727C548C900D0F25D /* Shaders.metal in Sources */,
 				32799F82264B1A5700255669 /* woz.c in Sources */,
@@ -1676,6 +1683,7 @@
 				327B75D729064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
 				3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */,
+				32C8233A2908822E0018438F /* DebuggerWindowController.swift in Sources */,
 				32A6AB1B266B19680023257A /* hires.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

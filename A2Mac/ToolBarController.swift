@@ -118,25 +118,37 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             window?.toggleFullScreen(self)
         }
         
-        PauseToolbarItem.isEnabled = false;
-        PauseButton.state = .off
-        PauseToolbarItem.label = offLabel
+        if let PauseToolbarItem = PauseToolbarItem {
+            PauseToolbarItem.isEnabled = false;
+            PauseToolbarItem.label = offLabel
+        }
+        if let PauseButton = PauseButton {
+            PauseButton.state = .off
+        }
     }
         
     @IBAction func PowerOn(_ sender: Any) {
         switch cpuState {
         case cpuState_inited, cpuState_unknown:
-            PauseToolbarItem.isEnabled = true;
-            PauseButton.state = .on
-            PauseToolbarItem.label = pauseLabel
-            
+            if let PauseToolbarItem = PauseToolbarItem {
+                PauseToolbarItem.isEnabled = true;
+                PauseToolbarItem.label = pauseLabel
+            }
+            if let PauseButton = PauseButton {
+                PauseButton.state = .on
+            }
+
             ViewController.current?.PowerOn(sender)
 
         default:
-            PauseToolbarItem.isEnabled = false;
-            PauseButton.state = .off
-            PauseToolbarItem.label = offLabel
-            
+            if let PauseToolbarItem = PauseToolbarItem {
+                PauseToolbarItem.isEnabled = false;
+                PauseToolbarItem.label = offLabel
+            }
+            if let PauseButton = PauseButton {
+                PauseButton.state = .off
+            }
+
             ViewController.current?.PowerOff(sender)
         }
     }
@@ -146,19 +158,31 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     @IBAction func Pause(_ sender: Any) {
         switch cpuState {
         case cpuState_halted:
-            PauseButton.state = .on
-            PauseToolbarItem.label = pauseLabel
+            if let PauseButton = PauseButton {
+                PauseButton.state = .on
+            }
+            if let PauseToolbarItem = PauseToolbarItem {
+                PauseToolbarItem.label = pauseLabel
+            }
             ViewController.current?.Pause(sender)
 
         case cpuState_running:
-            PauseButton.state = .off
-            PauseToolbarItem.label = resumeLabel
+            if let PauseButton = PauseButton {
+                PauseButton.state = .off
+            }
+            if let PauseToolbarItem = PauseToolbarItem {
+                PauseToolbarItem.label = resumeLabel
+            }
             ViewController.current?.Pause(sender)
             
         default:
-            PauseToolbarItem.isEnabled = false;
-            PauseButton.state = .off
-            PauseToolbarItem.label = offLabel
+            if let PauseToolbarItem = PauseToolbarItem {
+                PauseToolbarItem.isEnabled = false;
+                PauseToolbarItem.label = offLabel
+            }
+            if let PauseButton = PauseButton {
+                PauseButton.state = .off
+            }
             break
         }
         

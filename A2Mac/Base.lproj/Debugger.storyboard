@@ -66,7 +66,7 @@
                                         </buttonCell>
                                     </button>
                                     <connections>
-                                        <action selector="Reset:" target="g5o-m8-tZm" id="LMa-Mf-pnp"/>
+                                        <action selector="Step_In:" target="g5o-m8-tZm" id="qrp-Kd-Rja"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="9B3244CB-1CE2-4293-9E8C-B9BFD5DD84C4" label="Step Out" paletteLabel="Step Out" image="NSTouchBarGoUpTemplate" id="hAK-Yq-UK2">
@@ -82,7 +82,7 @@
                                         </buttonCell>
                                     </button>
                                     <connections>
-                                        <action selector="SelectAll:" target="g5o-m8-tZm" id="0f6-gY-Qzh"/>
+                                        <action selector="Step_Out:" target="g5o-m8-tZm" id="ofS-PM-fve"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="D00D9DE2-E274-4915-87A5-C94FEDDB6C22" label="Break" paletteLabel="Break" image="NSStatusUnavailable" id="hyi-RO-JXD" userLabel="Beak">
@@ -136,9 +136,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="CPUMode:" target="g5o-m8-tZm" id="IY1-yk-RmV"/>
-                                        </connections>
                                     </popUpButton>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="E8498057-9DDE-45D0-9BD9-3F924022507F" label="Clear" paletteLabel="Clear" image="NSTrashEmpty" id="iuE-Cf-et4" userLabel="Clear">
@@ -159,9 +156,6 @@
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
-                                        <connections>
-                                            <action selector="DiskOptions:" target="g5o-m8-tZm" id="GfE-ve-2Fg"/>
-                                        </connections>
                                     </popUpButton>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="C98C0013-54CF-42E5-9633-F3735234750D" label="Settings" paletteLabel="Settings" tag="-1" image="NSActionTemplate" id="MRX-lG-5ut">
@@ -226,7 +220,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="133" width="288" height="1271"/>
+                                                    <rect key="frame" x="0.0" y="113" width="288" height="1271"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -457,7 +451,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-19" width="349" height="182"/>
+                                                                            <rect key="frame" x="0.0" y="-42" width="349" height="181"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -635,9 +629,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
-                                                <connections>
-                                                    <action selector="traceEnable:" target="R5e-co-cXs" id="Pt1-Q1-WMs"/>
-                                                </connections>
                                             </button>
                                             <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="oa2-bF-OPT">
                                                 <rect key="frame" x="0.0" y="32" width="68" height="5"/>
@@ -653,9 +644,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                             <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BhN-WM-tjw">
                                                 <rect key="frame" x="-2" y="40" width="92" height="19"/>
                                                 <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="1" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="9wv-cN-nvE"/>
-                                                <connections>
-                                                    <action selector="leadingInitEdgeSelected:" target="R5e-co-cXs" id="puV-VS-Moc"/>
-                                                </connections>
                                             </slider>
                                             <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-pO-ycS">
                                                 <rect key="frame" x="-2" y="41" width="44" height="16"/>
@@ -668,9 +656,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                             <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OMo-Kb-QeD">
                                                 <rect key="frame" x="-2" y="40" width="92" height="19"/>
                                                 <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="0.99990000000000001" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="sQN-qq-kna"/>
-                                                <connections>
-                                                    <action selector="leadingEdgeSelected:" target="R5e-co-cXs" id="bh3-7O-xQU"/>
-                                                </connections>
                                             </slider>
                                             <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eLg-K3-PjQ">
                                                 <rect key="frame" x="-2" y="41" width="48" height="16"/>
@@ -683,9 +668,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                             <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NkU-cs-aFb">
                                                 <rect key="frame" x="-2" y="40" width="92" height="19"/>
                                                 <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="1" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="zBO-yu-dme"/>
-                                                <connections>
-                                                    <action selector="trailingInitEdgeSelected:" target="R5e-co-cXs" id="smc-md-bwM"/>
-                                                </connections>
                                             </slider>
                                             <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5c-EX-l5m">
                                                 <rect key="frame" x="-2" y="41" width="45" height="16"/>
@@ -698,9 +680,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                             <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Co1-Pf-vj7">
                                                 <rect key="frame" x="-2" y="40" width="92" height="19"/>
                                                 <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="0.99990000000000001" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="QUR-Gu-VdD"/>
-                                                <connections>
-                                                    <action selector="trailingEdgeSelected:" target="R5e-co-cXs" id="oee-ki-Ot6"/>
-                                                </connections>
                                             </slider>
                                             <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mh9-7g-Aso">
                                                 <rect key="frame" x="-2" y="41" width="40" height="16"/>
@@ -713,9 +692,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                             <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ph5-Bw-bE9">
                                                 <rect key="frame" x="-2" y="33" width="92" height="24"/>
                                                 <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="40" doubleValue="4.1025641025641022" tickMarkPosition="above" numberOfTickMarks="40" allowsTickMarkValuesOnly="YES" sliderType="linear" id="YOJ-Bu-pgj"/>
-                                                <connections>
-                                                    <action selector="wozExtraSelected:" target="R5e-co-cXs" id="uvY-a2-r5n"/>
-                                                </connections>
                                             </slider>
                                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3bk-Vi-4BD">
                                                 <rect key="frame" x="-2" y="9" width="75" height="17"/>
@@ -787,18 +763,6 @@ C20D: 4C C5 FE   JMP $FEC5
                             <constraint firstAttribute="trailing" secondItem="JUf-qx-iuW" secondAttribute="trailing" constant="8" id="kwa-ri-Rtq"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <outlet property="initialLeadEdgeSlider" destination="BhN-WM-tjw" id="4RX-th-1xe"/>
-                        <outlet property="initialTailEdgeSlider" destination="NkU-cs-aFb" id="LLr-Ld-BmW"/>
-                        <outlet property="leadEdgeSlider" destination="OMo-Kb-QeD" id="R2v-eR-Lqc"/>
-                        <outlet property="leadingEdgeLabel" destination="5ol-5S-WKc" id="vvx-c0-F52"/>
-                        <outlet property="ledingInitEdgeLabel" destination="f2w-FD-OOD" id="a2W-Jx-bXz"/>
-                        <outlet property="speedometer" destination="Bvh-6f-3DM" id="6FH-hl-i3v"/>
-                        <outlet property="tailEdgeSlider" destination="Co1-Pf-vj7" id="N1R-fj-xR7"/>
-                        <outlet property="trailingEdgeLabel" destination="FVR-Lz-j3N" id="ims-Dv-Kt5"/>
-                        <outlet property="trailingInitEdgeLabel" destination="1EB-3r-dYk" id="xlt-r1-lFW"/>
-                        <outlet property="wozExtraLabel" destination="eqc-tk-tvn" id="rbR-xp-ozJ"/>
-                    </connections>
                 </viewController>
                 <customObject id="DyX-eh-3mW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <toolbarItem implicitItemIdentifier="BFA7134C-38B0-453E-9AFB-33B380479DB4" label="Game" paletteLabel="Game" image="Joystick" id="mKu-aU-HoF">

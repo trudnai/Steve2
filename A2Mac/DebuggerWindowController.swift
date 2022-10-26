@@ -39,8 +39,6 @@ class DebuggerToolBarController: NSWindowController, NSWindowDelegate {
         if isWindowFullscreen {
             window?.toggleFullScreen(self)
         }
-
-        NSLog("Debugger Window")
     }
 
 

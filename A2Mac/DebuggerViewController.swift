@@ -24,13 +24,20 @@
 import Cocoa
 
 class DebuggerViewController: NSViewController {
+    static var shared : DebuggerViewController? = nil
 
     @IBOutlet var CPU_Display: DisplayView!
+    @IBOutlet var Stack_Display: DisplayView!
+
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        DebuggerViewController.shared = self
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height)
+        DebuggerViewController.shared = self
     }
 
     
@@ -40,7 +47,7 @@ class DebuggerViewController: NSViewController {
 //        // Update window title with the active TableView Title
 //        self.parent?.view.window?.title = self.title!
 
-        DisplayRegisters()
+        Update()
     }
 
 
@@ -89,8 +96,27 @@ N V - B D I Z C
             m6502.N > 0, m6502.V > 0, m6502.res > 0, m6502.B > 0, m6502.D > 0, m6502.I > 0, m6502.Z > 0, m6502.C > 0
         )
 
-        CPU_Display.string = registers
+        DispatchQueue.main.async {
+            self.CPU_Display.string = registers
+        }
+    }
 
+
+    func DisplayStack() {
+        var stack = ""
+        for i : UInt16 in (0x100...0x1FF).reversed() {
+            stack += String(format:"%03X: %02X\n", i, getMEM(i))
+        }
+
+        DispatchQueue.main.async {
+            self.Stack_Display.string = stack
+        }
+    }
+
+
+    func Update() {
+        DisplayRegisters()
+        DisplayStack()
     }
 
 

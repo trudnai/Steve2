@@ -384,9 +384,12 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func Debugger(_ sender: Any) {
-        let debuggerStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Debugger"), bundle: nil)
-        let debuggerControler = debuggerStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("debuggerWindowController")) as! NSWindowController
-        debuggerControler.showWindow(self)
+        if DebuggerToolBarController.current == nil {
+            let debuggerStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Debugger"), bundle: nil)
+            let debuggerControler = debuggerStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("debuggerWindowController")) as! NSWindowController
+//            debuggerControler.showWindow(self)
+        }
 
+        DebuggerToolBarController.current?.showWindow(self)
     }
 }

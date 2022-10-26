@@ -1242,6 +1242,11 @@ class ViewController: NSViewController  {
                 if ( frameCounter % video_fps_divider == 0 ) {
                     self.Render()
                 }
+
+                // TODO: This should be in Debugger!
+                if let debugger = DebuggerViewController.shared {
+                    debugger.Update()
+                }
                 
                 #endif
                 

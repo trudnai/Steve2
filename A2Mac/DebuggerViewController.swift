@@ -28,6 +28,7 @@ class DebuggerViewController: NSViewController {
 
     @IBOutlet var CPU_Display: DisplayView!
     @IBOutlet var Stack_Display: DisplayView!
+    @IBOutlet var Mem1_Display: DisplayView!
 
 //    required init?(coder: NSCoder) {
 //        super.init(coder: coder)
@@ -113,10 +114,50 @@ N V - B D I Z C
         }
     }
 
+    func hexLine16(addr : UInt16) -> String {
+        var line = String(format: "%04X: ", addr)
+
+        for i : UInt16 in 0...15 {
+            line += String(format: "%02X ", getMEM(addr + i))
+        }
+
+        return line
+    }
+
+
+    let txtClear = [Character](repeating: " ", count: 16)
+    func textLine16(addr : UInt16) -> String {
+        var unicodeTextArray = NSArray(array: txtClear, copyItems: true) as! [Character]
+
+        // render the rest of the text screen
+        for i in 0 ... 15 {
+            let byte = getMEM(addr + UInt16(i))
+            let idx = Int(byte);
+            let chr = ViewController.charConvTbl[idx]
+
+            unicodeTextArray[i] = chr
+        }
+
+        return String(unicodeTextArray)
+    }
+
+
+    func DisplayMemory() {
+        var memory = ""
+        for i : UInt16 in stride(from: 0x400, to: 0x4FF, by: 16) {
+            memory += hexLine16(addr: i) + textLine16(addr: i) + "\n"
+        }
+
+        DispatchQueue.main.async {
+            self.Mem1_Display.string = memory
+        }
+    }
+
 
     func Update() {
         DisplayRegisters()
         DisplayStack()
+        DisplayMemory()
     }
 
 

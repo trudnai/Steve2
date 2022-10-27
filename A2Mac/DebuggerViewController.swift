@@ -94,7 +94,7 @@ N V - B D I Z C
             m6502.Y, m6502.Y, bin(n: m6502.Y),
             m6502.SP,
             m6502.PC,
-            m6502.N > 0, m6502.V > 0, m6502.res > 0, m6502.B > 0, m6502.D > 0, m6502.I > 0, m6502.Z > 0, m6502.C > 0
+            m6502.N != 0, m6502.V != 0, m6502.res != 0, m6502.B != 0, m6502.D != 0, m6502.I != 0, m6502.Z != 0, m6502.C != 0
         )
 
         DispatchQueue.main.async {
@@ -105,7 +105,7 @@ N V - B D I Z C
 
     func DisplayStack() {
         var stack = ""
-        for i : UInt16 in (0x100...0x1FF).reversed() {
+        for i : UInt16 in (0x1F0...0x1FF).reversed() {
             stack += String(format:"%03X: %02X\n", i, getMEM(i))
         }
 

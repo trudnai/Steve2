@@ -28,6 +28,13 @@
 #include "common.h"
 #include "woz.h"
 
+
+#ifdef DEBUGGER
+#define INSTR INLINE static
+#else
+#define INSTR INLINE static
+#endif
+
 #define CRYSTAL_MHZ 14.31818                // NTSC version (original)
 #define DEFAULT_MHZ_6502 (CRYSTAL_MHZ / 14) // 1.023 MHz
 

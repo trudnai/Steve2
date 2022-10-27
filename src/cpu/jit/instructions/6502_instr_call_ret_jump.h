@@ -36,7 +36,7 @@
  absolute      JMP oper      4C    3     3
  indirect      JMP (oper)    6C    3     5
  **/
-INLINE void JMP( uint16_t addr ) {
+INSTR void JMP( uint16_t addr ) {
     dbgPrintf("JMP %04X ", addr);
     disPrintf(disassembly.inst, "JMP");
 
@@ -84,7 +84,7 @@ void JUMP( uint16_t addr ) {
  --------------------------------------------
  absolute      JSR oper      20    3     6
  **/
-INLINE void JSR( uint16_t addr ) {
+INSTR void JSR( uint16_t addr ) {
     dbgPrintf("JSR ");
     disPrintf(disassembly.inst, "JSR");
 
@@ -104,7 +104,7 @@ INLINE void JSR( uint16_t addr ) {
  --------------------------------------------
  implied       RTS           60    1     6
  **/
-INLINE void RTS() {
+INSTR void RTS(void) {
     dbgPrintf("RTS ");
     disPrintf(disassembly.inst, "RTS");
 
@@ -129,7 +129,7 @@ INLINE void RTS() {
  --------------------------------------------
  implied       RTI           40    1     6
  **/
-INLINE void RTI() {
+INSTR void RTI(void) {
     dbgPrintf("RTI ");
     disPrintf(disassembly.inst, "RTI");
 

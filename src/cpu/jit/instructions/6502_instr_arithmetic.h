@@ -45,7 +45,7 @@
  (indirect),Y  ADC (oper),Y  71    2     5*
 **/
 #ifndef DEBUGGER
-INLINE void _ADC( uint8_t src ) {
+INSTR void _ADC( uint8_t src ) {
     uint16_t tmp;
     
     // V = C7 != C6
@@ -81,7 +81,7 @@ INLINE void _ADC( uint8_t src ) {
     
 }
 #endif
-INLINE void ADC( uint8_t src ) {
+INSTR void ADC( uint8_t src ) {
     dbgPrintf("ADC(%02X) ", src);
     disPrintf(disassembly.inst, "ADC");
     
@@ -108,7 +108,7 @@ INLINE void ADC( uint8_t src ) {
  (indirect),Y  SBC (oper),Y  F1    2     5*
 **/
 #ifndef DEBUGGER
-INLINE void _SBC( uint8_t src ) {
+INSTR void _SBC( uint8_t src ) {
     uint16_t tmp;
     
     if( m6502.D ) {
@@ -134,7 +134,7 @@ INLINE void _SBC( uint8_t src ) {
     set_flags_NZ( m6502.A = tmp );
 }
 #endif
-INLINE void SBC( uint8_t src ) {
+INSTR void SBC( uint8_t src ) {
     dbgPrintf("SBC(%02X) ", src);
     disPrintf(disassembly.inst, "SBC");
 

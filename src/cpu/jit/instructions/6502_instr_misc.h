@@ -35,7 +35,7 @@
  --------------------------------------------
  implied       BRK           00    1     7
  **/
-INLINE int BRK() {
+INSTR int BRK(void) {
     dbgPrintf("BRK ");
     disPrintf(disassembly.inst, "BRK");
 
@@ -53,7 +53,7 @@ INLINE int BRK() {
 /**
  HLT / JAM / KIL  Halts (Hangs / Jams / Kills) the CPU - Well, it hangs it untill the next power cycle
  **/
-INLINE void HLT() {
+INSTR void HLT(void) {
     disPrintf(disassembly.inst, "HLT");
 
 #ifndef DEBUGGER
@@ -71,7 +71,7 @@ INLINE void HLT() {
  --------------------------------------------
  implied       NOP           EA    1     2
  **/
-INLINE void NOP() {
+INSTR void NOP(void) {
     dbgPrintf("NOP ");
     disPrintf(disassembly.inst, "NOP");
 }

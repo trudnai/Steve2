@@ -34,7 +34,7 @@
  --------------------------------------------
  implied       CLC           18    1     2
  **/
-INLINE void CLC() {
+INSTR void CLC(void) {
     dbgPrintf("CLC ");
     disPrintf(disassembly.inst, "CLC");
 #ifndef DEBUGGER
@@ -52,7 +52,7 @@ INLINE void CLC() {
  --------------------------------------------
  implied       CLD           D8    1     2
  **/
-INLINE void CLD() {
+INSTR void CLD(void) {
     dbgPrintf("CLD ");
     disPrintf(disassembly.inst, "CLD");
 #ifndef DEBUGGER
@@ -70,7 +70,7 @@ INLINE void CLD() {
  --------------------------------------------
  implied       CLI           58    1     2
  **/
-INLINE void CLI() {
+INSTR void CLI(void) {
     dbgPrintf("CLI ");
     disPrintf(disassembly.inst, "CLI");
 #ifndef DEBUGGER
@@ -88,7 +88,7 @@ INLINE void CLI() {
  --------------------------------------------
  implied       CLV           B8    1     2
  **/
-INLINE void CLV() {
+INSTR void CLV(void) {
     dbgPrintf("CLV ");
     disPrintf(disassembly.inst, "CLV");
 #ifndef DEBUGGER
@@ -106,7 +106,7 @@ INLINE void CLV() {
  --------------------------------------------
  implied       SEC           38    1     2
  **/
-INLINE void SEC() {
+INSTR void SEC(void) {
     dbgPrintf("SEC ");
     disPrintf(disassembly.inst, "SEC");
 #ifndef DEBUGGER
@@ -124,7 +124,7 @@ INLINE void SEC() {
  --------------------------------------------
  implied       SED           F8    1     2
  **/
-INLINE void SED() {
+INSTR void SED(void) {
     dbgPrintf("SED ");
     disPrintf(disassembly.inst, "SED");
 #ifndef DEBUGGER
@@ -142,7 +142,7 @@ INLINE void SED() {
  --------------------------------------------
  implied       SEI           78    1     2
  **/
-INLINE void SEI() {
+INSTR void SEI(void) {
     dbgPrintf("SEI ");
     disPrintf(disassembly.inst, "SEI");
 #ifndef DEBUGGER
@@ -190,13 +190,13 @@ INLINE void SEI() {
  F7 2   5   zp   ........ SMB7 $12
 **/
 #ifndef DEBUGGER
-#define RMB(n) INLINE void RMB##n( uint8_t zpg ) { \
+#define RMB(n) INSTR void RMB##n( uint8_t zpg ) { \
     dbgPrintf("RMB"#n" "); \
     disPrintf(disassembly.inst, "RMB"#n); \
     WRLOMEM[zpg] &= ~(1 << n); \
 }
 #else
-#define RMB(n) INLINE void RMB##n( uint8_t zpg ) { \
+#define RMB(n) INSTR void RMB##n( uint8_t zpg ) { \
     dbgPrintf("RMB"#n" "); \
     disPrintf(disassembly.inst, "RMB"#n); \
 }
@@ -213,13 +213,13 @@ INLINE void SEI() {
 
 
 #ifndef DEBUGGER
-#define SMB(n) INLINE void SMB##n( uint8_t zpg ) { \
+#define SMB(n) INSTR void SMB##n( uint8_t zpg ) { \
     dbgPrintf("SMB"#n" "); \
     disPrintf(disassembly.inst, "SMB"#n); \
     WRLOMEM[zpg] |= (1 << n); \
 }
 #else
-#define SMB(n) INLINE void SMB##n( uint8_t zpg ) { \
+#define SMB(n) INSTR void SMB##n( uint8_t zpg ) { \
     dbgPrintf("SMB"#n" "); \
     disPrintf(disassembly.inst, "SMB"#n); \
 }

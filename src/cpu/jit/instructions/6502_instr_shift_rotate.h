@@ -40,12 +40,12 @@
  absolute,X    ASL oper,X    1E    3     7
 **/
 #ifndef DEBUGGER
-INLINE void _ASL( uint16_t addr ) {
+INSTR void _ASL( uint16_t addr ) {
     m6502.C = memread(addr) & 0x80;
     set_flags_NZ( WRLOMEM[addr] <<= 1 );
 }
 #endif
-INLINE void ASL( uint16_t addr ) {
+INSTR void ASL( uint16_t addr ) {
     dbgPrintf("ASL ");
     disPrintf(disassembly.inst, "ASL");
 
@@ -53,7 +53,7 @@ INLINE void ASL( uint16_t addr ) {
     _ASL(addr);
 #endif
 }
-INLINE void ASLA() {
+INSTR void ASLA(void) {
     dbgPrintf("ASL ");
     disPrintf(disassembly.inst, "ASL");
 
@@ -77,7 +77,7 @@ INLINE void ASLA() {
  absolute      LSR oper      4E    3     6
  absolute,X    LSR oper,X    5E    3     7
 **/
-INLINE void LSR( uint16_t addr ) {
+INSTR void LSR( uint16_t addr ) {
     dbgPrintf("LSR ");
     disPrintf(disassembly.inst, "LSR");
 
@@ -86,7 +86,7 @@ INLINE void LSR( uint16_t addr ) {
     set_flags_NZ( WRLOMEM[addr] >>= 1 );
 #endif
 }
-INLINE void LSRA() {
+INSTR void LSRA(void) {
     dbgPrintf("LSR ");
     disPrintf(disassembly.inst, "LSR");
 
@@ -111,14 +111,14 @@ INLINE void LSRA() {
  absolute,X    ROL oper,X    3E    3     7
 **/
 #ifndef DEBUGGER
-INLINE void _ROL( uint16_t addr ) {
+INSTR void _ROL( uint16_t addr ) {
     uint8_t C = m6502.C != 0;
     m6502.C = WRLOMEM[addr] & 0x80;
     WRLOMEM[addr] <<= 1;
     set_flags_NZ( WRLOMEM[addr] |= C );
 }
 #endif
-INLINE void ROL( uint16_t addr ) {
+INSTR void ROL( uint16_t addr ) {
     dbgPrintf("ROL ");
     disPrintf(disassembly.inst, "ROL");
 
@@ -126,7 +126,7 @@ INLINE void ROL( uint16_t addr ) {
     _ROL(addr);
 #endif
 }
-INLINE void ROLA() {
+INSTR void ROLA(void) {
     dbgPrintf("ROL ");
     disPrintf(disassembly.inst, "ROL");
 
@@ -153,14 +153,14 @@ INLINE void ROLA() {
  absolute,X    ROR oper,X    7E    3     7
 **/
 #ifndef DEBUGGER
-INLINE void _ROR( uint16_t addr ) {
+INSTR void _ROR( uint16_t addr ) {
     uint8_t C = m6502.C != 0;
     m6502.C = WRLOMEM[addr] & 1;
     WRLOMEM[addr] >>= 1;
     set_flags_NZ( WRLOMEM[addr] |= C  << 7 );
 }
 #endif
-INLINE void ROR( uint16_t addr ) {
+INSTR void ROR( uint16_t addr ) {
     dbgPrintf("ROR ");
     disPrintf(disassembly.inst, "ROR");
     
@@ -168,7 +168,7 @@ INLINE void ROR( uint16_t addr ) {
     _ROR(addr);
 #endif
 }
-INLINE void RORA() {
+INSTR void RORA(void) {
     dbgPrintf("ROR ");
     disPrintf(disassembly.inst, "ROR");
 

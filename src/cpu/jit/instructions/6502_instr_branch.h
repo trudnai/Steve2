@@ -24,7 +24,7 @@
 #ifndef __6502_INSTR_BRANCH_H__
 #define __6502_INSTR_BRANCH_H__
 
-INLINE void BRA( int8_t reladdr ) {
+INSTR void BRA( int8_t reladdr ) {
     uint8_t pg = m6502.PC >> 8;
     m6502.PC += reladdr;
     m6502.clkfrm += m6502.PC >> 8 == pg ? 1 : 2;
@@ -47,7 +47,7 @@ INLINE void BRA( int8_t reladdr ) {
  --------------------------------------------
  relative      BCC oper      90    2     2**
  **/
-INLINE void BCC( int8_t reladdr ) {
+INSTR void BCC( int8_t reladdr ) {
     dbgPrintf("BCC ");
     disPrintf(disassembly.inst, "BCC");
     
@@ -71,7 +71,7 @@ INLINE void BCC( int8_t reladdr ) {
  --------------------------------------------
  relative      BCS oper      B0    2     2**
  **/
-INLINE void BCS( int8_t reladdr ) {
+INSTR void BCS( int8_t reladdr ) {
     dbgPrintf("BCS ");
     disPrintf(disassembly.inst, "BCS");
 
@@ -95,7 +95,7 @@ INLINE void BCS( int8_t reladdr ) {
  --------------------------------------------
  relative      BNE oper      D0    2     2**
  **/
-INLINE void BNE( int8_t reladdr ) {
+INSTR void BNE( int8_t reladdr ) {
     dbgPrintf("BNE ");
     disPrintf(disassembly.inst, "BNE");
 
@@ -119,7 +119,7 @@ INLINE void BNE( int8_t reladdr ) {
  --------------------------------------------
  relative      BEQ oper      F0    2     2**
  **/
-INLINE void BEQ( int8_t reladdr ) {
+INSTR void BEQ( int8_t reladdr ) {
     dbgPrintf("BEQ ");
     disPrintf(disassembly.inst, "BEQ");
 
@@ -143,7 +143,7 @@ INLINE void BEQ( int8_t reladdr ) {
  --------------------------------------------
  relative      BPL oper      10    2     2**
  **/
-INLINE void BPL( int8_t reladdr ) {
+INSTR void BPL( int8_t reladdr ) {
     dbgPrintf("BPL ");
     disPrintf(disassembly.inst, "BPL");
 
@@ -167,7 +167,7 @@ INLINE void BPL( int8_t reladdr ) {
  --------------------------------------------
  relative      BMI oper      30    2     2**
  **/
-INLINE void BMI( int8_t reladdr ) {
+INSTR void BMI( int8_t reladdr ) {
     dbgPrintf("BMI ");
     disPrintf(disassembly.inst, "BMI");
 
@@ -191,7 +191,7 @@ INLINE void BMI( int8_t reladdr ) {
  --------------------------------------------
  relative      BVC oper      50    2     2**
  **/
-INLINE void BVC( int8_t reladdr ) {
+INSTR void BVC( int8_t reladdr ) {
     dbgPrintf("BVC ");
     disPrintf(disassembly.inst, "BVC");
 
@@ -215,7 +215,7 @@ INLINE void BVC( int8_t reladdr ) {
  --------------------------------------------
  relative      BVC oper      70    2     2**
  **/
-INLINE void BVS( int8_t reladdr ) {
+INSTR void BVS( int8_t reladdr ) {
     dbgPrintf("BVS ");
     disPrintf(disassembly.inst, "BVS");
 
@@ -271,7 +271,7 @@ INLINE void BVS( int8_t reladdr ) {
  
 **/
 #ifndef DEBUGGER
-#define BBR(n) INLINE void BBR##n( uint8_t src, int8_t reladdr ) { \
+#define BBR(n) INSTR void BBR##n( uint8_t src, int8_t reladdr ) { \
 dbgPrintf("BBR"#n" "); \
 disPrintf(disassembly.inst, "BBR"#n); \
     if ( ! (src & (1 << n) ) ) { \
@@ -279,7 +279,7 @@ disPrintf(disassembly.inst, "BBR"#n); \
     } \
 }
 #else
-#define BBR(n) INLINE void BBR##n( uint8_t src, int8_t reladdr ) { \
+#define BBR(n) INSTR void BBR##n( uint8_t src, int8_t reladdr ) { \
     dbgPrintf("BBR"#n" "); \
     disPrintf(disassembly.inst, "BBR"#n); \
 }
@@ -296,7 +296,7 @@ disPrintf(disassembly.inst, "BBR"#n); \
 
 
 #ifndef DEBUGGER
-#define BBS(n) INLINE void BBS##n( uint8_t src, int8_t reladdr ) { \
+#define BBS(n) INSTR void BBS##n( uint8_t src, int8_t reladdr ) { \
 dbgPrintf("BBS"#n" "); \
 disPrintf(disassembly.inst, "BBS"#n); \
     if ( (src & (1 << n) ) ) { \
@@ -304,7 +304,7 @@ disPrintf(disassembly.inst, "BBS"#n); \
     } \
 }
 #else
-#define BBS(n) INLINE void BBS##n( uint8_t src, int8_t reladdr ) { \
+#define BBS(n) INSTR void BBS##n( uint8_t src, int8_t reladdr ) { \
     dbgPrintf("BBS"#n" "); \
     disPrintf(disassembly.inst, "BBS"#n); \
 }

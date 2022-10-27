@@ -178,7 +178,7 @@ typedef struct {
  located in the same source file -- hence the include...
 **/
 
-INLINE flags_t getFlags() {
+INLINE flags_t getFlags(void) {
     flags_t f = {
         m6502.C != 0,    // Carry Flag
         m6502.Z != 0,    // Zero Flag
@@ -209,7 +209,7 @@ INLINE void setFlags( uint8_t byte ) {
 
 #include "6502_instructions.h"
 
-INLINE int m6502_Step() {
+INLINE int m6502_Step(void) {
 
     
 #ifdef DEBUG___

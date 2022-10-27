@@ -39,7 +39,7 @@
  absolute      BIT oper      2C    3     4
  
  **/
-INLINE void BIT( uint8_t src ) {
+INSTR void BIT( uint8_t src ) {
     dbgPrintf("BIT(%02X) ", src);
     disPrintf(disassembly.inst, "BIT");
     
@@ -71,7 +71,7 @@ INLINE void BIT( uint8_t src ) {
  1C 3   6   abs  ......Z. TRB $3456
  
  **/
-INLINE void TRB( uint16_t addr ) {
+INSTR void TRB( uint16_t addr ) {
     dbgPrintf("TRB(%02X) ", src);
     disPrintf(disassembly.inst, "TRB");
 
@@ -101,7 +101,7 @@ INLINE void TRB( uint16_t addr ) {
  0C 3   6   abs  ......Z. TSB $3456
 
  **/
-INLINE void TSB( uint16_t addr ) {
+INSTR void TSB( uint16_t addr ) {
     dbgPrintf("TSB(%02X) ", src);
     disPrintf(disassembly.inst, "TSB");
 
@@ -129,11 +129,11 @@ INLINE void TSB( uint16_t addr ) {
  (indirect),Y  CMP (oper),Y  D1    2     5*
  **/
 #ifndef DEBUGGER
-INLINE void _CMP( uint8_t src ) {
+INSTR void _CMP( uint8_t src ) {
     set_flags_NZC( (int16_t)m6502.A - src );
 }
 #endif
-INLINE void CMP( uint8_t src ) {
+INSTR void CMP( uint8_t src ) {
     dbgPrintf("CMP(%02X) ", src);
     disPrintf(disassembly.inst, "CMP");
 
@@ -154,7 +154,7 @@ INLINE void CMP( uint8_t src ) {
  zeropage      CPX oper      E4    2     3
  absolute      CPX oper      EC    3     4
  **/
-INLINE void CPX( uint8_t src ) {
+INSTR void CPX( uint8_t src ) {
     dbgPrintf("CPX(%02X) ", src);
     disPrintf(disassembly.inst, "CPX");
 
@@ -175,7 +175,7 @@ INLINE void CPX( uint8_t src ) {
  zeropage      CPY oper      C4    2     3
  absolute      CPY oper      CC    3     4
  **/
-INLINE void CPY( uint8_t src ) {
+INSTR void CPY( uint8_t src ) {
     dbgPrintf("CPY(%02X) ", src);
     disPrintf(disassembly.inst, "CPY");
 

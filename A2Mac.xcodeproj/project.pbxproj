@@ -625,6 +625,7 @@
 		32440BA22480D5C0000F9DA1 /* LoRes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRes.swift; sourceTree = "<group>"; };
 		324D15D224ADAC71008AAFB0 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
 		32544194264A6C1600B7E3ED /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
+		325B75DF2909F95000B29605 /* 6502_debugger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_debugger.c; sourceTree = "<group>"; };
 		325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.on.doc.png; sourceTree = "<group>"; };
 		325DC40F24AC691B00EB8858 /* rgb_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_color.png; sourceTree = "<group>"; };
 		325DC41124AC692D00EB8858 /* rgb_mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_mono.png; sourceTree = "<group>"; };
@@ -980,6 +981,7 @@
 				32439F7522ECD8AD0077AAE0 /* instructions */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
+				325B75DF2909F95000B29605 /* 6502_debugger.c */,
 				320F2A8924CFFBE300671B35 /* 6502_std.h */,
 				320F2A8A24D0001600671B35 /* 6502_und.h */,
 				320F2A8B24D0828600671B35 /* 6502_C.h */,

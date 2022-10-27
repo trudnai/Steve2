@@ -220,7 +220,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="93" width="288" height="1271"/>
+                                                    <rect key="frame" x="0.0" y="73" width="288" height="1271"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -451,7 +451,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-65" width="349" height="181"/>
+                                                                            <rect key="frame" x="0.0" y="-89" width="349" height="182"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>

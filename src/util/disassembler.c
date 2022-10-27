@@ -154,6 +154,22 @@ void printDisassembly( FILE * f ) {
         
     }
 }
+
 #endif // DISASSEMBLER
+
+
+const char * disassemblyLine(void) {
+    static char line[256];
+
+    snprintf( line, sizeof(line), "%s: %-11s%-4s%s",
+         disassembly.addr,
+         disassembly.opcode,
+         disassembly.inst,
+         disassembly.oper
+    );
+
+    return line;
+}
+
 
 

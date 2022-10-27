@@ -31,6 +31,7 @@
 #define CLK_WAIT
 
 #define DEBUGGER
+#define FETCH_ADDR disass_addr
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -51,6 +52,8 @@
 #define IRQ_VECTOR          0xFFFE
 
 extern m6502_t m6502;
+
+uint16_t disass_addr = 0xFDED;
 
 #include "../util/disassembler.h"
 #include "../dev/mem/mmio.h"
@@ -123,7 +126,7 @@ void m6502_Disass(void) {
     {
     }
     // TODO: clkfrm is already increamented!!!
-    printDisassembly(outdev);
+//    printDisassembly(outdev);
         
 }
 

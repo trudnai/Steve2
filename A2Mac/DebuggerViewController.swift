@@ -29,8 +29,9 @@ class DebuggerViewController: NSViewController {
     @IBOutlet var CPU_Display: DisplayView!
     @IBOutlet var Stack_Display: DisplayView!
     @IBOutlet var Mem1_Display: DisplayView!
+    @IBOutlet var Disass_Display: DisplayView!
 
-//    required init?(coder: NSCoder) {
+    //    required init?(coder: NSCoder) {
 //        super.init(coder: coder)
 //        DebuggerViewController.shared = self
 //    }
@@ -154,10 +155,27 @@ N V - B D I Z C
     }
 
 
+    func DisplayDisassembly() {
+        m6502_Disass_1_Instr()
+
+        let disass_C = disassemblyLine()
+        let disass = withUnsafePointer(to: disass_C) {
+            $0.withMemoryRebound(to: UInt8.self, capacity: MemoryLayout.size(ofValue: $0)) {
+                String(cString: $0)
+            }
+        }
+
+        DispatchQueue.main.async {
+            self.Disass_Display.string = disass
+        }
+    }
+
+
     func Update() {
         DisplayRegisters()
         DisplayStack()
         DisplayMemory()
+        DisplayDisassembly()
     }
 
 

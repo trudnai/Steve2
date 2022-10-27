@@ -43,7 +43,7 @@ extern disassembly_t disassembly;
 //#define DISASSEMBLER
 //#undef DISASSEMBLER
 
-#ifdef DISASSEMBLER
+#if defined(DISASSEMBLER) || defined(DEBUGGER)
 
 //extern unsigned long long int clktime;
 extern unsigned long long discnt;
@@ -62,11 +62,14 @@ extern void _disPrintf( char * s, const size_t n, const char * fmt, ... );
 
 
 // TODO: We should add a new field for clk counter, so we can print that out _before_ execution, not after...
-extern void _disNewInstruction();
+extern void _disNewInstruction(void);
 #define disNewInstruction() _disNewInstruction()
 
 
+#ifdef DISASSEMBLER
 extern void printDisassembly( FILE * f );
+#endif
+
 
 #else // DISASSEMBLER
 
@@ -79,6 +82,8 @@ extern void printDisassembly( FILE * f );
 
 #endif // DISASSEMBLER
 
+
+extern const char * disassemblyLine(void);
 
 
 #endif /* disassembler_h */

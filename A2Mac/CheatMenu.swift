@@ -17,7 +17,7 @@ class CheatMenu: NSMenu {
         
 //        AppDelegate.current?.Cheat_Menu()
         
-        let ships = ViewController.current?.Get_Hard_Hat_Mack()
+        let /* ships */ _ = ViewController.current?.Get_Hard_Hat_Mack()
 //        AppDelegate.current?.MenuItem_Hard_Hat_Mack_Add_3_Macks.title =  String(format: "Add 3 Macks (%d)", ships!)
 
     }

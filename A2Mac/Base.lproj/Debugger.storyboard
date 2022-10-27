@@ -765,6 +765,7 @@ C20D: 4C C5 FE   JMP $FEC5
                     </view>
                     <connections>
                         <outlet property="CPU_Display" destination="Wrs-Qt-Kmd" id="SUW-Lc-Zv4"/>
+                        <outlet property="Disass_Display" destination="Hwx-Gd-XW1" id="XHS-dZ-gCR"/>
                         <outlet property="Mem1_Display" destination="qqp-t0-j4i" id="85A-sB-M0p"/>
                         <outlet property="Stack_Display" destination="BHr-Q4-rBI" id="qlA-JC-xkW"/>
                     </connections>

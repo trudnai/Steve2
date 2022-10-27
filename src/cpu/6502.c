@@ -30,6 +30,9 @@
 
 #define CLK_WAIT
 
+#undef DEBUGGER
+#define FETCH_ADDR m6502.PC
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

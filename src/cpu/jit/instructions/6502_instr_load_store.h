@@ -89,7 +89,7 @@ INSTR void LDX( uint8_t src ) {
  absolute      LDY oper      AC    3     4
  absolute,X    LDY oper,X    BC    3     4*
 **/
-INSTR static void LDY( uint8_t src ) {
+INSTR void LDY( uint8_t src ) {
     dbgPrintf("LDY(%02X) ", src);
     disPrintf(disassembly.inst, "LDY");
 #ifndef DEBUGGER
@@ -98,7 +98,7 @@ INSTR static void LDY( uint8_t src ) {
 }
 
 
-char * charConv =
+static char * charConv =
     "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?"
     "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?"
     "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?"

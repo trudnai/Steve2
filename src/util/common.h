@@ -27,12 +27,13 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define UNUSED __attribute__((unused))
 
 #ifdef DEBUG
-#define INLINE
+#define INLINE UNUSED
 #else
 // #define INLINE static __attribute__((always_inline))
-#define INLINE __attribute__((always_inline))
+#define INLINE __attribute__((always_inline)) UNUSED
 #endif
 
 

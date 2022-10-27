@@ -84,7 +84,7 @@ uint8_t * currentLowWRMEM = Apple2_64K_RAM;
 
 
 /// No writing (Readonly), and mark it as NO need to commit from Shadow RAM
-INLINE void set_MEM_readonly() {
+INLINE void set_MEM_readonly(void) {
     dbgPrintf2("NOWR_AUX (pc:$%04X)\n", m6502.PC);
     
     MEMcfg.WR_RAM = 0;
@@ -95,7 +95,7 @@ INLINE void set_MEM_readonly() {
 
 
 /// Returns TRUE if already writeable or second of the "two consecutive" reads on appropriate soft switches
-INLINE int is_wr_enabled() {
+INLINE int is_wr_enabled(void) {
     uint64_t clk = m6502.clktime + m6502.clkfrm;
 //    uint64_t elapsed = clk - m6502.clk_wrenable;
 //    int is_enabled = ( elapsed < 16 ) || MEMcfg.WR_RAM;
@@ -111,7 +111,7 @@ INLINE int is_wr_enabled() {
 
 /// Make AUX RAM writeable -- This is when AUX is also readable, othwrwise use set_AUX_write...
 /// Note: Need to save the content back from the shadow memory
-INLINE void set_AUX_read_write() {
+INLINE void set_AUX_read_write(void) {
     // two consecutive read or write needs for write enable
     // Note: if it is already writeable and was previously a ROM read + RAM write, then we also need to bound AUX to MEM
     if ( is_wr_enabled() ) {
@@ -127,7 +127,7 @@ INLINE void set_AUX_read_write() {
 
 /// Make AUX RAM writeable -- This is when ROM is readable, othwrwise use set_MEM_write...
 /// Note: NO NEED to write back the content since it writes everything directly to AUX memory
-INLINE void set_AUX_write() {
+INLINE void set_AUX_write(void) {
     // will write directly to Auxiliary RAM, and mark it as NO need to commit from Shadow RAM
     // Note: if it is already writeable and was previously a RAM read + RAM write, then we also need to bound AUX to MEM
     if ( is_wr_enabled() ) {
@@ -146,7 +146,7 @@ INLINE void set_AUX_write() {
 
 
 // save the content of Shadow Memory in needed
-INLINE void save_AUX() {
+INLINE void save_AUX(void) {
     if ( MEMcfg.WR_RAM && MEMcfg.RD_INT_RAM ) {
         dbgPrintf2("Saving RAM Bank %d to %d (pc:$%04X)\n", MEMcfg.RAM_BANK_2 + 1, (current_RAM_bank == Apple2_64K_AUX + 0xD000) + 1, m6502.PC);
         // save LC Bank 1 or 2

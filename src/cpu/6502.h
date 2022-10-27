@@ -30,9 +30,9 @@
 
 
 #ifdef DEBUGGER
-#define INSTR INLINE static
+#define INSTR INLINE UNUSED static
 #else
-#define INSTR INLINE static
+#define INSTR INLINE UNUSED static
 #endif
 
 #define CRYSTAL_MHZ 14.31818                // NTSC version (original)

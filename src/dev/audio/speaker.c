@@ -451,7 +451,7 @@ int spkr_unqueue( ALuint src ) {
     return processed;
 }
 
-void spkr_unqueueAll() {
+void spkr_unqueueAll(void) {
     for ( int i = 0; i < SOURCES_COUNT; i++ ) {
         spkr_unqueue( spkr_src[i] );
     }
@@ -976,7 +976,7 @@ INLINE static void spkr_filter() {
 }
 
 
-INLINE void spkr_debug_spike() {
+INLINE void spkr_debug_spike(void) {
 //    printf("spkr_debug_spike: %llu\n", m6502.clktime + m6502.clkfrm);
     int level = 28000;
     
@@ -989,7 +989,7 @@ INLINE void spkr_debug_spike() {
 }
 
 
-void spkr_play() {
+void spkr_play(void) {
     ALenum state;
     alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
 //    al_check_error();
@@ -1053,7 +1053,7 @@ void spkr_play() {
 //}
 
 
-void spkr_play_with_pause() {
+void spkr_play_with_pause(void) {
     ALenum state;
     alGetSourcei( spkr_src[SPKR_SRC_GAME_SFX], AL_SOURCE_STATE, &state );
     //                al_check_error();
@@ -1086,7 +1086,7 @@ void spkr_play_with_pause() {
 }
 
 
-void spkr_buffer_with_prebuf() {
+void spkr_buffer_with_prebuf(void) {
     if (--freeBuffers < 0) {
         printf("freeBuffer < 0 (%i)\n", freeBuffers);
         freeBuffers = 0;

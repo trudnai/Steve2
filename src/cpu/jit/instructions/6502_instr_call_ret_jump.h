@@ -55,23 +55,27 @@ INSTR void JMP( uint16_t addr ) {
 }
 
 
+#ifndef DEBUGGER
+
 // for patching game purposes -- it should not be inline!
 void CALL( uint16_t addr ) {
     dbgPrintf("CALL ");
     disPrintf(disassembly.inst, "CALL");
 
-#ifndef DEBUGGER
     PUSH_addr(m6502.PC -1);
     m6502.PC = addr;
-#endif
 }
 
 // for patching game purposes -- it should not be inline!
 void JUMP( uint16_t addr ) {
     dbgPrintf("JUMP ");
     disPrintf(disassembly.inst, "JUMP");
+    
     m6502.PC = addr;
 }
+
+#endif
+
 
 /**
  JSR  Jump to New Location Saving Return Address

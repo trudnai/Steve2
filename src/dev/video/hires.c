@@ -75,7 +75,7 @@ uint8_t * shadowScreen = _shadowScreen;
 int was = 0;
 
 
-void initHiResLineAddresses() {
+void initHiResLineAddresses(void) {
     int i = 0;
     
     for( int x = 0; x <= 0x50; x += 0x28 ) {
@@ -88,12 +88,12 @@ void initHiResLineAddresses() {
 }
 
 
-void init() {
+void init(void) {
     initHiResLineAddresses();
 }
 
 
-void hires_clearChanges() {
+void hires_clearChanges(void) {
     memset(_blockChanged, 0, sizeof(_blockChanged));
 }
 

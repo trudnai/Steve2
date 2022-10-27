@@ -14,7 +14,7 @@
 disassembly_t disassembly;
 unsigned long long discnt = 0;
 
-INLINE flags_t getFlags2() {
+INLINE flags_t getFlags2(void) {
     flags_t f = {
         m6502.C != 0,    // Carry Flag
         m6502.Z != 0,    // Zero Flag
@@ -61,7 +61,7 @@ void _disPrintf( char * s, const size_t n, const char * fmt, ... ) {
     }
 }
 
-void _disNewInstruction() {
+void _disNewInstruction(void) {
     if ( m6502.dbgLevel.trace ) {
         memset( &disassembly, 0, sizeof(disassembly) );
         disassembly.clk = m6502.clktime + m6502.clkfrm;

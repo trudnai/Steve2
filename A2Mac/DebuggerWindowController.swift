@@ -54,36 +54,27 @@ class DebuggerToolBarController: NSWindowController, NSWindowDelegate {
 
 
     @IBAction func Step_Over(_ sender: Any) {
-        switch cpuState {
-        case cpuState_halted:
-            ViewController.current?.Pause(sender)
-
-        case cpuState_running:
-            ViewController.current?.Pause(sender)
-            
-        default:
-            break
-        }
     }
 
 
     @IBAction func Step_In(_ sender: Any) {
-        ViewController.current?.Reset(sender)
+        m6502_Step()
+        // TODO: This should be in Debugger!
+        if let debugger = DebuggerViewController.shared {
+            debugger.Update()
+        }
     }
 
 
     @IBAction func Step_Out(_ sender: Any) {
-        ViewController.current?.textDisplay.setSelectedRange(NSRange())
     }
 
 
     @IBAction func SetBreakPoint(_ sender: Any) {
-        ViewController.current?.Copy()
     }
 
 
     @IBAction func DisableBreakPoint(_ sender: Any) {
-        ViewController.current?.Paste()
     }
 
 

@@ -220,6 +220,7 @@ extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
 extern void m6502_Run(void);
+INLINE int m6502_Step(void);
 
 extern void interrupt_IRQ(void);
 extern void interrupt_NMI(void);

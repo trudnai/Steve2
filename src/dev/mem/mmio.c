@@ -1116,10 +1116,13 @@ INLINE uint16_t _fetch16_dbg() {
  abs        ....    absolute         OPC $LLHH,X
  operand is address; effective address is address incremented by X with carry **
  **/
-INLINE uint16_t addr_abs() {
+INLINE uint16_t _addr_abs() {
     dbgPrintf("abs:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC));
     return fetch16();
+}
+INLINE uint16_t _addr_abs_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%04X", memread16(m6502.PC));
+    return _fetch16_dbg();
 }
 INLINE uint8_t src_abs() {
     return memread( addr_abs() );
@@ -1129,29 +1132,40 @@ INLINE uint8_t src_abs() {
 //}
 
 
-INLINE int8_t rel_addr() {
-    disPrintf(disassembly.oper, "$%04X", m6502.PC + 1 + (int8_t)memread8(m6502.PC));
+INLINE int8_t _rel_addr() {
     return fetch();
 }
-INLINE uint16_t abs_addr() {
-    disPrintf(disassembly.oper, "$%04X", memread16(m6502.PC));
+INLINE int8_t _rel_addr_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%04X", m6502.PC + 1 + (int8_t)memread8(m6502.PC));
+    return _fetch_dbg();
+}
+INLINE uint16_t _abs_addr() {
     return fetch16();
 }
-INLINE uint16_t ind_addr() {
-    disPrintf(disassembly.oper, "($%04X)", memread16(m6502.PC));
-    disPrintf(disassembly.comment, "ind_addr:%04X", memread16(memread16(m6502.PC)));
-
+INLINE uint16_t _abs_addr_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%04X", memread16(m6502.PC));
+    return _fetch16_dbg();
+}
+INLINE uint16_t _ind_addr() {
     return memread16( fetch16() );
+}
+INLINE uint16_t _ind_addr_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%04X)", memread16(m6502.PC));
+    _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16(memread16(m6502.PC)));
+
+    return memread16( _fetch16_dbg() );
 }
 
 /**
  abs,X        ....    absolute, X-indexed         OPC $LLHH,X
  operand is address; effective address is address incremented by X with carry **
  **/
-INLINE uint16_t addr_abs_X() {
-    dbgPrintf("abs,X:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
-    disPrintf(disassembly.oper, "$%04X,X", memread16(m6502.PC));
+INLINE uint16_t _addr_abs_X() {
     return fetch16() + m6502.X;
+}
+INLINE uint16_t _addr_abs_X_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%04X,X", memread16(m6502.PC));
+    return _fetch16_dbg() + m6502.X;
 }
 INLINE uint8_t src_abs_X() {
     return memread( addr_abs_X() );
@@ -1165,10 +1179,12 @@ INLINE uint8_t src_abs_X() {
  abs,Y        ....    absolute, Y-indexed         OPC $LLHH,Y
  operand is address; effective address is address incremented by Y with carry **
  **/
-INLINE uint16_t addr_abs_Y() {
-    dbgPrintf("abs,Y:%04X(%02X) ", *((uint16_t*)&RAM[m6502.PC]) + m6502.Y, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.Y]);
-    disPrintf(disassembly.oper, "$%04X,Y", memread16(m6502.PC));
+INLINE uint16_t _addr_abs_Y() {
     return fetch16() + m6502.Y;
+}
+INLINE uint16_t _addr_abs_Y_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%04X,Y", memread16(m6502.PC));
+    return _fetch16_dbg() + m6502.Y;
 }
 INLINE uint8_t src_abs_Y() {
     return memread(addr_abs_Y());
@@ -1177,9 +1193,12 @@ INLINE uint8_t src_abs_Y() {
 //    return WRLOMEM + addr_abs_Y();
 //}
 
-INLINE uint8_t imm() {
-    disPrintf(disassembly.oper, "#$%02X", memread8(m6502.PC));
+INLINE uint8_t _imm() {
     return fetch();
+}
+INLINE uint8_t _imm_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "#$%02X", memread8(m6502.PC));
+    return _fetch_dbg();
 }
 
 
@@ -1187,10 +1206,12 @@ INLINE uint8_t imm() {
  zpg        ....    zeropage         OPC $LL
  operand is zeropage address (hi-byte is zero, address = $00LL)
  **/
-INLINE uint8_t addr_zp() {
-    dbgPrintf("zp:%02X(%02X) ", RAM[m6502.PC], RAM[ RAM[m6502.PC]] );
-    disPrintf(disassembly.oper, "$%02X", memread8(m6502.PC));
+INLINE uint8_t _addr_zp() {
     return fetch();
+}
+INLINE uint8_t _addr_zp_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%02X", memread8(m6502.PC));
+    return _fetch_dbg();
 }
 INLINE uint8_t src_zp() {
     return memread8_low(addr_zp());
@@ -1214,12 +1235,14 @@ INLINE uint8_t src_zp() {
  operand is zeropage address;
  effective address is word in (LL, LL + 1), inc. without carry: C.w($00LL)
  **/
-INLINE uint16_t addr_ind() {
-    dbgPrintf("zpi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]), RAM[*((uint16_t*)&RAM[m6502.PC])]);
-    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) );
-    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC)) );
-
+INLINE uint16_t _addr_ind() {
     return memread16( fetch() );
+}
+INLINE uint16_t _addr_ind_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X,X)", memread8(m6502.PC) );
+    _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16( memread8(m6502.PC)) );
+
+    return memread16( _fetch_dbg() );
 }
 INLINE uint8_t src_ind() {
     return memread( addr_ind() );
@@ -1230,12 +1253,14 @@ INLINE uint8_t src_ind() {
  operand is zeropage address;
  effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
  **/
-INLINE uint16_t addr_ind_X() {
-    dbgPrintf("zpXi:%02X:%04X(%02X) ", RAM[m6502.PC], *((uint16_t*)&RAM[m6502.PC]) + m6502.X, RAM[*((uint16_t*)&RAM[m6502.PC]) + m6502.X]);
-    disPrintf(disassembly.oper, "($%02X,X)", memread8(m6502.PC) );
-    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) + m6502.X) );
-
+INLINE uint16_t _addr_ind_X() {
     return memread16( fetch() + m6502.X );
+}
+INLINE uint16_t _addr_ind_X_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X,X)", memread8(m6502.PC) );
+    _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16( memread8(m6502.PC) + m6502.X) );
+
+    return memread16( _fetch_dbg() + m6502.X );
 }
 INLINE uint8_t src_X_ind() {
     return memread( addr_ind_X() );
@@ -1249,13 +1274,14 @@ INLINE uint8_t src_X_ind() {
  operand is zeropage address;
  effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
  **/
-INLINE uint16_t addr_ind_Y() {
-    //    uint8_t a = fetch();
-    //    dbgPrintf("addr_ind_Y: %04X + %02X = %04X ", addr_zpg_ind( a ), m6502.Y, addr_zpg_ind( a ) + m6502.Y);
-    disPrintf(disassembly.oper, "($%02X),Y", memread8(m6502.PC) );
-    disPrintf(disassembly.comment, "ind_addr:%04X", memread16( memread8(m6502.PC) ) + m6502.Y );
-
+INLINE uint16_t _addr_ind_Y() {
     return memread16( fetch() ) + m6502.Y;
+}
+INLINE uint16_t _addr_ind_Y_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X),Y", memread8(m6502.PC) );
+    _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16( memread8(m6502.PC) ) + m6502.Y );
+
+    return memread16( _fetch_dbg() ) + m6502.Y;
 }
 INLINE uint8_t src_ind_Y() {
     return memread( addr_ind_Y() );
@@ -1270,10 +1296,13 @@ INLINE uint8_t src_ind_Y() {
  operand is zeropage address;
  effective address is address incremented by X without carry **
  **/
-INLINE uint8_t addr_zp_X() {
-    disPrintf(disassembly.oper, "$%02X,X", memread8(m6502.PC));
-
+INLINE uint8_t _addr_zp_X() {
     return fetch() + m6502.X;
+}
+INLINE uint8_t _addr_zp_X_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%02X,X", memread8(m6502.PC));
+
+    return _fetch_dbg() + m6502.X;
 }
 INLINE uint8_t src_zp_X() {
     return memread8_low(addr_zp_X());
@@ -1287,10 +1316,13 @@ INLINE uint8_t src_zp_X() {
  operand is zeropage address;
  effective address is address incremented by Y without carry **
  **/
-INLINE uint8_t addr_zp_Y() {
-    disPrintf(disassembly.oper, "$%02X,Y", memread8(m6502.PC));
-
+INLINE uint8_t _addr_zp_Y() {
     return fetch() + m6502.Y;
+}
+INLINE uint8_t _addr_zp_Y_dbg() {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%02X,Y", memread8(m6502.PC));
+
+    return _fetch_dbg() + m6502.Y;
 }
 INLINE uint8_t src_zp_Y() {
     return memread8_low(addr_zp_Y());

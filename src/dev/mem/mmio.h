@@ -24,7 +24,6 @@
 #ifndef __APPLE2_MMIO_H__
 #define __APPLE2_MMIO_H__
 
-#pragma message("MMIO")
 
 #include <string.h>
 
@@ -418,27 +417,40 @@ INLINE uint8_t _fetch(void);
 INLINE uint8_t _fetch_dbg(void);
 INLINE uint16_t _fetch16(void);
 INLINE uint16_t _fetch16_dbg(void);
-INLINE uint16_t addr_abs(void);
+INLINE uint16_t _addr_abs(void);
+INLINE uint16_t _addr_abs_dbg(void);
 INLINE uint8_t src_abs(void);
-INLINE int8_t rel_addr(void);
-INLINE uint16_t abs_addr(void);
-INLINE uint16_t ind_addr(void);
-INLINE uint16_t addr_abs_X(void);
+INLINE int8_t _rel_addr(void);
+INLINE int8_t _rel_addr_dbg(void);
+INLINE uint16_t _abs_addr(void);
+INLINE uint16_t _abs_addr_dbg(void);
+INLINE uint16_t _ind_addr(void);
+INLINE uint16_t _ind_addr_dbg(void);
+INLINE uint16_t _addr_abs_X(void);
+INLINE uint16_t _addr_abs_X_dbg(void);
 INLINE uint8_t src_abs_X(void);
-INLINE uint16_t addr_abs_Y(void);
+INLINE uint16_t _addr_abs_Y(void);
+INLINE uint16_t _addr_abs_Y_dbg(void);
 INLINE uint8_t src_abs_Y(void);
-INLINE uint8_t imm(void);
-INLINE uint8_t addr_zp(void);
+INLINE uint8_t _imm(void);
+INLINE uint8_t _imm_dbg(void);
+INLINE uint8_t _addr_zp(void);
+INLINE uint8_t _addr_zp_dbg(void);
 INLINE uint8_t src_zp(void);
-INLINE uint16_t addr_ind(void);
+INLINE uint16_t _addr_ind(void);
+INLINE uint16_t _addr_ind_dbg(void);
 INLINE uint8_t src_ind(void);
-INLINE uint16_t addr_ind_X(void);
+INLINE uint16_t _addr_ind_X(void);
+INLINE uint16_t _addr_ind_X_dbg(void);
 INLINE uint8_t src_X_ind(void);
-INLINE uint16_t addr_ind_Y(void);
+INLINE uint16_t _addr_ind_Y(void);
+INLINE uint16_t _addr_ind_Y_dbg(void);
 INLINE uint8_t src_ind_Y(void);
-INLINE uint8_t addr_zp_X(void);
+INLINE uint8_t _addr_zp_X(void);
+INLINE uint8_t _addr_zp_X_dbg(void);
 INLINE uint8_t src_zp_X(void);
-INLINE uint8_t addr_zp_Y(void);
+INLINE uint8_t _addr_zp_Y(void);
+INLINE uint8_t _addr_zp_Y_dbg(void);
 INLINE uint8_t src_zp_Y(void);
 
 
@@ -446,11 +458,37 @@ INLINE uint8_t src_zp_Y(void);
 
 #define fetch() _fetch()
 #define fetch16() _fetch16()
+#define addr_abs() _addr_abs()
+#define rel_addr() _rel_addr()
+#define abs_addr() _abs_addr()
+#define ind_addr() _ind_addr()
+#define addr_abs_X() _addr_abs_X()
+#define addr_abs_Y() _addr_abs_Y()
+#define imm() _imm()
+#define addr_zp() _addr_zp()
+#define addr_ind() _addr_ind()
+#define addr_ind_X() _addr_ind_X()
+#define addr_ind_Y() _addr_ind_Y()
+#define addr_zp_X() _addr_zp_X()
+#define addr_zp_Y() _addr_zp_Y()
 
 #else // DEBUGGER
 
 #define fetch() _fetch_dbg()
 #define fetch16() _fetch16_dbg()
+#define addr_abs() _addr_abs_dbg()
+#define rel_addr() _rel_addr_dbg()
+#define abs_addr() _abs_addr_dbg()
+#define ind_addr() _ind_addr_dbg()
+#define addr_abs_X() _addr_abs_X_dbg()
+#define addr_abs_Y() _addr_abs_Y_dbg()
+#define imm() _imm_dbg()
+#define addr_zp() _addr_zp_dbg()
+#define addr_ind() _addr_ind_dbg()
+#define addr_ind_X() _addr_ind_X_dbg()
+#define addr_ind_Y() _addr_ind_Y_dbg()
+#define addr_zp_X() _addr_zp_X_dbg()
+#define addr_zp_Y() _addr_zp_Y_dbg()
 
 #endif // DEBUGGER
 

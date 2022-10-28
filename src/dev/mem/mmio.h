@@ -24,6 +24,8 @@
 #ifndef __APPLE2_MMIO_H__
 #define __APPLE2_MMIO_H__
 
+#pragma message("MMIO")
+
 #include <string.h>
 
 #include "common.h"
@@ -412,8 +414,10 @@ INLINE void memwrite8_low( uint16_t addr, uint8_t data );
 INLINE void memwrite8_bank( uint16_t addr, uint8_t data );
 INLINE void memwrite8_high( uint16_t addr, uint8_t data );
 INLINE void memwrite( uint16_t addr, uint8_t data );
-INLINE uint8_t fetch(void);
-INLINE uint16_t fetch16(void);
+INLINE uint8_t _fetch(void);
+INLINE uint8_t _fetch_dbg(void);
+INLINE uint16_t _fetch16(void);
+INLINE uint16_t _fetch16_dbg(void);
 INLINE uint16_t addr_abs(void);
 INLINE uint8_t src_abs(void);
 INLINE int8_t rel_addr(void);
@@ -436,6 +440,19 @@ INLINE uint8_t addr_zp_X(void);
 INLINE uint8_t src_zp_X(void);
 INLINE uint8_t addr_zp_Y(void);
 INLINE uint8_t src_zp_Y(void);
+
+
+#ifndef DEBUGGER
+
+#define fetch() _fetch()
+#define fetch16() _fetch16()
+
+#else // DEBUGGER
+
+#define fetch() _fetch_dbg()
+#define fetch16() _fetch16_dbg()
+
+#endif // DEBUGGER
 
 
 #endif // __APPLE2_MMIO_H__

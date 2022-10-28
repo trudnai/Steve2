@@ -10,6 +10,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include "disassembler.h"
+#include "6502.h"
 
 disassembly_t disassembly;
 unsigned long long discnt = 0;
@@ -31,38 +32,38 @@ INLINE flags_t getFlags2(void) {
 
 
 void _disHexB( char ** s, const uint8_t b ) {
-    if ( m6502.dbgLevel.trace ) {
+//    if ( m6502.dbgLevel.trace ) {
         snprintf(*s, 4, "%02X ", b);
         *s += 3;
-    }
+//    }
 }
 
 void _disHexW( char ** s, const uint16_t w ) {
-    if ( m6502.dbgLevel.trace ) {
+//    if ( m6502.dbgLevel.trace ) {
         snprintf(*s, 6, "%04X ", w);
         *s += 5;
-    }
+//    }
 }
 
 void _disPuts( char ** s, const char * from ) {
-    if ( m6502.dbgLevel.trace ) {
+//    if ( m6502.dbgLevel.trace ) {
         while ( (*(*s)++ = *from++) );
-    }
+//    }
 }
 
 
 void _disPrintf( char * s, const size_t n, const char * fmt, ... ) {
-    if ( m6502.dbgLevel.trace ) {
+//    if ( m6502.dbgLevel.trace ) {
         va_list arg_ptr;
         
         va_start(arg_ptr, fmt);
         vsnprintf( s, n, fmt, arg_ptr );
         va_end(arg_ptr);
-    }
+//    }
 }
 
 void _disNewInstruction(void) {
-    if ( m6502.dbgLevel.trace ) {
+//    if ( m6502.dbgLevel.trace ) {
         memset( &disassembly, 0, sizeof(disassembly) );
         disassembly.clk = m6502.clktime + m6502.clkfrm;
         snprintf(disassembly.addr, 5, "%04X ", m6502.PC);
@@ -71,7 +72,7 @@ void _disNewInstruction(void) {
 //        disassembly.inst[0] = '\0';
 //        disassembly.oper[0] = '\0';
 //        disassembly.comment[0] = '\0';
-    }
+//    }
 }
 
 

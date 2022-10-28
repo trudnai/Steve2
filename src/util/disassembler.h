@@ -24,7 +24,7 @@
 #ifndef disassembler_h
 #define disassembler_h
 
-#include "6502.h"
+
 #include "common.h"
 
 
@@ -43,26 +43,23 @@ extern disassembly_t disassembly;
 //#define DISASSEMBLER
 //#undef DISASSEMBLER
 
-#if defined(DISASSEMBLER) || defined(DEBUGGER)
-
-//extern unsigned long long int clktime;
 extern unsigned long long discnt;
+//extern unsigned long long int clktime;
 
 extern void _disHexB( char ** s, const uint8_t b );
-#define disHexB( s, b ) _disHexB( &(s), (b) )
-
 extern void _disHexW( char ** s, const uint16_t w );
-#define disHexW( s, w ) _disHexW( &(s), (w) )
-
 extern void _disPuts( char ** s, const char * from );
-#define disPuts( s, from ) _disPuts( &(s), (from) )
-
 extern void _disPrintf( char * s, const size_t n, const char * fmt, ... );
+extern void _disNewInstruction(void);
+
+#if defined(DISASSEMBLER) || defined(DEBUGGER)
+
+#define disHexB( s, b ) _disHexB( &(s), (b) )
+#define disHexW( s, w ) _disHexW( &(s), (w) )
+#define disPuts( s, from ) _disPuts( &(s), (from) )
 #define disPrintf( s, fmt, args... ) _disPrintf( (s), sizeof(s), (fmt), ##args )
 
-
 // TODO: We should add a new field for clk counter, so we can print that out _before_ execution, not after...
-extern void _disNewInstruction(void);
 #define disNewInstruction() _disNewInstruction()
 
 

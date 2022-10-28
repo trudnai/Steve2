@@ -24,11 +24,12 @@
 #ifndef __6502_INSTR_BRANCH_H__
 #define __6502_INSTR_BRANCH_H__
 
-INSTR void BRA( int8_t reladdr ) {
+
+#ifndef DEBUGGER
+INSTR void _BRA( int8_t reladdr ) {
     uint8_t pg = m6502.PC >> 8;
     m6502.PC += reladdr;
     m6502.clkfrm += m6502.PC >> 8 == pg ? 1 : 2;
-    
 #ifdef DEBUG
     if ( reladdr == -2 ) {
         dbgPrintf2("Infinite Loop at %04X!\n", m6502.PC);
@@ -36,6 +37,25 @@ INSTR void BRA( int8_t reladdr ) {
 #endif
     dbgPrintf("BRA %04X ", m6502.PC);
 }
+#endif // DEBUGGER
+
+
+/**
+ BRA  Branch Unconditionally
+
+ addressing    assembler    opc  bytes  cyles
+ --------------------------------------------
+ relative      BRA oper      90    2     2**
+ **/
+INSTR void BRA( int8_t reladdr ) {
+    dbgPrintf("BRA ");
+    disPrintf(disassembly.inst, "BRA");
+
+#ifndef DEBUGGER
+    _BRA( reladdr );
+#endif
+}
+
 
 /**
  BCC  Branch on Carry Clear
@@ -53,7 +73,7 @@ INSTR void BCC( int8_t reladdr ) {
     
 #ifndef DEBUGGER
     if ( ! m6502.C ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -77,7 +97,7 @@ INSTR void BCS( int8_t reladdr ) {
 
 #ifndef DEBUGGER
     if ( m6502.C ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -101,7 +121,7 @@ INSTR void BNE( int8_t reladdr ) {
 
 #ifndef DEBUGGER
     if ( ! m6502.Z ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -125,7 +145,7 @@ INSTR void BEQ( int8_t reladdr ) {
 
 #ifndef DEBUGGER
     if ( m6502.Z ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -149,7 +169,7 @@ INSTR void BPL( int8_t reladdr ) {
 
 #ifndef DEBUGGER
     if ( ! m6502.N ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -173,7 +193,7 @@ INSTR void BMI( int8_t reladdr ) {
 
 #ifndef DEBUGGER
     if ( m6502.N ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -197,7 +217,7 @@ INSTR void BVC( int8_t reladdr ) {
 
 #ifndef DEBUGGER
     if ( ! m6502.V ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -221,7 +241,7 @@ INSTR void BVS( int8_t reladdr ) {
 
 #ifndef DEBUGGER
     if ( m6502.V ) {
-        BRA( reladdr );
+        _BRA( reladdr );
     }
     else {
         dbgPrintf("-no-");
@@ -275,7 +295,7 @@ INSTR void BVS( int8_t reladdr ) {
 dbgPrintf("BBR"#n" "); \
 disPrintf(disassembly.inst, "BBR"#n); \
     if ( ! (src & (1 << n) ) ) { \
-        BRA( reladdr ); \
+        _BRA( reladdr ); \
     } \
 }
 #else
@@ -300,7 +320,7 @@ disPrintf(disassembly.inst, "BBR"#n); \
 dbgPrintf("BBS"#n" "); \
 disPrintf(disassembly.inst, "BBS"#n); \
     if ( (src & (1 << n) ) ) { \
-        BRA( reladdr ); \
+        _BRA( reladdr ); \
     } \
 }
 #else

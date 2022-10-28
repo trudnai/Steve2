@@ -70,7 +70,7 @@ void CALL( uint16_t addr ) {
 void JUMP( uint16_t addr ) {
     dbgPrintf("JUMP ");
     disPrintf(disassembly.inst, "JUMP");
-    
+
     m6502.PC = addr;
 }
 

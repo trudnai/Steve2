@@ -156,18 +156,21 @@ N V - B D I Z C
 
 
     func DisplayDisassembly() {
-        m6502_Disass_1_Instr()
+        let m6502_saved = m6502
+        var disass = ""
 
-        let disass_C = disassemblyLine()
-        let disass = withUnsafePointer(to: disass_C) {
-            $0.withMemoryRebound(to: UInt8.self, capacity: MemoryLayout.size(ofValue: $0)) {
-                String(cString: $0)
-            }
+//        m6502.PC = 0xFF3A
+
+        for _ in 1...35 {
+            m6502_Disass_1_Instr()
+            disass += String(cString: disassemblyLine()!) + "\n"
         }
 
         DispatchQueue.main.async {
             self.Disass_Display.string = disass
         }
+
+        m6502 = m6502_saved
     }
 
 
@@ -176,6 +179,7 @@ N V - B D I Z C
         DisplayStack()
         DisplayMemory()
         DisplayDisassembly()
+
     }
 
 

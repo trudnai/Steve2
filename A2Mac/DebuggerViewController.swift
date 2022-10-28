@@ -155,6 +155,17 @@ N V - B D I Z C
     }
 
 
+    func invertLine(line : String) -> String {
+        var converted = ""
+
+        for chr in line {
+            converted.append(ViewController.charConvTbl[Int(chr.asciiValue!)])
+        }
+
+        return converted
+    }
+
+
     func DisplayDisassembly() {
         let m6502_saved = m6502
         var disass = ""
@@ -162,8 +173,17 @@ N V - B D I Z C
 //        m6502.PC = 0xFF3A
 
         for _ in 1...35 {
+            let current_line = m6502.PC == m6502_saved.PC
+
             m6502_Disass_1_Instr()
-            disass += String(cString: disassemblyLine()!) + "\n"
+
+            var line = String(cString: disassemblyLine( current_line )!)
+
+            if current_line {
+                line = invertLine(line: line)
+            }
+
+            disass += line + "\n"
         }
 
         DispatchQueue.main.async {

@@ -159,7 +159,7 @@ void printDisassembly( FILE * f ) {
 #endif // DISASSEMBLER
 
 
-const char * disassemblyLine(void) {
+const char * disassemblyLine(_Bool highlight) {
     static char line[256];
 
     snprintf( line, sizeof(line), "%s: %-11s%-4s%s",
@@ -168,6 +168,12 @@ const char * disassemblyLine(void) {
          disassembly.inst,
          disassembly.oper
     );
+
+    if (highlight) {
+        for (int i = 0; i < sizeof(line); i++) {
+            line[i] &= 0x3F;
+        }
+    }
 
     return line;
 }

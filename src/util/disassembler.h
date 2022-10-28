@@ -80,7 +80,7 @@ extern void printDisassembly( FILE * f );
 #endif // DISASSEMBLER
 
 
-extern const char * disassemblyLine(void);
+extern const char * disassemblyLine(_Bool higlight);
 
 
 #endif /* disassembler_h */

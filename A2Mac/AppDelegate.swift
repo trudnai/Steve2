@@ -148,8 +148,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func WarmReset(_ sender: Any) {
         ViewController.current?.Reset(sender)
     }
-    
-    
-    
+
+    @IBAction func DebugContinue(_ sender: Any) {
+        DebuggerWindowController.current?.Continue(sender)
+    }
+
+    @IBAction func DebugStepOver(_ sender: Any) {
+        DebuggerWindowController.current?.Step_Over(sender)
+    }
+
+    @IBAction func DebugStepIn(_ sender: Any) {
+        DebuggerWindowController.current?.Step_In(sender)
+    }
+
+    @IBAction func DebugStepOut(_ sender: Any) {
+        DebuggerWindowController.current?.Step_Out(sender)
+    }
+
+
 }
 

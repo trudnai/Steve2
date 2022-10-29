@@ -201,7 +201,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="622"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
+                            <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
                                 <rect key="frame" x="8" y="10" width="290" height="600"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M3T-0I-hdp">
@@ -446,18 +446,18 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="1" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="351" height="160"/>
                                                                 <clipView key="contentView" copiesOnScroll="NO" id="Fuu-ZX-arY">
-                                                                    <rect key="frame" x="1" y="1" width="349" height="158"/>
+                                                                    <rect key="frame" x="1" y="1" width="334" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-113" width="349" height="182"/>
+                                                                            <rect key="frame" x="0.0" y="-113" width="334" height="182"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            <size key="minSize" width="349" height="158"/>
+                                                                            <size key="minSize" width="334" height="158"/>
                                                                             <size key="maxSize" width="3840" height="58101"/>
                                                                             <attributedString key="textStorage">
                                                                                 <fragment content="1FF: FA 1FE: 84 1FD: 01 1FC: 01 1FB: 00 1FA: 1F 1F9: C1 1F7: D443 JSR 1F5: D532 JSR 1F3: FD77 JSR 1f1: FD37 JSR">
@@ -480,8 +480,8 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="dcm-z5-VNG">
-                                                                    <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="dcm-z5-VNG">
+                                                                    <rect key="frame" x="335" y="1" width="15" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>
@@ -536,9 +536,12 @@ C20D: 4C C5 FE   JMP $FEC5
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa">
-                                                        <rect key="frame" x="0.0" y="277" width="72" height="20"/>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" title="2000" drawsBackground="YES" id="Eze-3w-9N2">
-                                                            <font key="font" metaFont="system"/>
+                                                        <rect key="frame" x="10" y="277" width="50" height="20"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="20" id="bS5-Xb-qDz"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Addr" drawsBackground="YES" usesSingleLineMode="YES" id="Eze-3w-9N2">
+                                                            <font key="font" size="11" name="PrintChar21"/>
                                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
@@ -548,15 +551,15 @@ C20D: 4C C5 FE   JMP $FEC5
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="cbC-f3-JsA"/>
                                                         </constraints>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F" id="ECg-7L-hRs">
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F" id="ECg-7L-hRs">
                                                             <font key="font" size="11" name="PrintChar21"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                    <scrollView focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="710" height="274"/>
-                                                        <clipView key="contentView" copiesOnScroll="NO" id="Jy3-yS-sE4">
+                                                        <clipView key="contentView" focusRingType="none" copiesOnScroll="NO" id="Jy3-yS-sE4">
                                                             <rect key="frame" x="1" y="1" width="708" height="272"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -599,9 +602,9 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     <constraint firstItem="p3x-F3-IOa" firstAttribute="centerY" secondItem="DiM-zp-wCg" secondAttribute="centerY" id="1jB-6a-Kd7"/>
                                                     <constraint firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="trailing" id="7b8-T1-ViL"/>
                                                     <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" id="CnA-zf-PRO"/>
-                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="PZX-dV-eeZ"/>
+                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="10" id="PZX-dV-eeZ"/>
                                                     <constraint firstItem="DiM-zp-wCg" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="80" id="Vk4-MB-VHG"/>
-                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="leading" constant="-8" id="W4a-Ms-nKK"/>
+                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="leading" constant="-20" id="W4a-Ms-nKK"/>
                                                     <constraint firstItem="dzC-sA-aHa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="Ze8-Ir-2gQ"/>
                                                     <constraint firstItem="08L-qW-l2D" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="6" id="kxm-zh-cum"/>
                                                 </constraints>
@@ -786,35 +789,11 @@ C20D: 4C C5 FE   JMP $FEC5
                     </connections>
                 </viewController>
                 <customObject id="DyX-eh-3mW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <toolbarItem implicitItemIdentifier="BFA7134C-38B0-453E-9AFB-33B380479DB4" label="Game" paletteLabel="Game" image="Joystick" id="mKu-aU-HoF">
-                    <nil key="toolTip"/>
-                    <size key="minSize" width="30" height="17"/>
-                    <size key="maxSize" width="43" height="43"/>
-                    <popUpButton key="view" id="wee-Ro-RWP">
-                        <rect key="frame" x="0.0" y="14" width="43" height="30"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <popUpButtonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Joystick" imagePosition="only" alignment="right" lineBreakMode="truncatingTail" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" pullsDown="YES" arrowPosition="noArrow" selectedItem="nmF-Lh-lDV" id="ew6-Z3-VYc">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="menu"/>
-                            <menu key="menu" id="92q-SB-kUO">
-                                <items>
-                                    <menuItem image="Joystick" hidden="YES" id="wpi-yH-8RT">
-                                        <attributedString key="attributedTitle"/>
-                                    </menuItem>
-                                    <menuItem title="Keyboard -&gt; Joystick" state="on" tag="1" id="nmF-Lh-lDV"/>
-                                    <menuItem title="Mouse -&gt; Joystick" tag="2" id="LWq-xF-7RY"/>
-                                    <menuItem title="Mouse Enabled" state="on" tag="3" id="K0r-k9-cpK"/>
-                                </items>
-                            </menu>
-                        </popUpButtonCell>
-                    </popUpButton>
-                </toolbarItem>
             </objects>
             <point key="canvasLocation" x="-28" y="3201"/>
         </scene>
     </scenes>
     <resources>
-        <image name="Joystick" width="32" height="32"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSStatusNone" width="16" height="16"/>
         <image name="NSStatusPartiallyAvailable" width="16" height="16"/>

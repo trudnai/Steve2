@@ -108,7 +108,7 @@ N V - B D I Z C
 
     func DisplayStack() {
         var stack = ""
-        for i : UInt16 in (0x1F0...0x1FF).reversed() {
+        for i : UInt16 in (0x100...0x1FF).reversed() {
             stack += String(format:"%03X: %02X\n", i, getMEM(i))
         }
 

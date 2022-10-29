@@ -50,6 +50,8 @@ class DebuggerViewController: NSViewController {
 //        self.parent?.view.window?.title = self.title!
 
         Update()
+
+        DebuggerWindowController.current?.ContinuePauseButtonState()
     }
 
 

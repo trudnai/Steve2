@@ -24,13 +24,13 @@
 import Cocoa
 
 
-class DebuggerToolBarController: NSWindowController, NSWindowDelegate {
+class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     
-    static var current : DebuggerToolBarController? = nil
+    static var current : DebuggerWindowController? = nil
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        DebuggerToolBarController.current = self
+        DebuggerWindowController.current = self
     }
 
 
@@ -42,13 +42,63 @@ class DebuggerToolBarController: NSWindowController, NSWindowDelegate {
     }
 
 
+    // TODO: Probably there is a better way to achieve this
+    // fill non-break spaces to provide uniform button width
+    let offLabel = "Off \u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}"
+    let pauseLabel = "Pause\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}"
+    let resumeLabel = "Continue"
+
+    @IBOutlet weak var PauseToolbarItem: NSToolbarItem!
+    @IBOutlet weak var PauseButton: NSButton!
+
+
+    func ContinuePauseButtonState() {
+        DispatchQueue.main.async {
+            switch cpuState {
+            case cpuState_halted:
+                if let PauseButton = self.PauseButton {
+                    PauseButton.state = .off
+                }
+                if let PauseToolbarItem = self.PauseToolbarItem {
+                    PauseToolbarItem.isEnabled = true;
+                    PauseToolbarItem.label = self.resumeLabel
+                }
+
+            case cpuState_running:
+                if let PauseButton = self.PauseButton {
+                    PauseButton.state = .on
+                }
+                if let PauseToolbarItem = self.PauseToolbarItem {
+                    PauseToolbarItem.isEnabled = true;
+                    PauseToolbarItem.label = self.pauseLabel
+                }
+
+            default:
+                if let PauseToolbarItem = self.PauseToolbarItem {
+                    PauseToolbarItem.isEnabled = false;
+                    PauseToolbarItem.label = self.offLabel
+                }
+                if let PauseButton = self.PauseButton {
+                    PauseButton.state = .off
+                }
+                break
+            }
+        }
+    }
+
+
     @IBAction func Continue(_ sender: Any) {
+        ContinuePauseButtonState()
+
         switch cpuState {
-        case cpuState_inited, cpuState_unknown:
-            ViewController.current?.PowerOn(sender)
+        case cpuState_halted:
+            ViewController.current?.Pause(sender)
+
+        case cpuState_running:
+            ViewController.current?.Pause(sender)
 
         default:
-            ViewController.current?.PowerOff(sender)
+            break
         }
     }
 

@@ -185,7 +185,8 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             }
             break
         }
-        
+
+        DebuggerWindowController.current?.ContinuePauseButtonState()
     }
     
     @IBAction func Reset(_ sender: Any) {
@@ -384,12 +385,12 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func Debugger(_ sender: Any) {
-        if DebuggerToolBarController.current == nil {
+        if DebuggerWindowController.current == nil {
             let debuggerStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Debugger"), bundle: nil)
             debuggerStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("debuggerWindowController"))
 //            debuggerControler.showWindow(self)
         }
 
-        DebuggerToolBarController.current?.showWindow(self)
+        DebuggerWindowController.current?.showWindow(self)
     }
 }

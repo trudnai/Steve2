@@ -253,6 +253,8 @@ class ViewController: NSViewController  {
             #else
             self.upd.resume()
             #endif
+
+            DebuggerWindowController.current?.ContinuePauseButtonState()
         }
         //------------------------------------------------------------
         
@@ -317,6 +319,8 @@ class ViewController: NSViewController  {
                 self.splashScreen.isHidden = false
             })
         }
+
+        DebuggerWindowController.current?.ContinuePauseButtonState()
 
         
 //        hires.isHidden = true
@@ -1170,30 +1174,26 @@ class ViewController: NSViewController  {
             setIO(0xC063, 1 << 7) // inverted (bit 7: 1 = not pressed)
         }
     }
-    
 
-    func Update() {
-        // Disk Motor LED
-        if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
-            if spkr_is_disk_motor_playing() {
-                if disk1_led.isHidden {
-                    DispatchQueue.main.sync {
+
+    func diskButtonUpdate() {
+        DispatchQueue.main.sync {
+            // Disk Motor LED
+            if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
+                if spkr_is_disk_motor_playing() {
+                    if disk1_led.isHidden {
                         disk1_led.isHidden = false
                     }
                 }
-            }
-            else {
-                if !disk1_led.isHidden {
-                    DispatchQueue.main.sync {
+                else {
+                    if !disk1_led.isHidden {
                         disk1_led.isHidden = true
                     }
                 }
             }
-        }
 
-        // Disk Loaded
-        if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
-            DispatchQueue.main.sync {
+            // Disk Loaded
+            if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
                 if woz_is_loaded() > 0 {
                     if disk1_closed.isHidden {
                         disk1_closed.isHidden = false
@@ -1206,6 +1206,11 @@ class ViewController: NSViewController  {
                 }
             }
         }
+    }
+
+
+    func Update() {
+        diskButtonUpdate()
 
         switch cpuState {
             case cpuState_running:

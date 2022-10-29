@@ -8,7 +8,7 @@
         <!--Debugger Window Controller-->
         <scene sceneID="vl6-ZC-th8">
             <objects>
-                <windowController storyboardIdentifier="debuggerWindowController" id="g5o-m8-tZm" userLabel="Debugger Window Controller" customClass="DebuggerToolBarController" customModule="A2MacTests" customModuleProvider="target" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="debuggerWindowController" id="g5o-m8-tZm" userLabel="Debugger Window Controller" customClass="DebuggerWindowController" customModule="A2MacTests" customModuleProvider="target" sceneMemberID="viewController">
                     <window key="window" title="Steve ][ Debugger" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="Steve ][ Toolbar" animationBehavior="default" id="W9O-yw-CGK">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <rect key="contentRect" x="196" y="240" width="1280" height="840"/>
@@ -28,8 +28,8 @@
                                     <button key="view" verticalHuggingPriority="750" id="Ttb-R2-SbH">
                                         <rect key="frame" x="13" y="14" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarSkipToEndTemplate" imagePosition="only" alignment="center" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="9wh-tQ-dVG">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="NSTouchBarSkipToEndTemplate" imagePosition="only" alignment="center" alternateImage="NSTouchBarPauseTemplate" refusesFirstResponder="YES" imageScaling="proportionallyUpOrDown" inset="2" id="9wh-tQ-dVG">
+                                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
                                     </button>
@@ -184,6 +184,8 @@
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="PauseButton" destination="Ttb-R2-SbH" id="OHl-1i-Um2"/>
+                        <outlet property="PauseToolbarItem" destination="hhe-JX-s1a" id="Bgo-RL-Qb7"/>
                         <segue destination="R5e-co-cXs" kind="relationship" relationship="window.shadowedContentViewController" id="sTL-95-2Ng"/>
                     </connections>
                 </windowController>
@@ -220,7 +222,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="73" width="288" height="1271"/>
+                                                    <rect key="frame" x="0.0" y="53" width="288" height="1271"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -355,10 +357,10 @@ C20D: 4C C5 FE   JMP $FEC5
                                 <rect key="frame" x="306" y="12" width="710" height="598"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
-                                        <rect key="frame" x="0.0" y="72" width="710" height="526"/>
+                                        <rect key="frame" x="0.0" y="73" width="710" height="525"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvo-4B-v1R" userLabel="CPU Stack View">
-                                                <rect key="frame" x="0.0" y="342" width="710" height="184"/>
+                                                <rect key="frame" x="0.0" y="341" width="710" height="184"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
                                                         <rect key="frame" x="0.0" y="0.0" width="351" height="184"/>
@@ -451,7 +453,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-89" width="349" height="182"/>
+                                                                            <rect key="frame" x="0.0" y="-113" width="349" height="182"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -520,10 +522,10 @@ C20D: 4C C5 FE   JMP $FEC5
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
-                                                <rect key="frame" x="0.0" y="0.0" width="710" height="322"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="710" height="321"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="08L-qW-l2D" userLabel="Memory1">
-                                                        <rect key="frame" x="4" y="306" width="44" height="16"/>
+                                                        <rect key="frame" x="4" y="305" width="44" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="gj1-T9-yAz"/>
                                                         </constraints>
@@ -533,8 +535,16 @@ C20D: 4C C5 FE   JMP $FEC5
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="I">
-                                                        <rect key="frame" x="78" y="282" width="634" height="16"/>
+                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa">
+                                                        <rect key="frame" x="0.0" y="277" width="72" height="20"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" title="2000" drawsBackground="YES" id="Eze-3w-9N2">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="Low Nibble Label">
+                                                        <rect key="frame" x="78" y="282" width="634" height="11"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="cbC-f3-JsA"/>
                                                         </constraints>
@@ -586,9 +596,12 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     </scrollView>
                                                 </subviews>
                                                 <constraints>
+                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="centerY" secondItem="DiM-zp-wCg" secondAttribute="centerY" id="1jB-6a-Kd7"/>
                                                     <constraint firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="trailing" id="7b8-T1-ViL"/>
                                                     <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" id="CnA-zf-PRO"/>
+                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="PZX-dV-eeZ"/>
                                                     <constraint firstItem="DiM-zp-wCg" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="80" id="Vk4-MB-VHG"/>
+                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="leading" constant="-8" id="W4a-Ms-nKK"/>
                                                     <constraint firstItem="dzC-sA-aHa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="Ze8-Ir-2gQ"/>
                                                     <constraint firstItem="08L-qW-l2D" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="6" id="kxm-zh-cum"/>
                                                 </constraints>
@@ -596,8 +609,10 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
+                                                    <integer value="1000"/>
                                                 </visibilityPriorities>
                                                 <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
@@ -807,6 +822,7 @@ C20D: 4C C5 FE   JMP $FEC5
         <image name="NSTouchBarGoDownTemplate" width="16" height="30"/>
         <image name="NSTouchBarGoForwardTemplate" width="10" height="30"/>
         <image name="NSTouchBarGoUpTemplate" width="16" height="30"/>
+        <image name="NSTouchBarPauseTemplate" width="11" height="30"/>
         <image name="NSTouchBarSkipToEndTemplate" width="12" height="30"/>
         <image name="NSTrashEmpty" width="32" height="32"/>
         <image name="popUpButtonCell:0qv-E9-TgB:image" width="1" height="1">

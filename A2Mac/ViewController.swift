@@ -592,7 +592,10 @@ class ViewController: NSViewController  {
             pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
         }
     }
-    
+
+
+    var savedVideoMode = videoMode_t.init()
+
 
     override func keyDown(with event: NSEvent) {
         
@@ -703,9 +706,6 @@ class ViewController: NSViewController  {
 //        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
         textDisplay.setSelectedRange(NSRange())
     }
-    
-    
-    var savedVideoMode = videoMode_t.init()
     
     
     override func keyUp(with event: NSEvent) {
@@ -840,8 +840,6 @@ class ViewController: NSViewController  {
         }
     }
 
-
-    
     
     var was = 0;
     
@@ -1417,6 +1415,38 @@ class ViewController: NSViewController  {
     @IBOutlet weak var disk1_closed: NSImageView!
     @IBOutlet weak var disk2_closed: NSImageView!
 
+
+    func keyEventsOn() {
+//        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
+//        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
+//            self.flagsChanged(with: $0)
+//            return $0
+//        }
+
+//        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+//            print("keyDown event")
+
+            if DebuggerWindowController.current?.isKey ?? false {
+                return $0
+            }
+
+            self.keyDown(with: $0)
+            return nil
+        }
+        NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
+//            print("keyUp event")
+
+            if DebuggerWindowController.current?.isKey ?? false {
+                return $0
+            }
+
+            self.keyUp(with: $0)
+            return nil
+        }
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -1480,25 +1510,7 @@ class ViewController: NSViewController  {
         
         self.textDisplayScroller.scaleUnitSquare(to: NSSize(width: 1, height: 1))
         
-//        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
-//        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
-//            self.flagsChanged(with: $0)
-//            return $0
-//        }
-
-        //        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
-//            print("keyDown event")
-            self.keyDown(with: $0)
-            return nil
-//            return $0
-        }
-        NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
-//            print("keyUp event")
-            self.keyUp(with: $0)
-            return nil
-//            return $0
-        }
+        keyEventsOn()
 
 //        displayField.maximumNumberOfLines = textLines
 //        displayField.preferredMaxLayoutWidth = displayField.frame.width

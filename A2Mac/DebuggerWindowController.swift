@@ -42,6 +42,19 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     }
 
 
+    var isKey : Bool = false
+
+    func windowDidBecomeKey(_ notification: Notification) {
+//        NSLog("windowDidBecomeKey")
+        isKey = true
+    }
+
+    func windowDidResignKey(_ notification: Notification) {
+//        NSLog("windowDidResignKey")
+        isKey = false
+    }
+
+
     // TODO: Probably there is a better way to achieve this
     // fill non-break spaces to provide uniform button width
     let offLabel = "Off \u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}\u{A0}"

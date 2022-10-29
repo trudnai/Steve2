@@ -357,10 +357,10 @@ C20D: 4C C5 FE   JMP $FEC5
                                 <rect key="frame" x="306" y="12" width="710" height="598"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
-                                        <rect key="frame" x="0.0" y="73" width="710" height="525"/>
+                                        <rect key="frame" x="0.0" y="72" width="710" height="526"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvo-4B-v1R" userLabel="CPU Stack View">
-                                                <rect key="frame" x="0.0" y="341" width="710" height="184"/>
+                                                <rect key="frame" x="0.0" y="342" width="710" height="184"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
                                                         <rect key="frame" x="0.0" y="0.0" width="351" height="184"/>
@@ -446,7 +446,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="1" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="351" height="160"/>
                                                                 <clipView key="contentView" copiesOnScroll="NO" id="Fuu-ZX-arY">
                                                                     <rect key="frame" x="1" y="1" width="334" height="158"/>
@@ -522,10 +522,10 @@ C20D: 4C C5 FE   JMP $FEC5
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
-                                                <rect key="frame" x="0.0" y="0.0" width="710" height="321"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="710" height="322"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="08L-qW-l2D" userLabel="Memory1">
-                                                        <rect key="frame" x="4" y="305" width="44" height="16"/>
+                                                        <rect key="frame" x="4" y="306" width="44" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="gj1-T9-yAz"/>
                                                         </constraints>
@@ -536,7 +536,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa">
-                                                        <rect key="frame" x="10" y="277" width="50" height="20"/>
+                                                        <rect key="frame" x="10" y="282" width="50" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="bS5-Xb-qDz"/>
                                                         </constraints>
@@ -547,7 +547,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="Low Nibble Label">
-                                                        <rect key="frame" x="78" y="282" width="634" height="11"/>
+                                                        <rect key="frame" x="78" y="282" width="634" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="cbC-f3-JsA"/>
                                                         </constraints>

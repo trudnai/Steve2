@@ -81,9 +81,9 @@ class DebuggerViewController: NSViewController {
     func DisplayRegisters() {
 
         let registers = String(format:"""
-A: %02X    %3u    %@
-X: %02X    %3u    %@
-Y: %02X    %3u    %@
+A: %02X    %3u      %@
+X: %02X    %3u      %@
+Y: %02X    %3u      %@
 
 SP: %02X
 PC: %04X
@@ -168,9 +168,19 @@ N V - B D I Z C
     }
 
 
+    let disass_addr_max : UInt16 = 50
+    var disass_addr : UInt16 = 0
+
     func DisplayDisassembly() {
         let m6502_saved = m6502
         var disass = ""
+
+        if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
+            m6502.PC = disass_addr
+        }
+        else {
+            disass_addr = m6502.PC
+        }
 
 //        m6502.PC = 0xFF3A
 

@@ -152,10 +152,11 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             ViewController.current?.PowerOff(sender)
         }
     }
-    
+
     @IBOutlet weak var PauseToolbarItem: NSToolbarItem!
     @IBOutlet weak var PauseButton: NSButton!
-    @IBAction func Pause(_ sender: Any) {
+
+    func PauseButtonUpdate() {
         switch cpuState {
         case cpuState_halted:
             if let PauseButton = PauseButton {
@@ -164,7 +165,6 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             if let PauseToolbarItem = PauseToolbarItem {
                 PauseToolbarItem.label = pauseLabel
             }
-            ViewController.current?.Pause(sender)
 
         case cpuState_running:
             if let PauseButton = PauseButton {
@@ -173,8 +173,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             if let PauseToolbarItem = PauseToolbarItem {
                 PauseToolbarItem.label = resumeLabel
             }
-            ViewController.current?.Pause(sender)
-            
+
         default:
             if let PauseToolbarItem = PauseToolbarItem {
                 PauseToolbarItem.isEnabled = false;
@@ -183,6 +182,21 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             if let PauseButton = PauseButton {
                 PauseButton.state = .off
             }
+            break
+        }
+    }
+
+    @IBAction func Pause(_ sender: Any) {
+        PauseButtonUpdate()
+
+        switch cpuState {
+        case cpuState_halted:
+            ViewController.current?.Pause(sender)
+
+        case cpuState_running:
+            ViewController.current?.Pause(sender)
+            
+        default:
             break
         }
 

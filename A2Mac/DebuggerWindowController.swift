@@ -89,6 +89,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
     @IBAction func Continue(_ sender: Any) {
         ContinuePauseButtonState()
+        ToolBarController.current?.PauseButtonUpdate()
 
         switch cpuState {
         case cpuState_halted:

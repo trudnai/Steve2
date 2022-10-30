@@ -34,7 +34,7 @@
                                         </buttonCell>
                                     </button>
                                     <connections>
-                                        <action selector="Continue:" target="g5o-m8-tZm" id="ggd-Cv-fuR"/>
+                                        <action selector="ContinuePauseButton:" target="g5o-m8-tZm" id="ggd-Cv-fuR"/>
                                     </connections>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="34201AE0-6358-4CC1-A7D5-BEB45E6353C8" label="Step Over" paletteLabel="Step Over" image="NSTouchBarGoForwardTemplate" id="GHM-FG-JZe" userLabel="Step Over Toolbar Item">
@@ -222,7 +222,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="53" width="288" height="1271"/>
+                                                    <rect key="frame" x="0.0" y="33" width="288" height="1271"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -354,13 +354,13 @@ C20D: 4C C5 FE   JMP $FEC5
                                 </customSpacing>
                             </stackView>
                             <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Side Panel">
-                                <rect key="frame" x="306" y="12" width="710" height="598"/>
+                                <rect key="frame" x="306" y="10" width="710" height="600"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
-                                        <rect key="frame" x="0.0" y="72" width="710" height="526"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="710" height="600"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvo-4B-v1R" userLabel="CPU Stack View">
-                                                <rect key="frame" x="0.0" y="342" width="710" height="184"/>
+                                                <rect key="frame" x="0.0" y="416" width="710" height="184"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
                                                         <rect key="frame" x="0.0" y="0.0" width="351" height="184"/>
@@ -404,6 +404,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                                                 </clipView>
                                                                 <constraints>
+                                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="1ff-p2-gpA"/>
                                                                     <constraint firstAttribute="height" constant="160" id="SX5-Sa-JJZ"/>
                                                                 </constraints>
                                                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ZRA-0X-qL7">
@@ -453,11 +454,11 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-113" width="334" height="182"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="182"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            <size key="minSize" width="334" height="158"/>
+                                                                            <size key="minSize" width="181" height="158"/>
                                                                             <size key="maxSize" width="3840" height="58101"/>
                                                                             <attributedString key="textStorage">
                                                                                 <fragment content="1FF: FA 1FE: 84 1FD: 01 1FC: 01 1FB: 00 1FA: 1F 1F9: C1 1F7: D443 JSR 1F5: D532 JSR 1F3: FD77 JSR 1f1: FD37 JSR">
@@ -477,10 +478,10 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <constraint firstAttribute="height" constant="160" id="wPj-Ga-QuT"/>
                                                                 </constraints>
                                                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="uYL-9G-QAi">
-                                                                    <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                                                    <rect key="frame" x="-100" y="-100" width="349" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="dcm-z5-VNG">
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="dcm-z5-VNG">
                                                                     <rect key="frame" x="335" y="1" width="15" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -505,12 +506,14 @@ C20D: 4C C5 FE   JMP $FEC5
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="tkP-fH-zDU" secondAttribute="bottom" id="1s4-KL-DYI"/>
                                                     <constraint firstAttribute="bottom" secondItem="Crh-BM-MCy" secondAttribute="bottom" id="2Uh-ZC-DIS"/>
+                                                    <constraint firstItem="YLL-6E-LGQ" firstAttribute="height" secondItem="9Z1-95-RLw" secondAttribute="height" id="CoB-8r-Kke"/>
                                                     <constraint firstItem="tkP-fH-zDU" firstAttribute="leading" secondItem="Cvo-4B-v1R" secondAttribute="centerX" constant="4" id="IsL-Uw-GQd"/>
                                                     <constraint firstAttribute="trailing" secondItem="tkP-fH-zDU" secondAttribute="trailing" id="K1G-vH-FMD"/>
                                                     <constraint firstItem="Crh-BM-MCy" firstAttribute="leading" secondItem="Cvo-4B-v1R" secondAttribute="leading" id="UyY-hW-CCt"/>
                                                     <constraint firstAttribute="centerX" secondItem="Crh-BM-MCy" secondAttribute="trailing" constant="4" id="bbL-4L-Mdt"/>
                                                     <constraint firstItem="tkP-fH-zDU" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" id="dA3-wJ-Ymz"/>
                                                     <constraint firstItem="Crh-BM-MCy" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" id="nLr-7e-4fF"/>
+                                                    <constraint firstAttribute="height" constant="184" id="x8r-57-qsI"/>
                                                 </constraints>
                                                 <visibilityPriorities>
                                                     <integer value="1000"/>
@@ -522,21 +525,10 @@ C20D: 4C C5 FE   JMP $FEC5
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
-                                                <rect key="frame" x="0.0" y="0.0" width="710" height="322"/>
+                                                <rect key="frame" x="0.0" y="100" width="710" height="300"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="08L-qW-l2D" userLabel="Memory1">
-                                                        <rect key="frame" x="4" y="306" width="44" height="16"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="16" id="gj1-T9-yAz"/>
-                                                        </constraints>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Mem 1" id="3Un-jU-O0b">
-                                                            <font key="font" usesAppearanceFont="YES"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
                                                     <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa">
-                                                        <rect key="frame" x="10" y="282" width="50" height="16"/>
+                                                        <rect key="frame" x="10" y="280" width="50" height="20"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="20" id="bS5-Xb-qDz"/>
                                                         </constraints>
@@ -547,7 +539,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                         </textFieldCell>
                                                     </textField>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="Low Nibble Label">
-                                                        <rect key="frame" x="78" y="282" width="634" height="16"/>
+                                                        <rect key="frame" x="78" y="280" width="634" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="cbC-f3-JsA"/>
                                                         </constraints>
@@ -585,9 +577,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
                                                         </clipView>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="274" id="6Ya-GA-z0A"/>
-                                                        </constraints>
                                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="5vz-OF-VRE">
                                                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                                             <autoresizingMask key="autoresizingMask"/>
@@ -599,17 +588,19 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     </scrollView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="centerY" secondItem="DiM-zp-wCg" secondAttribute="centerY" id="1jB-6a-Kd7"/>
+                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="centerY" secondItem="DiM-zp-wCg" secondAttribute="centerY" constant="-2" id="1jB-6a-Kd7"/>
+                                                    <constraint firstAttribute="height" constant="300" id="1q4-G0-gXU"/>
                                                     <constraint firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="trailing" id="7b8-T1-ViL"/>
+                                                    <constraint firstItem="DiM-zp-wCg" firstAttribute="top" secondItem="ZWI-gS-oPs" secondAttribute="top" constant="4" id="C0D-5y-lzy"/>
                                                     <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" id="CnA-zf-PRO"/>
                                                     <constraint firstItem="p3x-F3-IOa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="10" id="PZX-dV-eeZ"/>
+                                                    <constraint firstItem="dzC-sA-aHa" firstAttribute="top" secondItem="ZWI-gS-oPs" secondAttribute="top" constant="26" id="T4S-i9-19K"/>
                                                     <constraint firstItem="DiM-zp-wCg" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="80" id="Vk4-MB-VHG"/>
                                                     <constraint firstItem="p3x-F3-IOa" firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="leading" constant="-20" id="W4a-Ms-nKK"/>
                                                     <constraint firstItem="dzC-sA-aHa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="Ze8-Ir-2gQ"/>
-                                                    <constraint firstItem="08L-qW-l2D" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="6" id="kxm-zh-cum"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dzC-sA-aHa" secondAttribute="bottom" id="m9p-3C-szs"/>
                                                 </constraints>
                                                 <visibilityPriorities>
-                                                    <integer value="1000"/>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
@@ -618,11 +609,11 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
-                                                    <real value="3.4028234663852886e+38"/>
                                                 </customSpacing>
                                             </stackView>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstItem="ZWI-gS-oPs" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="bottom" constant="16" id="Fz5-5q-jZv"/>
                                             <constraint firstItem="Cvo-4B-v1R" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="GTz-4R-DZt"/>
                                             <constraint firstItem="Cvo-4B-v1R" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" id="azH-14-O3q"/>
                                             <constraint firstAttribute="trailing" secondItem="Cvo-4B-v1R" secondAttribute="trailing" id="cxB-Rw-f6s"/>
@@ -639,89 +630,11 @@ C20D: 4C C5 FE   JMP $FEC5
                                         </customSpacing>
                                     </stackView>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQ2-04-lPn" userLabel="Bottom Selection">
-                                        <rect key="frame" x="8" y="8" width="694" height="57"/>
+                                        <rect key="frame" x="8" y="8" width="694" height="10"/>
                                         <subviews>
-                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HN2-Eb-6Ht">
-                                                <rect key="frame" x="-2" y="41" width="56" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Trace" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Kdm-bM-hb0">
-                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                    <font key="font" metaFont="system"/>
-                                                </buttonCell>
-                                            </button>
                                             <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="oa2-bF-OPT">
-                                                <rect key="frame" x="0.0" y="32" width="68" height="5"/>
+                                                <rect key="frame" x="0.0" y="7" width="68" height="5"/>
                                             </box>
-                                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jDi-tM-QQZ">
-                                                <rect key="frame" x="-2" y="41" width="47" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="ILE: 0.1" id="f2w-FD-OOD">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BhN-WM-tjw">
-                                                <rect key="frame" x="-2" y="40" width="92" height="19"/>
-                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="1" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="9wv-cN-nvE"/>
-                                            </slider>
-                                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7E5-pO-ycS">
-                                                <rect key="frame" x="-2" y="41" width="44" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="LE: 0.1" id="5ol-5S-WKc">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OMo-Kb-QeD">
-                                                <rect key="frame" x="-2" y="40" width="92" height="19"/>
-                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="0.99990000000000001" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="sQN-qq-kna"/>
-                                            </slider>
-                                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eLg-K3-PjQ">
-                                                <rect key="frame" x="-2" y="41" width="48" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="ITE: 0.1" id="1EB-3r-dYk">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NkU-cs-aFb">
-                                                <rect key="frame" x="-2" y="40" width="92" height="19"/>
-                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="1" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="zBO-yu-dme"/>
-                                            </slider>
-                                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5c-EX-l5m">
-                                                <rect key="frame" x="-2" y="41" width="45" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="TE: 0.1" id="FVR-Lz-j3N">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Co1-Pf-vj7">
-                                                <rect key="frame" x="-2" y="40" width="92" height="19"/>
-                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="0.99990000000000001" doubleValue="0.10000000000000001" tickMarkPosition="above" sliderType="linear" id="QUR-Gu-VdD"/>
-                                            </slider>
-                                            <textField hidden="YES" focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mh9-7g-Aso">
-                                                <rect key="frame" x="-2" y="41" width="40" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="right" title="WE: 4" id="eqc-tk-tvn">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
-                                            <slider hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ph5-Bw-bE9">
-                                                <rect key="frame" x="-2" y="33" width="92" height="24"/>
-                                                <sliderCell key="cell" continuous="YES" refusesFirstResponder="YES" state="on" focusRingType="none" alignment="left" maxValue="40" doubleValue="4.1025641025641022" tickMarkPosition="above" numberOfTickMarks="40" allowsTickMarkValuesOnly="YES" sliderType="linear" id="YOJ-Bu-pgj"/>
-                                            </slider>
-                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3bk-Vi-4BD">
-                                                <rect key="frame" x="-2" y="9" width="75" height="17"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="17" id="Jzf-c8-kfw"/>
-                                                </constraints>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" refusesFirstResponder="YES" focusRingType="none" alignment="center" title="0.000 MHz" id="Bvh-6f-3DM">
-                                                    <font key="font" metaFont="system"/>
-                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                </textFieldCell>
-                                            </textField>
                                             <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="VUT-jD-TzS">
                                                 <rect key="frame" x="0.0" y="-2" width="68" height="5"/>
                                             </box>
@@ -729,32 +642,8 @@ C20D: 4C C5 FE   JMP $FEC5
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
@@ -767,6 +656,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                     <constraint firstAttribute="trailing" secondItem="jQ2-04-lPn" secondAttribute="trailing" constant="8" id="IgJ-iQ-fya"/>
                                     <constraint firstAttribute="trailing" secondItem="0fW-4Y-eIm" secondAttribute="trailing" id="QYl-GI-RBo"/>
                                     <constraint firstItem="jQ2-04-lPn" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" constant="8" id="S6T-Kb-26z"/>
+                                    <constraint firstAttribute="bottom" secondItem="0fW-4Y-eIm" secondAttribute="bottom" id="i6Q-OP-9m0"/>
                                     <constraint firstItem="0fW-4Y-eIm" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" id="oiu-yH-cRR"/>
                                 </constraints>
                             </customView>
@@ -775,7 +665,7 @@ C20D: 4C C5 FE   JMP $FEC5
                             <constraint firstAttribute="bottom" secondItem="jY7-ZU-I4z" secondAttribute="bottom" constant="10" id="8jC-7G-Ofh"/>
                             <constraint firstItem="JUf-qx-iuW" firstAttribute="leading" secondItem="jY7-ZU-I4z" secondAttribute="trailing" constant="8" id="ARC-gJ-JMB"/>
                             <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" id="OaJ-lc-b0j"/>
-                            <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="12" id="Y4T-sR-Hag"/>
+                            <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="10" id="Y4T-sR-Hag"/>
                             <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" id="cCh-QQ-pyz"/>
                             <constraint firstItem="jY7-ZU-I4z" firstAttribute="leading" secondItem="Myj-W6-YvY" secondAttribute="leading" constant="8" id="gka-CA-9WG"/>
                             <constraint firstAttribute="trailing" secondItem="JUf-qx-iuW" secondAttribute="trailing" constant="8" id="kwa-ri-Rtq"/>

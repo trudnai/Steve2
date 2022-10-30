@@ -333,29 +333,47 @@ class ViewController: NSViewController  {
         //------------------------------------------------------------
         
     }
-    
-    
+
+
+    func Resume() {
+        #if SCHEDULER_CVDISPLAYLINK
+        CVDisplayLinkStart(displayLink!)
+        #else
+        upd.resume()
+        #endif
+
+        cpuState = cpuState_running
+
+        if let debugger = DebuggerWindowController.current {
+            debugger.ContinuePauseButtonState()
+        }
+    }
+
+
+    func Pause() {
+        #if SCHEDULER_CVDISPLAYLINK
+        CVDisplayLinkStop(displayLink!)
+        #else
+        upd.suspend()
+        #endif
+
+        cpuState = cpuState_halted
+
+        if let debugger = DebuggerWindowController.current {
+            debugger.ContinuePauseButtonState()
+        }
+    }
+
+
     @IBAction func Pause(_ sender: Any) {
 
         switch ( cpuState ) {
         case cpuState_halted:
-            #if SCHEDULER_CVDISPLAYLINK
-            CVDisplayLinkStart(displayLink!)
-            #else
-            upd.resume()
-            #endif
-
-            cpuState = cpuState_running
+            Resume()
             break
             
         case cpuState_running:
-            #if SCHEDULER_CVDISPLAYLINK
-            CVDisplayLinkStop(displayLink!)
-            #else
-            upd.suspend()
-            #endif
-
-            cpuState = cpuState_halted
+            Pause()
             break
             
         default:
@@ -450,7 +468,13 @@ class ViewController: NSViewController  {
     let rightArrowKey = 124
     let upArrowKey = 126
     let downArrowKey = 125
-    
+
+    let F4FunctionKey = 118
+    let F5FunctionKey = 96
+    let F6FunctionKey = 97
+    let F7FunctionKey = 98
+    let F8FunctionKey = 99
+
     var ddd = 9;
 
     override var acceptsFirstResponder: Bool {
@@ -506,7 +530,8 @@ class ViewController: NSViewController  {
         if hide {
             if mouseCursorHidden {
                 // NSCursor.hide() is working weird, better to set a 1px transparent cursor
-                mouseCursorHiddenJoystickEmulation.set()
+//                mouseCursorHiddenJoystickEmulation.set()
+                mouseCursorJoystickEmulation.set()
             }
             else {
                 mouseCursorJoystickEmulation.set()
@@ -690,7 +715,36 @@ class ViewController: NSViewController  {
                 else {
                     kbdInput(0x8B)
                 }
+
+            case F4FunctionKey:
+//                if let debugger = DebuggerWindowController.current {
+//                    debugger.Continue()
+//                }
+
+                Resume()
                 
+            case F5FunctionKey:
+//                if let debugger = DebuggerWindowController.current {
+//                    debugger.Pause()
+//                }
+
+                Pause()
+
+            case F6FunctionKey:
+                if let debugger = DebuggerWindowController.current {
+                    debugger.Step_Over(event)
+                }
+
+            case F7FunctionKey:
+                if let debugger = DebuggerWindowController.current {
+                    debugger.Step_In(event)
+                }
+
+            case F8FunctionKey:
+                if let debugger = DebuggerWindowController.current {
+                    debugger.Step_Out(event)
+                }
+
             default:
     //            print("keycode: %d", keyCode)
                 if let chars = event.characters {
@@ -1426,21 +1480,11 @@ class ViewController: NSViewController  {
 //        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
 //            print("keyDown event")
-
-            if DebuggerWindowController.current?.isKey ?? false {
-                return $0
-            }
-
             self.keyDown(with: $0)
             return nil
         }
         NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
 //            print("keyUp event")
-
-            if DebuggerWindowController.current?.isKey ?? false {
-                return $0
-            }
-
             self.keyUp(with: $0)
             return nil
         }

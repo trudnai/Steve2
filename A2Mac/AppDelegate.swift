@@ -150,7 +150,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @IBAction func DebugContinue(_ sender: Any) {
-        DebuggerWindowController.current?.Continue(sender)
+        DebuggerWindowController.current?.ContinuePauseButton(sender)
     }
 
     @IBAction func DebugStepOver(_ sender: Any) {

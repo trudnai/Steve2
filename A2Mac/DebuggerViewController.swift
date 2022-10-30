@@ -148,7 +148,7 @@ N V - B D I Z C
     func DisplayMemory() {
         var memory = ""
         for i : UInt16 in stride(from: 0x400, to: 0x4FF, by: 16) {
-            memory += hexLine16(addr: i) + textLine16(addr: i) + "\n"
+            memory += hexLine16(addr: i) + " " + textLine16(addr: i) + "\n"
         }
 
         DispatchQueue.main.async {

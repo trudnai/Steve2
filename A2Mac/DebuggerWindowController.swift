@@ -100,16 +100,29 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     }
 
 
-    @IBAction func Continue(_ sender: Any) {
+    func Continue() {
         ContinuePauseButtonState()
         ToolBarController.current?.PauseButtonUpdate()
 
+        ViewController.current?.Pause(0)
+    }
+
+
+    func Pause() {
+        ContinuePauseButtonState()
+        ToolBarController.current?.PauseButtonUpdate()
+
+        ViewController.current?.Pause(0)
+    }
+
+
+    @IBAction func ContinuePauseButton(_ sender: Any) {
         switch cpuState {
         case cpuState_halted:
-            ViewController.current?.Pause(sender)
+            Continue()
 
         case cpuState_running:
-            ViewController.current?.Pause(sender)
+            Pause()
 
         default:
             break

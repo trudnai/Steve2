@@ -23,7 +23,7 @@
 
 import Cocoa
 
-class DebuggerViewController: NSViewController {
+class DebuggerViewController: NSViewController, NSTextFieldDelegate {
     static var shared : DebuggerViewController? = nil
 
     @IBOutlet var CPU_Display: DisplayView!
@@ -52,6 +52,24 @@ class DebuggerViewController: NSViewController {
         Update()
 
         DebuggerWindowController.current?.ContinuePauseButtonState()
+    }
+
+
+    override func scrollWheel(with event: NSEvent) {
+        super.scrollWheel(with: event)
+
+//        if view.window?.firstResponder?.textView?.delegate === Stack_Display {
+//        print("scroll deltaY", event.deltaY, event.scrollingDeltaY)
+//        Stack_Display.scroll(Stack_Display.enclosingScrollView!.visibleRect, by: NSSize(width: 0, height: event.scrollingDeltaY) )
+//        }
+
+        var scrollTo = Stack_Display.visibleRect.origin
+        let lineSpacing = CGFloat(1.5)
+        let lineHeight = Stack_Display.font!.pointSize * lineSpacing
+//        print("lineHeight:", lineHeight, "fontSize:", Stack_Display.font?.pointSize)
+
+        scrollTo.y = round( (scrollTo.y + round(event.scrollingDeltaY) * lineHeight) / lineHeight) * lineHeight
+        Stack_Display.scroll(scrollTo)
     }
 
 

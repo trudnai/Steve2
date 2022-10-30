@@ -1202,6 +1202,17 @@
          contextName = "set_flags_Z:6502.c">
       </ContextState>
       <ContextState
+         contextName = "DebuggerViewController.scrollWheel(with:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "event.deltaY">
+            </PersistentString>
+            <PersistentString
+               value = "event.deltaX">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "textPageSelect:mmio.h">
          <PersistentStrings>
             <PersistentString

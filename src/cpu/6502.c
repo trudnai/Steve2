@@ -302,7 +302,7 @@ void interrupt_NMI() {
 void hardReset() {
     m6502.PC = memread16(RESET_VECTOR);
     // make sure it will be a cold reset...
-    memwrite(0x3F4, 0);
+    _memwrite(0x3F4, 0);
     m6502.SP = 0xFF;
     // N V - B D I Z C
     // 0 0 1 0 0 1 0 1

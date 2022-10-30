@@ -46,7 +46,7 @@ INSTR void PUSH_addr( uint16_t addr ) {
 INLINE uint16_t POP_addr(void) {
     return  POP() + ( POP() << 8 );
 }
-#endif
+#endif // DEBUGGER
 
 /**
  PHA  Push Accumulator on Stack

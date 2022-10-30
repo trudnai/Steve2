@@ -114,7 +114,7 @@ static char * charConv =
 INSTR void STR( uint16_t addr, uint8_t src ) {
     dbgPrintf("STR [%04X], %02X ", addr, src );
 #ifndef DEBUGGER
-    memwrite(addr, src);
+    _memwrite(addr, src);
 #endif
 }
 

@@ -983,19 +983,29 @@ INLINE uint16_t memread16( uint16_t addr ) {
     return memread16_low(addr);
 }
 
-INLINE uint8_t memread( uint16_t addr ) {
+INLINE uint8_t _memread( uint16_t addr ) {
     if (addr >= 0xC000) {
         if (addr < 0xC100) {
             return ioRead(addr);
         }
         
-        //        return memread8_paged(addr);
+//        return memread8_paged(addr);
         return memread8_high(addr);
     }
-    //    return memread8_paged(addr);
+//    return memread8_paged(addr);
     return memread8_low(addr);
     
-    //    return memread8(addr);
+//    return memread8(addr);
+}
+INLINE uint8_t _memread_dbg( uint16_t addr ) {
+    if (addr >= 0xC000) {
+//        return memread8_paged(addr);
+        return memread8_high(addr);
+    }
+//    return memread8_paged(addr);
+    return memread8_low(addr);
+
+//    return memread8(addr);
 }
 
 
@@ -1028,7 +1038,7 @@ INLINE void memwrite8_bank( uint16_t addr, uint8_t data ) {
 INLINE void memwrite8_high( uint16_t addr, uint8_t data ) {
     WRHIMEM[addr] = data;
 }
-INLINE void memwrite( uint16_t addr, uint8_t data ) {
+INLINE void _memwrite( uint16_t addr, uint8_t data ) {
     if (addr >= 0xC000) {
         if (addr < 0xC100) {
             ioWrite(addr, data);

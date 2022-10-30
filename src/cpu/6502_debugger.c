@@ -80,13 +80,13 @@ INLINE int m6502_Disass_1_Instr(void) {
 
     disNewInstruction();
     
-    switch ( fetch() ) {
+    switch ( _fetch_dbg() ) {
 #include "6502_std.h"       // Standard 6502 instructions
 //#include "6502_und.h"       // Undocumented 6502 instructions
 #include "6502_C.h"         // Extended 65C02 instructions
 
         default:
-            dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
+            dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, _memread_dbg( m6502.PC -1 ));
             return 2;
     } // switch fetch16
     

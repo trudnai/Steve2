@@ -41,7 +41,7 @@
 **/
 #ifndef DEBUGGER
 INSTR void _ASL( uint16_t addr ) {
-    m6502.C = memread(addr) & 0x80;
+    m6502.C = _memread(addr) & 0x80;
     set_flags_NZ( WRLOMEM[addr] <<= 1 );
 }
 #endif

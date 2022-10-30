@@ -131,6 +131,19 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
 
     @IBAction func Step_Over(_ sender: Any) {
+        let sp = m6502.SP
+
+        m6502_Step()
+        while m6502.SP < 0xFF && m6502.SP < sp {
+            m6502_Step()
+        }
+
+        // TODO: This should be in Debugger!
+        if let debugger = DebuggerViewController.shared {
+            debugger.Update()
+        }
+
+        // TODO: Update Screen and speaker etc
     }
 
 
@@ -140,10 +153,25 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         if let debugger = DebuggerViewController.shared {
             debugger.Update()
         }
+
+        // TODO: Update Screen and speaker etc
     }
 
 
     @IBAction func Step_Out(_ sender: Any) {
+        let sp = m6502.SP
+
+        m6502_Step()
+        while m6502.SP < 0xFF && m6502.SP <= sp {
+            m6502_Step()
+        }
+
+        // TODO: This should be in Debugger!
+        if let debugger = DebuggerViewController.shared {
+            debugger.Update()
+        }
+
+        // TODO: Update Screen and speaker etc
     }
 
 

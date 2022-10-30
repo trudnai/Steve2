@@ -30,6 +30,7 @@
 
 typedef struct disassembly_s {
     uint64_t clk;                   // clock time
+    uint8_t op;                     // opcode
     char addr[5];                   // 4 digits + \0
     char opcode[4 * 3 + 1];         // max 4 bytes * (2 digits + 1 space) + \0
     char * pOpcode;                 // pointer for opcode string builder

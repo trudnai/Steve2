@@ -62,6 +62,8 @@ void _disPrintf( char * s, const size_t n, const char * fmt, ... ) {
 //    }
 }
 
+INLINE uint8_t memread8_low( uint16_t addr );
+
 void _disNewInstruction(void) {
 //    if ( m6502.dbgLevel.trace ) {
         memset( &disassembly, 0, sizeof(disassembly) );
@@ -73,6 +75,8 @@ void _disNewInstruction(void) {
 //        disassembly.oper[0] = '\0';
 //        disassembly.comment[0] = '\0';
 //    }
+
+    disassembly.op = memread8_low(m6502.PC);
 }
 
 

@@ -1029,13 +1029,13 @@ INLINE uint8_t _memread_dbg( uint16_t addr ) {
  Naive implementation of RAM write to address
  **/
 
-INLINE void memwrite8_low( uint16_t addr, uint8_t data ) {
+INLINE void _memwrite8_low( uint16_t addr, uint8_t data ) {
     WRLOMEM[addr] = data;
 }
-INLINE void memwrite8_bank( uint16_t addr, uint8_t data ) {
+INLINE void _memwrite8_bank( uint16_t addr, uint8_t data ) {
     WRD0MEM[addr] = data;
 }
-INLINE void memwrite8_high( uint16_t addr, uint8_t data ) {
+INLINE void _memwrite8_high( uint16_t addr, uint8_t data ) {
     WRHIMEM[addr] = data;
 }
 INLINE void _memwrite( uint16_t addr, uint8_t data ) {

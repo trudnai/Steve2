@@ -133,10 +133,9 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     @IBAction func Step_Over(_ sender: Any) {
         let sp = m6502.SP
 
-        m6502_Step()
-        while m6502.SP < 0xFF && m6502.SP < sp {
+        repeat {
             m6502_Step()
-        }
+        } while m6502.SP < 0xFF && m6502.SP < sp
 
         // TODO: This should be in Debugger!
         if let debugger = DebuggerViewController.shared {
@@ -159,12 +158,20 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
 
     @IBAction func Step_Out(_ sender: Any) {
-        let sp = m6502.SP
+        var sp = m6502.SP
 
-        m6502_Step()
-        while m6502.SP < 0xFF && m6502.SP <= sp {
+        repeat {
+            let opcode = MEM[Int(m6502.PC)]
+
             m6502_Step()
-        }
+
+            // If it was NOT and RTI or RTS and stack pointer is above the saved one...
+            if opcode != 0x40 && opcode != 0x60 && m6502.SP > sp {
+                // ... then we need to update what we are looking at to get to the true frame pointer
+                sp = m6502.SP
+            }
+
+        } while m6502.SP < 0xFF && m6502.SP <= sp
 
         // TODO: This should be in Debugger!
         if let debugger = DebuggerViewController.shared {

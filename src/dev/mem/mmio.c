@@ -1134,10 +1134,10 @@ INLINE uint16_t _addr_abs_dbg() {
     return _fetch16_dbg();
 }
 INLINE uint8_t _src_abs() {
-    return memread( _addr_abs() );
+    return _memread( _addr_abs() );
 }
 INLINE uint8_t _src_abs_dbg() {
-    return memread( _addr_abs_dbg() );
+    return _memread_dbg( _addr_abs_dbg() );
 }
 //INLINE uint8_t * dest_abs() {
 //    return WRLOMEM + addr_abs();
@@ -1180,10 +1180,10 @@ INLINE uint16_t _addr_abs_X_dbg() {
     return _fetch16_dbg() + m6502.X;
 }
 INLINE uint8_t _src_abs_X() {
-    return memread( _addr_abs_X() );
+    return _memread( _addr_abs_X() );
 }
 INLINE uint8_t _src_abs_X_dbg() {
-    return memread( _addr_abs_X_dbg() );
+    return _memread_dbg( _addr_abs_X_dbg() );
 }
 //INLINE uint8_t * dest_abs_X() {
 //    return WRLOMEM + addr_abs_X();
@@ -1202,10 +1202,10 @@ INLINE uint16_t _addr_abs_Y_dbg() {
     return _fetch16_dbg() + m6502.Y;
 }
 INLINE uint8_t _src_abs_Y() {
-    return memread(_addr_abs_Y());
+    return _memread(_addr_abs_Y());
 }
 INLINE uint8_t _src_abs_Y_dbg() {
-    return memread(_addr_abs_Y_dbg());
+    return _memread_dbg(_addr_abs_Y_dbg());
 }
 //INLINE uint8_t * dest_abs_Y() {
 //    return WRLOMEM + addr_abs_Y();
@@ -1266,10 +1266,10 @@ INLINE uint16_t _addr_ind_dbg() {
     return memread16( _fetch_dbg() );
 }
 INLINE uint8_t _src_ind() {
-    return memread( _addr_ind() );
+    return _memread( _addr_ind() );
 }
 INLINE uint8_t _src_ind_dbg() {
-    return memread( _addr_ind_dbg() );
+    return _memread_dbg( _addr_ind_dbg() );
 }
 
 /**
@@ -1287,10 +1287,10 @@ INLINE uint16_t _addr_ind_X_dbg() {
     return memread16( _fetch_dbg() + m6502.X );
 }
 INLINE uint8_t _src_X_ind() {
-    return memread( _addr_ind_X() );
+    return _memread( _addr_ind_X() );
 }
 INLINE uint8_t _src_X_ind_dbg() {
-    return memread( _addr_ind_X_dbg() );
+    return _memread_dbg( _addr_ind_X_dbg() );
 }
 //INLINE uint8_t * dest_X_ind() {
 //    return WRLOMEM + addr_ind_X();
@@ -1311,10 +1311,10 @@ INLINE uint16_t _addr_ind_Y_dbg() {
     return memread16( _fetch_dbg() ) + m6502.Y;
 }
 INLINE uint8_t _src_ind_Y() {
-    return memread( _addr_ind_Y() );
+    return _memread( _addr_ind_Y() );
 }
 INLINE uint8_t _src_ind_Y_dbg() {
-    return memread( _addr_ind_Y_dbg() );
+    return _memread_dbg( _addr_ind_Y_dbg() );
 }
 //INLINE uint8_t * dest_ind_Y() {
 //    return WRLOMEM + addr_ind_Y();

@@ -198,11 +198,11 @@
             <objects>
                 <viewController title="Debugger Controller Scene" id="R5e-co-cXs" customClass="DebuggerViewController" customModule="A2MacTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" identifier="Monitor View" wantsLayer="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" misplaced="YES" id="Myj-W6-YvY" userLabel="Debugger View">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="622"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1100" height="622"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
-                                <rect key="frame" x="8" y="10" width="290" height="600"/>
+                                <rect key="frame" x="8" y="10" width="366" height="600"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M3T-0I-hdp">
                                         <rect key="frame" x="-2" y="584" width="81" height="16"/>
@@ -216,17 +216,17 @@
                                         </textFieldCell>
                                     </textField>
                                     <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Scroll View - Display View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="290" height="576"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="576"/>
                                         <clipView key="contentView" copiesOnScroll="NO" id="9iz-cs-4As">
-                                            <rect key="frame" x="1" y="1" width="273" height="574"/>
+                                            <rect key="frame" x="1" y="1" width="349" height="574"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-27" width="273" height="1271"/>
+                                                    <rect key="frame" x="0.0" y="-47" width="349" height="1271"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <size key="minSize" width="273" height="574"/>
+                                                    <size key="minSize" width="349" height="574"/>
                                                     <size key="maxSize" width="3840" height="58101"/>
                                                     <attributedString key="textStorage">
                                                         <fragment>
@@ -326,14 +326,14 @@ C20D: 4C C5 FE   JMP $FEC5
                                             <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                         </clipView>
                                         <constraints>
-                                            <constraint firstAttribute="width" priority="100" constant="200" id="fYt-BF-DLx"/>
+                                            <constraint firstAttribute="width" priority="100" constant="256" id="fYt-BF-DLx"/>
                                         </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="hWJ-vf-oXk">
                                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
-                                            <rect key="frame" x="274" y="1" width="15" height="574"/>
+                                            <rect key="frame" x="350" y="1" width="15" height="574"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
@@ -354,7 +354,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                 </customSpacing>
                             </stackView>
                             <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Side Panel">
-                                <rect key="frame" x="306" y="10" width="710" height="600"/>
+                                <rect key="frame" x="382" y="10" width="710" height="600"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
                                         <rect key="frame" x="0.0" y="0.0" width="710" height="600"/>
@@ -454,7 +454,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-71" width="334" height="181"/>
+                                                                            <rect key="frame" x="0.0" y="-94" width="334" height="181"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -617,6 +617,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                             <constraint firstItem="Cvo-4B-v1R" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="GTz-4R-DZt"/>
                                             <constraint firstItem="Cvo-4B-v1R" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" id="azH-14-O3q"/>
                                             <constraint firstAttribute="trailing" secondItem="Cvo-4B-v1R" secondAttribute="trailing" id="cxB-Rw-f6s"/>
+                                            <constraint firstItem="ZWI-gS-oPs" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" constant="200" id="hS6-K8-4XW"/>
                                             <constraint firstAttribute="trailing" secondItem="ZWI-gS-oPs" secondAttribute="trailing" id="pgn-YI-oKb"/>
                                             <constraint firstItem="ZWI-gS-oPs" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="sPE-Nn-wNX"/>
                                         </constraints>

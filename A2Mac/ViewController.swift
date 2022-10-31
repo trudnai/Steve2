@@ -473,7 +473,7 @@ class ViewController: NSViewController  {
     let F5FunctionKey = 96
     let F6FunctionKey = 97
     let F7FunctionKey = 98
-    let F8FunctionKey = 99
+    let F8FunctionKey = 100
 
     var ddd = 9;
 

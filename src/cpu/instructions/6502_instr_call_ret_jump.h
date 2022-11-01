@@ -110,6 +110,7 @@ INLINE void RTS() {
 
 #ifndef DEBUGGER
     m6502.PC = POP_addr() +1;
+    m6502.interrupt = RET;
 
     // disk accelerator would only work for a certain amount of time
     // currently it is 200ms simulated times
@@ -137,6 +138,7 @@ INLINE void RTI() {
     setFlags( POP() );
 //    m6502.I = 0;
     m6502.PC = POP_addr();
+    m6502.interrupt = RET;
 #endif
 }
 

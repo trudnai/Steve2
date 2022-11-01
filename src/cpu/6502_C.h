@@ -31,6 +31,31 @@
 #ifndef _6502_C_h
 #define _6502_C_h
 
+// http://6502.org/tutorials/interrupts.html
+//
+// 2.3 WAI: FASTER INTERRUPT SERVICE ON THE 65C02
+//
+// WDC's 65C02 has a "wait" instruction, WAI. This allows a special case of ultra-fast IRQ interrupt service.
+//
+// In the earlier doorbell comparison, the guests, after ringing the doorbell, had to wait for you to put down what you were doing and get to the door, which introduced a small delay before they would see the door open. The comparison now is that you have already put your work down and gone to the door so you're right there ready to open it immediately upon hearing the bell.
+//
+// If the main part of the work can be paused until the next interrupt, you can set the interrupt-disable bit I-- yes, set it-- execute WAI, and have the very next instruction to be the beginning of the ISR. There will be no jumping through vectors; and since you know exactly where the program pointer will be when the interrupt hits, you will not necessarily need to save any registers your ISR uses. If you do, you can do it before the interrupt.
+//
+// The WAI guarantees that the processor will not be in the middle of executing another instruction when the IRQ line is pulled down, so we can eliminate that part of the latency. The other part of the latency, the 7-clock interrupt sequence, gets eliminated by the fact that we have used SEI to disable the normal IRQ operation, so the IRQ will only have the effect of re-starting the processor and making it continue on with the next instruction instead of taking the vector. And since we don't take the vector, we won't use RTI at the end either.
+//
+// Here's the idea. The LDA and STA instructions were selected only arbitrarily for the example. The xxx just represent the continuation of code execution after the interrupt service is finished.
+//
+// STA VIA1IER     ; Pre-interrupt code finishes here.
+// SEI             ; Disable interrupts if not already done.
+// WAI             ; Put processor into pause mode.
+// LDA VIA1PB      ; First instruction of ISR goes here.
+//       .         ; (Notice the code is straight-lined.)
+//       .         ; Service the interrupt.
+//       .
+// xxx             ; End of ISR moves right into the next thing
+// xxx             ; for the computer to do, without using RTI.
+
+
 // 6502 instructions with additional addressing modes
 
     // ADC AND CMP EOR LDA ORA SBC STA - (zp) addressing mode

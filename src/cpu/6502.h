@@ -67,11 +67,14 @@ extern unsigned int clk_6502_per_frm_max;
 extern unsigned int clk_6502_per_frm_max_sound;
 
 
-typedef enum {
-    NO_INT,
-    HALT,
+typedef enum : uint8_t {
+    NO_INT = 0,
+    HALT,       // HLT instruction
+    BREAK,      // BRK instruction
     IRQ,
     NMI,
+    INV,        // Invalid Opcode
+    RET,        // RTS/RTI Used by Debugger Step_Over / Step_Out
     HARDRESET,
     SOFTRESET,
 } interrupt_t;
@@ -142,8 +145,11 @@ typedef struct m6502_s {
     uint64_t lastIO;  // Last time I/O accessed
     int ecoSpindown;  // spindown counter for eco mode
 
-    debugLevel_t dbgLevel;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
-    
+    union {
+        uint8_t debug;
+        debugLevel_t dbgLevel;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
+    };
+
     union {
         unsigned int IF;             // interrut flag
         interrupt_t interrupt;
@@ -220,6 +226,7 @@ extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
 extern void m6502_Run(void);
+extern void m6502_Debug(void);
 INLINE int m6502_Step(void);
 
 extern void interrupt_IRQ(void);

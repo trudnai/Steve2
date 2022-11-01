@@ -271,6 +271,7 @@ INLINE int m6502_Step(void) {
 
         default:
             dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
+            m6502.interrupt = INV;
             return 2;
     } // switch fetch16
     
@@ -409,6 +410,54 @@ void m6502_Run() {
     // this will take care of turning off disk motor sound when time is up
     spkr_update_disk_sfx();
 }
+
+
+void m6502_Debug(void) {
+    m6502.clktime += m6502.clkfrm;
+    m6502.clkfrm = 0;
+    m6502.lastIO = 0;
+    m6502.interrupt = NO_INT;
+
+    if( diskAccelerator_count ) {
+        if( --diskAccelerator_count <= 0 ) {
+            // make sure we only adjust clock once to get back to normal
+            diskAccelerator_count = 0;
+            clk_6502_per_frm = clk_6502_per_frm_set;
+        }
+    }
+
+    for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() ) {
+        switch (m6502.interrupt) {
+            case HALT:
+                return;
+
+            case IRQ:
+                break;
+
+            case NMI:
+                break;
+
+            case INV:
+                break;
+
+            case RET:
+                break;
+
+            case HARDRESET:
+                hardReset();
+                break;
+
+            case SOFTRESET:
+                softReset();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+}
+
 
 void read_rom( const char * bundlePath, const char * filename, uint8_t * rom, const uint16_t addr, const uint16_t size ) {
     

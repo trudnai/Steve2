@@ -1289,9 +1289,13 @@ class ViewController: NSViewController  {
                 // run some code
                 // cpuState = cpuState_executing
 //                DispatchQueue.global(qos: .userInitiated).async {
+                if m6502.debug {
+                    m6502_Debug()
+                }
+                else {
                     m6502_Run()
                     // cpuState = cpuState_running
-//                }
+                }
                 
                 // video rendering
                 if ( frameCounter % video_fps_divider == 0 ) {

@@ -88,47 +88,9 @@ INLINE int m6502_Disass_1_Instr(void) {
         default:
             dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, _memread_dbg( m6502.PC -1 ));
             return 2;
-    } // switch fetch16
+    } // switch fetch
     
     return 2;
 }
-
-
-void m6502_Disass(void) {
-
-    // init time
-//#ifdef CLK_WAIT
-//    unsigned long long elpased = (unsigned long long)-1LL;
-//#endif
-
-    m6502.clktime += m6502.clkfrm;
-    m6502.clkfrm = 0;
-    m6502.lastIO = 0;
-
-    if( diskAccelerator_count ) {
-        if( --diskAccelerator_count <= 0 ) {
-            // make sure we only adjust clock once to get back to normal
-            diskAccelerator_count = 0;
-            clk_6502_per_frm = clk_6502_per_frm_set;
-        }
-    }
-
-#ifdef SPEEDTEST
-    for ( inst_cnt = 0; inst_cnt < iterations ; inst_cnt++ )
-#elif defined( CLK_WAIT )
-        // we clear the clkfrm from ViewController Update()
-        // we will also use this to pause the simulation if not finished by the end of the frame
-    for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Disass_1_Instr() )
-#else
-    // this is for max speed only -- WARNING! It works only if simulation runs in a completely different thread from the Update()
-    for ( ; ; )
-#endif
-    {
-    }
-    // TODO: clkfrm is already increamented!!!
-//    printDisassembly(outdev);
-        
-}
-
 
 

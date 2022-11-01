@@ -149,6 +149,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
     @IBAction func Step_In(_ sender: Any) {
         m6502_Step()
+        
         // TODO: This should be in Debugger!
         if let debugger = DebuggerViewController.shared {
             debugger.Update()
@@ -173,7 +174,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
                 sp = m6502.SP
             }
 
-        } while m6502.SP < 0xFF && m6502.SP <= sp
+        } while m6502.SP < 0xFE && m6502.SP <= sp
 
         // TODO: This should be in Debugger!
         if let debugger = DebuggerViewController.shared {

@@ -63,13 +63,21 @@ class DebuggerViewController: NSViewController, NSTextFieldDelegate {
 //        Stack_Display.scroll(Stack_Display.enclosingScrollView!.visibleRect, by: NSSize(width: 0, height: event.scrollingDeltaY) )
 //        }
 
-        var scrollTo = Stack_Display.visibleRect.origin
+        var scrollTo = Disass_Display.visibleRect.origin
         let lineSpacing = CGFloat(1.5)
-        let lineHeight = Stack_Display.font!.pointSize * lineSpacing
+        let lineHeight = Disass_Display.font!.pointSize * lineSpacing
 //        print("lineHeight:", lineHeight, "fontSize:", Stack_Display.font?.pointSize)
 
-        scrollTo.y = round( (scrollTo.y + round(event.scrollingDeltaY) * lineHeight) / lineHeight) * lineHeight
-        Stack_Display.scroll(scrollTo)
+        let y1 = round( (scrollTo.y + round(event.scrollingDeltaY) * lineHeight) / lineHeight) * lineHeight
+        let y2 = round( scrollTo.y / lineHeight + event.scrollingDeltaY ) * lineHeight
+
+        if y1 != y2 {
+            print("NOT EQ", y1, y2)
+        }
+
+        scrollTo.y = y1
+
+        Disass_Display.scroll(scrollTo)
     }
 
 
@@ -186,40 +194,94 @@ N V - B D I Z C
     }
 
 
-    let disass_addr_max : UInt16 = 50
+    let disass_addr_min : UInt16 = 320
+    let disass_addr_max : UInt16 = 170
     var disass_addr : UInt16 = 0
+    var line_number = 0
+    var current_line_number = 0
+    let lines_to_disass = 300
+
+
+    func get_scroll_line(view: DisplayView) -> Int {
+        let scrollPos = view.visibleRect.origin.y
+        let lineSpacing = CGFloat(1.5)
+        let lineHeight = view.font!.pointSize * lineSpacing
+
+        return Int(scrollPos / lineHeight)
+    }
+
+
+    func scroll_to(view: DisplayView, line: Int) {
+        var scrollTo = view.visibleRect.origin
+        let lineSpacing = CGFloat(1.5)
+        let lineHeight = view.font!.pointSize * lineSpacing
+
+        scrollTo.y = CGFloat(line) * lineHeight
+
+        view.scroll(scrollTo)
+    }
+
 
     func DisplayDisassembly() {
         let m6502_saved = m6502
         var disass = ""
+
+        line_number = 0
+        current_line_number = 0
 
         if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
             m6502.PC = disass_addr
         }
         else {
             disass_addr = m6502.PC
+            m6502.PC -= disass_addr_min + 20
+
+            // try to sync disassembly code
+            while m6502.PC < disass_addr - disass_addr_min {
+                m6502_Disass_1_Instr()
+//                line_number += 1
+            }
+
+            // hopefully instruction address is in sync
+            disass_addr = m6502.PC
         }
 
-//        m6502.PC = 0xFF3A
-
-        for _ in 1...35 {
-            let current_line = m6502.PC == m6502_saved.PC
+        // normal disassembly
+        for _ in 1...lines_to_disass {
+            let isCurrentLine = m6502.PC == m6502_saved.PC
 
             m6502_Disass_1_Instr()
+            line_number += 1
 
-            var line = String(cString: disassemblyLine( current_line )!)
+            var line = String(cString: disassemblyLine( isCurrentLine )!)
 
-            if current_line {
+            if isCurrentLine {
                 line = invertLine(line: line)
+                current_line_number = line_number
             }
 
             disass += line + "\n"
         }
 
         DispatchQueue.main.async {
+//            let isEmpty = self.Disass_Display.string.isEmpty
             self.Disass_Display.string = disass
-        }
+            let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
+            if self.current_line_number <= currentScrollLine || self.current_line_number > currentScrollLine + 35 {
+                self.scroll_to(view: self.Disass_Display, line: self.current_line_number - 5)
 
+                // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
+                if currentScrollLine == 1 {
+                    // so we need to scroll a bit later when the string is already populated
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        self.scroll_to(view: self.Disass_Display, line: self.current_line_number - 5)
+                    }
+                }
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // your code here
+        }
         m6502 = m6502_saved
     }
 

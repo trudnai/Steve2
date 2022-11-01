@@ -143,6 +143,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         }
 
         // TODO: Update Screen and speaker etc
+        ViewController.current?.Update()
     }
 
 
@@ -154,6 +155,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         }
 
         // TODO: Update Screen and speaker etc
+        ViewController.current?.Update()
     }
 
 
@@ -179,6 +181,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         }
 
         // TODO: Update Screen and speaker etc
+        ViewController.current?.Update()
     }
 
 

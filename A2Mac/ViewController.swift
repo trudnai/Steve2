@@ -1162,7 +1162,7 @@ class ViewController: NSViewController  {
         // Rendering is happening in the main thread, which has two implications:
         //   1. We can update UI elements
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             self.UpdateText()
             self.UpdateCPUspeed()
                 
@@ -1229,31 +1229,31 @@ class ViewController: NSViewController  {
 
 
     func diskButtonUpdate() {
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             // Disk Motor LED
-            if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
+            if ( self.frameCounter % DEF_DRV_LED_DIV == 0 ) {
                 if spkr_is_disk_motor_playing() {
-                    if disk1_led.isHidden {
-                        disk1_led.isHidden = false
+                    if self.disk1_led.isHidden {
+                        self.disk1_led.isHidden = false
                     }
                 }
                 else {
-                    if !disk1_led.isHidden {
-                        disk1_led.isHidden = true
+                    if !self.disk1_led.isHidden {
+                        self.disk1_led.isHidden = true
                     }
                 }
             }
 
             // Disk Loaded
-            if ( frameCounter % DEF_DRV_LED_DIV == 0 ) {
+            if ( self.frameCounter % DEF_DRV_LED_DIV == 0 ) {
                 if woz_is_loaded() > 0 {
-                    if disk1_closed.isHidden {
-                        disk1_closed.isHidden = false
+                    if self.disk1_closed.isHidden {
+                        self.disk1_closed.isHidden = false
                     }
                 }
                 else {
-                    if !disk1_closed.isHidden {
-                        disk1_closed.isHidden = true
+                    if !self.disk1_closed.isHidden {
+                        self.disk1_closed.isHidden = true
                     }
                 }
             }

@@ -701,7 +701,7 @@ class ViewController: UIViewController {
         // Rendering is happening in the main thread, which has two implications:
         //   1. We can update UI elements
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
-        DispatchQueue.main.sync {
+        DispatchQueue.main.async {
             var unicodeTextString : String = ""
             
             var fromLines = 0

@@ -627,6 +627,12 @@
             <PersistentString
                value = "m6502.PC">
             </PersistentString>
+            <PersistentString
+               value = "line_number">
+            </PersistentString>
+            <PersistentString
+               value = "disass_addr">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
@@ -662,6 +668,20 @@
       </ContextState>
       <ContextState
          contextName = "AND:6502_instr_logic.h">
+      </ContextState>
+      <ContextState
+         contextName = "specialized closure #1 in DebuggerViewController.DisplayDisassembly():DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "line_number">
+            </PersistentString>
+            <PersistentString
+               value = "currentScrollLine">
+            </PersistentString>
+            <PersistentString
+               value = "current_line_number">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "fetch:mmio.h">
@@ -766,10 +786,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "DebuggerViewController.disass_scroll_to(line:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Disass_Display.visibleRect">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "HiRes.initHiResLineAddresses():HiRes.swift">
          <PersistentStrings>
             <PersistentString
                value = "HiResLineAddrTbl">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DebuggerViewController.get_scroll_line(view:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "scrollPos / lineHeight">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

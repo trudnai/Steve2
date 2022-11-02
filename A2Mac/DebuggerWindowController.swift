@@ -65,7 +65,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var PauseButton: NSButton!
 
 
-    func ContinuePauseButtonState() {
+    func PauseButtonUpdate(needUpdateMainToolbar: Bool = true) {
         DispatchQueue.main.async {
             switch cpuState {
             case cpuState_halted:
@@ -97,22 +97,38 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
                 break
             }
         }
+
+        if needUpdateMainToolbar {
+            ToolBarController.current?.PauseButtonUpdate(needUpdateDebugToolbar: false)
+        }
     }
 
 
-    func Continue() {
-        ContinuePauseButtonState()
-        ToolBarController.current?.PauseButtonUpdate()
 
-        ViewController.current?.Pause(0)
+
+    func Continue() {
+        PauseButtonUpdate()
+
+        m6502.debugger.SP = 0xFF
+        m6502.debugger.wMask = 0
+        m6502.debugger.on = true
+
+        ViewController.current?.Resume()
+
+        m6502.debugger.wMask = 0
+        m6502.debugger.on = false
+
+        PauseButtonUpdate()
     }
 
 
     func Pause() {
-        ContinuePauseButtonState()
-        ToolBarController.current?.PauseButtonUpdate()
+        PauseButtonUpdate()
 
         ViewController.current?.Pause(0)
+
+        m6502.debugger.wMask = 0
+        m6502.debugger.on = false
     }
 
 
@@ -131,19 +147,17 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
 
     @IBAction func Step_Over(_ sender: Any) {
-        let sp = m6502.SP
+        if MEM[Int(m6502.PC)] == 0x20 {
+            m6502.debugger.SP = m6502.SP > 1 ? m6502.SP : 0
+            m6502.debugger.mask.out = 1
+            m6502.debugger.on = true
 
-        repeat {
-            m6502_Step()
-        } while m6502.SP < 0xFF && m6502.SP < sp
-
-        // TODO: This should be in Debugger!
-        if let debugger = DebuggerViewController.shared {
-            debugger.Update()
+            ViewController.current?.Resume()
         }
-
-        // TODO: Update Screen and speaker etc
-        ViewController.current?.Update()
+        else {
+            // not a JSR call, only do a single step
+            Step_In(sender)
+        }
     }
 
 
@@ -161,28 +175,13 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
 
     @IBAction func Step_Out(_ sender: Any) {
-        var sp = m6502.SP
+        PauseButtonUpdate()
 
-        repeat {
-            let opcode = MEM[Int(m6502.PC)]
+        m6502.debugger.SP = m6502.SP < 0xFE ? m6502.SP + 1 : 0xFF
+        m6502.debugger.mask.out = 1
+        m6502.debugger.on = true
 
-            m6502_Step()
-
-            // If it was NOT and RTI or RTS and stack pointer is above the saved one...
-            if opcode != 0x40 && opcode != 0x60 && m6502.SP > sp {
-                // ... then we need to update what we are looking at to get to the true frame pointer
-                sp = m6502.SP
-            }
-
-        } while m6502.SP < 0xFE && m6502.SP <= sp
-
-        // TODO: This should be in Debugger!
-        if let debugger = DebuggerViewController.shared {
-            debugger.Update()
-        }
-
-        // TODO: Update Screen and speaker etc
-        ViewController.current?.Update()
+        ViewController.current?.Resume()
     }
 
 

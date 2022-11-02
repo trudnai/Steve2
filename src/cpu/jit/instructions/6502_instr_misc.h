@@ -46,6 +46,7 @@ INSTR int BRK(void) {
     PUSH( getFlags().SR );
     m6502.I = 1;
     m6502.PC = memread16(IRQ_VECTOR);
+    m6502.interrupt = BREAK;
 #endif
     return 7;
 }

@@ -429,18 +429,54 @@ void m6502_Debug(void) {
     for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() ) {
         switch (m6502.interrupt) {
             case HALT:
-                return;
+                if (m6502.debugger.mask.hlt) {
+                    cpuState = cpuState_halted;
+                    m6502.debugger.wMask = 0;
+                    return;
+                }
+                break;
+
+            case BREAK:
+                if (m6502.debugger.mask.brk) {
+                    cpuState = cpuState_halted;
+                    m6502.debugger.wMask = 0;
+                    return;
+                }
+                break;
 
             case IRQ:
+                if (m6502.debugger.mask.irq) {
+                    cpuState = cpuState_halted;
+                    m6502.debugger.wMask = 0;
+                    return;
+                }
                 break;
 
             case NMI:
+                if (m6502.debugger.mask.nmi) {
+                    cpuState = cpuState_halted;
+                    m6502.debugger.wMask = 0;
+                    return;
+                }
                 break;
 
             case INV:
+                if (m6502.debugger.mask.inv) {
+                    cpuState = cpuState_halted;
+                    m6502.debugger.wMask = 0;
+                    return;
+                }
                 break;
 
             case RET:
+                // Step_Out & Step_Over: Return to caller
+                if (m6502.debugger.mask.out) {
+                    if ( m6502.SP >= m6502.debugger.SP ) {
+                        cpuState = cpuState_halted;
+                        m6502.debugger.wMask = 0;
+                        return;
+                    }
+                }
                 break;
 
             case HARDRESET:
@@ -452,8 +488,15 @@ void m6502_Debug(void) {
                 break;
 
             default:
+                // Step_Out: If there was a POP (PLA, PLX, PLY, PLP), then we should update the monitoring stack pointer
+                // (so we can return to the caller, not stopping at the POP)
+                if ( m6502.SP > m6502.debugger.SP ) {
+                    m6502.debugger.SP = m6502.SP;
+                }
                 break;
         }
+
+        m6502.interrupt = NO_INT;
     }
 
 }

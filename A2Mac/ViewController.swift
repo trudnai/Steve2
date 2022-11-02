@@ -254,7 +254,9 @@ class ViewController: NSViewController  {
             self.upd.resume()
             #endif
 
-            DebuggerWindowController.current?.ContinuePauseButtonState()
+            if let debugger = DebuggerWindowController.current {
+                debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
+            }
         }
         //------------------------------------------------------------
         
@@ -320,7 +322,9 @@ class ViewController: NSViewController  {
             })
         }
 
-        DebuggerWindowController.current?.ContinuePauseButtonState()
+        if let debugger = DebuggerWindowController.current {
+            debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
+        }
 
         
 //        hires.isHidden = true
@@ -345,7 +349,7 @@ class ViewController: NSViewController  {
         cpuState = cpuState_running
 
         if let debugger = DebuggerWindowController.current {
-            debugger.ContinuePauseButtonState()
+            debugger.PauseButtonUpdate()
         }
     }
 
@@ -360,7 +364,7 @@ class ViewController: NSViewController  {
         cpuState = cpuState_halted
 
         if let debugger = DebuggerWindowController.current {
-            debugger.ContinuePauseButtonState()
+            debugger.PauseButtonUpdate()
         }
     }
 
@@ -1289,8 +1293,31 @@ class ViewController: NSViewController  {
                 // run some code
                 // cpuState = cpuState_executing
 //                DispatchQueue.global(qos: .userInitiated).async {
-                if m6502.debug {
+                if m6502.debugger.on {
                     m6502_Debug()
+
+                    switch m6502.interrupt {
+                    case HALT:
+                        Pause()
+
+                    case BREAK:
+                        Pause()
+
+                    case RET:
+                        if m6502.debugger.mask.ret == 1 {
+                            // Step_Out / Step_Over
+                            if m6502.PC >= m6502.debugger.SP {
+                                Pause()
+                            }
+                        }
+
+                    case INV:
+                        Pause()
+
+                    default:
+                        break
+                    }
+
                 }
                 else {
                     m6502_Run()
@@ -2044,11 +2071,11 @@ class ViewController: NSViewController  {
     @IBAction func traceEnable(_ sender: NSButton) {
         switch sender.state {
         case .on:
-            m6502.dbgLevel.trace = 1
+            m6502.debugger.mask.trace = 1
             openLog()
             
         default:
-            m6502.dbgLevel.trace = 0
+            m6502.debugger.mask.trace = 0
             closeLog()
         }
     }

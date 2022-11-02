@@ -72,7 +72,8 @@ m6502_t m6502 = {
     0,      // A
     0,      // X
     0,      // Y
-    
+
+    // flags_t
     0,      // C
     0,      // Z
     0,      // I
@@ -87,15 +88,32 @@ m6502_t m6502 = {
     
     0,      // clktime
     0,      // clklast
+    0,      // clkfrm
 
+    0,      // clk_wrenable
+    0,      // lastIO
+    0,      // ecoSpindown
+
+    // debugger_t
+    0,      // on
+    0,      // SP
+    0,      // wMask
+
+    // debugMask_t
     0,      // trace
     0,      // step
+    0,      // hlt
     0,      // brk
-    0,      // rts
+    0,      // irq
+    0,      // nmi
+    0,      // inv
+    0,      // out
+    0,      // ret
     0,      // bra
     0,      // bra_true
     0,      // bra_false
     0,      // compile
+    
     HALT,   // IF
     
 };

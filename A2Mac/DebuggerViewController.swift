@@ -51,7 +51,9 @@ class DebuggerViewController: NSViewController, NSTextFieldDelegate {
 
         Update()
 
-        DebuggerWindowController.current?.ContinuePauseButtonState()
+        if let debugger = DebuggerWindowController.current {
+            debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
+        }
     }
 
 

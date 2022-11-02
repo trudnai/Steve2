@@ -156,39 +156,45 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var PauseToolbarItem: NSToolbarItem!
     @IBOutlet weak var PauseButton: NSButton!
 
-    func PauseButtonUpdate() {
-        switch cpuState {
-        case cpuState_halted:
-            if let PauseButton = PauseButton {
-                PauseButton.state = .on
-            }
-            if let PauseToolbarItem = PauseToolbarItem {
-                PauseToolbarItem.label = pauseLabel
-            }
+    func PauseButtonUpdate(needUpdateDebugToolbar: Bool = true) {
+        DispatchQueue.main.async {
+            switch cpuState {
+            case cpuState_halted:
+                if let PauseButton = self.PauseButton {
+                    PauseButton.state = .off
+                }
+                if let PauseToolbarItem = self.PauseToolbarItem {
+                    PauseToolbarItem.label = self.resumeLabel
+                }
 
-        case cpuState_running:
-            if let PauseButton = PauseButton {
-                PauseButton.state = .off
-            }
-            if let PauseToolbarItem = PauseToolbarItem {
-                PauseToolbarItem.label = resumeLabel
-            }
+            case cpuState_running:
+                if let PauseButton = self.PauseButton {
+                    PauseButton.state = .on
+                }
+                if let PauseToolbarItem = self.PauseToolbarItem {
+                    PauseToolbarItem.label = self.pauseLabel
+                }
 
-        default:
-            if let PauseToolbarItem = PauseToolbarItem {
-                PauseToolbarItem.isEnabled = false;
-                PauseToolbarItem.label = offLabel
+            default: // OFF
+                if let PauseToolbarItem = self.PauseToolbarItem {
+                    PauseToolbarItem.isEnabled = false;
+                    PauseToolbarItem.label = self.offLabel
+                }
+                if let PauseButton = self.PauseButton {
+                    PauseButton.state = .off
+                }
+                break
             }
-            if let PauseButton = PauseButton {
-                PauseButton.state = .off
+        }
+
+        if needUpdateDebugToolbar {
+            if let debugger = DebuggerWindowController.current {
+                debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
             }
-            break
         }
     }
 
     @IBAction func Pause(_ sender: Any) {
-        PauseButtonUpdate()
-
         switch cpuState {
         case cpuState_halted:
             ViewController.current?.Pause(sender)
@@ -200,7 +206,11 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             break
         }
 
-        DebuggerWindowController.current?.ContinuePauseButtonState()
+        PauseButtonUpdate()
+
+        if let debugger = DebuggerWindowController.current {
+            debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
+        }
     }
     
     @IBAction func Reset(_ sender: Any) {
@@ -402,9 +412,11 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
         if DebuggerWindowController.current == nil {
             let debuggerStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Debugger"), bundle: nil)
             debuggerStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("debuggerWindowController"))
-//            debuggerControler.showWindow(self)
         }
 
-        DebuggerWindowController.current?.showWindow(self)
+        if let debugger = DebuggerWindowController.current {
+            debugger.showWindow(self)
+        }
     }
+
 }

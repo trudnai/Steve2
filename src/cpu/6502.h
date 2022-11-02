@@ -80,16 +80,21 @@ typedef enum : uint8_t {
 } interrupt_t;
 
 
-typedef struct debugLevel_s {
-    uint8_t trace       : 1;
-    uint8_t step        : 1;
-    uint8_t brk         : 1;
-    uint8_t rts         : 1;
-    uint8_t bra         : 1;
-    uint8_t bra_true    : 1;
-    uint8_t bra_false   : 1;
-    uint8_t compile     : 1;
-} debugLevel_t;
+typedef struct debugMask_s {
+    uint16_t trace       : 1;
+    uint16_t step        : 1;
+    uint16_t hlt         : 1;
+    uint16_t brk         : 1;
+    uint16_t irq         : 1;
+    uint16_t nmi         : 1;
+    uint16_t inv         : 1;
+    uint16_t out         : 1;
+    uint16_t ret         : 1;
+    uint16_t bra         : 1;
+    uint16_t bra_true    : 1;
+    uint16_t bra_false   : 1;
+    uint16_t compile     : 1;
+} debugMask_t;
 
 
 typedef union flags_u {
@@ -106,6 +111,17 @@ typedef union flags_u {
     
     uint8_t SR;
 } flags_t;
+
+
+typedef struct debugger_s {
+    _Bool on;         // debugger is on
+    uint8_t SP;       // Stack Pointer for monitoring Return Stack Level -- eg. Step_Out & Step_Over
+
+    union {
+        uint8_t wMask;
+        debugMask_t mask;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
+    };
+} debugger_t;
 
 
 //#pragma pack(1)
@@ -137,18 +153,15 @@ typedef struct m6502_s {
 
 //    unsigned clk;           // Clock Counter
     uint64_t clktime; // 14:
-    uint64_t clklast; // 22:
-    uint32_t clkfrm;  // 30:
+    uint64_t clklast; // 15:
+    uint32_t clkfrm;  // 16:
     
     uint64_t clk_wrenable;  // CPU clock when WRITE RAM is triggered
     
     uint64_t lastIO;  // Last time I/O accessed
     int ecoSpindown;  // spindown counter for eco mode
 
-    union {
-        uint8_t debug;
-        debugLevel_t dbgLevel;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
-    };
+    debugger_t debugger;
 
     union {
         unsigned int IF;             // interrut flag

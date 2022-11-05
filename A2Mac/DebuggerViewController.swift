@@ -197,7 +197,7 @@ N V - B D I Z C
 
 
     let disass_addr_min : UInt16 = 320
-    let disass_addr_max : UInt16 = 170
+    let disass_addr_max : UInt16 = 512
     var disass_addr : UInt16 = 0
     var line_number = 0
     var current_line_number = 0

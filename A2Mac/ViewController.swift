@@ -1095,8 +1095,8 @@ class ViewController: NSViewController  {
         }
 //            display.stringValue = "testing\nit\nout"
     }
-    
-    
+
+
     func UpdateCPUspeed() {
         // under ~1.5 MHz -- 3 decimals to be able to display 1.023 MHz
         if ( (mhz < 1.4) && (mhz != floor(mhz)) ) {
@@ -1620,15 +1620,15 @@ class ViewController: NSViewController  {
         newUpdateTimer( timeInterval: 1 / Double(fps) )
 #endif
         
-        soundGapSlider.integerValue = Int(spkr_extra_buf)
-        ledingInitEdgeLabel.title = "ILE: " + String( SPKR_INITIAL_LEADING_EDGE )
-        initialLeadEdgeSlider.floatValue = SPKR_INITIAL_LEADING_EDGE
-        leadingEdgeLabel.title = "LE: " + String( SPKR_FADE_LEADING_EDGE )
-        leadEdgeSlider.floatValue = SPKR_FADE_LEADING_EDGE
-        trailingInitEdgeLabel.title = "ITE: " + String( SPKR_INITIAL_TRAILING_EDGE )
-        initialTailEdgeSlider.floatValue = SPKR_INITIAL_TRAILING_EDGE
-        trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
-        tailEdgeSlider.floatValue = SPKR_FADE_TRAILING_EDGE
+//        soundGapSlider.integerValue = Int(spkr_extra_buf)
+//        ledingInitEdgeLabel.title = "ILE: " + String( SPKR_INITIAL_LEADING_EDGE )
+//        initialLeadEdgeSlider.floatValue = SPKR_INITIAL_LEADING_EDGE
+//        leadingEdgeLabel.title = "LE: " + String( SPKR_FADE_LEADING_EDGE )
+//        leadEdgeSlider.floatValue = SPKR_FADE_LEADING_EDGE
+//        trailingInitEdgeLabel.title = "ITE: " + String( SPKR_INITIAL_TRAILING_EDGE )
+//        initialTailEdgeSlider.floatValue = SPKR_INITIAL_TRAILING_EDGE
+//        trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
+//        tailEdgeSlider.floatValue = SPKR_FADE_TRAILING_EDGE
 
         
 //        // BUGFIX: I am not sure why but if I do not adjust the frame and bounds size

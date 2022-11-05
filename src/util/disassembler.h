@@ -27,16 +27,21 @@
 
 #include "common.h"
 
+#define DISASS_ADDR_LEN     5                       // 4 digits + \0
+#define DISASS_OPCODE_LEN   (4 * 3 + 1)             // max 4 bytes * (2 digits + 1 space) + \0
+#define DISASS_INST_LEN     (6 + 1)                 // 3 char (unknown instr? -- give it 6 chars) + \0
+#define DISASS_OPER_LEN     (14 + 2 + 1 + 1 + 1)    // 4 digits + 2 brackets + 1 comma + 1 index + \0
+#define DISASS_COMM_LEN     256                     // 255 char + \0
 
 typedef struct disassembly_s {
     uint64_t clk;                   // clock time
     uint8_t op;                     // opcode
-    char addr[5];                   // 4 digits + \0
-    char opcode[4 * 3 + 1];         // max 4 bytes * (2 digits + 1 space) + \0
+    char addr[DISASS_ADDR_LEN];     // 4 digits + \0
+    char opcode[DISASS_OPCODE_LEN]; // max 4 bytes * (2 digits + 1 space) + \0
     char * pOpcode;                 // pointer for opcode string builder
-    char inst[6 + 1];               // 3 char (unknown instr? -- give it 6 chars) + \0
-    char oper[14 + 2 + 1 + 1 + 1];  // 4 digits + 2 brackets + 1 comma + 1 index + \0
-    char comment[256];              // to be able to add some comments
+    char inst[DISASS_INST_LEN];     // 3 char (unknown instr? -- give it 6 chars) + \0
+    char oper[DISASS_OPER_LEN];     // 4 digits + 2 brackets + 1 comma + 1 index + \0
+    char comment[DISASS_COMM_LEN];  // to be able to add some comments
 } disassembly_t;
 
 extern disassembly_t disassembly;

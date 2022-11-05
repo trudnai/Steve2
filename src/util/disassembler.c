@@ -70,10 +70,10 @@ void _disNewInstruction(void) {
         disassembly.clk = m6502.clktime + m6502.clkfrm;
         snprintf(disassembly.addr, 5, "%04X ", m6502.PC);
         disassembly.pOpcode = disassembly.opcode;
-//        disassembly.opcode[0] = '\0';
-//        disassembly.inst[0] = '\0';
-//        disassembly.oper[0] = '\0';
-//        disassembly.comment[0] = '\0';
+        disassembly.opcode[0] = '\0';
+        disassembly.inst[0] = '\0';
+        disassembly.oper[0] = '\0';
+        disassembly.comment[0] = '\0';
 //    }
 
     disassembly.op = memread8_low(m6502.PC);
@@ -83,7 +83,7 @@ void _disNewInstruction(void) {
 
 #ifdef DISASSEMBLER
 void printDisassembly( FILE * f ) {
-    if ( m6502.dbgLevel.trace && f ) {
+    if ( m6502.debugger.mask.trace && f ) {
         //        fprintf( f, "%s: %-14s%-6s%-14s%-16s A:%02X X:%02X Y:%02X S:%02X P:%02X (%c%c%c%c%c%c%c%c)\n",
         //            disassembly.addr,
         //            disassembly.opcode,

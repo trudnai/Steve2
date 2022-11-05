@@ -78,7 +78,7 @@ typedef struct {
 
 INLINE int m6502_Disass_1_Instr(void) {
 
-    disNewInstruction();
+    _disNewInstruction();
     
     switch ( _fetch_dbg() ) {
 #include "6502_std.h"       // Standard 6502 instructions

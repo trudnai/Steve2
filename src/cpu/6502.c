@@ -335,6 +335,10 @@ void m6502_Run() {
     m6502.clktime += m6502.clkfrm;
     m6502.clkfrm = 0;
     m6502.lastIO = 0;
+    // make sure we aare not debugging
+    m6502.debugger.on = 0;
+    m6502.debugger.wMask = 0;
+
 
     if( diskAccelerator_count ) {
         if( --diskAccelerator_count <= 0 ) {
@@ -416,7 +420,12 @@ void m6502_Debug(void) {
     m6502.clktime += m6502.clkfrm;
     m6502.clkfrm = 0;
     m6502.lastIO = 0;
-    m6502.interrupt = NO_INT;
+    m6502.interrupt = NO_INT; // TODO: This should be taken care by the interrupt handler
+
+    m6502.debugger.on = 1;
+    m6502.debugger.mask.hlt = 1;
+    m6502.debugger.mask.brk = 1;
+    m6502.debugger.mask.inv = 1;
 
     if( diskAccelerator_count ) {
         if( --diskAccelerator_count <= 0 ) {

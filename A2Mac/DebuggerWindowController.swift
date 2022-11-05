@@ -114,11 +114,6 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         m6502.debugger.on = true
 
         ViewController.current?.Resume()
-
-        m6502.debugger.wMask = 0
-        m6502.debugger.on = false
-
-        PauseButtonUpdate()
     }
 
 

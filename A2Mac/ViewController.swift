@@ -1778,7 +1778,7 @@ class ViewController: NSViewController  {
         }
 
 //        spkr_fps_divider = fps / spkr_fps
-        spkr_fps = fps;
+//        spkr_fps = fps;
         
         spkr_play_timeout = SPKR_PLAY_TIMEOUT // * spkr_fps_divider
 

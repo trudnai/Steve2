@@ -198,16 +198,16 @@
             <objects>
                 <viewController title="Debugger Controller Scene" id="R5e-co-cXs" customClass="DebuggerViewController" customModule="A2MacTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" identifier="Monitor View" wantsLayer="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" id="Myj-W6-YvY" userLabel="Debugger View">
-                        <rect key="frame" x="0.0" y="0.0" width="1100" height="616"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1100" height="520"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
                             <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
-                                <rect key="frame" x="8" y="10" width="366" height="600"/>
+                                <rect key="frame" x="8" y="10" width="366" height="504"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M3T-0I-hdp">
-                                        <rect key="frame" x="-2" y="584" width="81" height="16"/>
+                                        <rect key="frame" x="-2" y="488" width="81" height="16"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" id="Nho-aF-T9F"/>
+                                            <constraint firstAttribute="height" constant="16" identifier="Disassembly.Height" id="Nho-aF-T9F"/>
                                         </constraints>
                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Disassembly" id="g1c-cQ-eDu">
                                             <font key="font" usesAppearanceFont="YES"/>
@@ -215,18 +215,18 @@
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Scroll View - Display View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="366" height="576"/>
-                                        <clipView key="contentView" copiesOnScroll="NO" id="9iz-cs-4As">
-                                            <rect key="frame" x="1" y="1" width="349" height="574"/>
+                                    <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Disass Scroll View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="480"/>
+                                        <clipView key="contentView" copiesOnScroll="NO" id="9iz-cs-4As" userLabel="Disass Clip View">
+                                            <rect key="frame" x="1" y="1" width="349" height="478"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-87" width="349" height="1271"/>
+                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="-94" width="349" height="1270"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <size key="minSize" width="349" height="574"/>
+                                                    <size key="minSize" width="349" height="478"/>
                                                     <size key="maxSize" width="3840" height="58101"/>
                                                     <attributedString key="textStorage">
                                                         <fragment>
@@ -325,24 +325,22 @@ C20D: 4C C5 FE   JMP $FEC5
                                             </subviews>
                                             <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                         </clipView>
-                                        <constraints>
-                                            <constraint firstAttribute="width" priority="100" constant="256" id="fYt-BF-DLx"/>
-                                        </constraints>
                                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="hWJ-vf-oXk">
                                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
-                                            <rect key="frame" x="350" y="1" width="15" height="574"/>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.0012626262626262627" horizontal="NO" id="8wE-fn-MQK">
+                                            <rect key="frame" x="350" y="1" width="15" height="478"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="600" id="32e-qn-VpW"/>
-                                    <constraint firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" id="9dB-f0-xxS"/>
-                                    <constraint firstItem="Pcn-4j-EEM" firstAttribute="leading" secondItem="jY7-ZU-I4z" secondAttribute="leading" id="SAn-3M-8BI"/>
-                                    <constraint firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="qhK-AR-32Y"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="500" identifier="Disassembler.Height" id="32e-qn-VpW"/>
+                                    <constraint firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" identifier="Disassembler.Trailing - Disass Scroll View.Trailing" id="9dB-f0-xxS"/>
+                                    <constraint firstAttribute="width" constant="366" id="H6l-7F-VyP"/>
+                                    <constraint firstItem="Pcn-4j-EEM" firstAttribute="leading" secondItem="jY7-ZU-I4z" secondAttribute="leading" identifier="Disass Scroll View.Leading - Disassembler.Leading" id="SAn-3M-8BI"/>
+                                    <constraint firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" identifier="Disassembler.Bottom - Disass Scroll View.Bottom" id="qhK-AR-32Y"/>
                                 </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
@@ -353,14 +351,14 @@ C20D: 4C C5 FE   JMP $FEC5
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Side Panel">
-                                <rect key="frame" x="382" y="10" width="710" height="600"/>
+                            <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Debug Side Panel">
+                                <rect key="frame" x="382" y="10" width="710" height="504"/>
                                 <subviews>
-                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Views">
-                                        <rect key="frame" x="0.0" y="0.0" width="710" height="600"/>
+                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Debug Views">
+                                        <rect key="frame" x="0.0" y="0.0" width="710" height="504"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvo-4B-v1R" userLabel="CPU Stack View">
-                                                <rect key="frame" x="0.0" y="416" width="710" height="184"/>
+                                                <rect key="frame" x="0.0" y="320" width="710" height="184"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
                                                         <rect key="frame" x="0.0" y="0.0" width="351" height="184"/>
@@ -376,13 +374,13 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Z1-95-RLw" userLabel="CPU" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Z1-95-RLw" userLabel="CPU Scroll" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="351" height="160"/>
-                                                                <clipView key="contentView" copiesOnScroll="NO" id="tqk-6Q-HpG">
+                                                                <clipView key="contentView" copiesOnScroll="NO" id="tqk-6Q-HpG" userLabel="CPU Clip View">
                                                                     <rect key="frame" x="1" y="1" width="349" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Wrs-Qt-Kmd" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                                        <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Wrs-Qt-Kmd" userLabel="CPU Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="52" width="349" height="158"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -403,10 +401,6 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                                                                 </clipView>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="1ff-p2-gpA"/>
-                                                                    <constraint firstAttribute="height" constant="160" id="SX5-Sa-JJZ"/>
-                                                                </constraints>
                                                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="ZRA-0X-qL7">
                                                                     <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
@@ -418,11 +412,11 @@ C20D: 4C C5 FE   JMP $FEC5
                                                             </scrollView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstItem="XKO-8T-LZ7" firstAttribute="top" secondItem="Crh-BM-MCy" secondAttribute="top" id="QMW-GI-j1g"/>
-                                                            <constraint firstItem="XKO-8T-LZ7" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" constant="6" id="SqI-vz-Ayj"/>
-                                                            <constraint firstItem="9Z1-95-RLw" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" id="Y46-UQ-uKd"/>
-                                                            <constraint firstAttribute="trailing" secondItem="9Z1-95-RLw" secondAttribute="trailing" id="YhB-6g-e4y"/>
-                                                            <constraint firstAttribute="trailing" secondItem="XKO-8T-LZ7" secondAttribute="trailing" id="ndK-yc-rrg"/>
+                                                            <constraint firstItem="XKO-8T-LZ7" firstAttribute="top" secondItem="Crh-BM-MCy" secondAttribute="top" identifier="CPU: 6502.Top - CPU View.Top" id="QMW-GI-j1g"/>
+                                                            <constraint firstItem="XKO-8T-LZ7" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" constant="6" identifier="CPU: 6502.Leading - CPU View.Leading" id="SqI-vz-Ayj"/>
+                                                            <constraint firstItem="9Z1-95-RLw" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" identifier="CPU Scroll.Leading - CPU View.Leading" id="Y46-UQ-uKd"/>
+                                                            <constraint firstAttribute="trailing" secondItem="9Z1-95-RLw" secondAttribute="trailing" identifier="CPU View.Trailing - CPU Scroll.Trailing" id="YhB-6g-e4y"/>
+                                                            <constraint firstAttribute="trailing" secondItem="XKO-8T-LZ7" secondAttribute="trailing" identifier="CPU View.Trailing - CPU:6502.Trailing" id="ndK-yc-rrg"/>
                                                         </constraints>
                                                         <visibilityPriorities>
                                                             <integer value="1000"/>
@@ -447,14 +441,14 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack">
+                                                            <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack Scroll">
                                                                 <rect key="frame" x="0.0" y="0.0" width="351" height="160"/>
-                                                                <clipView key="contentView" copiesOnScroll="NO" id="Fuu-ZX-arY">
+                                                                <clipView key="contentView" copiesOnScroll="NO" id="Fuu-ZX-arY" userLabel="Stack Clip View">
                                                                     <rect key="frame" x="1" y="1" width="334" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-140" width="334" height="181"/>
+                                                                        <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                                            <rect key="frame" x="0.0" y="-164" width="334" height="182"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -474,24 +468,21 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
                                                                 </clipView>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="160" id="wPj-Ga-QuT"/>
-                                                                </constraints>
                                                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="uYL-9G-QAi">
                                                                     <rect key="frame" x="-100" y="-100" width="349" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="dcm-z5-VNG">
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.020833333333333332" horizontal="NO" id="dcm-z5-VNG">
                                                                     <rect key="frame" x="335" y="1" width="15" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>
                                                         </subviews>
                                                         <constraints>
-                                                            <constraint firstItem="ugZ-j3-huv" firstAttribute="leading" secondItem="tkP-fH-zDU" secondAttribute="leading" constant="6" id="1Wz-Ok-FTm"/>
-                                                            <constraint firstAttribute="trailing" secondItem="YLL-6E-LGQ" secondAttribute="trailing" id="EEv-Kd-YNU"/>
-                                                            <constraint firstItem="YLL-6E-LGQ" firstAttribute="leading" secondItem="tkP-fH-zDU" secondAttribute="leading" id="HIC-KZ-1CC"/>
-                                                            <constraint firstAttribute="trailing" secondItem="ugZ-j3-huv" secondAttribute="trailing" id="xA2-eT-csP"/>
+                                                            <constraint firstItem="ugZ-j3-huv" firstAttribute="leading" secondItem="tkP-fH-zDU" secondAttribute="leading" constant="6" identifier="Stack.Leading - Superview.Leading" id="1Wz-Ok-FTm"/>
+                                                            <constraint firstAttribute="trailing" secondItem="YLL-6E-LGQ" secondAttribute="trailing" identifier="Suoerview.Trailing - Stack Scroll.Trailing" id="EEv-Kd-YNU"/>
+                                                            <constraint firstItem="YLL-6E-LGQ" firstAttribute="leading" secondItem="tkP-fH-zDU" secondAttribute="leading" identifier="Stack Scroll.Leading - Superview.Leading" id="HIC-KZ-1CC"/>
+                                                            <constraint firstAttribute="trailing" secondItem="ugZ-j3-huv" secondAttribute="trailing" identifier="Superview.Trailing - Stack.Trailing" id="xA2-eT-csP"/>
                                                         </constraints>
                                                         <visibilityPriorities>
                                                             <integer value="1000"/>
@@ -504,16 +495,15 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     </stackView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="tkP-fH-zDU" secondAttribute="bottom" id="1s4-KL-DYI"/>
-                                                    <constraint firstAttribute="bottom" secondItem="Crh-BM-MCy" secondAttribute="bottom" id="2Uh-ZC-DIS"/>
-                                                    <constraint firstItem="YLL-6E-LGQ" firstAttribute="height" secondItem="9Z1-95-RLw" secondAttribute="height" id="CoB-8r-Kke"/>
-                                                    <constraint firstItem="tkP-fH-zDU" firstAttribute="leading" secondItem="Cvo-4B-v1R" secondAttribute="centerX" constant="4" id="IsL-Uw-GQd"/>
-                                                    <constraint firstAttribute="trailing" secondItem="tkP-fH-zDU" secondAttribute="trailing" id="K1G-vH-FMD"/>
-                                                    <constraint firstItem="Crh-BM-MCy" firstAttribute="leading" secondItem="Cvo-4B-v1R" secondAttribute="leading" id="UyY-hW-CCt"/>
-                                                    <constraint firstAttribute="centerX" secondItem="Crh-BM-MCy" secondAttribute="trailing" constant="4" id="bbL-4L-Mdt"/>
-                                                    <constraint firstItem="tkP-fH-zDU" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" id="dA3-wJ-Ymz"/>
-                                                    <constraint firstItem="Crh-BM-MCy" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" id="nLr-7e-4fF"/>
-                                                    <constraint firstAttribute="height" constant="184" id="x8r-57-qsI"/>
+                                                    <constraint firstAttribute="bottom" secondItem="tkP-fH-zDU" secondAttribute="bottom" identifier="CPU Stack View.Bottom - Stack View.Bottom" id="1s4-KL-DYI"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Crh-BM-MCy" secondAttribute="bottom" identifier="CPU Stack View.Bottom - CPU View.Bottom" id="2Uh-ZC-DIS"/>
+                                                    <constraint firstItem="tkP-fH-zDU" firstAttribute="leading" secondItem="Cvo-4B-v1R" secondAttribute="centerX" constant="4" identifier="Stack View.Leading - CPU Stack View.Center X" id="IsL-Uw-GQd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="tkP-fH-zDU" secondAttribute="trailing" identifier="CPU Stack View.Trailing - Stack View.Trailing" id="K1G-vH-FMD"/>
+                                                    <constraint firstItem="Crh-BM-MCy" firstAttribute="leading" secondItem="Cvo-4B-v1R" secondAttribute="leading" identifier="CPU View.Leading - CPU Stack View.Leading" id="UyY-hW-CCt"/>
+                                                    <constraint firstAttribute="centerX" secondItem="Crh-BM-MCy" secondAttribute="trailing" constant="4" identifier="CPU Stack View..Center X - CPU View.Trailing" id="bbL-4L-Mdt"/>
+                                                    <constraint firstItem="tkP-fH-zDU" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" identifier="Stack View.Top - CPU Stack View.Top" id="dA3-wJ-Ymz"/>
+                                                    <constraint firstItem="Crh-BM-MCy" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" identifier="CPU View.Top - CPU Stack View.Top" id="nLr-7e-4fF"/>
+                                                    <constraint firstAttribute="height" constant="184" identifier="CPU Stack View.Height" id="x8r-57-qsI"/>
                                                 </constraints>
                                                 <visibilityPriorities>
                                                     <integer value="1000"/>
@@ -525,42 +515,87 @@ C20D: 4C C5 FE   JMP $FEC5
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
-                                                <rect key="frame" x="0.0" y="100" width="710" height="300"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="710" height="300"/>
                                                 <subviews>
-                                                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa">
-                                                        <rect key="frame" x="10" y="280" width="50" height="20"/>
+                                                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fik-fC-8sT">
+                                                        <rect key="frame" x="0.0" y="280" width="710" height="20"/>
+                                                        <subviews>
+                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P9L-wR-0tv" userLabel="Leading Space">
+                                                                <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="4" id="39F-LA-n7O"/>
+                                                                    <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="452-lu-0u3"/>
+                                                                </constraints>
+                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="m4R-OX-oeT" userLabel="Memory Addr Field Cell">
+                                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa" userLabel="Memory Addr Field">
+                                                                <rect key="frame" x="12" y="0.0" width="50" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="50" id="9xL-1J-8Hg"/>
+                                                                    <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="bS5-Xb-qDz"/>
+                                                                </constraints>
+                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Addr" drawsBackground="YES" usesSingleLineMode="YES" id="Eze-3w-9N2" userLabel="Memory Addr Field Cell">
+                                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-1T-iQB" userLabel="Middle Space">
+                                                                <rect key="frame" x="68" y="0.0" width="8" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="4" id="O5P-Di-Yom"/>
+                                                                    <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="rxQ-uI-YNZ"/>
+                                                                </constraints>
+                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="SdV-qz-FNM" userLabel="Memory Addr Field Cell">
+                                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="Low Nibble Label">
+                                                                <rect key="frame" x="80" y="4" width="632" height="16"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="16" identifier="Low Nibble Label.Height" id="cbC-f3-JsA"/>
+                                                                </constraints>
+                                                                <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F" usesSingleLineMode="YES" id="ECg-7L-hRs">
+                                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="20" id="bS5-Xb-qDz"/>
+                                                            <constraint firstAttribute="height" constant="20" id="Ciu-2g-lVZ"/>
                                                         </constraints>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Addr" drawsBackground="YES" usesSingleLineMode="YES" id="Eze-3w-9N2">
-                                                            <font key="font" size="11" name="PrintChar21"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="Low Nibble Label">
-                                                        <rect key="frame" x="78" y="280" width="634" height="16"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="16" id="cbC-f3-JsA"/>
-                                                        </constraints>
-                                                        <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F" id="ECg-7L-hRs">
-                                                            <font key="font" size="11" name="PrintChar21"/>
-                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <scrollView focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="710" height="274"/>
-                                                        <clipView key="contentView" focusRingType="none" copiesOnScroll="NO" id="Jy3-yS-sE4">
-                                                            <rect key="frame" x="1" y="1" width="708" height="272"/>
+                                                        <visibilityPriorities>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                        </visibilityPriorities>
+                                                        <customSpacing>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                        </customSpacing>
+                                                    </stackView>
+                                                    <scrollView focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory Scroll" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="710" height="272"/>
+                                                        <clipView key="contentView" focusRingType="none" copiesOnScroll="NO" id="Jy3-yS-sE4" userLabel="Memory Clip View">
+                                                            <rect key="frame" x="1" y="1" width="708" height="270"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="qqp-t0-j4i" userLabel="Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="89" width="708" height="272"/>
+                                                                <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="qqp-t0-j4i" userLabel="Memory Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="89" width="708" height="270"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    <size key="minSize" width="708" height="272"/>
+                                                                    <size key="minSize" width="708" height="270"/>
                                                                     <size key="maxSize" width="3840" height="58101"/>
                                                                     <attributedString key="textStorage">
                                                                         <fragment>
@@ -588,38 +623,29 @@ C20D: 4C C5 FE   JMP $FEC5
                                                     </scrollView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="centerY" secondItem="DiM-zp-wCg" secondAttribute="centerY" constant="-2" id="1jB-6a-Kd7"/>
-                                                    <constraint firstAttribute="height" constant="300" id="1q4-G0-gXU"/>
-                                                    <constraint firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="trailing" id="7b8-T1-ViL"/>
-                                                    <constraint firstItem="DiM-zp-wCg" firstAttribute="top" secondItem="ZWI-gS-oPs" secondAttribute="top" constant="4" id="C0D-5y-lzy"/>
-                                                    <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" id="CnA-zf-PRO"/>
-                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="10" id="PZX-dV-eeZ"/>
-                                                    <constraint firstItem="dzC-sA-aHa" firstAttribute="top" secondItem="ZWI-gS-oPs" secondAttribute="top" constant="26" id="T4S-i9-19K"/>
-                                                    <constraint firstItem="DiM-zp-wCg" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" constant="80" id="Vk4-MB-VHG"/>
-                                                    <constraint firstItem="p3x-F3-IOa" firstAttribute="trailing" secondItem="DiM-zp-wCg" secondAttribute="leading" constant="-20" id="W4a-Ms-nKK"/>
-                                                    <constraint firstItem="dzC-sA-aHa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="Ze8-Ir-2gQ"/>
-                                                    <constraint firstAttribute="bottom" secondItem="dzC-sA-aHa" secondAttribute="bottom" id="m9p-3C-szs"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" identifier="Memory View.Height" id="1q4-G0-gXU"/>
+                                                    <constraint firstAttribute="trailing" secondItem="fik-fC-8sT" secondAttribute="trailing" id="Bw2-S7-pH0"/>
+                                                    <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" identifier="Memory View.Trailing - Memory Scroll.Trailing" id="CnA-zf-PRO"/>
+                                                    <constraint firstItem="fik-fC-8sT" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="LVP-JS-pu0"/>
+                                                    <constraint firstItem="dzC-sA-aHa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" identifier="Memory Scroll.Leading - Memory View.Leading" id="Ze8-Ir-2gQ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="dzC-sA-aHa" secondAttribute="bottom" identifier="Memory View.Bottom - Memory Scroll.Bottom" id="m9p-3C-szs"/>
                                                 </constraints>
                                                 <visibilityPriorities>
-                                                    <integer value="1000"/>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
                                                 </visibilityPriorities>
                                                 <customSpacing>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
-                                                    <real value="3.4028234663852886e+38"/>
                                                 </customSpacing>
                                             </stackView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="ZWI-gS-oPs" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="bottom" constant="16" id="Fz5-5q-jZv"/>
-                                            <constraint firstItem="Cvo-4B-v1R" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="GTz-4R-DZt"/>
-                                            <constraint firstItem="Cvo-4B-v1R" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" id="azH-14-O3q"/>
-                                            <constraint firstAttribute="trailing" secondItem="Cvo-4B-v1R" secondAttribute="trailing" id="cxB-Rw-f6s"/>
-                                            <constraint firstItem="ZWI-gS-oPs" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" constant="200" id="hS6-K8-4XW"/>
-                                            <constraint firstAttribute="trailing" secondItem="ZWI-gS-oPs" secondAttribute="trailing" id="pgn-YI-oKb"/>
-                                            <constraint firstItem="ZWI-gS-oPs" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" id="sPE-Nn-wNX"/>
+                                            <constraint firstItem="Cvo-4B-v1R" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" identifier="CPU Stack View.Leading - Debug Views.Leading" id="GTz-4R-DZt"/>
+                                            <constraint firstItem="Cvo-4B-v1R" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" identifier="CPU Stack View.Top - Debug Views.Top" id="azH-14-O3q"/>
+                                            <constraint firstAttribute="trailing" secondItem="Cvo-4B-v1R" secondAttribute="trailing" identifier="Debug View.Trailing - CPU Stack View.Trailing" id="cxB-Rw-f6s"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZWI-gS-oPs" secondAttribute="trailing" identifier="Debug Views.Trailing - Memory View.Trailing" id="pgn-YI-oKb"/>
+                                            <constraint firstItem="ZWI-gS-oPs" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" identifier="Memory View.Leading - Debug Views.Leading" id="sPE-Nn-wNX"/>
                                         </constraints>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
@@ -651,25 +677,24 @@ C20D: 4C C5 FE   JMP $FEC5
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="0fW-4Y-eIm" firstAttribute="top" secondItem="JUf-qx-iuW" secondAttribute="top" id="4K9-Jh-Zby"/>
-                                    <constraint firstAttribute="bottom" secondItem="jQ2-04-lPn" secondAttribute="bottom" constant="8" id="Gux-DY-2ne"/>
-                                    <constraint firstAttribute="width" constant="710" id="ISn-zl-W0I"/>
-                                    <constraint firstAttribute="trailing" secondItem="jQ2-04-lPn" secondAttribute="trailing" constant="8" id="IgJ-iQ-fya"/>
-                                    <constraint firstAttribute="trailing" secondItem="0fW-4Y-eIm" secondAttribute="trailing" id="QYl-GI-RBo"/>
-                                    <constraint firstItem="jQ2-04-lPn" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" constant="8" id="S6T-Kb-26z"/>
-                                    <constraint firstAttribute="bottom" secondItem="0fW-4Y-eIm" secondAttribute="bottom" id="i6Q-OP-9m0"/>
-                                    <constraint firstItem="0fW-4Y-eIm" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" id="oiu-yH-cRR"/>
+                                    <constraint firstItem="0fW-4Y-eIm" firstAttribute="top" secondItem="JUf-qx-iuW" secondAttribute="top" identifier="Debug Views.Top - Debug Side Panel.Top" id="4K9-Jh-Zby"/>
+                                    <constraint firstAttribute="bottom" secondItem="jQ2-04-lPn" secondAttribute="bottom" constant="8" identifier="Debug Side Panel.Bottom - Bottom Selection.Bottom" id="Gux-DY-2ne"/>
+                                    <constraint firstAttribute="width" constant="710" identifier="Debug Side Panel.Width" id="ISn-zl-W0I"/>
+                                    <constraint firstAttribute="trailing" secondItem="jQ2-04-lPn" secondAttribute="trailing" constant="8" identifier="Debug Side Panel.Trailing - Bottom Selection.Trailing" id="IgJ-iQ-fya"/>
+                                    <constraint firstAttribute="trailing" secondItem="0fW-4Y-eIm" secondAttribute="trailing" identifier="Debug Side Panel.Trailing - Debug Views.Trailing" id="QYl-GI-RBo"/>
+                                    <constraint firstItem="jQ2-04-lPn" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" constant="8" identifier="Bottom Selection.Leading - Debug Side Panel.Leading" id="S6T-Kb-26z"/>
+                                    <constraint firstAttribute="bottom" secondItem="0fW-4Y-eIm" secondAttribute="bottom" identifier="Debug Side Panel.Bottom - Debug Views.Bottom" id="i6Q-OP-9m0"/>
+                                    <constraint firstItem="0fW-4Y-eIm" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" identifier="Debug Views.Leading - Debug Side Panel.Leading" id="oiu-yH-cRR"/>
                                 </constraints>
                             </customView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="jY7-ZU-I4z" secondAttribute="bottom" constant="10" id="8jC-7G-Ofh"/>
-                            <constraint firstItem="JUf-qx-iuW" firstAttribute="leading" secondItem="jY7-ZU-I4z" secondAttribute="trailing" constant="8" id="ARC-gJ-JMB"/>
-                            <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" id="OaJ-lc-b0j"/>
-                            <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="10" id="Y4T-sR-Hag"/>
-                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" id="cCh-QQ-pyz"/>
-                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="leading" secondItem="Myj-W6-YvY" secondAttribute="leading" constant="8" id="gka-CA-9WG"/>
-                            <constraint firstAttribute="trailing" secondItem="JUf-qx-iuW" secondAttribute="trailing" constant="8" id="kwa-ri-Rtq"/>
+                            <constraint firstAttribute="bottom" secondItem="jY7-ZU-I4z" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Disassembler.Bottom" id="8jC-7G-Ofh"/>
+                            <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Debug Side Panel.Top - Debugger View.Top" id="OaJ-lc-b0j"/>
+                            <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Sebug Side Panel.Bottom" id="Y4T-sR-Hag"/>
+                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Disassembler.Top - Debugger View.Top" id="cCh-QQ-pyz"/>
+                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="leading" secondItem="Myj-W6-YvY" secondAttribute="leading" constant="8" identifier="Disassembler.Leading - Debugger View.Leading" id="gka-CA-9WG"/>
+                            <constraint firstAttribute="trailing" secondItem="JUf-qx-iuW" secondAttribute="trailing" constant="8" identifier="Debugger View.Trailing - Sebug Side Panel.Trailing" id="kwa-ri-Rtq"/>
                         </constraints>
                     </view>
                     <connections>

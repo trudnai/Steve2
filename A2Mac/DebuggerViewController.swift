@@ -199,6 +199,8 @@ N V - B D I Z C
     let disass_addr_min : UInt16 = 320
     let disass_addr_max : UInt16 = 512
     var disass_addr : UInt16 = 0
+    let disass_addr_pre : UInt16 = 20
+    let disass_addr_min_pre : UInt16 = 320 - 20
     var line_number = 0
     var current_line_number = 0
     let lines_to_disass = 300
@@ -236,10 +238,13 @@ N V - B D I Z C
         }
         else {
             disass_addr = m6502.PC
-            m6502.PC -= disass_addr_min + 20
+            if m6502.PC >= disass_addr_min_pre {
+                m6502.PC -= disass_addr_min_pre
+            }
 
             // try to sync disassembly code
-            while m6502.PC < disass_addr - disass_addr_min {
+            let addr_min = disass_addr >= disass_addr_min ? disass_addr - disass_addr_min : disass_addr
+            while m6502.PC < addr_min {
                 m6502_Disass_1_Instr()
 //                line_number += 1
             }

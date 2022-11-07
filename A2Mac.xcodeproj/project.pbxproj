@@ -192,6 +192,8 @@
 		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32A9F74B2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32AF7C9724AD85E8002D82BF /* select_all.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32AF7C9624AD85E8002D82BF /* select_all.png */; };
+		32B3778F291787CA0040845B /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B3778E291787CA0040845B /* NSLayoutConstraint.swift */; };
+		32B37790291787CA0040845B /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B3778E291787CA0040845B /* NSLayoutConstraint.swift */; };
 		32BCCCE9264DBDC8002151C5 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32BCCCFC2650D275002151C5 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32BCCD192650D3B1002151C5 /* Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32BCCD182650D3B1002151C5 /* Debug-Info.plist */; };
@@ -715,6 +717,8 @@
 		32AF7C9624AD85E8002D82BF /* select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_all.png; sourceTree = "<group>"; };
 		32B18435233F10BC00DBB4AB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		32B18438233FAB3900DBB4AB /* verticies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verticies.swift; sourceTree = "<group>"; };
+		32B3778429177C480040845B /* debug layout bug.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "debug layout bug.rtf"; sourceTree = "<group>"; };
+		32B3778E291787CA0040845B /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
 		32BCCD182650D3B1002151C5 /* Debug-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Debug-Info.plist"; sourceTree = "<group>"; };
 		32BFFB5722EACC630003B53F /* Steve ][.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BFFB5A22EACC630003B53F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -1159,9 +1163,11 @@
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
+				32B3778E291787CA0040845B /* NSLayoutConstraint.swift */,
 				32100A8A2875387300D894EE /* CheatMenu.swift */,
 				32100A9E28753AAA00D894EE /* SubMenu.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
+				32B3778429177C480040845B /* debug layout bug.rtf */,
 				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
 				32C6995127C5439300D0F25D /* Debugger.swift */,
 				323D042F24898AB70086A901 /* PreferencesViewController.swift */,
@@ -1631,6 +1637,7 @@
 			files = (
 				32799F7A264B1A5700255669 /* DisplayView.swift in Sources */,
 				32799F7B264B1A5700255669 /* AppDelegate.swift in Sources */,
+				32B37790291787CA0040845B /* NSLayoutConstraint.swift in Sources */,
 				32C82356290888C50018438F /* DebuggerWindowController.swift in Sources */,
 				32799F7C264B1A5700255669 /* ToolBarController.swift in Sources */,
 				32799F7D264B1A5700255669 /* PreferencesViewController.swift in Sources */,
@@ -1683,6 +1690,7 @@
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
+				32B3778F291787CA0040845B /* NSLayoutConstraint.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
 				32C6995227C5439300D0F25D /* Debugger.swift in Sources */,

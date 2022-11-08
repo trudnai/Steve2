@@ -39,6 +39,7 @@
 #include <string.h>
 #include <time.h>
 #include "6502.h"
+#include "6502_bp.h"
 #include "speaker.h"
 
 
@@ -433,6 +434,12 @@ void m6502_Debug(void) {
             diskAccelerator_count = 0;
             clk_6502_per_frm = clk_6502_per_frm_set;
         }
+    }
+
+    if ( m6502_dbg_bp_is_exists(m6502.PC) ) {
+        cpuState = cpuState_halted;
+        m6502.debugger.wMask = 0;
+        return;
     }
 
     for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() ) {

@@ -33,8 +33,14 @@ INLINE flags_t getFlags2(void) {
 
 void _disHexB( char ** s, const uint8_t b ) {
 //    if ( m6502.dbgLevel.trace ) {
+    if ( (*s >= disassembly.opcode) && (*s < disassembly.opcode + sizeof(disassembly.opcode)) ) {
         snprintf(*s, 4, "%02X ", b);
         *s += 3;
+    }
+    else {
+        fprintf(stderr, "_disHexB *s is WRONG! (%p vs %p)\n", *s, disassembly.opcode);
+    }
+
 //    }
 }
 

@@ -226,6 +226,8 @@
 		32C8233A2908822E0018438F /* DebuggerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C823392908822E0018438F /* DebuggerWindowController.swift */; };
 		32C82356290888C50018438F /* DebuggerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C823392908822E0018438F /* DebuggerWindowController.swift */; };
 		32C82360290888D10018438F /* CheatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A8A2875387300D894EE /* CheatMenu.swift */; };
+		32D0897C291A44F200F2B486 /* 6502_bp.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D0897B291A44F200F2B486 /* 6502_bp.c */; };
+		32D0897D291A44F200F2B486 /* 6502_bp.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D0897B291A44F200F2B486 /* 6502_bp.c */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
@@ -742,6 +744,8 @@
 		32C4532D233345420000EBA1 /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
 		32C6995127C5439300D0F25D /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		32C823392908822E0018438F /* DebuggerWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebuggerWindowController.swift; sourceTree = "<group>"; };
+		32D0897B291A44F200F2B486 /* 6502_bp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_bp.c; sourceTree = "<group>"; };
+		32D08987291A450400F2B486 /* 6502_bp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_bp.h; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
 		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
@@ -990,6 +994,8 @@
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
 				325B7652290A32CC00B29605 /* 6502_debugger.h */,
 				325B75DF2909F95000B29605 /* 6502_debugger.c */,
+				32D08987291A450400F2B486 /* 6502_bp.h */,
+				32D0897B291A44F200F2B486 /* 6502_bp.c */,
 				320F2A8924CFFBE300671B35 /* 6502_std.h */,
 				320F2A8A24D0001600671B35 /* 6502_und.h */,
 				320F2A8B24D0828600671B35 /* 6502_C.h */,
@@ -1657,6 +1663,7 @@
 				32799F86264B1A5700255669 /* HiRes.swift in Sources */,
 				32799F87264B1A5700255669 /* LoRes.swift in Sources */,
 				32C6995327C5439300D0F25D /* Debugger.swift in Sources */,
+				32D0897D291A44F200F2B486 /* 6502_bp.c in Sources */,
 				325B761B290A0C4200B29605 /* 6502_debugger.c in Sources */,
 				327B75D829064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
@@ -1676,6 +1683,7 @@
 				32E3126D24AC033A00E61891 /* ToolBarController.swift in Sources */,
 				323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */,
 				32100A9F28753AAA00D894EE /* SubMenu.swift in Sources */,
+				32D0897C291A44F200F2B486 /* 6502_bp.c in Sources */,
 				32BCCCE9264DBDC8002151C5 /* 6502.c in Sources */,
 				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,

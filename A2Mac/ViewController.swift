@@ -1267,7 +1267,7 @@ class ViewController: NSViewController  {
 
     let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
-        if UpdateSemaphore.wait(timeout: DispatchTime.now() + 0.001) == .timedOut {
+        if UpdateSemaphore.wait(timeout: .now() + 0.001) == .timedOut {
             // get back here next time...
             print("UpdateSemaphore.wait")
             return

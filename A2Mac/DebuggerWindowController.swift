@@ -39,6 +39,8 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         if isWindowFullscreen {
             window?.toggleFullScreen(self)
         }
+
+        m6502_dbg_init()
     }
 
 

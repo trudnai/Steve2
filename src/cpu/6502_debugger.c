@@ -74,6 +74,7 @@ typedef struct {
 **/
 
 
+#include "6502_debugger.h"
 #include "6502_instructions.h"
 
 INLINE int m6502_Disass_1_Instr(void) {

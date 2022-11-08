@@ -293,13 +293,16 @@ N V - B D I Z C
     }
 
 
+    let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
+        UpdateSemaphore.wait()
+
         DisplayRegisters()
         DisplayStack()
         DisplayMemory()
         DisplayDisassembly()
+
+        UpdateSemaphore.signal()
     }
-
-
 
 }

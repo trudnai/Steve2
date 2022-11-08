@@ -54,6 +54,10 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         isKey = false
     }
 
+    func windowWillClose(_ notification: Notification) {
+        DebuggerWindowController.current = nil
+    }
+
 
     // TODO: Probably there is a better way to achieve this
     // fill non-break spaces to provide uniform button width

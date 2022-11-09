@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include "disassembler.h"
 #include "6502.h"
+#include "6502_bp.h"
 
 disassembly_t disassembly;
 unsigned long long discnt = 0;
@@ -74,7 +75,8 @@ void _disNewInstruction(void) {
 //    if ( m6502.dbgLevel.trace ) {
         memset( &disassembly, 0, sizeof(disassembly) );
         disassembly.clk = m6502.clktime + m6502.clkfrm;
-        snprintf(disassembly.addr, 5, "%04X ", m6502.PC);
+        disassembly.addr = m6502.PC;
+        snprintf(disassembly.hexAddr, 5, "%04X ", m6502.PC);
         disassembly.pOpcode = disassembly.opcode;
         disassembly.opcode[0] = '\0';
         disassembly.inst[0] = '\0';
@@ -172,11 +174,12 @@ void printDisassembly( FILE * f ) {
 const char * disassemblyLine(_Bool highlight) {
     static char line[256];
 
-    snprintf( line, sizeof(line), "%s: %-11s%-4s%s",
-         disassembly.addr,
-         disassembly.opcode,
-         disassembly.inst,
-         disassembly.oper
+    snprintf( line, sizeof(line), "%s %s: %-11s%-4s%s",
+        m6502_dbg_bp_is_exists(disassembly.addr) ? "*" : " ",
+        disassembly.hexAddr,
+        disassembly.opcode,
+        disassembly.inst,
+        disassembly.oper
     );
 
     if (highlight) {

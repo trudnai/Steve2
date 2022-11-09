@@ -222,7 +222,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-111" width="349" height="1270"/>
+                                                    <rect key="frame" x="0.0" y="-145" width="349" height="1155"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -308,14 +308,14 @@ C20D: 4C C5 FE   JMP $FEC5
 </mutableString>
                                                             <attributes>
                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                <font key="NSFont" size="10" name="PrintChar21"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
                                                         <fragment content="FEC5: 8D 06 C0   STA $C006">
                                                             <attributes>
                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                <font key="NSFont" size="10" name="PrintChar21"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -391,7 +391,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                                 <fragment content="A: A0    160    1010 0000 X: 01      1    0000 0001 Y: 10     16    0001 0000  SP: F0 PC: FD18  N V - B D I Z C 0 0 1 0 0 1 1 0">
                                                                                     <attributes>
                                                                                         <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                                        <font key="NSFont" size="10" name="PrintChar21"/>
                                                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
                                                                                     </attributes>
                                                                                 </fragment>
@@ -448,7 +448,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-187" width="334" height="181"/>
+                                                                            <rect key="frame" x="0.0" y="-218" width="334" height="165"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -458,7 +458,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                                 <fragment content="1FF: FA 1FE: 84 1FD: 01 1FC: 01 1FB: 00 1FA: 1F 1F9: C1 1F7: D443 JSR 1F5: D532 JSR 1F3: FD77 JSR 1f1: FD37 JSR">
                                                                                     <attributes>
                                                                                         <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                                        <font key="NSFont" size="10" name="PrintChar21"/>
                                                                                         <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
                                                                                     </attributes>
                                                                                 </fragment>
@@ -472,7 +472,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                     <rect key="frame" x="-100" y="-100" width="349" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="dcm-z5-VNG">
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.2857142857142857" horizontal="NO" id="dcm-z5-VNG">
                                                                     <rect key="frame" x="335" y="1" width="15" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -533,19 +533,19 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa" userLabel="Memory Addr Field">
-                                                                <rect key="frame" x="12" y="0.0" width="50" height="20"/>
+                                                                <rect key="frame" x="12" y="0.0" width="44" height="20"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="9xL-1J-8Hg"/>
+                                                                    <constraint firstAttribute="width" constant="44" id="9xL-1J-8Hg"/>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="bS5-Xb-qDz"/>
                                                                 </constraints>
                                                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Addr" drawsBackground="YES" usesSingleLineMode="YES" id="Eze-3w-9N2" userLabel="Memory Addr Field Cell">
-                                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                                    <font key="font" size="10" name="PrintChar21"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-1T-iQB" userLabel="Middle Space">
-                                                                <rect key="frame" x="68" y="0.0" width="8" height="20"/>
+                                                                <rect key="frame" x="62" y="0.0" width="8" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="4" id="O5P-Di-Yom"/>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="rxQ-uI-YNZ"/>
@@ -557,12 +557,12 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DiM-zp-wCg" userLabel="Low Nibble Label">
-                                                                <rect key="frame" x="80" y="4" width="632" height="16"/>
+                                                                <rect key="frame" x="74" y="4" width="638" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" identifier="Low Nibble Label.Height" id="cbC-f3-JsA"/>
                                                                 </constraints>
                                                                 <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F" usesSingleLineMode="YES" id="ECg-7L-hRs">
-                                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                                    <font key="font" size="10" name="PrintChar21"/>
                                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
@@ -602,7 +602,7 @@ C20D: 4C C5 FE   JMP $FEC5
                                                                             <mutableString key="content">2000: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2010: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2020: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2030: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2040: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2050: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2060: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2070: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2080: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 2090: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 20A0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 20B0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 20C0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 20D0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 20E0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP 20F0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ABCDEFGHIJKLMNOP</mutableString>
                                                                             <attributes>
                                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                                <font key="NSFont" size="11" name="PrintChar21"/>
+                                                                                <font key="NSFont" size="10" name="PrintChar21"/>
                                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" firstLineHeadIndent="8" headIndent="8" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
                                                                             </attributes>
                                                                         </fragment>

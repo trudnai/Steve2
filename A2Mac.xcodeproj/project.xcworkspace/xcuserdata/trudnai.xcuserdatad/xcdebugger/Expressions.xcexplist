@@ -179,6 +179,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "DebuggerViewController.highlight(view:line:attr:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "highlightedLine">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "specialized closure #1 in ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -472,6 +480,23 @@
       </ContextState>
       <ContextState
          contextName = "_addr_zp_X_dbg:mmio.c">
+      </ContextState>
+      <ContextState
+         contextName = "DebuggerViewController.mouseMoved(with:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "highlightedLine">
+            </PersistentString>
+            <PersistentString
+               value = "Disass_Display.frame.minX">
+            </PersistentString>
+            <PersistentString
+               value = "Disass_Display.frame">
+            </PersistentString>
+            <PersistentString
+               value = "Disass_Display.visibleRect">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "BRA:6502_instr_branch.h">

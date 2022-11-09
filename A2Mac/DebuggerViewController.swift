@@ -29,6 +29,7 @@ class DebuggerViewController: NSViewController, NSTextFieldDelegate {
     @IBOutlet var CPU_Display: DisplayView!
     @IBOutlet var Stack_Display: DisplayView!
     @IBOutlet var Mem1_Display: DisplayView!
+    @IBOutlet var Disass_Scroll: DisplayScrollView!
     @IBOutlet var Disass_Display: DisplayView!
 
     //    required init?(coder: NSCoder) {
@@ -185,11 +186,24 @@ N V - B D I Z C
     }
 
 
+    func ASCII_to_Apple2(line : String) -> String {
+        var converted = ""
+
+        for chr in line {
+            let c = Int(chr.asciiValue!) & 0x3F | 0x80
+            converted.append(ViewController.charConvTbl[c])
+        }
+
+        return converted
+    }
+
+
     func invertLine(line : String) -> String {
         var converted = ""
 
         for chr in line {
-            converted.append(ViewController.charConvTbl[Int(chr.asciiValue!)])
+            let c = Int(chr.asciiValue!) & 0x3F
+            converted.append(ViewController.charConvTbl[c])
         }
 
         return converted
@@ -202,7 +216,8 @@ N V - B D I Z C
     let disass_addr_pre : UInt16 = 20
     let disass_addr_min_pre : UInt16 = 320 - 20
     var line_number = 0
-    var current_line_number = 0
+    var line_number_at_PC = 0
+    var line_number_cursor = 0
     let lines_to_disass = 300
 
 
@@ -215,7 +230,7 @@ N V - B D I Z C
     }
 
 
-    func scroll_to(view: DisplayView, line: Int) {
+    func scroll_to_old(view: DisplayView, line: Int) {
         var scrollTo = view.visibleRect.origin
         let lineSpacing = CGFloat(1.5)
         let lineHeight = view.font!.pointSize * lineSpacing
@@ -226,12 +241,111 @@ N V - B D I Z C
     }
 
 
+    func getLine(inView view: NSTextView, forY: CGFloat) -> Int {
+        var scrollTo = view.visibleRect.origin
+        let lineSpacing = CGFloat(1.5)
+        let lineHeight = view.font!.pointSize * lineSpacing
+
+        let line = round(forY) / lineHeight
+
+        return Int(line) + 1
+    }
+
+
+    func getLineRange(inView view: NSTextView, forLine: Int) -> NSRange? {
+        let layoutManager = view.layoutManager!
+        var numberOfLines = 1
+        let numberOfGlyphs = layoutManager.numberOfGlyphs
+        var lineRange = NSRange()
+        var indexOfGlyph = 0
+
+        while indexOfGlyph < numberOfGlyphs {
+            layoutManager.lineFragmentRect(forGlyphAt: indexOfGlyph, effectiveRange: &lineRange, withoutAdditionalLayout: false)
+
+            // check if we've found our line number
+            if numberOfLines == forLine {
+                return lineRange
+            }
+
+            indexOfGlyph = NSMaxRange(lineRange)
+            numberOfLines += 1
+        }
+
+        // could not find line number
+        return nil
+    }
+
+
+    let lineFromTopToMiddle = 15
+    func scroll_to(view: DisplayView, line: Int) {
+        if let lineRange = getLineRange(inView: view, forLine: line + lineFromTopToMiddle) {
+            view.scrollRangeToVisible(lineRange)
+        }
+    }
+
+
+    let lineAttrAtSelected = [
+        NSAttributedString.Key.backgroundColor: NSColor.lightGray,
+        NSAttributedString.Key.foregroundColor: NSColor.black,
+    ]
+
+    let lineAttrAtPC = [
+        NSAttributedString.Key.backgroundColor: NSColor.blue,
+        NSAttributedString.Key.foregroundColor: NSColor.cyan,
+    ]
+
+    func highlight(view: DisplayView, line: Int, attr: [NSAttributedString.Key : Any]) {
+        if let lineRange = getLineRange(inView: view, forLine: line) {
+//            view.selectedRange = lineRange
+//            view.scrollRangeToVisible(lineRange)
+            if let oldLineRange = getLineRange(inView: view, forLine: line_number_cursor) {
+                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: oldLineRange)
+                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.foregroundColor, forCharacterRange: oldLineRange)
+            }
+            view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
+        }
+    }
+
+
+    func isMouseInView(view: NSView) -> Bool {
+        if let window = view.window {
+            return view.isMousePoint(window.mouseLocationOutsideOfEventStream, in: view.frame)
+        }
+        return false
+    }
+
+
+    override func mouseMoved(with event: NSEvent) {
+        var location = event.locationInWindow
+        let disass_frame = Disass_Scroll.superview?.frame
+        let minX = disass_frame!.minX + Disass_Scroll.frame.minX
+        let minY = disass_frame!.minY + Disass_Scroll.frame.minY
+        let maxX = minX + Disass_Scroll.frame.width
+        let maxY = minY + Disass_Scroll.frame.height
+
+//        if isMouseInView(view: Disass_Scroll) {
+        if location.x > minX && location.x < maxX
+        && location.y > minY && location.y < maxY {
+//            location.x -= Disass_Scroll.frame.origin.x
+//            location.y -= Disass_Scroll.frame.origin.y
+            location.x = maxX - location.x
+            location.y = maxY - location.y + Disass_Display.visibleRect.origin.y
+            //                print(location)
+
+            let line = getLine(inView: Disass_Display, forY: location.y)
+            highlight(view: Disass_Display, line: line_number_at_PC, attr: lineAttrAtPC)
+            highlight(view: Disass_Display, line: line, attr: lineAttrAtSelected)
+            line_number_cursor = line
+        }
+    }
+
+
     func DisplayDisassembly() {
         let m6502_saved = m6502
         var disass = ""
 
         line_number = 0
-        current_line_number = 0
+        line_number_at_PC = 0
 
         if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
             m6502.PC = disass_addr
@@ -255,16 +369,17 @@ N V - B D I Z C
 
         // normal disassembly
         for _ in 1...lines_to_disass {
+            // check if this is the current line before disassembling it (that will change PC...)
             let isCurrentLine = m6502.PC == m6502_saved.PC
 
             m6502_Disass_1_Instr()
             line_number += 1
 
-            var line = String(cString: disassemblyLine( isCurrentLine )!)
+            let line = ASCII_to_Apple2( line: String(cString: disassemblyLine( isCurrentLine )!) )
 
             if isCurrentLine {
-                line = invertLine(line: line)
-                current_line_number = line_number
+//                line = invertLine(line: line)
+                line_number_at_PC = line_number
             }
 
             disass += line + "\n"
@@ -274,17 +389,18 @@ N V - B D I Z C
 //            let isEmpty = self.Disass_Display.string.isEmpty
             self.Disass_Display.string = disass
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
-            if self.current_line_number <= currentScrollLine || self.current_line_number > currentScrollLine + 35 {
-                self.scroll_to(view: self.Disass_Display, line: self.current_line_number - 5)
+            if self.line_number_at_PC <= currentScrollLine || self.line_number_at_PC > currentScrollLine + 35 {
+                self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
 
                 // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
                 if currentScrollLine == 1 {
                     // so we need to scroll a bit later when the string is already populated
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.scroll_to(view: self.Disass_Display, line: self.current_line_number - 5)
+                        self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
                     }
                 }
             }
+            self.highlight(view: self.Disass_Display, line: self.line_number_at_PC, attr: self.lineAttrAtPC)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // your code here

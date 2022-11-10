@@ -32,5 +32,10 @@
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>PrintChar21.ttf</string>
+		<string>PRNumber3.ttf</string>
+	</array>
 </dict>
 </plist>

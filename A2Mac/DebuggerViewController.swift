@@ -294,15 +294,28 @@ N V - B D I Z C
         NSAttributedString.Key.foregroundColor: NSColor.cyan,
     ]
 
-    func highlight(view: DisplayView, line: Int, attr: [NSAttributedString.Key : Any]) {
-        if let lineRange = getLineRange(inView: view, forLine: line) {
-//            view.selectedRange = lineRange
-//            view.scrollRangeToVisible(lineRange)
-            if let oldLineRange = getLineRange(inView: view, forLine: line_number_cursor) {
-                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: oldLineRange)
-                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.foregroundColor, forCharacterRange: oldLineRange)
+
+    func remove_highlight(view: DisplayView, line: Int) {
+        if line > 0 {
+            if let lineRange = getLineRange(inView: view, forLine: line) {
+                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: lineRange)
+                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.foregroundColor, forCharacterRange: lineRange)
             }
-            view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
+        }
+    }
+
+
+    func highlight(view: DisplayView, line: Int, attr: [NSAttributedString.Key : Any]) {
+        if line > 0 {
+            // remove old highlighted line
+            remove_highlight(view: view, line: line)
+            if let lineRange = getLineRange(inView: view, forLine: line) {
+    //            view.selectedRange = lineRange
+    //            view.scrollRangeToVisible(lineRange)
+//                remove_highlight(view: view, line: line_number_cursor)
+//                line_number_cursor = 0
+                view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
+            }
         }
     }
 
@@ -334,6 +347,7 @@ N V - B D I Z C
 
             let line = getLine(inView: Disass_Display, forY: location.y)
             highlight(view: Disass_Display, line: line_number_at_PC, attr: lineAttrAtPC)
+            remove_highlight(view: Disass_Display, line: line_number_cursor)
             highlight(view: Disass_Display, line: line, attr: lineAttrAtSelected)
             line_number_cursor = line
         }
@@ -345,12 +359,21 @@ N V - B D I Z C
         var disass = ""
 
         line_number = 0
+
+        let highlighted = self.line_number_at_PC
+        DispatchQueue.main.async {
+            self.remove_highlight(view: self.Disass_Display, line: highlighted)
+        }
         line_number_at_PC = 0
+
+        var need_disass = false
 
         if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
             m6502.PC = disass_addr
         }
         else {
+            need_disass = true
+
             disass_addr = m6502.PC
             if m6502.PC >= disass_addr_min_pre {
                 m6502.PC -= disass_addr_min_pre
@@ -387,7 +410,10 @@ N V - B D I Z C
 
         DispatchQueue.main.async {
 //            let isEmpty = self.Disass_Display.string.isEmpty
-            self.Disass_Display.string = disass
+            if need_disass {
+                self.Disass_Display.string = disass
+            }
+
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
             if self.line_number_at_PC <= currentScrollLine || self.line_number_at_PC > currentScrollLine + 35 {
                 self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
@@ -395,30 +421,32 @@ N V - B D I Z C
                 // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
                 if currentScrollLine == 1 {
                     // so we need to scroll a bit later when the string is already populated
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
-                    }
+//                    }
                 }
             }
             self.highlight(view: self.Disass_Display, line: self.line_number_at_PC, attr: self.lineAttrAtPC)
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // your code here
-        }
+//        }
         m6502 = m6502_saved
     }
 
 
     let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
-        UpdateSemaphore.wait()
+        DispatchQueue.global().async {
+            self.UpdateSemaphore.wait()
 
-        DisplayRegisters()
-        DisplayStack()
-        DisplayMemory()
-        DisplayDisassembly()
+            self.DisplayRegisters()
+            self.DisplayStack()
+            self.DisplayMemory()
+            self.DisplayDisassembly()
 
-        UpdateSemaphore.signal()
+            self.UpdateSemaphore.signal()
+        }
     }
 
 }

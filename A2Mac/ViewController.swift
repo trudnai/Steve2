@@ -1265,6 +1265,16 @@ class ViewController: NSViewController  {
     }
 
 
+    func debugBreak() {
+        Pause()
+
+        // TODO: This should be in Debugger!
+        if let debugger = DebuggerViewController.shared {
+            debugger.Update()
+        }
+    }
+
+
     let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
         if UpdateSemaphore.wait(timeout: .now() + 0.001) == .timedOut {
@@ -1305,21 +1315,21 @@ class ViewController: NSViewController  {
 
                     switch m6502.interrupt {
                     case HALT:
-                        Pause()
+                        debugBreak()
 
                     case BREAK:
-                        Pause()
+                        debugBreak()
 
                     case RET:
                         if m6502.debugger.mask.ret == 1 {
                             // Step_Out / Step_Over
                             if m6502.PC >= m6502.debugger.SP {
-                                Pause()
+                                debugBreak()
                             }
                         }
 
                     case INV:
-                        Pause()
+                        debugBreak()
 
                     default:
                         break
@@ -1340,7 +1350,7 @@ class ViewController: NSViewController  {
                 if let debugger = DebuggerViewController.shared {
                     debugger.Update()
                 }
-                
+
                 #endif
                 
                 break
@@ -1354,7 +1364,7 @@ class ViewController: NSViewController  {
                 cpuState = cpuState_halted
                 // last video rendering before halt
                 Render()
-                
+
                 break
             
             case cpuState_halted:

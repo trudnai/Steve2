@@ -439,6 +439,7 @@ void m6502_Debug(void) {
     if ( m6502_dbg_bp_is_exists(m6502.PC) ) {
         cpuState = cpuState_halted;
         m6502.debugger.wMask = 0;
+        m6502.debugger.on = 0;
         return;
     }
 

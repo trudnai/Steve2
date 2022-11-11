@@ -384,8 +384,7 @@ N V - B D I Z C
 
             // force regenerate disassembly
             disass_addr = 0xFFFF
-            DisplayDisassembly()
-//            scroll_to(view: Disass_Display, line: line)
+            DisplayDisassembly(scrollY: Disass_Display.visibleRect.origin.y)
         }
         else {
             highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
@@ -411,7 +410,7 @@ N V - B D I Z C
     }
 
 
-    func DisplayDisassembly() {
+    func DisplayDisassembly( scrollY : CGFloat = -1 ) {
         let m6502_saved = m6502
         var disass = ""
 
@@ -480,12 +479,18 @@ N V - B D I Z C
             if self.line_number_at_PC <= currentScrollLine || self.line_number_at_PC > currentScrollLine + 35 {
                 self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
 
-                // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
-                if currentScrollLine == 1 {
-                    // so we need to scroll a bit later when the string is already populated
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
-//                    }
+                if scrollY < 0 {
+                    // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
+                    if currentScrollLine == 1 {
+                        // so we need to scroll a bit later when the string is already populated
+    //                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
+    //                    }
+                    }
+                }
+                else {
+                    // caller wants a specific scroll location...
+                    self.Disass_Display.scroll(NSPoint(x: 0, y: scrollY))
                 }
             }
             self.highlight(view: self.Disass_Display, line: self.line_number_at_PC, attr: self.lineAttrAtPC)

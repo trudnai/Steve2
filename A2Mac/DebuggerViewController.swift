@@ -354,6 +354,8 @@ N V - B D I Z C
     }
 
 
+    var addr_line = [UInt16 : Int]()
+
     func DisplayDisassembly() {
         let m6502_saved = m6502
         var disass = ""
@@ -364,15 +366,19 @@ N V - B D I Z C
         DispatchQueue.main.async {
             self.remove_highlight(view: self.Disass_Display, line: highlighted)
         }
-        line_number_at_PC = 0
 
-        var need_disass = false
+        // TODO: Also check if memory area updated!
 
-        if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
+        var need_disass = m6502.PC < disass_addr || m6502.PC > disass_addr + disass_addr_max
+        line_number_at_PC = addr_line[m6502_saved.PC] ?? 0
+
+//        if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
+        if line_number_at_PC != 0 && !need_disass {
             m6502.PC = disass_addr
         }
         else {
             need_disass = true
+            addr_line.removeAll()
 
             disass_addr = m6502.PC
             if m6502.PC >= disass_addr_min_pre {
@@ -383,29 +389,30 @@ N V - B D I Z C
             let addr_min = disass_addr >= disass_addr_min ? disass_addr - disass_addr_min : disass_addr
             while m6502.PC < addr_min {
                 m6502_Disass_1_Instr()
-//                line_number += 1
             }
 
             // hopefully instruction address is in sync
             disass_addr = m6502.PC
-        }
 
-        // normal disassembly
-        for _ in 1...lines_to_disass {
-            // check if this is the current line before disassembling it (that will change PC...)
-            let isCurrentLine = m6502.PC == m6502_saved.PC
+            // normal disassembly
+            for _ in 1...lines_to_disass {
+                // check if this is the current line before disassembling it (that will change PC...)
+                line_number += 1
+                addr_line.updateValue(line_number, forKey: m6502.PC)
 
-            m6502_Disass_1_Instr()
-            line_number += 1
+                let isCurrentLine = m6502.PC == m6502_saved.PC
 
-            let line = ASCII_to_Apple2( line: String(cString: disassemblyLine( isCurrentLine )!) )
+                m6502_Disass_1_Instr()
 
-            if isCurrentLine {
-//                line = invertLine(line: line)
-                line_number_at_PC = line_number
+                let line = ASCII_to_Apple2( line: String(cString: disassemblyLine( isCurrentLine )!) )
+
+                if isCurrentLine {
+                    //                line = invertLine(line: line)
+                    line_number_at_PC = line_number
+                }
+
+                disass += line + "\n"
             }
-
-            disass += line + "\n"
         }
 
         DispatchQueue.main.async {

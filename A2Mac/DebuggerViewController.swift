@@ -328,6 +328,22 @@ N V - B D I Z C
     }
 
 
+    func convertMouseCoordinates(scrollView : NSView, display : NSTextView, mouseLocation : NSPoint) -> NSPoint {
+        var location = mouseLocation
+        let parent_frame = scrollView.superview?.frame
+
+//        let minX = parent_frame!.minX + scrollView.frame.minX
+        let minY = parent_frame!.minY + scrollView.frame.minY
+//        let maxX = minX + scrollView.frame.width
+        let maxY = minY + scrollView.frame.height
+
+//        location.x = maxX - location.x
+        location.y = maxY - location.y + display.visibleRect.origin.y
+
+        return location
+    }
+
+
     func highlightCursor(scrollView : NSView, display : NSTextView, mouseLocation : NSPoint) {
         var location = mouseLocation
         let parent_frame = scrollView.superview?.frame
@@ -339,7 +355,7 @@ N V - B D I Z C
 
         if location.x > minX && location.x < maxX
         && location.y > minY && location.y < maxY {
-            location.x = maxX - location.x
+//            location.x = maxX - location.x
             location.y = maxY - location.y + display.visibleRect.origin.y
 
             let line = getLine(inView: display, forY: location.y)
@@ -351,18 +367,49 @@ N V - B D I Z C
     }
 
 
+    // select disassembly line
     override func mouseDown(with event: NSEvent) {
+        let location = convertMouseCoordinates(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: event.locationInWindow)
+
+        if location.x < 30 {
+            let line = getLine(inView: Disass_Display, forY: location.y)
+            let addr = getAddr(forLine: line)
+
+            if m6502_dbg_bp_is_exists(addr) {
+                m6502_dbg_bp_del(addr)
+            }
+            else {
+                m6502_dbg_bp_add(addr)
+            }
+
+            // force regenerate disassembly
+            disass_addr = 0xFFFF
+            DisplayDisassembly()
+//            scroll_to(view: Disass_Display, line: line)
+        }
+        else {
+            highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
+        }
+    }
+
+
+    // context menu
+    override func rightMouseDown(with event: NSEvent) {
         let location = event.locationInWindow
         highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
     }
 
-//    override func mouseMoved(with event: NSEvent) {
-//        let location = event.locationInWindow
-//        highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
-//    }
-
 
     var addr_line = [UInt16 : Int]()
+
+    func getLine(forAddr: UInt16) -> Int {
+        return addr_line[forAddr] ?? 0
+    }
+
+    func getAddr(forLine: Int) -> UInt16 {
+        return addr_line.first(where: { $1 == forLine })?.key ?? 0
+    }
+
 
     func DisplayDisassembly() {
         let m6502_saved = m6502
@@ -378,7 +425,7 @@ N V - B D I Z C
         // TODO: Also check if memory area updated!
 
         var need_disass = m6502.PC < disass_addr || m6502.PC > disass_addr + disass_addr_max
-        line_number_at_PC = addr_line[m6502_saved.PC] ?? 0
+        line_number_at_PC = getLine(forAddr: m6502_saved.PC)
 
 //        if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
         if line_number_at_PC != 0 && !need_disass {

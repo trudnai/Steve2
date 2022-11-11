@@ -77,11 +77,11 @@ uint16_t m6502_dbg_bp_get_first() {
 /// m6502_dbg_bp_get_first
 /// Get first valid BP
 /// @return addr of BP or 0 if non
-uint16_t m6502_dbg_bp_is_exists(uint16_t addr) {
+_Bool m6502_dbg_bp_is_exists(uint16_t addr) {
     for (uint16_t bp = m6502_dbg_bp_get_first(); bp; bp = m6502_dbg_bp_get_next()) {
         if ( bp == addr) {
             // found it!
-            return bp;
+            return 1;
         }
     }
     return 0;
@@ -103,16 +103,26 @@ int m6502_dbg_bp_add(uint16_t addr) {
 }
 
 
-void m6502_dbg_bp_init(void) {
+/// m6502_dbg_bp_del
+/// Remove a breakpoint
+/// @param addr address to remove
+void m6502_dbg_bp_del(uint16_t addr) {
+    for (uint16_t bp = m6502_dbg_bp_get_first(); bp; bp = m6502_dbg_bp_get_next()) {
+        if ( bp == addr ) {
+            breakpoints[bp_idx] = 0;
+        }
+    }
+}
+
+
+void m6502_dbg_bp_del_all(void) {
     bp_idx = 0;
     memset(breakpoints, 0, sizeof(breakpoints));
-
-    m6502_dbg_bp_add(0xC28B); // keyin DOS 3.3
 }
 
 
 void m6502_dbg_init(void) {
-    m6502_dbg_bp_init();
+    m6502_dbg_bp_del_all();
 }
 
 

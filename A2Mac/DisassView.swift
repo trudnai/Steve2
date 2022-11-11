@@ -58,30 +58,30 @@ class DisassView: NSTextView {
         // debugDisplayContraints()
     }
 
-    override func mouseUp(with event: NSEvent) {
-        //        print(#function + "DisassView")
-        DebuggerViewController.shared?.mouseUp(with: event)
-    }
+//    override func mouseUp(with event: NSEvent) {
+//        //        print(#function + "DisassView")
+//        DebuggerViewController.shared?.mouseUp(with: event)
+//    }
 
     override func rightMouseDown(with event: NSEvent) {
         //        print(#function + "DisassView")
         DebuggerViewController.shared?.rightMouseDown(with: event)
     }
 
-    override func rightMouseUp(with event: NSEvent) {
-        //        print(#function + "DisassView")
-        DebuggerViewController.shared?.rightMouseUp(with: event)
-    }
+//    override func rightMouseUp(with event: NSEvent) {
+//        //        print(#function + "DisassView")
+//        DebuggerViewController.shared?.rightMouseUp(with: event)
+//    }
 
-    override func otherMouseDown(with event: NSEvent) {
-        //        print(#function + "DisassView")
-        DebuggerViewController.shared?.otherMouseDown(with: event)
-    }
-
-    override func otherMouseUp(with event: NSEvent) {
-        //        print(#function + "DisassView")
-        DebuggerViewController.shared?.otherMouseUp(with: event)
-    }
+//    override func otherMouseDown(with event: NSEvent) {
+//        //        print(#function + "DisassView")
+//        DebuggerViewController.shared?.otherMouseDown(with: event)
+//    }
+//
+//    override func otherMouseUp(with event: NSEvent) {
+//        //        print(#function + "DisassView")
+//        DebuggerViewController.shared?.otherMouseUp(with: event)
+//    }
 
 }
 

@@ -419,7 +419,7 @@ void m6502_Run() {
 
 void m6502_Debug(void) {
     m6502.clktime += m6502.clkfrm;
-    m6502.clkfrm = 0;
+//    m6502.clkfrm = 0;
     m6502.lastIO = 0;
     m6502.interrupt = NO_INT; // TODO: This should be taken care by the interrupt handler
 
@@ -436,14 +436,9 @@ void m6502_Debug(void) {
         }
     }
 
-    if ( m6502_dbg_bp_is_exists(m6502.PC) ) {
-        cpuState = cpuState_halted;
-        m6502.debugger.wMask = 0;
-        m6502.debugger.on = 0;
-        return;
-    }
+    clk_6502_per_frm_max = clk_6502_per_frm;
 
-    for ( clk_6502_per_frm_max = clk_6502_per_frm; m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() ) {
+    for ( m6502.clkfrm = m6502_Step(); m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() ) {
         switch (m6502.interrupt) {
             case HALT:
                 if (m6502.debugger.mask.hlt) {
@@ -514,6 +509,14 @@ void m6502_Debug(void) {
         }
 
         m6502.interrupt = NO_INT;
+
+        if ( m6502_dbg_bp_is_exists(m6502.PC) ) {
+            cpuState = cpuState_halted;
+            m6502.debugger.wMask = 0;
+            m6502.debugger.on = 0;
+            return;
+        }
+
     }
 
 }

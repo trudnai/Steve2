@@ -1184,6 +1184,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "m6502_dbg_bp_del:6502_bp.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "bp_idx">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "AppDelegate.showPreferences(_:):AppDelegate.swift">
          <PersistentStrings>
             <PersistentString

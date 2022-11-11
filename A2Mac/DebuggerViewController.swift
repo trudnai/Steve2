@@ -23,7 +23,7 @@
 
 import Cocoa
 
-class DebuggerViewController: NSViewController, NSTextFieldDelegate {
+class DebuggerViewController: NSViewController {
     static var shared : DebuggerViewController? = nil
 
     @IBOutlet var CPU_Display: DisplayView!
@@ -221,7 +221,7 @@ N V - B D I Z C
     let lines_to_disass = 300
 
 
-    func get_scroll_line(view: DisplayView) -> Int {
+    func get_scroll_line(view: NSTextView) -> Int {
         let scrollPos = view.visibleRect.origin.y
         let lineSpacing = CGFloat(1.5)
         let lineHeight = view.font!.pointSize * lineSpacing
@@ -277,7 +277,7 @@ N V - B D I Z C
 
 
     let lineFromTopToMiddle = 15
-    func scroll_to(view: DisplayView, line: Int) {
+    func scroll_to(view: NSTextView, line: Int) {
         if let lineRange = getLineRange(inView: view, forLine: line + lineFromTopToMiddle) {
             view.scrollRangeToVisible(lineRange)
         }
@@ -295,7 +295,7 @@ N V - B D I Z C
     ]
 
 
-    func remove_highlight(view: DisplayView, line: Int) {
+    func remove_highlight(view: NSTextView, line: Int) {
         if line > 0 {
             if let lineRange = getLineRange(inView: view, forLine: line) {
                 view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: lineRange)
@@ -305,7 +305,7 @@ N V - B D I Z C
     }
 
 
-    func highlight(view: DisplayView, line: Int, attr: [NSAttributedString.Key : Any]) {
+    func highlight(view: NSTextView, line: Int, attr: [NSAttributedString.Key : Any]) {
         if line > 0 {
             // remove old highlighted line
             remove_highlight(view: view, line: line)
@@ -328,30 +328,38 @@ N V - B D I Z C
     }
 
 
-    override func mouseMoved(with event: NSEvent) {
-        var location = event.locationInWindow
-        let disass_frame = Disass_Scroll.superview?.frame
-        let minX = disass_frame!.minX + Disass_Scroll.frame.minX
-        let minY = disass_frame!.minY + Disass_Scroll.frame.minY
-        let maxX = minX + Disass_Scroll.frame.width
-        let maxY = minY + Disass_Scroll.frame.height
+    func highlightCursor(scrollView : NSView, display : NSTextView, mouseLocation : NSPoint) {
+        var location = mouseLocation
+        let parent_frame = scrollView.superview?.frame
 
-//        if isMouseInView(view: Disass_Scroll) {
+        let minX = parent_frame!.minX + scrollView.frame.minX
+        let minY = parent_frame!.minY + scrollView.frame.minY
+        let maxX = minX + scrollView.frame.width
+        let maxY = minY + scrollView.frame.height
+
         if location.x > minX && location.x < maxX
         && location.y > minY && location.y < maxY {
-//            location.x -= Disass_Scroll.frame.origin.x
-//            location.y -= Disass_Scroll.frame.origin.y
             location.x = maxX - location.x
-            location.y = maxY - location.y + Disass_Display.visibleRect.origin.y
-            //                print(location)
+            location.y = maxY - location.y + display.visibleRect.origin.y
 
-            let line = getLine(inView: Disass_Display, forY: location.y)
-            highlight(view: Disass_Display, line: line_number_at_PC, attr: lineAttrAtPC)
-            remove_highlight(view: Disass_Display, line: line_number_cursor)
-            highlight(view: Disass_Display, line: line, attr: lineAttrAtSelected)
+            let line = getLine(inView: display, forY: location.y)
+            highlight(view: display, line: line_number_at_PC, attr: lineAttrAtPC)
+            remove_highlight(view: display, line: line_number_cursor)
+            highlight(view: display, line: line, attr: lineAttrAtSelected)
             line_number_cursor = line
         }
     }
+
+
+    override func mouseDown(with event: NSEvent) {
+        let location = event.locationInWindow
+        highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
+    }
+
+//    override func mouseMoved(with event: NSEvent) {
+//        let location = event.locationInWindow
+//        highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
+//    }
 
 
     var addr_line = [UInt16 : Int]()

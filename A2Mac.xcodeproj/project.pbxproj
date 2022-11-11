@@ -228,6 +228,8 @@
 		32C82360290888D10018438F /* CheatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A8A2875387300D894EE /* CheatMenu.swift */; };
 		32D0897C291A44F200F2B486 /* 6502_bp.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D0897B291A44F200F2B486 /* 6502_bp.c */; };
 		32D0897D291A44F200F2B486 /* 6502_bp.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D0897B291A44F200F2B486 /* 6502_bp.c */; };
+		32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D089D7291E1BF800F2B486 /* DisassView.swift */; };
+		32D089D9291E1BF800F2B486 /* DisassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D089D7291E1BF800F2B486 /* DisassView.swift */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
@@ -747,6 +749,7 @@
 		32D0897B291A44F200F2B486 /* 6502_bp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_bp.c; sourceTree = "<group>"; };
 		32D08987291A450400F2B486 /* 6502_bp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_bp.h; sourceTree = "<group>"; };
 		32D08992291AF23500F2B486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = A2Mac/Base.lproj/Debug.storyboard; sourceTree = "<group>"; };
+		32D089D7291E1BF800F2B486 /* DisassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisassView.swift; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
 		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
@@ -1179,6 +1182,7 @@
 				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
 				32C6995127C5439300D0F25D /* Debugger.swift */,
 				323D042F24898AB70086A901 /* PreferencesViewController.swift */,
+				32D089D7291E1BF800F2B486 /* DisassView.swift */,
 				327B75D629064FDC00A86A71 /* DebuggerViewController.swift */,
 				32C823392908822E0018438F /* DebuggerWindowController.swift */,
 				323D04312489BFD80086A901 /* PreferencesWindowController.swift */,
@@ -1661,6 +1665,7 @@
 				32A6AB10266AF5160023257A /* paddle.c in Sources */,
 				32799F83264B1A5700255669 /* speaker.c in Sources */,
 				32799F84264B1A5700255669 /* common.c in Sources */,
+				32D089D9291E1BF800F2B486 /* DisassView.swift in Sources */,
 				32799F85264B1A5700255669 /* ViewController.swift in Sources */,
 				32799F86264B1A5700255669 /* HiRes.swift in Sources */,
 				32799F87264B1A5700255669 /* LoRes.swift in Sources */,
@@ -1693,6 +1698,7 @@
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
 				32100A8B2875387300D894EE /* CheatMenu.swift in Sources */,
 				3268B97A27DE7D6A003FBDCC /* disassembler.c in Sources */,
+				32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */,
 				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				32100AB42877AB8600D894EE /* scsi.c in Sources */,

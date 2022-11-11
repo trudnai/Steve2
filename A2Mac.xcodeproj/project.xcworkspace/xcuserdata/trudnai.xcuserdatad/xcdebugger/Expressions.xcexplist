@@ -482,6 +482,9 @@
          contextName = "_addr_zp_X_dbg:mmio.c">
       </ContextState>
       <ContextState
+         contextName = "main:AppDelegate.swift">
+      </ContextState>
+      <ContextState
          contextName = "DebuggerViewController.mouseMoved(with:):DebuggerViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -1372,6 +1375,17 @@
             </PersistentString>
             <PersistentString
                value = "newTextPage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DebuggerViewController.highlightCursor(scrollView:mouseLocation:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "display">
+            </PersistentString>
+            <PersistentString
+               value = "scrollView.subviews">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

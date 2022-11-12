@@ -750,6 +750,7 @@
 		32D08987291A450400F2B486 /* 6502_bp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_bp.h; sourceTree = "<group>"; };
 		32D08992291AF23500F2B486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = A2Mac/Base.lproj/Debug.storyboard; sourceTree = "<group>"; };
 		32D089D7291E1BF800F2B486 /* DisassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisassView.swift; sourceTree = "<group>"; };
+		32D089EC291EE19200F2B486 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
 		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
@@ -1173,6 +1174,7 @@
 			children = (
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
+				32D089EC291EE19200F2B486 /* UnfairLock.swift */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32B3778E291787CA0040845B /* NSLayoutConstraint.swift */,
 				32100A8A2875387300D894EE /* CheatMenu.swift */,

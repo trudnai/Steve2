@@ -50,7 +50,7 @@ class DebuggerViewController: NSViewController {
 //        // Update window title with the active TableView Title
 //        self.parent?.view.window?.title = self.title!
 
-        Update()
+        UpdateImmediately()
 
         if let debugger = DebuggerWindowController.current {
             debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
@@ -242,7 +242,7 @@ N V - B D I Z C
 
 
     func getLine(inView view: NSTextView, forY: CGFloat) -> Int {
-        var scrollTo = view.visibleRect.origin
+//        var scrollTo = view.visibleRect.origin
         let lineSpacing = CGFloat(1.5)
         let lineHeight = view.font!.pointSize * lineSpacing
 
@@ -328,6 +328,7 @@ N V - B D I Z C
     }
 
 
+    let textViewMouseYOffset = CGFloat(-4.0)
     func convertMouseCoordinates(scrollView : NSView, display : NSTextView, mouseLocation : NSPoint) -> NSPoint {
         var location = mouseLocation
         let parent_frame = scrollView.superview?.frame
@@ -338,7 +339,7 @@ N V - B D I Z C
         let maxY = minY + scrollView.frame.height
 
 //        location.x = maxX - location.x
-        location.y = maxY - location.y + display.visibleRect.origin.y
+        location.y = maxY - location.y + display.visibleRect.origin.y + textViewMouseYOffset
 
         return location
     }
@@ -411,7 +412,6 @@ N V - B D I Z C
 
 
     func DisplayDisassembly( scrollY : CGFloat = -1 ) {
-        let m6502_saved = m6502
         var disass = ""
 
         line_number = 0
@@ -423,14 +423,15 @@ N V - B D I Z C
 
         // TODO: Also check if memory area updated!
 
-        var need_disass = m6502.PC < disass_addr || m6502.PC > disass_addr + disass_addr_max
-        line_number_at_PC = getLine(forAddr: m6502_saved.PC)
+        var need_disass = m6502.PC <= disass_addr || m6502.PC > disass_addr + disass_addr_max
+        line_number_at_PC = getLine(forAddr: m6502.PC)
 
 //        if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
-        if line_number_at_PC != 0 && !need_disass {
-            m6502.PC = disass_addr
-        }
-        else {
+        if line_number_at_PC == 0 || need_disass {
+            ViewController.current?.UpdateSemaphore.wait()
+
+            let m6502_saved = m6502
+
             need_disass = true
             addr_line.removeAll()
 
@@ -467,6 +468,9 @@ N V - B D I Z C
 
                 disass += line + "\n"
             }
+
+            m6502 = m6502_saved
+            ViewController.current?.UpdateSemaphore.signal()
         }
 
         DispatchQueue.main.async {
@@ -498,21 +502,24 @@ N V - B D I Z C
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // your code here
 //        }
-        m6502 = m6502_saved
+    }
+
+
+    func UpdateImmediately() {
+        DisplayRegisters()
+        DisplayStack()
+        DisplayMemory()
+        DisplayDisassembly()
     }
 
 
     let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
         DispatchQueue.global().async {
-            self.UpdateSemaphore.wait()
-
-            self.DisplayRegisters()
-            self.DisplayStack()
-            self.DisplayMemory()
-            self.DisplayDisassembly()
-
-            self.UpdateSemaphore.signal()
+            if self.UpdateSemaphore.wait(timeout: .now()) == .success {
+                self.UpdateImmediately()
+                self.UpdateSemaphore.signal()
+            }
         }
     }
 

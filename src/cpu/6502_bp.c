@@ -33,6 +33,7 @@
 #include "6502_bp.h"
 
 /// Array of addresses of active breakpoints
+/// @note DEBUG_MAX_BREAKPOINTS controls its size
 uint16_t breakpoints[DEBUG_MAX_BREAKPOINTS];
 /// Index of last valid breakpoint element in the array
 int bp_last_idx = 0;

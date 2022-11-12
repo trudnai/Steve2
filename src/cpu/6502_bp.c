@@ -38,7 +38,7 @@ int bp_last_idx = 0;
 int bp_idx = 0;
 
 
-void m6502_dbg_bp_swap(uint16_t * a, uint16_t * b) {
+static void swap(uint16_t * a, uint16_t * b) {
     uint16_t temp = *a;
     *a = *b;
     *b = temp;
@@ -46,13 +46,10 @@ void m6502_dbg_bp_swap(uint16_t * a, uint16_t * b) {
 
 
 void m6502_dbg_bp_sort( uint16_t arr[], int first, int last ) {
-    int i, j;
-    uint16_t pivot;
-
     if ( first < last ) {
-        pivot = first; // (first + last) / 2;
-        i = first;
-        j = last;
+        uint16_t pivot = first; // (first + last) / 2;
+        int i = first;
+        int j = last;
 
         while ( i < j ) {
             while ( arr[i] <= arr[pivot] && i < last ) {
@@ -63,11 +60,11 @@ void m6502_dbg_bp_sort( uint16_t arr[], int first, int last ) {
             }
 
             if ( i < j ) {
-                m6502_dbg_bp_swap(breakpoints + i, breakpoints + j);
+                swap(breakpoints + i, breakpoints + j);
             }
         }
 
-        m6502_dbg_bp_swap(breakpoints + pivot, breakpoints + j);
+        swap(breakpoints + pivot, breakpoints + j);
 
 
         if (j > first) {
@@ -112,8 +109,7 @@ int m6502_dbg_bp_search(uint16_t arr[], int l, int r, uint16_t addr) {
 /// Get an empty slot in the bp astorage
 /// @return Index of the empty breakpoint or -1 if error
 int m6502_dbg_bp_get_last(int i) {
-    i++;
-    while(--i) {
+    for(; i >= 0; i--) {
         if ( breakpoints[i] ) {
             return i;
         }

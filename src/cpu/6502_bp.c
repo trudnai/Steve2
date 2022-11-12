@@ -32,12 +32,18 @@
 #include <stdlib.h>
 #include "6502_bp.h"
 
-
+/// Array of addresses of active breakpoints
 uint16_t breakpoints[DEBUG_MAX_BREAKPOINTS];
+/// Index of last valid breakpoint element in the array
 int bp_last_idx = 0;
+/// Index of current breapoint
+/// @note It is more like a temporary variable
 int bp_idx = 0;
 
 
+/// Swap 2 items
+/// @param a Pointer of first item
+/// @param b Pointer to second item
 static void swap(uint16_t * a, uint16_t * b) {
     uint16_t temp = *a;
     *a = *b;
@@ -45,6 +51,11 @@ static void swap(uint16_t * a, uint16_t * b) {
 }
 
 
+/// m6502_dbg_bp_sort
+/// Sort breakpoint array ascending
+/// @param arr Breakpoint array
+/// @param first Index of first element to sort
+/// @param last Index of last element to sort
 void m6502_dbg_bp_sort( uint16_t arr[], int first, int last ) {
     if ( first < last ) {
         uint16_t pivot = first; // (first + last) / 2;
@@ -78,8 +89,11 @@ void m6502_dbg_bp_sort( uint16_t arr[], int first, int last ) {
 
 
 /// A binary search function. It returns
-/// location of addr in given array arr[l..r] is present,
-/// otherwise -1
+/// @param arr Breakpoint array
+/// @param l Left index
+/// @param r Right index
+/// @param addr Address to search for
+/// @return lIndex of addr in Breakpoints, otherwise -1
 int m6502_dbg_bp_search(uint16_t arr[], int l, int r, uint16_t addr) {
     while ( r >= l ) {
         int mid = (l + r) / 2;
@@ -105,21 +119,20 @@ int m6502_dbg_bp_search(uint16_t arr[], int l, int r, uint16_t addr) {
 }
 
 
-/// m6502_dbg_bp_get_empty
-/// Get an empty slot in the bp astorage
-/// @return Index of the empty breakpoint or -1 if error
+/// Get index of the last BP
+/// @param i Current last index
+/// @return Index of the last breakpoint or 0 if non
 int m6502_dbg_bp_get_last(int i) {
     for(; i >= 0; i--) {
         if ( breakpoints[i] ) {
             return i;
         }
     }
-    // no empty slots
-    return -1;
+    // index should be 0 if there is no any BPs
+    return 0;
 }
 
 
-/// m6502_dbg_bp_get_first
 /// Get first valid BP
 /// @return addr of BP or 0 if non
 uint16_t m6502_dbg_bp_get_next() {
@@ -134,7 +147,6 @@ uint16_t m6502_dbg_bp_get_next() {
 }
 
 
-/// m6502_dbg_bp_get_first
 /// Get first valid BP
 /// @return addr of BP or 0 if non
 uint16_t m6502_dbg_bp_get_first() {
@@ -157,7 +169,6 @@ int m6502_dbg_bp_get_empty() {
 }
 
 
-/// m6502_dbg_bp_get_not_empty
 /// Get first not empty slot in the bp storage
 /// @return Index of the empty breakpoint or -1 if error
 int m6502_dbg_bp_get_not_empty() {
@@ -171,8 +182,7 @@ int m6502_dbg_bp_get_not_empty() {
 }
 
 
-/// m6502_dbg_bp_compact
-/// move array down to eliminate
+/// Move array down to eliminate leading zeros
 void m6502_dbg_bp_compact() {
     int i = m6502_dbg_bp_get_not_empty();
     memcpy(breakpoints, breakpoints + i, bp_last_idx * sizeof(uint16_t));
@@ -181,9 +191,9 @@ void m6502_dbg_bp_compact() {
 }
 
 
-/// m6502_dbg_bp_get_first
-/// Get first valid BP
-/// @return addr of BP or 0 if non
+/// Check if BP exists
+/// @param addr Address to check
+/// @return 1 (true) if exists, 0 (false) if not
 _Bool m6502_dbg_bp_is_exists(uint16_t addr) {
     if (addr) {
         int i = m6502_dbg_bp_search(breakpoints, 0, bp_last_idx, addr);
@@ -194,9 +204,8 @@ _Bool m6502_dbg_bp_is_exists(uint16_t addr) {
 }
 
 
-/// m6502_dbg_bp_add
 /// Add breakpoint
-/// @param addr address to add
+/// @param addr Address to add
 /// @return Index of breakpoint or -1 if error
 int m6502_dbg_bp_add(uint16_t addr) {
     if (bp_last_idx < DEBUG_MAX_BREAKPOINTS - 1) {
@@ -209,7 +218,6 @@ int m6502_dbg_bp_add(uint16_t addr) {
 }
 
 
-/// m6502_dbg_bp_del
 /// Remove a breakpoint
 /// @param addr address to remove
 void m6502_dbg_bp_del(uint16_t addr) {
@@ -222,12 +230,14 @@ void m6502_dbg_bp_del(uint16_t addr) {
 }
 
 
+/// Delete all breakpoints
 void m6502_dbg_bp_del_all(void) {
     bp_idx = 0;
     memset(breakpoints, 0, sizeof(breakpoints));
 }
 
 
+/// Initialize Breakpoints
 void m6502_dbg_init(void) {
     m6502_dbg_bp_del_all();
 }

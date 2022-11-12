@@ -80,11 +80,11 @@ void m6502_dbg_bp_sort( uint16_t arr[], int first, int last ) {
 }
 
 
-/// A recursive binary search function. It returns
+/// A binary search function. It returns
 /// location of addr in given array arr[l..r] is present,
 /// otherwise -1
 int m6502_dbg_bp_search(uint16_t arr[], int l, int r, uint16_t addr) {
-    if ( (r >= l) && (addr >= arr[l]) && (addr <= arr[r]) ) {
+    while ( r >= l ) {
         int mid = (l + r) / 2;
 
         // found it
@@ -93,12 +93,14 @@ int m6502_dbg_bp_search(uint16_t arr[], int l, int r, uint16_t addr) {
         }
 
         // maybe in the left side?
-        if (arr[mid] > addr) {
-            return m6502_dbg_bp_search(arr, l, mid - 1, addr);
+        else if (arr[mid] > addr) {
+            r = mid - 1;
         }
 
         // maybe in the right side?
-        return m6502_dbg_bp_search(arr, mid + 1, r, addr);
+        else {
+            l = mid + 1;
+        }
     }
 
     // addr not found
@@ -177,8 +179,8 @@ int m6502_dbg_bp_get_not_empty() {
 /// move array down to eliminate
 void m6502_dbg_bp_compact() {
     int i = m6502_dbg_bp_get_not_empty();
-    memcpy(breakpoints, breakpoints + i, bp_last_idx);
-    memset(breakpoints + bp_last_idx + 1, 0, DEBUG_MAX_BREAKPOINTS - bp_last_idx - 1);
+    memcpy(breakpoints, breakpoints + i, bp_last_idx * sizeof(uint16_t));
+    memset(breakpoints + bp_last_idx, 0, (DEBUG_MAX_BREAKPOINTS - bp_last_idx) * sizeof(uint16_t));
     bp_last_idx = m6502_dbg_bp_get_last(bp_last_idx);
 }
 

@@ -107,6 +107,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "m6502_dbg_bp_search:6502_bp.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "breakpoints">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "HiRes.draw(_:):HiRes.swift">
          <PersistentStrings>
             <PersistentString
@@ -285,6 +293,9 @@
                value = "spkr_clk + m6502.clkfrm / (int)( 1023000 / (double)spkr_sample_rate) * 2">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "m6502_dbg_bp_compact:6502_bp.c">
       </ContextState>
       <ContextState
          contextName = "ViewController.Reset(_:):ViewController.swift">

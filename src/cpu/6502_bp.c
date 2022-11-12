@@ -199,14 +199,10 @@ _Bool m6502_dbg_bp_is_exists(uint16_t addr) {
 /// @param addr address to add
 /// @return Index of breakpoint or -1 if error
 int m6502_dbg_bp_add(uint16_t addr) {
-    int i = m6502_dbg_bp_get_empty();
-    if ( i >= 0 ) {
-        breakpoints[i] = addr;
-        if (i > bp_last_idx) {
-            bp_last_idx = i;
-        }
+    if (bp_last_idx < DEBUG_MAX_BREAKPOINTS - 1) {
+        breakpoints[++bp_last_idx] = addr;
         m6502_dbg_bp_sort(breakpoints, 0, bp_last_idx);
-        return i;
+        return bp_last_idx;
     }
     // no empty slots
     return -1;
@@ -217,13 +213,11 @@ int m6502_dbg_bp_add(uint16_t addr) {
 /// Remove a breakpoint
 /// @param addr address to remove
 void m6502_dbg_bp_del(uint16_t addr) {
-    for (uint16_t bp = m6502_dbg_bp_get_first(); bp; bp = m6502_dbg_bp_get_next()) {
-        if ( bp == addr ) {
-            breakpoints[bp_idx] = 0;
-            m6502_dbg_bp_sort(breakpoints, 0, bp_last_idx);
-            m6502_dbg_bp_compact();
-//            bp_last_idx = m6502_dbg_bp_get_last(bp_last_idx);
-        }
+    int i = m6502_dbg_bp_search(breakpoints, 0, bp_last_idx, addr);
+    if (i >= 0) {
+        breakpoints[i] = 0;
+        m6502_dbg_bp_sort(breakpoints, 0, bp_last_idx);
+        m6502_dbg_bp_compact();
     }
 }
 

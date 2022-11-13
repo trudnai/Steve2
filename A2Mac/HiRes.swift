@@ -251,7 +251,7 @@ class HiRes: NSView {
 
 //        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
 
-        if ( ViewController.current?.CRTMonitor ?? false ) {
+        if ( ViewController.shared?.CRTMonitor ?? false ) {
             // do not clear the changes table
         }
         else {
@@ -275,7 +275,7 @@ class HiRes: NSView {
                 if shadowScreen[ screenIdx ] != block {
                     blockChanged[ blockVertIdx + blockHorIdx ] = 0xFF
                 }
-                else if ( ViewController.current?.CRTMonitor ?? false ) {
+                else if ( ViewController.shared?.CRTMonitor ?? false ) {
                     // slow CRT fade out effect
                     if (y % HiRes.blockHeight == 0) && (blockChanged[ blockVertIdx + blockHorIdx ] > 0) {
                         blockChanged[ blockVertIdx + blockHorIdx ] = UInt8( Double(blockChanged[ blockVertIdx + blockHorIdx ]) / pixelTrail )
@@ -571,7 +571,7 @@ class HiRes: NSView {
 
 
     func Render() {
-        if ( ViewController.current?.ColorMonitor ?? true ) {
+        if ( ViewController.shared?.ColorMonitor ?? true ) {
             RenderColor()
         }
         else {
@@ -591,7 +591,7 @@ class HiRes: NSView {
         // refresh the entire screen
         let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         
-        if ( ViewController.current?.CRTMonitor ?? false ) {
+        if ( ViewController.shared?.CRTMonitor ?? false ) {
             currentContext?.interpolationQuality = .high // TODO: Make a switch that lets you turn on and off "old monitor effects"
         }
         else {

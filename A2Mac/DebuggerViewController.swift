@@ -52,7 +52,7 @@ class DebuggerViewController: NSViewController {
 
         UpdateImmediately()
 
-        if let debugger = DebuggerWindowController.current {
+        if let debugger = DebuggerWindowController.shared {
             debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
         }
     }
@@ -197,9 +197,9 @@ N V - B D I Z C
             if c == 0xAA { // '*'
 //                converted.append("\u{E895}") // big dot (8x8)
 //                converted.append("\u{ED3C}") // big dot2 (8x8)
-//                converted.append("\u{E09B}") // right arrow
-//                converted.append("\u{E095}") // diamond
-                converted.append("\u{E080}") // closed apple
+                converted.append("\u{E095}") // right arrow
+//                converted.append("\u{E09B}") // diamond
+//                converted.append("\u{E080}") // closed apple
 //                converted.append("\u{E081}") // open apple
 //                converted.append("\u{E185}") // checkmark
             }
@@ -443,7 +443,7 @@ N V - B D I Z C
 
 //        if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
         if line_number_at_PC == 0 || need_disass {
-            ViewController.current?.UpdateSemaphore.wait()
+            ViewController.shared?.UpdateSemaphore.wait()
 
             let m6502_saved = m6502
 
@@ -485,7 +485,7 @@ N V - B D I Z C
             }
 
             m6502 = m6502_saved
-            ViewController.current?.UpdateSemaphore.signal()
+            ViewController.shared?.UpdateSemaphore.signal()
         }
 
         DispatchQueue.main.async {

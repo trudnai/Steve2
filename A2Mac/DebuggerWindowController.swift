@@ -26,11 +26,11 @@ import Cocoa
 
 class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     
-    static var current : DebuggerWindowController? = nil
+    static var shared : DebuggerWindowController? = nil
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        DebuggerWindowController.current = self
+        DebuggerWindowController.shared = self
     }
 
 
@@ -57,7 +57,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     }
 
     func windowWillClose(_ notification: Notification) {
-        DebuggerWindowController.current = nil
+        DebuggerWindowController.shared = nil
     }
 
 
@@ -119,14 +119,14 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         m6502.debugger.wMask = 0
         m6502.debugger.on = true
 
-        ViewController.current?.Resume()
+        ViewController.shared?.Resume()
     }
 
 
     func Pause() {
         PauseButtonUpdate()
 
-        ViewController.current?.Pause(0)
+        ViewController.shared?.Pause(0)
 
         m6502.debugger.wMask = 0
         m6502.debugger.on = false
@@ -153,7 +153,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
             m6502.debugger.mask.out = 1
             m6502.debugger.on = true
 
-            ViewController.current?.Resume()
+            ViewController.shared?.Resume()
         }
         else {
             // not a JSR call, only do a single step
@@ -171,7 +171,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         }
 
         // TODO: Update Screen and speaker etc
-        ViewController.current?.Update()
+        ViewController.shared?.Update()
     }
 
 
@@ -182,7 +182,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         m6502.debugger.mask.out = 1
         m6502.debugger.on = true
 
-        ViewController.current?.Resume()
+        ViewController.shared?.Resume()
     }
 
 

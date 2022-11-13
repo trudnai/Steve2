@@ -53,34 +53,34 @@ class DisplayView: NSTextView {
     
     override func mouseDown(with event: NSEvent) {
 //        print(#function + "DisplayView")
-        ViewController.current?.mouseDown(with: event)
+        ViewController.shared?.mouseDown(with: event)
         
         // debugDisplayContraints()
     }
     
     override func mouseUp(with event: NSEvent) {
 //        print(#function + "DisplayView")
-        ViewController.current?.mouseUp(with: event)
+        ViewController.shared?.mouseUp(with: event)
     }
     
     override func rightMouseDown(with event: NSEvent) {
 //        print(#function + "DisplayView")
-        ViewController.current?.rightMouseDown(with: event)
+        ViewController.shared?.rightMouseDown(with: event)
     }
     
     override func rightMouseUp(with event: NSEvent) {
 //        print(#function + "DisplayView")
-        ViewController.current?.rightMouseUp(with: event)
+        ViewController.shared?.rightMouseUp(with: event)
     }
     
     override func otherMouseDown(with event: NSEvent) {
 //        print(#function + "DisplayView")
-        ViewController.current?.otherMouseDown(with: event)
+        ViewController.shared?.otherMouseDown(with: event)
     }
     
     override func otherMouseUp(with event: NSEvent) {
 //        print(#function + "DisplayView")
-        ViewController.current?.otherMouseUp(with: event)
+        ViewController.shared?.otherMouseUp(with: event)
     }
 
     

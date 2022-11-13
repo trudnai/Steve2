@@ -138,7 +138,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
                 PauseButton.state = .on
             }
 
-            ViewController.current?.PowerOn(sender)
+            ViewController.shared?.PowerOn(sender)
 
         default:
             if let PauseToolbarItem = PauseToolbarItem {
@@ -149,7 +149,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
                 PauseButton.state = .off
             }
 
-            ViewController.current?.PowerOff(sender)
+            ViewController.shared?.PowerOff(sender)
         }
     }
 
@@ -188,7 +188,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
         }
 
         if needUpdateDebugToolbar {
-            if let debugger = DebuggerWindowController.current {
+            if let debugger = DebuggerWindowController.shared {
                 debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
             }
         }
@@ -197,10 +197,10 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     @IBAction func Pause(_ sender: Any) {
         switch cpuState {
         case cpuState_halted:
-            ViewController.current?.Pause(sender)
+            ViewController.shared?.Pause(sender)
 
         case cpuState_running:
-            ViewController.current?.Pause(sender)
+            ViewController.shared?.Pause(sender)
             
         default:
             break
@@ -208,46 +208,46 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
 
         PauseButtonUpdate()
 
-        if let debugger = DebuggerWindowController.current {
+        if let debugger = DebuggerWindowController.shared {
             debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
         }
     }
     
     @IBAction func Reset(_ sender: Any) {
-        ViewController.current?.Reset(sender)
+        ViewController.shared?.Reset(sender)
     }
     
     @IBAction func SelectAll(_ sender: Any) {
 //        ViewController.current?.displayField.currentEditor()?.selectAll(nil)
 //        ViewController.current?.displayField.selectText(nil)
-        ViewController.current?.textDisplay.setSelectedRange(NSRange())
+        ViewController.shared?.textDisplay.setSelectedRange(NSRange())
     }
     
     @IBAction func Copy(_ sender: Any) {
-        ViewController.current?.Copy()
+        ViewController.shared?.Copy()
     }
     
     @IBAction func Paste(_ sender: Any) {
-        ViewController.current?.Paste()
+        ViewController.shared?.Paste()
     }
     
     @IBAction func Green(_ sender: Any) {
 //        print("NSToolbarItem:", sender.tag)
-        ViewController.current?.MonoMonitorChange(color: "Green")
+        ViewController.shared?.MonoMonitorChange(color: "Green")
     }
     
     @IBAction func Amber(_ sender: Any) {
 //        print("NSToolbarItem:", sender.tag)
-        ViewController.current?.MonoMonitorChange(color: "Amber")
+        ViewController.shared?.MonoMonitorChange(color: "Amber")
     }
     
     @IBAction func White(_ sender: Any) {
 //        print("NSToolbarItem:", sender.tag)
-        ViewController.current?.MonoMonitorChange(color: "White")
+        ViewController.shared?.MonoMonitorChange(color: "White")
     }
     
     @IBAction func Color(_ sender: Any) {
-        ViewController.current?.ColorMonitorSelector(color: true)
+        ViewController.shared?.ColorMonitorSelector(color: true)
     }
     
     @IBOutlet weak var SpeedSelector: NSToolbarItem!
@@ -255,43 +255,43 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     @IBAction func SpeedSelected(_ slider: NSSliderCell) {
         switch slider.intValue {
         case 1:
-            ViewController.current?.setCPUClockSpeed(freq: 0.25)
+            ViewController.shared?.setCPUClockSpeed(freq: 0.25)
             SpeedSelector.label = "0.25 MHz"
             
         case 2:
-            ViewController.current?.setCPUClockSpeed(freq: 0.5)
+            ViewController.shared?.setCPUClockSpeed(freq: 0.5)
             SpeedSelector.label = "0.5 MHz"
             
         case 4:
-            ViewController.current?.setCPUClockSpeed(freq: 1.5)
+            ViewController.shared?.setCPUClockSpeed(freq: 1.5)
             SpeedSelector.label = "1.5 MHz"
             
         case 5:
-            ViewController.current?.setCPUClockSpeed(freq: 2)
+            ViewController.shared?.setCPUClockSpeed(freq: 2)
             SpeedSelector.label = "2 MHz"
             
         case 6:
-            ViewController.current?.setCPUClockSpeed(freq: 2.8)
+            ViewController.shared?.setCPUClockSpeed(freq: 2.8)
             SpeedSelector.label = "2.8 MHz"
             
         case 7:
-            ViewController.current?.setCPUClockSpeed(freq: 4)
+            ViewController.shared?.setCPUClockSpeed(freq: 4)
             SpeedSelector.label = "4 MHz"
             
         case 8:
-            ViewController.current?.setCPUClockSpeed(freq: 10)
+            ViewController.shared?.setCPUClockSpeed(freq: 10)
             SpeedSelector.label = "10 MHz"
             
         case 9:
-            ViewController.current?.setCPUClockSpeed(freq: 100)
+            ViewController.shared?.setCPUClockSpeed(freq: 100)
             SpeedSelector.label = "100 MHz"
             
         case 10:
-            ViewController.current?.setCPUClockSpeed(freq: 2000)
+            ViewController.shared?.setCPUClockSpeed(freq: 2000)
             SpeedSelector.label = "MAX Speed"
             
         default:
-            ViewController.current?.setCPUClockSpeed(freq: 14.31818 / 14.0)
+            ViewController.shared?.setCPUClockSpeed(freq: 14.31818 / 14.0)
             SpeedSelector.label = "1.023 MHz"
         }
     }
@@ -312,24 +312,24 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     @IBAction func GamePort(_ sender: NSPopUpButton) {
         switch sender.selectedItem?.tag {
         case 1: // "Keyboard -> Joystick"
-            if let state = ViewController.current?.Keyboard2Joystick {
-                ViewController.current?.Keyboard2Joystick = !state
+            if let state = ViewController.shared?.Keyboard2Joystick {
+                ViewController.shared?.Keyboard2Joystick = !state
                 sender.selectedItem?.state = state ? .off : .on
             }
             break
             
         case 2: // "Mouse -> Joystick"
-            if let state = ViewController.current?.Mouse2Joystick {
-                ViewController.current?.Mouse2Joystick = !state
+            if let state = ViewController.shared?.Mouse2Joystick {
+                ViewController.shared?.Mouse2Joystick = !state
                 sender.selectedItem?.state = state ? .off : .on
                 
-                ViewController.current?.mouseCursor(hide: !state)                
+                ViewController.shared?.mouseCursor(hide: !state)                
             }
             break
             
         case 3: // "Mouse Enabled"
-            if let state = ViewController.current?.MouseInterface {
-                ViewController.current?.MouseInterface = !state
+            if let state = ViewController.shared?.MouseInterface {
+                ViewController.shared?.MouseInterface = !state
                 sender.selectedItem?.state = state ? .off : .on
             }
             break
@@ -376,7 +376,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     @IBAction func CPUMode(_ sender: NSPopUpButton) {
         switch sender.selectedItem?.tag {
         case 1: // "Normal Mode"
-            ViewController.current?.setSimulationMode( mode: "Normal" )
+            ViewController.shared?.setSimulationMode( mode: "Normal" )
             for i in sender.itemArray {
                 i.state = .off
             }
@@ -384,7 +384,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             break
             
         case 2: // "Eco Mode"
-            ViewController.current?.setSimulationMode( mode: "Eco" )
+            ViewController.shared?.setSimulationMode( mode: "Eco" )
             for i in sender.itemArray {
                 i.state = .off
             }
@@ -392,7 +392,7 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
             break
 
         case 3: // "Write Enabled"
-            ViewController.current?.setSimulationMode( mode: "Game" )
+            ViewController.shared?.setSimulationMode( mode: "Game" )
             for i in sender.itemArray {
                 i.state = .off
             }
@@ -405,16 +405,16 @@ class ToolBarController: NSWindowController, NSWindowDelegate {
     }
     
     @IBAction func CRTModeOnOff(_ sender: NSButton) {
-        ViewController.current?.CRTMonitorOnOff(sender)
+        ViewController.shared?.CRTMonitorOnOff(sender)
     }
     
     @IBAction func Debugger(_ sender: Any) {
-        if DebuggerWindowController.current == nil {
+        if DebuggerWindowController.shared == nil {
             let debuggerStoryboard = NSStoryboard.init(name: NSStoryboard.Name("Debugger"), bundle: nil)
             debuggerStoryboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("debuggerWindowController"))
         }
 
-        if let debugger = DebuggerWindowController.current {
+        if let debugger = DebuggerWindowController.shared {
             debugger.showWindow(self)
         }
     }

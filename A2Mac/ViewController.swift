@@ -77,7 +77,7 @@ import Metal
 
 class ViewController: NSViewController  {
 
-    static var current : ViewController? = nil
+    static var shared : ViewController? = nil
     
     var displayLink: CVDisplayLink?
     
@@ -254,7 +254,7 @@ class ViewController: NSViewController  {
             self.upd.resume()
             #endif
 
-            if let debugger = DebuggerWindowController.current {
+            if let debugger = DebuggerWindowController.shared {
                 debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
             }
         }
@@ -322,7 +322,7 @@ class ViewController: NSViewController  {
             })
         }
 
-        if let debugger = DebuggerWindowController.current {
+        if let debugger = DebuggerWindowController.shared {
             debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
         }
 
@@ -348,7 +348,11 @@ class ViewController: NSViewController  {
 
         cpuState = cpuState_running
 
-        if let debugger = DebuggerWindowController.current {
+        DispatchQueue.main.async {
+            self.view.window?.windowController?.showWindow(self)
+        }
+
+        if let debugger = DebuggerWindowController.shared {
             debugger.PauseButtonUpdate()
         }
     }
@@ -363,7 +367,7 @@ class ViewController: NSViewController  {
 
         cpuState = cpuState_halted
 
-        if let debugger = DebuggerWindowController.current {
+        if let debugger = DebuggerWindowController.shared {
             debugger.PauseButtonUpdate()
         }
     }
@@ -735,17 +739,17 @@ class ViewController: NSViewController  {
                 Pause()
 
             case F6FunctionKey:
-                if let debugger = DebuggerWindowController.current {
+                if let debugger = DebuggerWindowController.shared {
                     debugger.Step_Over(event)
                 }
 
             case F7FunctionKey:
-                if let debugger = DebuggerWindowController.current {
+                if let debugger = DebuggerWindowController.shared {
                     debugger.Step_In(event)
                 }
 
             case F8FunctionKey:
-                if let debugger = DebuggerWindowController.current {
+                if let debugger = DebuggerWindowController.shared {
                     debugger.Step_Out(event)
                 }
 
@@ -1272,7 +1276,7 @@ class ViewController: NSViewController  {
         if let debugger = DebuggerViewController.shared {
             debugger.Update()
         }
-        if let debugger = DebuggerWindowController.current {
+        if let debugger = DebuggerWindowController.shared {
             DispatchQueue.main.async {
                 debugger.showWindow(self)
             }
@@ -1427,7 +1431,7 @@ class ViewController: NSViewController  {
 //        print(#function)
         super.init(coder: coder)
         
-        ViewController.current = self
+        ViewController.shared = self
     }
     
     
@@ -2085,7 +2089,7 @@ class ViewController: NSViewController  {
         case 1000: // Open Default Disk Image
             if let menuIdentifier = sender.selectedItem?.title {
                 let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/" + menuIdentifier + ".woz" )
-                ViewController.current?.chk_woz_load(err: woz_err)
+                ViewController.shared?.chk_woz_load(err: woz_err)
                 woz_flags.image_file_readonly = 1
             }
             
@@ -2285,6 +2289,6 @@ class ViewController: NSViewController  {
 
 @_cdecl("woz_ask_to_save")
 func woz_ask_to_save() {
-    ViewController.current?.saveFile()
+    ViewController.shared?.saveFile()
 }
 

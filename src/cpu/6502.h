@@ -77,6 +77,9 @@ typedef enum : uint8_t {
     RET,        // RTS/RTI Used by Debugger Step_Over / Step_Out
     HARDRESET,
     SOFTRESET,
+    BREAKPOINT,
+    BREAKIO,
+    BREAKMEM,
 } interrupt_t;
 
 

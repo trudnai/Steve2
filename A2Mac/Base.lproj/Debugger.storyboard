@@ -239,29 +239,95 @@
                             <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
                                 <rect key="frame" x="8" y="10" width="366" height="504"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M3T-0I-hdp">
-                                        <rect key="frame" x="-2" y="488" width="81" height="16"/>
+                                    <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lUp-Ww-thA">
+                                        <rect key="frame" x="0.0" y="484" width="233" height="20"/>
+                                        <subviews>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bwO-w1-hlg" userLabel="Memory Addr Field">
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="XCd-Q5-6sX"/>
+                                                    <constraint firstAttribute="width" constant="44" id="t28-y8-Zr5"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Addr" drawsBackground="YES" usesSingleLineMode="YES" id="SCz-Q0-cv7" userLabel="Memory Addr Field Cell">
+                                                    <font key="font" size="10" name="PrintChar21"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lht-UO-OM3" userLabel="Middle Space">
+                                                <rect key="frame" x="50" y="0.0" width="8" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="57Q-CT-Gpn"/>
+                                                    <constraint firstAttribute="width" constant="4" id="lWh-zL-9R3"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="Nrn-V7-Ftb" userLabel="Memory Addr Field Cell">
+                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zov-nz-fce">
+                                                <rect key="frame" x="62" y="2" width="40" height="18"/>
+                                                <buttonCell key="cell" type="check" title="PC" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Cu2-rY-Lii">
+                                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                            </button>
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jya-Sa-f8i" userLabel="Middle Space">
+                                                <rect key="frame" x="106" y="0.0" width="44" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="40" id="W3U-D5-7k9"/>
+                                                    <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="eb8-Te-a1X"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="NLP-Iu-qf6" userLabel="Memory Addr Field Cell">
+                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hxo-9P-cZv">
+                                                <rect key="frame" x="154" y="4" width="81" height="16"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="16" identifier="Disassembly.Height" id="jZh-9c-yY6"/>
+                                                </constraints>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Disassembly" id="scD-F6-xz3">
+                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="16" identifier="Disassembly.Height" id="Nho-aF-T9F"/>
+                                            <constraint firstAttribute="height" constant="20" id="IBp-m1-h7y"/>
+                                            <constraint firstItem="zov-nz-fce" firstAttribute="top" secondItem="lUp-Ww-thA" secondAttribute="top" constant="2" id="lFF-HX-eQV"/>
                                         </constraints>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Disassembly" id="g1c-cQ-eDu">
-                                            <font key="font" usesAppearanceFont="YES"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
+                                        <visibilityPriorities>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                            <integer value="1000"/>
+                                        </visibilityPriorities>
+                                        <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                            <real value="3.4028234663852886e+38"/>
+                                        </customSpacing>
+                                    </stackView>
                                     <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Disass Scroll View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="366" height="480"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="476"/>
                                         <clipView key="contentView" copiesOnScroll="NO" id="9iz-cs-4As" userLabel="Disass Clip View">
-                                            <rect key="frame" x="1" y="1" width="349" height="478"/>
+                                            <rect key="frame" x="1" y="1" width="349" height="474"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisassView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-196" width="349" height="1155"/>
+                                                    <rect key="frame" x="0.0" y="-195" width="349" height="1156"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <size key="minSize" width="349" height="478"/>
+                                                    <size key="minSize" width="349" height="474"/>
                                                     <size key="maxSize" width="3840" height="58101"/>
                                                     <attributedString key="textStorage">
                                                         <fragment>
@@ -356,8 +422,8 @@ C20D: 4C C5 FE   JMP $FEC5 FEC5: 8D 06 C0   STA $C006</mutableString>
                                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
-                                            <rect key="frame" x="350" y="1" width="15" height="478"/>
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.01466275659824047" horizontal="NO" id="8wE-fn-MQK">
+                                            <rect key="frame" x="350" y="1" width="15" height="474"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>

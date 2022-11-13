@@ -298,6 +298,9 @@
          contextName = "m6502_dbg_bp_compact:6502_bp.c">
       </ContextState>
       <ContextState
+         contextName = "m6502_dbg_bp_get_last:6502_bp.c">
+      </ContextState>
+      <ContextState
          contextName = "ViewController.Reset(_:):ViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -466,6 +469,20 @@
             </PersistentString>
             <PersistentString
                value = "RAM[0x74]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DebuggerViewController.ASCII_to_Apple2(line:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "chr">
+            </PersistentString>
+            <PersistentString
+               value = "chr.utf8">
+            </PersistentString>
+            <PersistentString
+               value = "chr.asciiValue">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

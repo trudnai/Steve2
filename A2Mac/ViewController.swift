@@ -1272,6 +1272,11 @@ class ViewController: NSViewController  {
         if let debugger = DebuggerViewController.shared {
             debugger.Update()
         }
+        if let debugger = DebuggerWindowController.current {
+            DispatchQueue.main.async {
+                debugger.showWindow(self)
+            }
+        }
     }
 
 
@@ -1317,6 +1322,9 @@ class ViewController: NSViewController  {
                         debugBreak()
 
                     case BREAK:
+                        debugBreak()
+
+                    case BREAKPOINT:
                         debugBreak()
 
                     case RET:

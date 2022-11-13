@@ -514,6 +514,7 @@ void m6502_Debug(void) {
             cpuState = cpuState_halted;
             m6502.debugger.wMask = 0;
             m6502.debugger.on = 0;
+            m6502.interrupt = BREAKPOINT;
             return;
         }
 

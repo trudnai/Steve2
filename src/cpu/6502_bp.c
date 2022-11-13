@@ -45,7 +45,7 @@ int bp_idx = 0;
 /// Swap 2 items
 /// @param a Pointer of first item
 /// @param b Pointer to second item
-static void swap(uint16_t * a, uint16_t * b) {
+static inline void swap(uint16_t * a, uint16_t * b) {
     uint16_t temp = *a;
     *a = *b;
     *b = temp;
@@ -184,6 +184,7 @@ int m6502_dbg_bp_get_not_empty() {
 
 
 /// Move array down to eliminate leading zeros
+/// @note: Array must be sorted before this!
 void m6502_dbg_bp_compact() {
     int i = m6502_dbg_bp_get_not_empty();
     memcpy(breakpoints, breakpoints + i, bp_last_idx * sizeof(uint16_t));

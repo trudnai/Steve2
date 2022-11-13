@@ -190,8 +190,23 @@ N V - B D I Z C
         var converted = ""
 
         for chr in line {
+            // make C character NORMAL Apple ][ character
             let c = Int(chr.asciiValue!) & 0x3F | 0x80
-            converted.append(ViewController.charConvTbl[c])
+
+            // breakpoint marker
+            if c == 0xAA { // '*'
+//                converted.append("\u{E895}") // big dot (8x8)
+//                converted.append("\u{ED3C}") // big dot2 (8x8)
+//                converted.append("\u{E09B}") // right arrow
+//                converted.append("\u{E095}") // diamond
+                converted.append("\u{E080}") // closed apple
+//                converted.append("\u{E081}") // open apple
+//                converted.append("\u{E185}") // checkmark
+            }
+            // normal character
+            else {
+                converted.append(ViewController.charConvTbl[c])
+            }
         }
 
         return converted

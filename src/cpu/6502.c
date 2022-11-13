@@ -40,6 +40,7 @@
 #include <time.h>
 #include "6502.h"
 #include "6502_bp.h"
+#include "6502_debugger.h"
 #include "speaker.h"
 
 
@@ -112,16 +113,11 @@ m6502_t m6502 = {
     
     0,      // lastIO
     0,      // ecoSpindown
-    
-    0,      // trace
-    0,      // step
-    0,      // brk
-    0,      // rts
-    0,      // bra
-    0,      // bra_true
-    0,      // bra_false
-    0,      // compile
-    
+
+    0,      // debugger.on
+    0xFF,   // debugger.SP
+    0,      // debugger.wMask
+
     HALT,   // IF
 };
 
@@ -423,10 +419,7 @@ void m6502_Debug(void) {
     m6502.lastIO = 0;
     m6502.interrupt = NO_INT; // TODO: This should be taken care by the interrupt handler
 
-    m6502.debugger.on = 1;
-    m6502.debugger.mask.hlt = 1;
-    m6502.debugger.mask.brk = 1;
-    m6502.debugger.mask.inv = 1;
+    m6502_dbg_on();
 
     if( diskAccelerator_count ) {
         if( --diskAccelerator_count <= 0 ) {
@@ -443,7 +436,7 @@ void m6502_Debug(void) {
             case HALT:
                 if (m6502.debugger.mask.hlt) {
                     cpuState = cpuState_halted;
-                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -451,7 +444,7 @@ void m6502_Debug(void) {
             case BREAK:
                 if (m6502.debugger.mask.brk) {
                     cpuState = cpuState_halted;
-                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -459,7 +452,7 @@ void m6502_Debug(void) {
             case IRQ:
                 if (m6502.debugger.mask.irq) {
                     cpuState = cpuState_halted;
-                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -467,7 +460,7 @@ void m6502_Debug(void) {
             case NMI:
                 if (m6502.debugger.mask.nmi) {
                     cpuState = cpuState_halted;
-                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -475,7 +468,7 @@ void m6502_Debug(void) {
             case INV:
                 if (m6502.debugger.mask.inv) {
                     cpuState = cpuState_halted;
-                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -485,7 +478,7 @@ void m6502_Debug(void) {
                 if (m6502.debugger.mask.out) {
                     if ( m6502.SP >= m6502.debugger.SP ) {
                         cpuState = cpuState_halted;
-                        m6502.debugger.wMask = 0;
+//                        m6502.debugger.wMask = 0;
                         return;
                     }
                 }
@@ -512,8 +505,8 @@ void m6502_Debug(void) {
 
         if ( m6502_dbg_bp_is_exists(m6502.PC) ) {
             cpuState = cpuState_halted;
-            m6502.debugger.wMask = 0;
-            m6502.debugger.on = 0;
+//            m6502.debugger.wMask = 0;
+//            m6502.debugger.on = 0;
             m6502.interrupt = BREAKPOINT;
             return;
         }

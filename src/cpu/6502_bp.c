@@ -30,6 +30,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include "6502.h"
 #include "6502_bp.h"
 
 /// Array of addresses of active breakpoints
@@ -236,12 +237,6 @@ void m6502_dbg_bp_del(uint16_t addr) {
 void m6502_dbg_bp_del_all(void) {
     bp_idx = 0;
     memset(breakpoints, 0, sizeof(breakpoints));
-}
-
-
-/// Initialize Breakpoints
-void m6502_dbg_init(void) {
-    m6502_dbg_bp_del_all();
 }
 
 

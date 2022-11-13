@@ -76,6 +76,7 @@ typedef struct {
 
 #include "6502_debugger.h"
 #include "6502_instructions.h"
+#include "6502_bp.h"
 
 INLINE int m6502_Disass_1_Instr(void) {
 
@@ -92,6 +93,29 @@ INLINE int m6502_Disass_1_Instr(void) {
     } // switch fetch
     
     return 2;
+}
+
+/// Turn On Debugger
+void m6502_dbg_on(void) {
+    m6502.debugger.on = 1;
+}
+
+
+/// Turn Off Debugger
+void m6502_dbg_off(void) {
+    m6502.debugger.on = 0;
+}
+
+
+/// Initialize Breakpoints
+void m6502_dbg_init(void) {
+    m6502_dbg_on();
+    m6502.debugger.wMask = 0;
+    m6502.debugger.mask.hlt = 1;
+    m6502.debugger.mask.brk = 1;
+    m6502.debugger.mask.inv = 1;
+    m6502.debugger.SP = 0xFF;
+    m6502_dbg_bp_del_all();
 }
 
 

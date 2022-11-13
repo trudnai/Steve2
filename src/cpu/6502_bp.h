@@ -15,7 +15,6 @@
 extern uint16_t breakpoints[DEBUG_MAX_BREAKPOINTS];
 extern int bp_last_idx;
 
-extern void m6502_dbg_init(void);
 extern int m6502_dbg_bp_add(uint16_t addr);
 extern void m6502_dbg_bp_del(uint16_t addr);
 extern void m6502_dbg_bp_del_all(void);

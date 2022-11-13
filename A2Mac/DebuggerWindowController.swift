@@ -31,6 +31,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         DebuggerWindowController.shared = self
+        m6502_dbg_init()
     }
 
 
@@ -39,8 +40,6 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         if isWindowFullscreen {
             window?.toggleFullScreen(self)
         }
-
-        m6502_dbg_init()
     }
 
 
@@ -57,6 +56,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     }
 
     func windowWillClose(_ notification: Notification) {
+        m6502_dbg_off()
         DebuggerWindowController.shared = nil
     }
 

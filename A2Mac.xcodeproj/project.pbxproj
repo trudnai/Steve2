@@ -230,6 +230,10 @@
 		32D0897D291A44F200F2B486 /* 6502_bp.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D0897B291A44F200F2B486 /* 6502_bp.c */; };
 		32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D089D7291E1BF800F2B486 /* DisassView.swift */; };
 		32D089D9291E1BF800F2B486 /* DisassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D089D7291E1BF800F2B486 /* DisassView.swift */; };
+		32D08A1429219C6B00F2B486 /* HexDigitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */; };
+		32D08A1529219C6B00F2B486 /* HexDigitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */; };
+		32D08A202921A8FA00F2B486 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1F2921A8F900F2B486 /* String.swift */; };
+		32D08A212921A8FA00F2B486 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1F2921A8F900F2B486 /* String.swift */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
@@ -751,6 +755,8 @@
 		32D08992291AF23500F2B486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = A2Mac/Base.lproj/Debug.storyboard; sourceTree = "<group>"; };
 		32D089D7291E1BF800F2B486 /* DisassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisassView.swift; sourceTree = "<group>"; };
 		32D089EC291EE19200F2B486 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
+		32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexDigitFormatter.swift; sourceTree = "<group>"; };
+		32D08A1F2921A8F900F2B486 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
 		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
@@ -1177,6 +1183,7 @@
 				32D089EC291EE19200F2B486 /* UnfairLock.swift */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
 				32B3778E291787CA0040845B /* NSLayoutConstraint.swift */,
+				32D08A1F2921A8F900F2B486 /* String.swift */,
 				32100A8A2875387300D894EE /* CheatMenu.swift */,
 				32100A9E28753AAA00D894EE /* SubMenu.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
@@ -1186,6 +1193,7 @@
 				323D042F24898AB70086A901 /* PreferencesViewController.swift */,
 				32D089D7291E1BF800F2B486 /* DisassView.swift */,
 				327B75D629064FDC00A86A71 /* DebuggerViewController.swift */,
+				32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */,
 				32C823392908822E0018438F /* DebuggerWindowController.swift */,
 				323D04312489BFD80086A901 /* PreferencesWindowController.swift */,
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,
@@ -1661,6 +1669,7 @@
 				32799F81264B1A5700255669 /* disk.c in Sources */,
 				3268B97B27DE7D6B003FBDCC /* disassembler.c in Sources */,
 				32C82360290888D10018438F /* CheatMenu.swift in Sources */,
+				32D08A212921A8FA00F2B486 /* String.swift in Sources */,
 				32100AB52877AB8600D894EE /* scsi.c in Sources */,
 				32C6996727C548C900D0F25D /* Shaders.metal in Sources */,
 				32799F82264B1A5700255669 /* woz.c in Sources */,
@@ -1677,6 +1686,7 @@
 				327B75D829064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
 				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
+				32D08A1529219C6B00F2B486 /* HexDigitFormatter.swift in Sources */,
 				32799F8A264B1A5700255669 /* MonitorView.swift in Sources */,
 				3277D7A4273C603600749544 /* DisplayScrollView.swift in Sources */,
 				32A6AB25266B19680023257A /* hires.c in Sources */,
@@ -1698,8 +1708,10 @@
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
 				325B7611290A0C4100B29605 /* 6502_debugger.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				32D08A1429219C6B00F2B486 /* HexDigitFormatter.swift in Sources */,
 				32100A8B2875387300D894EE /* CheatMenu.swift in Sources */,
 				3268B97A27DE7D6A003FBDCC /* disassembler.c in Sources */,
+				32D08A202921A8FA00F2B486 /* String.swift in Sources */,
 				32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */,
 				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,

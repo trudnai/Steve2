@@ -48,11 +48,13 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     func windowDidBecomeKey(_ notification: Notification) {
 //        NSLog("windowDidBecomeKey")
         isKey = true
+        ViewController.shared?.keyEventsOff()
     }
 
     func windowDidResignKey(_ notification: Notification) {
 //        NSLog("windowDidResignKey")
         isKey = false
+        ViewController.shared?.keyEventsOn()
     }
 
     func windowWillClose(_ notification: Notification) {

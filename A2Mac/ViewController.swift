@@ -472,18 +472,17 @@ class ViewController: NSViewController  {
     
     
     // AppleScript Keycodes
-    let leftArrowKey = 123
-    let rightArrowKey = 124
-    let upArrowKey = 126
-    let downArrowKey = 125
+    let leftArrowKey    = 123
+    let rightArrowKey   = 124
+    let upArrowKey      = 126
+    let downArrowKey    = 125
 
-    let F4FunctionKey = 118
-    let F5FunctionKey = 96
-    let F6FunctionKey = 97
-    let F7FunctionKey = 98
-    let F8FunctionKey = 100
+    let F4FunctionKey   = 118
+    let F5FunctionKey   =  96
+    let F6FunctionKey   =  97
+    let F7FunctionKey   =  98
+    let F8FunctionKey   = 100
 
-    var ddd = 9;
 
     override var acceptsFirstResponder: Bool {
         get {
@@ -645,12 +644,6 @@ class ViewController: NSViewController  {
         
 //        print("keyDown")
         
-//        for i in 0...65536 {
-//            ddd = Int(event.keyCode) + i
-//        }
-//        ddd = ddd * 2
-        
-        
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.command] where event.characters == "l",
 //             [.command, .shift] where event.characters == "l":
@@ -689,7 +682,7 @@ class ViewController: NSViewController  {
             let keyCode = Int(event.keyCode)
             switch keyCode {
             case leftArrowKey:
-//                print("LEFT", ddd);
+//                print("LEFT");
                 if ( Keyboard2Joystick ) {
                     // Keyboard 2 JoyStick (Game Controller / Paddle)
                     pdl_valarr[0] = 0
@@ -1531,6 +1524,9 @@ class ViewController: NSViewController  {
     @IBOutlet weak var disk2_closed: NSImageView!
 
 
+    var keyDownMonitor : Any?
+    var keyUpMonitor : Any?
+
     func keyEventsOn() {
 //        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
 //        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
@@ -1538,16 +1534,36 @@ class ViewController: NSViewController  {
 //            return $0
 //        }
 
-//        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+        if let event = keyDownMonitor {
+            NSEvent.removeMonitor(event)
+            keyDownMonitor = nil
+        }
+        keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
 //            print("keyDown event")
             self.keyDown(with: $0)
             return nil
         }
-        NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
+        if let event = keyUpMonitor {
+            NSEvent.removeMonitor(event)
+            keyUpMonitor = nil
+        }
+        keyUpMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
 //            print("keyUp event")
             self.keyUp(with: $0)
             return nil
+        }
+    }
+
+
+    func keyEventsOff() {
+//        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
+        if let event = keyDownMonitor {
+            NSEvent.removeMonitor(event)
+            keyDownMonitor = nil
+        }
+        if let event = keyUpMonitor {
+            NSEvent.removeMonitor(event)
+            keyUpMonitor = nil
         }
     }
 
@@ -1675,7 +1691,8 @@ class ViewController: NSViewController  {
 //        view.setBoundsSize(size)
         
     }
-    
+
+
     override func viewDidAppear() {
 //        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
 //        self.displayField.window?.makeFirstResponder(self)
@@ -1684,6 +1701,51 @@ class ViewController: NSViewController  {
     }
 
     
+    func setSpkrExtrabuf( freq : Double ) {
+        // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
+
+//        spkr_extra_buf = Int32( 780 / fps )
+
+        switch freq {
+        case 0.25:
+            spkr_extra_buf = -65
+            break
+
+        case 0.5:
+            spkr_extra_buf = -140
+            break
+
+        case 1.5:
+            spkr_extra_buf = 175
+            break
+
+        case 2.0:
+//            spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
+//            spkr_extra_buf = 20
+            spkr_extra_buf = 195 // 88
+            break
+
+        case 2.8:
+            spkr_extra_buf = 65 // 185
+            break
+
+        case 4.0:
+//            spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
+//            spkr_extra_buf = 45
+            spkr_extra_buf = 25 // 90 // 80 // 20
+            break
+
+        default:
+//            spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
+            spkr_extra_buf = 0 // 26
+            break
+        }
+
+        soundGapLabel.title = String( spkr_extra_buf )
+        soundGapSlider.integerValue = Int(spkr_extra_buf)
+    }
+
+
     func setCPUClockSpeed( freq : Double ) {
         spkr_stopAll();
         
@@ -1691,48 +1753,8 @@ class ViewController: NSViewController  {
         clk_6502_per_frm = UInt32( MHz_6502 * M / Double(fps) )
         clk_6502_per_frm_set = clk_6502_per_frm
             
-        // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
-        
-//            spkr_extra_buf = Int32( 780 / fps )
-        spkr_extra_buf = 0 // 26
-        
-//        switch freq {
-//        case 0.25:
-//            spkr_extra_buf = -65
-//            break
-//
-//        case 0.5:
-//            spkr_extra_buf = -140
-//            break
-//
-//        case 1.5:
-//            spkr_extra_buf = 175
-//            break
-//
-//        case 2.0:
-////                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
-////                spkr_extra_buf = 20
-//            spkr_extra_buf = 195 // 88
-//            break
-//
-//        case 2.8:
-//            spkr_extra_buf = 65 // 185
-//            break
-//
-//        case 4.0:
-////                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
-////                spkr_extra_buf = 45
-//            spkr_extra_buf = 25 // 90 // 80 // 20
-//            break
-//
-//        default:
-////                spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
-//            spkr_extra_buf = 0 // 26
-//            break
-//        }
-                    
-        soundGapLabel.title = String( spkr_extra_buf )
-        soundGapSlider.integerValue = Int(spkr_extra_buf)
+        spkr_extra_buf = 0
+//        setSpkrExtrabuf(freq: freq)
     }
 
     

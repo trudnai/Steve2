@@ -242,7 +242,7 @@
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lUp-Ww-thA">
                                         <rect key="frame" x="0.0" y="484" width="233" height="20"/>
                                         <subviews>
-                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bwO-w1-hlg" userLabel="Memory Addr Field">
+                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bwO-w1-hlg" userLabel="Disass Addr Field">
                                                 <rect key="frame" x="0.0" y="0.0" width="44" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="XCd-Q5-6sX"/>
@@ -252,6 +252,9 @@
                                                     <font key="font" size="10" name="PrintChar21"/>
                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    <connections>
+                                                        <action selector="DisassAddressEntered:" target="R5e-co-cXs" id="olp-pH-tuA"/>
+                                                    </connections>
                                                 </textFieldCell>
                                             </textField>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lht-UO-OM3" userLabel="Middle Space">
@@ -323,7 +326,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisassView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-195" width="349" height="1156"/>
+                                                    <rect key="frame" x="0.0" y="-216" width="349" height="1155"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -422,7 +425,7 @@ C20D: 4C C5 FE   JMP $FEC5 FEC5: 8D 06 C0   STA $C006</mutableString>
                                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.01466275659824047" horizontal="NO" id="8wE-fn-MQK">
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
                                             <rect key="frame" x="350" y="1" width="15" height="474"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -541,7 +544,7 @@ C20D: 4C C5 FE   JMP $FEC5 FEC5: 8D 06 C0   STA $C006</mutableString>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-232" width="334" height="165"/>
+                                                                            <rect key="frame" x="0.0" y="-239" width="334" height="165"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -565,7 +568,7 @@ C20D: 4C C5 FE   JMP $FEC5 FEC5: 8D 06 C0   STA $C006</mutableString>
                                                                     <rect key="frame" x="-100" y="-100" width="349" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.2857142857142857" horizontal="NO" id="dcm-z5-VNG">
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.21428571428571427" horizontal="NO" id="dcm-z5-VNG">
                                                                     <rect key="frame" x="335" y="1" width="15" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -631,10 +634,13 @@ C20D: 4C C5 FE   JMP $FEC5 FEC5: 8D 06 C0   STA $C006</mutableString>
                                                                     <constraint firstAttribute="width" constant="44" id="9xL-1J-8Hg"/>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="bS5-Xb-qDz"/>
                                                                 </constraints>
-                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Addr" drawsBackground="YES" usesSingleLineMode="YES" id="Eze-3w-9N2" userLabel="Memory Addr Field Cell">
+                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Addr" drawsBackground="YES" usesSingleLineMode="YES" id="Eze-3w-9N2" userLabel="Memory Addr Field Cell">
                                                                     <font key="font" size="10" name="PrintChar21"/>
                                                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                    <connections>
+                                                                        <action selector="MemoryAddressEntered:" target="R5e-co-cXs" id="wiF-B9-eF6"/>
+                                                                    </connections>
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-1T-iQB" userLabel="Middle Space">
@@ -792,9 +798,12 @@ C20D: 4C C5 FE   JMP $FEC5 FEC5: 8D 06 C0   STA $C006</mutableString>
                     </view>
                     <connections>
                         <outlet property="CPU_Display" destination="Wrs-Qt-Kmd" id="SUW-Lc-Zv4"/>
+                        <outlet property="DisassAddressField" destination="bwO-w1-hlg" id="tBp-cc-OcF"/>
+                        <outlet property="DisassAddressPC" destination="zov-nz-fce" id="fhe-fN-yPd"/>
                         <outlet property="Disass_Display" destination="Hwx-Gd-XW1" id="XHS-dZ-gCR"/>
                         <outlet property="Disass_Scroll" destination="Pcn-4j-EEM" id="5w1-DZ-ypu"/>
                         <outlet property="Mem1_Display" destination="qqp-t0-j4i" id="85A-sB-M0p"/>
+                        <outlet property="MemoryAddressField" destination="p3x-F3-IOa" id="9yv-2e-Lm7"/>
                         <outlet property="Stack_Display" destination="BHr-Q4-rBI" id="qlA-JC-xkW"/>
                     </connections>
                 </viewController>

@@ -31,16 +31,20 @@ class DebuggerViewController: NSViewController {
     @IBOutlet var Mem1_Display: DisplayView!
     @IBOutlet var Disass_Scroll: DisplayScrollView!
     @IBOutlet var Disass_Display: DisplayView!
+    @IBOutlet weak var MemoryAddressField: NSTextField!
+    @IBOutlet weak var DisassAddressField: NSTextField!
+    @IBOutlet weak var DisassAddressPC: NSButton!
 
-    //    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        DebuggerViewController.shared = self
-//    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        DebuggerViewController.shared = self
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height)
-        DebuggerViewController.shared = self
     }
 
     
@@ -55,6 +59,9 @@ class DebuggerViewController: NSViewController {
         if let debugger = DebuggerWindowController.shared {
             debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
         }
+
+        MemoryAddressField.formatter = HexDigitFormatter(maxLen: 4)
+        DisassAddressField.formatter = HexDigitFormatter(maxLen: 4)
     }
 
 
@@ -174,9 +181,11 @@ N V - B D I Z C
     }
 
 
+    var mem_1_addr : UInt16 = 0x400
+
     func DisplayMemory() {
         var memory = ""
-        for i : UInt16 in stride(from: 0x400, to: 0x4FF, by: 16) {
+        for i : UInt16 in stride(from: mem_1_addr, to: mem_1_addr + 0xFF, by: 16) {
             memory += hexLine16(addr: i) + " " + textLine16(addr: i) + "\n"
         }
 
@@ -227,11 +236,13 @@ N V - B D I Z C
 
     let disass_addr_min : UInt16 = 320
     let disass_addr_max : UInt16 = 512
-    var disass_addr : UInt16 = 0
+    var disass_addr : UInt16 = 0 /// Address disassembled in the window
+    var disass_addr_pc : UInt16 = 0 /// Address to disassemble
     let disass_addr_pre : UInt16 = 20
     let disass_addr_min_pre : UInt16 = 320 - 20
     var line_number = 0
-    var line_number_at_PC = 0
+    var scroll_line_number = 0
+    var highlighted_line_number = 0
     var line_number_cursor = 0
     let lines_to_disass = 300
 
@@ -375,7 +386,7 @@ N V - B D I Z C
             location.y = maxY - location.y + display.visibleRect.origin.y
 
             let line = getLine(inView: display, forY: location.y)
-            highlight(view: display, line: line_number_at_PC, attr: lineAttrAtPC)
+            highlight(view: display, line: highlighted_line_number, attr: lineAttrAtPC)
             remove_highlight(view: display, line: line_number_cursor)
             highlight(view: display, line: line, attr: lineAttrAtSelected)
             line_number_cursor = line
@@ -431,21 +442,33 @@ N V - B D I Z C
 
         line_number = 0
 
-        let highlighted = self.line_number_at_PC
+        let highlighted = self.highlighted_line_number
+
         DispatchQueue.main.async {
             self.remove_highlight(view: self.Disass_Display, line: highlighted)
         }
 
         // TODO: Also check if memory area updated!
 
-        var need_disass = m6502.PC <= disass_addr || m6502.PC > disass_addr + disass_addr_max
-        line_number_at_PC = getLine(forAddr: m6502.PC)
+//        DispatchQueue.main.sync {
+        let addrpc = DisassAddressPC == nil || DisassAddressPC.state == .on
+        if addrpc {
+            disass_addr_pc = m6502.PC
+        }
+//        }
+        var need_disass = disass_addr_pc <= disass_addr || disass_addr_pc > disass_addr + disass_addr_max
+        scroll_line_number = getLine(forAddr: disass_addr_pc)
+        highlighted_line_number = getLine(forAddr: m6502.PC)
 
-//        if m6502.PC > disass_addr && m6502.PC < disass_addr + disass_addr_max {
-        if line_number_at_PC == 0 || need_disass {
+//        if disass_addr_pc > disass_addr && disass_addr_pc < disass_addr + disass_addr_max {
+        if scroll_line_number == 0 || need_disass {
             ViewController.shared?.UpdateSemaphore.wait()
 
             let m6502_saved = m6502
+
+            if !addrpc {
+                m6502.PC = disass_addr_pc
+            }
 
             need_disass = true
             addr_line.removeAll()
@@ -478,7 +501,10 @@ N V - B D I Z C
 
                 if isCurrentLine {
                     //                line = invertLine(line: line)
-                    line_number_at_PC = line_number
+                    highlighted_line_number = line_number
+                }
+                if m6502.PC == disass_addr_pc {
+                    scroll_line_number = line_number
                 }
 
                 disass += line + "\n"
@@ -495,24 +521,25 @@ N V - B D I Z C
             }
 
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
-            if self.line_number_at_PC <= currentScrollLine || self.line_number_at_PC > currentScrollLine + 35 {
-                self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
+            if self.highlighted_line_number <= currentScrollLine || self.highlighted_line_number > currentScrollLine + 35 {
 
                 if scrollY < 0 {
+                    self.scroll_to(view: self.Disass_Display, line: self.scroll_line_number - 5)
+
                     // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
-                    if currentScrollLine == 1 {
-                        // so we need to scroll a bit later when the string is already populated
-    //                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
-    //                    }
-                    }
+//                    if currentScrollLine == 1 {
+//                        // so we need to scroll a bit later when the string is already populated
+//    //                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                            self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
+//    //                    }
+//                    }
                 }
                 else {
                     // caller wants a specific scroll location...
                     self.Disass_Display.scroll(NSPoint(x: 0, y: scrollY))
                 }
             }
-            self.highlight(view: self.Disass_Display, line: self.line_number_at_PC, attr: self.lineAttrAtPC)
+            self.highlight(view: self.Disass_Display, line: self.highlighted_line_number, attr: self.lineAttrAtPC)
         }
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // your code here
@@ -536,6 +563,21 @@ N V - B D I Z C
                 self.UpdateSemaphore.signal()
             }
         }
+    }
+
+
+    @IBAction func MemoryAddressEntered(_ sender: NSTextFieldCell) {
+        NSLog("MemoryAddressEntered %@", sender.stringValue)
+        mem_1_addr = UInt16(sender.stringValue.hexValue())
+        DisplayMemory()
+    }
+
+    @IBAction func DisassAddressEntered(_ sender: NSTextFieldCell) {
+        NSLog("DisassAddressEntered %@", sender.stringValue)
+//        sender.stringValue = "4321" // MemoryAddressField.stringValue
+        DisassAddressPC.state = .off
+        disass_addr_pc = UInt16(sender.stringValue.hexValue())
+        DisplayDisassembly()
     }
 
 }

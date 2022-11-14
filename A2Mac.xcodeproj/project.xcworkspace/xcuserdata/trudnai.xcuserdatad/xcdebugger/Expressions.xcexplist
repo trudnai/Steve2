@@ -905,6 +905,9 @@
             <PersistentString
                value = "disass_addr">
             </PersistentString>
+            <PersistentString
+               value = "scroll_line_number">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState

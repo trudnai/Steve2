@@ -1318,10 +1318,10 @@ class ViewController: NSViewController  {
                     case HALT:
                         debugBreak()
 
-                    case BREAK:
+                    case BREAK: // BRK instruction
                         debugBreak()
 
-                    case BREAKPOINT:
+                    case BREAKPOINT: // CPU halted because of a breakpoint
                         debugBreak()
 
                     case RET:
@@ -1332,7 +1332,7 @@ class ViewController: NSViewController  {
                             }
                         }
 
-                    case INV:
+                    case INV: // invalid instruction
                         debugBreak()
 
                     default:

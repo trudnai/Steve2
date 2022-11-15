@@ -17,6 +17,16 @@ class DisplayScrollView : NSScrollView {
         if scrollEnabled {
             super.scrollWheel(with: event)
         }
+        else {
+            let textView = documentView as! NSTextView
+            var scrollTo = textView.visibleRect.origin
+            let lineSpacing = CGFloat(1.5) // textView.defaultParagraphStyle?.lineSpacing ?? CGFloat(1.5)
+            let lineHeight = textView.font!.pointSize * lineSpacing
+
+            scrollTo.y = scrollTo.y + event.scrollingDeltaY * lineHeight
+
+            textView.scroll(scrollTo)
+        }
     }
     
     override func scrollPageUp(_ sender: Any?) {

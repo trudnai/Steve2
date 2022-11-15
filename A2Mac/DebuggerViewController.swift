@@ -67,27 +67,33 @@ class DebuggerViewController: NSViewController {
 
     override func scrollWheel(with event: NSEvent) {
         super.scrollWheel(with: event)
+        let location = event.locationInWindow
+        print("scrollWheel")
+
+        if location.x > Disass_Scroll.frame.minX
+        && location.x < Disass_Scroll.frame.maxX
+        && location.y < Disass_Scroll.frame.minY
+        && location.y < Disass_Scroll.frame.maxY
+        {
+            print("Disass_Scroll")
+            var scrollTo = Disass_Display.visibleRect.origin
+            let lineSpacing = CGFloat(1.5)
+            let lineHeight = Disass_Display.font!.pointSize * lineSpacing
+            //        print("lineHeight:", lineHeight, "fontSize:", Stack_Display.font?.pointSize)
+
+            let y1 = round( (scrollTo.y + round(event.scrollingDeltaY) * lineHeight) / lineHeight) * lineHeight
+//            let y2 = round( scrollTo.y / lineHeight + event.scrollingDeltaY ) * lineHeight
+
+            scrollTo.y = y1
+
+            Disass_Display.scroll(scrollTo)
+        }
 
 //        if view.window?.firstResponder?.textView?.delegate === Stack_Display {
 //        print("scroll deltaY", event.deltaY, event.scrollingDeltaY)
 //        Stack_Display.scroll(Stack_Display.enclosingScrollView!.visibleRect, by: NSSize(width: 0, height: event.scrollingDeltaY) )
 //        }
 
-        var scrollTo = Disass_Display.visibleRect.origin
-        let lineSpacing = CGFloat(1.5)
-        let lineHeight = Disass_Display.font!.pointSize * lineSpacing
-//        print("lineHeight:", lineHeight, "fontSize:", Stack_Display.font?.pointSize)
-
-        let y1 = round( (scrollTo.y + round(event.scrollingDeltaY) * lineHeight) / lineHeight) * lineHeight
-        let y2 = round( scrollTo.y / lineHeight + event.scrollingDeltaY ) * lineHeight
-
-        if y1 != y2 {
-            print("NOT EQ", y1, y2)
-        }
-
-        scrollTo.y = y1
-
-        Disass_Display.scroll(scrollTo)
     }
 
 
@@ -371,20 +377,25 @@ N V - B D I Z C
     }
 
 
-    func highlightCursor(scrollView : NSView, display : NSTextView, mouseLocation : NSPoint) {
-        var location = mouseLocation
+    /// Highlight the entire line at the mouse location
+    /// - Parameters:
+    ///   - scrollView: ScrollView of the scrollable TextView
+    ///   - display: The TextView itself
+    ///   - mouseLocation: Mouse location locally inside the ScrollView
+    func highlightCursor(scrollView : NSScrollView, mouseLocation : NSPoint) {
+        let display = scrollView.documentView as! NSTextView
+        let location = mouseLocation
         let parent_frame = scrollView.superview?.frame
 
+        // covering rectangle of the entire document
         let minX = parent_frame!.minX + scrollView.frame.minX
         let minY = parent_frame!.minY + scrollView.frame.minY
-        let maxX = minX + scrollView.frame.width
-        let maxY = minY + scrollView.frame.height
+        let maxX = minX + display.visibleRect.origin.x + scrollView.frame.width
+        let maxY = minY + display.visibleRect.origin.y + scrollView.frame.height
 
         if location.x > minX && location.x < maxX
-        && location.y > minY && location.y < maxY {
-//            location.x = maxX - location.x
-            location.y = maxY - location.y + display.visibleRect.origin.y
-
+        && location.y > minY && location.y < maxY
+        {
             let line = getLine(inView: display, forY: location.y)
             highlight(view: display, line: highlighted_line_number, attr: lineAttrAtPC)
             remove_highlight(view: display, line: line_number_cursor)
@@ -414,7 +425,7 @@ N V - B D I Z C
             DisplayDisassembly(scrollY: Disass_Display.visibleRect.origin.y)
         }
         else {
-            highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
+            highlightCursor(scrollView: Disass_Scroll, mouseLocation: location)
         }
     }
 
@@ -422,7 +433,7 @@ N V - B D I Z C
     // context menu
     override func rightMouseDown(with event: NSEvent) {
         let location = event.locationInWindow
-        highlightCursor(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: location)
+        highlightCursor(scrollView: Disass_Scroll, mouseLocation: location)
     }
 
 

@@ -107,6 +107,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "memread8_low:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "m6502_dbg_bp_search:6502_bp.c">
          <PersistentStrings>
             <PersistentString
@@ -736,6 +744,23 @@
          contextName = "ADC:6502_instr_arithmetic.h">
       </ContextState>
       <ContextState
+         contextName = "DisplayScrollView.scrollWheel(with:):DisplayScrollView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "documentView">
+            </PersistentString>
+            <PersistentString
+               value = "subviews">
+            </PersistentString>
+            <PersistentString
+               value = "textView.defaultParagraphStyle?.lineSpacing">
+            </PersistentString>
+            <PersistentString
+               value = "subviews[1].subviews">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "quicksort:6502_bp.c">
          <PersistentStrings>
             <PersistentString
@@ -860,6 +885,9 @@
          <PersistentStrings>
             <PersistentString
                value = "RAM">
+            </PersistentString>
+            <PersistentString
+               value = "breakpoints">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

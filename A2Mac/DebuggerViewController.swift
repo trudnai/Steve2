@@ -240,12 +240,12 @@ N V - B D I Z C
     }
 
 
-    let disass_addr_min : UInt16 = 320
+    let disass_addr_min : UInt16 = 0 // 320
     let disass_addr_max : UInt16 = 512
     var disass_addr : UInt16 = 0 /// Address disassembled in the window
     var disass_addr_pc : UInt16 = 0 /// Address to disassemble
     let disass_addr_pre : UInt16 = 20
-    let disass_addr_min_pre : UInt16 = 320 - 20
+    let disass_addr_min_pre : UInt16 = 0 // 320 - 20
     var line_number = 0
     var scroll_line_number = 0
     var highlighted_line_number = 0

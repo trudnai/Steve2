@@ -87,7 +87,7 @@ extern void kbdUp (void);
 extern uint8_t getIO ( uint16_t ioaddr );
 extern void setIO ( uint16_t ioaddr, uint8_t val );
 
-extern void save_RAM();
+extern void save_RAM(void);
 
 #ifndef DEBUGGER
 extern uint8_t getMEM ( uint16_t ioaddr );

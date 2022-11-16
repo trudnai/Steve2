@@ -513,6 +513,11 @@ void m6502_Debug(void) {
 
     }
 
+    // play the entire sound buffer for this frame
+    spkr_update();
+    // this will take care of turning off disk motor sound when time is up
+    spkr_update_disk_sfx();
+
 }
 
 

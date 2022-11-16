@@ -157,6 +157,26 @@ INLINE void save_AUX(void) {
 }
 
 
+/// Save entire
+void save_RAM() {
+    // save the content of Shadow ZP + Stack
+    memcpy( (void*) currentZPSTCKMEM, shadowZPSTCKMEM, 0x200);
+    // save LoMem
+    memcpy( (void*) currentLowWRMEM + 0x200, WRLOMEM + 0x200, 0xBE00);
+
+    save_AUX();
+
+    if ( activeTextPage ) {
+        // save the content of Shadow Memory
+        memcpy(activeTextPage, shadowTextPage, 0x400);
+    }
+
+}
+
+
+
+
+
 INLINE void select_RAM_BANK( uint16_t addr ) {
     // RAM Bank 1 or 2?
     switch ((uint8_t)addr) {
@@ -1378,19 +1398,19 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
             newReadMEM = Apple2_64K_AUX + 0x200;
         }
         else {
-            newReadMEM = Apple2_64K_MEM + 0x200;
+            newReadMEM = Apple2_64K_RAM + 0x200;
         }
         
         if ( newMEMcfg.WR_AUX_MEM ) {
             newWriteMEM = Apple2_64K_AUX;
         }
         else {
-            newWriteMEM = Apple2_64K_MEM;
+            newWriteMEM = Apple2_64K_RAM;
         }
     }
     else {
-        newReadMEM = Apple2_64K_MEM + 0x200;
-        newWriteMEM = Apple2_64K_MEM;
+        newReadMEM = Apple2_64K_RAM + 0x200;
+        newWriteMEM = Apple2_64K_RAM;
     }
     
     

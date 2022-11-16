@@ -189,7 +189,7 @@ int m6502_dbg_bp_get_not_empty() {
 void m6502_dbg_bp_compact() {
     int i = m6502_dbg_bp_get_not_empty();
     memcpy(breakpoints, breakpoints + i, bp_last_idx * sizeof(uint16_t));
-    memset(breakpoints + bp_last_idx, 0, (DEBUG_MAX_BREAKPOINTS - bp_last_idx) * sizeof(uint16_t));
+    memset(breakpoints + bp_last_idx - i + 1, 0, (DEBUG_MAX_BREAKPOINTS - bp_last_idx + i - 1) * sizeof(uint16_t));
     bp_last_idx = m6502_dbg_bp_get_last(bp_last_idx);
 }
 
@@ -214,6 +214,7 @@ int m6502_dbg_bp_add(uint16_t addr) {
     if (bp_last_idx < DEBUG_MAX_BREAKPOINTS - 1) {
         breakpoints[++bp_last_idx] = addr;
         m6502_dbg_bp_sort(breakpoints, 0, bp_last_idx);
+        m6502_dbg_bp_compact();
         return bp_last_idx;
     }
     // no empty slots

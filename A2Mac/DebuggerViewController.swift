@@ -467,7 +467,7 @@ N V - B D I Z C
             disass_addr_pc = m6502.PC
         }
 //        }
-        var need_disass = disass_addr_pc <= disass_addr || disass_addr_pc > disass_addr + disass_addr_max
+        var need_disass = disass_addr_pc <= disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
         scroll_line_number = getLine(forAddr: disass_addr_pc)
         highlighted_line_number = getLine(forAddr: m6502.PC)
 

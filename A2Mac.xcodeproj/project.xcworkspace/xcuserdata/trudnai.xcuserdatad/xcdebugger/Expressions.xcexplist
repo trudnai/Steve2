@@ -514,6 +514,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "_fetch16:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "m6502_step:6502.c">
          <PersistentStrings>
             <PersistentString
@@ -603,13 +611,16 @@
          contextName = "ioRead:mmio.c">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.clkfrm">
-            </PersistentString>
-            <PersistentString
                value = "(int)IOframe">
             </PersistentString>
             <PersistentString
                value = "lastIO">
+            </PersistentString>
+            <PersistentString
+               value = "MEMcfg.int_Cx_ROM">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clkfrm">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1249,6 +1260,14 @@
             </PersistentString>
             <PersistentString
                value = "frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "memread16_low:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "* (uint16_t*) ( Apple2_64K_MEM + addr )">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

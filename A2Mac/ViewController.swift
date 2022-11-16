@@ -1274,6 +1274,10 @@ class ViewController: NSViewController  {
                 debugger.showWindow(self)
             }
         }
+
+        spkr_play_disk_motor_time = 0
+        spkr_stopAll()
+
     }
 
 

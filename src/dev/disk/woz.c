@@ -316,7 +316,7 @@ uint8_t woz_read() {
 
     if ( woz_tmap && woz_trks ) {
         int track = woz_tmap->phase[disk.phase.count];
-        if (outdev) fprintf(outdev, "track: %d (%d)\n", track, disk.phase.count);
+        dbgPrintf2("track: %d (%d)\n", track, disk.phase.count);
         if ( track >= 40 ) {
             dbgPrintf("TRCK TOO HIGH!\n");
             return rand();

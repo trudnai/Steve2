@@ -188,7 +188,7 @@ void m6502_Debug(void) {
 
         m6502.interrupt = NO_INT;
 
-        if ( m6502_dbg_bp_exists(breakpoints, bp_last_idx, m6502.PC) ) {
+        if ( m6502_dbg_bp_exists(breakpoints, m6502.PC) ) {
             cpuState = cpuState_halted;
 //            m6502.debugger.wMask = 0;
 //            m6502.debugger.on = 0;

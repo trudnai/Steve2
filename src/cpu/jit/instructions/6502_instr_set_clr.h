@@ -37,7 +37,7 @@
 INSTR void CLC(void) {
     dbgPrintf("CLC ");
     disPrintf(disassembly.inst, "CLC");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.C = 0;
 #endif
 }
@@ -55,7 +55,7 @@ INSTR void CLC(void) {
 INSTR void CLD(void) {
     dbgPrintf("CLD ");
     disPrintf(disassembly.inst, "CLD");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.D = 0;
 #endif
 }
@@ -73,7 +73,7 @@ INSTR void CLD(void) {
 INSTR void CLI(void) {
     dbgPrintf("CLI ");
     disPrintf(disassembly.inst, "CLI");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.I = 0;
 #endif
 }
@@ -91,7 +91,7 @@ INSTR void CLI(void) {
 INSTR void CLV(void) {
     dbgPrintf("CLV ");
     disPrintf(disassembly.inst, "CLV");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.V = 0;
 #endif
 }
@@ -109,7 +109,7 @@ INSTR void CLV(void) {
 INSTR void SEC(void) {
     dbgPrintf("SEC ");
     disPrintf(disassembly.inst, "SEC");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.C = 1;
 #endif
 }
@@ -127,7 +127,7 @@ INSTR void SEC(void) {
 INSTR void SED(void) {
     dbgPrintf("SED ");
     disPrintf(disassembly.inst, "SED");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.D = 1;
 #endif
 }
@@ -145,7 +145,7 @@ INSTR void SED(void) {
 INSTR void SEI(void) {
     dbgPrintf("SEI ");
     disPrintf(disassembly.inst, "SEI");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.I = 1;
 #endif
 }
@@ -189,7 +189,7 @@ INSTR void SEI(void) {
  E7 2   5   zp   ........ SMB6 $12
  F7 2   5   zp   ........ SMB7 $12
 **/
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 #define RMB(n) INSTR void RMB##n( uint8_t zpg ) { \
     dbgPrintf("RMB"#n" "); \
     disPrintf(disassembly.inst, "RMB"#n); \
@@ -212,7 +212,7 @@ INSTR void SEI(void) {
     RMB(7)
 
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 #define SMB(n) INSTR void SMB##n( uint8_t zpg ) { \
     dbgPrintf("SMB"#n" "); \
     disPrintf(disassembly.inst, "SMB"#n); \

@@ -31,6 +31,8 @@
 #define CLK_WAIT
 
 #undef DEBUGGER
+#undef DISASSEMBLER
+
 #define FETCH_ADDR m6502.PC
 
 #include <stdio.h>

@@ -89,7 +89,7 @@ extern void setIO ( uint16_t ioaddr, uint8_t val );
 
 extern void save_RAM(void);
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 extern uint8_t getMEM ( uint16_t ioaddr );
 extern uint16_t getMEM16 ( uint16_t ioaddr );
 extern uint32_t getMEM32 ( uint16_t ioaddr );
@@ -466,7 +466,7 @@ INLINE uint8_t _src_zp_Y(void);
 INLINE uint8_t _src_zp_Y_dis(void);
 
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 
 #define fetch() _fetch()
 #define fetch16() _fetch16()
@@ -498,7 +498,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define addr_zp_Y() _addr_zp_Y()
 #define src_zp_Y() _src_zp_Y()
 
-#else // DEBUGGER
+#else // DISASSEMBLER
 
 #define fetch() _fetch_dis()
 #define fetch16() _fetch16_dis()
@@ -530,7 +530,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define addr_zp_Y() _addr_zp_Y_dis()
 #define src_zp_Y() _src_zp_Y_dis()
 
-#endif // DEBUGGER
+#endif // DISASSEMBLER
 
 
 #endif // __APPLE2_MMIO_H__

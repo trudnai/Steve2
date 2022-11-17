@@ -29,7 +29,7 @@
 #include "woz.h"
 
 
-#ifdef DEBUGGER
+#ifdef DISASSEMBLER
 #define INSTR INLINE UNUSED static
 #else
 #define INSTR INLINE UNUSED static

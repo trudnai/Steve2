@@ -39,7 +39,7 @@ INLINE void TAX() {
     dbgPrintf("TAX(%02X) ", m6502.A);
     disPrintf(disassembly.inst, "TAX");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.X = m6502.A);
 #endif
 }
@@ -58,7 +58,7 @@ INLINE void TXA() {
     dbgPrintf("TXA(%02X) ", m6502.X);
     disPrintf(disassembly.inst, "TXA");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.A = m6502.X);
 #endif
 }
@@ -78,7 +78,7 @@ INLINE void TAY() {
     dbgPrintf("TAY ");
     disPrintf(disassembly.inst, "TAY");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.Y = m6502.A);
 #endif
 }
@@ -97,7 +97,7 @@ INLINE void TYA() {
     dbgPrintf("TYA(%02X) ", m6502.Y);
     disPrintf(disassembly.inst, "TYA");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.A = m6502.Y);
 #endif
 }
@@ -116,7 +116,7 @@ INLINE void TSX() {
     dbgPrintf("TSX(%02X) ", m6502.SP);
     disPrintf(disassembly.inst, "TSX");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.X = m6502.SP);
 #endif
 }
@@ -135,7 +135,7 @@ INLINE void TXS() {
     dbgPrintf("TXS(%02X) ", m6502.X);
     disPrintf(disassembly.inst, "TXS");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.SP = m6502.X;
 #endif
 }

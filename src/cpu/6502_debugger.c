@@ -31,6 +31,8 @@
 #define CLK_WAIT
 
 #define DEBUGGER
+#define DISASSEMBLER
+
 #define FETCH_ADDR disass_addr
 
 #include <stdio.h>

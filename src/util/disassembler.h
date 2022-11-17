@@ -59,7 +59,7 @@ extern void _disPuts( char ** s, const char * from );
 extern void _disPrintf( char * s, const size_t n, const char * fmt, ... );
 extern void _disNewInstruction(void);
 
-#if defined(DISASS_TRACE) || defined(DEBUGGER)
+#if defined(DISASS_TRACE) || defined(DISASSEMBLER)
 
 #define disHexB( s, b ) _disHexB( &(s), (b) )
 #define disHexW( s, w ) _disHexW( &(s), (w) )

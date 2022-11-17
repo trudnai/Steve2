@@ -44,7 +44,7 @@
  (indirect,X)  ADC (oper,X)  61    2     6
  (indirect),Y  ADC (oper),Y  71    2     5*
 **/
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 INLINE void _ADC( uint8_t src ) {
     uint16_t tmp;
     
@@ -85,7 +85,7 @@ INLINE void ADC( uint8_t src ) {
     dbgPrintf("ADC(%02X) ", src);
     disPrintf(disassembly.inst, "ADC");
     
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     _ADC(src);
 #endif
 }
@@ -107,7 +107,7 @@ INLINE void ADC( uint8_t src ) {
  (indirect,X)  SBC (oper,X)  E1    2     6
  (indirect),Y  SBC (oper),Y  F1    2     5*
 **/
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 INLINE void _SBC( uint8_t src ) {
     uint16_t tmp;
     
@@ -138,7 +138,7 @@ INLINE void SBC( uint8_t src ) {
     dbgPrintf("SBC(%02X) ", src);
     disPrintf(disassembly.inst, "SBC");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     _SBC(src);
 #endif
 }

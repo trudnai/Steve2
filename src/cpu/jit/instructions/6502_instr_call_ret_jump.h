@@ -40,7 +40,7 @@ INSTR void JMP( uint16_t addr ) {
     dbgPrintf("JMP %04X ", addr);
     disPrintf(disassembly.inst, "JMP");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     //    disPrintf(disassembly.comment, "to:%04X", addr)
 #ifdef DEBUG
     if ( addr == m6502.PC - 3 ) {
@@ -55,7 +55,7 @@ INSTR void JMP( uint16_t addr ) {
 }
 
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 
 // for patching game purposes -- it should not be inline!
 void CALL( uint16_t addr ) {
@@ -92,7 +92,7 @@ INSTR void JSR( uint16_t addr ) {
     dbgPrintf("JSR ");
     disPrintf(disassembly.inst, "JSR");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     PUSH_addr(m6502.PC -1);
     m6502.PC = addr;
 #endif
@@ -112,7 +112,7 @@ INSTR void RTS(void) {
     dbgPrintf("RTS ");
     disPrintf(disassembly.inst, "RTS");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     m6502.PC = POP_addr() +1;
     m6502.interrupt = RET;
 
@@ -138,7 +138,7 @@ INSTR void RTI(void) {
     dbgPrintf("RTI ");
     disPrintf(disassembly.inst, "RTI");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     setFlags( POP() );
 //    m6502.I = 0;
     m6502.PC = POP_addr();

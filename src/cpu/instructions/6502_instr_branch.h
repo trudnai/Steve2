@@ -25,7 +25,7 @@
 #define __6502_INSTR_BRANCH_H__
 
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 INSTR void _BRA( int8_t reladdr ) {
     uint8_t pg = m6502.PC >> 8;
     m6502.PC += reladdr;
@@ -38,7 +38,7 @@ INSTR void _BRA( int8_t reladdr ) {
 #endif
     dbgPrintf("BRA %04X ", m6502.PC);
 }
-#endif // DEBUGGER
+#endif // DISASSEMBLER
 
 
 /**
@@ -52,7 +52,7 @@ INSTR void BRA( int8_t reladdr ) {
     dbgPrintf("BRA ");
     disPrintf(disassembly.inst, "BRA");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     _BRA( reladdr );
 #endif
 }
@@ -72,7 +72,7 @@ INSTR void BCC( int8_t reladdr ) {
     dbgPrintf("BCC ");
     disPrintf(disassembly.inst, "BCC");
     
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( ! m6502.C ) {
         _BRA( reladdr );
     }
@@ -96,7 +96,7 @@ INSTR void BCS( int8_t reladdr ) {
     dbgPrintf("BCS ");
     disPrintf(disassembly.inst, "BCS");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( m6502.C ) {
         _BRA( reladdr );
     }
@@ -120,7 +120,7 @@ INSTR void BNE( int8_t reladdr ) {
     dbgPrintf("BNE ");
     disPrintf(disassembly.inst, "BNE");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( ! m6502.Z ) {
         _BRA( reladdr );
     }
@@ -144,7 +144,7 @@ INSTR void BEQ( int8_t reladdr ) {
     dbgPrintf("BEQ ");
     disPrintf(disassembly.inst, "BEQ");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( m6502.Z ) {
         _BRA( reladdr );
     }
@@ -168,7 +168,7 @@ INSTR void BPL( int8_t reladdr ) {
     dbgPrintf("BPL ");
     disPrintf(disassembly.inst, "BPL");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( ! m6502.N ) {
         _BRA( reladdr );
     }
@@ -192,7 +192,7 @@ INSTR void BMI( int8_t reladdr ) {
     dbgPrintf("BMI ");
     disPrintf(disassembly.inst, "BMI");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( m6502.N ) {
         _BRA( reladdr );
     }
@@ -216,7 +216,7 @@ INSTR void BVC( int8_t reladdr ) {
     dbgPrintf("BVC ");
     disPrintf(disassembly.inst, "BVC");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( ! m6502.V ) {
         _BRA( reladdr );
     }
@@ -240,7 +240,7 @@ INSTR void BVS( int8_t reladdr ) {
     dbgPrintf("BVS ");
     disPrintf(disassembly.inst, "BVS");
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     if ( m6502.V ) {
         _BRA( reladdr );
     }
@@ -291,7 +291,7 @@ INSTR void BVS( int8_t reladdr ) {
  FF 3   5   zp,rel ........ BBS7 $12,LABEL
  
 **/
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 #define BBR(n) INSTR void BBR##n( uint8_t src, int8_t reladdr ) { \
 dbgPrintf("BBR"#n" "); \
 disPrintf(disassembly.inst, "BBR"#n); \
@@ -316,7 +316,7 @@ disPrintf(disassembly.inst, "BBR"#n); \
     BBR(7)
 
 
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
 #define BBS(n) INSTR void BBS##n( uint8_t src, int8_t reladdr ) { \
 dbgPrintf("BBS"#n" "); \
 disPrintf(disassembly.inst, "BBS"#n); \

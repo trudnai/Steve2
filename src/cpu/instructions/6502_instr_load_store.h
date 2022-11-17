@@ -48,7 +48,7 @@
 INLINE void LDA( uint8_t src ) {
     dbgPrintf("LDA(%02X) ", src);
     disPrintf(disassembly.inst, "LDA");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.A = src);
 #endif
 }
@@ -70,7 +70,7 @@ INLINE void LDA( uint8_t src ) {
 INLINE void LDX( uint8_t src ) {
     dbgPrintf("LDX(%02X) ", src);
     disPrintf(disassembly.inst, "LDX");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.X = src);
 #endif
 }
@@ -92,7 +92,7 @@ INLINE void LDX( uint8_t src ) {
 INLINE void LDY( uint8_t src ) {
     dbgPrintf("LDY(%02X) ", src);
     disPrintf(disassembly.inst, "LDY");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.Y = src);
 #endif
 }
@@ -113,7 +113,7 @@ char * charConv =
 **/
 INLINE void STR( uint16_t addr, uint8_t src ) {
     dbgPrintf("STR [%04X], %02X ", addr, src );
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     memwrite(addr, src);
 #endif
 }
@@ -137,7 +137,7 @@ INLINE void STR( uint16_t addr, uint8_t src ) {
 INLINE void STA( uint16_t addr ) {
     dbgPrintf("STA ");
     disPrintf(disassembly.inst, "STA");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     STR(addr, m6502.A);
 #endif
 }
@@ -157,7 +157,7 @@ INLINE void STA( uint16_t addr ) {
 INLINE void STX( uint16_t addr ) {
     dbgPrintf("STX ");
     disPrintf(disassembly.inst, "STX");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     STR(addr, m6502.X);
 #endif
 }
@@ -177,7 +177,7 @@ INLINE void STX( uint16_t addr ) {
 INLINE void STY( uint16_t addr ) {
     dbgPrintf("STY ");
     disPrintf(disassembly.inst, "STY");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     STR(addr, m6502.Y);
 #endif
 }
@@ -198,7 +198,7 @@ INLINE void STY( uint16_t addr ) {
 INLINE void STZ( uint16_t addr ) {
     dbgPrintf("STZ ");
     disPrintf(disassembly.inst, "STZ");
-#ifndef DEBUGGER
+#ifndef DISASSEMBLER
     STR(addr, 0);
 #endif
 }

@@ -27,6 +27,7 @@
 #include "mmio.h"
 #include "common.h"
 #include "6502.h"
+#include "6502_bp.h"
 #include "disk.h"
 #include "woz.h"
 #include "speaker.h"
@@ -1017,16 +1018,18 @@ INLINE uint8_t _memread( uint16_t addr ) {
     
 //    return memread8(addr);
 }
-INLINE uint8_t _memread_dbg( uint16_t addr ) {
-    if (addr >= 0xC000) {
-        //        return memread8_paged(addr);
-        return memread8_high(addr);
-    }
-    //    return memread8_paged(addr);
-    return memread8_low(addr);
 
-    //    return memread8(addr);
+INLINE uint8_t _memread_dbg( uint16_t addr ) {
+    if (LAST_IDX(mem_read_breakpoints)) {
+        if ( m6502_dbg_bp_exists(mem_read_breakpoints, addr) ) {
+            cpuState = cpuState_halted;
+            m6502.interrupt = BREAKPOINT;
+        }
+    }
+
+    return _memread(addr);
 }
+
 INLINE uint8_t _memread_dis( uint16_t addr ) {
     if (addr >= 0xC000) {
 //        return memread8_paged(addr);

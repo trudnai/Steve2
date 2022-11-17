@@ -27,8 +27,8 @@
 		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
 		324D15D324ADAC71008AAFB0 /* floppy.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 324D15D224ADAC71008AAFB0 /* floppy.png */; };
 		32544195264A6C1600B7E3ED /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
-		325B7611290A0C4100B29605 /* 6502_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = 325B75DF2909F95000B29605 /* 6502_debugger.c */; };
-		325B761B290A0C4200B29605 /* 6502_debugger.c in Sources */ = {isa = PBXBuildFile; fileRef = 325B75DF2909F95000B29605 /* 6502_debugger.c */; };
+		325B7611290A0C4100B29605 /* 6502_dbg.c in Sources */ = {isa = PBXBuildFile; fileRef = 325B75DF2909F95000B29605 /* 6502_dbg.c */; };
+		325B761B290A0C4200B29605 /* 6502_dbg.c in Sources */ = {isa = PBXBuildFile; fileRef = 325B75DF2909F95000B29605 /* 6502_dbg.c */; };
 		325DC40E24AC5ABC00EB8858 /* doc.on.doc.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */; };
 		325DC41024AC691B00EB8858 /* rgb_color.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40F24AC691B00EB8858 /* rgb_color.png */; };
 		325DC41324AC692D00EB8858 /* rgb_mono.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC41124AC692D00EB8858 /* rgb_mono.png */; };
@@ -637,8 +637,8 @@
 		32440BA22480D5C0000F9DA1 /* LoRes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRes.swift; sourceTree = "<group>"; };
 		324D15D224ADAC71008AAFB0 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
 		32544194264A6C1600B7E3ED /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
-		325B75DF2909F95000B29605 /* 6502_debugger.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_debugger.c; sourceTree = "<group>"; };
-		325B7652290A32CC00B29605 /* 6502_debugger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_debugger.h; sourceTree = "<group>"; };
+		325B75DF2909F95000B29605 /* 6502_dbg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_dbg.c; sourceTree = "<group>"; };
+		325B7652290A32CC00B29605 /* 6502_dbg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_dbg.h; sourceTree = "<group>"; };
 		325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.on.doc.png; sourceTree = "<group>"; };
 		325DC40F24AC691B00EB8858 /* rgb_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_color.png; sourceTree = "<group>"; };
 		325DC41124AC692D00EB8858 /* rgb_mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_mono.png; sourceTree = "<group>"; };
@@ -1003,8 +1003,8 @@
 				32439F7522ECD8AD0077AAE0 /* instructions */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
-				325B7652290A32CC00B29605 /* 6502_debugger.h */,
-				325B75DF2909F95000B29605 /* 6502_debugger.c */,
+				325B7652290A32CC00B29605 /* 6502_dbg.h */,
+				325B75DF2909F95000B29605 /* 6502_dbg.c */,
 				32D08987291A450400F2B486 /* 6502_bp.h */,
 				32D0897B291A44F200F2B486 /* 6502_bp.c */,
 				320F2A8924CFFBE300671B35 /* 6502_std.h */,
@@ -1682,7 +1682,7 @@
 				32799F87264B1A5700255669 /* LoRes.swift in Sources */,
 				32C6995327C5439300D0F25D /* Debugger.swift in Sources */,
 				32D0897D291A44F200F2B486 /* 6502_bp.c in Sources */,
-				325B761B290A0C4200B29605 /* 6502_debugger.c in Sources */,
+				325B761B290A0C4200B29605 /* 6502_dbg.c in Sources */,
 				327B75D829064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
 				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
@@ -1706,7 +1706,7 @@
 				32BCCCE9264DBDC8002151C5 /* 6502.c in Sources */,
 				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
-				325B7611290A0C4100B29605 /* 6502_debugger.c in Sources */,
+				325B7611290A0C4100B29605 /* 6502_dbg.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
 				32D08A1429219C6B00F2B486 /* HexDigitFormatter.swift in Sources */,
 				32100A8B2875387300D894EE /* CheatMenu.swift in Sources */,

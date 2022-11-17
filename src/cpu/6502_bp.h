@@ -1,5 +1,5 @@
 //
-//  6502_debugger.h
+//  6502_bp.h
 //  A2Mac
 //
 //  Created by Tamas Rudnai on 10/26/22.

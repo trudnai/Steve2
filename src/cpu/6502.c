@@ -42,7 +42,7 @@
 #include <time.h>
 #include "6502.h"
 #include "6502_bp.h"
-#include "6502_debugger.h"
+#include "6502_dbg.h"
 #include "speaker.h"
 
 

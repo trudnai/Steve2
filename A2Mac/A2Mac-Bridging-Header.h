@@ -30,7 +30,7 @@
 
 #import "6502.h"
 #import "6502_bp.h"
-#import "6502_debugger.h"
+#import "6502_dbg.h"
 #import "disassembler.h"
 #import "speaker.h" // So we can access to speaker stuff from Swift
 #import "disk.h"

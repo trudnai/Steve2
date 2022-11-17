@@ -76,7 +76,7 @@ typedef struct {
 **/
 
 
-#include "6502_debugger.h"
+#include "6502_dbg.h"
 #include "6502_instructions.h"
 #include "6502_bp.h"
 

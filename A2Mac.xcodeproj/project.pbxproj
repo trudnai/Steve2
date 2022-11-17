@@ -66,9 +66,9 @@
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		3267641624B6572E000BEA11 /* Merlin Assembler.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 3267641524B6572E000BEA11 /* Merlin Assembler.woz */; };
 		3267641824BCC9A5000BEA11 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 3267641724BCC9A5000BEA11 /* COPYING */; };
-		3268B97A27DE7D6A003FBDCC /* disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* disassembler.c */; };
-		3268B97B27DE7D6B003FBDCC /* disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* disassembler.c */; };
-		3268B97C27DE7D6B003FBDCC /* disassembler.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* disassembler.c */; };
+		3268B97A27DE7D6A003FBDCC /* 6502_dis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* 6502_dis.c */; };
+		3268B97B27DE7D6B003FBDCC /* 6502_dis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* 6502_dis.c */; };
+		3268B97C27DE7D6B003FBDCC /* 6502_dis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* 6502_dis.c */; };
 		3268B99127DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
 		3268B99227DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
 		3268B99327DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
@@ -683,7 +683,7 @@
 		3267641524B6572E000BEA11 /* Merlin Assembler.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler.woz"; sourceTree = "<group>"; };
 		3267641724BCC9A5000BEA11 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert_spkr_buf_to_wav.py; sourceTree = SOURCE_ROOT; };
-		3268B97927DE7D6A003FBDCC /* disassembler.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = disassembler.c; sourceTree = "<group>"; };
+		3268B97927DE7D6A003FBDCC /* 6502_dis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 6502_dis.c; sourceTree = "<group>"; };
 		3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e_32k.rom; path = Resources/rom/Apple2e_32k.rom; sourceTree = SOURCE_ROOT; };
 		3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = "077-0019 Apple IIe Diagnostic Card - English.rom"; sourceTree = "<group>"; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
@@ -758,7 +758,7 @@
 		32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexDigitFormatter.swift; sourceTree = "<group>"; };
 		32D08A1F2921A8F900F2B486 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
-		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
+		32DBF76723373FB400DD50E7 /* 6502_dis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_dis.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
 		32E3126424A7193700E61891 /* disk_ii_arm.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_arm.sfx; sourceTree = "<group>"; };
 		32E3126824A98B9300E61891 /* dsk2woz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsk2woz.c; sourceTree = "<group>"; };
@@ -1003,8 +1003,8 @@
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
 				325B7652290A32CC00B29605 /* 6502_dbg.h */,
 				325B75DF2909F95000B29605 /* 6502_dbg.c */,
-				32DBF76723373FB400DD50E7 /* disassembler.h */,
-				3268B97927DE7D6A003FBDCC /* disassembler.c */,
+				32DBF76723373FB400DD50E7 /* 6502_dis.h */,
+				3268B97927DE7D6A003FBDCC /* 6502_dis.c */,
 				32D08987291A450400F2B486 /* 6502_bp.h */,
 				32D0897B291A44F200F2B486 /* 6502_bp.c */,
 				320F2A8924CFFBE300671B35 /* 6502_std.h */,
@@ -1625,7 +1625,7 @@
 				3270432F28ECF0E50077E2BC /* LoRes.swift in Sources */,
 				32A6AB11266AF5160023257A /* paddle.c in Sources */,
 				32A6AB26266B196A0023257A /* hires.c in Sources */,
-				3268B97C27DE7D6B003FBDCC /* disassembler.c in Sources */,
+				3268B97C27DE7D6B003FBDCC /* 6502_dis.c in Sources */,
 				325EB67823FBC45300C6B4A4 /* disk.c in Sources */,
 				325EB64723FBBACF00C6B4A4 /* ViewController.swift in Sources */,
 				325EB64323FBBACF00C6B4A4 /* AppDelegate.swift in Sources */,
@@ -1667,7 +1667,7 @@
 				32799F7E264B1A5700255669 /* PreferencesWindowController.swift in Sources */,
 				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
 				32799F81264B1A5700255669 /* disk.c in Sources */,
-				3268B97B27DE7D6B003FBDCC /* disassembler.c in Sources */,
+				3268B97B27DE7D6B003FBDCC /* 6502_dis.c in Sources */,
 				32C82360290888D10018438F /* CheatMenu.swift in Sources */,
 				32D08A212921A8FA00F2B486 /* String.swift in Sources */,
 				32100AB52877AB8600D894EE /* scsi.c in Sources */,
@@ -1710,7 +1710,7 @@
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
 				32D08A1429219C6B00F2B486 /* HexDigitFormatter.swift in Sources */,
 				32100A8B2875387300D894EE /* CheatMenu.swift in Sources */,
-				3268B97A27DE7D6A003FBDCC /* disassembler.c in Sources */,
+				3268B97A27DE7D6A003FBDCC /* 6502_dis.c in Sources */,
 				32D08A202921A8FA00F2B486 /* String.swift in Sources */,
 				32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */,
 				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,

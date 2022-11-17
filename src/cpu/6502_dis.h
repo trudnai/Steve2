@@ -1,5 +1,5 @@
 //
-//  disassembler.h
+//  6502_dis.h
 //  Steve ][
 //
 //  Created by Tamas Rudnai on 9/21/19.
@@ -21,8 +21,8 @@
 // along with Steve ][.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-#ifndef disassembler_h
-#define disassembler_h
+#ifndef _6502_dis_h
+#define _6502_dis_h
 
 
 #include "common.h"
@@ -90,4 +90,4 @@ extern void printDisassembly( FILE * f );
 extern const char * disassemblyLine(_Bool higlight);
 
 
-#endif /* disassembler_h */
+#endif /* _6502_dis_h */

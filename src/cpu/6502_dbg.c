@@ -57,7 +57,7 @@ extern m6502_t m6502;
 
 uint16_t disass_addr = 0xFDED;
 
-#include "../util/disassembler.h"
+#include "6502_dis.h"
 #include "../dev/mem/mmio.h"
 
 

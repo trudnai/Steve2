@@ -120,7 +120,7 @@ m6502_t m6502 = {
 
 disassembly_t disassembly;
 
-#include "../util/disassembler.h"
+#include "6502_dis.h"
 #include "../dev/mem/mmio.h"
 
 

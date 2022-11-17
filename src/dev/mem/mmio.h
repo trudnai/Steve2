@@ -33,7 +33,7 @@
 #include "woz.h"
 #include "speaker.h"
 #include "paddle.h"
-#include "disassembler.h"
+#include "6502_dis.h"
 
 
 typedef union address16_u {

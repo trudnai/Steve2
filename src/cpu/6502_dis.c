@@ -1,5 +1,5 @@
 //
-//  disassembler.c
+//  6502_dis.c
 //  A2Mac
 //
 //  Created by Tamas Rudnai on 3/13/22.
@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
-#include "disassembler.h"
+#include "6502_dis.h"
 #include "6502.h"
 #include "6502_bp.h"
 

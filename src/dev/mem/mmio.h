@@ -411,59 +411,59 @@ INLINE uint8_t memread8( uint16_t addr );
 INLINE uint16_t memread16_low( uint16_t addr );
 INLINE uint16_t memread16( uint16_t addr );
 INLINE uint8_t _memread( uint16_t addr );
-INLINE uint8_t _memread_dbg( uint16_t addr );
+INLINE uint8_t _memread_dis( uint16_t addr );
 INLINE void _memwrite8_low( uint16_t addr, uint8_t data );
 INLINE void _memwrite8_bank( uint16_t addr, uint8_t data );
 INLINE void _memwrite8_high( uint16_t addr, uint8_t data );
 INLINE void _memwrite( uint16_t addr, uint8_t data );
 INLINE uint8_t _fetch(void);
-INLINE uint8_t _fetch_dbg(void);
+INLINE uint8_t _fetch_dis(void);
 INLINE uint16_t _fetch16(void);
-INLINE uint16_t _fetch16_dbg(void);
+INLINE uint16_t _fetch16_dis(void);
 INLINE uint16_t _addr_abs(void);
-INLINE uint16_t _addr_abs_dbg(void);
+INLINE uint16_t _addr_abs_dis(void);
 INLINE uint8_t _src_abs(void);
-INLINE uint8_t _src_abs_dbg(void);
+INLINE uint8_t _src_abs_dis(void);
 INLINE int8_t _rel_addr(void);
-INLINE int8_t _rel_addr_dbg(void);
+INLINE int8_t _rel_addr_dis(void);
 INLINE uint16_t _abs_addr(void);
-INLINE uint16_t _abs_addr_dbg(void);
+INLINE uint16_t _abs_addr_dis(void);
 INLINE uint16_t _ind_addr(void);
-INLINE uint16_t _ind_addr_dbg(void);
+INLINE uint16_t _ind_addr_dis(void);
 INLINE uint16_t _addr_abs_X(void);
-INLINE uint16_t _addr_abs_X_dbg(void);
+INLINE uint16_t _addr_abs_X_dis(void);
 INLINE uint8_t _src_abs_X(void);
-INLINE uint8_t _src_abs_X_dbg(void);
+INLINE uint8_t _src_abs_X_dis(void);
 INLINE uint16_t _addr_abs_Y(void);
-INLINE uint16_t _addr_abs_Y_dbg(void);
+INLINE uint16_t _addr_abs_Y_dis(void);
 INLINE uint8_t _src_abs_Y(void);
-INLINE uint8_t _src_abs_Y_dbg(void);
+INLINE uint8_t _src_abs_Y_dis(void);
 INLINE uint8_t _imm(void);
-INLINE uint8_t _imm_dbg(void);
+INLINE uint8_t _imm_dis(void);
 INLINE uint8_t _addr_zp(void);
-INLINE uint8_t _addr_zp_dbg(void);
+INLINE uint8_t _addr_zp_dis(void);
 INLINE uint8_t _src_zp(void);
-INLINE uint8_t _src_zp_dbg(void);
+INLINE uint8_t _src_zp_dis(void);
 INLINE uint16_t _addr_ind(void);
-INLINE uint16_t _addr_ind_dbg(void);
+INLINE uint16_t _addr_ind_dis(void);
 INLINE uint8_t _src_ind(void);
-INLINE uint8_t _src_ind_dbg(void);
+INLINE uint8_t _src_ind_dis(void);
 INLINE uint16_t _addr_ind_X(void);
-INLINE uint16_t _addr_ind_X_dbg(void);
+INLINE uint16_t _addr_ind_X_dis(void);
 INLINE uint8_t _src_X_ind(void);
-INLINE uint8_t _src_X_ind_dbg(void);
+INLINE uint8_t _src_X_ind_dis(void);
 INLINE uint16_t _addr_ind_Y(void);
-INLINE uint16_t _addr_ind_Y_dbg(void);
+INLINE uint16_t _addr_ind_Y_dis(void);
 INLINE uint8_t _src_ind_Y(void);
-INLINE uint8_t _src_ind_Y_dbg(void);
+INLINE uint8_t _src_ind_Y_dis(void);
 INLINE uint8_t _addr_zp_X(void);
-INLINE uint8_t _addr_zp_X_dbg(void);
+INLINE uint8_t _addr_zp_X_dis(void);
 INLINE uint8_t _src_zp_X(void);
-INLINE uint8_t _src_zp_X_dbg(void);
+INLINE uint8_t _src_zp_X_dis(void);
 INLINE uint8_t _addr_zp_Y(void);
-INLINE uint8_t _addr_zp_Y_dbg(void);
+INLINE uint8_t _addr_zp_Y_dis(void);
 INLINE uint8_t _src_zp_Y(void);
-INLINE uint8_t _src_zp_Y_dbg(void);
+INLINE uint8_t _src_zp_Y_dis(void);
 
 
 #ifndef DEBUGGER
@@ -500,35 +500,35 @@ INLINE uint8_t _src_zp_Y_dbg(void);
 
 #else // DEBUGGER
 
-#define fetch() _fetch_dbg()
-#define fetch16() _fetch16_dbg()
-#define memread(addr) _memread_dbg(addr);
+#define fetch() _fetch_dis()
+#define fetch16() _fetch16_dis()
+#define memread(addr) _memread_dis(addr);
 #define memwrite8_low(addr,data)    // do not write anything into the memory while disassembling
 #define memwrite8_bank(addr,data)   // do not write anything into the memory while disassembling
 #define memwrite8_high(addr,data)   // do not write anything into the memory while disassembling
 #define memwrite(addr,data)         // do not write anything into the memory while disassembling
-#define addr_abs() _addr_abs_dbg()
-#define src_abs() _src_abs_dbg()
-#define rel_addr() _rel_addr_dbg()
-#define abs_addr() _abs_addr_dbg()
-#define ind_addr() _ind_addr_dbg()
-#define addr_abs_X() _addr_abs_X_dbg()
-#define src_abs_X() _src_abs_X_dbg()
-#define addr_abs_Y() _addr_abs_Y_dbg()
-#define src_abs_Y() _src_abs_Y_dbg()
-#define imm() _imm_dbg()
-#define addr_zp() _addr_zp_dbg()
-#define src_zp() _src_zp_dbg()
-#define addr_ind() _addr_ind_dbg()
-#define src_ind() _src_ind_dbg()
-#define addr_ind_X() _addr_ind_X_dbg()
-#define src_X_ind() _src_X_ind_dbg()
-#define addr_ind_Y() _addr_ind_Y_dbg()
-#define src_ind_Y() _src_ind_Y_dbg()
-#define addr_zp_X() _addr_zp_X_dbg()
-#define src_zp_X() _src_zp_X_dbg()
-#define addr_zp_Y() _addr_zp_Y_dbg()
-#define src_zp_Y() _src_zp_Y_dbg()
+#define addr_abs() _addr_abs_dis()
+#define src_abs() _src_abs_dis()
+#define rel_addr() _rel_addr_dis()
+#define abs_addr() _abs_addr_dis()
+#define ind_addr() _ind_addr_dis()
+#define addr_abs_X() _addr_abs_X_dis()
+#define src_abs_X() _src_abs_X_dis()
+#define addr_abs_Y() _addr_abs_Y_dis()
+#define src_abs_Y() _src_abs_Y_dis()
+#define imm() _imm_dis()
+#define addr_zp() _addr_zp_dis()
+#define src_zp() _src_zp_dis()
+#define addr_ind() _addr_ind_dis()
+#define src_ind() _src_ind_dis()
+#define addr_ind_X() _addr_ind_X_dis()
+#define src_X_ind() _src_X_ind_dis()
+#define addr_ind_Y() _addr_ind_Y_dis()
+#define src_ind_Y() _src_ind_Y_dis()
+#define addr_zp_X() _addr_zp_X_dis()
+#define src_zp_X() _src_zp_X_dis()
+#define addr_zp_Y() _addr_zp_Y_dis()
+#define src_zp_Y() _src_zp_Y_dis()
 
 #endif // DEBUGGER
 

@@ -47,8 +47,8 @@ typedef struct disassembly_s {
 
 extern disassembly_t disassembly;
 
-//#define DISASSEMBLER
-//#undef DISASSEMBLER
+//#define DISASS_TRACE
+//#undef DISASS_TRACE
 
 extern unsigned long long discnt;
 //extern unsigned long long int clktime;
@@ -59,7 +59,7 @@ extern void _disPuts( char ** s, const char * from );
 extern void _disPrintf( char * s, const size_t n, const char * fmt, ... );
 extern void _disNewInstruction(void);
 
-#if defined(DISASSEMBLER) || defined(DEBUGGER)
+#if defined(DISASS_TRACE) || defined(DEBUGGER)
 
 #define disHexB( s, b ) _disHexB( &(s), (b) )
 #define disHexW( s, w ) _disHexW( &(s), (w) )
@@ -70,12 +70,12 @@ extern void _disNewInstruction(void);
 #define disNewInstruction() _disNewInstruction()
 
 
-#ifdef DISASSEMBLER
+#ifdef DISASS_TRACE
 extern void printDisassembly( FILE * f );
 #endif
 
 
-#else // DISASSEMBLER
+#else // DISASS_TRACE
 
 #define disHexB( to, b )
 #define disHexW( to, w )
@@ -84,7 +84,7 @@ extern void printDisassembly( FILE * f );
 #define disNewInstruction()
 #define printDisassembly( f )
 
-#endif // DISASSEMBLER
+#endif // DISASS_TRACE
 
 
 extern const char * disassemblyLine(_Bool higlight);

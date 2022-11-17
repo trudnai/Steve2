@@ -1017,6 +1017,16 @@ INLINE uint8_t _memread( uint16_t addr ) {
     
 //    return memread8(addr);
 }
+INLINE uint8_t _memread_dbg( uint16_t addr ) {
+    if (addr >= 0xC000) {
+        //        return memread8_paged(addr);
+        return memread8_high(addr);
+    }
+    //    return memread8_paged(addr);
+    return memread8_low(addr);
+
+    //    return memread8(addr);
+}
 INLINE uint8_t _memread_dis( uint16_t addr ) {
     if (addr >= 0xC000) {
 //        return memread8_paged(addr);

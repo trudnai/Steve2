@@ -37,7 +37,7 @@
 #endif
 
 
-#ifdef DISASSEMBLER
+#ifdef DISASS_TRACE
 //#define dbgPrintf(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)
 #define dbgPrintf(format, ...)
 #define dbgPrintf2(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)

@@ -89,7 +89,7 @@ void _disNewInstruction(void) {
 
 
 
-#ifdef DISASSEMBLER
+#ifdef DISASS_TRACE
 void printDisassembly( FILE * f ) {
     if ( m6502.debugger.mask.trace && f ) {
         //        fprintf( f, "%s: %-14s%-6s%-14s%-16s A:%02X X:%02X Y:%02X S:%02X P:%02X (%c%c%c%c%c%c%c%c)\n",
@@ -168,7 +168,7 @@ void printDisassembly( FILE * f ) {
     }
 }
 
-#endif // DISASSEMBLER
+#endif // DISASS_TRACE
 
 
 const char * disassemblyLine(_Bool highlight) {

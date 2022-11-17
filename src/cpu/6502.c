@@ -604,7 +604,7 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 
 
 void openLog() {
-#ifdef DISASSEMBLER
+#ifdef DISASS_TRACE
     outdev = fopen("/Users/trudnai/Library/Containers/com.trudnai.steveii/Data/disassembly_new.log", "w+");
 #endif
     // for DEBUG ONLY!!! -- use stdout if could not create log file

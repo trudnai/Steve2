@@ -175,7 +175,7 @@ const char * disassemblyLine(_Bool highlight) {
     static char line[256];
 
     snprintf( line, sizeof(line), "%s %s: %-11s%-4s%s",
-        m6502_dbg_bp_is_exists(disassembly.addr) ? "*" : " ",
+        m6502_dbg_bp_exists(breakpoints, bp_last_idx, disassembly.addr) ? "*" : " ",
         disassembly.hexAddr,
         disassembly.opcode,
         disassembly.inst,

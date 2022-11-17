@@ -35,9 +35,24 @@
 
 /// Array of addresses of active breakpoints
 /// @note DEBUG_MAX_BREAKPOINTS controls its size
-uint16_t breakpoints[DEBUG_MAX_BREAKPOINTS];
+uint16_t bp_array[DEBUG_MAX_BREAKPOINTS];
+/// Pointer to the bp_array
+/// @note We have to do this way because of interfacing problem with Swift
+uint16_t * breakpoints = bp_array;
+/// Array of addresses of memory read breakpoints
+/// @note DEBUG_MAX_BREAKPOINTS controls its size
+uint16_t mem_rd_bp[DEBUG_MAX_BREAKPOINTS];
+uint16_t * mem_read_breakpoints = mem_rd_bp;
+/// Array of addresses of memory write breakpoints
+/// @note DEBUG_MAX_BREAKPOINTS controls its size
+uint16_t mem_wr_bp[DEBUG_MAX_BREAKPOINTS];
+uint16_t * mem_write_breakpoints = mem_wr_bp;
 /// Index of last valid breakpoint element in the array
 int bp_last_idx = 0;
+/// Index of last valid breakpoint element in the array
+int bp_mem_read_last_idx = 0;
+/// Index of last valid breakpoint element in the array
+int bp_mem_write_last_idx = 0;
 /// Index of current breapoint
 /// @note It is more like a temporary variable
 int bp_idx = 0;
@@ -124,9 +139,9 @@ int m6502_dbg_bp_search(uint16_t arr[], int l, int r, uint16_t addr) {
 /// Get index of the last BP
 /// @param i Current last index
 /// @return Index of the last breakpoint or 0 if non
-int m6502_dbg_bp_get_last(int i) {
+int m6502_dbg_bp_get_last(uint16_t *bp, int i) {
     for(; i >= 0; i--) {
-        if ( breakpoints[i] ) {
+        if ( bp[i] ) {
             return i;
         }
     }
@@ -186,20 +201,21 @@ int m6502_dbg_bp_get_not_empty() {
 
 /// Move array down to eliminate leading zeros
 /// @note: Array must be sorted before this!
-void m6502_dbg_bp_compact() {
+/// @return last index
+int m6502_dbg_bp_compact(uint16_t * bp, int last) {
     int i = m6502_dbg_bp_get_not_empty();
-    memcpy(breakpoints, breakpoints + i, bp_last_idx * sizeof(uint16_t));
-    memset(breakpoints + bp_last_idx - i + 1, 0, (DEBUG_MAX_BREAKPOINTS - bp_last_idx + i - 1) * sizeof(uint16_t));
-    bp_last_idx = m6502_dbg_bp_get_last(bp_last_idx);
+    memcpy(bp, bp + i, last * sizeof(uint16_t));
+    memset(bp + last - i + 1, 0, (DEBUG_MAX_BREAKPOINTS - last + i - 1) * sizeof(uint16_t));
+    return m6502_dbg_bp_get_last(bp, last);
 }
 
 
 /// Check if BP exists
 /// @param addr Address to check
 /// @return 1 (true) if exists, 0 (false) if not
-_Bool m6502_dbg_bp_is_exists(uint16_t addr) {
+_Bool m6502_dbg_bp_exists(uint16_t * bp, int last, uint16_t addr) {
     if (addr) {
-        int i = m6502_dbg_bp_search(breakpoints, 0, bp_last_idx, addr);
+        int i = m6502_dbg_bp_search(bp, 0, last, addr);
         return i >= 0;
     }
 
@@ -209,35 +225,36 @@ _Bool m6502_dbg_bp_is_exists(uint16_t addr) {
 
 /// Add breakpoint
 /// @param addr Address to add
-/// @return Index of breakpoint or -1 if error
-int m6502_dbg_bp_add(uint16_t addr) {
-    if (bp_last_idx < DEBUG_MAX_BREAKPOINTS - 1) {
-        breakpoints[++bp_last_idx] = addr;
-        m6502_dbg_bp_sort(breakpoints, 0, bp_last_idx);
-        m6502_dbg_bp_compact();
-        return bp_last_idx;
+/// @return Index of breakpoint or 0 if error
+int m6502_dbg_bp_add(uint16_t * bp, int last, uint16_t addr) {
+    if (last < DEBUG_MAX_BREAKPOINTS - 1) {
+        bp[++last] = addr;
+        m6502_dbg_bp_sort(bp, 0, last);
+        last = m6502_dbg_bp_compact(bp, last);
+        return last;
     }
     // no empty slots
-    return -1;
+    return 0;
 }
 
 
 /// Remove a breakpoint
 /// @param addr address to remove
-void m6502_dbg_bp_del(uint16_t addr) {
-    int i = m6502_dbg_bp_search(breakpoints, 0, bp_last_idx, addr);
+int m6502_dbg_bp_del(uint16_t * bp, int last, uint16_t addr) {
+    int i = m6502_dbg_bp_search(bp, 0, last, addr);
     if (i >= 0) {
-        breakpoints[i] = 0;
-        m6502_dbg_bp_sort(breakpoints, 0, bp_last_idx);
-        m6502_dbg_bp_compact();
+        bp[i] = 0;
+        m6502_dbg_bp_sort(breakpoints, 0, last);
+        last = m6502_dbg_bp_compact(bp, last);
     }
+    return last;
 }
 
 
 /// Delete all breakpoints
-void m6502_dbg_bp_del_all(void) {
+void m6502_dbg_bp_del_all(uint16_t * bp) {
     bp_idx = 0;
-    memset(breakpoints, 0, sizeof(breakpoints));
+    memset(bp, 0, sizeof(uint16_t) * DEBUG_MAX_BREAKPOINTS);
 }
 
 

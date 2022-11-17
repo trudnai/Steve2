@@ -188,10 +188,10 @@ void m6502_Debug(void) {
 
         m6502.interrupt = NO_INT;
 
-        if ( m6502_dbg_bp_is_exists(m6502.PC) ) {
+        if ( m6502_dbg_bp_exists(breakpoints, bp_last_idx, m6502.PC) ) {
             cpuState = cpuState_halted;
-            //            m6502.debugger.wMask = 0;
-            //            m6502.debugger.on = 0;
+//            m6502.debugger.wMask = 0;
+//            m6502.debugger.on = 0;
             m6502.interrupt = BREAKPOINT;
             return;
         }
@@ -226,7 +226,7 @@ void m6502_dbg_init(void) {
     m6502.debugger.mask.brk = 1;
     m6502.debugger.mask.inv = 1;
     m6502.debugger.SP = 0xFF;
-    m6502_dbg_bp_del_all();
+    m6502_dbg_bp_del_all(breakpoints);
 }
 
 

@@ -414,11 +414,11 @@ N V - B D I Z C
             let line = getLine(inView: Disass_Display, forY: location.y)
             let addr = getAddr(forLine: line)
 
-            if m6502_dbg_bp_is_exists(addr) {
-                m6502_dbg_bp_del(addr)
+            if m6502_dbg_bp_exists(breakpoints, bp_last_idx, addr) {
+                bp_last_idx = m6502_dbg_bp_del(breakpoints, bp_last_idx, addr)
             }
             else {
-                m6502_dbg_bp_add(addr)
+                bp_last_idx = m6502_dbg_bp_add(breakpoints, bp_last_idx, addr)
             }
 
             // force regenerate disassembly

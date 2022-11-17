@@ -308,8 +308,9 @@ N V - B D I Z C
     }
 
 
-    let lineFromTopToMiddle = 15
+    let lineFromTopToMiddle = 0
     func scroll_to(view: NSTextView, line: Int) {
+        let line = line > 0 ? line : 0
         if let lineRange = getLineRange(inView: view, forLine: line + lineFromTopToMiddle) {
             view.scrollRangeToVisible(lineRange)
         }
@@ -440,7 +441,7 @@ N V - B D I Z C
     var addr_line = [UInt16 : Int]()
 
     func getLine(forAddr: UInt16) -> Int {
-        return addr_line[forAddr] ?? 0
+        return addr_line[forAddr] ?? -1
     }
 
     func getAddr(forLine: Int) -> UInt16 {
@@ -467,12 +468,12 @@ N V - B D I Z C
             disass_addr_pc = m6502.PC
         }
 //        }
-        var need_disass = disass_addr_pc <= disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
+        var need_disass = disass_addr_pc < disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
         scroll_line_number = getLine(forAddr: disass_addr_pc)
         highlighted_line_number = getLine(forAddr: m6502.PC)
 
 //        if disass_addr_pc > disass_addr && disass_addr_pc < disass_addr + disass_addr_max {
-        if scroll_line_number == 0 || need_disass {
+        if scroll_line_number < 0 || need_disass {
             ViewController.shared?.UpdateSemaphore.wait()
 
             let m6502_saved = m6502

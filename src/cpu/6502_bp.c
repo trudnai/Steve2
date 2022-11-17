@@ -186,9 +186,9 @@ int m6502_dbg_bp_get_empty() {
 
 /// Get first not empty slot in the bp storage
 /// @return Index of the empty breakpoint or -1 if error
-int m6502_dbg_bp_get_not_empty() {
-    for (int i = 0; i < DEBUG_MAX_BREAKPOINTS; i++) {
-        if ( breakpoints[i] ) {
+int m6502_dbg_bp_get_not_empty(uint16_t * bp) {
+    for (int i = 1; i < DEBUG_MAX_BREAKPOINTS; i++) {
+        if ( bp[i] ) {
             return i;
         }
     }
@@ -201,9 +201,11 @@ int m6502_dbg_bp_get_not_empty() {
 /// @note: Array must be sorted before this!
 /// @return last index
 int m6502_dbg_bp_compact(uint16_t * bp) {
-    int i = m6502_dbg_bp_get_not_empty();
-    memcpy(bp, bp + i, LAST_IDX(bp) * sizeof(uint16_t));
-    memset(bp + LAST_IDX(bp) - i + 1, 0, (DEBUG_MAX_BREAKPOINTS - LAST_IDX(bp) + i - 1) * sizeof(uint16_t));
+    int i = m6502_dbg_bp_get_not_empty(bp);
+    if ( i > 1 ) {
+        memcpy(bp + 1, bp + i, LAST_IDX(bp) * sizeof(uint16_t));
+    }
+    memset(bp + i + 1, 0, (DEBUG_MAX_BREAKPOINTS - i - 2) * sizeof(uint16_t));
     return m6502_dbg_bp_get_last(bp, LAST_IDX(bp));
 }
 

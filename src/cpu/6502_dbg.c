@@ -190,8 +190,6 @@ void m6502_Debug(void) {
 
         if ( m6502_dbg_bp_exists(breakpoints, m6502.PC) ) {
             cpuState = cpuState_halted;
-//            m6502.debugger.wMask = 0;
-//            m6502.debugger.on = 0;
             m6502.interrupt = BREAKPOINT;
             return;
         }
@@ -227,6 +225,8 @@ void m6502_dbg_init(void) {
     m6502.debugger.mask.inv = 1;
     m6502.debugger.SP = 0xFF;
     m6502_dbg_bp_del_all(breakpoints);
+    m6502_dbg_bp_del_all(mem_read_breakpoints);
+    m6502_dbg_bp_del_all(mem_write_breakpoints);
 }
 
 

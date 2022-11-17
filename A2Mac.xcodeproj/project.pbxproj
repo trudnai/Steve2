@@ -990,8 +990,6 @@
 			children = (
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				325EB63823F9E48100C6B4A4 /* common.c */,
-				32DBF76723373FB400DD50E7 /* disassembler.h */,
-				3268B97927DE7D6A003FBDCC /* disassembler.c */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -1005,6 +1003,8 @@
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
 				325B7652290A32CC00B29605 /* 6502_dbg.h */,
 				325B75DF2909F95000B29605 /* 6502_dbg.c */,
+				32DBF76723373FB400DD50E7 /* disassembler.h */,
+				3268B97927DE7D6A003FBDCC /* disassembler.c */,
 				32D08987291A450400F2B486 /* 6502_bp.h */,
 				32D0897B291A44F200F2B486 /* 6502_bp.c */,
 				320F2A8924CFFBE300671B35 /* 6502_std.h */,

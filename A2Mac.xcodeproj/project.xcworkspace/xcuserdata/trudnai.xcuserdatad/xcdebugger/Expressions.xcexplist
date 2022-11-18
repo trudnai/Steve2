@@ -304,6 +304,17 @@
       </ContextState>
       <ContextState
          contextName = "m6502_dbg_bp_compact:6502_bp.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "mem_rd_bp">
+            </PersistentString>
+            <PersistentString
+               value = "bp +  i + 1">
+            </PersistentString>
+            <PersistentString
+               value = "256 - i - 2 ">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "m6502_dbg_bp_get_last:6502_bp.c">
@@ -582,6 +593,14 @@
       </ContextState>
       <ContextState
          contextName = "disassemblyLine:disassembler.c">
+      </ContextState>
+      <ContextState
+         contextName = "_memread:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
       <ContextState
          contextName = "ToolBarController.buttonPressed(_:):ToolBarController.swift">
@@ -870,7 +889,10 @@
          contextName = "m6502_dbg_bp_add:6502_bp.c">
          <PersistentStrings>
             <PersistentString
-               value = "breakpoints">
+               value = "mem_rd_bp">
+            </PersistentString>
+            <PersistentString
+               value = "bp">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1352,6 +1374,14 @@
          <PersistentStrings>
             <PersistentString
                value = "m6502.SP">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "m6502_dbg_init:6502_dbg.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "mem_read_breakpoints">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

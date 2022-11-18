@@ -234,6 +234,8 @@
 		32D08A1529219C6B00F2B486 /* HexDigitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */; };
 		32D08A202921A8FA00F2B486 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1F2921A8F900F2B486 /* String.swift */; };
 		32D08A212921A8FA00F2B486 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1F2921A8F900F2B486 /* String.swift */; };
+		32D08A7429272FDD00F2B486 /* 6502_dis_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */; };
+		32D08A7529272FDD00F2B486 /* 6502_dis_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
@@ -757,6 +759,8 @@
 		32D089EC291EE19200F2B486 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
 		32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexDigitFormatter.swift; sourceTree = "<group>"; };
 		32D08A1F2921A8F900F2B486 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_dis_utils.c; sourceTree = "<group>"; };
+		32D08A7F2927306D00F2B486 /* 6502_dis_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_dis_utils.h; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
 		32DBF76723373FB400DD50E7 /* 6502_dis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_dis.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
@@ -1005,6 +1009,8 @@
 				325B75DF2909F95000B29605 /* 6502_dbg.c */,
 				32DBF76723373FB400DD50E7 /* 6502_dis.h */,
 				3268B97927DE7D6A003FBDCC /* 6502_dis.c */,
+				32D08A7F2927306D00F2B486 /* 6502_dis_utils.h */,
+				32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */,
 				32D08987291A450400F2B486 /* 6502_bp.h */,
 				32D0897B291A44F200F2B486 /* 6502_bp.c */,
 				320F2A8924CFFBE300671B35 /* 6502_std.h */,
@@ -1666,6 +1672,7 @@
 				32BCCCFC2650D275002151C5 /* 6502.c in Sources */,
 				32799F7E264B1A5700255669 /* PreferencesWindowController.swift in Sources */,
 				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
+				32D08A7529272FDD00F2B486 /* 6502_dis_utils.c in Sources */,
 				32799F81264B1A5700255669 /* disk.c in Sources */,
 				3268B97B27DE7D6B003FBDCC /* 6502_dis.c in Sources */,
 				32C82360290888D10018438F /* CheatMenu.swift in Sources */,
@@ -1714,6 +1721,7 @@
 				32D08A202921A8FA00F2B486 /* String.swift in Sources */,
 				32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */,
 				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,
+				32D08A7429272FDD00F2B486 /* 6502_dis_utils.c in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
 				32100AB42877AB8600D894EE /* scsi.c in Sources */,
 				32A6AB0F266AF5160023257A /* paddle.c in Sources */,

@@ -55,7 +55,7 @@ INSTR void JMP( uint16_t addr ) {
 }
 
 
-#ifndef DISASSEMBLER
+#if !defined(DISASSEMBLER) && !defined(DEBUGGER)
 
 // for patching game purposes -- it should not be inline!
 void CALL( uint16_t addr ) {

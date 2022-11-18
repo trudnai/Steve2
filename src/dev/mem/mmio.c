@@ -1023,7 +1023,7 @@ INLINE uint8_t _memread_dbg( uint16_t addr ) {
     if (LAST_IDX(mem_read_breakpoints)) {
         if ( m6502_dbg_bp_exists(mem_read_breakpoints, addr) ) {
             cpuState = cpuState_halted;
-            m6502.interrupt = BREAKPOINT;
+            m6502.interrupt = BREAKRDMEM;
         }
     }
 

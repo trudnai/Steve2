@@ -32,7 +32,7 @@ ANC -     "AND" Memory with Accumulator
     (M "AND" A) -> A
     THEN msb(A) -> C
 **/
-INLINE void ANC ( uint8_t src ) {
+INSTR void ANC ( uint8_t src ) {
     disPrintf(disassembly.inst, "ANC");
     
 #ifndef DISASSEMBLER
@@ -52,7 +52,7 @@ INLINE void ANC ( uint8_t src ) {
  THEN msb(A) -> C
  THEN ROR A
 **/
-INLINE void ARC ( uint8_t src ) {
+INSTR void ARC ( uint8_t src ) {
     disPrintf(disassembly.inst, "ARC");
 
 #ifndef DISASSEMBLER
@@ -74,7 +74,7 @@ INLINE void ARC ( uint8_t src ) {
  (M "AND" A) -> A
  THEN LSR A
  **/
-INLINE void ASR ( uint8_t src ) {
+INSTR void ASR ( uint8_t src ) {
     disPrintf(disassembly.inst, "ASR");
     
 #ifndef DISASSEMBLER
@@ -95,7 +95,7 @@ INLINE void ASR ( uint8_t src ) {
  (M - 1) -> M
  THEN CMP M
  **/
-INLINE void DCP ( uint16_t addr ) {
+INSTR void DCP ( uint16_t addr ) {
     disPrintf(disassembly.inst, "DCP");
 #ifndef DISASSEMBLER
     _DEC(addr);
@@ -107,7 +107,7 @@ INLINE void DCP ( uint16_t addr ) {
 /**
  LAS - Stores {adr} & S into A, X and S
  **/
-INLINE void LAS ( uint8_t src ) {
+INSTR void LAS ( uint8_t src ) {
     disPrintf(disassembly.inst, "LAS");
 #ifndef DISASSEMBLER
     set_flags_NZ( m6502.A = m6502.X = m6502.SP = m6502.SP & src );
@@ -122,7 +122,7 @@ INLINE void LAS ( uint8_t src ) {
     (M + 1) -> M
     THEN (A - M - ~C) -> A
  **/
-INLINE void ISB ( uint16_t addr ) {
+INSTR void ISB ( uint16_t addr ) {
     disPrintf(disassembly.inst, "ISB");
 #ifndef DISASSEMBLER
     _INC(addr);
@@ -136,7 +136,7 @@ INLINE void ISB ( uint16_t addr ) {
  
     M -> X,A
  **/
-INLINE void LAX ( uint8_t src ) {
+INSTR void LAX ( uint8_t src ) {
     disPrintf(disassembly.inst, "LAX");
 #ifndef DISASSEMBLER
     set_flags_NZ(m6502.A = m6502.X = src);
@@ -151,7 +151,7 @@ INLINE void LAX ( uint8_t src ) {
  ROL M
  AND M
 **/
-INLINE void RLA ( uint16_t addr ) {
+INSTR void RLA ( uint16_t addr ) {
     disPrintf(disassembly.inst, "RLA");
 
 #ifndef DISASSEMBLER
@@ -168,7 +168,7 @@ INLINE void RLA ( uint16_t addr ) {
  ROR M
  ADC M
  **/
-INLINE void RRA ( uint16_t addr ) {
+INSTR void RRA ( uint16_t addr ) {
     disPrintf(disassembly.inst, "RRA");
 #ifndef DISASSEMBLER
     _ROR(addr);
@@ -185,7 +185,7 @@ INLINE void RRA ( uint16_t addr ) {
   THEN (SP "AND" (MSB(adr)+1)) -> M
  **/
 
-INLINE void SAS ( uint16_t addr ) {
+INSTR void SAS ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SAS");
 #ifndef DISASSEMBLER
     m6502.SP = m6502.A & m6502.X;
@@ -215,7 +215,7 @@ INLINE void SAS ( uint16_t addr ) {
  be ignored in the subtraction but set according to the result.
 
  **/
-INLINE void SBX ( uint8_t src ) {
+INSTR void SBX ( uint8_t src ) {
     disPrintf(disassembly.inst, "SBX");
 
 #ifndef DISASSEMBLER
@@ -237,7 +237,7 @@ INLINE void SBX ( uint8_t src ) {
  (X "AND" A "AND" addr.H) -> M
  **/
 
-INLINE void SHA ( uint16_t addr ) {
+INSTR void SHA ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SHA");
 #ifndef DISASSEMBLER
     set_flags_NZ( WRLOMEM[addr] = m6502.X & m6502.A & ((addr >> 8) + 1) );
@@ -251,7 +251,7 @@ INLINE void SHA ( uint16_t addr ) {
  ((MSB(adr)+1) "AND" Y) -> M
  **/
 
-INLINE void SHY ( uint16_t addr ) {
+INSTR void SHY ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SHY");
 #ifndef DISASSEMBLER
     set_flags_NZ( WRLOMEM[addr] = m6502.Y &((addr >> 8) + 1) );
@@ -265,7 +265,7 @@ INLINE void SHY ( uint16_t addr ) {
  ((MSB(adr)+1) "AND" X) -> M
  **/
 
-INLINE void SHX ( uint16_t addr ) {
+INSTR void SHX ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SHX");
 #ifndef DISASSEMBLER
     set_flags_NZ( WRLOMEM[addr] = m6502.X &((addr >> 8) + 1) );
@@ -283,7 +283,7 @@ INLINE void SHX ( uint16_t addr ) {
   -> A,M
 **/
 
-INLINE void SLO ( uint16_t addr ) {
+INSTR void SLO ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SLO");
     
 #ifndef DISASSEMBLER
@@ -300,7 +300,7 @@ INLINE void SLO ( uint16_t addr ) {
    (A "AND" X) -> M
  **/
 
-INLINE void SAX ( uint16_t addr ) {
+INSTR void SAX ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SAX");
 #ifndef DISASSEMBLER
     set_flags_NZ( WRLOMEM[addr] = m6502.A & m6502.X );
@@ -316,7 +316,7 @@ INLINE void SAX ( uint16_t addr ) {
  ORA M
  **/
 
-INLINE void SRE ( uint16_t addr ) {
+INSTR void SRE ( uint16_t addr ) {
     disPrintf(disassembly.inst, "SRE");
 
 #ifndef DISASSEMBLER
@@ -335,7 +335,7 @@ XAA -     "AND" Memory with Index X into Accumulator
  
     (M "AND" X) -> A
 **/
-INLINE void XAA ( uint8_t src ) {
+INSTR void XAA ( uint8_t src ) {
     disPrintf(disassembly.inst, "XAA");
 #ifndef DISASSEMBLER
     set_flags_NZ( m6502.A = m6502.X & src );

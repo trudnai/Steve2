@@ -126,7 +126,7 @@ m6502_t m6502 = {
 const int ecoSpindown = 25; // initial value of ECO Spingdown Counter
 
 
-#include "6502_dis.h"
+#include "6502_dis_utils.h"
 #include "../dev/mem/mmio.h"
 
 

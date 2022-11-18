@@ -30,9 +30,9 @@
 
 
 #ifdef DISASSEMBLER
-#define INSTR INLINE UNUSED static
+#define INSTR INLINE static
 #else
-#define INSTR INLINE UNUSED static
+#define INSTR INLINE static
 #endif
 
 #define CRYSTAL_MHZ 14.31818                // NTSC version (original)
@@ -79,7 +79,8 @@ typedef enum : uint8_t {
     SOFTRESET,
     BREAKPOINT,
     BREAKIO,
-    BREAKMEM,
+    BREAKRDMEM,
+    BREAKWRMEM,
 } interrupt_t;
 
 
@@ -241,8 +242,21 @@ extern unsigned int fps;
 extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
+
+INLINE void set_flags_N( const uint8_t test );
+INLINE void set_flags_V( const uint8_t test );
+INLINE void set_flags_Z( const uint8_t test );
+INLINE void set_flags_C( const int16_t test );
+INLINE void set_flags_NZ( const uint8_t test );
+INLINE void set_flags_NV( const uint8_t test );
+INLINE void set_flags_NVZ( const uint8_t test );
+INLINE void set_flags_NZC( const int16_t test );
+INLINE flags_t getFlags(void);
+INLINE void setFlags( uint8_t byte );
+
 extern void m6502_Run(void);
 INLINE int m6502_Step(void);
+INLINE int m6502_Step_dbg(void);
 
 extern void interrupt_IRQ(void);
 extern void interrupt_NMI(void);

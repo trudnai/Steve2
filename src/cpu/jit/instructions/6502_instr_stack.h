@@ -43,7 +43,7 @@ INSTR void PUSH_addr( uint16_t addr ) {
     PUSH( (uint8_t)addr );
 }
 
-INLINE uint16_t POP_addr(void) {
+INSTR uint16_t POP_addr(void) {
     return  POP() + ( POP() << 8 );
 }
 #endif // DISASSEMBLER

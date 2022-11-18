@@ -31,7 +31,7 @@
 #define CLK_WAIT
 
 #define DEBUGGER
-#define DISASSEMBLER
+//#define DISASSEMBLER
 
 #define FETCH_ADDR disass_addr
 
@@ -57,7 +57,7 @@ extern m6502_t m6502;
 
 uint16_t disass_addr = 0xFDED;
 
-#include "6502_dis.h"
+//#include "6502_dis.h"
 #include "../dev/mem/mmio.h"
 
 
@@ -80,27 +80,27 @@ typedef struct {
 #include "6502_instructions.h"
 #include "6502_bp.h"
 
-INLINE int m6502_Disass_1_Instr(void) {
+INLINE int m6502_Step_dbg(void) {
+    disNewInstruction();
 
-    _disNewInstruction();
-    
-    switch ( _fetch_dis() ) {
+    switch ( fetch() ) {
 #include "6502_std.h"       // Standard 6502 instructions
 //#include "6502_und.h"       // Undocumented 6502 instructions
 #include "6502_C.h"         // Extended 65C02 instructions
 
         default:
-            dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, _memread_dis( m6502.PC -1 ));
+            dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));
+            m6502.interrupt = INV;
             return 2;
-    } // switch fetch
-    
+    } // switch fetch16
+
     return 2;
 }
 
 
 void m6502_Debug(void) {
     m6502.clktime += m6502.clkfrm;
-    //    m6502.clkfrm = 0;
+
     m6502.lastIO = 0;
     m6502.interrupt = NO_INT; // TODO: This should be taken care by the interrupt handler
 
@@ -116,12 +116,12 @@ void m6502_Debug(void) {
 
     clk_6502_per_frm_max = clk_6502_per_frm;
 
-    for ( m6502.clkfrm = m6502_Step(); m6502.clkfrm < clk_6502_per_frm_max ; m6502.clkfrm += m6502_Step() ) {
+    for ( m6502.clkfrm = m6502_Step_dbg(); m6502.clkfrm < clk_6502_per_frm_max; m6502.clkfrm += m6502_Step_dbg() ) {
         switch (m6502.interrupt) {
             case HALT:
                 if (m6502.debugger.mask.hlt) {
                     cpuState = cpuState_halted;
-                    //                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -129,7 +129,7 @@ void m6502_Debug(void) {
             case BREAK:
                 if (m6502.debugger.mask.brk) {
                     cpuState = cpuState_halted;
-                    //                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -137,7 +137,7 @@ void m6502_Debug(void) {
             case IRQ:
                 if (m6502.debugger.mask.irq) {
                     cpuState = cpuState_halted;
-                    //                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -145,7 +145,7 @@ void m6502_Debug(void) {
             case NMI:
                 if (m6502.debugger.mask.nmi) {
                     cpuState = cpuState_halted;
-                    //                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -153,7 +153,7 @@ void m6502_Debug(void) {
             case INV:
                 if (m6502.debugger.mask.inv) {
                     cpuState = cpuState_halted;
-                    //                    m6502.debugger.wMask = 0;
+//                    m6502.debugger.wMask = 0;
                     return;
                 }
                 break;
@@ -163,7 +163,7 @@ void m6502_Debug(void) {
                 if (m6502.debugger.mask.out) {
                     if ( m6502.SP >= m6502.debugger.SP ) {
                         cpuState = cpuState_halted;
-                        //                        m6502.debugger.wMask = 0;
+//                        m6502.debugger.wMask = 0;
                         return;
                     }
                 }
@@ -227,6 +227,9 @@ void m6502_dbg_init(void) {
     m6502_dbg_bp_del_all(breakpoints);
     m6502_dbg_bp_del_all(mem_read_breakpoints);
     m6502_dbg_bp_del_all(mem_write_breakpoints);
+
+    // TODO: TESTING ONLY!!!
+    m6502_dbg_bp_add(mem_read_breakpoints, 0xC000);
 }
 
 

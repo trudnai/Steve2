@@ -32,6 +32,7 @@
 #import "6502_bp.h"
 #import "6502_dbg.h"
 #import "6502_dis.h"
+#import "6502_dis_utils.h"
 #import "speaker.h" // So we can access to speaker stuff from Swift
 #import "disk.h"
 #import "dsk2woz.h"

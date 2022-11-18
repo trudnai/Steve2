@@ -130,7 +130,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
         ViewController.shared?.Pause(0)
 
-        m6502.debugger.wMask = 0
+//        m6502.debugger.wMask = 0
         m6502.debugger.on = false
     }
 

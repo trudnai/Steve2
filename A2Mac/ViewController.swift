@@ -1328,6 +1328,12 @@ class ViewController: NSViewController  {
                     case BREAKPOINT: // CPU halted because of a breakpoint
                         debugBreak()
 
+                    case BREAKRDMEM: // CPU halted because of a breakpoint
+                        debugBreak()
+
+                    case BREAKWRMEM: // CPU halted because of a breakpoint
+                        debugBreak()
+
                     case RET:
                         if m6502.debugger.mask.ret == 1 {
                             // Step_Out / Step_Over

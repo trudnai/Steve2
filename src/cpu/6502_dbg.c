@@ -115,7 +115,7 @@ void m6502_Debug(void) {
     }
 
     clk_6502_per_frm_max = clk_6502_per_frm;
-
+    pc = m6502.PC;
     for ( m6502.clkfrm = m6502_Step_dbg(); m6502.clkfrm < clk_6502_per_frm_max; m6502.clkfrm += m6502_Step_dbg() ) {
         switch (m6502.interrupt) {
             case HALT:
@@ -127,6 +127,23 @@ void m6502_Debug(void) {
                 break;
 
             case BREAK:
+                if (m6502.debugger.mask.brk) {
+                    cpuState = cpuState_halted;
+//                    m6502.debugger.wMask = 0;
+                    return;
+                }
+                break;
+
+            case BREAKRDMEM:
+                if (m6502.debugger.mask.brk) {
+                    cpuState = cpuState_halted;
+//                    m6502.debugger.wMask = 0;
+                    m6502.PC = pc;
+                    return;
+                }
+                break;
+
+            case BREAKWRMEM:
                 if (m6502.debugger.mask.brk) {
                     cpuState = cpuState_halted;
 //                    m6502.debugger.wMask = 0;

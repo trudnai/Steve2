@@ -1022,7 +1022,8 @@ INLINE uint8_t _memread( uint16_t addr ) {
 INLINE uint8_t _memread_dbg( uint16_t addr ) {
     if (LAST_IDX(mem_read_breakpoints)) {
         if ( m6502_dbg_bp_exists(mem_read_breakpoints, addr) ) {
-            cpuState = cpuState_halted;
+//            printf("MEM BP $%04X (bp:%04X)\n", addr, m6502.PC);
+//            cpuState = cpuState_halted;
             m6502.interrupt = BREAKRDMEM;
         }
     }
@@ -1169,6 +1170,9 @@ INLINE uint16_t _addr_abs_dis() {
 INLINE uint8_t _src_abs() {
     return _memread( _addr_abs() );
 }
+INLINE uint8_t _src_abs_dbg() {
+    return _memread_dbg( _addr_abs() );
+}
 INLINE uint8_t _src_abs_dis() {
     return _memread_dis( _addr_abs_dis() );
 }
@@ -1215,6 +1219,9 @@ INLINE uint16_t _addr_abs_X_dis() {
 INLINE uint8_t _src_abs_X() {
     return _memread( _addr_abs_X() );
 }
+INLINE uint8_t _src_abs_X_dbg() {
+    return _memread_dbg( _addr_abs_X() );
+}
 INLINE uint8_t _src_abs_X_dis() {
     return _memread_dis( _addr_abs_X_dis() );
 }
@@ -1236,6 +1243,9 @@ INLINE uint16_t _addr_abs_Y_dis() {
 }
 INLINE uint8_t _src_abs_Y() {
     return _memread(_addr_abs_Y());
+}
+INLINE uint8_t _src_abs_Y_dbg() {
+    return _memread_dbg(_addr_abs_Y());
 }
 INLINE uint8_t _src_abs_Y_dis() {
     return _memread_dis(_addr_abs_Y_dis());
@@ -1301,6 +1311,9 @@ INLINE uint16_t _addr_ind_dis() {
 INLINE uint8_t _src_ind() {
     return _memread( _addr_ind() );
 }
+INLINE uint8_t _src_ind_dbg() {
+    return _memread_dbg( _addr_ind() );
+}
 INLINE uint8_t _src_ind_dis() {
     return _memread_dis( _addr_ind_dis() );
 }
@@ -1321,6 +1334,9 @@ INLINE uint16_t _addr_ind_X_dis() {
 }
 INLINE uint8_t _src_X_ind() {
     return _memread( _addr_ind_X() );
+}
+INLINE uint8_t _src_X_ind_dbg() {
+    return _memread_dbg( _addr_ind_X() );
 }
 INLINE uint8_t _src_X_ind_dis() {
     return _memread_dis( _addr_ind_X_dis() );
@@ -1345,6 +1361,9 @@ INLINE uint16_t _addr_ind_Y_dis() {
 }
 INLINE uint8_t _src_ind_Y() {
     return _memread( _addr_ind_Y() );
+}
+INLINE uint8_t _src_ind_Y_dbg() {
+    return _memread_dbg( _addr_ind_Y() );
 }
 INLINE uint8_t _src_ind_Y_dis() {
     return _memread_dis( _addr_ind_Y_dis() );

@@ -1212,11 +1212,21 @@ INLINE uint8_t _src_abs_dis() {
 INLINE int8_t _rel_addr() {
     return _fetch();
 }
+INLINE int8_t _rel_addr_dbg() {
+    uint16_t addr = _fetch();
+    is_mem_rd_bp(addr);
+    return addr;
+}
 INLINE int8_t _rel_addr_dis() {
     _disPrintf(disassembly.oper, sizeof(disassembly.oper), "$%04X", m6502.PC + 1 + (int8_t)memread8(m6502.PC));
     return _fetch_dis();
 }
 INLINE uint16_t _abs_addr() {
+    uint16_t addr = _fetch16();
+    is_mem_rd_bp(addr);
+    return addr;
+}
+INLINE uint16_t _abs_addr_dbg() {
     return _fetch16();
 }
 INLINE uint16_t _abs_addr_dis() {
@@ -1225,6 +1235,9 @@ INLINE uint16_t _abs_addr_dis() {
 }
 INLINE uint16_t _ind_addr() {
     return memread16( _fetch16() );
+}
+INLINE uint16_t _ind_addr_dbg() {
+    return _memread16_dbg( _fetch16() );
 }
 INLINE uint16_t _ind_addr_dis() {
     _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%04X)", memread16(m6502.PC));
@@ -1304,6 +1317,9 @@ INLINE uint8_t _addr_zp_dis() {
 }
 INLINE uint8_t _src_zp() {
     return memread8_low(_addr_zp());
+}
+INLINE uint8_t _src_zp_dbg() {
+    return _memread_dbg(_addr_zp());
 }
 INLINE uint8_t _src_zp_dis() {
     return memread8_low(_addr_zp_dis());
@@ -1387,6 +1403,11 @@ INLINE uint8_t _src_X_ind_dis() {
 INLINE uint16_t _addr_ind_Y() {
     return memread16( _fetch() ) + m6502.Y;
 }
+INLINE uint16_t _addr_ind_Y_dbg() {
+    uint16_t addr = _memread16_dbg( _fetch() ) + m6502.Y;
+    is_mem_rd_bp(addr);
+    return addr;
+}
 INLINE uint16_t _addr_ind_Y_dis() {
     _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X),Y", memread8(m6502.PC) );
     _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16( memread8(m6502.PC) ) + m6502.Y );
@@ -1423,6 +1444,9 @@ INLINE uint8_t _addr_zp_X_dis() {
 INLINE uint8_t _src_zp_X() {
     return memread8_low(_addr_zp_X());
 }
+INLINE uint8_t _src_zp_X_dbg() {
+    return _memread_dbg(_addr_zp_X());
+}
 INLINE uint8_t _src_zp_X_dis() {
     return memread8_low(_addr_zp_X_dis());
 }
@@ -1445,6 +1469,9 @@ INLINE uint8_t _addr_zp_Y_dis() {
 }
 INLINE uint8_t _src_zp_Y() {
     return memread8_low(_addr_zp_Y());
+}
+INLINE uint8_t _src_zp_Y_dbg() {
+    return _memread_dbg(_addr_zp_Y());
 }
 INLINE uint8_t _src_zp_Y_dis() {
     return memread8_low(_addr_zp_Y_dis());

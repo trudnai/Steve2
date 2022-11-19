@@ -427,10 +427,13 @@ INLINE uint8_t _src_abs(void);
 INLINE uint8_t _src_abs_dbg(void);
 INLINE uint8_t _src_abs_dis(void);
 INLINE int8_t _rel_addr(void);
+INLINE int8_t _rel_addr_dbg(void);
 INLINE int8_t _rel_addr_dis(void);
 INLINE uint16_t _abs_addr(void);
+INLINE uint16_t _abs_addr_dbg(void);
 INLINE uint16_t _abs_addr_dis(void);
 INLINE uint16_t _ind_addr(void);
+INLINE uint16_t _ind_addr_dbg(void);
 INLINE uint16_t _ind_addr_dis(void);
 INLINE uint16_t _addr_abs_X(void);
 INLINE uint16_t _addr_abs_X_dis(void);
@@ -447,6 +450,7 @@ INLINE uint8_t _imm_dis(void);
 INLINE uint8_t _addr_zp(void);
 INLINE uint8_t _addr_zp_dis(void);
 INLINE uint8_t _src_zp(void);
+INLINE uint8_t _src_zp_dbg(void);
 INLINE uint8_t _src_zp_dis(void);
 INLINE uint16_t _addr_ind(void);
 INLINE uint16_t _addr_ind_dis(void);
@@ -459,6 +463,7 @@ INLINE uint8_t _src_X_ind(void);
 INLINE uint8_t _src_X_ind_dbg(void);
 INLINE uint8_t _src_X_ind_dis(void);
 INLINE uint16_t _addr_ind_Y(void);
+INLINE uint16_t _addr_ind_Y_dbg(void);
 INLINE uint16_t _addr_ind_Y_dis(void);
 INLINE uint8_t _src_ind_Y(void);
 INLINE uint8_t _src_ind_Y_dbg(void);
@@ -466,10 +471,12 @@ INLINE uint8_t _src_ind_Y_dis(void);
 INLINE uint8_t _addr_zp_X(void);
 INLINE uint8_t _addr_zp_X_dis(void);
 INLINE uint8_t _src_zp_X(void);
+INLINE uint8_t _src_zp_X_dbg(void);
 INLINE uint8_t _src_zp_X_dis(void);
 INLINE uint8_t _addr_zp_Y(void);
 INLINE uint8_t _addr_zp_Y_dis(void);
 INLINE uint8_t _src_zp_Y(void);
+INLINE uint8_t _src_zp_Y_dbg(void);
 INLINE uint8_t _src_zp_Y_dis(void);
 
 
@@ -516,26 +523,26 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define memwrite(addr,data) _memwrite(addr,data);
 #define addr_abs() _addr_abs()
 #define src_abs() _src_abs_dbg()
-#define rel_addr() _rel_addr()
-#define abs_addr() _abs_addr()
-#define ind_addr() _ind_addr()
+#define rel_addr() _rel_addr_dbg()
+#define abs_addr() _abs_addr_dbg()
+#define ind_addr() _ind_addr_dbg()
 #define addr_abs_X() _addr_abs_X()
 #define src_abs_X() _src_abs_X_dbg()
 #define addr_abs_Y() _addr_abs_Y()
 #define src_abs_Y() _src_abs_Y_dbg()
 #define imm() _imm()
 #define addr_zp() _addr_zp()
-#define src_zp() _src_zp()
+#define src_zp() _src_zp_dbg()
 #define addr_ind() _addr_ind()
 #define src_ind() _src_ind_dbg()
 #define addr_ind_X() _addr_ind_X()
 #define src_X_ind() _src_X_ind_dbg()
-#define addr_ind_Y() _addr_ind_Y()
-#define src_ind_Y() _src_ind_Y()
+#define addr_ind_Y() _addr_ind_Y_dbg()
+#define src_ind_Y() _src_ind_Y_dbg()
 #define addr_zp_X() _addr_zp_X()
-#define src_zp_X() _src_zp_X()
+#define src_zp_X() _src_zp_X_dbg()
 #define addr_zp_Y() _addr_zp_Y()
-#define src_zp_Y() _src_zp_Y()
+#define src_zp_Y() _src_zp_Y_dbg()
 
 #else // DEBUGGER
 

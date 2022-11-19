@@ -118,7 +118,8 @@ void m6502_Debug(void) {
     for (
         m6502_saved = m6502, clk_6502_per_frm_max = clk_6502_per_frm;
         m6502.clkfrm < clk_6502_per_frm_max;
-        m6502_saved = m6502, m6502.clkfrm += m6502_Step_dbg()
+         memcpy(&m6502_saved, &m6502, 7), // copy over only A, X, Y, Status, PC & SP...
+         m6502.clkfrm += m6502_Step_dbg()
     ){
         switch (m6502.interrupt) {
             case HALT:
@@ -144,8 +145,7 @@ void m6502_Debug(void) {
                     // memory break happens *after* executing
                     // the instruction, therefore we need to
                     // step back to get it right in the debugger
-                    m6502_saved.interrupt = m6502.interrupt;
-                    m6502 = m6502_saved;
+                    memcpy(&m6502, &m6502_saved, 7); // copy over only A, X, Y, Status, PC & SP...
 
                     return;
                 }
@@ -158,8 +158,7 @@ void m6502_Debug(void) {
                     // memory break happens *after* executing
                     // the instruction, therefore we need to
                     // step back to get it right in the debugger
-                    m6502_saved.interrupt = m6502.interrupt;
-                    m6502 = m6502_saved;
+                    memcpy(&m6502, &m6502_saved, 7); // copy over only A, X, Y, Status, PC & SP...
 
                     return;
                 }
@@ -260,7 +259,7 @@ void m6502_dbg_init(void) {
     m6502_dbg_bp_del_all(mem_write_breakpoints);
 
     // TODO: TESTING ONLY!!!
-    m6502_dbg_bp_add(mem_read_breakpoints, 0xC000);
+//    m6502_dbg_bp_add(mem_read_breakpoints, 0xC000);
 }
 
 

@@ -118,9 +118,20 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         PauseButtonUpdate()
 
         m6502.debugger.SP = 0xFF
+
         m6502.debugger.wMask = 0
+        m6502.debugger.mask.hlt = 1;
+        m6502.debugger.mask.brk = 1;
+        m6502.debugger.mask.inv = 1;
+        
         m6502.debugger.on = true
 
+        m6502.interrupt = NO_INT
+
+        // because of memory debugger first we need to step over one instruction
+        // otherwise it would not step over that instruction
+        m6502_Step_dbg()
+        // now we cn resume to run
         ViewController.shared?.Resume()
     }
 
@@ -130,7 +141,6 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
         ViewController.shared?.Pause(0)
 
-//        m6502.debugger.wMask = 0
         m6502.debugger.on = false
     }
 
@@ -152,9 +162,21 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     @IBAction func Step_Over(_ sender: Any) {
         if MEM[Int(m6502.PC)] == 0x20 {
             m6502.debugger.SP = m6502.SP > 1 ? m6502.SP : 0
+
+            m6502.debugger.wMask = 0
             m6502.debugger.mask.out = 1
+            m6502.debugger.mask.hlt = 1;
+            m6502.debugger.mask.brk = 1;
+            m6502.debugger.mask.inv = 1;
+
             m6502.debugger.on = true
 
+            m6502.interrupt = NO_INT
+
+            // because of memory debugger first we need to step over one instruction
+            // otherwise it would not step over that instruction
+            m6502_Step_dbg()
+            // now we cn resume to run
             ViewController.shared?.Resume()
         }
         else {
@@ -165,7 +187,7 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
 
 
     @IBAction func Step_In(_ sender: Any) {
-        m6502_Step()
+        m6502_Step_dbg()
         
         // TODO: This should be in Debugger!
         if let debugger = DebuggerViewController.shared {
@@ -181,9 +203,21 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         PauseButtonUpdate()
 
         m6502.debugger.SP = m6502.SP < 0xFE ? m6502.SP + 1 : 0xFF
+
+        m6502.debugger.wMask = 0
         m6502.debugger.mask.out = 1
+        m6502.debugger.mask.hlt = 1;
+        m6502.debugger.mask.brk = 1;
+        m6502.debugger.mask.inv = 1;
+
         m6502.debugger.on = true
 
+        m6502.interrupt = NO_INT
+
+        // because of memory debugger first we need to step over one instruction
+        // otherwise it would not step over that instruction
+        m6502_Step_dbg()
+        // now we cn resume to run
         ViewController.shared?.Resume()
     }
 

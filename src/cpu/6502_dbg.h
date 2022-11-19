@@ -9,6 +9,7 @@
 #ifndef _6502_dbg_h
 #define _6502_dbg_h
 
+extern m6502_t m6502_saved;
 
 extern uint16_t disass_addr;
 extern void m6502_Debug(void);

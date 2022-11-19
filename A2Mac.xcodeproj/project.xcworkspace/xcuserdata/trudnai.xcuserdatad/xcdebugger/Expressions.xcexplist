@@ -1275,6 +1275,20 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "m6502_Debug:6502_dbg.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+            <PersistentString
+               value = "m6502_saved.PC">
+            </PersistentString>
+            <PersistentString
+               value = "m6502_saved">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "DisplayView.mouseExited(with:):DisplayView.swift">
          <PersistentStrings>
             <PersistentString

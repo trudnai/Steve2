@@ -54,6 +54,7 @@
 #define IRQ_VECTOR          0xFFFE
 
 extern m6502_t m6502;
+m6502_t m6502_saved;
 
 uint16_t disass_addr = 0xFDED;
 
@@ -100,7 +101,7 @@ INLINE int m6502_Step_dbg(void) {
 
 void m6502_Debug(void) {
     m6502.clktime += m6502.clkfrm;
-
+    m6502.clkfrm = 0;
     m6502.lastIO = 0;
     m6502.interrupt = NO_INT; // TODO: This should be taken care by the interrupt handler
 
@@ -114,14 +115,16 @@ void m6502_Debug(void) {
         }
     }
 
-    clk_6502_per_frm_max = clk_6502_per_frm;
-    pc = m6502.PC;
-    for ( m6502.clkfrm = m6502_Step_dbg(); m6502.clkfrm < clk_6502_per_frm_max; m6502.clkfrm += m6502_Step_dbg() ) {
+    for (
+        m6502_saved = m6502, clk_6502_per_frm_max = clk_6502_per_frm;
+        m6502.clkfrm < clk_6502_per_frm_max;
+        m6502_saved = m6502, m6502.clkfrm += m6502_Step_dbg()
+    ){
         switch (m6502.interrupt) {
             case HALT:
                 if (m6502.debugger.mask.hlt) {
                     cpuState = cpuState_halted;
-//                    m6502.debugger.wMask = 0;
+
                     return;
                 }
                 break;
@@ -129,7 +132,7 @@ void m6502_Debug(void) {
             case BREAK:
                 if (m6502.debugger.mask.brk) {
                     cpuState = cpuState_halted;
-//                    m6502.debugger.wMask = 0;
+
                     return;
                 }
                 break;
@@ -137,8 +140,13 @@ void m6502_Debug(void) {
             case BREAKRDMEM:
                 if (m6502.debugger.mask.brk) {
                     cpuState = cpuState_halted;
-//                    m6502.debugger.wMask = 0;
-                    m6502.PC = pc;
+
+                    // memory break happens *after* executing
+                    // the instruction, therefore we need to
+                    // step back to get it right in the debugger
+                    m6502_saved.interrupt = m6502.interrupt;
+                    m6502 = m6502_saved;
+
                     return;
                 }
                 break;
@@ -146,7 +154,13 @@ void m6502_Debug(void) {
             case BREAKWRMEM:
                 if (m6502.debugger.mask.brk) {
                     cpuState = cpuState_halted;
-//                    m6502.debugger.wMask = 0;
+
+                    // memory break happens *after* executing
+                    // the instruction, therefore we need to
+                    // step back to get it right in the debugger
+                    m6502_saved.interrupt = m6502.interrupt;
+                    m6502 = m6502_saved;
+
                     return;
                 }
                 break;
@@ -154,7 +168,7 @@ void m6502_Debug(void) {
             case IRQ:
                 if (m6502.debugger.mask.irq) {
                     cpuState = cpuState_halted;
-//                    m6502.debugger.wMask = 0;
+
                     return;
                 }
                 break;
@@ -162,7 +176,7 @@ void m6502_Debug(void) {
             case NMI:
                 if (m6502.debugger.mask.nmi) {
                     cpuState = cpuState_halted;
-//                    m6502.debugger.wMask = 0;
+
                     return;
                 }
                 break;
@@ -170,7 +184,7 @@ void m6502_Debug(void) {
             case INV:
                 if (m6502.debugger.mask.inv) {
                     cpuState = cpuState_halted;
-//                    m6502.debugger.wMask = 0;
+
                     return;
                 }
                 break;
@@ -180,7 +194,7 @@ void m6502_Debug(void) {
                 if (m6502.debugger.mask.out) {
                     if ( m6502.SP >= m6502.debugger.SP ) {
                         cpuState = cpuState_halted;
-//                        m6502.debugger.wMask = 0;
+
                         return;
                     }
                 }

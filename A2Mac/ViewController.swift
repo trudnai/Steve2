@@ -1349,6 +1349,8 @@ class ViewController: NSViewController  {
                         break
                     }
 
+                    // clear iterrupt
+                    m6502.interrupt = NO_INT
                 }
                 else {
                     m6502_Run()

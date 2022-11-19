@@ -57,6 +57,12 @@ class HexDigitFormatter: Formatter {
         if string.starts(with: "#") {
             hexValue = String(string.dropFirst()).uppercased()
         }
+        else if string.starts(with: "%") {
+            hexValue = String(string.dropFirst()).uppercased()
+        }
+        else if string.starts(with: "$") {
+            hexValue = String(string.dropFirst()).uppercased()
+        }
         else if string.starts(with: "0x") {
             hexValue = String(string.dropFirst(2)).uppercased()
         }

@@ -215,7 +215,7 @@ int m6502_dbg_bp_compact(uint16_t * bp) {
 /// @return 1 (true) if exists, 0 (false) if not
 _Bool m6502_dbg_bp_exists(uint16_t * bp, uint16_t addr) {
     if (addr) {
-        int i = m6502_dbg_bp_search(bp, 0, LAST_IDX(bp), addr);
+        int i = m6502_dbg_bp_search(bp, 1, LAST_IDX(bp), addr);
         return i >= 0;
     }
 
@@ -241,7 +241,7 @@ int m6502_dbg_bp_add(uint16_t * bp, uint16_t addr) {
 /// Remove a breakpoint
 /// @param addr address to remove
 int m6502_dbg_bp_del(uint16_t * bp, uint16_t addr) {
-    int i = m6502_dbg_bp_search(bp, 0, LAST_IDX(bp), addr);
+    int i = m6502_dbg_bp_search(bp, 1, LAST_IDX(bp), addr);
     if (i >= 0) {
         bp[i] = 0;
         m6502_dbg_bp_sort(breakpoints, 1, LAST_IDX(bp));

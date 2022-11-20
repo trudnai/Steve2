@@ -322,6 +322,8 @@ INSTR void SRE ( uint16_t addr ) {
 #ifndef DISASSEMBLER
     // LSR
     m6502.C = WRLOMEM[addr] & 1;
+    // TODO: this and the next operation should be one!
+    // TODO: Review flag calculation!
     set_flags_NZ( WRLOMEM[addr] >>= 1 );
     
     // EOR M

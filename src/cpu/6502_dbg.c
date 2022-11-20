@@ -115,12 +115,12 @@ void m6502_Debug(void) {
         }
     }
 
-    for (
-        m6502_saved = m6502, clk_6502_per_frm_max = clk_6502_per_frm;
-        m6502.clkfrm < clk_6502_per_frm_max;
-         memcpy(&m6502_saved, &m6502, 7), // copy over only A, X, Y, Status, PC & SP...
-         m6502.clkfrm += m6502_Step_dbg()
-    ){
+    clk_6502_per_frm_max = clk_6502_per_frm;
+
+    while ( m6502.clkfrm < clk_6502_per_frm_max ) {
+        m6502_saved = m6502;
+        m6502.clkfrm += m6502_Step_dbg();
+
         switch (m6502.interrupt) {
             case HALT:
                 if (m6502.debugger.mask.hlt) {
@@ -139,26 +139,14 @@ void m6502_Debug(void) {
                 break;
 
             case BREAKRDMEM:
-                if (m6502.debugger.mask.brk) {
-                    cpuState = cpuState_halted;
-
-                    // memory break happens *after* executing
-                    // the instruction, therefore we need to
-                    // step back to get it right in the debugger
-                    memcpy(&m6502, &m6502_saved, 7); // copy over only A, X, Y, Status, PC & SP...
-
-                    return;
-                }
-                break;
-
             case BREAKWRMEM:
                 if (m6502.debugger.mask.brk) {
                     cpuState = cpuState_halted;
 
-                    // memory break happens *after* executing
-                    // the instruction, therefore we need to
-                    // step back to get it right in the debugger
-                    memcpy(&m6502, &m6502_saved, 7); // copy over only A, X, Y, Status, PC & SP...
+                    // memory break happens *after* executing the instruction,
+                    // therefore we need to step back to get it right in the debugger
+                    m6502_saved.interrupt = m6502.interrupt; // we need to keep the new interrupt though
+                    m6502 = m6502_saved; // copy over only A, X, Y, Status, PC & SP...
 
                     return;
                 }
@@ -260,6 +248,7 @@ void m6502_dbg_init(void) {
 
     // TODO: TESTING ONLY!!!
 //    m6502_dbg_bp_add(mem_read_breakpoints, 0xC000);
+//    m6502_dbg_bp_add(mem_write_breakpoints, 0xC099);
 }
 
 

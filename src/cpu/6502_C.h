@@ -78,7 +78,7 @@
         case 0x3A: DEA(); return 2;                                     // DEA imm (DEC A)
 
     // JMP - (abs,X) addressing mode
-        case 0x7C: JMP( addr_abs_X() ); return 6;                       // JMP abs,X
+        case 0x7C: JMP( abs_addr_X() ); return 6;                       // JMP abs,X
 
 // Additional instructions
 

@@ -135,10 +135,9 @@ int m6502_dbg_bp_search(uint16_t arr[], int l, int r, uint16_t addr) {
 
 
 /// Get index of the last BP
-/// @param i Current last index
 /// @return Index of the last breakpoint or 0 if non
-int m6502_dbg_bp_get_last(uint16_t *bp, int i) {
-    for(; i >= 0; i--) {
+int m6502_dbg_bp_get_last(uint16_t *bp) {
+    for(int i = LAST_IDX(bp); i >= 0; i--) {
         if ( bp[i] ) {
             return i;
         }
@@ -205,8 +204,9 @@ int m6502_dbg_bp_compact(uint16_t * bp) {
     if ( i > 1 ) {
         memcpy(bp + 1, bp + i, LAST_IDX(bp) * sizeof(uint16_t));
     }
+    LAST_IDX(bp) = i = m6502_dbg_bp_get_last(bp);
     memset(bp + i + 1, 0, (DEBUG_MAX_BREAKPOINTS - i - 2) * sizeof(uint16_t));
-    return m6502_dbg_bp_get_last(bp, LAST_IDX(bp));
+    return i;
 }
 
 
@@ -230,7 +230,7 @@ int m6502_dbg_bp_add(uint16_t * bp, uint16_t addr) {
     if (LAST_IDX(bp) < DEBUG_MAX_BREAKPOINTS - 1) {
         bp[++LAST_IDX(bp)] = addr;
         m6502_dbg_bp_sort(bp, 1, LAST_IDX(bp));
-        LAST_IDX(bp) = m6502_dbg_bp_compact(bp);
+        m6502_dbg_bp_compact(bp);
         return LAST_IDX(bp);
     }
     // no empty slots
@@ -245,7 +245,7 @@ int m6502_dbg_bp_del(uint16_t * bp, uint16_t addr) {
     if (i >= 0) {
         bp[i] = 0;
         m6502_dbg_bp_sort(breakpoints, 1, LAST_IDX(bp));
-        LAST_IDX(bp) = m6502_dbg_bp_compact(bp);
+        m6502_dbg_bp_compact(bp);
     }
     return LAST_IDX(bp);
 }

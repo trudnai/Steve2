@@ -111,7 +111,7 @@ m6502_t m6502 = {
     0,      // clklast
     0,      // clkfrm
     
-    0,      // clk_wrenable
+//    0,      // clk_wrenable
     
     0,      // lastIO
     0,      // ecoSpindown

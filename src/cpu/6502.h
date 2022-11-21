@@ -128,6 +128,8 @@ typedef struct debugger_s {
 } debugger_t;
 
 
+typedef uint32_t clkfrm_t;
+
 //#pragma pack(1)
 typedef struct m6502_s {
     uint8_t  A;       //  0: Accumulator
@@ -156,13 +158,13 @@ typedef struct m6502_s {
     uint8_t SP;       // 13: Stack Pointer ( stack addr = 0x01 + sp )
 
 //    unsigned clk;           // Clock Counter
-    uint64_t clktime; // 14:
-    uint64_t clklast; // 15:
-    uint32_t clkfrm;  // 16:
+    clkfrm_t clktime; // 14:
+    clkfrm_t clklast; // 15:
+    clkfrm_t clkfrm;  // 16:
     
-    uint64_t clk_wrenable;  // CPU clock when WRITE RAM is triggered
+//    uint64_t clk_wrenable;  // CPU clock when WRITE RAM is triggered
     
-    uint64_t lastIO;  // Last time I/O accessed
+    clkfrm_t lastIO;  // Last time I/O accessed
     int ecoSpindown;  // spindown counter for eco mode
 
     debugger_t debugger;

@@ -324,7 +324,7 @@ uint8_t woz_read() {
         
         static uint8_t latch = 0;
 
-        uint64_t clktime = m6502.clktime + m6502.clkfrm;
+        clkfrm_t clktime = m6502.clktime + m6502.clkfrm;
         clkelpased = clktime - m6502.clklast;
         m6502.clklast = clktime;
         
@@ -410,7 +410,7 @@ void woz_write( uint8_t data ) {
         
         woz_flags.disk_modified = 1;
         
-        uint64_t clktime = m6502.clktime + m6502.clkfrm;
+        clkfrm_t clktime = m6502.clktime + m6502.clkfrm;
         clkelpased = clktime - m6502.clklast;
         m6502.clklast = clktime;
         

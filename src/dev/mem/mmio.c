@@ -97,7 +97,7 @@ INLINE void set_MEM_readonly(void) {
 
 /// Returns TRUE if already writeable or second of the "two consecutive" reads on appropriate soft switches
 INLINE int is_wr_enabled(void) {
-    uint64_t clk = m6502.clktime + m6502.clkfrm;
+//    uint64_t clk = m6502.clktime + m6502.clkfrm;
 //    uint64_t elapsed = clk - m6502.clk_wrenable;
 //    int is_enabled = ( elapsed < 16 ) || MEMcfg.WR_RAM;
     int is_enabled = ++MEMcfg.WR_RAM_cntr >= 1 || MEMcfg.WR_RAM;
@@ -105,7 +105,7 @@ INLINE int is_wr_enabled(void) {
 //    printf("is_wr_enabled elapsed:%llu  was_enabled:%i  to_be_enabled:%i\n", elapsed, MEMcfg.WR_RAM, is_enabled);
     dbgPrintf2("is_wr_enabled WR_RAM_cntr:%u  was_enabled:%i  to_be_enabled:%i\n", MEMcfg.WR_RAM_cntr, MEMcfg.WR_RAM, is_enabled);
 
-    m6502.clk_wrenable = clk;
+//    m6502.clk_wrenable = clk;
     return is_enabled;
 }
 

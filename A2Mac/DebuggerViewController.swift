@@ -286,7 +286,7 @@ N V - B D I Z C
 
     func getLineRange(inView view: NSTextView, forLine: Int) -> NSRange? {
         let layoutManager = view.layoutManager!
-        var numberOfLines = 1
+        var numberOfLines = 0
         let numberOfGlyphs = layoutManager.numberOfGlyphs
         var lineRange = NSRange()
         var indexOfGlyph = 0

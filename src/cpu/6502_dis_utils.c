@@ -173,6 +173,7 @@ void printDisassembly( FILE * f ) {
 
 #endif // DISASS_TRACE
 
+size_t disassLineLength = 0;
 
 const char * disassemblyLine(_Bool highlight) {
     static char line[256];
@@ -190,6 +191,8 @@ const char * disassemblyLine(_Bool highlight) {
             line[i] &= 0x3F;
         }
     }
+
+    disassLineLength = strlen(line);
 
     return line;
 }

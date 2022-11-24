@@ -1022,6 +1022,9 @@ INLINE uint8_t memread8( uint16_t addr ) {
  **/
 INLINE uint16_t memread16_low( uint16_t addr ) {
     return * (uint16_t*) ( Apple2_64K_MEM + addr );
+
+    // avoid unaligned memory access
+//    return (uint16_t)Apple2_64K_MEM[addr] | (uint16_t)Apple2_64K_MEM[addr+1] << 8;
 }
 //INLINE uint16_t memread16_high( uint16_t addr ) {
 //    return * (uint16_t*) ( RDHIMEM + addr );

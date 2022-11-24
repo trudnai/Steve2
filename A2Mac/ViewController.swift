@@ -1231,8 +1231,10 @@ class ViewController: NSViewController  {
 
     func diskButtonUpdate() {
         DispatchQueue.main.async {
-            // Disk Motor LED
+
             if ( self.frameCounter % DEF_DRV_LED_DIV == 0 ) {
+
+                // Disk Motor LED
                 if spkr_is_disk_motor_playing() {
                     if self.disk1_led.isHidden {
                         self.disk1_led.isHidden = false
@@ -1243,10 +1245,8 @@ class ViewController: NSViewController  {
                         self.disk1_led.isHidden = true
                     }
                 }
-            }
 
-            // Disk Loaded
-            if ( self.frameCounter % DEF_DRV_LED_DIV == 0 ) {
+                // Disk Loaded
                 if woz_is_loaded() > 0 {
                     if self.disk1_closed.isHidden {
                         self.disk1_closed.isHidden = false
@@ -1257,6 +1257,7 @@ class ViewController: NSViewController  {
                         self.disk1_closed.isHidden = true
                     }
                 }
+
             }
         }
     }
@@ -1295,9 +1296,9 @@ class ViewController: NSViewController  {
                 clkCounter += Double(m6502.clkfrm)
                 // we start a new frame from here, so CPU is running even while rendering
 //                m6502.clkfrm = 0
-                
+
                 frameCounter += 1
-                
+
                 if ( frameCounter % fps == 0 ) {
                     let currentTime = CACurrentMediaTime() as Double
                     let elpasedTime = currentTime - lastFrameTime

@@ -34,17 +34,42 @@ class DebuggerViewController: NSViewController {
     @IBOutlet weak var MemoryAddressField: NSTextField!
     @IBOutlet weak var DisassAddressField: NSTextField!
     @IBOutlet weak var DisassAddressPC: NSButton!
-
+//    @IBOutlet weak var test: NSTextField!
+//
+//
+//    //        let bold14:NSFont = NSFont.boldSystemFontOfSize(14.0)
+//    let textFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
+//    let textColor : NSColor = NSColor.white
+//    let textParagraph : NSMutableParagraphStyle = NSMutableParagraphStyle()
+//    //        textParagraph.lineSpacing = 10.0  /*this sets the space BETWEEN lines to 10points*/
+//    //        textParagraph.maximumLineHeight = 12.0/*this sets the MAXIMUM height of the lines to 12points*/
+////    textParagraph.lineHeightMultiple = 1.15
+//    let textAttribs : [NSAttributedString.Key : NSObject]
 
     required init?(coder: NSCoder) {
+//        textParagraph.lineHeightMultiple = 1.15
+//        textAttribs = [
+//            NSAttributedString.Key.font: textFont,
+//            NSAttributedString.Key.foregroundColor: textColor,
+//            NSAttributedString.Key.paragraphStyle: textParagraph
+//        ]
+//
         super.init(coder: coder)
         DebuggerViewController.shared = self
     }
 
 
+//    func testTextField(str : String) {
+//        let attrString:NSAttributedString = NSAttributedString.init(string: str, attributes: textAttribs)
+//        test.attributedStringValue = attrString
+//    }
+//
+//
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height)
+
+//        testTextField(str: "0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n")
     }
 
     
@@ -284,7 +309,7 @@ N V - B D I Z C
     }
 
 
-    func getLineRange(inView view: NSTextView, forLine: Int) -> NSRange? {
+    func getLineRange_old(inView view: NSTextView, forLine: Int) -> NSRange? {
         let layoutManager = view.layoutManager!
         var numberOfLines = 0
         let numberOfGlyphs = layoutManager.numberOfGlyphs
@@ -308,10 +333,22 @@ N V - B D I Z C
     }
 
 
+    func getLineRange(_ lineRange : [LineRange_t], forLine: Int) -> NSRange? {
+//        print("disassLineRange.count:", disassLineRange.count)
+        if 0 < forLine && forLine <= lineRange.count {
+            let disassRange = lineRange[forLine - 1]
+            return NSRange(location: disassRange.loc, length: disassRange.len)
+        }
+
+        // could not find line number
+        return nil
+    }
+
+
     let lineFromTopToMiddle = 0
     func scroll_to(view: NSTextView, line: Int) {
         let line = line > 0 ? line : 0
-        if let lineRange = getLineRange(inView: view, forLine: line + lineFromTopToMiddle) {
+        if let lineRange = getLineRange(disassLineRange, forLine: line + lineFromTopToMiddle) {
             view.scrollRangeToVisible(lineRange)
         }
     }
@@ -328,11 +365,38 @@ N V - B D I Z C
     ]
 
 
-    func remove_highlight(view: NSTextView, line: Int) {
+    func remove_highlight(view : NSTextView, lineRange : NSRange) {
+        DispatchQueue.main.async {
+            if let layoutManager = view.layoutManager {
+                layoutManager.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: lineRange)
+                layoutManager.removeTemporaryAttribute(NSAttributedString.Key.foregroundColor, forCharacterRange: lineRange)
+            }
+        }
+    }
+
+    func remove_highlight(view : NSTextView, line : Int) {
         if line > 0 {
-            if let lineRange = getLineRange(inView: view, forLine: line) {
-                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: lineRange)
-                view.layoutManager?.removeTemporaryAttribute(NSAttributedString.Key.foregroundColor, forCharacterRange: lineRange)
+            if let lineRange = getLineRange(disassLineRange, forLine: line) {
+                remove_highlight(view: view, lineRange: lineRange)
+            }
+        }
+    }
+
+    func remove_highlight_(view: NSTextView) {
+        remove_highlight(view: view, line: highlighted_line_number)
+        highlighted_line_number = 0;
+    }
+
+
+    func remove_highlight(view: NSTextView) {
+        if highlighted_line_number > 0 {
+            if let lineRange = getLineRange(disassLineRange, forLine: highlighted_line_number) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                    if let layoutManager = view.layoutManager {
+                        layoutManager.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: lineRange)
+                        layoutManager.removeTemporaryAttribute(NSAttributedString.Key.foregroundColor, forCharacterRange: lineRange)
+                    }
+                })
             }
         }
     }
@@ -342,12 +406,10 @@ N V - B D I Z C
         if line > 0 {
             // remove old highlighted line
             remove_highlight(view: view, line: line)
-            if let lineRange = getLineRange(inView: view, forLine: line) {
-    //            view.selectedRange = lineRange
-    //            view.scrollRangeToVisible(lineRange)
-//                remove_highlight(view: view, line: line_number_cursor)
-//                line_number_cursor = 0
-                view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
+            if let lineRange = getLineRange(disassLineRange, forLine: line) {
+                DispatchQueue.main.async {
+                    view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
+                }
             }
         }
     }
@@ -449,16 +511,22 @@ N V - B D I Z C
     }
 
 
+    struct LineRange_t {
+        var loc : Int
+        var len : Int
+    }
+
+    var disassLineRange = [LineRange_t]()
+
     func DisplayDisassembly( scrollY : CGFloat = -1 ) {
-        var disass = ""
+        var disass = "" // String(repeating: "\n", count: 0x1800)
+        var loc = 0
+
+        remove_highlight(view: Disass_Display)
 
         line_number = 0
 
-        let highlighted = self.highlighted_line_number
-
-        DispatchQueue.main.async {
-            self.remove_highlight(view: self.Disass_Display, line: highlighted)
-        }
+//        let highlighted = self.highlighted_line_number
 
         // TODO: Also check if memory area updated!
 
@@ -474,6 +542,7 @@ N V - B D I Z C
 
 //        if disass_addr_pc > disass_addr && disass_addr_pc < disass_addr + disass_addr_max {
         if scroll_line_number < 0 || need_disass {
+            disassLineRange.removeAll()
             ViewController.shared?.UpdateSemaphore.wait()
 
             let m6502_saved = m6502
@@ -510,6 +579,11 @@ N V - B D I Z C
                 m6502_Disass_1_Instr()
 
                 let line = ASCII_to_Apple2( line: String(cString: disassemblyLine( isCurrentLine )!) )
+//                print("disassLineLength:", disassLineLength)
+                let len = disassLineLength + 1
+                let lineRange = LineRange_t(loc: loc, len: len)
+                disassLineRange.append(lineRange)
+                loc += len
 
                 if isCurrentLine {
                     //                line = invertLine(line: line)
@@ -529,11 +603,12 @@ N V - B D I Z C
         DispatchQueue.main.async {
 //            let isEmpty = self.Disass_Display.string.isEmpty
             if need_disass {
-                self.Disass_Display.string = disass
+                self.Disass_Display.string = disass // + String(repeating: "\n", count: 0x8000)
+//                self.testTextField(str: "")
             }
 
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
-            if self.highlighted_line_number <= currentScrollLine || self.highlighted_line_number > currentScrollLine + 35 {
+            if self.highlighted_line_number <= currentScrollLine || self.highlighted_line_number > currentScrollLine + 25 {
 
                 if scrollY < 0 {
                     self.scroll_to(view: self.Disass_Display, line: self.scroll_line_number - 5)
@@ -569,11 +644,13 @@ N V - B D I Z C
 
     let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
-        DispatchQueue.global().async {
-            if self.UpdateSemaphore.wait(timeout: .now()) == .success {
-                self.UpdateImmediately()
-                self.UpdateSemaphore.signal()
+        if self.UpdateSemaphore.wait(timeout: .now()) == .success {
+            if Disass_Display != nil {
+                DispatchQueue.global().async {
+                        self.UpdateImmediately()
+                }
             }
+            self.UpdateSemaphore.signal()
         }
     }
 

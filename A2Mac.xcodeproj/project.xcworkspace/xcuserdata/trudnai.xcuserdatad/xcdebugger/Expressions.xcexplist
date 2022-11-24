@@ -491,6 +491,14 @@
          contextName = "_addr_zp_X_dbg:mmio.c">
       </ContextState>
       <ContextState
+         contextName = "specialized closure #1 in DebuggerViewController.DisplayDisassembly(scrollY:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "highlighted_line_number">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "read_woz:6502.c">
          <PersistentStrings>
             <PersistentString
@@ -994,19 +1002,28 @@
          contextName = "DebuggerViewController.DisplayDisassembly(scrollY:):DebuggerViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "scroll_line_number">
+               value = "disassLineRange">
             </PersistentString>
             <PersistentString
                value = "disass_addr">
             </PersistentString>
             <PersistentString
-               value = "highlighted_line_number">
+               value = "m6502.PC">
+            </PersistentString>
+            <PersistentString
+               value = "line_number">
             </PersistentString>
             <PersistentString
                value = "Disass_Display.string.utf8CString">
             </PersistentString>
             <PersistentString
                value = "Disass_Display">
+            </PersistentString>
+            <PersistentString
+               value = "scroll_line_number">
+            </PersistentString>
+            <PersistentString
+               value = "highlighted_line_number">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

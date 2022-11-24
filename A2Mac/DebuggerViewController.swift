@@ -391,14 +391,15 @@ N V - B D I Z C
     func remove_highlight(view: NSTextView) {
         if highlighted_line_number > 0 {
             if let lineRange = getLineRange(disassLineRange, forLine: highlighted_line_number) {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                    if let layoutManager = view.layoutManager {
+                if let layoutManager = view.layoutManager {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.03, execute: {
                         layoutManager.removeTemporaryAttribute(NSAttributedString.Key.backgroundColor, forCharacterRange: lineRange)
                         layoutManager.removeTemporaryAttribute(NSAttributedString.Key.foregroundColor, forCharacterRange: lineRange)
-                    }
-                })
+                    })
+                }
             }
         }
+        highlighted_line_number = 0
     }
 
 
@@ -518,11 +519,21 @@ N V - B D I Z C
 
     var disassLineRange = [LineRange_t]()
 
+
+    func TrunDisassAddressPC(_ on: NSControl.StateValue = .on) {
+        if let disassAddressPC = DisassAddressPC {
+            disassAddressPC.state = on
+        }
+    }
+
+
     func DisplayDisassembly( scrollY : CGFloat = -1 ) {
         var disass = "" // String(repeating: "\n", count: 0x1800)
         var loc = 0
 
-        remove_highlight(view: Disass_Display)
+        if cpuState == cpuState_running {
+            remove_highlight(view: Disass_Display)
+        }
 
         line_number = 0
 
@@ -575,6 +586,14 @@ N V - B D I Z C
                 addr_line.updateValue(line_number, forKey: m6502.PC)
 
                 let isCurrentLine = m6502.PC == m6502_saved.PC
+                if isCurrentLine {
+//                line = invertLine(line: line)
+                    highlighted_line_number = line_number
+                }
+
+                if m6502.PC == disass_addr_pc {
+                    scroll_line_number = line_number
+                }
 
                 m6502_Disass_1_Instr()
 
@@ -584,14 +603,6 @@ N V - B D I Z C
                 let lineRange = LineRange_t(loc: loc, len: len)
                 disassLineRange.append(lineRange)
                 loc += len
-
-                if isCurrentLine {
-                    //                line = invertLine(line: line)
-                    highlighted_line_number = line_number
-                }
-                if m6502.PC == disass_addr_pc {
-                    scroll_line_number = line_number
-                }
 
                 disass += line + "\n"
             }
@@ -604,6 +615,7 @@ N V - B D I Z C
 //            let isEmpty = self.Disass_Display.string.isEmpty
             if need_disass {
                 self.Disass_Display.string = disass // + String(repeating: "\n", count: 0x8000)
+                self.Disass_Display.scroll(CGPoint.zero)
 //                self.testTextField(str: "")
             }
 
@@ -635,10 +647,12 @@ N V - B D I Z C
 
 
     func UpdateImmediately() {
-        DisplayRegisters()
-        DisplayStack()
-        DisplayMemory()
-        DisplayDisassembly()
+        DispatchQueue.main.async {
+            self.DisplayRegisters()
+            self.DisplayStack()
+            self.DisplayMemory()
+            self.DisplayDisassembly()
+        }
     }
 
 
@@ -646,9 +660,7 @@ N V - B D I Z C
     func Update() {
         if self.UpdateSemaphore.wait(timeout: .now()) == .success {
             if Disass_Display != nil {
-                DispatchQueue.global().async {
-                        self.UpdateImmediately()
-                }
+                self.UpdateImmediately()
             }
             self.UpdateSemaphore.signal()
         }

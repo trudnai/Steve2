@@ -112,8 +112,6 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
     }
 
 
-
-
     func Continue() {
         PauseButtonUpdate()
 
@@ -190,8 +188,9 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         m6502_Step_dbg()
         
         // TODO: This should be in Debugger!
-        if let debugger = DebuggerViewController.shared {
-            debugger.Update()
+        if let debuggerViewController = DebuggerViewController.shared {
+            debuggerViewController.remove_highlight(view: debuggerViewController.Disass_Display, line: debuggerViewController.highlighted_line_number)
+            debuggerViewController.Update()
         }
 
         // TODO: Update Screen and speaker etc

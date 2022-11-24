@@ -339,7 +339,34 @@ class ViewController: NSViewController  {
     }
 
 
+    func debuggerShowWindow() {
+        if let debuggerWindowController = DebuggerWindowController.shared {
+            DispatchQueue.main.async {
+                debuggerWindowController.showWindow(self)
+            }
+        }
+    }
+
+
+    func debuggerRemoveHighlight() {
+        if let debuggerViewController = DebuggerViewController.shared {
+            debuggerViewController.remove_highlight(view: debuggerViewController.Disass_Display, line: debuggerViewController.highlighted_line_number)
+        }
+    }
+
+
+    func debuggerPauseUpdate() {
+        if let debuggerViewController = DebuggerViewController.shared {
+            debuggerViewController.TrunDisassAddressPC(.on)
+            debuggerViewController.remove_highlight(view: debuggerViewController.Disass_Display, line: debuggerViewController.highlighted_line_number)
+            debuggerViewController.Update()
+        }
+    }
+
+
     func Resume() {
+        debuggerRemoveHighlight()
+
         #if SCHEDULER_CVDISPLAYLINK
         CVDisplayLinkStart(displayLink!)
         #else
@@ -370,6 +397,8 @@ class ViewController: NSViewController  {
         if let debugger = DebuggerWindowController.shared {
             debugger.PauseButtonUpdate()
         }
+
+        debuggerPauseUpdate()
     }
 
 
@@ -1265,20 +1294,12 @@ class ViewController: NSViewController  {
 
     func debugBreak() {
         Pause()
-
-        // TODO: This should be in Debugger!
-        if let debugger = DebuggerViewController.shared {
-            debugger.Update()
-        }
-        if let debugger = DebuggerWindowController.shared {
-            DispatchQueue.main.async {
-                debugger.showWindow(self)
-            }
-        }
-
         spkr_play_disk_motor_time = 0
         spkr_stopAll()
 
+        // TODO: This should be in Debugger!
+        debuggerPauseUpdate()
+        debuggerShowWindow()
     }
 
 

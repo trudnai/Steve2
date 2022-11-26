@@ -322,7 +322,8 @@ N V - B D I Z C
     func getLine(inView view: NSTextView, forY: CGFloat) -> Int {
 //        var scrollTo = view.visibleRect.origin
         let lineSpacing = CGFloat(1.5)
-        let lineHeight = view.font!.pointSize * lineSpacing
+        let fontPointSize = CGFloat(10) // view.font!.pointSize
+        let lineHeight = fontPointSize * lineSpacing
 
         let line = round(forY) / lineHeight
 

@@ -34,37 +34,58 @@ class DebuggerViewController: NSViewController {
     @IBOutlet weak var MemoryAddressField: NSTextField!
     @IBOutlet weak var DisassAddressField: NSTextField!
     @IBOutlet weak var DisassAddressPC: NSButton!
-//    @IBOutlet weak var test: NSTextField!
-//
-//
-//    //        let bold14:NSFont = NSFont.boldSystemFontOfSize(14.0)
-//    let textFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
-//    let textColor : NSColor = NSColor.white
-//    let textParagraph : NSMutableParagraphStyle = NSMutableParagraphStyle()
-//    //        textParagraph.lineSpacing = 10.0  /*this sets the space BETWEEN lines to 10points*/
-//    //        textParagraph.maximumLineHeight = 12.0/*this sets the MAXIMUM height of the lines to 12points*/
-////    textParagraph.lineHeightMultiple = 1.15
-//    let textAttribs : [NSAttributedString.Key : NSObject]
+    @IBOutlet weak var DisassTextField: NSTextField!
+    @IBOutlet weak var DisassHighlighter: NSTextField!
+    @IBOutlet weak var DisassHightlighterContriant: NSLayoutConstraint!
+
+
+    let textFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
+    let textColor : NSColor = NSColor.white
+    let highlightColor : NSColor = NSColor.blue
+    let textParagraph : NSMutableParagraphStyle = NSMutableParagraphStyle()
+    let textAttribs : [NSAttributedString.Key : NSObject]
+    let highlightAttribs : [NSAttributedString.Key : NSObject]
 
     required init?(coder: NSCoder) {
-//        textParagraph.lineHeightMultiple = 1.15
-//        textAttribs = [
-//            NSAttributedString.Key.font: textFont,
-//            NSAttributedString.Key.foregroundColor: textColor,
-//            NSAttributedString.Key.paragraphStyle: textParagraph
-//        ]
-//
+//        textParagraph.lineSpacing = 10.0  /*this sets the space BETWEEN lines to 10points*/
+//        textParagraph.maximumLineHeight = 12.0/*this sets the MAXIMUM height of the lines to 12points*/
+        textParagraph.lineHeightMultiple = 1.15
+        textAttribs = [
+            NSAttributedString.Key.font: textFont,
+            NSAttributedString.Key.foregroundColor: textColor,
+            NSAttributedString.Key.paragraphStyle: textParagraph
+        ]
+        highlightAttribs = [
+            NSAttributedString.Key.font: textFont,
+            NSAttributedString.Key.foregroundColor: textColor,
+            NSAttributedString.Key.backgroundColor: highlightColor,
+            NSAttributedString.Key.paragraphStyle: textParagraph
+        ]
+
         super.init(coder: coder)
         DebuggerViewController.shared = self
     }
 
 
-//    func testTextField(str : String) {
-//        let attrString:NSAttributedString = NSAttributedString.init(string: str, attributes: textAttribs)
-//        test.attributedStringValue = attrString
-//    }
+    func testTextField(str : String) {
+        let attrString = NSAttributedString.init(string: String(str.dropLast()), attributes: textAttribs)
+        DisassTextField.attributedStringValue = attrString
+
+//        let hlString =  String(repeating: "\n", count: 4) +
+//                        String(repeating: " ", count: 20) +
+//                        String(repeating: "\n", count: 10) +
+//                        String(repeating: " ", count: 30) +
+//                        String(repeating: "\n", count: 4)
 //
-//
+//        let hlAttrString = NSAttributedString.init(string: hlString, attributes: highlightAttribs)
+//        DisassHighlighter.attributedStringValue = hlAttrString
+
+//        let hlAttrString = NSAttributedString.init(string: "\n", attributes: highlightAttribs)
+//        DisassHighlighter.attributedStringValue = hlAttrString
+
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height)
@@ -275,7 +296,7 @@ N V - B D I Z C
     var scroll_line_number = 0
     var highlighted_line_number = 0
     var line_number_cursor = 0
-    let lines_to_disass = 300
+    let lines_to_disass = 30
 
 
     func get_scroll_line(view: NSTextView) -> Int {
@@ -347,9 +368,17 @@ N V - B D I Z C
 
     let lineFromTopToMiddle = 0
     func scroll_to(view: NSTextView, line: Int) {
-        let line = line > 0 ? line : 0
+        let lineSpacing = 1.5
+        let lineHeight = Double(Disass_Display.font!.pointSize) * lineSpacing
+        let line = line > 0 ? line - 1 : 0
+
         if let lineRange = getLineRange(disassLineRange, forLine: line + lineFromTopToMiddle) {
-            view.scrollRangeToVisible(lineRange)
+//            view.scrollRangeToVisible(lineRange)
+
+//            let to = CGRect(x: 0, y: lineRange.location, width: 0, height: lineRange.location + Int(Disass_Scroll.frame.size.height))
+//            view.scrollToVisible(to)
+
+            view.scroll( NSPoint(x: 0, y: Double(line) * lineHeight ) )
         }
     }
 
@@ -405,13 +434,20 @@ N V - B D I Z C
 
     func highlight(view: NSTextView, line: Int, attr: [NSAttributedString.Key : Any]) {
         if line > 0 {
+//            let lineSpacing = CGFloat(1.25)
+//            let lineHeight = CGFloat(view.font!.pointSize) * lineSpacing
+            let line = line > 0 ? line - 1 : 0
+
             // remove old highlighted line
-            remove_highlight(view: view, line: line)
-            if let lineRange = getLineRange(disassLineRange, forLine: line) {
-                DispatchQueue.main.async {
-                    view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
-                }
-            }
+//            remove_highlight(view: view, line: line)
+//            if let lineRange = getLineRange(disassLineRange, forLine: line) {
+//                DispatchQueue.main.async {
+//                    view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
+//                }
+//            }
+
+            let lineHeight = CGFloat(14.96) // magic number... No idea why... 10pt font size + 1.5 lineSpacing
+            DisassHightlighterContriant.constant = CGFloat(line) * lineHeight + 1
         }
     }
 
@@ -527,8 +563,12 @@ N V - B D I Z C
     }
 
 
+    var isCurrentLine = false
+
     func DisplayDisassembly( scrollY : CGFloat = -1 ) {
-        var disass = "" // String(repeating: "\n", count: 0x1800)
+//        var disass = ""
+        var disass = ""
+
         var loc = 0
 
         if cpuState == cpuState_running {
@@ -578,6 +618,13 @@ N V - B D I Z C
 
             // hopefully instruction address is in sync
             disass_addr = m6502.PC
+            let preLines = 0 // Int(self.disass_addr / 2)
+
+            for _ in 0..<preLines {
+                let lineRange = LineRange_t(loc: loc, len: 1)
+                disassLineRange.append(lineRange)
+                loc += 1
+            }
 
             // normal disassembly
             for _ in 1...lines_to_disass {
@@ -585,7 +632,7 @@ N V - B D I Z C
                 line_number += 1
                 addr_line.updateValue(line_number, forKey: m6502.PC)
 
-                let isCurrentLine = m6502.PC == m6502_saved.PC
+                isCurrentLine = m6502.PC == m6502_saved.PC
                 if isCurrentLine {
 //                line = invertLine(line: line)
                     highlighted_line_number = line_number
@@ -605,6 +652,8 @@ N V - B D I Z C
                 loc += len
 
                 disass += line + "\n"
+//                let attr = highlight ? highlightAttribs : textAttribs
+//                let attrString = NSAttributedString.init(string: String(disass.dropLast()), attributes: attr)
             }
 
             m6502 = m6502_saved
@@ -613,17 +662,20 @@ N V - B D I Z C
 
         DispatchQueue.main.async {
 //            let isEmpty = self.Disass_Display.string.isEmpty
+            let preLines = 0 // Int(self.disass_addr / 2)
+
             if need_disass {
-                self.Disass_Display.string = disass // + String(repeating: "\n", count: 0x8000)
+                self.Disass_Display.string = "" // disass // String(repeating: "\n", count: preLines) + String(repeating: "\n", count: 0x8000)
+//                self.scroll_to(view: self.Disass_Display, line: preLines)
                 self.Disass_Display.scroll(CGPoint.zero)
-//                self.testTextField(str: "")
+                self.testTextField(str: disass)
             }
 
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
             if self.highlighted_line_number <= currentScrollLine || self.highlighted_line_number > currentScrollLine + 25 {
 
                 if scrollY < 0 {
-                    self.scroll_to(view: self.Disass_Display, line: self.scroll_line_number - 5)
+                    self.scroll_to(view: self.Disass_Display, line: /*preLines +*/ self.scroll_line_number)
 
                     // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
 //                    if currentScrollLine == 1 {

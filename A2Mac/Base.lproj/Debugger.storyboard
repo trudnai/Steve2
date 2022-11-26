@@ -233,14 +233,41 @@
             <objects>
                 <viewController title="Debugger Controller Scene" id="R5e-co-cXs" customClass="DebuggerViewController" customModule="A2MacTests" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" identifier="Monitor View" wantsLayer="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" id="Myj-W6-YvY" userLabel="Debugger View">
-                        <rect key="frame" x="0.0" y="0.0" width="1100" height="520"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1100" height="500"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uQh-oP-EwQ" userLabel="DisassBackground">
+                                <rect key="frame" x="12" y="10" width="362" height="454"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="YJj-UG-uPe">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KwD-2D-fNp" userLabel="DisassHighlighter">
+                                <rect key="frame" x="12" y="449" width="362" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="ZoQ-wC-c4X"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="CJy-tb-1Xs">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lw3-np-MbY" userLabel="Disassembly">
+                                <rect key="frame" x="10" y="10" width="366" height="454"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="V2q-LD-et1">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
                             <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
-                                <rect key="frame" x="8" y="10" width="366" height="504"/>
+                                <rect key="frame" x="8" y="10" width="366" height="484"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lUp-Ww-thA">
-                                        <rect key="frame" x="0.0" y="484" width="363" height="20"/>
+                                        <rect key="frame" x="0.0" y="464" width="363" height="20"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yYC-5c-mvY" userLabel="Leading Space">
                                                 <rect key="frame" x="-2" y="0.0" width="16" height="20"/>
@@ -334,17 +361,17 @@
                                         </customSpacing>
                                     </stackView>
                                     <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pcn-4j-EEM" userLabel="Disass Scroll View" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="366" height="476"/>
-                                        <clipView key="contentView" copiesOnScroll="NO" id="9iz-cs-4As" userLabel="Disass Clip View">
-                                            <rect key="frame" x="1" y="1" width="349" height="474"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="366" height="456"/>
+                                        <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="9iz-cs-4As" userLabel="Disass Clip View">
+                                            <rect key="frame" x="1" y="1" width="349" height="454"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisassView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-258" width="349" height="510"/>
+                                                    <rect key="frame" x="0.0" y="-294" width="349" height="510"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <size key="minSize" width="349" height="474"/>
+                                                    <size key="minSize" width="349" height="454"/>
                                                     <size key="maxSize" width="3840" height="58101"/>
                                                     <attributedString key="textStorage">
                                                         <fragment>
@@ -399,13 +426,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
-                                            <rect key="frame" x="350" y="1" width="15" height="474"/>
+                                            <rect key="frame" x="350" y="1" width="15" height="454"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="500" identifier="Disassembler.Height" id="32e-qn-VpW"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="480" identifier="Disassembler.Height" id="32e-qn-VpW"/>
                                     <constraint firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" identifier="Disassembler.Trailing - Disass Scroll View.Trailing" id="9dB-f0-xxS"/>
                                     <constraint firstAttribute="width" constant="366" id="H6l-7F-VyP"/>
                                     <constraint firstItem="Pcn-4j-EEM" firstAttribute="leading" secondItem="jY7-ZU-I4z" secondAttribute="leading" identifier="Disass Scroll View.Leading - Disassembler.Leading" id="SAn-3M-8BI"/>
@@ -421,13 +448,13 @@
                                 </customSpacing>
                             </stackView>
                             <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Debug Side Panel">
-                                <rect key="frame" x="382" y="10" width="710" height="504"/>
+                                <rect key="frame" x="382" y="10" width="710" height="484"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Debug Views">
-                                        <rect key="frame" x="0.0" y="0.0" width="710" height="504"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="710" height="484"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvo-4B-v1R" userLabel="CPU Stack View">
-                                                <rect key="frame" x="0.0" y="320" width="710" height="184"/>
+                                                <rect key="frame" x="0.0" y="300" width="710" height="184"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
                                                         <rect key="frame" x="0.0" y="0.0" width="351" height="184"/>
@@ -517,7 +544,7 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-253" width="334" height="165"/>
+                                                                            <rect key="frame" x="0.0" y="-267" width="334" height="165"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -584,10 +611,10 @@
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
-                                                <rect key="frame" x="0.0" y="0.0" width="710" height="300"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="710" height="280"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fik-fC-8sT">
-                                                        <rect key="frame" x="0.0" y="280" width="710" height="20"/>
+                                                        <rect key="frame" x="0.0" y="260" width="710" height="20"/>
                                                         <subviews>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P9L-wR-0tv" userLabel="Leading Space">
                                                                 <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
@@ -670,17 +697,17 @@
                                                         </customSpacing>
                                                     </stackView>
                                                     <scrollView focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory Scroll" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="710" height="272"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="710" height="252"/>
                                                         <clipView key="contentView" focusRingType="none" copiesOnScroll="NO" id="Jy3-yS-sE4" userLabel="Memory Clip View">
-                                                            <rect key="frame" x="1" y="1" width="708" height="270"/>
+                                                            <rect key="frame" x="1" y="1" width="708" height="250"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" selectionGranularity="word" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="qqp-t0-j4i" userLabel="Memory Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="89" width="708" height="270"/>
+                                                                    <rect key="frame" x="0.0" y="82" width="708" height="250"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    <size key="minSize" width="708" height="270"/>
+                                                                    <size key="minSize" width="708" height="250"/>
                                                                     <size key="maxSize" width="3840" height="58101"/>
                                                                     <attributedString key="textStorage">
                                                                         <fragment>
@@ -708,7 +735,7 @@
                                                     </scrollView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" identifier="Memory View.Height" id="1q4-G0-gXU"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="280" identifier="Memory View.Height" id="1q4-G0-gXU"/>
                                                     <constraint firstAttribute="trailing" secondItem="fik-fC-8sT" secondAttribute="trailing" id="Bw2-S7-pH0"/>
                                                     <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" identifier="Memory View.Trailing - Memory Scroll.Trailing" id="CnA-zf-PRO"/>
                                                     <constraint firstItem="fik-fC-8sT" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="LVP-JS-pu0"/>
@@ -741,33 +768,11 @@
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
                                     </stackView>
-                                    <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jQ2-04-lPn" userLabel="Bottom Selection">
-                                        <rect key="frame" x="8" y="8" width="694" height="10"/>
-                                        <subviews>
-                                            <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="oa2-bF-OPT">
-                                                <rect key="frame" x="0.0" y="7" width="68" height="5"/>
-                                            </box>
-                                            <box focusRingType="none" verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="VUT-jD-TzS">
-                                                <rect key="frame" x="0.0" y="-2" width="68" height="5"/>
-                                            </box>
-                                        </subviews>
-                                        <visibilityPriorities>
-                                            <integer value="1000"/>
-                                            <integer value="1000"/>
-                                        </visibilityPriorities>
-                                        <customSpacing>
-                                            <real value="3.4028234663852886e+38"/>
-                                            <real value="3.4028234663852886e+38"/>
-                                        </customSpacing>
-                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="0fW-4Y-eIm" firstAttribute="top" secondItem="JUf-qx-iuW" secondAttribute="top" identifier="Debug Views.Top - Debug Side Panel.Top" id="4K9-Jh-Zby"/>
-                                    <constraint firstAttribute="bottom" secondItem="jQ2-04-lPn" secondAttribute="bottom" constant="8" identifier="Debug Side Panel.Bottom - Bottom Selection.Bottom" id="Gux-DY-2ne"/>
                                     <constraint firstAttribute="width" constant="710" identifier="Debug Side Panel.Width" id="ISn-zl-W0I"/>
-                                    <constraint firstAttribute="trailing" secondItem="jQ2-04-lPn" secondAttribute="trailing" constant="8" identifier="Debug Side Panel.Trailing - Bottom Selection.Trailing" id="IgJ-iQ-fya"/>
                                     <constraint firstAttribute="trailing" secondItem="0fW-4Y-eIm" secondAttribute="trailing" identifier="Debug Side Panel.Trailing - Debug Views.Trailing" id="QYl-GI-RBo"/>
-                                    <constraint firstItem="jQ2-04-lPn" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" constant="8" identifier="Bottom Selection.Leading - Debug Side Panel.Leading" id="S6T-Kb-26z"/>
                                     <constraint firstAttribute="bottom" secondItem="0fW-4Y-eIm" secondAttribute="bottom" identifier="Debug Side Panel.Bottom - Debug Views.Bottom" id="i6Q-OP-9m0"/>
                                     <constraint firstItem="0fW-4Y-eIm" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" identifier="Debug Views.Leading - Debug Side Panel.Leading" id="oiu-yH-cRR"/>
                                 </constraints>
@@ -775,17 +780,31 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="jY7-ZU-I4z" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Disassembler.Bottom" id="8jC-7G-Ofh"/>
+                            <constraint firstItem="uQh-oP-EwQ" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="8q5-Sd-fZ8"/>
+                            <constraint firstItem="KwD-2D-fNp" firstAttribute="leading" secondItem="lw3-np-MbY" secondAttribute="leading" id="HHi-Vl-G7O"/>
+                            <constraint firstItem="uQh-oP-EwQ" firstAttribute="bottom" secondItem="lw3-np-MbY" secondAttribute="bottom" id="JnX-xB-eor"/>
+                            <constraint firstItem="KwD-2D-fNp" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="KjG-Xt-w0g"/>
+                            <constraint firstItem="KwD-2D-fNp" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="LYb-x4-eZt"/>
                             <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Debug Side Panel.Top - Debugger View.Top" id="OaJ-lc-b0j"/>
                             <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Sebug Side Panel.Bottom" id="Y4T-sR-Hag"/>
+                            <constraint firstItem="uQh-oP-EwQ" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="YuC-6J-6RS"/>
                             <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Disassembler.Top - Debugger View.Top" id="cCh-QQ-pyz"/>
+                            <constraint firstItem="lw3-np-MbY" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="e8j-dQ-6Dc"/>
                             <constraint firstItem="jY7-ZU-I4z" firstAttribute="leading" secondItem="Myj-W6-YvY" secondAttribute="leading" constant="8" identifier="Disassembler.Leading - Debugger View.Leading" id="gka-CA-9WG"/>
                             <constraint firstAttribute="trailing" secondItem="JUf-qx-iuW" secondAttribute="trailing" constant="8" identifier="Debugger View.Trailing - Sebug Side Panel.Trailing" id="kwa-ri-Rtq"/>
+                            <constraint firstItem="lw3-np-MbY" firstAttribute="leading" secondItem="Pcn-4j-EEM" secondAttribute="leading" constant="4" id="rCO-iJ-DOu"/>
+                            <constraint firstItem="uQh-oP-EwQ" firstAttribute="leading" secondItem="lw3-np-MbY" secondAttribute="leading" id="uRt-lv-mfI"/>
+                            <constraint firstItem="lw3-np-MbY" firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" id="x4p-qF-iKb"/>
+                            <constraint firstItem="lw3-np-MbY" firstAttribute="top" secondItem="Pcn-4j-EEM" secondAttribute="top" constant="2" id="yYL-a5-8xr"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="CPU_Display" destination="Wrs-Qt-Kmd" id="SUW-Lc-Zv4"/>
                         <outlet property="DisassAddressField" destination="bwO-w1-hlg" id="tBp-cc-OcF"/>
                         <outlet property="DisassAddressPC" destination="zov-nz-fce" id="fhe-fN-yPd"/>
+                        <outlet property="DisassHighlighter" destination="KwD-2D-fNp" id="bTl-R3-0bK"/>
+                        <outlet property="DisassHightlighterContriant" destination="KjG-Xt-w0g" id="PrT-Dn-qaX"/>
+                        <outlet property="DisassTextField" destination="lw3-np-MbY" id="xv3-mQ-zMX"/>
                         <outlet property="Disass_Display" destination="Hwx-Gd-XW1" id="XHS-dZ-gCR"/>
                         <outlet property="Disass_Scroll" destination="Pcn-4j-EEM" id="5w1-DZ-ypu"/>
                         <outlet property="Mem1_Display" destination="qqp-t0-j4i" id="85A-sB-M0p"/>

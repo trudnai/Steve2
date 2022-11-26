@@ -67,22 +67,9 @@ class DebuggerViewController: NSViewController {
     }
 
 
-    func testTextField(str : String) {
+    func disassDisplay(str : String) {
         let attrString = NSAttributedString.init(string: String(str.dropLast()), attributes: textAttribs)
         DisassTextField.attributedStringValue = attrString
-
-//        let hlString =  String(repeating: "\n", count: 4) +
-//                        String(repeating: " ", count: 20) +
-//                        String(repeating: "\n", count: 10) +
-//                        String(repeating: " ", count: 30) +
-//                        String(repeating: "\n", count: 4)
-//
-//        let hlAttrString = NSAttributedString.init(string: hlString, attributes: highlightAttribs)
-//        DisassHighlighter.attributedStringValue = hlAttrString
-
-//        let hlAttrString = NSAttributedString.init(string: "\n", attributes: highlightAttribs)
-//        DisassHighlighter.attributedStringValue = hlAttrString
-
     }
 
 
@@ -90,16 +77,15 @@ class DebuggerViewController: NSViewController {
         super.viewDidLoad()
         self.preferredContentSize = NSMakeSize(self.view.frame.size.width, self.view.frame.size.height)
 
-//        testTextField(str: "0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n0000000\n")
+        // For the fake text view scroller
+        // 64K RAM/2 as an average bytes / instruction
+        Disass_Display.string = String(repeating: "\n", count: 32768);
     }
 
     
     override func viewDidAppear() {
         super.viewDidAppear()
         
-//        // Update window title with the active TableView Title
-//        self.parent?.view.window?.title = self.title!
-
         UpdateImmediately()
 
         if let debugger = DebuggerWindowController.shared {
@@ -124,21 +110,15 @@ class DebuggerViewController: NSViewController {
             print("Disass_Scroll")
             var scrollTo = Disass_Display.visibleRect.origin
             let lineSpacing = CGFloat(1.5)
-            let lineHeight = Disass_Display.font!.pointSize * lineSpacing
-            //        print("lineHeight:", lineHeight, "fontSize:", Stack_Display.font?.pointSize)
+            let fontPointSize = CGFloat(10) // Disass_Display.font!.pointSize
+            let lineHeight = fontPointSize * lineSpacing
 
             let y1 = round( (scrollTo.y + round(event.scrollingDeltaY) * lineHeight) / lineHeight) * lineHeight
-//            let y2 = round( scrollTo.y / lineHeight + event.scrollingDeltaY ) * lineHeight
 
             scrollTo.y = y1
 
             Disass_Display.scroll(scrollTo)
         }
-
-//        if view.window?.firstResponder?.textView?.delegate === Stack_Display {
-//        print("scroll deltaY", event.deltaY, event.scrollingDeltaY)
-//        Stack_Display.scroll(Stack_Display.enclosingScrollView!.visibleRect, by: NSSize(width: 0, height: event.scrollingDeltaY) )
-//        }
 
     }
 
@@ -370,14 +350,11 @@ N V - B D I Z C
     let lineFromTopToMiddle = 0
     func scroll_to(view: NSTextView, line: Int) {
         let lineSpacing = 1.5
-        let lineHeight = Double(Disass_Display.font!.pointSize) * lineSpacing
+        let fontPointSize = 10.0 // Disass_Display.font!.pointSize
+        let lineHeight = fontPointSize * lineSpacing
         let line = line > 0 ? line - 1 : 0
 
         if let lineRange = getLineRange(disassLineRange, forLine: line + lineFromTopToMiddle) {
-//            view.scrollRangeToVisible(lineRange)
-
-//            let to = CGRect(x: 0, y: lineRange.location, width: 0, height: lineRange.location + Int(Disass_Scroll.frame.size.height))
-//            view.scrollToVisible(to)
 
             view.scroll( NSPoint(x: 0, y: Double(line) * lineHeight ) )
         }
@@ -646,15 +623,12 @@ N V - B D I Z C
                 m6502_Disass_1_Instr()
 
                 let line = ASCII_to_Apple2( line: String(cString: disassemblyLine( isCurrentLine )!) )
-//                print("disassLineLength:", disassLineLength)
                 let len = disassLineLength + 1
                 let lineRange = LineRange_t(loc: loc, len: len)
                 disassLineRange.append(lineRange)
                 loc += len
 
                 disass += line + "\n"
-//                let attr = highlight ? highlightAttribs : textAttribs
-//                let attrString = NSAttributedString.init(string: String(disass.dropLast()), attributes: attr)
             }
 
             m6502 = m6502_saved
@@ -662,14 +636,9 @@ N V - B D I Z C
         }
 
         DispatchQueue.main.async {
-//            let isEmpty = self.Disass_Display.string.isEmpty
-            let preLines = 0 // Int(self.disass_addr / 2)
-
             if need_disass {
-                self.Disass_Display.string = "" // disass // String(repeating: "\n", count: preLines) + String(repeating: "\n", count: 0x8000)
-//                self.scroll_to(view: self.Disass_Display, line: preLines)
                 self.Disass_Display.scroll(CGPoint.zero)
-                self.testTextField(str: disass)
+                self.disassDisplay(str: disass)
             }
 
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1

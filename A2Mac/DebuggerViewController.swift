@@ -79,7 +79,14 @@ class DebuggerViewController: NSViewController {
 
         // For the fake text view scroller
         // 64K RAM/2 as an average bytes / instruction
-        Disass_Display.string = String(repeating: "\n", count: 32768);
+//        Disass_Display.string = String(repeating: "\n", count: 2220);
+
+        Disass_Display.string = ""
+        // for proper address scrolling
+        var r = Disass_Display.frame
+        r.size.height = 65535
+        Disass_Display.frame = r
+
     }
 
     
@@ -97,29 +104,53 @@ class DebuggerViewController: NSViewController {
     }
 
 
-    override func scrollWheel(with event: NSEvent) {
-        super.scrollWheel(with: event)
-        let location = event.locationInWindow
-        print("scrollWheel")
+    /// Disassembly View Scroll changed
+    func disassScroller(needScroll : Bool = false) {
+        var scrollTo = Disass_Display.visibleRect.origin
+        let maxAddr = Float(0xFFD0)
+        let scrollPos = Disass_Scroll.verticalScroller?.floatValue ?? 0
+        let addr = scrollPos * maxAddr
+        disass_addr_pc = addr < maxAddr ? UInt16(addr) : UInt16(maxAddr)
 
-        if location.x > Disass_Scroll.frame.minX
-        && location.x < Disass_Scroll.frame.maxX
-        && location.y < Disass_Scroll.frame.minY
-        && location.y < Disass_Scroll.frame.maxY
-        {
-            print("Disass_Scroll")
-            var scrollTo = Disass_Display.visibleRect.origin
-            let lineSpacing = CGFloat(1.5)
-            let fontPointSize = CGFloat(10) // Disass_Display.font!.pointSize
-            let lineHeight = fontPointSize * lineSpacing
+//        print("disassScroller ", "scrollTo", scrollTo, "scrollPos", scrollPos, " addr:", disass_addr_pc)
 
-            let y1 = round( (scrollTo.y + round(event.scrollingDeltaY) * lineHeight) / lineHeight) * lineHeight
-
-            scrollTo.y = y1
-
+        if needScroll {
+            scrollTo.y = Disass_Display.frame.height * CGFloat(scrollPos)
             Disass_Display.scroll(scrollTo)
         }
 
+        DisassAddressPC.state = .off
+        DisplayDisassembly(scrollY: scrollTo.y)
+    }
+
+
+    override func scrollWheel(with event: NSEvent) {
+        super.scrollWheel(with: event)
+
+        let location = event.locationInWindow
+
+//        print("scrollWheel, location:", location,
+//              Disass_Scroll.frame.minX,
+//              Disass_Scroll.frame.maxX,
+//              Disass_Scroll.frame.minY,
+//              Disass_Scroll.frame.maxY
+//              )
+
+        if location.x > Disass_Scroll.frame.minX
+        && location.x < Disass_Scroll.frame.maxX
+        && location.y > Disass_Scroll.frame.minY
+        && location.y < Disass_Scroll.frame.maxY
+        {
+            disassScroller()
+        }
+
+    }
+
+
+    /// Disassemby View had been Scrolled using the ScrollBar Y
+    /// - Parameter sender: ScrollBar
+    @IBAction func DisassScrolled(_ sender: NSScroller) {
+        disassScroller(needScroll: true)
     }
 
 
@@ -271,7 +302,7 @@ N V - B D I Z C
     var disass_addr : UInt16 = 0 /// Address disassembled in the window
     var disass_addr_pc : UInt16 = 0 /// Address to disassemble
     let disass_addr_pre : UInt16 = 20
-    let disass_addr_min_pre : UInt16 = 0 // 320 - 20
+    let disass_addr_min_pre : UInt16 = 32 // how many bytes we need to start to disassemble before our target address
     var line_number = 0
     var scroll_line_number = 0
     var highlighted_line_number = 0
@@ -348,13 +379,14 @@ N V - B D I Z C
 
 
     let lineFromTopToMiddle = 0
+
     func scroll_to(view: NSTextView, line: Int) {
         let lineSpacing = 1.5
         let fontPointSize = 10.0 // Disass_Display.font!.pointSize
         let lineHeight = fontPointSize * lineSpacing
         let line = line > 0 ? line - 1 : 0
 
-        if let lineRange = getLineRange(disassLineRange, forLine: line + lineFromTopToMiddle) {
+        if getLineRange(disassLineRange, forLine: line + lineFromTopToMiddle) != nil {
 
             view.scroll( NSPoint(x: 0, y: Double(line) * lineHeight ) )
         }
@@ -544,7 +576,6 @@ N V - B D I Z C
     var isCurrentLine = false
 
     func DisplayDisassembly( scrollY : CGFloat = -1 ) {
-//        var disass = ""
         var disass = ""
 
         var loc = 0
@@ -565,7 +596,7 @@ N V - B D I Z C
             disass_addr_pc = m6502.PC
         }
 //        }
-        var need_disass = disass_addr_pc < disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
+        var need_disass = scrollY > 0 || disass_addr_pc < disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
         scroll_line_number = getLine(forAddr: disass_addr_pc)
         highlighted_line_number = getLine(forAddr: m6502.PC)
 
@@ -637,34 +668,17 @@ N V - B D I Z C
 
         DispatchQueue.main.async {
             if need_disass {
-                self.Disass_Display.scroll(CGPoint.zero)
                 self.disassDisplay(str: disass)
             }
 
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
             if self.highlighted_line_number <= currentScrollLine || self.highlighted_line_number > currentScrollLine + 25 {
-
-                if scrollY < 0 {
-                    self.scroll_to(view: self.Disass_Display, line: /*preLines +*/ self.scroll_line_number)
-
-                    // at the beginning it takes a while to fill up the buffer -- maybe allocation issue?
-//                    if currentScrollLine == 1 {
-//                        // so we need to scroll a bit later when the string is already populated
-//    //                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                            self.scroll_to(view: self.Disass_Display, line: self.line_number_at_PC - 5)
-//    //                    }
-//                    }
-                }
-                else {
-                    // caller wants a specific scroll location...
-                    self.Disass_Display.scroll(NSPoint(x: 0, y: scrollY))
+                if scrollY < 0 && self.DisassAddressPC.state == .off {
+                    self.Disass_Display.scroll(NSPoint(x: 0, y: Int(self.disass_addr)))
                 }
             }
             self.highlight(view: self.Disass_Display, line: self.highlighted_line_number, attr: self.lineAttrAtPC)
         }
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // your code here
-//        }
     }
 
 
@@ -700,6 +714,7 @@ N V - B D I Z C
 //        sender.stringValue = "4321" // MemoryAddressField.stringValue
         DisassAddressPC.state = .off
         disass_addr_pc = UInt16(sender.stringValue.hexValue())
+//        Disass_Display.scroll(NSPoint(x: 0, y: Int(disass_addr_pc)))
         DisplayDisassembly()
     }
 

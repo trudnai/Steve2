@@ -14,6 +14,7 @@ class DisplayScrollView : NSScrollView {
     var scrollEnabled = false
     
     override func scrollWheel(with event: NSEvent) {
+//        print("DisplayScrollView.scrollWheel")
         if scrollEnabled {
             super.scrollWheel(with: event)
         }
@@ -21,11 +22,14 @@ class DisplayScrollView : NSScrollView {
             let textView = documentView as! NSTextView
             var scrollTo = textView.visibleRect.origin
             let lineSpacing = CGFloat(1.5) // textView.defaultParagraphStyle?.lineSpacing ?? CGFloat(1.5)
-            let lineHeight = textView.font!.pointSize * lineSpacing
+            let fontPointSize = CGFloat(10) // textView.font!.pointSize
+            let lineHeight = fontPointSize * lineSpacing
 
-            scrollTo.y = scrollTo.y + event.scrollingDeltaY * lineHeight
+            scrollTo.y = scrollTo.y + event.scrollingDeltaY // * lineHeight
 
             textView.scroll(scrollTo)
+
+            DebuggerViewController.shared?.scrollWheel(with: event)
         }
     }
     

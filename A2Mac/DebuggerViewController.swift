@@ -132,9 +132,7 @@ class DebuggerViewController: NSViewController {
         && location.y < scrollView.frame.maxY
         {
             if let documentView = scrollView.documentView {
-                print("scrollEvent b:", deltaY, scrollView.verticalScroller?.floatValue ?? 0)
                 scrollView.verticalScroller?.floatValue += deltaY / Float(documentView.frame.height)
-                print("scrollEvent a:", deltaY, scrollView.verticalScroller?.floatValue ?? 0)
             }
 
             action()
@@ -414,9 +412,7 @@ N V - B D I Z C
 
 
     func scroll_to_disass(addr: UInt16) {
-//        print("scroll_to_disass b:", addr, Disass_Scroll.verticalScroller?.floatValue ?? 0)
         Disass_Scroll.verticalScroller?.floatValue = Float(addr) / Float(Disass_Display.frame.height)
-//        print("scroll_to_disass a:", addr, Disass_Scroll.verticalScroller?.floatValue ?? 0)
     }
 
 

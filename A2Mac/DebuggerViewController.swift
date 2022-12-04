@@ -79,8 +79,6 @@ class DebuggerViewController: NSViewController {
 
         // For the fake text view scroller
         // 64K RAM/2 as an average bytes / instruction
-//        Disass_Display.string = String(repeating: "\n", count: 2220);
-
         Disass_Display.string = ""
         // for proper address scrolling
         var r = Disass_Display.frame
@@ -104,10 +102,11 @@ class DebuggerViewController: NSViewController {
     }
 
 
+    let maxAddr = Float(65536) // Float(0xFFD0)
+
     /// Disassembly View Scroll changed
     func disassScroller(needScroll : Bool = false) {
         var scrollTo = Disass_Display.visibleRect.origin
-        let maxAddr = Float(0xFFD0)
         let scrollPos = Disass_Scroll.verticalScroller?.floatValue ?? 0
         let addr = scrollPos * maxAddr
         disass_addr_pc = addr < maxAddr ? UInt16(addr) : UInt16(maxAddr)
@@ -116,15 +115,35 @@ class DebuggerViewController: NSViewController {
 
         if needScroll {
             scrollTo.y = Disass_Display.frame.height * CGFloat(scrollPos)
-            Disass_Display.scroll(scrollTo)
+//            Disass_Display.scroll(scrollTo)
         }
 
         DisassAddressPC.state = .off
         DisplayDisassembly(scrollY: scrollTo.y)
+
+//        disassScroller()
+    }
+
+
+    func scrollEvent(location: NSPoint, scrollView: NSScrollView, deltaY: Float, action: () -> Void) {
+        if location.x > scrollView.frame.minX
+        && location.x < scrollView.frame.maxX
+        && location.y > scrollView.frame.minY
+        && location.y < scrollView.frame.maxY
+        {
+            if let documentView = scrollView.documentView {
+                print("scrollEvent b:", deltaY, scrollView.verticalScroller?.floatValue ?? 0)
+                scrollView.verticalScroller?.floatValue += deltaY / Float(documentView.frame.height)
+                print("scrollEvent a:", deltaY, scrollView.verticalScroller?.floatValue ?? 0)
+            }
+
+            action()
+        }
     }
 
 
     override func scrollWheel(with event: NSEvent) {
+//        print("scrollWheel")
         super.scrollWheel(with: event)
 
         let location = event.locationInWindow
@@ -136,13 +155,12 @@ class DebuggerViewController: NSViewController {
 //              Disass_Scroll.frame.maxY
 //              )
 
-        if location.x > Disass_Scroll.frame.minX
-        && location.x < Disass_Scroll.frame.maxX
-        && location.y > Disass_Scroll.frame.minY
-        && location.y < Disass_Scroll.frame.maxY
-        {
-            disassScroller()
-        }
+        let deltaY = Float(event.scrollingDeltaY)
+//        print("scrollWheel:", deltaY)
+
+        scrollEvent(location: location, scrollView: Disass_Scroll, deltaY: deltaY, action: {
+            disassScroller(needScroll: true)
+        })
 
     }
 
@@ -150,6 +168,7 @@ class DebuggerViewController: NSViewController {
     /// Disassemby View had been Scrolled using the ScrollBar Y
     /// - Parameter sender: ScrollBar
     @IBAction func DisassScrolled(_ sender: NSScroller) {
+//        print("DisassScrolled")
         disassScroller(needScroll: true)
     }
 
@@ -381,6 +400,7 @@ N V - B D I Z C
     let lineFromTopToMiddle = 0
 
     func scroll_to(view: NSTextView, line: Int) {
+//        print("scroll_to", line)
         let lineSpacing = 1.5
         let fontPointSize = 10.0 // Disass_Display.font!.pointSize
         let lineHeight = fontPointSize * lineSpacing
@@ -390,6 +410,13 @@ N V - B D I Z C
 
             view.scroll( NSPoint(x: 0, y: Double(line) * lineHeight ) )
         }
+    }
+
+
+    func scroll_to_disass(addr: UInt16) {
+//        print("scroll_to_disass b:", addr, Disass_Scroll.verticalScroller?.floatValue ?? 0)
+        Disass_Scroll.verticalScroller?.floatValue = Float(addr) / Float(Disass_Display.frame.height)
+//        print("scroll_to_disass a:", addr, Disass_Scroll.verticalScroller?.floatValue ?? 0)
     }
 
 
@@ -627,6 +654,9 @@ N V - B D I Z C
 
             // hopefully instruction address is in sync
             disass_addr = m6502.PC
+
+            scroll_to_disass(addr: disass_addr)
+
             let preLines = 0 // Int(self.disass_addr / 2)
 
             for _ in 0..<preLines {
@@ -674,7 +704,12 @@ N V - B D I Z C
             let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
             if self.highlighted_line_number <= currentScrollLine || self.highlighted_line_number > currentScrollLine + 25 {
                 if scrollY < 0 && self.DisassAddressPC.state == .off {
-                    self.Disass_Display.scroll(NSPoint(x: 0, y: Int(self.disass_addr)))
+//                    print("DisplayDisassembly scroll")
+//                    self.Disass_Display.scroll(NSPoint(x: 0, y: Int(self.disass_addr)))
+//                    self.Disass_Scroll.verticalScroller?.floatValue = Float(self.disass_addr) / 65536
+                }
+                else {
+//                    self.Disass_Scroll.verticalScroller?.floatValue = Float(self.disass_addr) / 65536
                 }
             }
             self.highlight(view: self.Disass_Display, line: self.highlighted_line_number, attr: self.lineAttrAtPC)
@@ -715,6 +750,9 @@ N V - B D I Z C
         DisassAddressPC.state = .off
         disass_addr_pc = UInt16(sender.stringValue.hexValue())
 //        Disass_Display.scroll(NSPoint(x: 0, y: Int(disass_addr_pc)))
+
+//        scroll_to_disass(addr: disass_addr_pc)
+
         DisplayDisassembly()
     }
 

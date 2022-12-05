@@ -115,13 +115,10 @@ class DebuggerViewController: NSViewController {
 
         if needScroll {
             scrollTo.y = Disass_Display.frame.height * CGFloat(scrollPos)
-//            Disass_Display.scroll(scrollTo)
         }
 
         DisassAddressPC.state = .off
         DisplayDisassembly(scrollY: scrollTo.y)
-
-//        disassScroller()
     }
 
 
@@ -315,7 +312,7 @@ N V - B D I Z C
 
 
     let disass_addr_min : UInt16 = 0 // 320
-    let disass_addr_max : UInt16 = 512
+    let disass_addr_max : UInt16 = 50 // 512
     var disass_addr : UInt16 = 0 /// Address disassembled in the window
     var disass_addr_pc : UInt16 = 0 /// Address to disassemble
     let disass_addr_pre : UInt16 = 20
@@ -609,105 +606,85 @@ N V - B D I Z C
 
         line_number = 0
 
-//        let highlighted = self.highlighted_line_number
-
         // TODO: Also check if memory area updated!
 
-//        DispatchQueue.main.sync {
         let addrpc = DisassAddressPC == nil || DisassAddressPC.state == .on
         if addrpc {
             disass_addr_pc = m6502.PC
         }
-//        }
-        var need_disass = scrollY > 0 || disass_addr_pc < disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
+
+        let need_scroll = scrollY > 0 || disass_addr_pc < disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
+
         scroll_line_number = getLine(forAddr: disass_addr_pc)
         highlighted_line_number = getLine(forAddr: m6502.PC)
 
-//        if disass_addr_pc > disass_addr && disass_addr_pc < disass_addr + disass_addr_max {
-        if scroll_line_number < 0 || need_disass {
-            disassLineRange.removeAll()
-            ViewController.shared?.UpdateSemaphore.wait()
+        disassLineRange.removeAll()
+        ViewController.shared?.UpdateSemaphore.wait()
 
-            let m6502_saved = m6502
+        let m6502_saved = m6502
 
-            if !addrpc {
-                m6502.PC = disass_addr_pc
-            }
-
-            need_disass = true
-            addr_line.removeAll()
-
-            disass_addr = m6502.PC
-            if m6502.PC >= disass_addr_min_pre {
-                m6502.PC -= disass_addr_min_pre
-            }
-
-            // try to sync disassembly code
-            let addr_min = disass_addr >= disass_addr_min ? disass_addr - disass_addr_min : disass_addr
-            while m6502.PC < addr_min {
-                m6502_Disass_1_Instr()
-            }
-
-            // hopefully instruction address is in sync
-            disass_addr = m6502.PC
-
-            scroll_to_disass(addr: disass_addr)
-
-            let preLines = 0 // Int(self.disass_addr / 2)
-
-            for _ in 0..<preLines {
-                let lineRange = LineRange_t(loc: loc, len: 1)
-                disassLineRange.append(lineRange)
-                loc += 1
-            }
-
-            // normal disassembly
-            for _ in 1...lines_to_disass {
-                // check if this is the current line before disassembling it (that will change PC...)
-                line_number += 1
-                addr_line.updateValue(line_number, forKey: m6502.PC)
-
-                isCurrentLine = m6502.PC == m6502_saved.PC
-                if isCurrentLine {
-//                line = invertLine(line: line)
-                    highlighted_line_number = line_number
-                }
-
-                if m6502.PC == disass_addr_pc {
-                    scroll_line_number = line_number
-                }
-
-                m6502_Disass_1_Instr()
-
-                let line = ASCII_to_Apple2( line: String(cString: disassemblyLine( isCurrentLine )!) )
-                let len = disassLineLength + 1
-                let lineRange = LineRange_t(loc: loc, len: len)
-                disassLineRange.append(lineRange)
-                loc += len
-
-                disass += line + "\n"
-            }
-
-            m6502 = m6502_saved
-            ViewController.shared?.UpdateSemaphore.signal()
+        if !addrpc {
+            m6502.PC = disass_addr_pc
         }
 
-        DispatchQueue.main.async {
-            if need_disass {
-                self.disassDisplay(str: disass)
+        addr_line.removeAll()
+
+        // de we need to scroll or prell at the same location?
+        if need_scroll {
+            disass_addr = m6502.PC
+        }
+        else {
+            m6502.PC = disass_addr
+        }
+
+        if m6502.PC >= disass_addr_min_pre {
+            m6502.PC -= disass_addr_min_pre
+        }
+
+        // try to sync disassembly code
+        let addr_min = disass_addr >= disass_addr_min ? disass_addr - disass_addr_min : disass_addr
+        while m6502.PC < addr_min {
+            m6502_Disass_1_Instr()
+        }
+
+        // hopefully instruction address is in sync
+        disass_addr = m6502.PC
+
+        scroll_to_disass(addr: disass_addr)
+
+        // normal disassembly
+        for _ in 1...lines_to_disass {
+            // check if this is the current line before disassembling it (that will change PC...)
+            line_number += 1
+            addr_line.updateValue(line_number, forKey: m6502.PC)
+
+            isCurrentLine = m6502.PC == m6502_saved.PC
+            if isCurrentLine {
+//                line = invertLine(line: line)
+                highlighted_line_number = line_number
             }
 
-            let currentScrollLine = self.get_scroll_line(view: self.Disass_Display) + 1
-            if self.highlighted_line_number <= currentScrollLine || self.highlighted_line_number > currentScrollLine + 25 {
-                if scrollY < 0 && self.DisassAddressPC.state == .off {
-//                    print("DisplayDisassembly scroll")
-//                    self.Disass_Display.scroll(NSPoint(x: 0, y: Int(self.disass_addr)))
-//                    self.Disass_Scroll.verticalScroller?.floatValue = Float(self.disass_addr) / 65536
-                }
-                else {
-//                    self.Disass_Scroll.verticalScroller?.floatValue = Float(self.disass_addr) / 65536
-                }
+            if m6502.PC == disass_addr_pc {
+                scroll_line_number = line_number
             }
+
+            m6502_Disass_1_Instr()
+
+            let line = ASCII_to_Apple2( line: String(cString: disassemblyLine()!) )
+            let len = disassLineLength + 1
+            let lineRange = LineRange_t(loc: loc, len: len)
+            disassLineRange.append(lineRange)
+            loc += len
+
+            disass += line + "\n"
+        }
+
+        m6502 = m6502_saved
+        ViewController.shared?.UpdateSemaphore.signal()
+
+        DispatchQueue.main.async {
+            self.disassDisplay(str: disass)
+
             self.highlight(view: self.Disass_Display, line: self.highlighted_line_number, attr: self.lineAttrAtPC)
         }
     }

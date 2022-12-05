@@ -88,7 +88,7 @@ extern void printDisassembly( FILE * f );
 
 extern size_t disassLineLength;
 
-extern const char * disassemblyLine(_Bool higlight);
+extern const char * disassemblyLine();
 
 
 #endif /* _6502_dis_utils_h */

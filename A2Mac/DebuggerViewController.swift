@@ -102,7 +102,7 @@ class DebuggerViewController: NSViewController {
     }
 
 
-    let maxAddr = Float(65536) // Float(0xFFD0)
+    let maxAddr = Float(0xFFFF)
 
     /// Disassembly View Scroll changed
     func disassScroller(needScroll : Bool = false) {
@@ -151,7 +151,7 @@ class DebuggerViewController: NSViewController {
 //              )
 
         let deltaY = Float(event.scrollingDeltaY)
-//        print("scrollWheel:", deltaY)
+//        print("scrollWheel:", event.scrollingDeltaY, deltaY)
 
         scrollEvent(location: location, scrollView: Disass_Scroll, deltaY: deltaY, action: {
             disassScroller(needScroll: true)
@@ -595,10 +595,24 @@ N V - B D I Z C
 
     var isCurrentLine = false
 
-    func DisplayDisassembly( scrollY : CGFloat = -1 ) {
-        var disass = ""
+    var disass = ""
+    var loc = 0
 
-        var loc = 0
+    func AddDisassLine() {
+        let line = ASCII_to_Apple2( line: String(cString: disassemblyLine()!) )
+        let len = disassLineLength + 1
+        let lineRange = LineRange_t(loc: loc, len: len)
+        disassLineRange.append(lineRange)
+        loc += len
+
+        disass += line + "\n"
+    }
+
+
+    func DisplayDisassembly( scrollY : CGFloat = -1 ) {
+        disass = ""
+
+        loc = 0
 
         if cpuState == cpuState_running {
             remove_highlight(view: Disass_Display)
@@ -643,6 +657,7 @@ N V - B D I Z C
 
         // try to sync disassembly code
         let addr_min = disass_addr >= disass_addr_min ? disass_addr - disass_addr_min : disass_addr
+
         while m6502.PC < addr_min {
             m6502_Disass_1_Instr()
         }
@@ -650,7 +665,10 @@ N V - B D I Z C
         // hopefully instruction address is in sync
         disass_addr = m6502.PC
 
-        scroll_to_disass(addr: disass_addr)
+        // Scroll by address is needed only when address is NOT calculated from scroll position...
+        if scrollY < 0 {
+            scroll_to_disass(addr: disass_addr)
+        }
 
         // normal disassembly
         for _ in 1...lines_to_disass {
@@ -664,26 +682,19 @@ N V - B D I Z C
                 highlighted_line_number = line_number
             }
 
-            if m6502.PC == disass_addr_pc {
+            if m6502.PC == disass_addr {
                 scroll_line_number = line_number
             }
 
             m6502_Disass_1_Instr()
-
-            let line = ASCII_to_Apple2( line: String(cString: disassemblyLine()!) )
-            let len = disassLineLength + 1
-            let lineRange = LineRange_t(loc: loc, len: len)
-            disassLineRange.append(lineRange)
-            loc += len
-
-            disass += line + "\n"
+            AddDisassLine()
         }
 
         m6502 = m6502_saved
         ViewController.shared?.UpdateSemaphore.signal()
 
         DispatchQueue.main.async {
-            self.disassDisplay(str: disass)
+            self.disassDisplay(str: self.disass)
 
             self.highlight(view: self.Disass_Display, line: self.highlighted_line_number, attr: self.lineAttrAtPC)
         }

@@ -600,6 +600,14 @@
          contextName = "set_flags_Z:6502.c">
       </ContextState>
       <ContextState
+         contextName = "DebuggerViewController.scrollWheel(with:):DebuggerViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "event.scrollingDeltaY">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "PLA:6502_instr_stack.h">
       </ContextState>
       <ContextState

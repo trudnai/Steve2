@@ -37,7 +37,9 @@ class DebuggerViewController: NSViewController {
     @IBOutlet weak var DisassTextField: NSTextField!
     @IBOutlet weak var DisassHighlighter: NSTextField!
     @IBOutlet weak var DisassHightlighterContriant: NSLayoutConstraint!
-
+    @IBOutlet weak var DisassCursor: NSTextField!
+    @IBOutlet weak var DisassCursorContraint: NSLayoutConstraint!
+    
 
     let textFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
     let textColor : NSColor = NSColor.white

@@ -255,6 +255,17 @@
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgy-Qm-MWH" userLabel="DisassCursor">
+                                <rect key="frame" x="12" y="403" width="362" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="iWk-6p-CrU"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="nPK-EB-T0n">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" white="1" alpha="0.33000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </textFieldCell>
+                            </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lw3-np-MbY" userLabel="Disassembly">
                                 <rect key="frame" x="10" y="10" width="366" height="454"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" id="V2q-LD-et1">
@@ -367,7 +378,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisassView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-320" width="349" height="510"/>
+                                                    <rect key="frame" x="0.0" y="-346" width="349" height="510"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -547,7 +558,7 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-274" width="334" height="165"/>
+                                                                            <rect key="frame" x="0.0" y="-281" width="334" height="165"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -571,7 +582,7 @@
                                                                     <rect key="frame" x="-100" y="-100" width="349" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.21428571428571427" horizontal="NO" id="dcm-z5-VNG">
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.14285714285714285" horizontal="NO" id="dcm-z5-VNG">
                                                                     <rect key="frame" x="335" y="1" width="15" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -782,6 +793,7 @@
                             </customView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="Mgy-Qm-MWH" firstAttribute="leading" secondItem="lw3-np-MbY" secondAttribute="leading" id="3mY-nW-zNp"/>
                             <constraint firstAttribute="bottom" secondItem="jY7-ZU-I4z" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Disassembler.Bottom" id="8jC-7G-Ofh"/>
                             <constraint firstItem="uQh-oP-EwQ" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="8q5-Sd-fZ8"/>
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="leading" secondItem="lw3-np-MbY" secondAttribute="leading" id="HHi-Vl-G7O"/>
@@ -789,6 +801,8 @@
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="KjG-Xt-w0g"/>
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="LYb-x4-eZt"/>
                             <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Debug Side Panel.Top - Debugger View.Top" id="OaJ-lc-b0j"/>
+                            <constraint firstItem="Mgy-Qm-MWH" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="PdI-W2-UUw"/>
+                            <constraint firstItem="Mgy-Qm-MWH" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" constant="46" id="R2c-sP-wWP"/>
                             <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Sebug Side Panel.Bottom" id="Y4T-sR-Hag"/>
                             <constraint firstItem="uQh-oP-EwQ" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="YuC-6J-6RS"/>
                             <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Disassembler.Top - Debugger View.Top" id="cCh-QQ-pyz"/>
@@ -805,6 +819,8 @@
                         <outlet property="CPU_Display" destination="Wrs-Qt-Kmd" id="SUW-Lc-Zv4"/>
                         <outlet property="DisassAddressField" destination="bwO-w1-hlg" id="tBp-cc-OcF"/>
                         <outlet property="DisassAddressPC" destination="zov-nz-fce" id="fhe-fN-yPd"/>
+                        <outlet property="DisassCursor" destination="Mgy-Qm-MWH" id="6Pn-wq-woY"/>
+                        <outlet property="DisassCursorContraint" destination="R2c-sP-wWP" id="7vt-Dc-wGf"/>
                         <outlet property="DisassHighlighter" destination="KwD-2D-fNp" id="bTl-R3-0bK"/>
                         <outlet property="DisassHightlighterContriant" destination="KjG-Xt-w0g" id="PrT-Dn-qaX"/>
                         <outlet property="DisassTextField" destination="lw3-np-MbY" id="xv3-mQ-zMX"/>

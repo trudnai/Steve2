@@ -39,7 +39,7 @@ class DebuggerViewController: NSViewController {
     @IBOutlet weak var DisassHightlighterContriant: NSLayoutConstraint!
     @IBOutlet weak var DisassCursor: NSTextField!
     @IBOutlet weak var DisassCursorContraint: NSLayoutConstraint!
-    
+
 
     let textFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
     let textColor : NSColor = NSColor.white
@@ -446,10 +446,8 @@ N V - B D I Z C
 
     let lineHeight = CGFloat(14.96) // magic number... No idea why... 10pt font size + 1.5 lineSpacing
 
-    func remove_highlight(view: NSTextView) {
-//        DisassHightlighterContriant.constant = 0
-        DisassHighlighter.isHidden = true
-        highlighted_line_number = 0;
+    func remove_highlight(view: NSTextField) {
+        view.isHidden = true
     }
 
 
@@ -468,13 +466,13 @@ N V - B D I Z C
     }
 
 
-    func highlight(view: NSTextView, line: Int, attr: [NSAttributedString.Key : Any]) {
+    func highlight(view: NSTextField, constraint: NSLayoutConstraint, line: Int) {
         if line > 0 {
             let line = line > 0 ? line - 1 : 0
 
             if getLineRange(disassLineRange, forLine: line) != nil {
-                DisassHightlighterContriant.constant = CGFloat(line) * lineHeight + 1
-                DisassHighlighter.isHidden = false
+                constraint.constant = CGFloat(line) * lineHeight + 1
+                view.isHidden = false
                 // to make sure not to remove higlight
                 return
             }
@@ -517,22 +515,18 @@ N V - B D I Z C
     ///   - mouseLocation: Mouse location locally inside the ScrollView
     func highlightCursor(scrollView : NSScrollView, mouseLocation : NSPoint) {
         let display = scrollView.documentView as! NSTextView
-        let location = mouseLocation
-        let parent_frame = scrollView.superview?.frame
 
         // covering rectangle of the entire document
-        let minX = parent_frame!.minX + scrollView.frame.minX
-        let minY = parent_frame!.minY + scrollView.frame.minY
-        let maxX = minX + display.visibleRect.origin.x + scrollView.frame.width
-        let maxY = minY + display.visibleRect.origin.y + scrollView.frame.height
+        let minX = scrollView.frame.minX
+        let minY = scrollView.frame.minY
+        let maxX = scrollView.frame.maxX
+        let maxY = scrollView.frame.maxY - 4
 
-        if location.x > minX && location.x < maxX
-        && location.y > minY && location.y < maxY
+        if mouseLocation.x > minX && mouseLocation.x < maxX
+        && mouseLocation.y > minY && mouseLocation.y < maxY
         {
-            let line = getLine(inView: display, forY: location.y)
-            highlight(view: display, line: highlighted_line_number, attr: lineAttrAtPC)
-            remove_highlight(view: display, line: line_number_cursor)
-            highlight(view: display, line: line, attr: lineAttrAtSelected)
+            let line = getLine(inView: display, forY: mouseLocation.y)
+            highlight(view: DisassCursor, constraint: DisassCursorContraint, line: line)
             line_number_cursor = line
         }
     }
@@ -619,7 +613,7 @@ N V - B D I Z C
         highlighted_line_number = -1 // getLine(forAddr: m6502.PC)
 
         if cpuState == cpuState_running {
-            remove_highlight(view: Disass_Display)
+            remove_highlight(view: DisassHighlighter)
         }
 
         line_number = 0
@@ -698,7 +692,7 @@ N V - B D I Z C
 
         DispatchQueue.main.async {
             self.disassDisplay(str: self.disass)
-            self.highlight(view: self.Disass_Display, line: self.highlighted_line_number, attr: self.lineAttrAtPC)
+            self.highlight(view: self.DisassHighlighter, constraint: self.DisassHightlighterContriant, line: self.highlighted_line_number)
         }
     }
 

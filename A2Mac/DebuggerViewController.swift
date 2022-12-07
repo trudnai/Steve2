@@ -382,8 +382,8 @@ N V - B D I Z C
 
     func getLineRange(_ lineRange : [LineRange_t], forLine: Int) -> NSRange? {
 //        print("disassLineRange.count:", disassLineRange.count)
-        if 0 < forLine && forLine <= lineRange.count {
-            let disassRange = lineRange[forLine - 1]
+        if forLine >= 0 && forLine < lineRange.count {
+            let disassRange = lineRange[forLine]
             return NSRange(location: disassRange.loc, length: disassRange.len)
         }
 
@@ -441,13 +441,17 @@ N V - B D I Z C
         }
     }
 
-    func remove_highlight_(view: NSTextView) {
-        remove_highlight(view: view, line: highlighted_line_number)
+
+    let lineHeight = CGFloat(14.96) // magic number... No idea why... 10pt font size + 1.5 lineSpacing
+
+    func remove_highlight(view: NSTextView) {
+//        DisassHightlighterContriant.constant = 0
+        DisassHighlighter.isHidden = true
         highlighted_line_number = 0;
     }
 
 
-    func remove_highlight(view: NSTextView) {
+    func remove_highlight_attr(view: NSTextView) {
         if highlighted_line_number > 0 {
             if let lineRange = getLineRange(disassLineRange, forLine: highlighted_line_number) {
                 if let layoutManager = view.layoutManager {
@@ -464,21 +468,18 @@ N V - B D I Z C
 
     func highlight(view: NSTextView, line: Int, attr: [NSAttributedString.Key : Any]) {
         if line > 0 {
-//            let lineSpacing = CGFloat(1.25)
-//            let lineHeight = CGFloat(view.font!.pointSize) * lineSpacing
             let line = line > 0 ? line - 1 : 0
 
-            // remove old highlighted line
-//            remove_highlight(view: view, line: line)
-//            if let lineRange = getLineRange(disassLineRange, forLine: line) {
-//                DispatchQueue.main.async {
-//                    view.layoutManager?.addTemporaryAttributes(attr, forCharacterRange: lineRange)
-//                }
-//            }
-
-            let lineHeight = CGFloat(14.96) // magic number... No idea why... 10pt font size + 1.5 lineSpacing
-            DisassHightlighterContriant.constant = CGFloat(line) * lineHeight + 1
+            if getLineRange(disassLineRange, forLine: line) != nil {
+                DisassHightlighterContriant.constant = CGFloat(line) * lineHeight + 1
+                DisassHighlighter.isHidden = false
+                // to make sure not to remove higlight
+                return
+            }
         }
+
+        // remove old highlighted line
+        remove_highlight(view: view)
     }
 
 
@@ -611,8 +612,9 @@ N V - B D I Z C
 
     func DisplayDisassembly( scrollY : CGFloat = -1 ) {
         disass = ""
-
         loc = 0
+        isCurrentLine = false
+        highlighted_line_number = -1 // getLine(forAddr: m6502.PC)
 
         if cpuState == cpuState_running {
             remove_highlight(view: Disass_Display)
@@ -630,7 +632,6 @@ N V - B D I Z C
         let need_scroll = scrollY > 0 || disass_addr_pc < disass_addr || UInt(disass_addr_pc) > UInt(disass_addr) + UInt(disass_addr_max)
 
         scroll_line_number = getLine(forAddr: disass_addr_pc)
-        highlighted_line_number = getLine(forAddr: m6502.PC)
 
         disassLineRange.removeAll()
         ViewController.shared?.UpdateSemaphore.wait()
@@ -695,7 +696,6 @@ N V - B D I Z C
 
         DispatchQueue.main.async {
             self.disassDisplay(str: self.disass)
-
             self.highlight(view: self.Disass_Display, line: self.highlighted_line_number, attr: self.lineAttrAtPC)
         }
     }

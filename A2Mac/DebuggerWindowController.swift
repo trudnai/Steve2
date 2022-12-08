@@ -40,6 +40,11 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         if isWindowFullscreen {
             window?.toggleFullScreen(self)
         }
+
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+            return self.keyHandler(with: $0)
+            // return nil // $0
+        }
     }
 
 
@@ -156,16 +161,78 @@ class DebuggerWindowController: NSWindowController, NSWindowDelegate {
         }
     }
 
+    // AppleScript Keycodes
+    let leftArrowKey    = 123
+    let rightArrowKey   = 124
+    let upArrowKey      = 126
+    let downArrowKey    = 125
+
+    let F4FunctionKey   = 118
+    let F5FunctionKey   =  96
+    let F6FunctionKey   =  97
+    let F7FunctionKey   =  98
+    let F8FunctionKey   = 100
+
+
+    func keyHandler(with event: NSEvent) -> NSEvent? {
+        let keyCode = Int(event.keyCode)
+
+        print("keyDown DWC:", keyCode)
+
+        switch keyCode {
+        case leftArrowKey:
+            break
+
+        case rightArrowKey:
+            break
+
+        case downArrowKey:
+            break
+
+        case upArrowKey:
+            if isKey {
+                print("upArrowKeyDn in Debugger")
+                break
+            }
+
+            print("upArrowKeyDn outside of Debugger")
+
+
+        case F4FunctionKey:
+            Continue()
+
+        case F5FunctionKey:
+            Pause()
+
+        case F6FunctionKey:
+            Step_Over(event)
+
+        case F7FunctionKey:
+            Step_In(event)
+
+        case F8FunctionKey:
+            Step_Out(event)
+
+        default:
+//            print("keycode: %d", keyCode)
+            return event
+        }
+
+        return nil
+    }
+
+
+    let JSR_instr_code : UInt8 = 0x20
 
     @IBAction func Step_Over(_ sender: Any) {
-        if MEM[Int(m6502.PC)] == 0x20 {
+        if MEM[Int(m6502.PC)] == JSR_instr_code {
             m6502.debugger.SP = m6502.SP > 1 ? m6502.SP : 0
 
             m6502.debugger.wMask = 0
             m6502.debugger.mask.out = 1
-            m6502.debugger.mask.hlt = 1;
-            m6502.debugger.mask.brk = 1;
-            m6502.debugger.mask.inv = 1;
+            m6502.debugger.mask.hlt = 1
+            m6502.debugger.mask.brk = 1
+            m6502.debugger.mask.inv = 1
 
             m6502.debugger.on = true
 

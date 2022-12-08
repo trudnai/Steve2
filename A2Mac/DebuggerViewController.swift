@@ -532,11 +532,13 @@ N V - B D I Z C
     }
 
 
+    let leftSideSize = CGFloat(30)
+
     // select disassembly line
     override func mouseDown(with event: NSEvent) {
         let location = convertMouseCoordinates(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: event.locationInWindow)
 
-        if location.x < 30 {
+        if location.x < leftSideSize {
             let line = getLine(inView: Disass_Display, forY: location.y)
             let addr = getAddr(forLine: line)
 

@@ -39,6 +39,7 @@ class DebuggerViewController: NSViewController {
     @IBOutlet weak var DisassHightlighterContriant: NSLayoutConstraint!
     @IBOutlet weak var DisassCursor: NSTextField!
     @IBOutlet weak var DisassCursorContraint: NSLayoutConstraint!
+    @IBOutlet weak var DisassBackground: NSTextField!
 
 
     let textFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
@@ -531,11 +532,24 @@ N V - B D I Z C
         }
     }
 
+    let normalBackground = NSColor(red: 38/255, green: 38/255, blue: 38/255, alpha: 1)
+    let selectedBackground = NSColor(red: 38/255, green: 38/255, blue: 64/255, alpha: 1.0)
+
+    func unselectViews() {
+        DisassBackground.backgroundColor = normalBackground
+    }
+
+    func selectView(view: NSTextView) {
+        unselectViews()
+        view.backgroundColor = normalBackground
+    }
 
     let leftSideSize = CGFloat(30)
 
     // select disassembly line
     override func mouseDown(with event: NSEvent) {
+        unselectViews()
+
         let location = convertMouseCoordinates(scrollView: Disass_Scroll, display: Disass_Display, mouseLocation: event.locationInWindow)
 
         if location.x < leftSideSize {

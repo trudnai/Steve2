@@ -53,9 +53,11 @@ class DisassView: NSTextView {
 
     override func mouseDown(with event: NSEvent) {
         //        print(#function + "DisassView")
-        DebuggerViewController.shared?.mouseDown(with: event)
-
+        if let dbgVC = DebuggerViewController.shared {
+            dbgVC.mouseDown(with: event)
+            dbgVC.DisassBackground.backgroundColor = dbgVC.selectedBackground
         // debugDisplayContraints()
+        }
     }
 
 //    override func mouseUp(with event: NSEvent) {

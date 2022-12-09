@@ -378,7 +378,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisassView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-402" width="349" height="510"/>
+                                                    <rect key="frame" x="0.0" y="-424" width="349" height="510"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -436,7 +436,7 @@
                                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.076923076923076927" horizontal="NO" id="8wE-fn-MQK">
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="8wE-fn-MQK">
                                             <rect key="frame" x="350" y="1" width="15" height="458"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <connections>
@@ -558,7 +558,7 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-295" width="334" height="165"/>
+                                                                            <rect key="frame" x="0.0" y="-302" width="334" height="165"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -819,6 +819,7 @@
                         <outlet property="CPU_Display" destination="Wrs-Qt-Kmd" id="SUW-Lc-Zv4"/>
                         <outlet property="DisassAddressField" destination="bwO-w1-hlg" id="tBp-cc-OcF"/>
                         <outlet property="DisassAddressPC" destination="zov-nz-fce" id="fhe-fN-yPd"/>
+                        <outlet property="DisassBackground" destination="uQh-oP-EwQ" id="Rtn-R5-VDA"/>
                         <outlet property="DisassCursor" destination="Mgy-Qm-MWH" id="6Pn-wq-woY"/>
                         <outlet property="DisassCursorContraint" destination="R2c-sP-wWP" id="7vt-Dc-wGf"/>
                         <outlet property="DisassHighlighter" destination="KwD-2D-fNp" id="bTl-R3-0bK"/>

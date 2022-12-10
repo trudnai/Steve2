@@ -81,6 +81,7 @@ class ViewController: NSViewController  {
     
     var displayLink: CVDisplayLink?
     
+    @IBOutlet var monitorView: MonitorView!
     @IBOutlet weak var textDisplayScroller: NSScrollView!
     @IBOutlet var textDisplay: NSTextView!
     @IBOutlet weak var speedometer: NSTextFieldCell!
@@ -1732,6 +1733,8 @@ class ViewController: NSViewController  {
 //        self.displayField.window?.makeFirstResponder(self)
         textDisplay.setSelectedRange(NSRange())
         textDisplay.window?.makeFirstResponder(self)
+
+        monitorView.adjustTextDisplaySize()
     }
 
     

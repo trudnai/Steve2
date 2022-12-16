@@ -274,6 +274,56 @@
                                     <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TWP-wN-aCW" userLabel="MemoryBackground">
+                                <rect key="frame" x="382" y="10" width="710" height="252"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="1Ul-O8-InU">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VVf-7D-pjV" userLabel="MemoryHighlighter Horizontal">
+                                <rect key="frame" x="382" y="199" width="710" height="15"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="15" id="DD3-Fv-9rp"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="wtu-IS-9xa">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f2z-vp-zIf" userLabel="MemoryHighlighter Vertical">
+                                <rect key="frame" x="500" y="10" width="10" height="252"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="10" id="sVL-zn-P6J"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="JbR-PR-wNO">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.33000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kXX-RT-0Bb" userLabel="MemoryCursor">
+                                <rect key="frame" x="498" y="196" width="14" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="14" id="RyF-lI-kBO"/>
+                                    <constraint firstAttribute="height" constant="20" id="SPO-SY-K6g"/>
+                                </constraints>
+                                <textFieldCell key="cell" lineBreakMode="clipping" borderStyle="border" drawsBackground="YES" id="2Uj-VZ-SbU">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="selectedTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4pW-7e-eaj" userLabel="Memory">
+                                <rect key="frame" x="380" y="10" width="714" height="252"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" id="iea-16-EtD">
+                                    <font key="font" size="10" name="PrintChar21"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                </textFieldCell>
+                            </textField>
                             <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="4" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jY7-ZU-I4z" userLabel="Disassebler">
                                 <rect key="frame" x="8" y="10" width="366" height="484"/>
                                 <subviews>
@@ -378,7 +428,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisassView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-424" width="349" height="510"/>
+                                                    <rect key="frame" x="0.0" y="-468" width="349" height="510"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -558,7 +608,7 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-302" width="334" height="165"/>
+                                                                            <rect key="frame" x="0.0" y="-316" width="334" height="165"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -582,7 +632,7 @@
                                                                     <rect key="frame" x="-100" y="-100" width="349" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.14285714285714285" horizontal="NO" id="dcm-z5-VNG">
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="dcm-z5-VNG">
                                                                     <rect key="frame" x="335" y="1" width="15" height="158"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
@@ -712,7 +762,7 @@
                                                     </stackView>
                                                     <scrollView focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory Scroll" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="710" height="252"/>
-                                                        <clipView key="contentView" focusRingType="none" copiesOnScroll="NO" id="Jy3-yS-sE4" userLabel="Memory Clip View">
+                                                        <clipView key="contentView" focusRingType="none" drawsBackground="NO" copiesOnScroll="NO" id="Jy3-yS-sE4" userLabel="Memory Clip View">
                                                             <rect key="frame" x="1" y="1" width="708" height="250"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
@@ -794,25 +844,41 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="Mgy-Qm-MWH" firstAttribute="leading" secondItem="lw3-np-MbY" secondAttribute="leading" id="3mY-nW-zNp"/>
+                            <constraint firstItem="VVf-7D-pjV" firstAttribute="leading" secondItem="4pW-7e-eaj" secondAttribute="leading" id="4xV-KN-9i2"/>
+                            <constraint firstItem="4pW-7e-eaj" firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" id="77M-hm-zZ0"/>
                             <constraint firstAttribute="bottom" secondItem="jY7-ZU-I4z" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Disassembler.Bottom" id="8jC-7G-Ofh"/>
                             <constraint firstItem="uQh-oP-EwQ" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="8q5-Sd-fZ8"/>
+                            <constraint firstItem="TWP-wN-aCW" firstAttribute="top" secondItem="4pW-7e-eaj" secondAttribute="top" id="BfY-7O-aDg"/>
+                            <constraint firstItem="kXX-RT-0Bb" firstAttribute="top" secondItem="4pW-7e-eaj" secondAttribute="top" constant="46" id="BsB-C0-dQ9"/>
+                            <constraint firstItem="4pW-7e-eaj" firstAttribute="leading" secondItem="dzC-sA-aHa" secondAttribute="leading" id="C5j-QY-Wbm"/>
+                            <constraint firstItem="TWP-wN-aCW" firstAttribute="trailing" secondItem="4pW-7e-eaj" secondAttribute="trailing" id="E1c-lX-VRE"/>
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="leading" secondItem="lw3-np-MbY" secondAttribute="leading" id="HHi-Vl-G7O"/>
                             <constraint firstItem="uQh-oP-EwQ" firstAttribute="bottom" secondItem="lw3-np-MbY" secondAttribute="bottom" id="JnX-xB-eor"/>
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="KjG-Xt-w0g"/>
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="LYb-x4-eZt"/>
+                            <constraint firstItem="f2z-vp-zIf" firstAttribute="leading" secondItem="4pW-7e-eaj" secondAttribute="leading" constant="118" id="Nz3-Lb-ESq"/>
                             <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Debug Side Panel.Top - Debugger View.Top" id="OaJ-lc-b0j"/>
                             <constraint firstItem="Mgy-Qm-MWH" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="PdI-W2-UUw"/>
                             <constraint firstItem="Mgy-Qm-MWH" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" constant="46" id="R2c-sP-wWP"/>
+                            <constraint firstItem="kXX-RT-0Bb" firstAttribute="leading" secondItem="4pW-7e-eaj" secondAttribute="leading" constant="116" id="Xh5-tR-rGb"/>
                             <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Sebug Side Panel.Bottom" id="Y4T-sR-Hag"/>
                             <constraint firstItem="uQh-oP-EwQ" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="YuC-6J-6RS"/>
+                            <constraint firstItem="f2z-vp-zIf" firstAttribute="top" secondItem="4pW-7e-eaj" secondAttribute="top" id="bl4-gs-Kc0"/>
                             <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Disassembler.Top - Debugger View.Top" id="cCh-QQ-pyz"/>
+                            <constraint firstItem="4pW-7e-eaj" firstAttribute="bottom" secondItem="dzC-sA-aHa" secondAttribute="bottom" id="e6d-iV-Mjx"/>
                             <constraint firstItem="lw3-np-MbY" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="e8j-dQ-6Dc"/>
+                            <constraint firstItem="VVf-7D-pjV" firstAttribute="trailing" secondItem="4pW-7e-eaj" secondAttribute="trailing" id="epT-27-6q6"/>
                             <constraint firstItem="jY7-ZU-I4z" firstAttribute="leading" secondItem="Myj-W6-YvY" secondAttribute="leading" constant="8" identifier="Disassembler.Leading - Debugger View.Leading" id="gka-CA-9WG"/>
+                            <constraint firstItem="TWP-wN-aCW" firstAttribute="bottom" secondItem="4pW-7e-eaj" secondAttribute="bottom" id="hJE-5H-00a"/>
                             <constraint firstAttribute="trailing" secondItem="JUf-qx-iuW" secondAttribute="trailing" constant="8" identifier="Debugger View.Trailing - Sebug Side Panel.Trailing" id="kwa-ri-Rtq"/>
+                            <constraint firstItem="f2z-vp-zIf" firstAttribute="bottom" secondItem="4pW-7e-eaj" secondAttribute="bottom" id="kzN-TO-IcO"/>
+                            <constraint firstItem="4pW-7e-eaj" firstAttribute="top" secondItem="dzC-sA-aHa" secondAttribute="top" id="nJg-Ah-5VS"/>
                             <constraint firstItem="lw3-np-MbY" firstAttribute="leading" secondItem="Pcn-4j-EEM" secondAttribute="leading" constant="4" id="rCO-iJ-DOu"/>
                             <constraint firstItem="uQh-oP-EwQ" firstAttribute="leading" secondItem="lw3-np-MbY" secondAttribute="leading" id="uRt-lv-mfI"/>
+                            <constraint firstItem="TWP-wN-aCW" firstAttribute="leading" secondItem="4pW-7e-eaj" secondAttribute="leading" id="wIu-cL-8NA"/>
                             <constraint firstItem="lw3-np-MbY" firstAttribute="trailing" secondItem="Pcn-4j-EEM" secondAttribute="trailing" id="x4p-qF-iKb"/>
                             <constraint firstItem="lw3-np-MbY" firstAttribute="top" secondItem="Pcn-4j-EEM" secondAttribute="top" constant="5" id="yYL-a5-8xr"/>
+                            <constraint firstItem="VVf-7D-pjV" firstAttribute="top" secondItem="4pW-7e-eaj" secondAttribute="top" constant="48" id="yaq-3g-r5g"/>
                         </constraints>
                     </view>
                     <connections>
@@ -838,7 +904,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Debugger" width="128" height="128"/>
+        <image name="Debugger" width="32" height="32"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSStatusNone" width="16" height="16"/>
         <image name="NSStatusPartiallyAvailable" width="16" height="16"/>

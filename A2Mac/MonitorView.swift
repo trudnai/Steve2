@@ -25,6 +25,7 @@ import Cocoa
 
 class MonitorView: NSView {
     
+    @IBOutlet weak var textDisplayScroller: DisplayScrollView!
     @IBOutlet var textDisplay: DisplayView!
     @IBOutlet weak var scanlinesView: NSImageView!
     
@@ -43,6 +44,8 @@ class MonitorView: NSView {
     }
     
     func adjustTextDisplaySize() {
+        textDisplayScroller.updateConstraints()
+
         var textFrameSize = frame.size
         
         if textDisplay_width_diff == nil {
@@ -92,7 +95,10 @@ class MonitorView: NSView {
         // BUGFIX: I am not sure why but if I do not adjust the frame and bounds size
         //         couple of times, Cocoa miscalculates them
         if let textDisplay = textDisplay {
-            for _ in 0...15 {
+            textDisplay.setFrameSize(textFrameSize)
+            textDisplay.setBoundsSize(MonitorView.textViewBounds)
+            DispatchQueue.main.async() {
+//            for _ in 0...15 {
                 textDisplay.setFrameSize(textFrameSize)
     //            textDisplay.setBoundsSize(MonitorView.textViewBounds)
     //            textDisplay.setFrameSize(scanlinesView.frame.size)

@@ -265,7 +265,7 @@ N V - B D I Z C
 
     func DisplayMemory() {
         var memory = ""
-        for i : UInt16 in stride(from: mem_1_addr, to: mem_1_addr + 0xFF, by: 16) {
+        for i : UInt16 in stride(from: mem_1_addr, to: mem_1_addr + 0x21F, by: 16) {
             memory += hexLine16(addr: i) + " " + textLine16(addr: i) + "\n"
         }
 
@@ -324,7 +324,7 @@ N V - B D I Z C
     var scroll_line_number = 0
     var highlighted_line_number = 0
     var line_number_cursor = 0
-    let lines_to_disass = 30
+    let lines_to_disass = 50
 
 
     func get_scroll_line(view: NSTextView) -> Int {

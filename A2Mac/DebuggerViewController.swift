@@ -206,6 +206,12 @@ PC: %04X
 
 N V - B D I Z C
 %d %d %d %d %d %d %d %d
+
+STK REA WRI LNG BNK PG2 80S CXR
+mne mne mne rom  2  off off off
+
+KEY TXT MIX HGR 80C ALT
+93  on  off off off off
 """,
 
             m6502.A, m6502.A, bin(n: m6502.A),

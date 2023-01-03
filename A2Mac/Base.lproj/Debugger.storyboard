@@ -232,7 +232,7 @@
         <scene sceneID="TCG-Cv-QBI">
             <objects>
                 <viewController title="Debugger Controller Scene" id="R5e-co-cXs" customClass="DebuggerViewController" customModule="A2MacTests" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" identifier="Monitor View" wantsLayer="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" misplaced="YES" id="Myj-W6-YvY" userLabel="Debugger View">
+                    <view key="view" identifier="Monitor View" wantsLayer="YES" focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" id="Myj-W6-YvY" userLabel="Debugger View">
                         <rect key="frame" x="0.0" y="0.0" width="1280" height="800"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
@@ -275,7 +275,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TWP-wN-aCW" userLabel="MemoryBackground">
-                                <rect key="frame" x="374" y="10" width="645" height="520"/>
+                                <rect key="frame" x="374" y="10" width="664" height="448"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="1Ul-O8-InU">
                                     <font key="font" size="10" name="PrintChar21"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -283,7 +283,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VVf-7D-pjV" userLabel="MemoryHighlighter Horizontal">
-                                <rect key="frame" x="374" y="467" width="645" height="15"/>
+                                <rect key="frame" x="374" y="395" width="664" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="DD3-Fv-9rp"/>
                                 </constraints>
@@ -294,7 +294,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f2z-vp-zIf" userLabel="MemoryHighlighter Vertical">
-                                <rect key="frame" x="492" y="10" width="10" height="520"/>
+                                <rect key="frame" x="492" y="10" width="10" height="448"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="sVL-zn-P6J"/>
                                 </constraints>
@@ -305,7 +305,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kXX-RT-0Bb" userLabel="MemoryCursor">
-                                <rect key="frame" x="490" y="464" width="14" height="20"/>
+                                <rect key="frame" x="490" y="392" width="14" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="14" id="RyF-lI-kBO"/>
                                     <constraint firstAttribute="height" constant="20" id="SPO-SY-K6g"/>
@@ -317,7 +317,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4pW-7e-eaj" userLabel="Memory">
-                                <rect key="frame" x="372" y="10" width="649" height="520"/>
+                                <rect key="frame" x="372" y="10" width="668" height="448"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" id="iea-16-EtD">
                                     <font key="font" size="10" name="PrintChar21"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -511,20 +511,20 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Debug Side Panel">
-                                <rect key="frame" x="374" y="10" width="645" height="780"/>
+                            <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="JUf-qx-iuW" userLabel="Middle Panel">
+                                <rect key="frame" x="374" y="10" width="664" height="780"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0fW-4Y-eIm" userLabel="Debug Views">
-                                        <rect key="frame" x="0.0" y="0.0" width="645" height="780"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="664" height="780"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cvo-4B-v1R" userLabel="CPU Stack View">
-                                                <rect key="frame" x="0.0" y="596" width="645" height="184"/>
+                                                <rect key="frame" x="0.0" y="524" width="664" height="256"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
-                                                        <rect key="frame" x="0.0" y="0.0" width="260" height="184"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="256"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKO-8T-LZ7">
-                                                                <rect key="frame" x="4" y="168" width="258" height="16"/>
+                                                                <rect key="frame" x="4" y="240" width="298" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="kwa-Y6-h52"/>
                                                                 </constraints>
@@ -535,20 +535,21 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Z1-95-RLw" userLabel="CPU Scroll" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="260" height="160"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="300" height="232"/>
                                                                 <clipView key="contentView" copiesOnScroll="NO" id="tqk-6Q-HpG" userLabel="CPU Clip View">
-                                                                    <rect key="frame" x="1" y="1" width="258" height="158"/>
+                                                                    <rect key="frame" x="1" y="1" width="298" height="230"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Wrs-Qt-Kmd" userLabel="CPU Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="52" width="258" height="158"/>
+                                                                            <rect key="frame" x="0.0" y="76" width="298" height="230"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            <size key="minSize" width="258" height="158"/>
+                                                                            <size key="minSize" width="298" height="230"/>
                                                                             <size key="maxSize" width="3840" height="58101"/>
                                                                             <attributedString key="textStorage">
-                                                                                <fragment content="A: A0    160    1010 0000 X: 01      1    0000 0001 Y: 10     16    0001 0000  SP: F0 PC: FD18  N V - B D I Z C 0 0 1 0 0 1 1 0">
+                                                                                <fragment>
+                                                                                    <string key="content">A: A0    160    1010 0000 X: 01      1    0000 0001 Y: 10     16    0001 0000  SP: F0 PC: FD18  N V - B D I Z C 0 0 1 0 0 1 1 0  STK REA WRI LNG BNK PG2 80S CXR mne mne mne rom  2  off off off  KEY TXT MIX HGR 80C ALT 93  on  off off off off</string>
                                                                                     <attributes>
                                                                                         <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                                         <font key="NSFont" size="10" name="PrintChar21"/>
@@ -574,7 +575,7 @@
                                                         <constraints>
                                                             <constraint firstItem="XKO-8T-LZ7" firstAttribute="top" secondItem="Crh-BM-MCy" secondAttribute="top" identifier="CPU: 6502.Top - CPU View.Top" id="QMW-GI-j1g"/>
                                                             <constraint firstItem="XKO-8T-LZ7" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" constant="6" identifier="CPU: 6502.Leading - CPU View.Leading" id="SqI-vz-Ayj"/>
-                                                            <constraint firstAttribute="width" constant="260" id="X9r-sT-ss9"/>
+                                                            <constraint firstAttribute="width" constant="300" id="X9r-sT-ss9"/>
                                                             <constraint firstItem="9Z1-95-RLw" firstAttribute="leading" secondItem="Crh-BM-MCy" secondAttribute="leading" identifier="CPU Scroll.Leading - CPU View.Leading" id="Y46-UQ-uKd"/>
                                                             <constraint firstAttribute="trailing" secondItem="9Z1-95-RLw" secondAttribute="trailing" identifier="CPU View.Trailing - CPU Scroll.Trailing" id="YhB-6g-e4y"/>
                                                             <constraint firstAttribute="trailing" secondItem="XKO-8T-LZ7" secondAttribute="trailing" identifier="CPU View.Trailing - CPU:6502.Trailing" id="ndK-yc-rrg"/>
@@ -589,10 +590,10 @@
                                                         </customSpacing>
                                                     </stackView>
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkP-fH-zDU">
-                                                        <rect key="frame" x="268" y="0.0" width="377" height="184"/>
+                                                        <rect key="frame" x="308" y="0.0" width="356" height="256"/>
                                                         <subviews>
                                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ugZ-j3-huv">
-                                                                <rect key="frame" x="4" y="168" width="375" height="16"/>
+                                                                <rect key="frame" x="4" y="240" width="354" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="OVy-Wd-oXn"/>
                                                                 </constraints>
@@ -603,17 +604,17 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="YLL-6E-LGQ" userLabel="Stack Scroll">
-                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="160"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="356" height="232"/>
                                                                 <clipView key="contentView" copiesOnScroll="NO" id="Fuu-ZX-arY" userLabel="Stack Clip View">
-                                                                    <rect key="frame" x="1" y="1" width="360" height="158"/>
+                                                                    <rect key="frame" x="1" y="1" width="339" height="230"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="BHr-Q4-rBI" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="-323" width="360" height="165"/>
+                                                                            <rect key="frame" x="0.0" y="-471" width="339" height="230"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                            <size key="minSize" width="360" height="158"/>
+                                                                            <size key="minSize" width="339" height="230"/>
                                                                             <size key="maxSize" width="3840" height="58101"/>
                                                                             <attributedString key="textStorage">
                                                                                 <fragment content="1FF: FA 1FE: 84 1FD: 01 1FC: 01 1FB: 00 1FA: 1F 1F9: C1 1F7: D443 JSR 1F5: D532 JSR 1F3: FD77 JSR 1f1: FD37 JSR">
@@ -633,8 +634,8 @@
                                                                     <rect key="frame" x="-100" y="-100" width="349" height="15"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
-                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="dcm-z5-VNG">
-                                                                    <rect key="frame" x="361" y="1" width="15" height="158"/>
+                                                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="dcm-z5-VNG">
+                                                                    <rect key="frame" x="340" y="1" width="15" height="230"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </scroller>
                                                             </scrollView>
@@ -661,7 +662,7 @@
                                                     <constraint firstItem="Crh-BM-MCy" firstAttribute="leading" secondItem="Cvo-4B-v1R" secondAttribute="leading" id="WWQ-6k-g1Y"/>
                                                     <constraint firstItem="tkP-fH-zDU" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" identifier="Stack View.Top - CPU Stack View.Top" id="dA3-wJ-Ymz"/>
                                                     <constraint firstItem="Crh-BM-MCy" firstAttribute="top" secondItem="Cvo-4B-v1R" secondAttribute="top" identifier="CPU View.Top - CPU Stack View.Top" id="nLr-7e-4fF"/>
-                                                    <constraint firstAttribute="height" constant="184" identifier="CPU Stack View.Height" id="x8r-57-qsI"/>
+                                                    <constraint firstAttribute="height" constant="256" identifier="CPU Stack View.Height" id="x8r-57-qsI"/>
                                                 </constraints>
                                                 <visibilityPriorities>
                                                     <integer value="1000"/>
@@ -673,10 +674,10 @@
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZWI-gS-oPs" userLabel="Memory View">
-                                                <rect key="frame" x="0.0" y="0.0" width="645" height="576"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="664" height="504"/>
                                                 <subviews>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fik-fC-8sT" userLabel="Search View">
-                                                        <rect key="frame" x="0.0" y="556" width="645" height="20"/>
+                                                        <rect key="frame" x="0.0" y="484" width="664" height="20"/>
                                                         <subviews>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P9L-wR-0tv" userLabel="Leading Space">
                                                                 <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
@@ -691,7 +692,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa" userLabel="Memory Search Field">
-                                                                <rect key="frame" x="12" y="0.0" width="493" height="20"/>
+                                                                <rect key="frame" x="12" y="0.0" width="558" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="bS5-Xb-qDz"/>
                                                                 </constraints>
@@ -705,7 +706,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-1T-iQB" userLabel="Middle Space">
-                                                                <rect key="frame" x="511" y="0.0" width="8" height="20"/>
+                                                                <rect key="frame" x="576" y="0.0" width="8" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="4" id="O5P-Di-Yom"/>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="rxQ-uI-YNZ"/>
@@ -717,15 +718,15 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QfU-SL-a48">
-                                                                <rect key="frame" x="519" y="-7" width="67" height="31"/>
-                                                                <buttonCell key="cell" type="push" title="First" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="688-ON-ioL">
+                                                                <rect key="frame" x="584" y="-7" width="45" height="31"/>
+                                                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoBackTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="688-ON-ioL">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
                                                             </button>
                                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OWt-5x-lHI">
-                                                                <rect key="frame" x="582" y="-7" width="69" height="31"/>
-                                                                <buttonCell key="cell" type="push" title="Next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PM7-uD-1oI">
+                                                                <rect key="frame" x="625" y="-7" width="45" height="31"/>
+                                                                <buttonCell key="cell" type="push" bezelStyle="rounded" image="NSGoRightTemplate" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PM7-uD-1oI">
                                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
@@ -750,7 +751,7 @@
                                                         </customSpacing>
                                                     </stackView>
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d0p-Gc-l7M" userLabel="Memory Header View">
-                                                        <rect key="frame" x="0.0" y="528" width="546" height="20"/>
+                                                        <rect key="frame" x="0.0" y="456" width="664" height="20"/>
                                                         <subviews>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1q0-LV-pXH" userLabel="Leading Space">
                                                                 <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
@@ -792,7 +793,7 @@
                                                                 </textFieldCell>
                                                             </textField>
                                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gUS-Q0-ezQ" userLabel="Low Nibble Label">
-                                                                <rect key="frame" x="74" y="4" width="407" height="16"/>
+                                                                <rect key="frame" x="74" y="4" width="424" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" identifier="Low Nibble Label.Height" id="EGq-Si-0ib"/>
                                                                 </constraints>
@@ -802,14 +803,55 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gdT-ce-lHe">
-                                                                <rect key="frame" x="485" y="4" width="63" height="16"/>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pgw-HP-Drh">
+                                                                <rect key="frame" x="498" y="-7" width="46" height="31"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="16" identifier="Disassembly.Height" id="RnV-CF-S0A"/>
+                                                                    <constraint firstAttribute="width" constant="34" id="xL8-3f-hTd"/>
                                                                 </constraints>
-                                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Memory 1" id="0ZZ-sL-iEd">
-                                                                    <font key="font" usesAppearanceFont="YES"/>
-                                                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                <buttonCell key="cell" type="push" title="M1" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TP3-HT-DXR">
+                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="A3g-3w-KRR">
+                                                                <rect key="frame" x="540" y="-7" width="46" height="31"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="34" id="IVM-t3-2ch"/>
+                                                                </constraints>
+                                                                <buttonCell key="cell" type="push" title="M2" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rbh-TS-61l">
+                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oKk-nP-jGv">
+                                                                <rect key="frame" x="582" y="-7" width="46" height="31"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="34" id="1In-o2-Iay"/>
+                                                                </constraints>
+                                                                <buttonCell key="cell" type="push" title="M3" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a8J-oi-3Sp">
+                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2LW-8x-dyd">
+                                                                <rect key="frame" x="624" y="-7" width="46" height="31"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="34" id="Yk3-Fa-Bge"/>
+                                                                </constraints>
+                                                                <buttonCell key="cell" type="push" title="M4" bezelStyle="rounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gvv-AU-eEw">
+                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                            </button>
+                                                            <textField hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LCb-7J-76T" userLabel="Right Space">
+                                                                <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="5wb-72-6Pa"/>
+                                                                    <constraint firstAttribute="width" constant="4" id="gN5-2P-V3p"/>
+                                                                </constraints>
+                                                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" enabled="NO" sendsActionOnEndEditing="YES" usesSingleLineMode="YES" id="70s-HS-5gG" userLabel="Memory Addr Field Cell">
+                                                                    <font key="font" size="11" name="PrintChar21"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
@@ -823,6 +865,10 @@
                                                             <integer value="1000"/>
                                                             <integer value="1000"/>
                                                             <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
                                                         </visibilityPriorities>
                                                         <customSpacing>
                                                             <real value="3.4028234663852886e+38"/>
@@ -830,20 +876,24 @@
                                                             <real value="3.4028234663852886e+38"/>
                                                             <real value="3.4028234663852886e+38"/>
                                                             <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
                                                         </customSpacing>
                                                     </stackView>
-                                                    <scrollView focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory Scroll" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="645" height="520"/>
+                                                    <scrollView focusRingType="none" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="dzC-sA-aHa" userLabel="Memory Scroll" customClass="DisplayScrollView" customModule="A2MacTests" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="664" height="448"/>
                                                         <clipView key="contentView" focusRingType="none" drawsBackground="NO" copiesOnScroll="NO" id="Jy3-yS-sE4" userLabel="Memory Clip View">
-                                                            <rect key="frame" x="1" y="1" width="643" height="518"/>
+                                                            <rect key="frame" x="1" y="1" width="647" height="446"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" selectionGranularity="word" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="qqp-t0-j4i" userLabel="Memory Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="169" width="643" height="518"/>
+                                                                    <rect key="frame" x="0.0" y="212" width="647" height="446"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    <size key="minSize" width="643" height="518"/>
+                                                                    <size key="minSize" width="647" height="446"/>
                                                                     <size key="maxSize" width="3840" height="58101"/>
                                                                     <attributedString key="textStorage">
                                                                         <fragment>
@@ -864,18 +914,18 @@
                                                             <rect key="frame" x="-100" y="-100" width="225" height="15"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
-                                                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="z8t-Mj-Ja9">
-                                                            <rect key="frame" x="-100" y="-100" width="15" height="135"/>
+                                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="z8t-Mj-Ja9">
+                                                            <rect key="frame" x="648" y="1" width="15" height="446"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                     </scrollView>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="280" identifier="Memory View.Height" id="1q4-G0-gXU"/>
                                                     <constraint firstAttribute="trailing" secondItem="fik-fC-8sT" secondAttribute="trailing" id="Bw2-S7-pH0"/>
                                                     <constraint firstAttribute="trailing" secondItem="dzC-sA-aHa" secondAttribute="trailing" identifier="Memory View.Trailing - Memory Scroll.Trailing" id="CnA-zf-PRO"/>
                                                     <constraint firstItem="fik-fC-8sT" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" id="LVP-JS-pu0"/>
                                                     <constraint firstItem="dzC-sA-aHa" firstAttribute="leading" secondItem="ZWI-gS-oPs" secondAttribute="leading" identifier="Memory Scroll.Leading - Memory View.Leading" id="Ze8-Ir-2gQ"/>
+                                                    <constraint firstAttribute="trailing" secondItem="d0p-Gc-l7M" secondAttribute="trailing" id="fOY-so-nG3"/>
                                                     <constraint firstAttribute="bottom" secondItem="dzC-sA-aHa" secondAttribute="bottom" identifier="Memory View.Bottom - Memory Scroll.Bottom" id="m9p-3C-szs"/>
                                                 </constraints>
                                                 <visibilityPriorities>
@@ -894,6 +944,7 @@
                                             <constraint firstItem="Cvo-4B-v1R" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" identifier="CPU Stack View.Leading - Debug Views.Leading" id="GTz-4R-DZt"/>
                                             <constraint firstItem="Cvo-4B-v1R" firstAttribute="top" secondItem="0fW-4Y-eIm" secondAttribute="top" identifier="CPU Stack View.Top - Debug Views.Top" id="azH-14-O3q"/>
                                             <constraint firstAttribute="trailing" secondItem="Cvo-4B-v1R" secondAttribute="trailing" identifier="Debug View.Trailing - CPU Stack View.Trailing" id="cxB-Rw-f6s"/>
+                                            <constraint firstAttribute="bottom" secondItem="ZWI-gS-oPs" secondAttribute="bottom" id="laf-FE-i3z"/>
                                             <constraint firstAttribute="trailing" secondItem="ZWI-gS-oPs" secondAttribute="trailing" identifier="Debug Views.Trailing - Memory View.Trailing" id="pgn-YI-oKb"/>
                                             <constraint firstItem="ZWI-gS-oPs" firstAttribute="leading" secondItem="0fW-4Y-eIm" secondAttribute="leading" identifier="Memory View.Leading - Debug Views.Leading" id="sPE-Nn-wNX"/>
                                         </constraints>
@@ -909,23 +960,23 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="0fW-4Y-eIm" firstAttribute="top" secondItem="JUf-qx-iuW" secondAttribute="top" identifier="Debug Views.Top - Debug Side Panel.Top" id="4K9-Jh-Zby"/>
-                                    <constraint firstAttribute="width" constant="645" identifier="Debug Side Panel.Width" id="ISn-zl-W0I"/>
+                                    <constraint firstAttribute="width" constant="664" identifier="Debug Side Panel.Width" id="ISn-zl-W0I"/>
                                     <constraint firstAttribute="trailing" secondItem="0fW-4Y-eIm" secondAttribute="trailing" identifier="Debug Side Panel.Trailing - Debug Views.Trailing" id="QYl-GI-RBo"/>
                                     <constraint firstAttribute="bottom" secondItem="0fW-4Y-eIm" secondAttribute="bottom" identifier="Debug Side Panel.Bottom - Debug Views.Bottom" id="i6Q-OP-9m0"/>
                                     <constraint firstItem="0fW-4Y-eIm" firstAttribute="leading" secondItem="JUf-qx-iuW" secondAttribute="leading" identifier="Debug Views.Leading - Debug Side Panel.Leading" id="oiu-yH-cRR"/>
                                 </constraints>
                             </customView>
-                            <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="2sL-CM-Zt5" userLabel="Memory Side Panel">
-                                <rect key="frame" x="1027" y="10" width="245" height="780"/>
+                            <customView identifier="Side Panel" focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="2sL-CM-Zt5" userLabel="Right Side Panel">
+                                <rect key="frame" x="1046" y="10" width="226" height="780"/>
                                 <subviews>
                                     <stackView focusRingType="none" distribution="fill" orientation="vertical" alignment="leading" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0UY-EH-lpp" userLabel="Debug Views">
-                                        <rect key="frame" x="0.0" y="0.0" width="245" height="780"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="226" height="780"/>
                                         <subviews>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aqD-5D-Xz1" userLabel="IO View">
-                                                <rect key="frame" x="0.0" y="390" width="245" height="390"/>
+                                                <rect key="frame" x="0.0" y="390" width="226" height="390"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-qw-owI">
-                                                        <rect key="frame" x="-2" y="374" width="249" height="16"/>
+                                                        <rect key="frame" x="-2" y="374" width="230" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="ISe-0R-r82"/>
                                                         </constraints>
@@ -936,17 +987,17 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="eRN-Gc-sG8" userLabel="Stack Scroll">
-                                                        <rect key="frame" x="0.0" y="0.0" width="245" height="366"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="226" height="366"/>
                                                         <clipView key="contentView" copiesOnScroll="NO" id="d4c-Qd-Yai" userLabel="Stack Clip View">
-                                                            <rect key="frame" x="1" y="1" width="228" height="364"/>
+                                                            <rect key="frame" x="1" y="1" width="209" height="364"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="dAS-QV-erJ" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="-744" width="228" height="364"/>
+                                                                    <rect key="frame" x="0.0" y="-744" width="209" height="364"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    <size key="minSize" width="228" height="364"/>
+                                                                    <size key="minSize" width="209" height="364"/>
                                                                     <size key="maxSize" width="3840" height="58101"/>
                                                                     <attributedString key="textStorage">
                                                                         <fragment content="1FF: FA 1FE: 84 1FD: 01 1FC: 01 1FB: 00 1FA: 1F 1F9: C1 1F7: D443 JSR 1F5: D532 JSR 1F3: FD77 JSR 1f1: FD37 JSR">
@@ -967,7 +1018,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="iDT-SJ-hdv">
-                                                            <rect key="frame" x="229" y="1" width="15" height="364"/>
+                                                            <rect key="frame" x="210" y="1" width="15" height="364"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                     </scrollView>
@@ -987,10 +1038,10 @@
                                                 </customSpacing>
                                             </stackView>
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ypu-2G-o19" userLabel="ZP View">
-                                                <rect key="frame" x="0.0" y="0.0" width="245" height="370"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="226" height="370"/>
                                                 <subviews>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6av-it-wJZ">
-                                                        <rect key="frame" x="4" y="354" width="243" height="16"/>
+                                                        <rect key="frame" x="4" y="354" width="224" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="N6w-DV-CWZ"/>
                                                         </constraints>
@@ -1001,17 +1052,17 @@
                                                         </textFieldCell>
                                                     </textField>
                                                     <scrollView horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" borderType="line" horizontalLineScroll="0.0" horizontalPageScroll="0.0" verticalLineScroll="0.0" verticalPageScroll="0.0" hasHorizontalScroller="NO" minMagnification="1" translatesAutoresizingMaskIntoConstraints="NO" id="PG5-wl-Rm5" userLabel="Stack Scroll">
-                                                        <rect key="frame" x="0.0" y="0.0" width="245" height="346"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="226" height="346"/>
                                                         <clipView key="contentView" copiesOnScroll="NO" id="co0-mz-BBS" userLabel="Stack Clip View">
-                                                            <rect key="frame" x="1" y="1" width="228" height="344"/>
+                                                            <rect key="frame" x="1" y="1" width="209" height="344"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Gsx-fZ-jrH" userLabel="Stack Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="-703" width="228" height="344"/>
+                                                                    <rect key="frame" x="0.0" y="-703" width="209" height="344"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                     <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                    <size key="minSize" width="228" height="344"/>
+                                                                    <size key="minSize" width="209" height="344"/>
                                                                     <size key="maxSize" width="3840" height="58101"/>
                                                                     <attributedString key="textStorage">
                                                                         <fragment content="1FF: FA 1FE: 84 1FD: 01 1FC: 01 1FB: 00 1FA: 1F 1F9: C1 1F7: D443 JSR 1F5: D532 JSR 1F3: FD77 JSR 1f1: FD37 JSR">
@@ -1032,7 +1083,7 @@
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                         <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="HXl-22-V8J">
-                                                            <rect key="frame" x="229" y="1" width="15" height="344"/>
+                                                            <rect key="frame" x="210" y="1" width="15" height="344"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                         </scroller>
                                                     </scrollView>
@@ -1095,16 +1146,16 @@
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="KjG-Xt-w0g"/>
                             <constraint firstItem="KwD-2D-fNp" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="LYb-x4-eZt"/>
                             <constraint firstItem="f2z-vp-zIf" firstAttribute="leading" secondItem="4pW-7e-eaj" secondAttribute="leading" constant="118" id="Nz3-Lb-ESq"/>
-                            <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Debug Side Panel.Top - Debugger View.Top" id="OaJ-lc-b0j"/>
+                            <constraint firstItem="JUf-qx-iuW" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="10" identifier="Debug Side Panel.Top - Debugger View.Top" id="OaJ-lc-b0j"/>
                             <constraint firstItem="JUf-qx-iuW" firstAttribute="trailing" secondItem="2sL-CM-Zt5" secondAttribute="leading" constant="-8" id="P1R-0q-9ak"/>
                             <constraint firstItem="Mgy-Qm-MWH" firstAttribute="trailing" secondItem="lw3-np-MbY" secondAttribute="trailing" id="PdI-W2-UUw"/>
                             <constraint firstItem="Mgy-Qm-MWH" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" constant="46" id="R2c-sP-wWP"/>
-                            <constraint firstItem="2sL-CM-Zt5" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" id="WxF-5Z-XHr"/>
+                            <constraint firstItem="2sL-CM-Zt5" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="10" id="WxF-5Z-XHr"/>
                             <constraint firstItem="kXX-RT-0Bb" firstAttribute="leading" secondItem="4pW-7e-eaj" secondAttribute="leading" constant="116" id="Xh5-tR-rGb"/>
                             <constraint firstAttribute="bottom" secondItem="JUf-qx-iuW" secondAttribute="bottom" constant="10" identifier="Debugger View.Bottom - Sebug Side Panel.Bottom" id="Y4T-sR-Hag"/>
                             <constraint firstItem="uQh-oP-EwQ" firstAttribute="top" secondItem="lw3-np-MbY" secondAttribute="top" id="YuC-6J-6RS"/>
                             <constraint firstItem="f2z-vp-zIf" firstAttribute="top" secondItem="4pW-7e-eaj" secondAttribute="top" id="bl4-gs-Kc0"/>
-                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="6" identifier="Disassembler.Top - Debugger View.Top" id="cCh-QQ-pyz"/>
+                            <constraint firstItem="jY7-ZU-I4z" firstAttribute="top" secondItem="Myj-W6-YvY" secondAttribute="top" constant="10" identifier="Disassembler.Top - Debugger View.Top" id="cCh-QQ-pyz"/>
                             <constraint firstItem="4pW-7e-eaj" firstAttribute="bottom" secondItem="dzC-sA-aHa" secondAttribute="bottom" id="e6d-iV-Mjx"/>
                             <constraint firstItem="lw3-np-MbY" firstAttribute="bottom" secondItem="Pcn-4j-EEM" secondAttribute="bottom" id="e8j-dQ-6Dc"/>
                             <constraint firstItem="VVf-7D-pjV" firstAttribute="trailing" secondItem="4pW-7e-eaj" secondAttribute="trailing" id="epT-27-6q6"/>
@@ -1146,6 +1197,8 @@
     <resources>
         <image name="Debugger" width="32" height="32"/>
         <image name="NSActionTemplate" width="14" height="14"/>
+        <image name="NSGoBackTemplate" width="9" height="12"/>
+        <image name="NSGoRightTemplate" width="9" height="12"/>
         <image name="NSStatusNone" width="16" height="16"/>
         <image name="NSStatusPartiallyAvailable" width="16" height="16"/>
         <image name="NSStatusUnavailable" width="16" height="16"/>

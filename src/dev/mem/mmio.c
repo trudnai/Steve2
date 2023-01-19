@@ -335,7 +335,7 @@ INLINE int is_io_interesting( uint16_t addr ) {
 }
 
 
-const int pasteBufferSize = 100;
+const int pasteBufferSize = 1000;
 int pasteBufferIdx = 0;
 uint8_t pasteBuffer[pasteBufferSize];
 
@@ -368,8 +368,10 @@ void kbdClearPasteBuffer(void) {
 
 
 void kbdPaste ( uint8_t code ) {
-    while (pasteBufferIdx >= pasteBufferSize) {
-        usleep(100);
+    if (pasteBufferIdx >= pasteBufferSize) {
+        while (pasteBufferIdx) {
+            usleep(100);
+        }
     }
 
     pasteBuffer[pasteBufferIdx++] = code;

@@ -29,11 +29,13 @@
 #include "woz.h"
 
 
-#ifdef DISASSEMBLER
-#define INSTR INLINE static
-#else
-#define INSTR INLINE static
-#endif
+//#ifdef DISASSEMBLER
+//#define INSTR INLINE static
+//#else
+//#define INSTR INLINE static
+//#endif
+
+#define INSTR static
 
 #define CRYSTAL_MHZ 14.31818                // NTSC version (original)
 #define DEFAULT_MHZ_6502 (CRYSTAL_MHZ / 14) // 1.023 MHz
@@ -230,13 +232,14 @@ extern double mhz;
 
 #define DEFAULT_FPS 60U
 #define DEF_VIDEO_DIV 2U
-#define DEF_SPKR_DIV 2U
+#define DEF_SPKR_DIV 1U
 #define DEF_DRV_LED_DIV 4U
 
 #define ECO_VIDEO_DIV 4U
 
-#define GAME_FPS 60U // 180U // 480U
-#define GAME_VIDEO_DIV 1U // (GAME_FPS / DEFAULT_FPS)
+#define GAME_FPS 600U // 180U // 480U
+#define GAME_VIDEO_DIV 10U // (GAME_FPS / DEFAULT_FPS)
+#define GAME_SPKR_DIV 10U
 
 extern unsigned int video_fps_divider;
 extern unsigned int fps;

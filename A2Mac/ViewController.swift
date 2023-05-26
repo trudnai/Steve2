@@ -1849,6 +1849,7 @@ class ViewController: NSViewController  {
 
             fps = DEFAULT_FPS
             video_fps_divider = ECO_VIDEO_DIV
+            spkr_fps_divider = DEF_SPKR_DIV
             break
             
         case "Game":
@@ -1857,6 +1858,7 @@ class ViewController: NSViewController  {
 
             fps = GAME_FPS
             video_fps_divider = GAME_VIDEO_DIV
+            spkr_fps_divider = GAME_SPKR_DIV
             break
             
         default:
@@ -1865,6 +1867,7 @@ class ViewController: NSViewController  {
             
             fps = DEFAULT_FPS
             video_fps_divider = DEF_VIDEO_DIV
+            spkr_fps_divider = DEF_SPKR_DIV
             break
         }
 

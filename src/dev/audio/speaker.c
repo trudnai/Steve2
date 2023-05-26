@@ -125,7 +125,7 @@ float spkr_vol = 0.5;
 
 
 unsigned spkr_fps = DEFAULT_FPS;
-//unsigned spkr_fps_divider = 1;
+unsigned spkr_fps_divider = DEF_SPKR_DIV;
 unsigned spkr_frame_cntr = 0;
 unsigned spkr_clk = 0;
 
@@ -498,14 +498,17 @@ char spkr_state = 0;
 
 
 #define _NO_SPKR_EARLY_ZERO_LEVEL 500
+const float SPKR_FADE_TRAILING_SLOPE = 0.2;
 
 INLINE void spkr_finish_square(const int new_idx) {
+
+    float level = spkr_level;
+    const float slope = spkr_level >= 0 ? SPKR_FADE_TRAILING_SLOPE : -SPKR_FADE_TRAILING_SLOPE;
 
     // avoid buffer under/over runs
     if ( (new_idx < 0) || (new_idx >= SPKR_BUF_SLOT_SIZE(BUFFER_COUNT)) ) {
         return;
     }
-
     
     // only fill small enough gaps and larger ones will go back to 0
 #ifdef SPKR_EARLY_ZERO_LEVEL
@@ -513,6 +516,10 @@ INLINE void spkr_finish_square(const int new_idx) {
 #endif
         // finish the aquare wave
         while ( spkr_sample_last_idx < new_idx ) {
+            if ( fabs(level) > SPKR_FADE_TRAILING_SLOPE ) {
+                level -= slope;
+                spkr_level = level;
+            }
             spkr_samples[ spkr_sample_last_idx++ ] = spkr_level;
             spkr_samples[ spkr_sample_last_idx++ ] = spkr_level; // stereo
         }
@@ -1156,7 +1163,7 @@ void spkr_buffer_with_prebuf(void) {
 
 
 void spkr_update() {
-//    if ( ++spkr_frame_cntr >= spkr_fps_divider ) {
+    if ( ++spkr_frame_cntr >= spkr_fps_divider ) {
         spkr_frame_cntr = 0;
         
         // Fix: Unqueue was not working properly some cases, so we need to monitor
@@ -1248,10 +1255,10 @@ void spkr_update() {
         
         spkr_clk = 0;
         
-//    }
-//    else {
-//        spkr_clk += m6502.clkfrm;
-//    }
+    }
+    else {
+        spkr_clk += m6502.clkfrm;
+    }
     
     // free up unused buffers
     spkr_unqueue( spkr_src[SPKR_SRC_GAME_SFX] );

@@ -32,7 +32,7 @@ uint8_t* HiResBufferPointer = Apple2_64K_MEM + Page1Addr;
 uint16_t HiResLineAddrTbl[PixelHeight];
 
 
-double pixelTrail = 15;
+double pixelTrail = 2.0;
 
 
 typedef enum {

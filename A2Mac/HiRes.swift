@@ -219,6 +219,8 @@ class HiRes: NSView {
         }
     }
 
+
+    let usePixelTrail = true
     
 //    let pixelTrail = 2 // maybe too fast?
 //    let pixelTrail = 1.5
@@ -275,11 +277,14 @@ class HiRes: NSView {
                 if shadowScreen[ screenIdx ] != block {
                     blockChanged[ blockVertIdx + blockHorIdx ] = 0xFF
                 }
-                else if ( ViewController.shared?.CRTMonitor ?? false ) {
+                else if usePixelTrail && ( ViewController.shared?.CRTMonitor ?? false ) {
                     // slow CRT fade out effect
                     if (y % HiRes.blockHeight == 0) && (blockChanged[ blockVertIdx + blockHorIdx ] > 0) {
                         blockChanged[ blockVertIdx + blockHorIdx ] = UInt8( Double(blockChanged[ blockVertIdx + blockHorIdx ]) / pixelTrail )
                     }
+                }
+                else {
+                    blockChanged[ blockVertIdx + blockHorIdx ] = 0
                 }
                 
                 shadowScreen[ screenIdx ] = block
@@ -296,21 +301,22 @@ class HiRes: NSView {
                         }
                         prevColor = monoColor
                     }
-//                    else if ( ViewController.current?.CRTMonitor ?? false ) {
-//                        var srgb = pixelsSRGB[pixelAddr]
-//
-//                        let s = srgb >> 24 & 0xFF
-//                        let r = srgb >> 16 & 0xFF
-//                        let g = srgb >>  8 & 0xFF
-//                        let b = srgb >>  0 & 0xFF
-//
-//                        srgb = UInt32(Double(s) / pixelTrail) << 24
-//                             | UInt32(Double(r) / pixelTrail) << 16
-//                             | UInt32(Double(g) / pixelTrail) << 8
-//                             | UInt32(Double(b) / pixelTrail)
-//
-//                        pixelsSRGB[pixelAddr] = srgb;
-//                    }
+                    else if usePixelTrail && ( ViewController.shared?.CRTMonitor ?? false ) {
+                        var srgb = pixelsSRGB[pixelAddr + highBit]
+
+                        let s = srgb >> 24 & 0xFF
+                        let r = srgb >> 16 & 0xFF
+                        let g = srgb >>  8 & 0xFF
+                        let b = srgb >>  0 & 0xFF
+
+                        srgb = UInt32(Double(s) / pixelTrail) << 24
+                             | UInt32(Double(r) / pixelTrail) << 16
+                             | UInt32(Double(g) / pixelTrail) << 8
+                             | UInt32(Double(b) / pixelTrail)
+
+                        pixelsSRGB[pixelAddr + highBit]     = srgb;
+                        pixelsSRGB[pixelAddr + highBit + 1] = srgb;
+                    }
                     else {
                         pixelsSRGB[pixelAddr + highBit]     = color_black
                         pixelsSRGB[pixelAddr + highBit + 1] = color_black
@@ -346,7 +352,7 @@ class HiRes: NSView {
             
         case 2: // green
             // reducing color bleeding
-            if (colorAddr > 0) && (pixelsSRGB[colorAddr - 2] != color_black) {
+            if (colorAddr > 1) && (pixelsSRGB[colorAddr - 2] != color_black) {
                 pixelsSRGB[colorAddr]     = color_green
                 pixelsSRGB[colorAddr + 1] = color_green
             }

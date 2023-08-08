@@ -343,9 +343,8 @@ class HiRes: NSView {
         case 1: // purple (bits are in reverse!)
             pixelsSRGB[colorAddr]     = color_purple
             pixelsSRGB[colorAddr + 1] = color_purple
-//            HiRes.pixelsSRGB[colorAddr + 1] = color_purple
+            pixelsSRGB[colorAddr + 2] = color_purple
             if  (colorAddr >= 2) && (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
-                pixelsSRGB[colorAddr]     = color_purple
                 pixelsSRGB[colorAddr - 1] = color_purple
                 pixelsSRGB[colorAddr - 2] = color_purple
             }
@@ -353,58 +352,68 @@ class HiRes: NSView {
         case 2: // green
             // reducing color bleeding
             if (colorAddr > 1) && (pixelsSRGB[colorAddr - 2] != color_black) {
-                pixelsSRGB[colorAddr]     = color_green
-                pixelsSRGB[colorAddr + 1] = color_green
+                pixelsSRGB[colorAddr + 0] = color_green
             }
+            pixelsSRGB[colorAddr]     = color_green
+            pixelsSRGB[colorAddr + 1] = color_green
             pixelsSRGB[colorAddr + 2] = color_green
             pixelsSRGB[colorAddr + 3] = color_green
 
         case 3: // white 1
-//            if ( colorAddr >= 2 ) && ( HiRes.pixelsSRGB[colorAddr - 2] != color_black ) {
-//                HiRes.pixelsSRGB[colorAddr - 1] = HiRes.pixelsSRGB[colorAddr - 2]
+//            if ( colorAddr >= 2 ) && ( pixelsSRGB[colorAddr - 2] != color_black ) {
+//                pixelsSRGB[colorAddr - 2] = color_white // HiRes.pixelsSRGB[colorAddr - 2]
 //            }
 //            if (colorAddr >= 1) {
 //                HiRes.pixelsSRGB[colorAddr - 1] = color_yellow
 //            }
-            pixelsSRGB[colorAddr]     = color_white
+            pixelsSRGB[colorAddr - 1] = color_white
+            pixelsSRGB[colorAddr + 0] = color_white
             pixelsSRGB[colorAddr + 1] = color_white
             pixelsSRGB[colorAddr + 2] = color_white
             pixelsSRGB[colorAddr + 3] = color_white
+            pixelsSRGB[colorAddr + 4] = color_white
 
         case 5: // blue
             pixelsSRGB[colorAddr + 1] = color_blue
             pixelsSRGB[colorAddr + 2] = color_blue
+            pixelsSRGB[colorAddr]     = color_blue
+            pixelsSRGB[colorAddr - 1] = color_blue
             if  (colorAddr >= 2) && (prev != 0x00) && (prev != 0x04) {
-                pixelsSRGB[colorAddr]     = color_blue
-                pixelsSRGB[colorAddr - 1] = color_blue
                 pixelsSRGB[colorAddr - 2] = color_blue
             }
 
         case 6: // orange
             // reducing color bleeding
-            if (colorAddr > 0) && (pixelsSRGB[colorAddr] != color_black) {
+            if (colorAddr > 0) && (pixelsSRGB[colorAddr - 2] != color_black) {
+                pixelsSRGB[colorAddr + 0] = color_orange // important for color bleeding and color contiunity
                 pixelsSRGB[colorAddr + 1] = color_orange
-                pixelsSRGB[colorAddr + 2] = color_orange
             }
+            pixelsSRGB[colorAddr + 2] = color_orange
             pixelsSRGB[colorAddr + 3] = color_orange
             pixelsSRGB[colorAddr + 4] = color_orange
 
         case 7: // white 2
-//            pixelsSRGB[colorAddr + 0] = color_white // Donkey Kong would be perfect but problem in Sneakers
+            if ( colorAddr >= 2 ) && ( pixelsSRGB[colorAddr - 2] != color_black ) {
+//                pixelsSRGB[colorAddr - 2] = color_white // HiRes.pixelsSRGB[colorAddr - 2]
+                pixelsSRGB[colorAddr - 1] = color_white
+            }
+            pixelsSRGB[colorAddr + 0] = color_white // Donkey Kong would be perfect but problem in Sneakers
             pixelsSRGB[colorAddr + 1] = color_white
             pixelsSRGB[colorAddr + 2] = color_white
             pixelsSRGB[colorAddr + 3] = color_white
             pixelsSRGB[colorAddr + 4] = color_white
 
         case 0: // 0x00 (black 1), 0x04 (black 2)
-            pixelsSRGB[colorAddr + 0] = color_black
+//            pixelsSRGB[colorAddr + 0] = color_black
             pixelsSRGB[colorAddr + 1] = color_black
             pixelsSRGB[colorAddr + 2] = color_black
             pixelsSRGB[colorAddr + 3] = color_black
 
             // white adjustment
+//            if (colorAddr >= 2) && ((prev == 3) || (prev == 7)) {
             if (colorAddr >= 2) && (prev == 7) {
                 pixelsSRGB[colorAddr - 1] = color_black
+                pixelsSRGB[colorAddr - 0] = color_black
             }
             // blue adjustment
             if (colorAddr >= 2) && (prev == 5) {
@@ -418,6 +427,7 @@ class HiRes: NSView {
             pixelsSRGB[colorAddr + 4] = color_black
 
             // white adjustment
+//            if (colorAddr >= 2) && ((prev == 3) || (prev == 7)) {
             if (colorAddr >= 2) && (prev == 7) {
                 pixelsSRGB[colorAddr - 0] = color_black
             }
@@ -427,6 +437,43 @@ class HiRes: NSView {
                 pixelsSRGB[colorAddr - 1] = color_black
 //                pixelsSRGB[colorAddr - 2] = color_black // if i put that in there is ladder on Donkey Kong is too thin
             }
+
+
+//            let pp = pixelAddr - 1 // HiRes.pixelAddrBlockIncrement
+//            let cp = pixelsSRGB[pp / 4]
+//
+//            let pa = pixelAddr - HiRes.pixelAddrBlockIncrement * 7 * 20
+//            let ca = pixelsSRGB[pa / 4]
+//
+//            if cp == ca {
+//                switch cp {
+//                case color_blue, color_white, color_green, color_purple, color_orange, color_yellow:
+////                    pixelsSRGB[pp/4] = color_turquis
+////                    pixelsSRGB[pa/4] = color_yellow
+//
+//                    let c1 = ca & 0x00FFFFFF
+//                    let a = ca >> 24
+//                    let a1 = (a / 6) << 24
+//                    let a2 = a1 * 2
+//                    let a3 = a1 * 3
+//                    let a4 = a1 * 4
+//
+////                    pixelsSRGB[colorAddr + 0] = a4 | c1
+////                    pixelsSRGB[colorAddr + 1] = a3 | c1
+////                    pixelsSRGB[colorAddr + 2] = a2 | c1
+////                    pixelsSRGB[colorAddr + 3] = a1 | c1
+//
+//                    pixelsSRGB[colorAddr + 0] = a4 | c1
+//                    pixelsSRGB[colorAddr + 1] = a2 | c1
+//
+//                //            let pb = pixelAddr + HiRes.pixelAddrBlockIncrement * 7 * 20
+//                //            let cb = pb / 4
+//                //            pixelsSRGB[cb] = pixelsSRGB[colorAddr]
+//                default:
+//                    break
+//                }
+//
+//            }
 
         default:
             break
@@ -439,6 +486,7 @@ class HiRes: NSView {
             if colorAddr >= 2 {
                 pixelsSRGB[colorAddr - 1] = color_white
                 pixelsSRGB[colorAddr - 2] = color_white
+                pixelsSRGB[colorAddr - 3] = color_white
             }
             // blue expansion
             if pixel == 5 {
@@ -475,18 +523,21 @@ class HiRes: NSView {
 
         // blue adjustment -- followed by white
         else if (prev == 0x05) && (
-            (pixel == 0x05) ||
-            (pixel == 0x03) || (pixel == 0x07)  // white
+            (pixel == 0x05)
+         || (pixel == 0x03)
+         || (pixel == 0x07)  // white
         ) {
-            pixelsSRGB[colorAddr - 0] = color_blue
-            pixelsSRGB[colorAddr - 1] = color_blue
-            pixelsSRGB[colorAddr - 2] = color_blue
+//            pixelsSRGB[colorAddr - 0] = color_blue
+//            pixelsSRGB[colorAddr - 1] = color_blue
+            pixelsSRGB[colorAddr - 2] = color_blue // blue color  bleed
         }
-        
+
     }
 
 
-    static let pixelAddrBlockIncrement = 8 * 2 // 2 display pixels per logical pixel
+    static let logicalPixels = 8
+    static let physicalPixels = 2
+    static let pixelAddrBlockIncrement = logicalPixels * physicalPixels // 2 display pixels per logical pixel
 
     func RenderColor() {
         var height = HiRes.PixelHeight
@@ -601,7 +652,7 @@ class HiRes: NSView {
             currentContext?.interpolationQuality = .high // TODO: Make a switch that lets you turn on and off "old monitor effects"
         }
         else {
-            currentContext?.interpolationQuality = .none
+            currentContext?.interpolationQuality = .high // .none
         }
         currentContext?.draw(image, in: boundingBox)
     }

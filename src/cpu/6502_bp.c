@@ -172,7 +172,7 @@ uint16_t m6502_dbg_bp_get_first(uint16_t * bp) {
 /// m6502_dbg_bp_get_empty
 /// Get an empty slot in the bp storage
 /// @return Index of the empty breakpoint or -1 if error
-int m6502_dbg_bp_get_empty() {
+int m6502_dbg_bp_get_empty(void) {
     for (int i = 0; i < DEBUG_MAX_BREAKPOINTS; i++) {
         if ( breakpoints[i] == 0 ) {
             return i;

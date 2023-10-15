@@ -291,7 +291,7 @@ static void spkr_debug(FILE * file) {
 
 
 // initialize OpenAL
-void spkr_init() {
+void spkr_init(void) {
     const char *defname = alcGetString(NULL, ALC_DEFAULT_DEVICE_SPECIFIER);
     dbgPrintf2( "Default device: %s\n", defname );
     
@@ -390,7 +390,7 @@ void spkr_init() {
 }
 
 
-void spkr_vol_up() {
+void spkr_vol_up(void) {
     spkr_vol += 0.1;
     if ( spkr_vol > 1 ) {
         spkr_vol = 1;
@@ -399,7 +399,7 @@ void spkr_vol_up() {
     al_check_error();
 }
 
-void spkr_vol_dn() {
+void spkr_vol_dn(void) {
     spkr_vol -= 0.1;
     if ( spkr_vol < 0.1 ) {
         // use mute to make it completely silent
@@ -409,7 +409,7 @@ void spkr_vol_dn() {
     al_check_error();
 }
 
-void spkr_mute() {
+void spkr_mute(void) {
     ALfloat vol = 0;
     alGetListenerf(AL_GAIN, &vol);
     al_check_error();
@@ -459,7 +459,7 @@ void spkr_unqueueAll(void) {
 
 
 // Dealloc OpenAL
-void spkr_exit() {
+void spkr_exit(void) {
     if ( spkr_src[SPKR_SRC_GAME_SFX] ) {
         spkr_stopAll();
         spkr_unqueueAll();
@@ -564,7 +564,7 @@ float SPKR_INITIAL_LEADING_EDGE   = 0.64; // leading edge should be pretty steep
 float SPKR_INITIAL_TRAILING_EDGE  = 0.64; // need a bit of slope to get Xonix sound good
 
 
-void spkr_toggle() {
+void spkr_toggle(void) {
     // do not sleep while sound is playing
     m6502.ecoSpindown = ecoSpindown;
 
@@ -941,7 +941,7 @@ INLINE static spkr_sample_t spkr_avg_new(const spkr_sample_t * buf, int len) {
 }
 
 
-INLINE static void spkr_downsample() {
+INLINE static void spkr_downsample(void) {
     for (int i = 0; i < SPKR_BUF_SIZE; ) {
         int buf_idx = i * SPKR_OVERSAMPLING;
         
@@ -956,7 +956,7 @@ INLINE static void spkr_downsample() {
 #endif
 
 
-INLINE static void spkr_filter() {
+INLINE static void spkr_filter(void) {
     // Debug SPKR Buffer Before filters
     spkr_debug(spkr_debug_raw_file);
     
@@ -1162,7 +1162,7 @@ void spkr_buffer_with_prebuf(void) {
 }
 
 
-void spkr_update() {
+void spkr_update(void) {
     if ( ++spkr_frame_cntr >= spkr_fps_divider ) {
         spkr_frame_cntr = 0;
         
@@ -1358,7 +1358,7 @@ void spkr_stop_sfx( ALuint src ) {
 }
 
 
-bool spkr_is_disk_motor_playing() {
+bool spkr_is_disk_motor_playing(void) {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         ALenum state;
         alGetSourcei( spkr_src[SPKR_SRC_DISK_MOTOR_SFX], AL_SOURCE_STATE, &state );
@@ -1369,7 +1369,7 @@ bool spkr_is_disk_motor_playing() {
 }
 
 
-void spkr_play_disk_motor() {
+void spkr_play_disk_motor(void) {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_play_sfx( spkr_src[SPKR_SRC_DISK_MOTOR_SFX], diskmotor_sfx, diskmotor_sfx_len );
     }
@@ -1383,7 +1383,7 @@ void spkr_stop_disk_motor( int time ) {
 }
 
 
-void spkr_play_disk_arm() {
+void spkr_play_disk_arm(void) {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         if ( spkr_play_disk_ioerr_time == 0 ) {
             spkr_play_sfx( spkr_src[SPKR_SRC_DISK_ARM_SFX], diskarm_sfx, diskarm_sfx_len );
@@ -1393,7 +1393,7 @@ void spkr_play_disk_arm() {
 }
 
 
-void spkr_play_disk_ioerr() {
+void spkr_play_disk_ioerr(void) {
     if ( ( disk_sfx_enabled ) && ( clk_6502_per_frm <= FRAME(iicplus_MHz_6502) ) ) {
         spkr_playqueue_sfx( spkr_src[SPKR_SRC_DISK_IOERR_SFX], diskioerr_sfx, diskioerr_sfx_len);
         spkr_play_disk_ioerr_time = fps / 10; // 4 for 30 FPS, 8 for 60 FPS
@@ -1401,19 +1401,19 @@ void spkr_play_disk_ioerr() {
 }
 
 
-void spkr_stopAll() {
+void spkr_stopAll(void) {
     for ( int i = 0; i < SOURCES_COUNT; i++ ) {
         spkr_stop_sfx( spkr_src[i] );
     }
 }
 
 
-void spkr_stop_game_sfx() {
+void spkr_stop_game_sfx(void) {
     spkr_stop_sfx( spkr_src[SPKR_SRC_GAME_SFX] );
 }
 
 
-void spkr_stop_disk_sfx() {
+void spkr_stop_disk_sfx(void) {
     spkr_stop_sfx( spkr_src[SPKR_SRC_DISK_ARM_SFX] );
     spkr_stop_sfx( spkr_src[SPKR_SRC_DISK_MOTOR_SFX] );
     spkr_stop_sfx( spkr_src[SPKR_SRC_DISK_IOERR_SFX] );
@@ -1432,7 +1432,7 @@ void update_disk_sfx( int * time, ALuint src ) {
 }
 
 
-void spkr_update_disk_sfx() {
+void spkr_update_disk_sfx(void) {
     // is user speeds up the machine, disk sfx needs to be stopped
     if ( ( ! disk_sfx_enabled ) || ( clk_6502_per_frm > FRAME(iicplus_MHz_6502) ) ) {
         if ( spkr_play_disk_motor_time ) {

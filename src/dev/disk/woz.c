@@ -312,7 +312,7 @@ INLINE uint8_t woz_readByte(unsigned trk, unsigned ofs) {
     return (*woz_trks)[trk].data[ofs];
 }
 
-uint8_t woz_read() {
+uint8_t woz_read(void) {
 
     if ( woz_tmap && woz_trks ) {
         int track = woz_tmap->phase[disk.phase.count];
@@ -500,7 +500,7 @@ void woz_free_buffer(void) {
 }
 
 
-int woz_parseBuffer() {
+int woz_parseBuffer(void) {
     
     woz_flags.disk_modified = 0;
     woz_flags.disk_write_protected = 0;
@@ -627,7 +627,7 @@ int woz_loadFile( const char * filename ) {
 void woz_ask_to_save(void);
 
 
-void woz_eject() {
+void woz_eject(void) {
     if ( woz_flags.disk_modified ) {
         woz_ask_to_save();
     }

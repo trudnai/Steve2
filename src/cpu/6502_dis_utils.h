@@ -88,7 +88,7 @@ extern void printDisassembly( FILE * f );
 
 extern size_t disassLineLength;
 
-extern const char * disassemblyLine();
+extern const char * disassemblyLine(void);
 
 
 #endif /* _6502_dis_utils_h */

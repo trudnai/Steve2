@@ -175,7 +175,7 @@ void printDisassembly( FILE * f ) {
 
 size_t disassLineLength = 0;
 
-const char * disassemblyLine() {
+const char * disassemblyLine(void) {
     static char line[256];
 
     snprintf( line, sizeof(line), "%s %s: %-11s%-4s%s",

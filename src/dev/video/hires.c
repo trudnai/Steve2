@@ -98,7 +98,7 @@ void hires_clearChanges(void) {
 }
 
 
-void hires_renderMono() {
+void hires_renderMono(void) {
     int height = PixelHeight;
     
     // do not even render it...

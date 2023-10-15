@@ -34,7 +34,7 @@ double * pdl_valarr = pdl_value;
 double * pdl_prevarr = pdl_prev;
 double * pdl_diffarr = pdl_diff;
 
-INLINE uint8_t pdl_reset() {
+INLINE uint8_t pdl_reset(void) {
     pdl_reset_time = m6502.clktime + m6502.clkfrm;
     return 0;
 }

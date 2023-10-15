@@ -88,7 +88,7 @@ const uint8_t log2phy_cpm[16] = {
 
 
 
-void disk_accelerator_speedup() {
+void disk_accelerator_speedup(void) {
     if ( ( diskAccelerator_enabled ) && ( FRAME(diskAccelerator_speed) >= clk_6502_per_frm ) ) {
         clk_6502_per_frm =
         clk_6502_per_frm_max = FRAME(diskAccelerator_speed);  // clk_6502_per_frm_diskAccelerator;
@@ -96,7 +96,7 @@ void disk_accelerator_speedup() {
     }
 }
 
-void disk_phase() {
+void disk_phase(void) {
 
     int position = magnet_to_Poistion[disk.phase.magnet];
     if ( position >= 0 ) {
@@ -146,16 +146,16 @@ void disk_phase_off( uint8_t currentMagnet ) {
     disk_phase();
 }
 
-void disk_motor_on() {
+void disk_motor_on(void) {
     spkr_play_disk_motor();
     spkr_stop_disk_motor( -1 );
 }
 
-void disk_motor_off() {
+void disk_motor_off(void) {
     spkr_stop_disk_motor( 3 * fps ); // 3 second delay
 }
 
-uint8_t disk_read() {
+uint8_t disk_read(void) {
     dbgPrintf("io_DISK_READ (S%u)\n", 6);
     
     disk.clk_last_access = m6502.clktime;

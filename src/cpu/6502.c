@@ -289,17 +289,17 @@ unsigned long long epoch = 0;
 
 
 
-void interrupt_IRQ() {
+void interrupt_IRQ(void) {
     m6502.PC = memread16(IRQ_VECTOR);
     // TODO: PUSH things onto stack?
 }
 
-void interrupt_NMI() {
+void interrupt_NMI(void) {
     m6502.PC = memread16(NMI_VECTOR);
     // TODO: PUSH things onto stack?
 }
 
-void hardReset() {
+void hardReset(void) {
     m6502.PC = memread16(RESET_VECTOR);
     // make sure it will be a cold reset...
     _memwrite(0x3F4, 0);
@@ -309,7 +309,7 @@ void hardReset() {
     setFlags(0x25);
 }
 
-void softReset() {
+void softReset(void) {
 //    m6502.PC = memread16(SOFTRESET_VECTOR);
     m6502.PC = memread16( RESET_VECTOR );
     
@@ -324,7 +324,7 @@ void softReset() {
 }
 
 
-void m6502_Run() {
+void m6502_Run(void) {
 
     // init time
 //#ifdef CLK_WAIT
@@ -497,7 +497,7 @@ void rom_loadFile( const char * bundlePath, const char * filename ) {
 }
 
 
-void openLog() {
+void openLog(void) {
 #ifdef DISASS_TRACE
     outdev = fopen("/Users/trudnai/Library/Containers/com.trudnai.steveii/Data/disassembly_new.log", "w+");
 #endif
@@ -508,7 +508,7 @@ void openLog() {
 }
 
 
-void closeLog() {
+void closeLog(void) {
     if ( ( outdev ) && ( outdev != stdout ) && ( outdev != stderr ) ) {
         fclose(outdev);
     }
@@ -681,7 +681,7 @@ void m6502_ColdReset( const char * bundlePath, const char * romFileName ) {
 }
 
 
-void tst6502() {
+void tst6502(void) {
     // insert code here...
     printf("6502\n");
     

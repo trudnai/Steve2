@@ -35,7 +35,12 @@
 //#define INSTR INLINE static
 //#endif
 
-#define INSTR static inline
+#ifdef DEBUG
+#define INSTR static
+#else
+#define INSTR static inline __attribute__((always_inline)) UNUSED
+//#define INSTR static inline __attribute__((always_inline)) __attribute__((regcall)) UNUSED
+#endif
 
 #define CRYSTAL_MHZ 14.31818                // NTSC version (original)
 #define DEFAULT_MHZ_6502 (CRYSTAL_MHZ / 14) // 1.023 MHz

@@ -32,8 +32,8 @@
 #ifdef DEBUG
 #define INLINE UNUSED
 #else
-// #define INLINE static __attribute__((always_inline))
-#define INLINE __attribute__((always_inline)) UNUSED
+ #define INLINE __attribute__((always_inline)) UNUSED
+//#define INLINE __attribute__((always_inline)) __attribute__((fastcall)) UNUSED
 #endif
 
 

@@ -1102,10 +1102,13 @@ class ViewController: NSViewController  {
         
         if textNeedRender || shadowTxt != unicodeTextString {
             shadowTxt = unicodeTextString
-            //                display.stringValue = unicodeTextString
+
             let selectedRange = textDisplay.selectedRange()
-            textDisplay.string = unicodeTextString
-            textDisplay.setSelectedRange(selectedRange)
+
+//            DispatchQueue.main.async { [self] in
+                textDisplay.string = unicodeTextString
+                textDisplay.setSelectedRange(selectedRange)
+//            }
             
 //                let bold14 = NSFont.boldSystemFont(ofSize: 14.0)
 //                let textColor = NSColor.red
@@ -1125,6 +1128,7 @@ class ViewController: NSViewController  {
 
 
     func UpdateCPUspeed() {
+//        DispatchQueue.main.async { [self] in
         // under ~1.5 MHz -- 3 decimals to be able to display 1.023 MHz
         if ( (mhz < 1.4) && (mhz != floor(mhz)) ) {
             speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
@@ -1141,6 +1145,7 @@ class ViewController: NSViewController  {
         else {
             speedometer.stringValue = String(format: "%0.0lf MHz", mhz);
         }
+//        }
     }
     
     
@@ -1193,6 +1198,7 @@ class ViewController: NSViewController  {
         // Rendering is happening in the main thread, which has two implications:
         //   1. We can update UI elements
         //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
+//        DispatchQueue.global(qos: .userInitiated).async {
         DispatchQueue.main.async {
             self.UpdateText()
             self.UpdateCPUspeed()
@@ -1306,6 +1312,8 @@ class ViewController: NSViewController  {
 
     let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
+//        clk_6502_per_frm_max = 0
+
         if UpdateSemaphore.wait(timeout: .now() + 0.001) == .timedOut {
             // get back here next time...
             return
@@ -1376,13 +1384,15 @@ class ViewController: NSViewController  {
                     m6502.interrupt = NO_INT
                 }
                 else {
-                    m6502_Run()
+//                    DispatchQueue.global(qos: .userInitiated).async {
+                        m6502_Run()
+//                    }
                     // cpuState = cpuState_running
                 }
-                
+
                 // video rendering
                 if ( frameCounter % video_fps_divider == 0 ) {
-                    self.Render()
+                    Render()
                 }
 
                 // TODO: This should be in Debugger!

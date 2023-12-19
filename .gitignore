@@ -24,3 +24,5 @@ Resources/rom/Downloads/apple_iie_rom.zip
 Resources/rom/Downloads/077-0026-0027 for IIe.zip
 
 **/Contents/**
+.DS_Store
+Brewfile

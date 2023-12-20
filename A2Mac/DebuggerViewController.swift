@@ -28,10 +28,14 @@ class DebuggerViewController: NSViewController {
 
     @IBOutlet var CPU_Display: DisplayView!
     @IBOutlet var Stack_Display: DisplayView!
+    @IBOutlet var Mem1_Addr_Nibbles: NSTextField!
     @IBOutlet var Mem1_Display: DisplayView!
+    @IBOutlet var ZP_Display: DisplayView!
+    @IBOutlet var IO_Display: DisplayView!
     @IBOutlet var Disass_Scroll: DisplayScrollView!
     @IBOutlet var Disass_Display: DisplayView!
     @IBOutlet weak var MemoryAddressField: NSTextField!
+    @IBOutlet weak var MemoryTextField: NSTextField!
     @IBOutlet weak var DisassAddressField: NSTextField!
     @IBOutlet weak var DisassAddressPC: NSButton!
     @IBOutlet weak var DisassTextField: NSTextField!
@@ -42,27 +46,43 @@ class DebuggerViewController: NSViewController {
     @IBOutlet weak var DisassBackground: NSTextField!
 
 
-    let textFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
+    let infoFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
+    let disassFont : NSFont = NSFont(name: "Print Char 21", size: 10.0)!
     let textColor : NSColor = NSColor.white
     let highlightColor : NSColor = NSColor.blue
-    let textParagraph : NSMutableParagraphStyle = NSMutableParagraphStyle()
-    let textAttribs : [NSAttributedString.Key : NSObject]
-    let highlightAttribs : [NSAttributedString.Key : NSObject]
+    let infoTextParagraph : NSMutableParagraphStyle = NSMutableParagraphStyle()
+    let disassTextParagraph : NSMutableParagraphStyle = NSMutableParagraphStyle()
+    let infoTextAttribs : [NSAttributedString.Key : NSObject]
+    let disassTextAttribs : [NSAttributedString.Key : NSObject]
+    let infoHighlightAttribs : [NSAttributedString.Key : NSObject]
+    let disassHighlightAttribs : [NSAttributedString.Key : NSObject]
 
     required init?(coder: NSCoder) {
 //        textParagraph.lineSpacing = 10.0  /*this sets the space BETWEEN lines to 10points*/
 //        textParagraph.maximumLineHeight = 12.0/*this sets the MAXIMUM height of the lines to 12points*/
-        textParagraph.lineHeightMultiple = 1.15
-        textAttribs = [
-            NSAttributedString.Key.font: textFont,
+        disassTextParagraph.lineHeightMultiple = 1.15
+        disassTextAttribs = [
+            NSAttributedString.Key.font: disassFont,
             NSAttributedString.Key.foregroundColor: textColor,
-            NSAttributedString.Key.paragraphStyle: textParagraph
+            NSAttributedString.Key.paragraphStyle: disassTextParagraph
         ]
-        highlightAttribs = [
-            NSAttributedString.Key.font: textFont,
+        disassHighlightAttribs = [
+            NSAttributedString.Key.font: disassFont,
             NSAttributedString.Key.foregroundColor: textColor,
             NSAttributedString.Key.backgroundColor: highlightColor,
-            NSAttributedString.Key.paragraphStyle: textParagraph
+            NSAttributedString.Key.paragraphStyle: disassTextParagraph
+        ]
+        infoTextParagraph.lineHeightMultiple = 1.15
+        infoTextAttribs = [
+            NSAttributedString.Key.font: disassFont,
+            NSAttributedString.Key.foregroundColor: textColor,
+            NSAttributedString.Key.paragraphStyle: infoTextParagraph
+        ]
+        infoHighlightAttribs = [
+            NSAttributedString.Key.font: disassFont,
+            NSAttributedString.Key.foregroundColor: textColor,
+            NSAttributedString.Key.backgroundColor: highlightColor,
+            NSAttributedString.Key.paragraphStyle: infoTextParagraph
         ]
 
         super.init(coder: coder)
@@ -71,8 +91,8 @@ class DebuggerViewController: NSViewController {
 
 
     func disassDisplay(str : String) {
-        let attrString = NSAttributedString.init(string: String(str.dropLast()), attributes: textAttribs)
-        DisassTextField.attributedStringValue = attrString
+        let disassAttrString = NSAttributedString.init(string: String(str.dropLast()), attributes: disassTextAttribs)
+        DisassTextField.attributedStringValue = disassAttrString
     }
 
 
@@ -87,6 +107,14 @@ class DebuggerViewController: NSViewController {
         var r = Disass_Display.frame
         r.size.height = 65535
         Disass_Display.frame = r
+        
+        
+        CPU_Display.font = infoFont
+        Stack_Display.font = infoFont
+        Mem1_Addr_Nibbles.font = infoFont
+        Mem1_Display.font = infoFont
+        ZP_Display.font = infoFont
+        IO_Display.font = infoFont
 
     }
 

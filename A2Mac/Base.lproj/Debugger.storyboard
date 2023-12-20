@@ -236,7 +236,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1280" height="800"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uQh-oP-EwQ" userLabel="DisassBackground">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uQh-oP-EwQ" userLabel="DisassBackground">
                                 <rect key="frame" x="12" y="10" width="362" height="751"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="YJj-UG-uPe">
                                     <font key="font" metaFont="system" size="10"/>
@@ -244,7 +244,7 @@
                                     <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KwD-2D-fNp" userLabel="DisassHighlighter">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KwD-2D-fNp" userLabel="DisassHighlighter">
                                 <rect key="frame" x="12" y="746" width="362" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="ZoQ-wC-c4X"/>
@@ -255,7 +255,7 @@
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgy-Qm-MWH" userLabel="DisassCursor">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mgy-Qm-MWH" userLabel="DisassCursor">
                                 <rect key="frame" x="12" y="700" width="362" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="iWk-6p-CrU"/>
@@ -266,7 +266,7 @@
                                     <color key="backgroundColor" white="1" alpha="0.33000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lw3-np-MbY" userLabel="Disassembly">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lw3-np-MbY" userLabel="Disassembly">
                                 <rect key="frame" x="10" y="10" width="366" height="751"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" id="V2q-LD-et1">
                                     <font key="font" metaFont="system" size="10"/>
@@ -274,7 +274,7 @@
                                     <color key="backgroundColor" red="0.11372549019607843" green="0.11372549019607843" blue="0.11372549019607843" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TWP-wN-aCW" userLabel="MemoryBackground">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TWP-wN-aCW" userLabel="MemoryBackground">
                                 <rect key="frame" x="374" y="10" width="664" height="448"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" drawsBackground="YES" id="1Ul-O8-InU">
                                     <font key="font" metaFont="system" size="10"/>
@@ -282,7 +282,7 @@
                                     <color key="backgroundColor" red="0.1137254902" green="0.1137254902" blue="0.1137254902" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VVf-7D-pjV" userLabel="MemoryHighlighter Horizontal">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VVf-7D-pjV" userLabel="MemoryHighlighter Horizontal">
                                 <rect key="frame" x="374" y="395" width="664" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="DD3-Fv-9rp"/>
@@ -293,7 +293,7 @@
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.44" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f2z-vp-zIf" userLabel="MemoryHighlighter Vertical">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f2z-vp-zIf" userLabel="MemoryHighlighter Vertical">
                                 <rect key="frame" x="492" y="10" width="10" height="448"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="10" id="sVL-zn-P6J"/>
@@ -304,7 +304,7 @@
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.33000000000000002" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kXX-RT-0Bb" userLabel="MemoryCursor">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kXX-RT-0Bb" userLabel="MemoryCursor">
                                 <rect key="frame" x="490" y="392" width="14" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="14" id="RyF-lI-kBO"/>
@@ -316,7 +316,7 @@
                                     <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4pW-7e-eaj" userLabel="Memory">
+                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4pW-7e-eaj" userLabel="Memory">
                                 <rect key="frame" x="372" y="10" width="668" height="448"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" id="iea-16-EtD">
                                     <font key="font" metaFont="system" size="10"/>
@@ -330,7 +330,7 @@
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lUp-Ww-thA">
                                         <rect key="frame" x="0.0" y="760" width="366" height="20"/>
                                         <subviews>
-                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yYC-5c-mvY" userLabel="Leading Space">
+                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yYC-5c-mvY" userLabel="Leading Space">
                                                 <rect key="frame" x="-2" y="0.0" width="16" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="12" id="6Nf-9P-EJo"/>
@@ -342,7 +342,7 @@
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwO-w1-hlg" userLabel="Disass Addr Field">
+                                            <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bwO-w1-hlg" userLabel="Disass Addr Field">
                                                 <rect key="frame" x="20" y="0.0" width="44" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="XCd-Q5-6sX"/>
@@ -357,7 +357,7 @@
                                                     </connections>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lht-UO-OM3" userLabel="Middle Space">
+                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lht-UO-OM3" userLabel="Middle Space">
                                                 <rect key="frame" x="70" y="0.0" width="8" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="57Q-CT-Gpn"/>
@@ -376,7 +376,7 @@
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
                                             </button>
-                                            <textField verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jya-Sa-f8i" userLabel="Middle Space">
+                                            <textField focusRingType="none" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jya-Sa-f8i" userLabel="Middle Space">
                                                 <rect key="frame" x="132" y="0.0" width="154" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="150" id="W3U-D5-7k9"/>
@@ -388,7 +388,7 @@
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hxo-9P-cZv">
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hxo-9P-cZv">
                                                 <rect key="frame" x="290" y="4" width="78" height="16"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="16" identifier="Disassembly.Height" id="jZh-9c-yY6"/>
@@ -428,7 +428,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Hwx-Gd-XW1" userLabel="Disass Display" customClass="DisassView" customModule="A2MacTests" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="-807" width="366" height="754"/>
+                                                    <rect key="frame" x="0.0" y="-807" width="364" height="754"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" red="0.12549019610000001" green="0.12549019610000001" blue="0.12549019610000001" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -472,7 +472,7 @@
   C1F1: 60         RTS</mutableString>
                                                             <attributes>
                                                                 <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                                                <font key="NSFont" metaFont="system" size="10"/>
+                                                                <font key="NSFont" size="10" name="HelveticaNeue"/>
                                                                 <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="leftToRight" lineHeightMultiple="1.5" tighteningFactorForTruncation="0.0"/>
                                                             </attributes>
                                                         </fragment>
@@ -523,7 +523,7 @@
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Crh-BM-MCy" userLabel="CPU View">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="256"/>
                                                         <subviews>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKO-8T-LZ7">
+                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XKO-8T-LZ7">
                                                                 <rect key="frame" x="4" y="240" width="298" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="kwa-Y6-h52"/>
@@ -541,7 +541,7 @@
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" horizontallyResizable="YES" verticallyResizable="YES" baseWritingDirection="leftToRight" findStyle="bar" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="Wrs-Qt-Kmd" userLabel="CPU Display" customClass="DisplayView" customModule="A2MacTests" customModuleProvider="target">
-                                                                            <rect key="frame" x="0.0" y="32" width="298" height="270"/>
+                                                                            <rect key="frame" x="0.0" y="-12" width="298" height="270"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="backgroundColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -592,7 +592,7 @@
                                                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkP-fH-zDU">
                                                         <rect key="frame" x="308" y="0.0" width="356" height="256"/>
                                                         <subviews>
-                                                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ugZ-j3-huv">
+                                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ugZ-j3-huv">
                                                                 <rect key="frame" x="4" y="240" width="354" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" id="OVy-Wd-oXn"/>
@@ -679,7 +679,7 @@
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fik-fC-8sT" userLabel="Search View">
                                                         <rect key="frame" x="0.0" y="484" width="664" height="20"/>
                                                         <subviews>
-                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P9L-wR-0tv" userLabel="Leading Space">
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P9L-wR-0tv" userLabel="Leading Space">
                                                                 <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="4" id="39F-LA-n7O"/>
@@ -691,7 +691,7 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa" userLabel="Memory Search Field">
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3x-F3-IOa" userLabel="Memory Search Field">
                                                                 <rect key="frame" x="12" y="0.0" width="572" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="bS5-Xb-qDz"/>
@@ -705,7 +705,7 @@
                                                                     </connections>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-1T-iQB" userLabel="Middle Space">
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eCI-1T-iQB" userLabel="Middle Space">
                                                                 <rect key="frame" x="590" y="0.0" width="8" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="4" id="O5P-Di-Yom"/>
@@ -753,7 +753,7 @@
                                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d0p-Gc-l7M" userLabel="Memory Header View">
                                                         <rect key="frame" x="0.0" y="456" width="664" height="20"/>
                                                         <subviews>
-                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1q0-LV-pXH" userLabel="Leading Space">
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1q0-LV-pXH" userLabel="Leading Space">
                                                                 <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="OJw-Kd-vPY"/>
@@ -765,7 +765,7 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xtr-61-22R" userLabel="Memory Addr Field">
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xtr-61-22R" userLabel="Memory Addr Field">
                                                                 <rect key="frame" x="12" y="0.0" width="44" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="0zw-JT-a8l"/>
@@ -780,7 +780,7 @@
                                                                     </connections>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19i-lm-kK6" userLabel="Middle Space">
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="19i-lm-kK6" userLabel="Middle Space">
                                                                 <rect key="frame" x="62" y="0.0" width="8" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="4" id="SL4-Al-t75"/>
@@ -792,7 +792,7 @@
                                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                 </textFieldCell>
                                                             </textField>
-                                                            <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gUS-Q0-ezQ" userLabel="Low Nibble Label">
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gUS-Q0-ezQ" userLabel="Low Nibble Label">
                                                                 <rect key="frame" x="74" y="4" width="424" height="16"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="16" identifier="Low Nibble Label.Height" id="EGq-Si-0ib"/>
@@ -843,7 +843,7 @@
                                                                     <constraint firstAttribute="width" constant="34" id="Yk3-Fa-Bge"/>
                                                                 </constraints>
                                                             </button>
-                                                            <textField hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LCb-7J-76T" userLabel="Right Space">
+                                                            <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LCb-7J-76T" userLabel="Right Space">
                                                                 <rect key="frame" x="-2" y="0.0" width="8" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" identifier="Memory Addr Field.Height" id="5wb-72-6Pa"/>
@@ -975,7 +975,7 @@
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aqD-5D-Xz1" userLabel="IO View">
                                                 <rect key="frame" x="0.0" y="390" width="226" height="390"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-qw-owI">
+                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DmO-qw-owI">
                                                         <rect key="frame" x="-2" y="374" width="230" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="ISe-0R-r82"/>
@@ -1040,7 +1040,7 @@
                                             <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ypu-2G-o19" userLabel="ZP View">
                                                 <rect key="frame" x="0.0" y="0.0" width="226" height="370"/>
                                                 <subviews>
-                                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6av-it-wJZ">
+                                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6av-it-wJZ">
                                                         <rect key="frame" x="4" y="354" width="224" height="16"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="16" id="N6w-DV-CWZ"/>
@@ -1184,9 +1184,14 @@
                         <outlet property="DisassTextField" destination="lw3-np-MbY" id="xv3-mQ-zMX"/>
                         <outlet property="Disass_Display" destination="Hwx-Gd-XW1" id="XHS-dZ-gCR"/>
                         <outlet property="Disass_Scroll" destination="Pcn-4j-EEM" id="5w1-DZ-ypu"/>
+                        <outlet property="IO_Display" destination="dAS-QV-erJ" id="pEh-27-sTo"/>
+                        <outlet property="Mem1_AddrInfo" destination="gUS-Q0-ezQ" id="ioC-JR-0Km"/>
+                        <outlet property="Mem1_Addr_Nibbles" destination="gUS-Q0-ezQ" id="kZD-sw-cx4"/>
                         <outlet property="Mem1_Display" destination="qqp-t0-j4i" id="85A-sB-M0p"/>
                         <outlet property="MemoryAddressField" destination="p3x-F3-IOa" id="9yv-2e-Lm7"/>
+                        <outlet property="MemoryTextField" destination="4pW-7e-eaj" id="RLj-FT-AJb"/>
                         <outlet property="Stack_Display" destination="BHr-Q4-rBI" id="qlA-JC-xkW"/>
+                        <outlet property="ZP_Display" destination="Gsx-fZ-jrH" id="gXI-UV-mg5"/>
                     </connections>
                 </viewController>
                 <customObject id="DyX-eh-3mW" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

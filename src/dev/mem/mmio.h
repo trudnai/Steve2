@@ -408,6 +408,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val );
 INLINE uint8_t memread8_low( uint16_t addr );
 INLINE uint8_t memread8_high( uint16_t addr );
 INLINE uint8_t memread8( uint16_t addr );
+INLINE uint16_t memread16_high( uint16_t addr );
 INLINE uint16_t memread16_low( uint16_t addr );
 INLINE uint16_t memread16( uint16_t addr );
 INLINE uint8_t _memread( uint16_t addr );
@@ -465,6 +466,9 @@ INLINE uint8_t _src_ind_dis(void);
 INLINE uint16_t _addr_ind_X(void);
 INLINE uint16_t _addr_ind_X_dbg(void);
 INLINE uint16_t _addr_ind_X_dis(void);
+INLINE uint16_t _addr_ind_ind_X(void);
+INLINE uint16_t _addr_ind_ind_X_dbg(void);
+INLINE uint16_t _addr_ind_ind_X_dis(void);
 INLINE uint8_t _src_X_ind(void);
 INLINE uint8_t _src_X_ind_dbg(void);
 INLINE uint8_t _src_X_ind_dis(void);
@@ -513,6 +517,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define addr_ind() _addr_ind_dis()
 #define src_ind() _src_ind_dis()
 #define addr_ind_X() _addr_ind_X_dis()
+#define addr_ind_ind_X() _addr_ind_ind_X_dis()
 #define src_X_ind() _src_X_ind_dis()
 #define addr_ind_Y() _addr_ind_Y_dis()
 #define src_ind_Y() _src_ind_Y_dis()
@@ -546,6 +551,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define addr_ind() _addr_ind_dbg()
 #define src_ind() _src_ind_dbg()
 #define addr_ind_X() _addr_ind_X_dbg()
+#define addr_ind_ind_X() _addr_ind_ind_X_dbg()
 #define src_X_ind() _src_X_ind_dbg()
 #define addr_ind_Y() _addr_ind_Y_dbg()
 #define src_ind_Y() _src_ind_Y_dbg()
@@ -579,6 +585,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define addr_ind() _addr_ind()
 #define src_ind() _src_ind()
 #define addr_ind_X() _addr_ind_X()
+#define addr_ind_ind_X() _addr_ind_ind_X()
 #define src_X_ind() _src_X_ind()
 #define addr_ind_Y() _addr_ind_Y()
 #define src_ind_Y() _src_ind_Y()

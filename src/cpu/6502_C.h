@@ -1,4 +1,4 @@
-//
+    //
 //  6502_und.h
 //  A2Mac
 //
@@ -63,7 +63,7 @@
         case 0x32: AND( src_ind() ); return 5;                          // AND (zpg)
         case 0x52: EOR( src_ind() ); return 5;                          // EOR (zpg)
         case 0x72: ADC( src_ind() ); return 5;                          // ADC (zpg)
-        case 0x92: STA( src_ind() ); return 5;                          // STA (zpg)
+        case 0x92: STA( addr_ind() ); return 5;                          // STA (zpg)
         case 0xB2: LDA( src_ind() ); return 5;                          // LDA (zpg)
         case 0xD2: CMP( src_ind() ); return 5;                          // CMP (zpg)
         case 0xF2: SBC( src_ind() ); return 5;                          // SBC (zpg)
@@ -71,14 +71,14 @@
     // BIT - imm abs,X zp,X addressing modes
         case 0x34: BIT( src_zp_X() ); return 4;                         // BIT zpg,X
         case 0x3C: BIT( src_abs_X() ); return 4;                        // BIT abs,X
-        case 0x89: BIT( imm() ); return 2;                              // BIT imm
+        case 0x89: BITI( imm() ); return 2;                              // BIT imm
 
     // DEC INC - acc addressing mode
         case 0x1A: INA(); return 2;                                     // INA imm (INC A)
         case 0x3A: DEA(); return 2;                                     // DEA imm (DEC A)
 
     // JMP - (abs,X) addressing mode
-        case 0x7C: JMP( abs_addr_X() ); return 6;                       // JMP abs,X
+case 0x7C: JMP( addr_ind_ind_X()); return 6; // abs_addr_X() ); return 6;                       // JMP abs,X
 
 // Additional instructions
 
@@ -103,6 +103,60 @@
         case 0x14: TRB( addr_zp() ); return 5;                          // TRB zpg
         case 0x1C: TRB( addr_abs() ); return 6;                         // TRB abs
 
+
+        /// Undocumented NOPs
+
+        case 0x02:
+        case 0x22:
+        case 0x42:
+        case 0x62:
+        case 0x82:
+        case 0xC2:
+        case 0xE2: NOP(); fetch(); return 2;                            // NOP* (2 bytes) (undocumented)
+
+        case 0x44: NOP(); fetch(); return 3;                            // NOP* (2 bytes) (undocumented)
+
+        case 0x54:
+        case 0xD4:
+        case 0xF4: NOP(); fetch(); return 4;                            // NOP* (2 bytes) (undocumented)
+
+        case 0x5C: NOP(); fetch16(); return 8;                          // NOP* (3 bytes) (undocumented)
+
+        case 0xDC:
+        case 0xFC: NOP(); fetch16(); return 4;                          // NOP* (3 bytes) (undocumented)
+
+        case 0x03:
+        case 0x13:
+        case 0x23:
+        case 0x33:
+        case 0x43:
+        case 0x53:
+        case 0x63:
+        case 0x73:
+        case 0x83:
+        case 0x93:
+        case 0xA3:
+        case 0xB3:
+        case 0xC3:
+        case 0xD3:
+        case 0xE3:
+        case 0xF3:
+
+        case 0x0B:
+        case 0x1B:
+        case 0x2B:
+        case 0x3B:
+        case 0x4B:
+        case 0x5B:
+        case 0x6B:
+        case 0x7B:
+        case 0x8B:
+        case 0x9B:
+        case 0xAB:
+        case 0xBB:
+
+        case 0xEB:
+        case 0xFB: NOP(); return 1;                                     // NOP* (1 byte) (undocumented)
 
 
 #endif /* _6502_C_h */

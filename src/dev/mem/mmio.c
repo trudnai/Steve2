@@ -1028,9 +1028,9 @@ INLINE uint16_t memread16_low( uint16_t addr ) {
     // avoid unaligned memory access
 //    return (uint16_t)Apple2_64K_MEM[addr] | (uint16_t)Apple2_64K_MEM[addr+1] << 8;
 }
-//INLINE uint16_t memread16_high( uint16_t addr ) {
-//    return * (uint16_t*) ( RDHIMEM + addr );
-//}
+INLINE uint16_t memread16_high( uint16_t addr ) {
+    return * (uint16_t*) ( RDHIMEM + addr );
+}
 INLINE uint16_t memread16( uint16_t addr ) {
 
 //    if (addr >= 0xC000) {
@@ -1380,7 +1380,7 @@ INLINE uint16_t _addr_ind_dbg(void) {
     return addr;
 }
 INLINE uint16_t _addr_ind_dis(void) {
-    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X,X)", memread8(m6502.PC) );
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X)", memread8(m6502.PC) );
     _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16( memread8(m6502.PC)) );
 
     return memread16( _fetch_dis() );
@@ -1429,6 +1429,32 @@ INLINE uint8_t _src_X_ind_dis(void) {
 //INLINE uint8_t * dest_X_ind() {
 //    return WRLOMEM + addr_ind_X();
 //}
+
+/**
+ Used only by [0x7C] JMP (ind,X) in 65C02)
+ X,ind        ....    X-indexed, indirect         OPC ($LL,X)
+ operand is zeropage address;
+ effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
+ **/
+INLINE uint16_t _addr_ind_ind_X(void) {
+    return memread16( (uint16_t)(_fetch16() + m6502.X) );
+}
+INLINE uint16_t _addr_ind_ind_X_rd_dbg(void) {
+    return _memread16_dbg( (uint16_t)(_fetch16() + m6502.X) );
+}
+INLINE uint16_t _addr_ind_ind_X_dbg(void) {
+    uint16_t addr = _memread16_dbg( (uint16_t)(_fetch16() + m6502.X));
+    check_mem_wr_bp(addr); // write debug on the target address
+    return addr;
+}
+INLINE uint16_t _addr_ind_ind_X_dis(void) {
+    _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X,X)", memread16(m6502.PC) );
+    _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16( memread16(m6502.PC) + m6502.X) );
+
+    return memread16( (uint16_t)(_fetch16_dis() + m6502.X) );
+}
+
+
 
 /**
  ind,Y        ....    indirect, Y-indexed         OPC ($LL),Y

@@ -31,7 +31,7 @@
 #define CLK_WAIT
 
 #define DEBUGGER
-//#define DISASSEMBLER
+#undef DISASSEMBLER
 
 #define FETCH_ADDR disass_addr
 
@@ -85,9 +85,10 @@ INLINE int m6502_Step_dbg(void) {
     disNewInstruction();
 
     switch ( fetch() ) {
-#include "6502_std.h"       // Standard 6502 instructions
-//#include "6502_und.h"       // Undocumented 6502 instructions
-#include "6502_C.h"         // Extended 65C02 instructions
+#include "6502_std.h"           // Standard 6502 instructions
+//#include "6502_und.h"           // Undocumented 6502 instructions
+#include "6502_C.h"             // Extended 65C02 instructions
+#include "6502_C_Rockwell.h"    // Extended 65C02 instructions
 
         default:
             dbgPrintf("%04X: Unimplemented Instruction 0x%02X\n", m6502.PC -1, memread( m6502.PC -1 ));

@@ -48,6 +48,14 @@ INSTR void BIT( uint8_t src ) {
     set_flags_Z(m6502.A & src);
 #endif
 }
+INSTR void BITI( uint8_t src ) {
+    dbgPrintf("BIT(%02X) ", src);
+    disPrintf(disassembly.inst, "BIT");
+    
+#ifndef DISASSEMBLER
+    set_flags_Z(m6502.A & src);
+#endif
+}
 
 /**
  TRB - Test and Reset Bits

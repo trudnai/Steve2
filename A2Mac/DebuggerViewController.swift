@@ -299,8 +299,8 @@ KEY TXT MIX HGR 80C ALT
 
     func DisplayMemory() {
         var memory = ""
-        for i : UInt16 in stride(from: mem_1_addr, to: mem_1_addr + 0x21F, by: 16) {
-            memory += hexLine16(addr: i) + " " + textLine16(addr: i) + "\n"
+        for i : UInt32 in stride(from: UInt32(mem_1_addr), to: UInt32(mem_1_addr) + 0x21F, by: 16) {
+            memory += hexLine16(addr: UInt16(i & 0xFFFF)) + " " + textLine16(addr: UInt16(i & 0xFFFF)) + "\n"
         }
 
         DispatchQueue.main.async {

@@ -115,6 +115,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "_memwrite8_low:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "_src_zp_X_dbg:mmio.c">
          <PersistentStrings>
             <PersistentString

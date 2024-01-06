@@ -730,6 +730,7 @@ INLINE void ioWrite( uint16_t addr, uint8_t val ) {
     switch ( (uint8_t)addr ) {
         case (uint8_t)io_KBDSTRB:
             kbdStrobe();
+            newMEMcfg.is_80STORE = 0;
             break;
             
         case (uint8_t)io_TAPEOUT:
@@ -1101,6 +1102,11 @@ INLINE uint8_t _memread_dis( uint16_t addr ) {
  **/
 
 INLINE void _memwrite8_low( uint16_t addr, uint8_t data ) {
+    if ((addr >= 0x400) && (addr < 0x800)) {
+        if ((data == 0x00) || (data == 0xFF)) {
+            m6502.interrupt = BREAK;
+        }
+    }
     WRLOMEM[addr] = data;
 }
 INLINE void _memwrite8_bank( uint16_t addr, uint8_t data ) {

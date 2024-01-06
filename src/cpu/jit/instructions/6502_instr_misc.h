@@ -47,7 +47,7 @@ INSTR int BRK(void) {
     m6502.I = 1;
     m6502.D = 0;
     m6502.PC = memread16_high(IRQ_VECTOR);
-//    m6502.interrupt = BREAK;
+    m6502.interrupt = BREAK;
 #endif
     return 7;
 }

@@ -55,23 +55,23 @@
 
 
     // RMB SMB - Reset or Set Memory Bit
-        case 0x07: RMB0( src_zp() ); return 5;                          // RMB0 zpg, rel
-        case 0x17: RMB1( src_zp() ); return 5;                          // RMB1 zpg, rel
-        case 0x27: RMB2( src_zp() ); return 5;                          // RMB2 zpg, rel
-        case 0x37: RMB3( src_zp() ); return 5;                          // RMB3 zpg, rel
-        case 0x47: RMB4( src_zp() ); return 5;                          // RMB4 zpg, rel
-        case 0x57: RMB5( src_zp() ); return 5;                          // RMB5 zpg, rel
-        case 0x67: RMB6( src_zp() ); return 5;                          // RMB6 zpg, rel
-        case 0x77: RMB7( src_zp() ); return 5;                          // RMB7 zpg, rel
+        case 0x07: RMB0( addr_zp() ); return 5;                          // RMB0 zpg, rel
+        case 0x17: RMB1( addr_zp() ); return 5;                          // RMB1 zpg, rel
+        case 0x27: RMB2( addr_zp() ); return 5;                          // RMB2 zpg, rel
+        case 0x37: RMB3( addr_zp() ); return 5;                          // RMB3 zpg, rel
+        case 0x47: RMB4( addr_zp() ); return 5;                          // RMB4 zpg, rel
+        case 0x57: RMB5( addr_zp() ); return 5;                          // RMB5 zpg, rel
+        case 0x67: RMB6( addr_zp() ); return 5;                          // RMB6 zpg, rel
+        case 0x77: RMB7( addr_zp() ); return 5;                          // RMB7 zpg, rel
 
-        case 0x87: SMB0( src_zp() ); return 5;                          // SMB0 zpg, rel
-        case 0x97: SMB1( src_zp() ); return 5;                          // SMB1 zpg, rel
-        case 0xA7: SMB2( src_zp() ); return 5;                          // SMB2 zpg, rel
-        case 0xB7: SMB3( src_zp() ); return 5;                          // SMB3 zpg, rel
-        case 0xC7: SMB4( src_zp() ); return 5;                          // SMB4 zpg, rel
-        case 0xD7: SMB5( src_zp() ); return 5;                          // SMB5 zpg, rel
-        case 0xE7: SMB6( src_zp() ); return 5;                          // SMB6 zpg, rel
-        case 0xF7: SMB7( src_zp() ); return 5;                          // SMB7 zpg, rel
+        case 0x87: SMB0( addr_zp() ); return 5;                          // SMB0 zpg, rel
+        case 0x97: SMB1( addr_zp() ); return 5;                          // SMB1 zpg, rel
+        case 0xA7: SMB2( addr_zp() ); return 5;                          // SMB2 zpg, rel
+        case 0xB7: SMB3( addr_zp() ); return 5;                          // SMB3 zpg, rel
+        case 0xC7: SMB4( addr_zp() ); return 5;                          // SMB4 zpg, rel
+        case 0xD7: SMB5( addr_zp() ); return 5;                          // SMB5 zpg, rel
+        case 0xE7: SMB6( addr_zp() ); return 5;                          // SMB6 zpg, rel
+        case 0xF7: SMB7( addr_zp() ); return 5;                          // SMB7 zpg, rel
 
 
 

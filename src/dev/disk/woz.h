@@ -157,15 +157,23 @@ typedef woz1_track_t woz1_trks_t[DISKII_MAXTRACKS];
 
 typedef union {
     struct {
+        // for buffering for shifting during write process
+        // also for debug and diag purposes
+        uint8_t next_next;
+        uint8_t next;
+        
         uint8_t data;
         uint8_t latch;
         
-        // for debug and diag purposes
-        uint8_t out[6];
+        // for buffering for shifting during write process
+        // also for debug and diag purposes
+        uint8_t out[4];
     };
     struct {
+        uint16_t next16; // unused
         uint16_t lower15 : 15;
         uint16_t valid : 1;
+        uint32_t out32; // unused
     };
     uint64_t shift;
 } WOZread_t;
@@ -187,6 +195,7 @@ extern woz_flags_t woz_flags;
 extern size_t woz_file_size;
 extern uint8_t * woz_file_buffer;
 
+extern int extraForward;
 
 //extern woz_header_t woz_header;
 //extern woz_chunk_header_t woz_chunk_header;
@@ -200,5 +209,7 @@ extern int woz_parseBuffer(void);
 extern int woz_loadFile( const char * filename );
 extern int woz_saveFile( const char * filename );
 extern void woz_eject(void);
+extern uint8_t woz_is_loaded(void);
+
 
 #endif /* woz_h */

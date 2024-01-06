@@ -83,7 +83,7 @@
 
         case 0x4B: ASR( imm() ); return 2;                             // ASR* imm 2 (undocumented)
 
-        case 0x4F: SRE( abs_addr() ); return 6;                        // SRE* abs 6 (undocumented)
+        case 0x4F: SRE( addr_abs() ); return 6;                        // SRE* abs 6 (undocumented)
 
         case 0x52: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x53: SRE( addr_ind_Y() ); return 8;                      // SRE* izy 8 (undocumented)
@@ -105,7 +105,7 @@
 
         case 0x6B: ARC( imm() ); return 2;                             // ARR/ARC* imm 2 (undocumented)
 
-        case 0x6F: RRA( abs_addr() ); return 6;                        // RRA* abs 6 (undocumented)
+        case 0x6F: RRA( addr_abs() ); return 6;                        // RRA* abs 6 (undocumented)
 
         case 0x72: HLT(); return 0;                                     // HLT* - Halts / Hangs / Jams / Kills the CPU (undocumented)
         case 0x73: RRA( addr_ind_Y() ); return 8;                      // RRA* izy 8 (undocumented)

@@ -28,6 +28,24 @@
 #include "common.h"
 #include "woz.h"
 
+
+//#ifdef DISASSEMBLER
+//#define INSTR INLINE static
+//#else
+//#define INSTR INLINE static
+//#endif
+
+#ifdef DEBUG
+#define INSTR static
+#else
+#define INSTR static inline __attribute__((always_inline)) UNUSED
+//#define INSTR static inline __attribute__((always_inline)) __attribute__((regcall)) UNUSED
+#endif
+
+#define CRYSTAL_MHZ 14.31818                // NTSC version (original)
+#define DEFAULT_MHZ_6502 (CRYSTAL_MHZ / 14) // 1.023 MHz
+
+
 typedef enum cpuMode_e {
     cpuMode_normal = 0,
     cpuMode_eco,
@@ -38,6 +56,7 @@ typedef enum cpuState_e {
     cpuState_unknown = 0,
     cpuState_inited,
     cpuState_running,
+    cpuState_executing,
     cpuState_halting,
     cpuState_halted,
 } cpuState_s;
@@ -49,33 +68,44 @@ extern const double default_MHz_6502;
 extern const double iigs_MHz_6502;
 extern const double iicplus_MHz_6502;
 extern double MHz_6502;
-extern unsigned long long clk_6502_per_frm;
-extern unsigned long long clk_6502_per_frm_set;
-extern unsigned long long clk_6502_per_frm_max;
-extern unsigned long long clk_6502_per_frm_max_sound;
-extern unsigned int clkfrm;
+extern unsigned int clk_6502_per_frm;
+extern unsigned int clk_6502_per_frm_set;
+extern unsigned int clk_6502_per_frm_max;
+extern unsigned int clk_6502_per_frm_max_sound;
 
 
-typedef enum {
-    NO_INT,
-    HALT,
+typedef enum : uint8_t {
+    NO_INT = 0,
+    HALT,       // HLT instruction
+    BREAK,      // BRK instruction
     IRQ,
     NMI,
+    INV,        // Invalid Opcode
+    RET,        // RTS/RTI Used by Debugger Step_Over / Step_Out
     HARDRESET,
     SOFTRESET,
+    BREAKPOINT,
+    BREAKIO,
+    BREAKRDMEM,
+    BREAKWRMEM,
 } interrupt_t;
 
 
-typedef struct debugLevel_s {
-    uint8_t trace       : 1;
-    uint8_t step        : 1;
-    uint8_t brk         : 1;
-    uint8_t rts         : 1;
-    uint8_t bra         : 1;
-    uint8_t bra_true    : 1;
-    uint8_t bra_false   : 1;
-    uint8_t compile     : 1;
-} debugLevel_t;
+typedef struct debugMask_s {
+    uint16_t trace       : 1;
+    uint16_t step        : 1;
+    uint16_t hlt         : 1;
+    uint16_t brk         : 1;
+    uint16_t irq         : 1;
+    uint16_t nmi         : 1;
+    uint16_t inv         : 1;
+    uint16_t out         : 1;
+    uint16_t ret         : 1;
+    uint16_t bra         : 1;
+    uint16_t bra_true    : 1;
+    uint16_t bra_false   : 1;
+    uint16_t compile     : 1;
+} debugMask_t;
 
 
 typedef union flags_u {
@@ -94,10 +124,24 @@ typedef union flags_u {
 } flags_t;
 
 
+typedef struct debugger_s {
+    _Bool on;         // debugger is on
+    uint8_t SP;       // Stack Pointer for monitoring Return Stack Level -- eg. Step_Out & Step_Over
+
+    union {
+        uint8_t wMask;
+        debugMask_t mask;  // 34:  0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
+    };
+} debugger_t;
+
+
+typedef uint32_t clkfrm_t;
+
+//#pragma pack(1)
 typedef struct m6502_s {
-    uint8_t  A;             // Accumulator
-    uint8_t  X;             // X index register
-    uint8_t  Y;             // Y index register
+    uint8_t  A;       //  0: Accumulator
+    uint8_t  X;       //  1: X index register
+    uint8_t  Y;       //  2: Y index register
 //    union {
 //        uint8_t  instr;         // Instruction
 //        struct {
@@ -107,42 +151,40 @@ typedef struct m6502_s {
 //        };
 //    };
     struct { // no bitfield faster processing
-        uint8_t C;    // Carry Flag
-        uint8_t Z;    // Zero Flag
-        uint8_t I;    // Interrupt Flag
-        uint8_t D;    // Decimal Flag
-        uint8_t B;    // B Flag
-        uint8_t res;  // reserved -- should be always 1
-        uint8_t V;    // Overflow Flag ???
-        uint8_t N;    // Negative Flag
+        uint8_t C;    //  3: Carry Flag
+        uint8_t Z;    //  4: Zero Flag
+        uint8_t I;    //  5: Interrupt Flag
+        uint8_t D;    //  6: Decimal Flag
+        uint8_t B;    //  7: B Flag
+        uint8_t res;  //  8: reserved -- should be always 1
+        uint8_t V;    //  9: Overflow Flag ???
+        uint8_t N;    // 10: Negative Flag
     };
     
-    uint16_t PC;            // Program Counter
-    uint8_t SP;             // Stack Pointer ( stack addr = 0x01 + sp )
+    uint16_t PC;      // 11: Program Counter
+    uint8_t SP;       // 13: Stack Pointer ( stack addr = 0x01 + sp )
 
 //    unsigned clk;           // Clock Counter
-    uint64_t clktime;
-    uint64_t clklast;
-
-    debugLevel_t dbgLevel;  // 0: No Debug, 1: Disassembly Only, 2: Run till BRK, 3: StepByStep
+    clkfrm_t clktime; // 14:
+    clkfrm_t clklast; // 15:
+    clkfrm_t clkfrm;  // 16:
     
+//    uint64_t clk_wrenable;  // CPU clock when WRITE RAM is triggered
+    
+    clkfrm_t lastIO;  // Last time I/O accessed
+    int ecoSpindown;  // spindown counter for eco mode
+
+    debugger_t debugger;
+
     union {
         unsigned int IF;             // interrut flag
         interrupt_t interrupt;
     };
     
 } m6502_t;
+//#pragma pack()
 
-
-typedef struct disassembly_s {
-    uint64_t clk;                   // clock time
-    char addr[5];                   // 4 digits + \0
-    char opcode[4 * 3 + 1];         // max 4 bytes * (2 digits + 1 space) + \0
-    char * pOpcode;                 // pointer for opcode string builder
-    char inst[6 + 1];               // 3 char (unknown instr? -- give it 6 chars) + \0
-    char oper[14 + 2 + 1 + 1 + 1];  // 4 digits + 2 brackets + 1 comma + 1 index + \0
-    char comment[256];              // to be able to add some comments
-} disassembly_t;
+extern const int ecoSpindown;   // initial value of ECO Spingdown Counter
 
 
 // Memory Config
@@ -160,6 +202,8 @@ typedef struct MEMcfg_s {
     unsigned RD_AUX_MEM  : 1;
     unsigned WR_AUX_MEM  : 1;
     unsigned ALT_ZP      : 1;
+    
+    unsigned WR_RAM_cntr;       // min 2 I/O to enable mem write
 } MEMcfg_t;
 
 
@@ -174,7 +218,6 @@ typedef union videoMode_u {
     uint8_t mode;
 } videoMode_t;
 
-extern videoMode_t videoMode;
 extern MEMcfg_t MEMcfg;
 
 extern m6502_t m6502;
@@ -192,12 +235,19 @@ extern double * pdl_diffarr;
 extern double mips;
 extern double mhz;
 
-#define DEFAULT_FPS 30U
+#define DEFAULT_FPS 60U
 #define DEF_VIDEO_DIV 1U
 #define DEF_SPKR_DIV 1U
+#define DEF_DRV_LED_DIV 4U
 
-#define GAME_FPS 600U
-#define GAME_VIDEO_DIV 10U // 600 / 10 = 60 FPS
+#define ECO_VIDEO_DIV 4U
+
+//#define GAME_FPS 180U // 90U // 120U // 180U // 240U // 480U // 600U
+//#define GAME_VIDEO_DIV 1U // (GAME_FPS / DEFAULT_FPS)
+//#define GAME_SPKR_DIV 6U // 16U
+#define GAME_FPS  180U // 300U // 240U // 180U // 120U
+#define GAME_VIDEO_DIV 1U // 4U // (GAME_FPS / DEFAULT_FPS)
+#define GAME_SPKR_DIV 1U // 8U // 16U
 
 extern unsigned int video_fps_divider;
 extern unsigned int fps;
@@ -205,10 +255,21 @@ extern unsigned int fps;
 extern void rom_loadFile( const char * bundlePath, const char * filename );
 extern void tst6502(void);
 extern void m6502_ColdReset( const char * bundlePath, const char * romFilePath );
+
+INLINE void set_flags_N( const uint8_t test );
+INLINE void set_flags_V( const uint8_t test );
+INLINE void set_flags_Z( const uint8_t test );
+INLINE void set_flags_C( const int16_t test );
+INLINE void set_flags_NZ( const uint8_t test );
+INLINE void set_flags_NV( const uint8_t test );
+INLINE void set_flags_NVZ( const uint8_t test );
+INLINE void set_flags_NZC( const int16_t test );
+INLINE flags_t getFlags(void);
+INLINE void setFlags( uint8_t byte );
+
 extern void m6502_Run(void);
-extern void kbdInput ( uint8_t code );
-extern void kbdUp (void);
-extern void setIO ( uint16_t ioaddr, uint8_t val );
+INLINE int m6502_Step(void);
+INLINE int m6502_Step_dbg(void);
 
 extern void interrupt_IRQ(void);
 extern void interrupt_NMI(void);

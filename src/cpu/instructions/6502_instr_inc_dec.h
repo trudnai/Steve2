@@ -38,12 +38,17 @@
  absolute      INC oper      EE    3     6
  absolute,X    INC oper,X    FE    3     7
 **/
-INLINE void _INC( uint16_t addr ) {
+#ifndef DISASSEMBLER
+INSTR void _INC( uint16_t addr ) {
     set_flags_NZ( ++(WRLOMEM[addr]) );
 }
-INLINE void INC( uint16_t addr ) {
+#endif
+INSTR void INC( uint16_t addr ) {
     disPrintf(disassembly.inst, "INC");
+
+#ifndef DISASSEMBLER
     _INC(addr);
+#endif
 }
 
 /**
@@ -56,11 +61,14 @@ INLINE void INC( uint16_t addr ) {
  --------------------------------------------
  implied       INX           E8    1     2
 **/
-INLINE void INX() {
+INSTR void INX() {
     dbgPrintf("INX %02X -> ", m6502.X);
     disPrintf(disassembly.inst, "INX");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( ++m6502.X );
     dbgPrintf("%02X ", m6502.X);
+#endif
 }
 
 /**
@@ -73,11 +81,14 @@ INLINE void INX() {
  --------------------------------------------
  implied       INY           C8    1     2
 **/
-INLINE void INY() {
+INSTR void INY() {
     dbgPrintf("INY %02X -> ", m6502.Y);
     disPrintf(disassembly.inst, "INY");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( ++m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
+#endif
 }
 
 /**
@@ -90,11 +101,14 @@ INLINE void INY() {
  --------------------------------------------
  implied       INA           C8    1     2
  **/
-INLINE void INA() {
+INSTR void INA() {
     dbgPrintf("INA %02X -> ", m6502.A);
     disPrintf(disassembly.inst, "INA");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( ++m6502.A );
     dbgPrintf("%02X ", m6502.A);
+#endif
 }
 
 /**
@@ -110,12 +124,17 @@ INLINE void INA() {
  absolute      DEC oper      CE    3     3
  absolute,X    DEC oper,X    DE    3     7
 **/
-INLINE void _DEC( uint16_t addr ) {
+#ifndef DISASSEMBLER
+INSTR void _DEC( uint16_t addr ) {
     set_flags_NZ( --(WRLOMEM[addr]) );
 }
-INLINE void DEC( uint16_t addr ) {
+#endif
+INSTR void DEC( uint16_t addr ) {
     disPrintf(disassembly.inst, "DEC");
+
+#ifndef DISASSEMBLER
     _DEC(addr);
+#endif
 }
 
 /**
@@ -128,11 +147,14 @@ INLINE void DEC( uint16_t addr ) {
  --------------------------------------------
  implied       DEC           CA    1     2
 **/
-INLINE void DEX() {
+INSTR void DEX() {
     dbgPrintf("DEX %02X -> ", m6502.X);
     disPrintf(disassembly.inst, "DEX");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( --m6502.X );
     dbgPrintf("%02X ", m6502.X);
+#endif
 }
 
 /**
@@ -145,11 +167,14 @@ INLINE void DEX() {
  --------------------------------------------
  implied       DEC           88    1     2
  **/
-INLINE void DEY() {
+INSTR void DEY() {
     dbgPrintf("DEY %02X -> ", m6502.Y);
     disPrintf(disassembly.inst, "DEY");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( --m6502.Y );
     dbgPrintf("%02X ", m6502.Y);
+#endif
 }
 
 /**
@@ -162,11 +187,14 @@ addressing    assembler    opc  bytes  cyles
 --------------------------------------------
 implied       DEC           88    1     2
 **/
-INLINE void DEA() {
+INSTR void DEA() {
     dbgPrintf("DEA %02X -> ", m6502.A);
     disPrintf(disassembly.inst, "DEA");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( --m6502.A );
     dbgPrintf("%02X ", m6502.A);
+#endif
 }
 
 #endif // __6502_INSTR_INC_DEC_H__

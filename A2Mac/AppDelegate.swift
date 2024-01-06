@@ -22,12 +22,18 @@
 //
 
 import Cocoa
+import Foundation
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    static var current : AppDelegate?
     var preferencesController : PreferencesWindowController?
 
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return true
+    }
+    
     @IBAction func ROM_Selected(_ sender: NSMenuItem) {
         if let menuIdentifier = sender.identifier {
 //            rom_loadFile( Bundle.main.resourcePath, menuIdentifier.rawValue + ".rom" )
@@ -40,13 +46,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func Disk1_Selected(_ sender: NSMenuItem) {
         if let menuIdentifier = sender.identifier {
             let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/" + menuIdentifier.rawValue + ".woz" )
-            ViewController.current?.chk_woz_load(err: woz_err)
+            ViewController.shared?.chk_woz_load(err: woz_err)
             woz_flags.image_file_readonly = 1
         }
     }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        AppDelegate.current = self
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -54,56 +61,110 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction func selectAnImageFromFile(sender: AnyObject) {
-        ViewController.current?.openDiskImageDialog()
+        ViewController.shared?.openDiskImageDialog()
     }
 
     
     func application(_ sender: NSApplication, openFile filename: String) -> Bool {
-        ViewController.current?.openDiskImage(url: URL(fileURLWithPath: filename))
+        ViewController.shared?.openDiskImage(url: URL(fileURLWithPath: filename))
+        
         return true;
     }
-    
+
+    @IBAction func openFile(_ sender: NSMenuItem) {
+        ViewController.shared?.openDiskImageDialog()
+    }
+
     @IBAction func saveFile(_ sender: NSMenuItem) {
-        ViewController.current?.saveFile()
+        ViewController.shared?.saveFile()
     }
     
     @IBAction func saveFileAs(_ sender: NSMenuItem) {
-        ViewController.current?.saveFileAs()
+        ViewController.shared?.saveFileAs()
+    }
+    
+    @IBAction func Cheat_Wavy_Navy_Vitroy(_ sender: Any) {
+        ViewController.shared?.Cheat_Wavy_Navy_Victory()
+    }
+    
+    @IBAction func Cheat_Wavy_Navy_Add_3_Ships(_ sender: Any) {
+        ViewController.shared?.Cheat_Wavy_Navy_Add_3_Ships()
+    }
+    
+    @IBAction func Cheat_Wavy_Navy_Never_Lose(_ menuItem: NSMenuItem) {
+        menuItem.state = (ViewController.shared?.Cheat_Wavy_Navy_Never_Lose())!
+    }
+    
+    @IBAction func Cheat_Wavy_Navy_Lose_To_Win(_ menuItem: NSMenuItem) {
+        menuItem.state = (ViewController.shared?.Cheat_Wavy_Navy_Lose_To_Win())!
+    }
+    
+    @IBOutlet weak var MenuItem_Cheat: NSMenuItem!
+    @IBOutlet weak var MenuItem_Hard_Hat_Mack: NSMenuItem!
+    @IBOutlet weak var MenuItem_Hard_Hat_Mack_Add_3_Macks: NSMenuItem!
+    
+    func Cheat_Menu() {
+//        print("Cheat_Menu Menu")
+        let ships = ViewController.shared?.Get_Hard_Hat_Mack()
+        MenuItem_Hard_Hat_Mack_Add_3_Macks.title =  String(format: "Add 3 Macks (%d)", ships!)
+    }
+    
+    @IBAction func Cheat_Hard_Hat_Mack(_ menuItem: NSMenuItem) {
+        print("Cheat_Hard_Hat_Mack SubMenu")
+        let ships = ViewController.shared?.Get_Hard_Hat_Mack()
+        MenuItem_Hard_Hat_Mack_Add_3_Macks.title =  String(format: "Add 3 Macks (%d)", ships!)
+    }
+    @IBAction func Cheat_Hard_Hat_Mack_Add_3_Macks(_ menuItem: NSMenuItem) {
+        let _ = ViewController.shared?.Cheat_Hard_Hat_Mack(add: 3)
+    }
+    
+    @IBAction func Cheat_Hard_Hat_Mack_Never_Lose(_ menuItem: NSMenuItem) {
+        menuItem.state = (ViewController.shared?.Cheat_Hard_Hat_Mack_Never_Lose())!
     }
     
     @IBAction func showPreferences(_ sender: NSMenuItem) {
-        
         if ( preferencesController == nil ) {
             let storyboard = NSStoryboard(name: NSStoryboard.Name("Preferences"), bundle: nil)
             preferencesController = storyboard.instantiateInitialController() as? PreferencesWindowController
         }
-        
-        if ( preferencesController != nil ) {
-            preferencesController?.showWindow(sender)
-        }
     }
     
     @IBAction func PowerOn(_ sender: Any) {
-        ViewController.current?.PowerOn(sender)
+        ViewController.shared?.PowerOn(sender)
     }
     
     @IBAction func Pause(_ sender: Any) {
-        ViewController.current?.Pause(sender)
+        ViewController.shared?.Pause(sender)
     }
     
     @IBAction func PowerOff(_ sender: Any) {
-        ViewController.current?.PowerOff(sender)
+        ViewController.shared?.PowerOff(sender)
     }
     
     @IBAction func ColdReset(_ sender: Any) {
-        ViewController.current?.Reset(sender)
+        ViewController.shared?.Reset(sender)
     }
     
     @IBAction func WarmReset(_ sender: Any) {
-        ViewController.current?.Reset(sender)
+        ViewController.shared?.Reset(sender)
     }
-    
-    
-    
+
+    @IBAction func DebugContinue(_ sender: Any) {
+        DebuggerWindowController.shared?.ContinuePauseButton(sender)
+    }
+
+    @IBAction func DebugStepOver(_ sender: Any) {
+        DebuggerWindowController.shared?.Step_Over(sender)
+    }
+
+    @IBAction func DebugStepIn(_ sender: Any) {
+        DebuggerWindowController.shared?.Step_In(sender)
+    }
+
+    @IBAction func DebugStepOut(_ sender: Any) {
+        DebuggerWindowController.shared?.Step_Out(sender)
+    }
+
+
 }
 

@@ -42,11 +42,30 @@ class RepeatingTimer {
         self.timeInterval = timeInterval
     }
     
+//    var dt_start = DispatchTime.now()
+
     private lazy var timer: DispatchSourceTimer = {
         let t = DispatchSource.makeTimerSource()
+//        let t = DispatchSource.makeTimerSource(flags: .strict, queue: .global(qos: .userInitiated))
+//        dt_start = DispatchTime.now()
         t.schedule(deadline: .now() + self.timeInterval, repeating: self.timeInterval)
         t.setEventHandler(handler: { [weak self] in
-            self?.eventHandler?()
+//            let dt_end = DispatchTime.now()
+//
+//            let nanoTime = dt_end.uptimeNanoseconds - (self?.dt_start.uptimeNanoseconds)! // <<<<< Difference in nano seconds (UInt64)
+//            let timeInterval = Double(nanoTime) / 1_000_000_000 // Technically could overflow for long running tests
+//
+//            if ( timeInterval < 0.0001 ) {
+//                print("timer: \(timeInterval) seconds")
+//            }
+//
+//            self?.dt_start = dt_end
+
+            guard let strongSelf = self else {
+                print("RepeatingTimer Error: No self!\n");
+                return
+            }
+            strongSelf.eventHandler?()
         })
         return t
     }()

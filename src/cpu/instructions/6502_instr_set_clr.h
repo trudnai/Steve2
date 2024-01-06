@@ -34,10 +34,12 @@
  --------------------------------------------
  implied       CLC           18    1     2
  **/
-INLINE void CLC() {
+INSTR void CLC() {
     dbgPrintf("CLC ");
     disPrintf(disassembly.inst, "CLC");
+#ifndef DISASSEMBLER
     m6502.C = 0;
+#endif
 }
 
 /**
@@ -50,10 +52,12 @@ INLINE void CLC() {
  --------------------------------------------
  implied       CLD           D8    1     2
  **/
-INLINE void CLD() {
+INSTR void CLD() {
     dbgPrintf("CLD ");
     disPrintf(disassembly.inst, "CLD");
+#ifndef DISASSEMBLER
     m6502.D = 0;
+#endif
 }
 
 /**
@@ -66,10 +70,12 @@ INLINE void CLD() {
  --------------------------------------------
  implied       CLI           58    1     2
  **/
-INLINE void CLI() {
+INSTR void CLI() {
     dbgPrintf("CLI ");
     disPrintf(disassembly.inst, "CLI");
+#ifndef DISASSEMBLER
     m6502.I = 0;
+#endif
 }
 
 /**
@@ -82,10 +88,12 @@ INLINE void CLI() {
  --------------------------------------------
  implied       CLV           B8    1     2
  **/
-INLINE void CLV() {
+INSTR void CLV() {
     dbgPrintf("CLV ");
     disPrintf(disassembly.inst, "CLV");
+#ifndef DISASSEMBLER
     m6502.V = 0;
+#endif
 }
 
 /**
@@ -98,10 +106,12 @@ INLINE void CLV() {
  --------------------------------------------
  implied       SEC           38    1     2
  **/
-INLINE void SEC() {
+INSTR void SEC() {
     dbgPrintf("SEC ");
     disPrintf(disassembly.inst, "SEC");
+#ifndef DISASSEMBLER
     m6502.C = 1;
+#endif
 }
 
 /**
@@ -114,10 +124,12 @@ INLINE void SEC() {
  --------------------------------------------
  implied       SED           F8    1     2
  **/
-INLINE void SED() {
+INSTR void SED() {
     dbgPrintf("SED ");
     disPrintf(disassembly.inst, "SED");
+#ifndef DISASSEMBLER
     m6502.D = 1;
+#endif
 }
 
 /**
@@ -130,10 +142,12 @@ INLINE void SED() {
  --------------------------------------------
  implied       SEI           78    1     2
  **/
-INLINE void SEI() {
+INSTR void SEI() {
     dbgPrintf("SEI ");
     disPrintf(disassembly.inst, "SEI");
+#ifndef DISASSEMBLER
     m6502.I = 1;
+#endif
 }
 
 /**
@@ -175,11 +189,18 @@ INLINE void SEI() {
  E7 2   5   zp   ........ SMB6 $12
  F7 2   5   zp   ........ SMB7 $12
 **/
-#define RMB(n) INLINE void RMB##n( uint8_t zpg ) { \
+#ifndef DISASSEMBLER
+#define RMB(n) INSTR void RMB##n( uint8_t zpg ) { \
     dbgPrintf("RMB"#n" "); \
     disPrintf(disassembly.inst, "RMB"#n); \
     WRLOMEM[zpg] &= ~(1 << n); \
 }
+#else
+#define RMB(n) INSTR void RMB##n( uint8_t zpg ) { \
+    dbgPrintf("RMB"#n" "); \
+    disPrintf(disassembly.inst, "RMB"#n); \
+}
+#endif
 
     RMB(0)
     RMB(1)
@@ -190,11 +211,19 @@ INLINE void SEI() {
     RMB(6)
     RMB(7)
 
-#define SMB(n) INLINE void SMB##n( uint8_t zpg ) { \
+
+#ifndef DISASSEMBLER
+#define SMB(n) INSTR void SMB##n( uint8_t zpg ) { \
     dbgPrintf("SMB"#n" "); \
     disPrintf(disassembly.inst, "SMB"#n); \
     WRLOMEM[zpg] |= (1 << n); \
 }
+#else
+#define SMB(n) INSTR void SMB##n( uint8_t zpg ) { \
+    dbgPrintf("SMB"#n" "); \
+    disPrintf(disassembly.inst, "SMB"#n); \
+}
+#endif
 
     SMB(0)
     SMB(1)

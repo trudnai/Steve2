@@ -23,7 +23,17 @@
 
 
 import Cocoa
-import AVFoundation
+//import AVFoundation
+
+//import Metal
+//
+//var device : MTLDevice!
+//var metalLayer: CAMetalLayer!
+//var vertexBuffer: MTLBuffer!
+//var pipelineState: MTLRenderPipelineState!
+//var commandQueue: MTLCommandQueue!
+////var timer: CADisplayLink!
+
 
 
 let K : Double = 1000.0
@@ -43,34 +53,37 @@ let colorOrange =  NSColor.init( red:1, green:0.38671875, blue:0.0078125, alpha:
 
 var monoColor = colorGreen;
 
-var spk_up: AVAudioPlayer?
-var spk_dn: AVAudioPlayer?
+//var spk_up: AVAudioPlayer?
+//var spk_dn: AVAudioPlayer?
+//
+//@_cdecl("ViewController_spk_up_play")
+//func spk_up_play() {
+//    spk_up?.stop()
+//    spk_dn?.stop()
+//    spk_up?.play()
+//}
+//
+//@_cdecl("ViewController_spk_dn_play")
+//func spk_dn_play() {
+//    spk_up?.stop()
+//    spk_dn?.stop()
+//    spk_dn?.play()
+//}
 
-@_cdecl("ViewController_spk_up_play")
-func spk_up_play() {
-    spk_up?.stop()
-    spk_dn?.stop()
-    spk_up?.play()
-}
 
-@_cdecl("ViewController_spk_dn_play")
-func spk_dn_play() {
-    spk_up?.stop()
-    spk_dn?.stop()
-    spk_dn?.play()
-}
-
-
-//#if METAL_YES
-//import Metal
-//#endif
+#if METAL_YES
+import Metal
+#endif
 
 class ViewController: NSViewController  {
 
+    static var shared : ViewController? = nil
+    
+    var displayLink: CVDisplayLink?
+    
+    @IBOutlet var monitorView: MonitorView!
     @IBOutlet weak var textDisplayScroller: NSScrollView!
     @IBOutlet var textDisplay: NSTextView!
-    @IBOutlet weak var displayField: NSTextField!
-    @IBOutlet weak var display: NSTextFieldCell!
     @IBOutlet weak var speedometer: NSTextFieldCell!
     @IBOutlet weak var lores: LoRes!
     @IBOutlet weak var hires: HiRes!
@@ -102,29 +115,55 @@ class ViewController: NSViewController  {
 //        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_\u{E0A0}!\"#$%&'()*+,-./0123456789:;<=>?" +
 //        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~?"
     
-    static let charConvStrFlashOff : String =
+    // TODO: On 80n col mode no flash + small caps are inversed on the Flash map
+    
+    static let charConvStrFlashOff40 : String =
+        // INVERSE
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
             
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" + // FL
-            
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
-            
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+        // FLASH
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" + // FL
 
-    static let charConvStrFlashOn : String =
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+            
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+
+    static let charConvStrFlashOn40 : String =
+        // INVERSE
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+
+        // FLASH
         "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
            
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
             
-            "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
 
-    static let charConvTblFlashOn  = Array( charConvStrFlashOn  )
-    static let charConvTblFlashOff = Array( charConvStrFlashOff )
+    
+    static let charConvStrCol80 : String =
+        // INVERSE
+        "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E120}\u{E121}\u{E122}\u{E123}\u{E124}\u{E125}\u{E126}\u{E127}\u{E128}\u{E129}\u{E12A}\u{E12B}\u{E12C}\u{E12D}\u{E12E}\u{E12F}\u{E130}\u{E131}\u{E132}\u{E133}\u{E134}\u{E135}\u{E136}\u{E137}\u{E138}\u{E139}\u{E13A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+        
+        // INVERSE 2 with small caps
+        "\u{E140}\u{E141}\u{E142}\u{E143}\u{E144}\u{E145}\u{E146}\u{E147}\u{E148}\u{E149}\u{E14A}\u{E14B}\u{E14C}\u{E14D}\u{E14E}\u{E14F}\u{E150}\u{E151}\u{E152}\u{E153}\u{E154}\u{E155}\u{E156}\u{E157}\u{E158}\u{E159}\u{E15A}\u{E15B}\u{E15C}\u{E15D}\u{E15E}\u{E15F}\u{E160}\u{E161}\u{E162}\u{E163}\u{E164}\u{E165}\u{E166}\u{E167}\u{E168}\u{E169}\u{E16A}\u{E16B}\u{E16C}\u{E16D}\u{E16E}\u{E16F}\u{E170}\u{E171}\u{E172}\u{E173}\u{E174}\u{E175}\u{E176}\u{E177}\u{E178}\u{E179}\u{E17A}\u{E13B}\u{E13C}\u{E13D}\u{E13E}\u{E13F}" +
+
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_ !\"#$%&'()*+,-./0123456789:;<=>?" +
+        
+        "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~\u{E27F}"
+    
+    
+    static let charConvTblFlashOn40  = Array( charConvStrFlashOn40  )
+    static let charConvTblFlashOff40 = Array( charConvStrFlashOff40 )
+    static let charConvTblCol80  = Array( charConvStrCol80  )
+    
+    static var charConvTblFlashOn  = charConvTblFlashOn40
+    static var charConvTblFlashOff = charConvTblFlashOff40
     
     static var charConvTbl = charConvTblFlashOn
     
-    static var romFileName = "Apple2e_Enhanced.rom";
+//    static var romFileName = "Apple2e_Enhanced.rom"
+    static var romFileName = "Apple2e_32k.rom"
+//    static var romFileName = "077-0019 Apple IIe Diagnostic Card - English.rom"
 
     static let textLineOfs : [Int] = [
         0x000, 0x080, 0x100, 0x180, 0x200, 0x280, 0x300, 0x380, 0x028, 0x0A8, 0x128, 0x1A8,
@@ -170,7 +209,12 @@ class ViewController: NSViewController  {
     var workItem : DispatchWorkItem? = nil;
     @IBAction func PowerOn(_ sender: Any) {
         
+        #if SCHEDULER_CVDISPLAYLINK
+        CVDisplayLinkStop(displayLink!)
+        #else
         upd.suspend()
+        #endif
+
         cpuState = cpuState_inited;
         spkr_stopAll()
 
@@ -188,20 +232,32 @@ class ViewController: NSViewController  {
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             NSAnimationContext.runAnimationGroup({ (context) in
-                context.duration = 0.5
+                context.duration = 1.0
                 // Use the value you want to animate to (NOT the starting value)
                 self.textDisplayScroller.animator().alphaValue = 1
+                self.hires.animator().alphaValue = 1
+                self.lores.animator().alphaValue = 1
                 self.splashScreen.animator().alphaValue = 0
             },
             completionHandler:{ () -> Void in
                 self.textDisplayScroller.alphaValue = 1
+                self.hires.alphaValue = 1
+                self.lores.alphaValue = 1
                 self.splashScreen.isHidden = true
             })
             
             m6502_ColdReset( Bundle.main.resourcePath! + "/rom/", ViewController.romFileName )
             
             cpuState = cpuState_running;
+            #if SCHEDULER_CVDISPLAYLINK
+            CVDisplayLinkStart(self.displayLink!)
+            #else
             self.upd.resume()
+            #endif
+
+            if let debugger = DebuggerWindowController.shared {
+                debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
+            }
         }
         //------------------------------------------------------------
         
@@ -229,36 +285,133 @@ class ViewController: NSViewController  {
     
     @IBAction func PowerOff(_ sender: Any) {
         
+        #if SCHEDULER_CVDISPLAYLINK
+        CVDisplayLinkStop(displayLink!)
+        #else
         upd.suspend()
+        #endif
+
         cpuState = cpuState_inited;
         spkr_stopAll()
         
         //------------------------------------------------------------
         // Animated Splash Screen fade out and (Text) Monitor fade in
         
-        hires.isHidden = true
-        lores.isHidden = true
-        textDisplayScroller.alphaValue = 0
-//        textDisplayScroller.isHidden = false
-        splashScreen.alphaValue = 1
-        splashScreen.isHidden = false
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+            self.splashScreen.alphaValue = 0
+            self.splashScreen.isHidden = false
+
+            NSAnimationContext.runAnimationGroup({ (context) in
+                context.duration = 0.5
+                // Use the value you want to animate to (NOT the starting value)
+                self.textDisplayScroller.animator().alphaValue = 0
+                self.hires.animator().alphaValue = 0
+                self.lores.animator().alphaValue = 0
+                self.splashScreen.animator().alphaValue = 1
+            },
+            completionHandler:{ () -> Void in
+                self.textDisplayScroller.alphaValue = 0
+                self.textDisplayScroller.isHidden = true
+                self.splashScreen.isHidden = false
+                
+                self.hires.alphaValue = 0
+                self.lores.alphaValue = 0
+                self.hires.isHidden = true
+                self.lores.isHidden = true
+                
+                self.splashScreen.isHidden = false
+            })
+        }
+
+        if let debugger = DebuggerWindowController.shared {
+            debugger.PauseButtonUpdate(needUpdateMainToolbar: false)
+        }
+
+        
+//        hires.isHidden = true
+//        lores.isHidden = true
+//        textDisplayScroller.alphaValue = 0
+////        textDisplayScroller.isHidden = false
+//        splashScreen.alphaValue = 1
+//        splashScreen.isHidden = false
         
         //------------------------------------------------------------
         
     }
-    
-    
+
+
+    func debuggerShowWindow() {
+        if let debuggerWindowController = DebuggerWindowController.shared {
+            DispatchQueue.main.async {
+                debuggerWindowController.showWindow(self)
+            }
+        }
+    }
+
+
+    func debuggerRemoveHighlight() {
+        if let debuggerViewController = DebuggerViewController.shared {
+            debuggerViewController.remove_highlight(view: debuggerViewController.Disass_Display, line: debuggerViewController.highlighted_line_number)
+        }
+    }
+
+
+    func debuggerPauseUpdate() {
+        if let debuggerViewController = DebuggerViewController.shared {
+            debuggerViewController.TrunDisassAddressPC(.on)
+            debuggerViewController.remove_highlight(view: debuggerViewController.Disass_Display, line: debuggerViewController.highlighted_line_number)
+            debuggerViewController.Update()
+        }
+    }
+
+
+    func Resume() {
+        debuggerRemoveHighlight()
+
+        #if SCHEDULER_CVDISPLAYLINK
+        CVDisplayLinkStart(displayLink!)
+        #else
+        upd.resume()
+        #endif
+
+        cpuState = cpuState_running
+
+        DispatchQueue.main.async {
+            self.view.window?.windowController?.showWindow(self)
+        }
+
+        if let debugger = DebuggerWindowController.shared {
+            debugger.PauseButtonUpdate()
+        }
+    }
+
+
+    func Pause() {
+        #if SCHEDULER_CVDISPLAYLINK
+        CVDisplayLinkStop(displayLink!)
+        #else
+        upd.suspend()
+        #endif
+
+        cpuState = cpuState_halted
+
+        if let debugger = DebuggerWindowController.shared {
+            debugger.PauseButtonUpdate()
+        }
+
+        debuggerPauseUpdate()
+    }
+
+
     @IBAction func Pause(_ sender: Any) {
 
         switch ( cpuState ) {
         case cpuState_halted:
-            upd.resume()
-            cpuState = cpuState_running
+            Resume()
             break
             
         case cpuState_running:
-            upd.suspend()
-            cpuState = cpuState_halted
+            Pause()
             break
             
         default:
@@ -299,6 +452,8 @@ class ViewController: NSViewController  {
     let lineEndChars = ViewController.lineEndChars
 
     var frameCnt = 0
+    var flashInverted = false
+    
 //    let spaceChar : Character = "\u{E17F}"
 //    let blockChar : Character = "\u{E07F}"
 //    static let spaceChar : Character = " "
@@ -310,7 +465,9 @@ class ViewController: NSViewController  {
     static let textPage2Pointer = UnsafeRawBufferPointer(start: MEM + textPage2Addr, count: textBufferSize)
     static let textIntBufferPointer = UnsafeRawBufferPointer(start: RAM + textPage1Addr, count: textBufferSize)
     static let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textPage1Addr, count: textBufferSize)
-
+    
+    static let textPageShadowBuffer = UnsafeMutableRawBufferPointer.allocate(byteCount: textBufferSize, alignment: 1)
+    
     // TODO: Render text screen in native C
 //    static let textScreen = UnsafeMutableRawPointer(mutating: testText)
 
@@ -319,7 +476,7 @@ class ViewController: NSViewController  {
 
     static let textArraySize = textLines * (textCols + lineEndChars) + textCols * 2
 
-    var txtClear = [Character](repeating: " ", count: textArraySize * 2)
+    let txtClear = [Character](repeating: " ", count: textArraySize * 2)
     var unicodeTextArray = [Character](repeating: " ", count: textArraySize * 2)
 
     var s = String()
@@ -338,19 +495,24 @@ class ViewController: NSViewController  {
         }
         
         DispatchQueue.main.async {
-            self.display.stringValue = txt
+            self.textDisplay.string = txt
             self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
         }
     }
     
     
     // AppleScript Keycodes
-    let leftArrowKey = 123
-    let rightArrowKey = 124
-    let upArrowKey = 126
-    let downArrowKey = 125
-    
-    var ddd = 9;
+    let leftArrowKey    = 123
+    let rightArrowKey   = 124
+    let upArrowKey      = 126
+    let downArrowKey    = 125
+
+    let F4FunctionKey   = 118
+    let F5FunctionKey   =  96
+    let F6FunctionKey   =  97
+    let F7FunctionKey   =  98
+    let F8FunctionKey   = 100
+
 
     override var acceptsFirstResponder: Bool {
         get {
@@ -361,15 +523,17 @@ class ViewController: NSViewController  {
     
     func SelectAll() {
 //        textDisplayScroller.currentEditor()?.selectAll(nil)
-        displayField.selectText(nil)
+//        displayField.selectText(nil)
+        textDisplay.setSelectedRange(NSRange())
     }
     
     func Copy() {
         let pasteBoard = NSPasteboard.general
         pasteBoard.clearContents()
         // TODO: Find a better way to avoid index out of range error when the entire text area is selected
-        let string = display.stringValue + " "
-        if let selectedRange = displayField.currentEditor()?.selectedRange {
+        let string = textDisplay.string + " "
+        let selectedRange = textDisplay.selectedRange()
+        if selectedRange != NSRange() {
             let startIndex = string.index(string.startIndex, offsetBy: selectedRange.lowerBound)
             let endIndex = string.index(string.startIndex, offsetBy: selectedRange.upperBound)
             let selectedString = string[startIndex..<endIndex]
@@ -386,52 +550,129 @@ class ViewController: NSViewController  {
                 for char in str.uppercased() {
                     if let ascii = char.asciiValue {
                         // TODO: Write separate Paste Accelerator
-                        disk_accelerator_speedup()
-                        kbdInput(ascii)
+//                        disk_accelerator_speedup()
+                        kbdPaste(ascii)
                     }
                 }
             }
         }
     }
     
+    let mouseCursorHidden = true;
+    let mouseCursorJoystickEmulation = NSCursor.crosshair
+    let mouseCursorHiddenJoystickEmulation = NSCursor.init(image: NSImage.init(size: NSSize(width: 1, height: 1)), hotSpot: NSPoint(x: 0, y: 0))
+
+    
+    func mouseCursor(hide : Bool) {
+        if hide {
+            if mouseCursorHidden {
+                // NSCursor.hide() is working weird, better to set a 1px transparent cursor
+//                mouseCursorHiddenJoystickEmulation.set()
+                mouseCursorJoystickEmulation.set()
+            }
+            else {
+                mouseCursorJoystickEmulation.set()
+            }
+        }
+        else {
+//            if mouseCursorHidden {
+//                NSCursor.unhide()
+//            }
+            NSCursor.arrow.set()
+        }
+    }
+
+    
+    func getScreenWithMouse() -> NSScreen? {
+        let mouseLocation = NSEvent.mouseLocation
+        let screens = NSScreen.screens
+        let screenWithMouse = (screens.first { NSMouseInRect(mouseLocation, $0.frame, false) })
+        
+        return screenWithMouse
+    }
+    
+    
+    func convertPoint(toCG point : NSPoint) -> CGPoint {
+        /// Cocoa and Core Graphics (a.k.a. Quartz) use different coordinate systems. In Cocoa, the origin is at the lower left of the primary screen and y increases as you go up. In Core Graphics, the origin is at the top left of the primary screen and y increases as you go down.
+        /// Need to convert coordinates from Cocoa to Core Graphics
+        var cgpoint = view.window!.convertPoint(toScreen: point)
+        if let screen = getScreenWithMouse() {
+            cgpoint.y = NSHeight(screen.frame) - cgpoint.y;
+        }
+        return cgpoint
+    }
+    
+    
     override func mouseMoved(with event: NSEvent) {
-        mouseLocation = event.locationInWindow
+//        print(#function)
+        var location = event.locationInWindow
+//        displayOrigin = textDisplayScroller.frame.origin.
+//        print("mx:", location.x, " my:", location.y)
+                
+        var mouseCursorNeedsReplace = false
+        
+        if location.x < 8 {
+            mouseCursorNeedsReplace = true
+            location.x = 8
+        }
+        if location.x > textDisplay.frame.width - 8 {
+            mouseCursorNeedsReplace = true
+            location.x = textDisplay.frame.width - 8
+        }
+        if location.y < 8 {
+            mouseCursorNeedsReplace = true
+            location.y = 8
+        }
+        if location.y > textDisplay.frame.height - 8 {
+            mouseCursorNeedsReplace = true
+            location.y = textDisplay.frame.height - 8
+        }
+
+        mouseCursor(hide: Mouse2Joystick)
         
         if ( Mouse2Joystick ) {
+            if mouseCursorNeedsReplace {
+                CGWarpMouseCursorPosition(convertPoint(toCG: location))
+            }
+            
             pdl_prevarr[0] = pdl_valarr[0]
-            pdl_valarr[0] = Double(mouseLocation.x / (textDisplayScroller.frame.width) )
+            pdl_valarr[0] = Double(location.x / (textDisplay.frame.width) )
             pdl_diffarr[0] = pdl_valarr[0] - pdl_prevarr[0]
             
             pdl_prevarr[1] = pdl_valarr[1]
-            pdl_valarr[1] = 1 - Double(mouseLocation.y / (textDisplayScroller.frame.height) )
+            pdl_valarr[1] = 1 - Double(location.y / (textDisplay.frame.height) )
             pdl_diffarr[1] = pdl_valarr[1] - pdl_prevarr[1]
         }
         
         if ( MouseInterface ) {
             pdl_prevarr[2] = pdl_valarr[2]
-            pdl_valarr[2] = Double(mouseLocation.x / (textDisplayScroller.frame.width) )
+            pdl_valarr[2] = Double(location.x / (textDisplay.frame.width) )
             pdl_diffarr[2] = pdl_valarr[2] - pdl_prevarr[2]
             
             pdl_prevarr[3] = pdl_valarr[3]
-            pdl_valarr[3] = 1 - Double(mouseLocation.y / (textDisplayScroller.frame.height) )
+            pdl_valarr[3] = 1 - Double(location.y / (textDisplay.frame.height) )
             pdl_diffarr[3] = pdl_valarr[3] - pdl_prevarr[3]
         }
     }
-    
+
+
+    var savedVideoMode = videoMode_t.init()
+
+
     override func keyDown(with event: NSEvent) {
+        
+        m6502.ecoSpindown = ecoSpindown;
         
         if ( cpuMode == cpuMode_eco ) {
             cpuState = cpuState_running;
+            #if SCHEDULER_CVDISPLAYLINK
+            CVDisplayLinkStart(displayLink!)
+            #else
             upd.resume()
+            #endif
         }
         
 //        print("keyDown")
-        
-//        for i in 0...65536 {
-//            ddd = Int(event.keyCode) + i
-//        }
-//        ddd = ddd * 2
-        
         
 //        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
 //        case [.command] where event.characters == "l",
@@ -471,13 +712,12 @@ class ViewController: NSViewController  {
             let keyCode = Int(event.keyCode)
             switch keyCode {
             case leftArrowKey:
-//                print("LEFT", ddd);
+//                print("LEFT");
                 if ( Keyboard2Joystick ) {
                     // Keyboard 2 JoyStick (Game Controller / Paddle)
                     pdl_valarr[0] = 0
                 }
-                kbdInput(0x08)
-                
+                kbdInput(0x88)
                 
             case rightArrowKey:
 //                print("RIGHT")
@@ -485,8 +725,8 @@ class ViewController: NSViewController  {
                 if ( Keyboard2Joystick ) {
                     pdl_valarr[0] = 1
                 }
-                kbdInput(0x15)
-
+                kbdInput(0x95)
+                
             case downArrowKey:
 //                print("DOWN")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
@@ -494,8 +734,9 @@ class ViewController: NSViewController  {
                     pdl_valarr[1] = 1
                 }
                 else {
-                    kbdInput(0x0B)
+                    kbdInput(0x8A)
                 }
+                
             case upArrowKey:
 //                print("UP")
                 // Keyboard 2 JoyStick (Game Controller / Paddle)
@@ -503,7 +744,36 @@ class ViewController: NSViewController  {
                     pdl_valarr[1] = 0
                 }
                 else {
-                    kbdInput(0x0A)
+                    kbdInput(0x8B)
+                }
+
+            case F4FunctionKey:
+//                if let debugger = DebuggerWindowController.current {
+//                    debugger.Continue()
+//                }
+
+                Resume()
+                
+            case F5FunctionKey:
+//                if let debugger = DebuggerWindowController.current {
+//                    debugger.Pause()
+//                }
+
+                Pause()
+
+            case F6FunctionKey:
+                if let debugger = DebuggerWindowController.shared {
+                    debugger.Step_Over(event)
+                }
+
+            case F7FunctionKey:
+                if let debugger = DebuggerWindowController.shared {
+                    debugger.Step_In(event)
+                }
+
+            case F8FunctionKey:
+                if let debugger = DebuggerWindowController.shared {
+                    debugger.Step_Out(event)
                 }
 
             default:
@@ -518,11 +788,9 @@ class ViewController: NSViewController  {
             #endif
         }
         
-        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
+//        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
+        textDisplay.setSelectedRange(NSRange())
     }
-    
-    
-    var savedVideoMode = videoMode_t.init()
     
     
     override func keyUp(with event: NSEvent) {
@@ -586,7 +854,8 @@ class ViewController: NSViewController  {
     }
     
     override func flagsChanged(with event: NSEvent) {
-        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        let flags = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
+        switch flags {
         case [.shift]:
             setIO(0xC061, 0)
             setIO(0xC062, 0)
@@ -642,6 +911,12 @@ class ViewController: NSViewController  {
 //            print("function key is pressed")
 //        case [.capsLock]:
 //            print("capsLock key is pressed")
+        
+        case [.control, .command, .option]:
+            Mouse2Joystick = !Mouse2Joystick
+            mouseCursor(hide: Mouse2Joystick)
+            ToolBarController.current?.MouseToJoystickMenuItem.state = Mouse2Joystick ? .on : .off
+
         default:
             setIO(0xC061, 0)
             setIO(0xC062, 0)
@@ -650,8 +925,6 @@ class ViewController: NSViewController  {
         }
     }
 
-
-    
     
     var was = 0;
     
@@ -660,124 +933,187 @@ class ViewController: NSViewController  {
     var frameCounter : UInt32 = 0
     var clkCounter : Double = 0
     
-    var mouseLocation = NSPoint.zero
-    
     var shadowTxt : String = ""
-    
-    func Render() {
-        
-        frameCnt += 1
-        
-        if ( frameCnt == fps / 2 ) {
-            ViewController.charConvTbl = ViewController.charConvTblFlashOn
-        }
-        else if ( frameCnt >= fps ) {
-            ViewController.charConvTbl = ViewController.charConvTblFlashOff
-            frameCnt = 0
-        }
-        
-        // Rendering is happening in the main thread, which has two implications:
-        //   1. We can update UI elements
-        //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
-        DispatchQueue.main.sync {
-            var unicodeTextString : String = ""
-            
-            var fromLines = 0
-            var toLines = self.textLines
-            
-            if videoMode.text == 0 {
-                if videoMode.mixed == 1 {
-                    fromLines = toLines - 4
-                }
-                else {
-                    toLines = 0
-                }
-            }
-            
-            self.unicodeTextArray = self.txtClear
-            
-            // render an empty space to eiminate displaying text portion of the screen covered by graphics
-            let charDisposition = videoMode.col80 == 0 ? 1 : 2
-            for y in 0 ..< fromLines {
-                self.unicodeTextArray[ y * (self.textCols * charDisposition + self.lineEndChars) + self.textCols * charDisposition] = "\n"
-            }
-            
-            // 40 col
-            if videoMode.col80 == 0 {
-                if MEMcfg.txt_page_2 == 0 {
-                    self.textBufferPointer = ViewController.textPage1Pointer
-                }
-                else {
-                    self.textBufferPointer = ViewController.textPage2Pointer
-                }
-                // render the rest of the text screen
-                for y in fromLines ..< toLines {
-                    for x in 0 ..< self.textCols {
-                        let byte = self.textBufferPointer[ ViewController.textLineOfs[y] + x ]
-                        let idx = Int(byte);
-                        let chr = ViewController.charConvTbl[idx]
-                        
-                        self.unicodeTextArray[ y * (self.textCols + self.lineEndChars) + x ] = chr
-                    }
-                    
-                    self.unicodeTextArray[ y * (self.textCols + self.lineEndChars) + self.textCols ] = "\n"
-                }
-            }
-            // 80 col
-            else {
-                let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
-                
-                let textIntBuffer = auxPage ?  ViewController.textIntBufferPointer : ViewController.textPage1Pointer
-                let textAuxBuffer = auxPage ?  ViewController.textPage1Pointer : ViewController.textAuxBufferPointer
-                
-                // render the rest of the text screen
-                for y in fromLines ..< toLines {
-                    for x in 0 ..< self.textCols {
-                        let byte = textIntBuffer[ ViewController.textLineOfs[y] + x ]
-                        let idx = Int(byte);
-                        let chr = ViewController.charConvTbl[idx]
-                        
-                        self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2 + 1] = chr
-                        
-                        let byte2 = textAuxBuffer[ ViewController.textLineOfs[y] + x ]
-                        let idx2 = Int(byte2);
-                        let chr2 = ViewController.charConvTbl[idx2]
-                        
-                        self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + x * 2] = chr2
-                    }
-                    
-                    self.unicodeTextArray[ y * (self.textCols * 2 + self.lineEndChars) + self.textCols * 2] = "\n"
-                }
-            }
-            
-            
-            unicodeTextString = String(self.unicodeTextArray)
-            
-            // TODO: Render text Screen in native C
-            //            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
-            
-            if videoMode.col80 != self.currentVideoMode.col80 {
-                self.currentVideoMode.col80 = videoMode.col80
-                
-                if let fontSize = self.display.font?.pointSize {
-                    if videoMode.col80 == 1 {
-                        self.textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
-                    }
-                    else {
-                        self.textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
-                    }
-                }
-            }
-            
-            if ( self.shadowTxt != unicodeTextString ) {
-                self.shadowTxt = unicodeTextString
-//                self.display.stringValue = unicodeTextString
-                self.textDisplay.string = unicodeTextString
+    var unicodeTextString : String = ""
 
+    
+    func Flash() {
+        self.frameCnt += 1
+        
+        if ( self.frameCnt == fps / video_fps_divider / 2 ) {
+            if !flashInverted {
+                ViewController.charConvTbl = ViewController.charConvTblFlashOn
+                flashInverted = true
+            }
+        }
+        else if ( self.frameCnt >= fps / video_fps_divider ) {
+            self.frameCnt = 0
+            
+            if flashInverted {
+                ViewController.charConvTbl = ViewController.charConvTblFlashOff
+                flashInverted = false
+            }
+        }
+    }
+
+    
+    var textNeedRender = false
+    
+    func RenderText() {
+        Flash()
+
+        textNeedRender = false
+        
+        var fromLines = 0
+        var toLines = textLines
+        
+        if videoMode.text == 0 {
+            if videoMode.mixed == 1 {
+                fromLines = toLines - 4
+            }
+            else {
+                toLines = 0
+            }
+        }
+        
+        unicodeTextArray = NSArray(array: txtClear, copyItems: true) as! [Character]
+        
+        // render an empty space to eiminate displaying text portion of the screen covered by graphics
+        let charDisposition = videoMode.col80 == 0 ? 1 : 2
+        for y in 0 ..< fromLines {
+            unicodeTextArray[ y * (textCols * charDisposition + lineEndChars) + textCols * charDisposition] = "\n"
+        }
+        
+        // 40 col
+        if videoMode.col80 == 0 {
+            if MEMcfg.txt_page_2 == 0 {
+                textBufferPointer = ViewController.textPage1Pointer
+            }
+            else {
+                textBufferPointer = ViewController.textPage2Pointer
+            }
+            
+            if textBufferPointer.elementsEqual(ViewController.textPageShadowBuffer) {
+            }
+            else {
+                ViewController.textPage1Pointer.copyBytes(to: ViewController.textPageShadowBuffer)
+                textNeedRender = true
+                
+                // render the rest of the text screen
+                for y in fromLines ..< toLines {
+                    for x in 0 ..< textCols {
+                        let byte = textBufferPointer[ ViewController.textLineOfs[y] + x ]
+                        let idx = Int(byte);
+                        let chr = ViewController.charConvTbl[idx]
+                        
+                        unicodeTextArray[ y * (textCols + lineEndChars) + x ] = chr
+                    }
+                    
+                    unicodeTextArray[ y * (textCols + lineEndChars) + textCols ] = "\n"
+                }
+                
+                unicodeTextString = String(unicodeTextArray)
+            }
+        }
+        // 80 col
+        else {
+            let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
+            
+            let textIntBuffer = auxPage ?  ViewController.textIntBufferPointer : ViewController.textPage1Pointer
+            let textAuxBuffer = auxPage ?  ViewController.textPage1Pointer : ViewController.textAuxBufferPointer
+            
+            // render the rest of the text screen
+            for y in fromLines ..< toLines {
+                for x in 0 ..< textCols {
+                    let byte = textIntBuffer[ ViewController.textLineOfs[y] + x ]
+                    let idx = Int(byte);
+                    let chr = ViewController.charConvTbl[idx]
+                    
+                    unicodeTextArray[ y * (textCols * 2 + lineEndChars) + x * 2 + 1] = chr
+                    
+                    let byte2 = textAuxBuffer[ ViewController.textLineOfs[y] + x ]
+                    let idx2 = Int(byte2);
+                    let chr2 = ViewController.charConvTbl[idx2]
+                    
+                    unicodeTextArray[ y * (textCols * 2 + lineEndChars) + x * 2] = chr2
+                }
+                
+                unicodeTextArray[ y * (textCols * 2 + lineEndChars) + textCols * 2] = "\n"
+            }
+            
+            unicodeTextString = String(unicodeTextArray)
+        }
+    }
+
+    func SetSplashScreenFont() {
+        for view in splashScreen.subviews {
+            if view is NSTextField {
+                let textField = view as! NSTextField
+                if let fontSize = textField.font?.pointSize {
+                    textField.font = NSFont(name: "PrintChar21", size: fontSize)
+                }
+            }
+        }
+
+        // Set Apple ][ font
+        if let fontSize = textDisplay.font?.pointSize {
+            textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
+            ViewController.charConvTblFlashOn = ViewController.charConvTblFlashOn40
+            ViewController.charConvTblFlashOff = ViewController.charConvTblFlashOff40
+        }
+    }
+
+
+    func SetCol40() {
+        // Set Apple ][ font
+        if let fontSize = textDisplay.font?.pointSize {
+            textDisplay.font = NSFont(name: "PrintChar21", size: fontSize)
+            ViewController.charConvTblFlashOn = ViewController.charConvTblFlashOn40
+            ViewController.charConvTblFlashOff = ViewController.charConvTblFlashOff40
+        }
+    }
+
+
+    func SetCol80() {
+        // Set Apple ][ font
+        if let fontSize = textDisplay.font?.pointSize {
+            textDisplay.font = NSFont(name: "PRNumber3", size: fontSize)
+            ViewController.charConvTblFlashOn = ViewController.charConvTblCol80
+            ViewController.charConvTblFlashOff = ViewController.charConvTblCol80
+        }
+    }
+
+
+    func UpdateText() {
+
+// TODO: Render text Screen in native C
+//            txt = String(bytesNoCopy: ViewController.textScreen!, length: 10, encoding: .ascii, freeWhenDone: false) ?? "HMM"
+        
+        if videoMode.col80 != currentVideoMode.col80 {
+            currentVideoMode.col80 = videoMode.col80
+            
+            if videoMode.col80 == 1 {
+                SetCol80()
+            }
+            else {
+                SetCol40()
+            }
+        }
+        
+        if textNeedRender || shadowTxt != unicodeTextString {
+            shadowTxt = unicodeTextString
+
+            let selectedRange = textDisplay.selectedRange()
+
+//            DispatchQueue.main.async { [self] in
+                textDisplay.string = unicodeTextString
+                textDisplay.setSelectedRange(selectedRange)
+//            }
+            
 //                let bold14 = NSFont.boldSystemFont(ofSize: 14.0)
 //                let textColor = NSColor.red
 //                let attribs = [NSAttributedString.Key.font:bold14,NSAttributedString.Key.foregroundColor:textColor,NSAttributedString.Key.paragraphStyle:textParagraph]
-                
+
 //                let textParagraph = NSMutableParagraphStyle()
 //                textParagraph.lineSpacing = 0
 //                textParagraph.minimumLineHeight = 32.0
@@ -785,115 +1121,214 @@ class ViewController: NSViewController  {
 //
 //                let attribs = [NSAttributedString.Key.paragraphStyle: textParagraph]
 //                let attrString:NSAttributedString = NSAttributedString.init(string: unicodeTextString, attributes: attribs)
-//                self.display.attributedStringValue = attrString
-            }
-            //            self.display.stringValue = "testing\nit\nout"
-            
-            if ( (mhz < 1.5) && (mhz != floor(mhz)) ) {
-                self.speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+//                display.attributedStringValue = attrString
+        }
+//            display.stringValue = "testing\nit\nout"
+    }
+
+
+    func UpdateCPUspeed() {
+//        DispatchQueue.main.async { [self] in
+        // under ~1.5 MHz -- 3 decimals to be able to display 1.023 MHz
+        if ( (mhz < 1.4) && (mhz != floor(mhz)) ) {
+            speedometer.stringValue = String(format: "%0.3lf MHz", mhz);
+        }
+        // under ~100 MHz -- 1 decimal
+        else if (mhz < 95) {
+            speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
+        }
+        // over ~1000 MHz -- 1 decimal GHz
+        else if (mhz > 950) {
+            speedometer.stringValue = String(format: "%0.1lf GHz", mhz / 1000);
+        }
+        // hundreds -- no decimals
+        else {
+            speedometer.stringValue = String(format: "%0.0lf MHz", mhz);
+        }
+//        }
+    }
+    
+    
+    func RenderGraphics() {
+        // only refresh graphics view when needed (aka not in text mode)
+        if ( videoMode.text == 0 ) {
+            if ( videoMode.hires == 0 ) {
+                // when we change video mode, buffer needs to be cleared to avoid artifacts
+                if ( savedVideoMode.text == 1 )
+                    || ( savedVideoMode.mixed != videoMode.mixed )
+                    || ( savedVideoMode.hires != videoMode.hires )
+                {
+                    lores.clearScreen()
+                    lores.isHidden = false
+                    hires.isHidden = true
+                    unicodeTextString = String(unicodeTextArray)
+                }
+                
+                lores.Render()
             }
             else {
-                self.speedometer.stringValue = String(format: "%0.1lf MHz", mhz);
+                // when we change video mode, buffer needs to be cleared to avoid artifacts
+                if ( savedVideoMode.text == 1 )
+                    || ( savedVideoMode.mixed != videoMode.mixed )
+                    || ( savedVideoMode.hires != videoMode.hires )
+                {
+                    hires.clearScreen()
+                    hires.isHidden = false
+                    lores.isHidden = true
+                    unicodeTextString = String(unicodeTextArray)
+                }
+                
+                hires.Render()
             }
-            //            else {
-            //                self.speedometer.stringValue = String(format: "%.0lf MHz", mhz);
-            //            }
-            
+        }
+        else if ( savedVideoMode.text == 0 ) {
+            // we just switched from grahics to text
+            lores.isHidden = true
+            hires.isHidden = true
+            unicodeTextString = String(unicodeTextArray)
+        }
+        
+        savedVideoMode = videoMode
+    }
+    
+    
+    func Render() {
+        self.RenderText()
+
+        // Rendering is happening in the main thread, which has two implications:
+        //   1. We can update UI elements
+        //   2. it is independent of the simulation, de that is running in the background thread while we are busy with rendering...
+//        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.main.async {
+            self.UpdateText()
+            self.UpdateCPUspeed()
+                
             #if HIRES
-            
-            // only refresh graphics view when needed (aka not in text mode)
-            if ( videoMode.text == 0 ) {
-                if ( videoMode.hires == 0 ) {
-                    // when we change video mode, buffer needs to be cleared to avoid artifacts
-                    if ( self.savedVideoMode.text == 1 )
-                        || ( self.savedVideoMode.mixed != videoMode.mixed )
-                        || ( self.savedVideoMode.hires != videoMode.hires )
-                    {
-                        self.lores.clearScreen()
-                        self.lores.isHidden = false
-                        self.hires.isHidden = true
-                    }
-                    
-                    self.lores.Render()
-                }
-                else {
-                    // when we change video mode, buffer needs to be cleared to avoid artifacts
-                    if ( self.savedVideoMode.text == 1 )
-                        || ( self.savedVideoMode.mixed != videoMode.mixed )
-                        || ( self.savedVideoMode.hires != videoMode.hires )
-                    {
-                        self.hires.clearScreen()
-                        self.hires.isHidden = false
-                        self.lores.isHidden = true
-                    }
-                    
-                    hires.Render()
-                }
-            }
-            else if ( self.savedVideoMode.text == 0 ) {
-                // we just switched from grahics to text
-                self.lores.isHidden = true
-                self.hires.isHidden = true
-            }
-            
-            self.savedVideoMode = videoMode
-            
-            #endif
-            
-            // stream speaker from a separate thread from the simulation
-            // TODO: Do we need to do this from here?
-            //            spkr_update()
-            
+            self.RenderGraphics()
+            #endif // HIRES
         }
     }
     
     
     override func mouseDown(with event: NSEvent) {
+//        print(#function)
+        
+        switch event.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+        case [.control, .command, .option]:
+            Mouse2Joystick = !Mouse2Joystick
+            mouseCursor(hide: Mouse2Joystick)
+            ToolBarController.current?.MouseToJoystickMenuItem.state = Mouse2Joystick ? .on : .off
+
+        default:
+            break
+        }
+
         if ( Mouse2Joystick ) {
             setIO(0xC061, 1 << 7)
         }
+        
     }
 
     override func mouseUp(with event: NSEvent) {
+//        print(#function)
         if ( Mouse2Joystick ) {
             setIO(0xC061, 0)
         }
     }
     
     override func rightMouseDown(with event: NSEvent) {
+//        print(#function)
         if ( Mouse2Joystick ) {
             setIO(0xC062, 1 << 7)
         }
     }
     
     override func rightMouseUp(with event: NSEvent) {
+//        print(#function)
         if ( Mouse2Joystick ) {
             setIO(0xC062, 0)
         }
     }
     
     override func otherMouseDown(with event: NSEvent) {
+//        print(#function)
         if ( Mouse2Joystick ) {
             setIO(0xC063, 0) // inverted (bit 7: 0 = pressed)
         }
     }
     
     override func otherMouseUp(with event: NSEvent) {
+//        print(#function)
         if ( Mouse2Joystick ) {
             setIO(0xC063, 1 << 7) // inverted (bit 7: 1 = not pressed)
         }
     }
-    
 
+
+    func diskButtonUpdate() {
+        DispatchQueue.main.async {
+
+            if ( self.frameCounter % DEF_DRV_LED_DIV == 0 ) {
+
+                // Disk Motor LED
+                if spkr_is_disk_motor_playing() {
+                    if self.disk1_led.isHidden {
+                        self.disk1_led.isHidden = false
+                    }
+                }
+                else {
+                    if !self.disk1_led.isHidden {
+                        self.disk1_led.isHidden = true
+                    }
+                }
+
+                // Disk Loaded
+                if woz_is_loaded() > 0 {
+                    if self.disk1_closed.isHidden {
+                        self.disk1_closed.isHidden = false
+                    }
+                }
+                else {
+                    if !self.disk1_closed.isHidden {
+                        self.disk1_closed.isHidden = true
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    func debugBreak() {
+        Pause()
+        spkr_play_disk_motor_time = 0
+        spkr_stopAll()
+
+        // TODO: This should be in Debugger!
+        debuggerPauseUpdate()
+        debuggerShowWindow()
+    }
+
+
+    let UpdateSemaphore = DispatchSemaphore(value: 1)
     func Update() {
+//        clk_6502_per_frm_max = 0
+
+        if UpdateSemaphore.wait(timeout: .now() + 0.001) == .timedOut {
+            // get back here next time...
+            return
+        }
+
+        diskButtonUpdate()
+
         switch cpuState {
             case cpuState_running:
-                clkCounter += Double(clkfrm)
+                clkCounter += Double(m6502.clkfrm)
                 // we start a new frame from here, so CPU is running even while rendering
-                clkfrm = 0
-                
+//                m6502.clkfrm = 0
+
                 frameCounter += 1
-                
+
                 if ( frameCounter % fps == 0 ) {
                     let currentTime = CACurrentMediaTime() as Double
                     let elpasedTime = currentTime - lastFrameTime
@@ -909,32 +1344,93 @@ class ViewController: NSViewController  {
 //                Input()
                 
                 // run some code
-                m6502_Run()
-                
+                // cpuState = cpuState_executing
+//                DispatchQueue.global(qos: .userInitiated).async {
+                if m6502.debugger.on {
+                    m6502_Debug()
+
+                    switch m6502.interrupt {
+                    case HALT:
+                        debugBreak()
+
+                    case BREAK: // BRK instruction
+                        debugBreak()
+
+                    case BREAKPOINT: // CPU halted because of a breakpoint
+                        debugBreak()
+
+                    case BREAKRDMEM: // CPU halted because of a breakpoint
+                        debugBreak()
+
+                    case BREAKWRMEM: // CPU halted because of a breakpoint
+                        debugBreak()
+
+                    case RET:
+                        if m6502.debugger.mask.ret == 1 {
+                            // Step_Out / Step_Over
+                            if m6502.PC >= m6502.debugger.SP {
+                                debugBreak()
+                            }
+                        }
+
+                    case INV: // invalid instruction
+                        debugBreak()
+
+                    default:
+                        break
+                    }
+
+                    // clear iterrupt
+                    m6502.interrupt = NO_INT
+                }
+                else {
+//                    DispatchQueue.global(qos: .userInitiated).async {
+                        m6502_Run()
+//                    }
+                    // cpuState = cpuState_running
+                }
+
                 // video rendering
                 if ( frameCounter % video_fps_divider == 0 ) {
                     Render()
                 }
-                
+
+                // TODO: This should be in Debugger!
+                if let debugger = DebuggerViewController.shared {
+                    debugger.Update()
+                }
+
                 #endif
                 
+                break
+                
+            case cpuState_executing:
+                // prevent running more instances per session
+//                setCPUClockSpeed(freq: MHz_6502 - 1)
                 break
 
             case cpuState_halting:
                 cpuState = cpuState_halted
-                // video rendering
+                // last video rendering before halt
                 Render()
-                
+
                 break
             
             case cpuState_halted:
+                #if SCHEDULER_CVDISPLAYLINK
+                CVDisplayLinkStop(displayLink!)
+                #else
                 upd.suspend()
+                #endif
+                
                 break
                 
             default:
                 break
         }
 
+        // ok, from now you can update again
+        UpdateSemaphore.signal()
     }
 
     
@@ -948,9 +1444,9 @@ class ViewController: NSViewController  {
 //    }
     
     
+    #if SCHEDULER_CVDISPLAYLINK
+    #else
     var upd = RepeatingTimer(timeInterval: 1)
-
-    static var current : ViewController? = nil
     
     func newUpdateTimer( timeInterval : Double ) {
         upd.kill()
@@ -961,19 +1457,211 @@ class ViewController: NSViewController  {
         upd.resume()
     }
 
+    #endif
+
     
     // Kelvin Sherlock's fix to avoid uninstalled font problems
     override func awakeFromNib() {
-        self.display.font = NSFont(name: "PrintChar21", size: 32)
+//        self.display.font = NSFont(name: "PrintChar21", size: 32)
     }
     
+    required init?(coder: NSCoder) {
+//        print(#function)
+        super.init(coder: coder)
         
+        ViewController.shared = self
+    }
+    
+    
+//    func render() {
+//
+//        var x = vertexData[2 * 3 + 0]
+//        x -= 0.01
+//        if x < -1 {
+//            x = 1
+//        }
+//        vertexData[2 * 3 + 0] = x
+//
+//        guard let drawable = metalLayer?.nextDrawable() else { return }
+//        let renderPassDescriptor = MTLRenderPassDescriptor()
+//        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
+//        renderPassDescriptor.colorAttachments[0].loadAction = .clear
+//        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColor(
+//            red: 0.0,
+//            green: 104.0/255.0,
+//            blue: 55.0/255.0,
+//            alpha: 0.3)
+//
+//        if let commandBuffer = commandQueue.makeCommandBuffer() {
+//            if let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) {
+//                renderEncoder.setRenderPipelineState(pipelineState)
+//                let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]) // 1
+//                vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: []) // 2
+//                renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+//                renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
+//                renderEncoder.endEncoding()
+//                commandBuffer.present(drawable)
+//                commandBuffer.commit()
+//            }
+//        }
+//    }
+//
+//
+//    var vertexData: [Float] = [
+//        0.0,  1.0, 0.0,
+//        -1.0, -1.0, 0.0,
+//        1.0, -1.0, 0.0
+//    ]
+    
+#if SCHEDULER_CVDISPLAYLINK
+
+    //  The callback function is called everytime CVDisplayLink says its time to get a new frame.
+    let displayLinkOutputCallback : CVDisplayLinkOutputCallback = { (displayLink: CVDisplayLink, _ inNow: UnsafePointer<CVTimeStamp>, _ inOutputTime: UnsafePointer<CVTimeStamp>, _ flagsIn: CVOptionFlags, _ flagsOut: UnsafeMutablePointer<CVOptionFlags>, _ vController: UnsafeMutableRawPointer?) -> CVReturn in
+        
+        /*  The displayLinkContext is CVDisplayLink's parameter definition of the view in which we are working.
+         In order to access the methods of a given view we need to specify what kind of view it is as right
+         now the UnsafeMutablePointer<Void> just means we have a pointer to "something".  To cast the pointer
+         such that the compiler at runtime can access the methods associated with our SwiftOpenGLView, we use
+         an unsafeBitCast.  The definition of which states, "Returns the the bits of x, interpreted as having
+         type U."  We may then call any of that view's methods.  Here we call drawView() which we draw a
+         frame for rendering.  */
+        //            unsafeBitCast(displayLinkContext, SwiftOpenGLView.self).renderFrame()
+
+/// This can be a precise FPS updater so MHz would be dead perfect pitch -- however, it makes things worse
+//        let now : CVTimeStamp = inNow.pointee
+////            print( "RateScaler:", now.rateScalar )
+//        if (mySelf.last_frame_time != 0) {
+//            let videoTimeDiff = now.videoTime - mySelf.last_frame_time
+//            let currentFPS = Double(now.videoTimeScale) / Double(videoTimeDiff)
+//
+//            fps = currentFPS
+//            //                mySelf.setCPUClockSpeed(freq: MHz_6502)
+//            clk_6502_per_frm = UInt64( MHz_6502 * M / currentFPS )
+//            clk_6502_per_frm_set = clk_6502_per_frm
+//
+//        }
+//        mySelf.last_frame_time = now.videoTime;
+
+        let mySelf = Unmanaged<ViewController>.fromOpaque(vController!).takeUnretainedValue()
+        mySelf.Update();
+
+        //  We are going to assume that everything went well for this mock up, and pass success as the CVReturn
+        return kCVReturnSuccess
+    }
+    
+    // sets a callback at every screen refresh (normally 60Hz)
+    func setupDisplayLink() {
+        //  Grab the a link to the active displays, set the callback defined above, and start the link.
+        /*  An alternative to a nested function is a global function or a closure passed as the argument--a local function
+         (i.e. a function defined within the class) is NOT allowed. */
+        //  The UnsafeMutablePointer<Void>(unsafeAddressOf(self)) passes a pointer to the instance of our class.
+        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+        
+        let unsafeSelf: UnsafeMutableRawPointer = Unmanaged.passUnretained(self).toOpaque()
+        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, unsafeSelf)
+//        CVDisplayLinkStart(displayLink!)
+    }
+#endif
+
+    @IBOutlet weak var disk1_led: NSImageView!
+    @IBOutlet weak var disk2_led: NSImageView!
+    @IBOutlet weak var disk1_closed: NSImageView!
+    @IBOutlet weak var disk2_closed: NSImageView!
+
+
+    var keyDownMonitor : Any?
+    var keyUpMonitor : Any?
+
+    func keyEventsOn() {
+//        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
+//        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
+//            self.flagsChanged(with: $0)
+//            return $0
+//        }
+
+        if let event = keyDownMonitor {
+            NSEvent.removeMonitor(event)
+            keyDownMonitor = nil
+        }
+        keyDownMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+//            print("keyDown event")
+            self.keyDown(with: $0)
+            return nil
+        }
+        if let event = keyUpMonitor {
+            NSEvent.removeMonitor(event)
+            keyUpMonitor = nil
+        }
+        keyUpMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
+//            print("keyUp event")
+            self.keyUp(with: $0)
+            return nil
+        }
+    }
+
+
+    func keyEventsOff() {
+//        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
+        if let event = keyDownMonitor {
+            NSEvent.removeMonitor(event)
+            keyDownMonitor = nil
+        }
+        if let event = keyUpMonitor {
+            NSEvent.removeMonitor(event)
+            keyUpMonitor = nil
+        }
+    }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        ViewController.current = self
-        openLog()
 
+//        if let image = Disk1_open_on_img {
+//            Disk1_ButtonCell.alternateImage = image
+//            NSLog("Disk1_ButtonCell:%@", Disk1_ButtonCell)
+//        }
+
+//        let layer = CALayer()
+//        hires.layer = layer
+//        hires.wantsLayer = true
+        
+//        device = MTLCreateSystemDefaultDevice()
+//        metalLayer = CAMetalLayer()          // 1
+//        metalLayer.device = device           // 2
+//        metalLayer.pixelFormat = .bgra8Unorm // 3
+//        metalLayer.framebufferOnly = true    // 4
+//        metalLayer.frame = hires.layer!.frame  // 5
+//        hires.layer!.addSublayer(metalLayer)   // 6
+//
+//        let dataSize = vertexData.count * MemoryLayout.size(ofValue: vertexData[0]) // 1
+//        vertexBuffer = device.makeBuffer(bytes: vertexData, length: dataSize, options: []) // 2
+//
+//        // 1
+//        let defaultLibrary = device.makeDefaultLibrary()!
+//        let fragmentProgram = defaultLibrary.makeFunction(name: "basic_fragment")
+//        let vertexProgram = defaultLibrary.makeFunction(name: "basic_vertex")
+//
+//        // 2
+//        let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
+//        pipelineStateDescriptor.vertexFunction = vertexProgram
+//        pipelineStateDescriptor.fragmentFunction = fragmentProgram
+//        pipelineStateDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+//
+//        // 3
+//        pipelineState = try! device.makeRenderPipelineState(descriptor: pipelineStateDescriptor)
+//
+//        commandQueue = device.makeCommandQueue()
+
+//        timer = CADisplayLink(target: self, selector: #selector(gameloop))
+//        timer.add(to: RunLoop.main, forMode: .default)
+
+
+        // Set Apple ][ font
+        SetCol40()
+        SetSplashScreenFont()
+
+        openLog()
+        
         hires.clearScreen();
         
         spkr_load_sfx( Bundle.main.resourcePath! + "/sfx" )
@@ -988,28 +1676,10 @@ class ViewController: NSViewController  {
         
         self.textDisplayScroller.scaleUnitSquare(to: NSSize(width: 1, height: 1))
         
-//        NSEvent.removeMonitor(NSEvent.EventType.flagsChanged)
-//        NSEvent.addLocalMonitorForEvents(matching: .flagsChanged) {
-//            self.flagsChanged(with: $0)
-//            return $0
-//        }
+        keyEventsOn()
 
-        //        NSEvent.removeMonitor(NSEvent.EventType.keyDown)
-        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
-//            print("keyDown event")
-            self.keyDown(with: $0)
-            return nil
-//            return $0
-        }
-        NSEvent.addLocalMonitorForEvents(matching: .keyUp) {
-//            print("keyUp event")
-            self.keyUp(with: $0)
-            return nil
-//            return $0
-        }
-
-        displayField.maximumNumberOfLines = textLines
-        displayField.preferredMaxLayoutWidth = displayField.frame.width
+//        displayField.maximumNumberOfLines = textLines
+//        displayField.preferredMaxLayoutWidth = displayField.frame.width
 
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1/fps, execute: {
 //            self.update()
@@ -1026,63 +1696,161 @@ class ViewController: NSViewController  {
 //        }
 //        upd.resume()
         
+        
+        
+#if SCHEDULER_CVDISPLAYLINK
+        //  Grab the a link to the active displays, set the callback defined above, and start the link.
+        /*  An alternative to a nested function is a global function or a closure passed as the argument--a local function
+         (i.e. a function defined within the class) is NOT allowed. */
+        //  The UnsafeMutablePointer<Void>(unsafeAddressOf(self)) passes a pointer to the instance of our class.
+        CVDisplayLinkCreateWithActiveCGDisplays(&displayLink)
+        let unsafeSelf: UnsafeMutableRawPointer = Unmanaged.passUnretained(self).toOpaque()
+        CVDisplayLinkSetOutputCallback(displayLink!, displayLinkOutputCallback, unsafeSelf)
+        CVDisplayLinkStart(displayLink!)
+#else
         newUpdateTimer( timeInterval: 1 / Double(fps) )
+#endif
         
-//        #endif
+//        soundGapSlider.integerValue = Int(spkr_extra_buf)
+//        ledingInitEdgeLabel.title = "ILE: " + String( SPKR_INITIAL_LEADING_EDGE )
+//        initialLeadEdgeSlider.floatValue = SPKR_INITIAL_LEADING_EDGE
+//        leadingEdgeLabel.title = "LE: " + String( SPKR_FADE_LEADING_EDGE )
+//        leadEdgeSlider.floatValue = SPKR_FADE_LEADING_EDGE
+//        trailingInitEdgeLabel.title = "ITE: " + String( SPKR_INITIAL_TRAILING_EDGE )
+//        initialTailEdgeSlider.floatValue = SPKR_INITIAL_TRAILING_EDGE
+//        trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
+//        tailEdgeSlider.floatValue = SPKR_FADE_TRAILING_EDGE
+
+        
+//        // BUGFIX: I am not sure why but if I do not adjust the frame and bounds size
+//        //         couple of times, Cocoa miscalculates them
+//        var size = MonitorView.textViewBounds
+//        size.width /= 2
+//        size.height /= 2
+//        textDisplay.setFrameSize(size)
+//        textDisplay.setBoundsSize(size)
+//
+//        size.width += 136 + 11 * 2
+//        size.height += 64 + 11 * 2
+//        view.setFrameSize(size)
+//        view.setBoundsSize(size)
+        
     }
-    
+
+
     override func viewDidAppear() {
-        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
-        self.displayField.window?.makeFirstResponder(self)
+//        displayField.currentEditor()?.selectedRange = NSMakeRange(0, 0)
+//        self.displayField.window?.makeFirstResponder(self)
+        textDisplay.setSelectedRange(NSRange())
+        textDisplay.window?.makeFirstResponder(self)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.monitorView.adjustTextDisplaySize()
+        }
     }
 
     
+    func setSpkrExtrabuf( freq : Double ) {
+        // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
+
+//        spkr_extra_buf = Int32( 780 / fps )
+
+        switch freq {
+        case 0.25:
+            spkr_extra_buf = -65
+            break
+
+        case 0.5:
+            spkr_extra_buf = -140
+            break
+
+        case 1.5:
+            spkr_extra_buf = 175
+            break
+
+        case 2.0:
+//            spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
+//            spkr_extra_buf = 20
+            spkr_extra_buf = 195 // 88
+            break
+
+        case 2.8:
+            spkr_extra_buf = 65 // 185
+            break
+
+        case 4.0:
+//            spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
+//            spkr_extra_buf = 45
+            spkr_extra_buf = 25 // 90 // 80 // 20
+            break
+
+        default:
+//            spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
+            spkr_extra_buf = 0 // 26
+            break
+        }
+
+        soundGapLabel.title = String( spkr_extra_buf )
+        soundGapSlider.integerValue = Int(spkr_extra_buf)
+    }
+
+
     func setCPUClockSpeed( freq : Double ) {
+        spkr_stopAll();
+        
         MHz_6502 = freq
-        clk_6502_per_frm = UInt64( MHz_6502 * M / Double(fps) )
+        clk_6502_per_frm = UInt32( MHz_6502 * M / Double(fps) )
         clk_6502_per_frm_set = clk_6502_per_frm
+            
+        spkr_extra_buf = 0
+//        setSpkrExtrabuf(freq: freq)
     }
 
-    @IBAction func speedSelected(_ sender: NSButton) {
-        if ( sender.title == "MAX" ) {
-            setCPUClockSpeed(freq: 1600)
-        }
-        else if let freq = Double( sender.title ) {
-            setCPUClockSpeed(freq: freq)
-        
-            
-            // TODO: Probably this is not the best way to deal with the problem: To make sound continous independent of FPS and Freq
-            
-//            spkr_extra_buf = Int32( 780 / fps )
-            spkr_extra_buf = 0
-            
-            switch freq {
-            case 2.0:
-//                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 2.961538461538462 ) // normally it should come up as 77, but this way it is calculated with FPS
-                spkr_extra_buf = 120
-                break
-                
-            case 4.0:
-//                spkr_extra_buf = Int32( Double(spkr_extra_buf) * 1.346153846153846 ) // normally it should come up as 35, but this way it is calculated with FPS
-                spkr_extra_buf = 8
-                break
-                
-            default:
-//                spkr_extra_buf = Int32( 780 / fps ) // normally it should come up as 26, but this way it is calculated with FPS
-                spkr_extra_buf = 0
-                break
-            }
-                        
-            SoundGap.integerValue = Int(spkr_extra_buf)
-        }
-        
-    }
     
-    @IBOutlet weak var lab: NSTextFieldCell!
+    @IBOutlet weak var soundGapLabel: NSTextFieldCell!
     @IBAction func extraBuf(_ sender: NSSlider) {
         spkr_extra_buf = sender.intValue
-        lab.title = String( spkr_extra_buf )
+        soundGapLabel.title = String( spkr_extra_buf )
     }
+    
+    @IBOutlet weak var ledingInitEdgeLabel: NSTextFieldCell!
+    @IBAction func leadingInitEdgeSelected(_ sender: NSSlider) {
+        SPKR_INITIAL_LEADING_EDGE = sender.floatValue
+        ledingInitEdgeLabel.title = "ILE: " + String( SPKR_INITIAL_LEADING_EDGE )
+    }
+    
+    @IBOutlet weak var leadingEdgeLabel: NSTextFieldCell!
+    @IBAction func leadingEdgeSelected(_ sender: NSSlider) {
+        SPKR_FADE_LEADING_EDGE = sender.floatValue
+        leadingEdgeLabel.title = "LE: " + String( SPKR_FADE_LEADING_EDGE )
+    }
+    
+    @IBOutlet weak var trailingInitEdgeLabel: NSTextFieldCell!
+    @IBAction func trailingInitEdgeSelected(_ sender: NSSlider) {
+        SPKR_INITIAL_TRAILING_EDGE = sender.floatValue
+        trailingInitEdgeLabel.title = "ITE: " + String( SPKR_INITIAL_TRAILING_EDGE )
+    }
+    
+    @IBOutlet weak var trailingEdgeLabel: NSTextFieldCell!
+    @IBAction func trailingEdgeSelected(_ sender: NSSlider) {
+        SPKR_FADE_TRAILING_EDGE = sender.floatValue
+        trailingEdgeLabel.title = "TE: " + String( SPKR_FADE_TRAILING_EDGE )
+    }
+    
+    
+    @IBOutlet weak var wozExtraLabel: NSTextFieldCell!
+    @IBAction func wozExtraSelected(_ sender: NSSlider) {
+        extraForward = Int32(sender.floatValue)
+        wozExtraLabel.title = "WE: " + String( extraForward )
+    }
+    
+    
+    @IBOutlet weak var EMALabel: NSTextFieldCell!
+    @IBAction func EMASelected(_ sender: NSSlider) {
+        spkr_ema_len = Int32(sender.floatValue)
+        EMALabel.title = "EMA: " + String( spkr_ema_len )
+    }
+    
     
     func setSimulationMode( mode : String ) {
         switch ( mode ) {
@@ -1090,7 +1858,8 @@ class ViewController: NSViewController  {
             cpuMode = cpuMode_eco
 
             fps = DEFAULT_FPS
-            video_fps_divider = DEF_VIDEO_DIV
+            video_fps_divider = ECO_VIDEO_DIV
+            spkr_fps_divider = DEF_SPKR_DIV
             break
             
         case "Game":
@@ -1099,6 +1868,7 @@ class ViewController: NSViewController  {
 
             fps = GAME_FPS
             video_fps_divider = GAME_VIDEO_DIV
+            spkr_fps_divider = GAME_SPKR_DIV
             break
             
         default:
@@ -1107,18 +1877,27 @@ class ViewController: NSViewController  {
             
             fps = DEFAULT_FPS
             video_fps_divider = DEF_VIDEO_DIV
+            spkr_fps_divider = DEF_SPKR_DIV
             break
         }
 
-        spkr_fps_divider = fps / spkr_fps
-        spkr_play_timeout = 8 * spkr_fps_divider
+//        spkr_fps_divider = fps / spkr_fps
+//        spkr_fps = fps;
+        
+        spkr_play_timeout = SPKR_PLAY_TIMEOUT // * spkr_fps_divider
+
+//        pixelTrail = pow(256, 1 / Double(fps / video_fps_divider / 3) )
 
 //        spkr_buf_size = spkr_sample_rate * 2 / spkr_fps
+        #if SCHEDULER_CVDISPLAYLINK
+        #else
         newUpdateTimer( timeInterval: 1 / Double(fps) )
+        #endif
+        
         setCPUClockSpeed(freq: MHz_6502)
         
         // TODO: Better way to deal with speaker!!!
-        spkr_play_timeout = 8 * video_fps_divider
+        spkr_play_timeout = SPKR_PLAY_TIMEOUT * Int32(video_fps_divider)
     }
     
     
@@ -1126,23 +1905,29 @@ class ViewController: NSViewController  {
         setSimulationMode(mode: sender.selectedItem?.title ?? "Normal" )
     }
     
-    @IBOutlet weak var SoundGap: NSTextFieldCell!
-    
-    @IBAction func SoundGapChanged(_ sender: NSStepper) {
-        SoundGap.integerValue = sender.integerValue
-        spkr_extra_buf = Int32( sender.integerValue )
-    }
+    @IBOutlet weak var initialLeadEdgeSlider: NSSlider!
+    @IBOutlet weak var leadEdgeSlider: NSSlider!
+    @IBOutlet weak var initialTailEdgeSlider: NSSlider!
+    @IBOutlet weak var tailEdgeSlider: NSSlider!
+    @IBOutlet weak var soundGapSlider: NSSlider!
+
+//    @IBOutlet weak var soundGap: NSTextFieldCell!
+//
+//    @IBAction func SoundGapChanged(_ sender: NSStepper) {
+//        SoundGap.integerValue = sender.integerValue
+//        spkr_extra_buf = Int32( sender.integerValue )
+//    }
     
     @IBAction func CRTMonitorOnOff(_ sender: NSButton) {
         CRTMonitor = sender.state == .on
         scanLines.isHidden = !CRTMonitor
         
         if ( CRTMonitor ) {
-            display.textColor = .white
+            textDisplay.textColor = .white
             // TODO: Adjust gamma so pixels are brighter
         }
         else {
-            display.textColor = colorWhite
+            textDisplay.textColor = colorWhite
             // TODO: Adjust gamma so pixels are dimmer
         }
         
@@ -1153,10 +1938,10 @@ class ViewController: NSViewController  {
         ColorMonitor = color
         
         if ( ColorMonitor ) {
-            display.textColor = colorWhite // .white
+            textDisplay.textColor = colorWhite // .white
         }
         else {
-            display.textColor = colorGreen // .green
+            textDisplay.textColor = colorGreen // .green
         }
         
         hires.RenderFullScreen()
@@ -1184,7 +1969,7 @@ class ViewController: NSViewController  {
             hires.monoColor = hires.color_white
         }
         
-        display.textColor = monoColor
+        textDisplay.textColor = monoColor
         hires.RenderFullScreen()
     }
     
@@ -1378,7 +2163,7 @@ class ViewController: NSViewController  {
         case 1000: // Open Default Disk Image
             if let menuIdentifier = sender.selectedItem?.title {
                 let woz_err = woz_loadFile( Bundle.main.resourcePath! + "/dsk/" + menuIdentifier + ".woz" )
-                ViewController.current?.chk_woz_load(err: woz_err)
+                ViewController.shared?.chk_woz_load(err: woz_err)
                 woz_flags.image_file_readonly = 1
             }
             
@@ -1390,11 +2175,11 @@ class ViewController: NSViewController  {
     @IBAction func traceEnable(_ sender: NSButton) {
         switch sender.state {
         case .on:
-            m6502.dbgLevel.trace = 1
+            m6502.debugger.mask.trace = 1
             openLog()
             
         default:
-            m6502.dbgLevel.trace = 0
+            m6502.debugger.mask.trace = 0
             closeLog()
         }
     }
@@ -1436,11 +2221,148 @@ class ViewController: NSViewController  {
     }
     
     
+    func Cheat_Wavy_Navy_Victory() {
+#if !DEBUGGER
+        JUMP( 0x1528 ) // called when player clears the level
+#endif
+    }
+    
+    func Cheat_Wavy_Navy_Add_3_Ships() {
+#if !DEBUGGER
+        let ships = min( getMEM( 0x4746 ) + 3, 9 )
+        setMEM( 0x4746, ships )
+        m6502.A = ships
+//        m6502.X = 0x10
+        setMEM16(0x4728, 0x16F0) // cursor pos: 0x4728:x, 0x4729:y
+        CALL( 0x1FDA ) // position and number needed? A:Number of ships X:0x10
+#endif
+    }
+
+    func Cheat_Wavy_Navy_OtherCheats() {
+#if !DEBUGGER
+        // Replace STC / SBC $0x1 to NOPs...
+        setMEM( 0x1E63, 0xEA )
+        setMEM( 0x1E64, 0xEA )
+        setMEM( 0x1E65, 0xEA )
+
+//        // call to decease
+//        setMEM( 0x1556, 0xEA );
+//        setMEM( 0x1557, 0xEA );
+//        setMEM( 0x1558, 0xEA );
+
+//        setMEM( 0x15F3, 0xEA );
+//        setMEM( 0x15F4, 0xEA );
+//        setMEM( 0x15F5, 0xEA );
+
+//        setMEM( 0x15EA, 0xEA );
+//        setMEM( 0x15EB, 0xEA );
+
+//        // no end
+//        setMEM( 0x1515, 0xEA );
+//        setMEM( 0x1516, 0xEA );
+
+//        // no end
+//        setMEM( 0x1537, 0xEA );
+//        setMEM( 0x1538, 0xEA );
+        
+        // lose to win
+        setMEM( 0x1545, 0xEA )
+        setMEM( 0x1546, 0xEA )
+
+//        var i : UInt16 = 0x15EA;
+//        while i < 0x1608 {
+//            setMEM( i, 0xEA )
+//            i += 1
+//        }
+#endif
+    }
+
+    func Cheat_Wavy_Navy_Never_Lose()  -> NSControl.StateValue {
+#if !DEBUGGER
+        // Replace STC / SBC #$01 to NOPs...
+//        setMEM( 0x1E63, 0xEA )
+//        setMEM( 0x1E64, 0xEA )
+//        setMEM( 0x1E65, 0xEA )
+
+        if ( getMEM16(0x1E64) == 0x01E9 ) { // SBC #$01
+            // Replace SBC #$01 to SBC #$00...
+            setMEM( 0x1E65, 0 )
+            return .on
+        }
+        else if ( getMEM16(0x1E64) == 0x00E9 ) { // SBC #$00
+            // Replace SBC #$00 to SBC #$01...
+            setMEM( 0x1E65, 1 )
+            return .off
+        }
+        else {
+            print("Not Wavy Navy!")
+            return .off
+        }
+#else
+        return .off
+#endif
+    }
+    
+    func Cheat_Wavy_Navy_Lose_To_Win() -> NSControl.StateValue {
+#if !DEBUGGER
+        if ( getMEM16(0x1545) == 0x09F0 ) { // BEQ $1550
+            // lose to win
+            setMEM16( 0x1545, 0xEAEA ) // NOP NOP
+            return .on
+        }
+        else if ( getMEM16(0x1545) == 0xEAEA ) { // NOP NOP
+            // lose to win
+            setMEM16( 0x1545, 0x09F0 ) // BEQ $1550
+            return .off
+        }
+        else {
+            print("Not Wavy Navy!")
+            return .off
+        }
+#else
+        return .off
+#endif
+    }
+    
+    
+    func Get_Hard_Hat_Mack() -> UInt8 {
+#if !DEBUGGER
+        return getMEM( 0x4EDF )
+#else
+        return 0
+#endif
+    }
+    
+    func Cheat_Hard_Hat_Mack(add : UInt8) -> UInt8 {
+#if !DEBUGGER
+        let ships = min( getMEM( 0x4EDF ) + add, 9 )
+        setMEM( 0x4EDF, ships )
+//        CALL( 0x1219 ) // starts from the beginning
+        CALL( 0x1A2B ) // refresh Mack counter on screen
+        
+        return ships
+#else
+        return 0
+#endif
+    }
+
+    
+    func Cheat_Hard_Hat_Mack_Never_Lose() -> NSControl.StateValue {
+#if !DEBUGGER
+        setMEM( 0x0503, 0x18 )
+        setMEM( 0x0504, 0x60 )
+        
+        setMEM( 0x50A5, 0xEA )
+        setMEM( 0x50A6, 0xEA )
+        setMEM( 0x50A7, 0xEA )
+#endif
+        return .on
+    }
 }
 
 
 @_cdecl("woz_ask_to_save")
 func woz_ask_to_save() {
-    ViewController.current?.saveFile()
+    ViewController.shared?.saveFile()
 }
 

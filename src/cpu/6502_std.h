@@ -44,7 +44,7 @@
         case 0x0D: ORA( src_abs() ); return 4;                         // ORA abs
         case 0x0E: ASL( addr_abs() ); return 6;                        // ASL abs
         
-        case 0x10: BPL( rel_addr() ); return 3;                        // BPL rel
+        case 0x10: BPL( rel_addr() ); return 2;                        // BPL rel
         case 0x11: ORA( src_ind_Y() ); return 5;                       // ORA ind,Y
 
         case 0x15: ORA( src_zp_X() ); return 4;                        // ORA zpg,X
@@ -71,7 +71,7 @@
         case 0x2D: AND( src_abs() ); return 4;                         // AND abs
         case 0x2E: ROL( addr_abs() ); return 6;                        // ROL abs
 
-        case 0x30: BMI( rel_addr() ); return 3;                        // BMI rel
+        case 0x30: BMI( rel_addr() ); return 2;                        // BMI rel
         case 0x31: AND( src_ind_Y() ); return 5;                       // AND ind,Y
 
         case 0x35: AND( src_zp_X() ); return 4;                        // AND zpg,X
@@ -97,7 +97,7 @@
         case 0x4D: EOR( src_abs() ); return 4;                         // EOR abs
         case 0x4E: LSR( addr_abs() ); return 6;                        // LSR abs
 
-        case 0x50: BVC( rel_addr() ); return 3;                        // BVC rel
+        case 0x50: BVC( rel_addr() ); return 2;                        // BVC rel
         case 0x51: EOR( src_ind_Y() ); return 5;                       // EOR ind,Y
 
         case 0x55: EOR( src_zp_X() ); return 4;                        // AND zpg,X
@@ -123,7 +123,7 @@
         case 0x6D: ADC( src_abs() ); return 4;                         // ADC abs
         case 0x6E: ROR( addr_abs() ); return 6;                        // ROR abs
 
-        case 0x70: BVS( rel_addr() ); return 3;                        // BVS rel
+        case 0x70: BVS( rel_addr() ); return 2;                        // BVS rel
         case 0x71: ADC( src_ind_Y() ); return 5;                       // ADC ind,Y
 
         case 0x75: ADC( src_zp_X() ); return 4;                        // ADC zpg,X
@@ -149,7 +149,7 @@
         case 0x8D: STA( addr_abs() ); return 4;                        // STA abs
         case 0x8E: STX( addr_abs() ); return 4;                            // STX abs
 
-        case 0x90: BCC( rel_addr() ); return 3;                        // BCC rel
+        case 0x90: BCC( rel_addr() ); return 2;                        // BCC rel
         case 0x91: STA( addr_ind_Y() ); return 6;                      // STA ind,Y
 
         case 0x94: STY( addr_zp_X() ); return 4;                       // STY zpg,X
@@ -178,7 +178,7 @@
         case 0xAD: LDA( src_abs() ); return 4;                         // LDA abs
         case 0xAE: LDX( src_abs() ); return 4;                         // LDX abs
 
-        case 0xB0: BCS( rel_addr() ); return 3;                        // BCS rel
+        case 0xB0: BCS( rel_addr() ); return 2;                        // BCS rel
         case 0xB1: LDA( src_ind_Y() ); return 5;                       // LDA ind,Y
 
         case 0xB4: LDY( src_zp_X() ); return 4+1;                        // LDY zpg,X
@@ -191,8 +191,8 @@
 
         case 0xBC: LDY( src_abs_X() ); return 4;                       // LDY abs,X
         case 0xBD: LDA( src_abs_X() ); return 4;                       // LDA abs,X
-        case 0xBE: LDX( src_abs_Y() ); return 4;
-// LDX abs,Y
+        case 0xBE: LDX( src_abs_Y() ); return 4;                       // LDX abs,Y
+
         case 0xC0: CPY( imm() ); return 2;                             // CPY imm
         case 0xC1: CMP( src_X_ind() ) ; return 6;                      // LDA X,ind
 
@@ -208,7 +208,7 @@
         case 0xCD: CMP( src_abs() ); return 4;                         // CMP abs
         case 0xCE: DEC( addr_abs() ); return 6;                        // DEC abs
 
-        case 0xD0: BNE( rel_addr() ); return 3;                        // BNE rel
+        case 0xD0: BNE( rel_addr() ); return 2;                        // BNE rel
         case 0xD1: CMP( src_ind_Y() ); return 5;                       // CMP ind,Y
 
         case 0xD5: CMP( src_zp_X() ); return 4;                        // CMP zpg,X
@@ -235,7 +235,7 @@
         case 0xED: SBC( src_abs() ); return 4;                         // SBC abs
         case 0xEE: INC( addr_abs() ); return 6;                        // INC abs
 
-        case 0xF0: BEQ( rel_addr() ); return 3;                        // BEQ rel
+        case 0xF0: BEQ( rel_addr() ); return 2;                        // BEQ rel
         case 0xF1: SBC( src_ind_Y() ); return 5;                       // SBC ind,Y
 
         case 0xF5: SBC( src_zp_X() ); return 4;                        // SBC zpg,X

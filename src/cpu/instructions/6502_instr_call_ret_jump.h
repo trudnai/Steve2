@@ -36,17 +36,44 @@
  absolute      JMP oper      4C    3     3
  indirect      JMP (oper)    6C    3     5
  **/
-INLINE void JMP( uint16_t addr ) {
+INSTR void JMP( uint16_t addr ) {
     dbgPrintf("JMP %04X ", addr);
     disPrintf(disassembly.inst, "JMP");
-//    disPrintf(disassembly.comment, "to:%04X", addr)
+
+#ifndef DISASSEMBLER
+    //    disPrintf(disassembly.comment, "to:%04X", addr)
 #ifdef DEBUG
     if ( addr == m6502.PC - 3 ) {
         dbgPrintf("Infinite Loop at %04X!\n", m6502.PC);
     }
 #endif
+    if (m6502.PC >> 8 != addr >> 8) {
+        m6502.clkfrm += 1;
+    }
+    m6502.PC = addr;
+#endif
+}
+
+
+#if !defined(DISASSEMBLER) && !defined(DEBUGGER)
+// for patching game purposes -- it should not be inline!
+void CALL( uint16_t addr ) {
+    dbgPrintf("CALL ");
+    disPrintf(disassembly.inst, "CALL");
+
+#ifndef DISASSEMBLER
+    PUSH_addr(m6502.PC -1);
+    m6502.PC = addr;
+#endif
+}
+
+// for patching game purposes -- it should not be inline!
+void JUMP( uint16_t addr ) {
+    dbgPrintf("JUMP ");
+    disPrintf(disassembly.inst, "JUMP");
     m6502.PC = addr;
 }
+#endif
 
 /**
  JSR  Jump to New Location Saving Return Address
@@ -59,11 +86,14 @@ INLINE void JMP( uint16_t addr ) {
  --------------------------------------------
  absolute      JSR oper      20    3     6
  **/
-INLINE void JSR( uint16_t addr ) {
+INSTR void JSR( uint16_t addr ) {
     dbgPrintf("JSR ");
     disPrintf(disassembly.inst, "JSR");
+
+#ifndef DISASSEMBLER
     PUSH_addr(m6502.PC -1);
     m6502.PC = addr;
+#endif
 }
 
 /**
@@ -76,16 +106,20 @@ INLINE void JSR( uint16_t addr ) {
  --------------------------------------------
  implied       RTS           60    1     6
  **/
-INLINE void RTS() {
+INSTR void RTS() {
     dbgPrintf("RTS ");
     disPrintf(disassembly.inst, "RTS");
+
+#ifndef DISASSEMBLER
     m6502.PC = POP_addr() +1;
+    m6502.interrupt = RET;
 
     // disk accelerator would only work for a certain amount of time
     // currently it is 200ms simulated times
 //    if ( m6502.clktime - disk.clk_last_access > clk_diskAcceleratorTimeout ) {
 //        clk_6502_per_frm = clk_6502_per_frm_set;
 //    }
+#endif
 }
 
 /**
@@ -98,12 +132,16 @@ INLINE void RTS() {
  --------------------------------------------
  implied       RTI           40    1     6
  **/
-INLINE void RTI() {
+INSTR void RTI() {
     dbgPrintf("RTI ");
     disPrintf(disassembly.inst, "RTI");
+
+#ifndef DISASSEMBLER
     setFlags( POP() );
 //    m6502.I = 0;
     m6502.PC = POP_addr();
+    m6502.interrupt = RET;
+#endif
 }
 
 

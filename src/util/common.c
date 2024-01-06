@@ -25,6 +25,16 @@
 #include "common.h"
 
 
+INLINE int decrement(int num, const int dec) {
+    num -= dec;
+    if (num < 0) {
+        num = 0;
+    }
+    
+    return num;
+}
+
+
 FILE * outdev = NULL;
 
 

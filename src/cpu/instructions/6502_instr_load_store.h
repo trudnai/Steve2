@@ -26,7 +26,7 @@
 #define __6502_INSTR_LOAD_STORE_H__
 
 #include <ctype.h>
-#include "../../dev/mem/mmio.h"
+#include "mmio.h"
 
 /**
  LDA  Load Accumulator with Memory
@@ -45,10 +45,12 @@
  (indirect,X)  LDA (oper,X)  A1    2     6
  (indirect),Y  LDA (oper),Y  B1    2     5*
 **/
-INLINE void LDA( uint8_t src ) {
+INSTR void LDA( uint8_t src ) {
     dbgPrintf("LDA(%02X) ", src);
     disPrintf(disassembly.inst, "LDA");
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.A = src);
+#endif
 }
 
 /**
@@ -65,10 +67,12 @@ INLINE void LDA( uint8_t src ) {
  absolute      LDX oper      AE    3     4
  absolute,Y    LDX oper,Y    BE    3     4*
 **/
-INLINE void LDX( uint8_t src ) {
+INSTR void LDX( uint8_t src ) {
     dbgPrintf("LDX(%02X) ", src);
     disPrintf(disassembly.inst, "LDX");
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.X = src);
+#endif
 }
 
 /**
@@ -85,10 +89,12 @@ INLINE void LDX( uint8_t src ) {
  absolute      LDY oper      AC    3     4
  absolute,X    LDY oper,X    BC    3     4*
 **/
-INLINE void LDY( uint8_t src ) {
+INSTR void LDY( uint8_t src ) {
     dbgPrintf("LDY(%02X) ", src);
     disPrintf(disassembly.inst, "LDY");
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.Y = src);
+#endif
 }
 
 
@@ -105,9 +111,11 @@ char * charConv =
  
  (not a real instruction, only a helper function)
 **/
-INLINE void STR( uint16_t addr, uint8_t src ) {
+INSTR void STR( uint16_t addr, uint8_t src ) {
     dbgPrintf("STR [%04X], %02X ", addr, src );
+#ifndef DISASSEMBLER
     memwrite(addr, src);
+#endif
 }
 
 /**
@@ -126,10 +134,12 @@ INLINE void STR( uint16_t addr, uint8_t src ) {
  (indirect,X)  STA (oper,X)  81    2     6
  (indirect),Y  STA (oper),Y  91    2     6
 **/
-INLINE void STA( uint16_t addr ) {
+INSTR void STA( uint16_t addr ) {
     dbgPrintf("STA ");
     disPrintf(disassembly.inst, "STA");
+#ifndef DISASSEMBLER
     STR(addr, m6502.A);
+#endif
 }
 
 /**
@@ -144,10 +154,12 @@ INLINE void STA( uint16_t addr ) {
  zeropage,Y    STX oper,Y    96    2     4
  absolute      STX oper      8E    3     4
  **/
-INLINE void STX( uint16_t addr ) {
+INSTR void STX( uint16_t addr ) {
     dbgPrintf("STX ");
     disPrintf(disassembly.inst, "STX");
+#ifndef DISASSEMBLER
     STR(addr, m6502.X);
+#endif
 }
 
 /**
@@ -162,10 +174,12 @@ INLINE void STX( uint16_t addr ) {
  zeropage,X    STY oper,X    94    2     4
  absolute      STY oper      8C    3     4
  **/
-INLINE void STY( uint16_t addr ) {
+INSTR void STY( uint16_t addr ) {
     dbgPrintf("STY ");
     disPrintf(disassembly.inst, "STY");
+#ifndef DISASSEMBLER
     STR(addr, m6502.Y);
+#endif
 }
 
 /**
@@ -181,10 +195,12 @@ INLINE void STY( uint16_t addr ) {
  9C 3   4   abs   ........ STZ $3456
  9E 3   5   abs,X ........ STZ $3456,X
 **/
-INLINE void STZ( uint16_t addr ) {
+INSTR void STZ( uint16_t addr ) {
     dbgPrintf("STZ ");
     disPrintf(disassembly.inst, "STZ");
+#ifndef DISASSEMBLER
     STR(addr, 0);
+#endif
 }
 
 #endif // __6502_INSTR_LOAD_STORE_H__

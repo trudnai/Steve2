@@ -35,25 +35,31 @@
  --------------------------------------------
  implied       BRK           00    1     7
  **/
-INLINE int BRK() {
+INSTR int BRK() {
     dbgPrintf("BRK ");
     disPrintf(disassembly.inst, "BRK");
+
+#ifndef DISASSEMBLER
     PUSH_addr(m6502.PC +1); // PC +2, however, fetch already incremented it by 1
     // B flag should be set before pushing flags onto the stack
     m6502.B = 1;
     PUSH( getFlags().SR );
     m6502.I = 1;
     m6502.PC = memread16(IRQ_VECTOR);
-    
+    m6502.interrupt = BREAK;
+#endif
     return 7;
 }
 
 /**
  HLT / JAM / KIL  Halts (Hangs / Jams / Kills) the CPU - Well, it hangs it untill the next power cycle
  **/
-INLINE void HLT() {
+INSTR void HLT() {
     disPrintf(disassembly.inst, "HLT");
+
+#ifndef DISASSEMBLER
     m6502.interrupt = HALT;
+#endif
 }
 
 /**
@@ -66,7 +72,7 @@ INLINE void HLT() {
  --------------------------------------------
  implied       NOP           EA    1     2
  **/
-INLINE void NOP() {
+INSTR void NOP() {
     dbgPrintf("NOP ");
     disPrintf(disassembly.inst, "NOP");
 }

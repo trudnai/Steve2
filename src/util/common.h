@@ -27,15 +27,17 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define UNUSED __attribute__((unused))
 
 #ifdef DEBUG
-#define INLINE
+#define INLINE UNUSED
 #else
-#define INLINE static __attribute__((always_inline))
+ #define INLINE __attribute__((always_inline)) UNUSED
+//#define INLINE __attribute__((always_inline)) __attribute__((fastcall)) UNUSED
 #endif
 
 
-#ifdef DEBUG
+#ifdef DISASS_TRACE
 //#define dbgPrintf(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)
 #define dbgPrintf(format, ...)
 #define dbgPrintf2(format, ...) if(outdev) fprintf(outdev, format, ## __VA_ARGS__)
@@ -58,7 +60,7 @@
 
 
 // calculates number of cycles in one frame
-#define MHZ(mhz) ( (mhz) * M )
+#define MHZ(mhz) ( (double)( (mhz) * M ) )
 #define FRAME(mhz) ( MHZ(mhz) / fps )
 #define FRAME_INIT(mhz) ( MHZ(mhz) / DEFAULT_FPS )
 
@@ -85,6 +87,6 @@ union {
 
 
 extern FILE * outdev;
-
+INLINE int decrement(int num, const int dec);
 
 #endif // __COMMON_H__

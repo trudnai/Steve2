@@ -25,7 +25,7 @@
 import AppKit
 
 class HiRes: NSView {
-    
+
     static let PageSize  = 0x2000
     static let Page1Addr = 0x2000
     static let Page2Addr = 0x4000
@@ -63,7 +63,7 @@ class HiRes: NSView {
     
     
     var HiResSubView = [[NSView]]()
-    
+
     func createHiRes() {
         for y in 0 ..< HiRes.blockRows {
             HiResSubView.append([NSView]())
@@ -83,6 +83,8 @@ class HiRes: NSView {
 
 
     required init?(coder aDecoder: NSCoder) {
+        pixelsSRGB = HiRes.context?.data?.bindMemory(to: UInt32.self, capacity: HiRes.ScreenBitmapSize)
+
         super.init(coder: aDecoder)
         initHiResLineAddresses()
         clearScreen()
@@ -147,17 +149,17 @@ class HiRes: NSView {
         }
     }
 
-    static let ScreenBitmapSize = (PixelWidth * PixelHeight * 4)
-    static let context = createBitmapContext(pixelsWide: PixelWidth, PixelHeight)
+    static let ScreenBitmapSize = (PixelWidth * 2 * PixelHeight * 4)
+    static let context = createBitmapContext(pixelsWide: PixelWidth * 2, PixelHeight)
     static let pixels = UnsafeMutableRawBufferPointer(start: context?.data, count: ScreenBitmapSize)
-    static var pixelsSRGB = pixels.bindMemory(to: UInt32.self)
+//    static var pixelsSRGB = pixels.bindMemory(to: UInt32.self)
     
     let R = 2
     let G = 1
     let B = 0
     let A = 3
     
-    var blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
+//    var blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
     var shadowScreen = [Int](repeating: 0, count: PageSize)
 
     var was = 0;
@@ -185,31 +187,46 @@ class HiRes: NSView {
     // default is green
     var monoColor       : UInt32 = 0xFF2BD84A
     
+    static let refreshUnderscan: CGFloat = 1;
+    static let refreshOverscan : CGFloat = refreshUnderscan * 2;
     
     func refreshChanged( blockSize : Int ) {
         // refresh changed block only
         
-        let screenBlockMargin = 12 / blockSize
+        let screenBlockMargin = 16 / blockSize
         
-        let blockScreenWidth = Int(frame.width) / HiRes.blockCols * blockSize
-        let blockScreenHeigth = Int(frame.height) / HiRes.blockRows
+        let blockScreenWidth = CGFloat(frame.width) / CGFloat(HiRes.blockCols) * CGFloat(blockSize)
+        let blockScreenHeigth = CGFloat(frame.height) / CGFloat(HiRes.blockRows)
         
         for blockVertIdx in 0 ..< HiRes.blockRows {
             for blockHorIdx in 0 ..< HiRes.blockCols / blockSize {
-                if blockChanged[ blockVertIdx * HiRes.blockCols / blockSize + blockHorIdx ] {
+                if blockChanged[ blockVertIdx * HiRes.blockCols / blockSize + blockHorIdx ] != 0 {
                     // refresh the entire screen
-                    let boundingBox = CGRect(
-                        x: blockHorIdx * blockScreenWidth - screenBlockMargin,
-                        y: Int(frame.height) - blockVertIdx * blockScreenHeigth - blockScreenHeigth - screenBlockMargin,
-                        width: blockScreenWidth + screenBlockMargin * blockSize,
-                        height: blockScreenHeigth + screenBlockMargin * blockSize)
+                    let x = CGFloat(blockHorIdx) * blockScreenWidth - CGFloat(screenBlockMargin)
+                    let y = frame.height - CGFloat(blockVertIdx) * blockScreenHeigth - blockScreenHeigth - CGFloat(screenBlockMargin)
+                    let w = blockScreenWidth + CGFloat(screenBlockMargin) * CGFloat(blockSize)
+                    let h = blockScreenHeigth + CGFloat(screenBlockMargin) * CGFloat(blockSize)
                     
+                    let boundingBox = CGRect(
+                        x: x - HiRes.refreshUnderscan,
+                        y: y - HiRes.refreshUnderscan,
+                        width: w + HiRes.refreshOverscan,
+                        height: h + HiRes.refreshOverscan
+                    )
                     self.setNeedsDisplay( boundingBox )
                 }
             }
         }
     }
+
+
+    let usePixelTrail = true
     
+//    let pixelTrail = 2 // maybe too fast?
+//    let pixelTrail = 1.5
+//    let pixelTrail = 1.4 // maybe a bit slow?
+//    let pixelTrail = 1.35 // maybe too slow?
+//    let pixelTrail = 1.25 // maybe too slow?
     
     func RenderMono() {
         var height = HiRes.PixelHeight
@@ -231,42 +248,89 @@ class HiRes: NSView {
         }
 
         var pixelAddr = 0
-        
+
         var y = 0
-        
-        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
-        
+
+//        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols)
+
+        if ( ViewController.shared?.CRTMonitor ?? false ) {
+            // do not clear the changes table
+        }
+        else {
+            hires_clearChanges()
+        }
+
         for lineAddr in HiResLineAddrTbl {
             if ( height <= 0 ) {
                 break
             }
             height -= 1
-            
+
             let blockVertIdx = y / HiRes.blockHeight * HiRes.blockCols
+            var prevColor = color_black
 
             for blockHorIdx in 0..<HiRes.blockCols {
                 let block = Int(HiResBufferPointer[ Int(lineAddr + blockHorIdx) ])
                 let screenIdx = y * HiRes.blockCols + blockHorIdx
 
                 // get all changed blocks
-                blockChanged[ blockVertIdx + blockHorIdx ] = blockChanged[ blockVertIdx + blockHorIdx ] || shadowScreen[ screenIdx ] != block
+                if shadowScreen[ screenIdx ] != block {
+                    blockChanged[ blockVertIdx + blockHorIdx ] = 0xFF
+                }
+                else if usePixelTrail && ( ViewController.shared?.CRTMonitor ?? false ) {
+                    // slow CRT fade out effect
+                    if (y % HiRes.blockHeight == 0) && (blockChanged[ blockVertIdx + blockHorIdx ] > 0) {
+                        blockChanged[ blockVertIdx + blockHorIdx ] = UInt8( Double(blockChanged[ blockVertIdx + blockHorIdx ]) / pixelTrail )
+                    }
+                }
+                else {
+                    blockChanged[ blockVertIdx + blockHorIdx ] = 0
+                }
+                
                 shadowScreen[ screenIdx ] = block
+
+                let highBit = (block >> 7) & 1
 
                 for bit in stride(from: 0, through: 6, by: 1) {
                     let bitMask = 1 << bit
                     if (block & bitMask) != 0 {
-                        HiRes.pixelsSRGB[pixelAddr] = monoColor;
+                        pixelsSRGB[pixelAddr + highBit]     = monoColor
+                        pixelsSRGB[pixelAddr + highBit + 1] = monoColor
+                        if highBit == 1 && prevColor == monoColor {
+                            pixelsSRGB[pixelAddr] = monoColor
+                        }
+                        prevColor = monoColor
+                    }
+                    else if usePixelTrail && ( ViewController.shared?.CRTMonitor ?? false ) {
+                        var srgb = pixelsSRGB[pixelAddr + highBit]
+
+                        let s = srgb >> 24 & 0xFF
+                        let r = srgb >> 16 & 0xFF
+                        let g = srgb >>  8 & 0xFF
+                        let b = srgb >>  0 & 0xFF
+
+                        srgb = UInt32(Double(s) / pixelTrail) << 24
+                             | UInt32(Double(r) / pixelTrail) << 16
+                             | UInt32(Double(g) / pixelTrail) << 8
+                             | UInt32(Double(b) / pixelTrail)
+
+                        pixelsSRGB[pixelAddr + highBit]     = srgb;
+                        pixelsSRGB[pixelAddr + highBit + 1] = srgb;
                     }
                     else {
-                        HiRes.pixelsSRGB[pixelAddr] = color_black;
+                        pixelsSRGB[pixelAddr + highBit]     = color_black
+                        pixelsSRGB[pixelAddr + highBit + 1] = color_black
+                        prevColor = color_black
                     }
 
-                    pixelAddr += 1
+                    pixelAddr += 2 // two physical pixels per logical pixel
                 }
             }
-            
+
             y += 1
         }
+
+//        hires_renderMono()
         
         refreshChanged(blockSize: 1)
     }
@@ -277,63 +341,165 @@ class HiRes: NSView {
         
         switch ( pixel ) {
         case 1: // purple (bits are in reverse!)
-            HiRes.pixelsSRGB[colorAddr] = color_purple;
-//            HiRes.pixelsSRGB[colorAddr + 1] = color_purple
-            if  (colorAddr >= 1) && (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_purple
+            pixelsSRGB[colorAddr]     = color_purple
+            pixelsSRGB[colorAddr + 1] = color_purple
+            pixelsSRGB[colorAddr + 2] = color_purple
+            if  (colorAddr >= 2) && (prev != 0x03) && (prev != 0x07) && (prev != 0x00) && (prev != 0x04) {
+                pixelsSRGB[colorAddr - 1] = color_purple
+                pixelsSRGB[colorAddr - 2] = color_purple
             }
             
         case 2: // green
             // reducing color bleeding
-            if (colorAddr > 0) && (HiRes.pixelsSRGB[colorAddr - 1] != color_black) {
-                HiRes.pixelsSRGB[colorAddr] = color_green
+            if (colorAddr > 1) && (pixelsSRGB[colorAddr - 2] != color_black) {
+                pixelsSRGB[colorAddr + 0] = color_green
             }
-            HiRes.pixelsSRGB[colorAddr + 1] = color_green
+            pixelsSRGB[colorAddr]     = color_green
+            pixelsSRGB[colorAddr + 1] = color_green
+            pixelsSRGB[colorAddr + 2] = color_green
+            pixelsSRGB[colorAddr + 3] = color_green
 
         case 3: // white 1
-//            if ( colorAddr >= 2 ) && ( HiRes.pixelsSRGB[colorAddr - 2] != color_black ) {
-//                HiRes.pixelsSRGB[colorAddr - 1] = HiRes.pixelsSRGB[colorAddr - 2]
+//            if ( colorAddr >= 2 ) && ( pixelsSRGB[colorAddr - 2] != color_black ) {
+//                pixelsSRGB[colorAddr - 2] = color_white // HiRes.pixelsSRGB[colorAddr - 2]
 //            }
 //            if (colorAddr >= 1) {
 //                HiRes.pixelsSRGB[colorAddr - 1] = color_yellow
 //            }
-            HiRes.pixelsSRGB[colorAddr] = color_white
-            HiRes.pixelsSRGB[colorAddr + 1] = color_white
+            pixelsSRGB[colorAddr - 1] = color_white
+            pixelsSRGB[colorAddr + 0] = color_white
+            pixelsSRGB[colorAddr + 1] = color_white
+            pixelsSRGB[colorAddr + 2] = color_white
+            pixelsSRGB[colorAddr + 3] = color_white
+            pixelsSRGB[colorAddr + 4] = color_white
 
         case 5: // blue
-            HiRes.pixelsSRGB[colorAddr] = color_blue
-            if  (colorAddr >= 1) && (prev != 0x00) && (prev != 0x04) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_blue
+            pixelsSRGB[colorAddr + 1] = color_blue
+            pixelsSRGB[colorAddr + 2] = color_blue
+            pixelsSRGB[colorAddr]     = color_blue
+            pixelsSRGB[colorAddr - 1] = color_blue
+            if  (colorAddr >= 2) && (prev != 0x00) && (prev != 0x04) {
+                pixelsSRGB[colorAddr - 2] = color_blue
             }
 
         case 6: // orange
             // reducing color bleeding
-            if (colorAddr > 0) && (HiRes.pixelsSRGB[colorAddr - 1] != color_black) {
-                HiRes.pixelsSRGB[colorAddr] = color_orange
+            if (colorAddr > 0) && (pixelsSRGB[colorAddr - 2] != color_black) {
+                pixelsSRGB[colorAddr + 0] = color_orange // important for color bleeding and color contiunity
+                pixelsSRGB[colorAddr + 1] = color_orange
             }
-            HiRes.pixelsSRGB[colorAddr + 1] = color_orange
+            pixelsSRGB[colorAddr + 2] = color_orange
+            pixelsSRGB[colorAddr + 3] = color_orange
+            pixelsSRGB[colorAddr + 4] = color_orange
 
         case 7: // white 2
-            HiRes.pixelsSRGB[colorAddr] = color_white
-            HiRes.pixelsSRGB[colorAddr + 1] = color_white
+            if ( colorAddr >= 2 ) && ( pixelsSRGB[colorAddr - 2] != color_black ) {
+//                pixelsSRGB[colorAddr - 2] = color_white // HiRes.pixelsSRGB[colorAddr - 2]
+                pixelsSRGB[colorAddr - 1] = color_white
+            }
+            pixelsSRGB[colorAddr + 0] = color_white // Donkey Kong would be perfect but problem in Sneakers
+            pixelsSRGB[colorAddr + 1] = color_white
+            pixelsSRGB[colorAddr + 2] = color_white
+            pixelsSRGB[colorAddr + 3] = color_white
+            pixelsSRGB[colorAddr + 4] = color_white
 
-        default: // 0x00 (black 1), 0x04 (black 2)
-            HiRes.pixelsSRGB[colorAddr] = color_black
-            HiRes.pixelsSRGB[colorAddr + 1] = color_black
+        case 0: // 0x00 (black 1), 0x04 (black 2)
+//            pixelsSRGB[colorAddr + 0] = color_black
+            pixelsSRGB[colorAddr + 1] = color_black
+            pixelsSRGB[colorAddr + 2] = color_black
+            pixelsSRGB[colorAddr + 3] = color_black
+
+            // white adjustment
+//            if (colorAddr >= 2) && ((prev == 3) || (prev == 7)) {
+            if (colorAddr >= 2) && (prev == 7) {
+                pixelsSRGB[colorAddr - 1] = color_black
+                pixelsSRGB[colorAddr - 0] = color_black
+            }
+            // blue adjustment
+            if (colorAddr >= 2) && (prev == 5) {
+                pixelsSRGB[colorAddr - 1] = color_black
+            }
+
+        case 4: // 0x00 (black 1), 0x04 (black 2)
+            pixelsSRGB[colorAddr + 1] = color_black
+            pixelsSRGB[colorAddr + 2] = color_black
+            pixelsSRGB[colorAddr + 3] = color_black
+            pixelsSRGB[colorAddr + 4] = color_black
+
+            // white adjustment
+//            if (colorAddr >= 2) && ((prev == 3) || (prev == 7)) {
+            if (colorAddr >= 2) && (prev == 7) {
+                pixelsSRGB[colorAddr - 0] = color_black
+            }
+            // blue adjustment
+            if (colorAddr >= 2) && (prev == 5) {
+                pixelsSRGB[colorAddr - 0] = color_black
+                pixelsSRGB[colorAddr - 1] = color_black
+//                pixelsSRGB[colorAddr - 2] = color_black // if i put that in there is ladder on Donkey Kong is too thin
+            }
+
+
+//            let pp = pixelAddr - 1 // HiRes.pixelAddrBlockIncrement
+//            let cp = pixelsSRGB[pp / 4]
+//
+//            let pa = pixelAddr - HiRes.pixelAddrBlockIncrement * 7 * 20
+//            let ca = pixelsSRGB[pa / 4]
+//
+//            if cp == ca {
+//                switch cp {
+//                case color_blue, color_white, color_green, color_purple, color_orange, color_yellow:
+////                    pixelsSRGB[pp/4] = color_turquis
+////                    pixelsSRGB[pa/4] = color_yellow
+//
+//                    let c1 = ca & 0x00FFFFFF
+//                    let a = ca >> 24
+//                    let a1 = (a / 6) << 24
+//                    let a2 = a1 * 2
+//                    let a3 = a1 * 3
+//                    let a4 = a1 * 4
+//
+////                    pixelsSRGB[colorAddr + 0] = a4 | c1
+////                    pixelsSRGB[colorAddr + 1] = a3 | c1
+////                    pixelsSRGB[colorAddr + 2] = a2 | c1
+////                    pixelsSRGB[colorAddr + 3] = a1 | c1
+//
+//                    pixelsSRGB[colorAddr + 0] = a4 | c1
+//                    pixelsSRGB[colorAddr + 1] = a2 | c1
+//
+//                //            let pb = pixelAddr + HiRes.pixelAddrBlockIncrement * 7 * 20
+//                //            let cb = pb / 4
+//                //            pixelsSRGB[cb] = pixelsSRGB[colorAddr]
+//                default:
+//                    break
+//                }
+//
+//            }
+
+        default:
             break
         }
 
         // white adjustment
         if ( (prev & 2) == 2 ) && ( (pixel & 1) == 1 ) {
-            HiRes.pixelsSRGB[colorAddr] = color_white
-            if (colorAddr >= 1) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_white
+            pixelsSRGB[colorAddr]     = color_white
+            pixelsSRGB[colorAddr + 1] = color_white
+            if colorAddr >= 2 {
+                pixelsSRGB[colorAddr - 1] = color_white
+                pixelsSRGB[colorAddr - 2] = color_white
+                pixelsSRGB[colorAddr - 3] = color_white
+            }
+            // blue expansion
+            if pixel == 5 {
+                pixelsSRGB[colorAddr + 2] = color_black
+                pixelsSRGB[colorAddr + 3] = color_black
+                pixelsSRGB[colorAddr + 4] = color_black
             }
             
             // TODO: Need better check if extra green was created
-            if (colorAddr >= 2) && (HiRes.pixelsSRGB[colorAddr - 2] == color_green ) {
-                if (colorAddr < 3) || (HiRes.pixelsSRGB[colorAddr - 3] != color_green) {
-                    HiRes.pixelsSRGB[colorAddr - 2] = color_black
+            if (colorAddr >= 4) && (pixelsSRGB[colorAddr - 4] == color_green ) {
+                if (colorAddr < 6) || (pixelsSRGB[colorAddr - 6] != color_green) {
+                    pixelsSRGB[colorAddr - 3] = color_black
+                    pixelsSRGB[colorAddr - 4] = color_black
                 }
             }
         }
@@ -349,22 +515,30 @@ class HiRes: NSView {
             (pixel == 0x03) || (pixel == 0x07)  // white
         ) {
             // was the previous purple pixel promoted to white or is it still purple?
-            if (colorAddr >= 2) && ( HiRes.pixelsSRGB[colorAddr - 2] == color_purple ) {
-                HiRes.pixelsSRGB[colorAddr - 1] = color_purple
+            if (colorAddr >= 4) && ( pixelsSRGB[colorAddr - 4] == color_purple ) {
+                pixelsSRGB[colorAddr - 1] = color_purple
+                pixelsSRGB[colorAddr - 2] = color_purple
             }
         }
 
         // blue adjustment -- followed by white
         else if (prev == 0x05) && (
-            (pixel == 0x05) ||
-            (pixel == 0x03) || (pixel == 0x07)  // white
+            (pixel == 0x05)
+         || (pixel == 0x03)
+         || (pixel == 0x07)  // white
         ) {
-            HiRes.pixelsSRGB[colorAddr - 1] = color_blue
+//            pixelsSRGB[colorAddr - 0] = color_blue
+//            pixelsSRGB[colorAddr - 1] = color_blue
+            pixelsSRGB[colorAddr - 2] = color_blue // blue color  bleed
         }
-        
+
     }
 
-    
+
+    static let logicalPixels = 8
+    static let physicalPixels = 2
+    static let pixelAddrBlockIncrement = logicalPixels * physicalPixels // 2 display pixels per logical pixel
+
     func RenderColor() {
         var height = HiRes.PixelHeight
         
@@ -388,7 +562,10 @@ class HiRes: NSView {
         
         var y = 0
         
-        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols / 2)
+//        blockChanged = [Bool](repeating: false, count: HiRes.blockRows * HiRes.blockCols / 2)
+        
+        hires_clearChanges()
+        
         HiRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
         
         for lineAddr in HiResLineAddrTbl {
@@ -415,27 +592,27 @@ class HiRes: NSView {
                 let screenIdx = y * HiRes.blockCols + blockHorIdx
                 
                 // get all changed blocks
-                blockChanged[ blockVertIdx + blockHorIdx ] = blockChanged[ blockVertIdx + blockHorIdx ] || shadowScreen[ screenIdx ] != block14
+                blockChanged[ blockVertIdx + blockHorIdx ] = ((blockChanged[ blockVertIdx + blockHorIdx ] != 0) || (shadowScreen[ screenIdx ] != block14)) ? 1 : 0
                 shadowScreen[ screenIdx ] = block14
                 
                 for px in 0 ... 2  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockH7 | ( (block >> (px * 2)) & 3 )
                     colorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
-                    pixelAddr += 8
+                    pixelAddr += HiRes.pixelAddrBlockIncrement
                     prev = pixel
                 }
                 
                 let pixel = (blockL7 | blockH7) | ( (block >> (3 * 2)) & 3 )
                 colorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
-                pixelAddr += 8
+                pixelAddr += HiRes.pixelAddrBlockIncrement
                 prev = pixel
                 
                 for px in 4 ... 6  {
                     //                        let bitMask = 3 << ( px * 2 )
                     let pixel = blockL7 | ( (block >> (px * 2)) & 3 )
                     colorPixel(pixelAddr: pixelAddr, pixel: pixel, prev: prev )
-                    pixelAddr += 8
+                    pixelAddr += HiRes.pixelAddrBlockIncrement
                     prev = pixel
                 }
             }
@@ -451,7 +628,7 @@ class HiRes: NSView {
 
 
     func Render() {
-        if ( ViewController.current?.ColorMonitor ?? true ) {
+        if ( ViewController.shared?.ColorMonitor ?? true ) {
             RenderColor()
         }
         else {
@@ -471,11 +648,11 @@ class HiRes: NSView {
         // refresh the entire screen
         let boundingBox = CGRect(x: 0, y: 0, width: frame.width, height: frame.height)
         
-        if ( ViewController.current?.CRTMonitor ?? false ) {
+        if ( ViewController.shared?.CRTMonitor ?? false ) {
             currentContext?.interpolationQuality = .high // TODO: Make a switch that lets you turn on and off "old monitor effects"
         }
         else {
-            currentContext?.interpolationQuality = .none
+            currentContext?.interpolationQuality = .high // .none
         }
         currentContext?.draw(image, in: boundingBox)
     }

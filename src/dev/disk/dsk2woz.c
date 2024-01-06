@@ -68,7 +68,7 @@ int dsk2woz( const char * filename ) {
 	const char *extension = filename + strlen(filename) - 3;
     // for some reason macos does not have stricmp, so we do it in a not-so-efficient way
     const bool is_prodos = (strcmp(extension, ".po") == 0) || (strcmp(extension, ".PO") == 0);
-    
+
 	// If the DSK image was too short, announce failure. Some DSK files
 	// seem empirically to be too long, but it's unclear that the extra
 	// bytes actually mean anything — they're usually not many.
@@ -283,10 +283,12 @@ static uint32_t crc32(const uint8_t *buf, size_t size) {
 	@param value An indicator of the bit to write. If this is zero then a 0 is written; otherwise a 1 is written.
 	@return The position immediately after the bit.
 */
+#ifdef DISK2WOZ_WRITEBIT
 static size_t write_bit(uint8_t *buffer, size_t position, int value) {
 	buffer[position >> 3] |= (value ? 0x80 : 0x00) >> (position & 7);
 	return position + 1;
 }
+#endif
 
 /*!
 	Appends a byte to a buffer at a supplied position, returning the
@@ -409,7 +411,7 @@ static void serialise_track(uint8_t *dest, const uint8_t *src, uint8_t track_num
 	}
 
 	// Step through the sectors in physical order.
-	for(size_t sector = 0; sector < 16; ++sector) {
+	for(int sector = 0; sector < 16; ++sector) {
 		/*
 			Write the sector header.
 		*/

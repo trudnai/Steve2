@@ -35,10 +35,13 @@
  --------------------------------------------
  implied       TAX           AA    1     2
  **/
-INLINE void TAX() {
+INSTR void TAX() {
     dbgPrintf("TAX(%02X) ", m6502.A);
     disPrintf(disassembly.inst, "TAX");
+
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.X = m6502.A);
+#endif
 }
 
 /**
@@ -51,10 +54,13 @@ INLINE void TAX() {
  --------------------------------------------
  implied       TXA           8A    1     2
  **/
-INLINE void TXA() {
+INSTR void TXA() {
     dbgPrintf("TXA(%02X) ", m6502.X);
     disPrintf(disassembly.inst, "TXA");
+
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.A = m6502.X);
+#endif
 }
 
 
@@ -68,10 +74,13 @@ INLINE void TXA() {
  --------------------------------------------
  implied       TAY           A8    1     2
  **/
-INLINE void TAY() {
+INSTR void TAY() {
     dbgPrintf("TAY ");
     disPrintf(disassembly.inst, "TAY");
+
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.Y = m6502.A);
+#endif
 }
 
 /**
@@ -84,10 +93,13 @@ INLINE void TAY() {
  --------------------------------------------
  implied       TYA           98    1     2
  **/
-INLINE void TYA() {
+INSTR void TYA() {
     dbgPrintf("TYA(%02X) ", m6502.Y);
     disPrintf(disassembly.inst, "TYA");
+
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.A = m6502.Y);
+#endif
 }
 
 /**
@@ -100,10 +112,13 @@ INLINE void TYA() {
  --------------------------------------------
  implied       TSX           BA    1     2
  **/
-INLINE void TSX() {
+INSTR void TSX() {
     dbgPrintf("TSX(%02X) ", m6502.SP);
     disPrintf(disassembly.inst, "TSX");
+
+#ifndef DISASSEMBLER
     set_flags_NZ(m6502.X = m6502.SP);
+#endif
 }
 
 /**
@@ -116,10 +131,13 @@ INLINE void TSX() {
  --------------------------------------------
  implied       TXS           9A    1     2
  **/
-INLINE void TXS() {
+INSTR void TXS() {
     dbgPrintf("TXS(%02X) ", m6502.X);
     disPrintf(disassembly.inst, "TXS");
+
+#ifndef DISASSEMBLER
     m6502.SP = m6502.X;
+#endif
 }
 
 #endif // __6502_INSTR_TRANSFER_H__

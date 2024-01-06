@@ -27,25 +27,26 @@
 static const uint16_t stack_base_addr = 0x100;
 
 
-INLINE void PUSH( uint8_t src ) {
+#ifndef DISASSEMBLER
+INSTR void PUSH( uint8_t src ) {
     // DO NOT MAKE IT NICER! faster this way!
     WRLOMEM[ stack_base_addr | m6502.SP-- ] = src;
 }
 
-INLINE uint8_t POP() {
+INSTR uint8_t POP() {
     return Apple2_64K_MEM[ stack_base_addr | ++m6502.SP ];
 }
 
 
-INLINE void PUSH_addr( uint16_t addr ) {
+INSTR void PUSH_addr( uint16_t addr ) {
     PUSH( (uint8_t)(addr >> 8) );
     PUSH( (uint8_t)addr );
 }
 
-INLINE uint16_t POP_addr() {
+INSTR uint16_t POP_addr() {
     return  POP() + ( POP() << 8 );
 }
-
+#endif
 
 /**
  PHA  Push Accumulator on Stack
@@ -57,10 +58,13 @@ INLINE uint16_t POP_addr() {
  --------------------------------------------
  implied       PHA           48    1     3
  **/
-INLINE void PHA() {
+INSTR void PHA() {
     dbgPrintf("PHA %02X ", m6502.A);
     disPrintf(disassembly.inst, "PHA");
+
+#ifndef DISASSEMBLER
     PUSH( m6502.A );
+#endif
 }
 
 /**
@@ -73,10 +77,13 @@ INLINE void PHA() {
  --------------------------------------------
  implied       PHX           48    1     3
  **/
-INLINE void PHX() {
+INSTR void PHX() {
     dbgPrintf("PHX %02X ", m6502.X);
     disPrintf(disassembly.inst, "PHX");
+
+#ifndef DISASSEMBLER
     PUSH( m6502.X );
+#endif
 }
 
 /**
@@ -89,10 +96,13 @@ INLINE void PHX() {
  --------------------------------------------
  implied       PHY           48    1     3
  **/
-INLINE void PHY() {
+INSTR void PHY() {
     dbgPrintf("PHY %02X ", m6502.Y);
     disPrintf(disassembly.inst, "PHY");
+
+#ifndef DISASSEMBLER
     PUSH( m6502.Y );
+#endif
 }
 
 /**
@@ -105,11 +115,17 @@ INLINE void PHY() {
  --------------------------------------------
  implied       PLA           68    1     4
  **/
-INLINE void PLA() {
+INSTR void PLA() {
+#ifndef DISASSEMBLER
     m6502.A = POP();
+#endif
+
     dbgPrintf("PLA %02X ", m6502.A);
     disPrintf(disassembly.inst, "PLA");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( m6502.A );
+#endif
 }
 
 /**
@@ -122,11 +138,17 @@ INLINE void PLA() {
  --------------------------------------------
  implied       PLX           68    1     4
  **/
-INLINE void PLX() {
+INSTR void PLX() {
+#ifndef DISASSEMBLER
     m6502.X = POP();
+#endif
+
     dbgPrintf("PLX %02X ", m6502.X);
     disPrintf(disassembly.inst, "PLX");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( m6502.X );
+#endif
 }
 
 /**
@@ -139,11 +161,17 @@ INLINE void PLX() {
  --------------------------------------------
  implied       PLY           68    1     4
  **/
-INLINE void PLY() {
+INSTR void PLY() {
+#ifndef DISASSEMBLER
     m6502.Y = POP();
+#endif
+
     dbgPrintf("PLY %02X ", m6502.Y);
     disPrintf(disassembly.inst, "PLY");
+
+#ifndef DISASSEMBLER
     set_flags_NZ( m6502.Y );
+#endif
 }
 
 /**
@@ -156,10 +184,13 @@ INLINE void PLY() {
  --------------------------------------------
  implied       PHP           08    1     3
  **/
-INLINE void PHP() {
+INSTR void PHP() {
     dbgPrintf("PHP %02X ", m6502.SR);
     disPrintf(disassembly.inst, "PHP");
+
+#ifndef DISASSEMBLER
     PUSH( getFlags().SR ); // res and B flag should be set
+#endif
 }
 
 /**
@@ -172,8 +203,11 @@ INLINE void PHP() {
  --------------------------------------------
  implied       PLP           28    1     4
  **/
-INLINE void PLP() {
+INSTR void PLP() {
+#ifndef DISASSEMBLER
     setFlags(POP() | 0x30); // res and B flag should be set
+#endif
+
     dbgPrintf("PLP %02X ", m6502.SR);
     disPrintf(disassembly.inst, "PLP");
 }

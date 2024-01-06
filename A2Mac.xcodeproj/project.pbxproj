@@ -11,16 +11,24 @@
 		320B3FC424AD88B0005EA133 /* power.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B3FC324AD88B0005EA133 /* power.png */; };
 		320B4FC124B182DE00070038 /* Apple Disk II.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B4FC024B182DD00070038 /* Apple Disk II.png */; };
 		320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 320F2A8724CFD74000671B35 /* Steve2Icon.icns */; };
-		3213936624079C30007F5C4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		32100A8B2875387300D894EE /* CheatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A8A2875387300D894EE /* CheatMenu.swift */; };
+		32100A9F28753AAA00D894EE /* SubMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A9E28753AAA00D894EE /* SubMenu.swift */; };
+		32100AB42877AB8600D894EE /* scsi.c in Sources */ = {isa = PBXBuildFile; fileRef = 32100AB32877AB8600D894EE /* scsi.c */; };
+		32100AB52877AB8600D894EE /* scsi.c in Sources */ = {isa = PBXBuildFile; fileRef = 32100AB32877AB8600D894EE /* scsi.c */; };
+		321D9C3B287373D20036E22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		321D9C45287373D30036E22F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB6022EACC660003B53F /* Main.storyboard */; };
+		32326B0C2630A1910076F839 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		323D042E248980600086A901 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
 		323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
 		323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D04312489BFD80086A901 /* PreferencesWindowController.swift */; };
 		323D04442490B3930086A901 /* dotmatrix_effect.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04432490B3930086A901 /* dotmatrix_effect.png */; };
 		323E2DCF245531E600156805 /* Apple2e_Enhanced.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
-		323E2DD1245531E600156805 /* Apple2e.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
-		32440B85247E27D7000F9DA1 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
+		323E2DD1245531E600156805 /* Apple2e_16k.rom in Resources */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e_16k.rom */; };
 		32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
 		324D15D324ADAC71008AAFB0 /* floppy.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 324D15D224ADAC71008AAFB0 /* floppy.png */; };
+		32544195264A6C1600B7E3ED /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
+		325B7611290A0C4100B29605 /* 6502_dbg.c in Sources */ = {isa = PBXBuildFile; fileRef = 325B75DF2909F95000B29605 /* 6502_dbg.c */; };
+		325B761B290A0C4200B29605 /* 6502_dbg.c in Sources */ = {isa = PBXBuildFile; fileRef = 325B75DF2909F95000B29605 /* 6502_dbg.c */; };
 		325DC40E24AC5ABC00EB8858 /* doc.on.doc.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */; };
 		325DC41024AC691B00EB8858 /* rgb_color.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40F24AC691B00EB8858 /* rgb_color.png */; };
 		325DC41324AC692D00EB8858 /* rgb_mono.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC41124AC692D00EB8858 /* rgb_mono.png */; };
@@ -31,7 +39,6 @@
 		325EB64323FBBACF00C6B4A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325EB64223FBBACF00C6B4A4 /* AppDelegate.swift */; };
 		325EB64523FBBACF00C6B4A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325EB64423FBBACF00C6B4A4 /* SceneDelegate.swift */; };
 		325EB64723FBBACF00C6B4A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325EB64623FBBACF00C6B4A4 /* ViewController.swift */; };
-		325EB64A23FBBACF00C6B4A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EB64823FBBACF00C6B4A4 /* Main.storyboard */; };
 		325EB64C23FBBAD100C6B4A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 325EB64B23FBBAD100C6B4A4 /* Assets.xcassets */; };
 		325EB64F23FBBAD100C6B4A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EB64D23FBBAD100C6B4A4 /* LaunchScreen.storyboard */; };
 		325EB65A23FBBAD100C6B4A4 /* A2iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 325EB65923FBBAD100C6B4A4 /* A2iOSTests.swift */; };
@@ -59,17 +66,138 @@
 		325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
 		3267641624B6572E000BEA11 /* Merlin Assembler.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 3267641524B6572E000BEA11 /* Merlin Assembler.woz */; };
 		3267641824BCC9A5000BEA11 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 3267641724BCC9A5000BEA11 /* COPYING */; };
+		3268B97A27DE7D6A003FBDCC /* 6502_dis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* 6502_dis.c */; };
+		3268B97B27DE7D6B003FBDCC /* 6502_dis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* 6502_dis.c */; };
+		3268B97C27DE7D6B003FBDCC /* 6502_dis.c in Sources */ = {isa = PBXBuildFile; fileRef = 3268B97927DE7D6A003FBDCC /* 6502_dis.c */; };
+		3268B99127DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B99227DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B99327DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B9A627DEAD44003FBDCC /* Apple2e_32k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */; };
+		3268B9B027DEAD51003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
+		3268B9C327DEAE37003FBDCC /* Apple2e_32k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */; };
+		3268B9E927DEDD61003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */; };
 		326B56E524AD8E89009BA0AC /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
 		326B56E724AD906D009BA0AC /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
+		3270432F28ECF0E50077E2BC /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
+		3270433928ECF0E80077E2BC /* HiRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DBF7632334657900DD50E7 /* HiRes.swift */; };
+		3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
+		3277D7A4273C603600749544 /* DisplayScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3277D7A2273C603600749544 /* DisplayScrollView.swift */; };
+		32799F7A264B1A5700255669 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32544194264A6C1600B7E3ED /* DisplayView.swift */; };
+		32799F7B264B1A5700255669 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
+		32799F7C264B1A5700255669 /* ToolBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126C24AC033A00E61891 /* ToolBarController.swift */; };
+		32799F7D264B1A5700255669 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
+		32799F7E264B1A5700255669 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D04312489BFD80086A901 /* PreferencesWindowController.swift */; };
+		32799F80264B1A5700255669 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
+		32799F81264B1A5700255669 /* disk.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63523F8F78300C6B4A4 /* disk.c */; };
+		32799F82264B1A5700255669 /* woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB62E23F8856F00C6B4A4 /* woz.c */; };
+		32799F83264B1A5700255669 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
+		32799F84264B1A5700255669 /* common.c in Sources */ = {isa = PBXBuildFile; fileRef = 325EB63823F9E48100C6B4A4 /* common.c */; };
+		32799F85264B1A5700255669 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
+		32799F86264B1A5700255669 /* HiRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32DBF7632334657900DD50E7 /* HiRes.swift */; };
+		32799F87264B1A5700255669 /* LoRes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32440BA22480D5C0000F9DA1 /* LoRes.swift */; };
+		32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */; };
+		32799F8A264B1A5700255669 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
+		32799F8D264B1A5700255669 /* COPYING in Resources */ = {isa = PBXBuildFile; fileRef = 3267641724BCC9A5000BEA11 /* COPYING */; };
+		32799F8F264B1A5700255669 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
+		32799F90264B1A5700255669 /* Preferences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 323D042D248980600086A901 /* Preferences.storyboard */; };
+		32799F91264B1A5700255669 /* Steve2Icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 320F2A8724CFD74000671B35 /* Steve2Icon.icns */; };
+		32799F93264B1A5700255669 /* PrintChar21.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
+		32799F94264B1A5700255669 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
+		32799F96264B1A5700255669 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
+		32799F97264B1A5700255669 /* Apple2e_Enhanced.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
+		32799F98264B1A5700255669 /* Apple2e_16k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e_16k.rom */; };
+		32799F99264B1A5700255669 /* Apple2Plus.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */; };
+		32799F9A264B1A5700255669 /* DISK_II_C600.ROM in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */; };
+		32799F9C264B1A5700255669 /* blank.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B9C247F9DC7000F9DA1 /* blank.woz */; };
+		32799F9D264B1A5700255669 /* Apple DOS 3.3 January 1983.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68523FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz */; };
+		32799F9E264B1A5700255669 /* Hard Hat Mack - Disk 1, Side A.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68823FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz */; };
+		32799F9F264B1A5700255669 /* Merlin Pro v1.34.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B78247CB2B2000F9DA1 /* Merlin Pro v1.34.woz */; };
+		32799FA0264B1A5700255669 /* Merlin Assembler.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 3267641524B6572E000BEA11 /* Merlin Assembler.woz */; };
+		32799FA1264B1A5700255669 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7E247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz */; };
+		32799FA2264B1A5700255669 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7F247CB66C000F9DA1 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz */; };
+		32799FA3264B1A5700255669 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7B247CB649000F9DA1 /* Merlin Macroassembler Side 1 (SDS, 1983).woz */; };
+		32799FA4264B1A5700255669 /* Merlin Macroassembler Side 2 (SDS, 1983).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B7A247CB649000F9DA1 /* Merlin Macroassembler Side 2 (SDS, 1983).woz */; };
+		32799FA5264B1A5700255669 /* Merlin-8 v2.48 (DOS 3.3).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68B23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz */; };
+		32799FA6264B1A5700255669 /* Crossfire.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6952401118200C6B4A4 /* Crossfire.woz */; };
+		32799FA7264B1A5700255669 /* Lode Runner.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6942401118200C6B4A4 /* Lode Runner.woz */; };
+		32799FA8264B1A5700255669 /* ProDOS_312.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6982401118200C6B4A4 /* ProDOS_312.woz */; };
+		32799FA9264B1A5700255669 /* Donkey Kong.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB68F23FE028800C6B4A4 /* Donkey Kong.woz */; };
+		32799FAA264B1A5700255669 /* ProDOS_402_System.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6992401118200C6B4A4 /* ProDOS_402_System.woz */; };
+		32799FAB264B1A5700255669 /* Qbit.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6972401118200C6B4A4 /* Qbit.woz */; };
+		32799FAC264B1A5700255669 /* Sneakers.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB69A2401118300C6B4A4 /* Sneakers.woz */; };
+		32799FAD264B1A5700255669 /* Wavy Navy.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB6962401118200C6B4A4 /* Wavy Navy.woz */; };
+		32799FAE264B1A5700255669 /* Wavy Navy (4am crack).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B82247CC4C0000F9DA1 /* Wavy Navy (4am crack).woz */; };
+		32799FAF264B1A5700255669 /* Xonix.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 325EB69B2401118300C6B4A4 /* Xonix.woz */; };
+		32799FB0264B1A5700255669 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B73247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz */; };
+		32799FB1264B1A5700255669 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B74247CAA00000F9DA1 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz */; };
+		32799FB2264B1A5700255669 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B72247CAA00000F9DA1 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz */; };
+		32799FB3264B1A5700255669 /* merlin_assembler_1.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B61247C9C2D000F9DA1 /* merlin_assembler_1.woz */; };
+		32799FB4264B1A5700255669 /* merlin_assembler_2.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B62247C9C2D000F9DA1 /* merlin_assembler_2.woz */; };
+		32799FB5264B1A5700255669 /* merlin_assembler_3.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B63247C9C2D000F9DA1 /* merlin_assembler_3.woz */; };
+		32799FB6264B1A5700255669 /* Apple ][ Dealer Service Programs.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8E247F86D6000F9DA1 /* Apple ][ Dealer Service Programs.woz */; };
+		32799FB7264B1A5700255669 /* Apple II Dealer Diagnostics Cracked.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8A247F86D5000F9DA1 /* Apple II Dealer Diagnostics Cracked.woz */; };
+		32799FB8264B1A5700255669 /* Apple II Dealer Diagnostics.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8C247F86D5000F9DA1 /* Apple II Dealer Diagnostics.woz */; };
+		32799FB9264B1A5700255669 /* Apple II+ Dealer Diagnostics.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B86247F86D4000F9DA1 /* Apple II+ Dealer Diagnostics.woz */; };
+		32799FBA264B1A5700255669 /* Apple II+ Products diagnostic 652-0334.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8D247F86D6000F9DA1 /* Apple II+ Products diagnostic 652-0334.woz */; };
+		32799FBB264B1A5700255669 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B89247F86D5000F9DA1 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz */; };
+		32799FBC264B1A5700255669 /* COMPUTER_CHECKUP.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B88247F86D5000F9DA1 /* COMPUTER_CHECKUP.woz */; };
+		32799FBD264B1A5700255669 /* XPS Diagnostic IIe 1.0.5.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B87247F86D5000F9DA1 /* XPS Diagnostic IIe 1.0.5.woz */; };
+		32799FBE264B1A5700255669 /* XPS Diagnostic IIe.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B8B247F86D5000F9DA1 /* XPS Diagnostic IIe.woz */; };
+		32799FBF264B1A5700255669 /* LOCKSMITH_V7_REV_B.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */; };
+		32799FC0264B1A5700255669 /* locksmith_v6.0.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32F2C144249218A400FDC61B /* locksmith_v6.0.woz */; };
+		32799FC2264B1A5700255669 /* disk_ii_motor_w_floppy.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */; };
+		32799FC3264B1A5700255669 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
+		32799FC4264B1A5700255669 /* disk_ii_io_error.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */; };
+		32799FC6264B1A5700255669 /* Apple Disk II D1 Open.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32F04B0C24B189D3006B5ECB /* Apple Disk II D1 Open.png */; };
+		32799FC7264B1A5700255669 /* Apple Disk II D2 Open.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32F04B0D24B189D4006B5ECB /* Apple Disk II D2 Open.png */; };
+		32799FC8264B1A5700255669 /* power.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B3FC324AD88B0005EA133 /* power.png */; };
+		32799FC9264B1A5700255669 /* joystick.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32877F8C24ADA6AF003A940D /* joystick.png */; };
+		32799FCA264B1A5700255669 /* apple_original_logo_design.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 3296223124A6622C002DEB78 /* apple_original_logo_design.png */; };
+		32799FCB264B1A5700255669 /* doc.text.viewfinder.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */; };
+		32799FCC264B1A5700255669 /* floppy.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 324D15D224ADAC71008AAFB0 /* floppy.png */; };
+		32799FCD264B1A5700255669 /* gobackward.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 326B56E424AD8E89009BA0AC /* gobackward.png */; };
+		32799FCE264B1A5700255669 /* Apple Disk II.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 320B4FC024B182DD00070038 /* Apple Disk II.png */; };
+		32799FCF264B1A5700255669 /* select_all.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32AF7C9624AD85E8002D82BF /* select_all.png */; };
+		32799FD0264B1A5700255669 /* rgb_color.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40F24AC691B00EB8858 /* rgb_color.png */; };
+		32799FD1264B1A5700255669 /* rgb_mono.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC41124AC692D00EB8858 /* rgb_mono.png */; };
+		32799FD2264B1A5700255669 /* mono.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC41224AC692D00EB8858 /* mono.png */; };
+		32799FD3264B1A5700255669 /* doc.on.doc.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */; };
+		32799FD4264B1A5700255669 /* doc.on.clipboard.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32E3127224AC0AC400E61891 /* doc.on.clipboard.png */; };
+		32799FD5264B1A5700255669 /* dotmatrix_effect.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04432490B3930086A901 /* dotmatrix_effect.png */; };
+		32799FD6264B1A5700255669 /* scanlines.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 323D04452490BA1E0086A901 /* scanlines.png */; };
+		327B75C0290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75C1290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75C2290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75C3290645EC00A86A71 /* Debugger.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 327B75BE290645EC00A86A71 /* Debugger.storyboard */; };
+		327B75D729064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
+		327B75D829064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
+		327B75D929064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
+		327B75DA29064FDC00A86A71 /* DebuggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 327B75D629064FDC00A86A71 /* DebuggerViewController.swift */; };
 		32877F8D24ADA6AF003A940D /* joystick.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32877F8C24ADA6AF003A940D /* joystick.png */; };
 		3296223224A6622C002DEB78 /* apple_original_logo_design.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 3296223124A6622C002DEB78 /* apple_original_logo_design.png */; };
 		3296223524A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */; };
 		3296223624A709EE002DEB78 /* disk_ii_motor_w_floppy.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */; };
 		3296223924A710CD002DEB78 /* disk_ii_io_error.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */; };
 		3296223A24A710E5002DEB78 /* disk_ii_io_error.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */; };
+		329CAA842620FC560039440F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 325EB64823FBBACF00C6B4A4 /* Main.storyboard */; };
+		32A6AAF0266AEDF40023257A /* mmio.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AABF2669B5480023257A /* mmio.c */; };
+		32A6AAFA266AEDF50023257A /* mmio.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AABF2669B5480023257A /* mmio.c */; };
+		32A6AB04266AEDF60023257A /* mmio.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AABF2669B5480023257A /* mmio.c */; };
+		32A6AB0F266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
+		32A6AB10266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
+		32A6AB11266AF5160023257A /* paddle.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AB0E266AF5160023257A /* paddle.c */; };
+		32A6AB1B266B19680023257A /* hires.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AA97266187570023257A /* hires.c */; };
+		32A6AB25266B19680023257A /* hires.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AA97266187570023257A /* hires.c */; };
+		32A6AB26266B196A0023257A /* hires.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A6AA97266187570023257A /* hires.c */; };
 		32A9F74A2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32A9F74B2467B60B004902A1 /* speaker.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A9F7492467B60B004902A1 /* speaker.c */; };
 		32AF7C9724AD85E8002D82BF /* select_all.png in Copy Image Files */ = {isa = PBXBuildFile; fileRef = 32AF7C9624AD85E8002D82BF /* select_all.png */; };
+		32B3778F291787CA0040845B /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B3778E291787CA0040845B /* NSLayoutConstraint.swift */; };
+		32B37790291787CA0040845B /* NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32B3778E291787CA0040845B /* NSLayoutConstraint.swift */; };
+		32BCCCE9264DBDC8002151C5 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
+		32BCCCFC2650D275002151C5 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
+		32BCCD192650D3B1002151C5 /* Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32BCCD182650D3B1002151C5 /* Debug-Info.plist */; };
+		32BCCD1A2650D3B1002151C5 /* Debug-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 32BCCD182650D3B1002151C5 /* Debug-Info.plist */; };
 		32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5A22EACC630003B53F /* AppDelegate.swift */; };
 		32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32BFFB5C22EACC630003B53F /* ViewController.swift */; };
 		32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 32BFFB5E22EACC660003B53F /* Assets.xcassets */; };
@@ -91,6 +219,23 @@
 		32C4532E233345430000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C4532F233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
 		32C45330233345820000EBA1 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C4532D233345420000EBA1 /* MonitorView.swift */; };
+		32C6995227C5439300D0F25D /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C6995127C5439300D0F25D /* Debugger.swift */; };
+		32C6995327C5439300D0F25D /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C6995127C5439300D0F25D /* Debugger.swift */; };
+		32C6995D27C548C800D0F25D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32B18435233F10BC00DBB4AB /* Shaders.metal */; };
+		32C6996727C548C900D0F25D /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 32B18435233F10BC00DBB4AB /* Shaders.metal */; };
+		32C8233A2908822E0018438F /* DebuggerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C823392908822E0018438F /* DebuggerWindowController.swift */; };
+		32C82356290888C50018438F /* DebuggerWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C823392908822E0018438F /* DebuggerWindowController.swift */; };
+		32C82360290888D10018438F /* CheatMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32100A8A2875387300D894EE /* CheatMenu.swift */; };
+		32D0897C291A44F200F2B486 /* 6502_bp.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D0897B291A44F200F2B486 /* 6502_bp.c */; };
+		32D0897D291A44F200F2B486 /* 6502_bp.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D0897B291A44F200F2B486 /* 6502_bp.c */; };
+		32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D089D7291E1BF800F2B486 /* DisassView.swift */; };
+		32D089D9291E1BF800F2B486 /* DisassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D089D7291E1BF800F2B486 /* DisassView.swift */; };
+		32D08A1429219C6B00F2B486 /* HexDigitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */; };
+		32D08A1529219C6B00F2B486 /* HexDigitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */; };
+		32D08A202921A8FA00F2B486 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1F2921A8F900F2B486 /* String.swift */; };
+		32D08A212921A8FA00F2B486 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A1F2921A8F900F2B486 /* String.swift */; };
+		32D08A7429272FDD00F2B486 /* 6502_dis_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */; };
+		32D08A7529272FDD00F2B486 /* 6502_dis_utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */; };
 		32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126724A7194900E61891 /* disk_ii_arm.sfx in Copy SFX Files */ = {isa = PBXBuildFile; fileRef = 32E3126424A7193700E61891 /* disk_ii_arm.sfx */; };
 		32E3126924A98B9300E61891 /* dsk2woz.c in Sources */ = {isa = PBXBuildFile; fileRef = 32E3126824A98B9300E61891 /* dsk2woz.c */; };
@@ -110,12 +255,11 @@
 		32F1D03824CE3AA30058AC75 /* RepeatingTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */; };
 		32F1D03924CE3AB10058AC75 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D042F24898AB70086A901 /* PreferencesViewController.swift */; };
 		32F1D03A24CE3AB10058AC75 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323D04312489BFD80086A901 /* PreferencesWindowController.swift */; };
-		32F8994924D9149800C85BE5 /* 6502.c in Sources */ = {isa = PBXBuildFile; fileRef = 32439F7422ECD8AD0077AAE0 /* 6502.c */; };
 		32F8A87C24A3A84300EE6735 /* PrintChar21.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 325EB67B23FBD43800C6B4A4 /* PrintChar21.ttf */; };
 		32F8A87D24A3A84700EE6735 /* PRNumber3.ttf in Copy Font Files */ = {isa = PBXBuildFile; fileRef = 32089E4724556DBD0036E667 /* PRNumber3.ttf */; };
 		32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 32439F8422ECD8AD0077AAE0 /* apple.rom */; };
 		32F8A88024A3A8A300EE6735 /* Apple2e_Enhanced.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */; };
-		32F8A88124A3A8A600EE6735 /* Apple2e.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e.rom */; };
+		32F8A88124A3A8A600EE6735 /* Apple2e_16k.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 323E2DCD245531E500156805 /* Apple2e_16k.rom */; };
 		32F8A88224A3A8AA00EE6735 /* Apple2Plus.rom in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */; };
 		32F8A88324A3A8B200EE6735 /* DISK_II_C600.ROM in Copy ROM Images */ = {isa = PBXBuildFile; fileRef = 325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */; };
 		32F8A88524A3A91100EE6735 /* blank.woz in Copy Disk Images */ = {isa = PBXBuildFile; fileRef = 32440B9C247F9DC7000F9DA1 /* blank.woz */; };
@@ -189,6 +333,122 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		32799F92264B1A5700255669 /* Copy Font Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = fnt;
+			dstSubfolderSpec = 7;
+			files = (
+				32799F93264B1A5700255669 /* PrintChar21.ttf in Copy Font Files */,
+				32799F94264B1A5700255669 /* PRNumber3.ttf in Copy Font Files */,
+			);
+			name = "Copy Font Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32799F95264B1A5700255669 /* Copy ROM Images */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = rom;
+			dstSubfolderSpec = 7;
+			files = (
+				3268B9E927DEDD61003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */,
+				32799F96264B1A5700255669 /* apple.rom in Copy ROM Images */,
+				32799F97264B1A5700255669 /* Apple2e_Enhanced.rom in Copy ROM Images */,
+				32799F98264B1A5700255669 /* Apple2e_16k.rom in Copy ROM Images */,
+				3268B9C327DEAE37003FBDCC /* Apple2e_32k.rom in Copy ROM Images */,
+				32799F99264B1A5700255669 /* Apple2Plus.rom in Copy ROM Images */,
+				32799F9A264B1A5700255669 /* DISK_II_C600.ROM in Copy ROM Images */,
+			);
+			name = "Copy ROM Images";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32799F9B264B1A5700255669 /* Copy Disk Images */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = dsk;
+			dstSubfolderSpec = 7;
+			files = (
+				32799F9C264B1A5700255669 /* blank.woz in Copy Disk Images */,
+				32799F9D264B1A5700255669 /* Apple DOS 3.3 January 1983.woz in Copy Disk Images */,
+				32799F9E264B1A5700255669 /* Hard Hat Mack - Disk 1, Side A.woz in Copy Disk Images */,
+				32799F9F264B1A5700255669 /* Merlin Pro v1.34.woz in Copy Disk Images */,
+				32799FA0264B1A5700255669 /* Merlin Assembler.woz in Copy Disk Images */,
+				32799FA1264B1A5700255669 /* Merlin Assembler (early version, 40-column, DOS 3.3) side A.woz in Copy Disk Images */,
+				32799FA2264B1A5700255669 /* Merlin Assembler (early version, 40-column, DOS 3.3) side B.woz in Copy Disk Images */,
+				32799FA3264B1A5700255669 /* Merlin Macroassembler Side 1 (SDS, 1983).woz in Copy Disk Images */,
+				32799FA4264B1A5700255669 /* Merlin Macroassembler Side 2 (SDS, 1983).woz in Copy Disk Images */,
+				32799FA5264B1A5700255669 /* Merlin-8 v2.48 (DOS 3.3).woz in Copy Disk Images */,
+				32799FA6264B1A5700255669 /* Crossfire.woz in Copy Disk Images */,
+				32799FA7264B1A5700255669 /* Lode Runner.woz in Copy Disk Images */,
+				32799FA8264B1A5700255669 /* ProDOS_312.woz in Copy Disk Images */,
+				32799FA9264B1A5700255669 /* Donkey Kong.woz in Copy Disk Images */,
+				32799FAA264B1A5700255669 /* ProDOS_402_System.woz in Copy Disk Images */,
+				32799FAB264B1A5700255669 /* Qbit.woz in Copy Disk Images */,
+				32799FAC264B1A5700255669 /* Sneakers.woz in Copy Disk Images */,
+				32799FAD264B1A5700255669 /* Wavy Navy.woz in Copy Disk Images */,
+				32799FAE264B1A5700255669 /* Wavy Navy (4am crack).woz in Copy Disk Images */,
+				32799FAF264B1A5700255669 /* Xonix.woz in Copy Disk Images */,
+				32799FB0264B1A5700255669 /* Merlin Pro 2.45 (DOS) Disk 1-2.woz in Copy Disk Images */,
+				32799FB1264B1A5700255669 /* Merlin Pro 2.45 (DOS) Disk 2-2.woz in Copy Disk Images */,
+				32799FB2264B1A5700255669 /* Merlin Pro v2.23 DOS3.3 (The Yegg-Men Crack).woz in Copy Disk Images */,
+				32799FB3264B1A5700255669 /* merlin_assembler_1.woz in Copy Disk Images */,
+				32799FB4264B1A5700255669 /* merlin_assembler_2.woz in Copy Disk Images */,
+				32799FB5264B1A5700255669 /* merlin_assembler_3.woz in Copy Disk Images */,
+				32799FB6264B1A5700255669 /* Apple ][ Dealer Service Programs.woz in Copy Disk Images */,
+				32799FB7264B1A5700255669 /* Apple II Dealer Diagnostics Cracked.woz in Copy Disk Images */,
+				32799FB8264B1A5700255669 /* Apple II Dealer Diagnostics.woz in Copy Disk Images */,
+				32799FB9264B1A5700255669 /* Apple II+ Dealer Diagnostics.woz in Copy Disk Images */,
+				32799FBA264B1A5700255669 /* Apple II+ Products diagnostic 652-0334.woz in Copy Disk Images */,
+				32799FBB264B1A5700255669 /* Apple IIc - Diagnostic diskette Program service 077-8125-A.woz in Copy Disk Images */,
+				32799FBC264B1A5700255669 /* COMPUTER_CHECKUP.woz in Copy Disk Images */,
+				32799FBD264B1A5700255669 /* XPS Diagnostic IIe 1.0.5.woz in Copy Disk Images */,
+				32799FBE264B1A5700255669 /* XPS Diagnostic IIe.woz in Copy Disk Images */,
+				32799FBF264B1A5700255669 /* LOCKSMITH_V7_REV_B.woz in Copy Disk Images */,
+				32799FC0264B1A5700255669 /* locksmith_v6.0.woz in Copy Disk Images */,
+			);
+			name = "Copy Disk Images";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32799FC1264B1A5700255669 /* Copy SFX Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = sfx;
+			dstSubfolderSpec = 7;
+			files = (
+				32799FC2264B1A5700255669 /* disk_ii_motor_w_floppy.sfx in Copy SFX Files */,
+				32799FC3264B1A5700255669 /* disk_ii_arm.sfx in Copy SFX Files */,
+				32799FC4264B1A5700255669 /* disk_ii_io_error.sfx in Copy SFX Files */,
+			);
+			name = "Copy SFX Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32799FC5264B1A5700255669 /* Copy Image Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				32799FC6264B1A5700255669 /* Apple Disk II D1 Open.png in Copy Image Files */,
+				32799FC7264B1A5700255669 /* Apple Disk II D2 Open.png in Copy Image Files */,
+				32799FC8264B1A5700255669 /* power.png in Copy Image Files */,
+				32799FC9264B1A5700255669 /* joystick.png in Copy Image Files */,
+				32799FCA264B1A5700255669 /* apple_original_logo_design.png in Copy Image Files */,
+				32799FCB264B1A5700255669 /* doc.text.viewfinder.png in Copy Image Files */,
+				32799FCC264B1A5700255669 /* floppy.png in Copy Image Files */,
+				32799FCD264B1A5700255669 /* gobackward.png in Copy Image Files */,
+				32799FCE264B1A5700255669 /* Apple Disk II.png in Copy Image Files */,
+				32799FCF264B1A5700255669 /* select_all.png in Copy Image Files */,
+				32799FD0264B1A5700255669 /* rgb_color.png in Copy Image Files */,
+				32799FD1264B1A5700255669 /* rgb_mono.png in Copy Image Files */,
+				32799FD2264B1A5700255669 /* mono.png in Copy Image Files */,
+				32799FD3264B1A5700255669 /* doc.on.doc.png in Copy Image Files */,
+				32799FD4264B1A5700255669 /* doc.on.clipboard.png in Copy Image Files */,
+				32799FD5264B1A5700255669 /* dotmatrix_effect.png in Copy Image Files */,
+				32799FD6264B1A5700255669 /* scanlines.png in Copy Image Files */,
+			);
+			name = "Copy Image Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32F8A87B24A3A81900EE6735 /* Copy Font Files */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -207,9 +467,11 @@
 			dstPath = rom;
 			dstSubfolderSpec = 7;
 			files = (
+				3268B9B027DEAD51003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Copy ROM Images */,
 				32F8A87F24A3A8A000EE6735 /* apple.rom in Copy ROM Images */,
 				32F8A88024A3A8A300EE6735 /* Apple2e_Enhanced.rom in Copy ROM Images */,
-				32F8A88124A3A8A600EE6735 /* Apple2e.rom in Copy ROM Images */,
+				32F8A88124A3A8A600EE6735 /* Apple2e_16k.rom in Copy ROM Images */,
+				3268B9A627DEAD44003FBDCC /* Apple2e_32k.rom in Copy ROM Images */,
 				32F8A88224A3A8AA00EE6735 /* Apple2Plus.rom in Copy ROM Images */,
 				32F8A88324A3A8B200EE6735 /* DISK_II_C600.ROM in Copy ROM Images */,
 			);
@@ -314,6 +576,11 @@
 		320F2A8A24D0001600671B35 /* 6502_und.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_und.h; sourceTree = "<group>"; };
 		320F2A8B24D0828600671B35 /* 6502_C.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_C.h; sourceTree = "<group>"; };
 		320F2A9924D4DE8400671B35 /* 6502_C_Rockwell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_C_Rockwell.h; sourceTree = "<group>"; };
+		32100A8A2875387300D894EE /* CheatMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatMenu.swift; sourceTree = "<group>"; };
+		32100A9E28753AAA00D894EE /* SubMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubMenu.swift; sourceTree = "<group>"; };
+		32100AB22877AB8600D894EE /* scsi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scsi.h; sourceTree = "<group>"; };
+		32100AB32877AB8600D894EE /* scsi.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scsi.c; sourceTree = "<group>"; };
+		321D9BDC287373000036E22F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = A2Mac/Base.lproj/Main_copy.storyboard; sourceTree = "<group>"; };
 		323D042D248980600086A901 /* Preferences.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Preferences.storyboard; sourceTree = "<group>"; };
 		323D042F24898AB70086A901 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		323D04312489BFD80086A901 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
@@ -324,7 +591,7 @@
 		323D04432490B3930086A901 /* dotmatrix_effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmatrix_effect.png; sourceTree = "<group>"; };
 		323D04452490BA1E0086A901 /* scanlines.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanlines.png; sourceTree = "<group>"; };
 		323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e_Enhanced.rom; sourceTree = "<group>"; };
-		323E2DCD245531E500156805 /* Apple2e.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e.rom; sourceTree = "<group>"; };
+		323E2DCD245531E500156805 /* Apple2e_16k.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = Apple2e_16k.rom; sourceTree = "<group>"; };
 		32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "A2Mac-Bridging-Header.h"; sourceTree = "<group>"; };
 		32439F7322ECD8AD0077AAE0 /* mmio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mmio.h; sourceTree = "<group>"; };
 		32439F7422ECD8AD0077AAE0 /* 6502.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502.c; sourceTree = "<group>"; };
@@ -371,6 +638,9 @@
 		32440BA0247F9F99000F9DA1 /* LOCKSMITH_V7_REV_B.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = LOCKSMITH_V7_REV_B.woz; sourceTree = "<group>"; };
 		32440BA22480D5C0000F9DA1 /* LoRes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoRes.swift; sourceTree = "<group>"; };
 		324D15D224ADAC71008AAFB0 /* floppy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = floppy.png; sourceTree = "<group>"; };
+		32544194264A6C1600B7E3ED /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
+		325B75DF2909F95000B29605 /* 6502_dbg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_dbg.c; sourceTree = "<group>"; };
+		325B7652290A32CC00B29605 /* 6502_dbg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_dbg.h; sourceTree = "<group>"; };
 		325DC40D24AC5ABC00EB8858 /* doc.on.doc.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.on.doc.png; sourceTree = "<group>"; };
 		325DC40F24AC691B00EB8858 /* rgb_color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_color.png; sourceTree = "<group>"; };
 		325DC41124AC692D00EB8858 /* rgb_mono.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rgb_mono.png; sourceTree = "<group>"; };
@@ -414,19 +684,52 @@
 		326426112328ADF4008B615F /* Apple_II_ROM.s */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.asm; path = Apple_II_ROM.s; sourceTree = "<group>"; };
 		3267641524B6572E000BEA11 /* Merlin Assembler.woz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Merlin Assembler.woz"; sourceTree = "<group>"; };
 		3267641724BCC9A5000BEA11 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = convert_spkr_buf_to_wav.py; sourceTree = SOURCE_ROOT; };
+		3268B97927DE7D6A003FBDCC /* 6502_dis.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = 6502_dis.c; sourceTree = "<group>"; };
+		3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple2e_32k.rom; path = Resources/rom/Apple2e_32k.rom; sourceTree = SOURCE_ROOT; };
+		3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */ = {isa = PBXFileReference; lastKnownFileType = file; path = "077-0019 Apple IIe Diagnostic Card - English.rom"; sourceTree = "<group>"; };
 		3268E68E2474E24900047474 /* paddle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = paddle.h; sourceTree = "<group>"; };
 		326B56E424AD8E89009BA0AC /* gobackward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gobackward.png; sourceTree = "<group>"; };
 		326B56E624AD906D009BA0AC /* doc.text.viewfinder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doc.text.viewfinder.png; sourceTree = "<group>"; };
 		326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = 6502_functional_test.bin; path = Resources/rom/6502_functional_test.bin; sourceTree = SOURCE_ROOT; };
+		3277D7A2273C603600749544 /* DisplayScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayScrollView.swift; sourceTree = "<group>"; };
+		32799FDA264B1A5700255669 /* Steve ][ Debug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][ Debug.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		32799FDB264B1A5700255669 /* Steve ][ copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Steve ][ copy-Info.plist"; path = "/Users/trudnai/Dropbox/Projects/A2Mac/Steve ][ copy-Info.plist"; sourceTree = "<absolute>"; };
+		327B75BF290645EC00A86A71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Debugger.storyboard; sourceTree = "<group>"; };
+		327B75D629064FDC00A86A71 /* DebuggerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebuggerViewController.swift; sourceTree = "<group>"; };
 		32877F8C24ADA6AF003A940D /* joystick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = joystick.png; sourceTree = "<group>"; };
 		3296223124A6622C002DEB78 /* apple_original_logo_design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple_original_logo_design.png; sourceTree = "<group>"; };
 		3296223324A709CE002DEB78 /* disk_ii_motor_w_floppy.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_motor_w_floppy.sfx; sourceTree = "<group>"; };
 		3296223724A710CD002DEB78 /* disk_ii_io_error.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_io_error.sfx; sourceTree = "<group>"; };
+		32A6AA96266187570023257A /* hires.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hires.h; sourceTree = "<group>"; };
+		32A6AA97266187570023257A /* hires.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = hires.c; sourceTree = "<group>"; };
+		32A6AABF2669B5480023257A /* mmio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mmio.c; sourceTree = "<group>"; };
+		32A6AB0E266AF5160023257A /* paddle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = paddle.c; sourceTree = "<group>"; };
+		32A6AB372671D0560023257A /* 6502.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502.h; sourceTree = "<group>"; };
+		32A6AB382671D0570023257A /* 6502.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502.c; sourceTree = "<group>"; };
+		32A6AB462671D0660023257A /* 6502_instr_set_clr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_set_clr.h; sourceTree = "<group>"; };
+		32A6AB472671D0660023257A /* 6502_instr_stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_stack.h; sourceTree = "<group>"; };
+		32A6AB482671D0660023257A /* 6502_instr_logic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_logic.h; sourceTree = "<group>"; };
+		32A6AB492671D0660023257A /* 6502_instr_shift_rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_shift_rotate.h; sourceTree = "<group>"; };
+		32A6AB4A2671D0660023257A /* 6502_instr_inc_dec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_inc_dec.h; sourceTree = "<group>"; };
+		32A6AB4B2671D0660023257A /* 6502_instr_compare_test.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_compare_test.h; sourceTree = "<group>"; };
+		32A6AB4C2671D0660023257A /* 6502_instr_branch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_branch.h; sourceTree = "<group>"; };
+		32A6AB4D2671D0660023257A /* 6502_instr_misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_misc.h; sourceTree = "<group>"; };
+		32A6AB4E2671D0660023257A /* 6502_instr_arithmetic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_arithmetic.h; sourceTree = "<group>"; };
+		32A6AB4F2671D0660023257A /* 6502_instr_undoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_undoc.h; sourceTree = "<group>"; };
+		32A6AB502671D0660023257A /* 6502_instr_transfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_transfer.h; sourceTree = "<group>"; };
+		32A6AB512671D0660023257A /* 6502_instr_load_store.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_load_store.h; sourceTree = "<group>"; };
+		32A6AB522671D0660023257A /* 6502_instr_call_ret_jump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instr_call_ret_jump.h; sourceTree = "<group>"; };
+		32A6AB532671D0660023257A /* 6502_instructions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_instructions.h; sourceTree = "<group>"; };
+		32A6AB672671D7880023257A /* 6502.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = 6502.S; sourceTree = "<group>"; };
 		32A9F7482467B60B004902A1 /* speaker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = speaker.h; sourceTree = "<group>"; };
 		32A9F7492467B60B004902A1 /* speaker.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = speaker.c; sourceTree = "<group>"; };
 		32AF7C9624AD85E8002D82BF /* select_all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = select_all.png; sourceTree = "<group>"; };
 		32B18435233F10BC00DBB4AB /* Shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 		32B18438233FAB3900DBB4AB /* verticies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = verticies.swift; sourceTree = "<group>"; };
+		32B3778429177C480040845B /* debug layout bug.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "debug layout bug.rtf"; sourceTree = "<group>"; };
+		32B3778E291787CA0040845B /* NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSLayoutConstraint.swift; sourceTree = "<group>"; };
+		32BCCD182650D3B1002151C5 /* Debug-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Debug-Info.plist"; sourceTree = "<group>"; };
 		32BFFB5722EACC630003B53F /* Steve ][.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Steve ][.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		32BFFB5A22EACC630003B53F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		32BFFB5C22EACC630003B53F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -447,8 +750,19 @@
 		32C4532B2331FED90000EBA1 /* Functiontest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Functiontest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		32C4532C2331FEDA0000EBA1 /* A2Mac copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "A2Mac copy2-Info.plist"; path = "/Users/trudnai/Projects/A2Mac/A2Mac copy2-Info.plist"; sourceTree = "<absolute>"; };
 		32C4532D233345420000EBA1 /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
+		32C6995127C5439300D0F25D /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		32C823392908822E0018438F /* DebuggerWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebuggerWindowController.swift; sourceTree = "<group>"; };
+		32D0897B291A44F200F2B486 /* 6502_bp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_bp.c; sourceTree = "<group>"; };
+		32D08987291A450400F2B486 /* 6502_bp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_bp.h; sourceTree = "<group>"; };
+		32D08992291AF23500F2B486 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = A2Mac/Base.lproj/Debug.storyboard; sourceTree = "<group>"; };
+		32D089D7291E1BF800F2B486 /* DisassView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisassView.swift; sourceTree = "<group>"; };
+		32D089EC291EE19200F2B486 /* UnfairLock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfairLock.swift; sourceTree = "<group>"; };
+		32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexDigitFormatter.swift; sourceTree = "<group>"; };
+		32D08A1F2921A8F900F2B486 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = 6502_dis_utils.c; sourceTree = "<group>"; };
+		32D08A7F2927306D00F2B486 /* 6502_dis_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = 6502_dis_utils.h; sourceTree = "<group>"; };
 		32DBF7632334657900DD50E7 /* HiRes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HiRes.swift; sourceTree = "<group>"; };
-		32DBF76723373FB400DD50E7 /* disassembler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = disassembler.h; sourceTree = "<group>"; };
+		32DBF76723373FB400DD50E7 /* 6502_dis.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = 6502_dis.h; sourceTree = "<group>"; };
 		32E21BE62491BF8B006C0C72 /* apple-rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "apple-rainbow.png"; sourceTree = "<group>"; };
 		32E3126424A7193700E61891 /* disk_ii_arm.sfx */ = {isa = PBXFileReference; lastKnownFileType = file; path = disk_ii_arm.sfx; sourceTree = "<group>"; };
 		32E3126824A98B9300E61891 /* dsk2woz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dsk2woz.c; sourceTree = "<group>"; };
@@ -477,6 +791,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		325EB65D23FBBAD100C6B4A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		32799F8B264B1A5700255669 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -591,8 +912,10 @@
 			children = (
 				326ED2EE232D7A0000A41337 /* 6502_functional_test.bin */,
 				32439F8422ECD8AD0077AAE0 /* apple.rom */,
+				3268B99027DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom */,
 				323E2DCC245531E500156805 /* Apple2e_Enhanced.rom */,
-				323E2DCD245531E500156805 /* Apple2e.rom */,
+				323E2DCD245531E500156805 /* Apple2e_16k.rom */,
+				3268B98F27DEAC73003FBDCC /* Apple2e_32k.rom */,
 				325EB67F23FBDF8F00C6B4A4 /* Apple2Plus.rom */,
 				325EB68223FBDFBA00C6B4A4 /* DISK_II_C600.ROM */,
 			);
@@ -615,7 +938,6 @@
 				32439F7622ECD8AD0077AAE0 /* 6502_instr_set_clr.h */,
 				32439F7722ECD8AD0077AAE0 /* 6502_instr_stack.h */,
 				32439F7822ECD8AD0077AAE0 /* 6502_instr_logic.h */,
-				323D0435248B20F20086A901 /* 6502_instr_undoc.h */,
 				32439F7922ECD8AD0077AAE0 /* 6502_instr_shift_rotate.h */,
 				32439F7A22ECD8AD0077AAE0 /* 6502_instr_inc_dec.h */,
 				32439F7B22ECD8AD0077AAE0 /* 6502_instr_compare_test.h */,
@@ -624,6 +946,7 @@
 				32439F7E22ECD8AD0077AAE0 /* 6502_instr_arithmetic.h */,
 				32439F7F22ECD8AD0077AAE0 /* 6502_instr_transfer.h */,
 				32439F8222ECD8AD0077AAE0 /* 6502_instr_call_ret_jump.h */,
+				323D0435248B20F20086A901 /* 6502_instr_undoc.h */,
 				32439F8322ECD8AD0077AAE0 /* 6502_instructions.h */,
 			);
 			path = instructions;
@@ -643,6 +966,7 @@
 			isa = PBXGroup;
 			children = (
 				32A9F7472467B5DF004902A1 /* audio */,
+				32A6AA952661871C0023257A /* video */,
 				325EB63323F8863100C6B4A4 /* disk */,
 				3268E68D2474E18F00047474 /* game */,
 				325EB63B23FA57C000C6B4A4 /* mem */,
@@ -659,6 +983,8 @@
 				325EB63523F8F78300C6B4A4 /* disk.c */,
 				32E3126B24A9928F00E61891 /* dsk2woz.h */,
 				32E3126824A98B9300E61891 /* dsk2woz.c */,
+				32100AB22877AB8600D894EE /* scsi.h */,
+				32100AB32877AB8600D894EE /* scsi.c */,
 			);
 			path = disk;
 			sourceTree = "<group>";
@@ -668,7 +994,6 @@
 			children = (
 				32439F8622ECD8AD0077AAE0 /* common.h */,
 				325EB63823F9E48100C6B4A4 /* common.c */,
-				32DBF76723373FB400DD50E7 /* disassembler.h */,
 			);
 			path = util;
 			sourceTree = "<group>";
@@ -676,9 +1001,18 @@
 		325EB63A23FA572000C6B4A4 /* cpu */ = {
 			isa = PBXGroup;
 			children = (
+				32A6AB362671CED60023257A /* jit */,
 				32439F7522ECD8AD0077AAE0 /* instructions */,
 				32439F8522ECD8AD0077AAE0 /* 6502.h */,
 				32439F7422ECD8AD0077AAE0 /* 6502.c */,
+				325B7652290A32CC00B29605 /* 6502_dbg.h */,
+				325B75DF2909F95000B29605 /* 6502_dbg.c */,
+				32DBF76723373FB400DD50E7 /* 6502_dis.h */,
+				3268B97927DE7D6A003FBDCC /* 6502_dis.c */,
+				32D08A7F2927306D00F2B486 /* 6502_dis_utils.h */,
+				32D08A7329272FDD00F2B486 /* 6502_dis_utils.c */,
+				32D08987291A450400F2B486 /* 6502_bp.h */,
+				32D0897B291A44F200F2B486 /* 6502_bp.c */,
 				320F2A8924CFFBE300671B35 /* 6502_std.h */,
 				320F2A8A24D0001600671B35 /* 6502_und.h */,
 				320F2A8B24D0828600671B35 /* 6502_C.h */,
@@ -693,6 +1027,7 @@
 			isa = PBXGroup;
 			children = (
 				32439F7322ECD8AD0077AAE0 /* mmio.h */,
+				32A6AABF2669B5480023257A /* mmio.c */,
 				3264261023284F6F008B615F /* Apple2_mmio_8bit_ioaddr.h */,
 			);
 			path = mem;
@@ -747,8 +1082,58 @@
 			isa = PBXGroup;
 			children = (
 				3268E68E2474E24900047474 /* paddle.h */,
+				32A6AB0E266AF5160023257A /* paddle.c */,
 			);
 			path = game;
+			sourceTree = "<group>";
+		};
+		32A6AA952661871C0023257A /* video */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AA96266187570023257A /* hires.h */,
+				32A6AA97266187570023257A /* hires.c */,
+			);
+			path = video;
+			sourceTree = "<group>";
+		};
+		32A6AB362671CED60023257A /* jit */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AB662671D7880023257A /* x86 */,
+				32A6AB452671D0660023257A /* instructions */,
+				32A6AB382671D0570023257A /* 6502.c */,
+				32A6AB372671D0560023257A /* 6502.h */,
+			);
+			path = jit;
+			sourceTree = "<group>";
+		};
+		32A6AB452671D0660023257A /* instructions */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AB512671D0660023257A /* 6502_instr_load_store.h */,
+				32A6AB462671D0660023257A /* 6502_instr_set_clr.h */,
+				32A6AB472671D0660023257A /* 6502_instr_stack.h */,
+				32A6AB482671D0660023257A /* 6502_instr_logic.h */,
+				32A6AB492671D0660023257A /* 6502_instr_shift_rotate.h */,
+				32A6AB4A2671D0660023257A /* 6502_instr_inc_dec.h */,
+				32A6AB4B2671D0660023257A /* 6502_instr_compare_test.h */,
+				32A6AB4C2671D0660023257A /* 6502_instr_branch.h */,
+				32A6AB4D2671D0660023257A /* 6502_instr_misc.h */,
+				32A6AB4E2671D0660023257A /* 6502_instr_arithmetic.h */,
+				32A6AB502671D0660023257A /* 6502_instr_transfer.h */,
+				32A6AB522671D0660023257A /* 6502_instr_call_ret_jump.h */,
+				32A6AB4F2671D0660023257A /* 6502_instr_undoc.h */,
+				32A6AB532671D0660023257A /* 6502_instructions.h */,
+			);
+			path = instructions;
+			sourceTree = "<group>";
+		};
+		32A6AB662671D7880023257A /* x86 */ = {
+			isa = PBXGroup;
+			children = (
+				32A6AB672671D7880023257A /* 6502.S */,
+			);
+			path = x86;
 			sourceTree = "<group>";
 		};
 		32A9F7472467B5DF004902A1 /* audio */ = {
@@ -763,6 +1148,7 @@
 		32BFFB4E22EACC630003B53F = {
 			isa = PBXGroup;
 			children = (
+				32D08991291AF23500F2B486 /* Debug.storyboard */,
 				326426112328ADF4008B615F /* Apple_II_ROM.s */,
 				325EB63123F8861A00C6B4A4 /* src */,
 				3262F37823E17013008BDB95 /* Resources */,
@@ -775,6 +1161,7 @@
 				32BFFB5822EACC630003B53F /* Products */,
 				32C4531A2331F7220000EBA1 /* A2Mac copy-Info.plist */,
 				32C4532C2331FEDA0000EBA1 /* A2Mac copy2-Info.plist */,
+				32799FDB264B1A5700255669 /* Steve ][ copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -789,6 +1176,7 @@
 				325EB64023FBBACF00C6B4A4 /* Steve ][ iOS.app */,
 				325EB65523FBBAD100C6B4A4 /* A2iOSTests.xctest */,
 				325EB66023FBBAD100C6B4A4 /* A2iOSUITests.xctest */,
+				32799FDA264B1A5700255669 /* Steve ][ Debug.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -798,9 +1186,22 @@
 			children = (
 				32BFFB5E22EACC660003B53F /* Assets.xcassets */,
 				32B18438233FAB3900DBB4AB /* verticies.swift */,
+				32D089EC291EE19200F2B486 /* UnfairLock.swift */,
 				32BFFB5A22EACC630003B53F /* AppDelegate.swift */,
+				32B3778E291787CA0040845B /* NSLayoutConstraint.swift */,
+				32D08A1F2921A8F900F2B486 /* String.swift */,
+				32100A8A2875387300D894EE /* CheatMenu.swift */,
+				32100A9E28753AAA00D894EE /* SubMenu.swift */,
 				32BFFB5C22EACC630003B53F /* ViewController.swift */,
+				32B3778429177C480040845B /* debug layout bug.rtf */,
+				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
+				32C6995127C5439300D0F25D /* Debugger.swift */,
 				323D042F24898AB70086A901 /* PreferencesViewController.swift */,
+				32544194264A6C1600B7E3ED /* DisplayView.swift */,
+				32D089D7291E1BF800F2B486 /* DisassView.swift */,
+				32D08A1329219C6A00F2B486 /* HexDigitFormatter.swift */,
+				327B75D629064FDC00A86A71 /* DebuggerViewController.swift */,
+				32C823392908822E0018438F /* DebuggerWindowController.swift */,
 				323D04312489BFD80086A901 /* PreferencesWindowController.swift */,
 				32B18435233F10BC00DBB4AB /* Shaders.metal */,
 				32C4532D233345420000EBA1 /* MonitorView.swift */,
@@ -809,14 +1210,18 @@
 				32DBF7632334657900DD50E7 /* HiRes.swift */,
 				32EDB7A123272CA80073AF2D /* fail1.txt */,
 				32BFFB6022EACC660003B53F /* Main.storyboard */,
+				327B75BE290645EC00A86A71 /* Debugger.storyboard */,
+				321D9BDB287373000036E22F /* Main_copy.storyboard */,
 				323D042D248980600086A901 /* Preferences.storyboard */,
 				32C45305232E3EEF0000EBA1 /* RepeatingTimer.swift */,
 				32BFFB6322EACC660003B53F /* Info.plist */,
+				32BCCD182650D3B1002151C5 /* Debug-Info.plist */,
 				320F2A8724CFD74000671B35 /* Steve2Icon.icns */,
 				32BFFB6422EACC660003B53F /* A2Mac.entitlements */,
-				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
-				32E3126C24AC033A00E61891 /* ToolBarController.swift */,
 				3267641724BCC9A5000BEA11 /* COPYING */,
+				3277D7A2273C603600749544 /* DisplayScrollView.swift */,
+				3268B96F27DBD219003FBDCC /* convert_spkr_buf_to_wav.py */,
+				32439F7222ECD8AC0077AAE0 /* A2Mac-Bridging-Header.h */,
 			);
 			path = A2Mac;
 			sourceTree = "<group>";
@@ -919,6 +1324,28 @@
 			productName = A2iOSUITests;
 			productReference = 325EB66023FBBAD100C6B4A4 /* A2iOSUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		32799F78264B1A5700255669 /* Steve ][ Debug */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 32799FD7264B1A5700255669 /* Build configuration list for PBXNativeTarget "Steve ][ Debug" */;
+			buildPhases = (
+				32799F79264B1A5700255669 /* Sources */,
+				32799F8B264B1A5700255669 /* Frameworks */,
+				32799F8C264B1A5700255669 /* Resources */,
+				32799F92264B1A5700255669 /* Copy Font Files */,
+				32799F95264B1A5700255669 /* Copy ROM Images */,
+				32799F9B264B1A5700255669 /* Copy Disk Images */,
+				32799FC1264B1A5700255669 /* Copy SFX Files */,
+				32799FC5264B1A5700255669 /* Copy Image Files */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Steve ][ Debug";
+			productName = A2Mac;
+			productReference = 32799FDA264B1A5700255669 /* Steve ][ Debug.app */;
+			productType = "com.apple.product-type.application";
 		};
 		32BFFB5622EACC630003B53F /* Steve ][ */ = {
 			isa = PBXNativeTarget;
@@ -1061,6 +1488,7 @@
 			projectRoot = "";
 			targets = (
 				32BFFB5622EACC630003B53F /* Steve ][ */,
+				32799F78264B1A5700255669 /* Steve ][ Debug */,
 				32BFFB6822EACC660003B53F /* A2MacTests */,
 				32BFFB7322EACC660003B53F /* A2MacUITests */,
 				32C453092331F7220000EBA1 /* Speedtest */,
@@ -1078,11 +1506,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				325EB6A22401118300C6B4A4 /* Wavy Navy.woz in Resources */,
+				329CAA842620FC560039440F /* Main.storyboard in Resources */,
 				325EB67E23FBDEE700C6B4A4 /* apple.rom in Resources */,
 				325EB64F23FBBAD100C6B4A4 /* LaunchScreen.storyboard in Resources */,
 				325EB68423FBDFBB00C6B4A4 /* DISK_II_C600.ROM in Resources */,
 				325EB69E2401118300C6B4A4 /* Lode Runner.woz in Resources */,
 				325EB68123FBDF8F00C6B4A4 /* Apple2Plus.rom in Resources */,
+				3268B99327DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
 				325EB6AA2401118300C6B4A4 /* Sneakers.woz in Resources */,
 				32E3126624A7193700E61891 /* disk_ii_arm.sfx in Resources */,
 				32089E4924556DBD0036E667 /* PRNumber3.ttf in Resources */,
@@ -1092,7 +1522,7 @@
 				325EB68A23FDDF6200C6B4A4 /* Hard Hat Mack - Disk 1, Side A.woz in Resources */,
 				325EB6A02401118300C6B4A4 /* Crossfire.woz in Resources */,
 				325EB64C23FBBAD100C6B4A4 /* Assets.xcassets in Resources */,
-				323E2DD1245531E600156805 /* Apple2e.rom in Resources */,
+				323E2DD1245531E600156805 /* Apple2e_16k.rom in Resources */,
 				325EB68D23FDDFD200C6B4A4 /* Merlin-8 v2.48 (DOS 3.3).woz in Resources */,
 				325EB6A62401118300C6B4A4 /* ProDOS_312.woz in Resources */,
 				325EB6AC2401118300C6B4A4 /* Xonix.woz in Resources */,
@@ -1100,7 +1530,6 @@
 				325EB67D23FBD43800C6B4A4 /* PrintChar21.ttf in Resources */,
 				325EB6A42401118300C6B4A4 /* Qbit.woz in Resources */,
 				325EB68723FC707A00C6B4A4 /* Apple DOS 3.3 January 1983.woz in Resources */,
-				325EB64A23FBBACF00C6B4A4 /* Main.storyboard in Resources */,
 				3296223924A710CD002DEB78 /* disk_ii_io_error.sfx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1119,15 +1548,33 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32799F8C264B1A5700255669 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				321D9C3B287373D20036E22F /* Main.storyboard in Resources */,
+				32BCCD1A2650D3B1002151C5 /* Debug-Info.plist in Resources */,
+				32799F8D264B1A5700255669 /* COPYING in Resources */,
+				32799F8F264B1A5700255669 /* Assets.xcassets in Resources */,
+				3268B99227DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
+				32799F90264B1A5700255669 /* Preferences.storyboard in Resources */,
+				32799F91264B1A5700255669 /* Steve2Icon.icns in Resources */,
+				327B75C1290645EC00A86A71 /* Debugger.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32BFFB5522EACC630003B53F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				321D9C45287373D30036E22F /* Main.storyboard in Resources */,
+				32BCCD192650D3B1002151C5 /* Debug-Info.plist in Resources */,
 				3267641824BCC9A5000BEA11 /* COPYING in Resources */,
-				3213936624079C30007F5C4A /* Main.storyboard in Resources */,
 				32BFFB5F22EACC660003B53F /* Assets.xcassets in Resources */,
+				3268B99127DEAC84003FBDCC /* 077-0019 Apple IIe Diagnostic Card - English.rom in Resources */,
 				323D042E248980600086A901 /* Preferences.storyboard in Resources */,
 				320F2A8824CFD74100671B35 /* Steve2Icon.icns in Resources */,
+				327B75C0290645EC00A86A71 /* Debugger.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1135,6 +1582,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				327B75C2290645EC00A86A71 /* Debugger.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1142,6 +1590,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				327B75C3290645EC00A86A71 /* Debugger.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1175,13 +1624,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				32440B85247E27D7000F9DA1 /* 6502.c in Sources */,
+				32A6AB04266AEDF60023257A /* mmio.c in Sources */,
+				3270433928ECF0E80077E2BC /* HiRes.swift in Sources */,
 				325EB67623FBC44400C6B4A4 /* common.c in Sources */,
 				32A9F74B2467B60B004902A1 /* speaker.c in Sources */,
+				3270432F28ECF0E50077E2BC /* LoRes.swift in Sources */,
+				32A6AB11266AF5160023257A /* paddle.c in Sources */,
+				32A6AB26266B196A0023257A /* hires.c in Sources */,
+				3268B97C27DE7D6B003FBDCC /* 6502_dis.c in Sources */,
 				325EB67823FBC45300C6B4A4 /* disk.c in Sources */,
 				325EB64723FBBACF00C6B4A4 /* ViewController.swift in Sources */,
 				325EB64323FBBACF00C6B4A4 /* AppDelegate.swift in Sources */,
 				325EB67723FBC45300C6B4A4 /* woz.c in Sources */,
+				32326B0C2630A1910076F839 /* 6502.c in Sources */,
 				325EB64523FBBACF00C6B4A4 /* SceneDelegate.swift in Sources */,
 				32E3126A24A98B9300E61891 /* dsk2woz.c in Sources */,
 				325EB67423FBC0AA00C6B4A4 /* RepeatingTimer.swift in Sources */,
@@ -1204,25 +1659,86 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		32799F79264B1A5700255669 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				32799F7A264B1A5700255669 /* DisplayView.swift in Sources */,
+				32799F7B264B1A5700255669 /* AppDelegate.swift in Sources */,
+				32B37790291787CA0040845B /* NSLayoutConstraint.swift in Sources */,
+				32C82356290888C50018438F /* DebuggerWindowController.swift in Sources */,
+				32799F7C264B1A5700255669 /* ToolBarController.swift in Sources */,
+				32799F7D264B1A5700255669 /* PreferencesViewController.swift in Sources */,
+				32BCCCFC2650D275002151C5 /* 6502.c in Sources */,
+				32799F7E264B1A5700255669 /* PreferencesWindowController.swift in Sources */,
+				32799F80264B1A5700255669 /* dsk2woz.c in Sources */,
+				32D08A7529272FDD00F2B486 /* 6502_dis_utils.c in Sources */,
+				32799F81264B1A5700255669 /* disk.c in Sources */,
+				3268B97B27DE7D6B003FBDCC /* 6502_dis.c in Sources */,
+				32C82360290888D10018438F /* CheatMenu.swift in Sources */,
+				32D08A212921A8FA00F2B486 /* String.swift in Sources */,
+				32100AB52877AB8600D894EE /* scsi.c in Sources */,
+				32C6996727C548C900D0F25D /* Shaders.metal in Sources */,
+				32799F82264B1A5700255669 /* woz.c in Sources */,
+				32A6AB10266AF5160023257A /* paddle.c in Sources */,
+				32799F83264B1A5700255669 /* speaker.c in Sources */,
+				32799F84264B1A5700255669 /* common.c in Sources */,
+				32D089D9291E1BF800F2B486 /* DisassView.swift in Sources */,
+				32799F85264B1A5700255669 /* ViewController.swift in Sources */,
+				32799F86264B1A5700255669 /* HiRes.swift in Sources */,
+				32799F87264B1A5700255669 /* LoRes.swift in Sources */,
+				32C6995327C5439300D0F25D /* Debugger.swift in Sources */,
+				32D0897D291A44F200F2B486 /* 6502_bp.c in Sources */,
+				325B761B290A0C4200B29605 /* 6502_dbg.c in Sources */,
+				327B75D829064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
+				32799F88264B1A5700255669 /* RepeatingTimer.swift in Sources */,
+				32A6AAFA266AEDF50023257A /* mmio.c in Sources */,
+				32D08A1529219C6B00F2B486 /* HexDigitFormatter.swift in Sources */,
+				32799F8A264B1A5700255669 /* MonitorView.swift in Sources */,
+				3277D7A4273C603600749544 /* DisplayScrollView.swift in Sources */,
+				32A6AB25266B19680023257A /* hires.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		32BFFB5322EACC630003B53F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				32544195264A6C1600B7E3ED /* DisplayView.swift in Sources */,
 				32BFFB5B22EACC630003B53F /* AppDelegate.swift in Sources */,
 				32E3126D24AC033A00E61891 /* ToolBarController.swift in Sources */,
 				323D043024898AB70086A901 /* PreferencesViewController.swift in Sources */,
+				32100A9F28753AAA00D894EE /* SubMenu.swift in Sources */,
+				32D0897C291A44F200F2B486 /* 6502_bp.c in Sources */,
+				32BCCCE9264DBDC8002151C5 /* 6502.c in Sources */,
 				323D04332489BFD80086A901 /* PreferencesWindowController.swift in Sources */,
-				32F8994924D9149800C85BE5 /* 6502.c in Sources */,
 				32E3126924A98B9300E61891 /* dsk2woz.c in Sources */,
+				325B7611290A0C4100B29605 /* 6502_dbg.c in Sources */,
 				325EB63623F8F78300C6B4A4 /* disk.c in Sources */,
+				32D08A1429219C6B00F2B486 /* HexDigitFormatter.swift in Sources */,
+				32100A8B2875387300D894EE /* CheatMenu.swift in Sources */,
+				3268B97A27DE7D6A003FBDCC /* 6502_dis.c in Sources */,
+				32D08A202921A8FA00F2B486 /* String.swift in Sources */,
+				32D089D8291E1BF800F2B486 /* DisassView.swift in Sources */,
+				32C6995D27C548C800D0F25D /* Shaders.metal in Sources */,
+				32D08A7429272FDD00F2B486 /* 6502_dis_utils.c in Sources */,
 				325EB62F23F8856F00C6B4A4 /* woz.c in Sources */,
+				32100AB42877AB8600D894EE /* scsi.c in Sources */,
+				32A6AB0F266AF5160023257A /* paddle.c in Sources */,
 				32A9F74A2467B60B004902A1 /* speaker.c in Sources */,
 				325EB63923F9E48100C6B4A4 /* common.c in Sources */,
 				32BFFB5D22EACC630003B53F /* ViewController.swift in Sources */,
+				32B3778F291787CA0040845B /* NSLayoutConstraint.swift in Sources */,
 				325EB69323FE6C6200C6B4A4 /* HiRes.swift in Sources */,
 				32440BA32480D5C0000F9DA1 /* LoRes.swift in Sources */,
+				32C6995227C5439300D0F25D /* Debugger.swift in Sources */,
 				32C45306232E3EEF0000EBA1 /* RepeatingTimer.swift in Sources */,
+				32A6AAF0266AEDF40023257A /* mmio.c in Sources */,
+				327B75D729064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 				32C4532E233345430000EBA1 /* MonitorView.swift in Sources */,
+				3277D7A3273C603600749544 /* DisplayScrollView.swift in Sources */,
+				32C8233A2908822E0018438F /* DebuggerWindowController.swift in Sources */,
+				32A6AB1B266B19680023257A /* hires.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1231,6 +1747,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BFFB6E22EACC660003B53F /* A2MacTests.swift in Sources */,
+				327B75D929064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1239,6 +1756,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				32BFFB7922EACC660003B53F /* A2MacUITests.swift in Sources */,
+				327B75DA29064FDC00A86A71 /* DebuggerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1298,6 +1816,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		321D9BDB287373000036E22F /* Main_copy.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				321D9BDC287373000036E22F /* Base */,
+			);
+			name = Main_copy.storyboard;
+			sourceTree = "<group>";
+		};
 		325EB64823FBBACF00C6B4A4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1314,12 +1840,28 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		327B75BE290645EC00A86A71 /* Debugger.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				327B75BF290645EC00A86A71 /* Base */,
+			);
+			name = Debugger.storyboard;
+			sourceTree = "<group>";
+		};
 		32BFFB6022EACC660003B53F /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				32BFFB6122EACC660003B53F /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		32D08991291AF23500F2B486 /* Debug.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				32D08992291AF23500F2B486 /* Base */,
+			);
+			name = Debug.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1331,13 +1873,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DHIRES -DHIRESDRAW -D_NO_HIRESLOW";
+				OTHER_SWIFT_FLAGS = "-D_NO_HIRES -D_NO_HIRESDRAW -D_NO_HIRESLOW";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1353,13 +1896,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2iOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				OTHER_SWIFT_FLAGS = "-DHIRES -DHIRESDRAW -D_NO_HIRESLOW";
+				OTHER_SWIFT_FLAGS = "-D_NO_HIRES -D_NO_HIRESDRAW -D_NO_HIRESLOW";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gamealloy.A2iOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -1459,6 +2003,90 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = A2iOS;
 				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		32799FD8264B1A5700255669 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_UNROLL_LOOPS = NO;
+				HEADER_SEARCH_PATHS = src/cpu;
+				INFOPLIST_FILE = "A2Mac/Debug-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 0.85;
+				OTHER_CFLAGS = (
+					"-DDISASS_TRACE",
+					"-D_NO_INTERRUPT_CHECK_PER_STEP",
+					"-D_NO_CLK_ABSOLUTE_PRECISE",
+				);
+				OTHER_SWIFT_FLAGS = "-DHIRES -D_NO_METAL -D_NO_HIRESDRAW -DHIRESLOW -DHIRESLOWCOLOR -DDEBUGGER";
+				PRODUCT_BUNDLE_IDENTIFIER = com.trudnai.steveii;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		32799FD9264B1A5700255669 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = W6TFQTZ4DA;
+				GCC_ENABLE_CPP_EXCEPTIONS = YES;
+				GCC_ENABLE_CPP_RTTI = YES;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = fast;
+				GCC_UNROLL_LOOPS = NO;
+				HEADER_SEARCH_PATHS = src/cpu;
+				INFOPLIST_FILE = "A2Mac/Debug-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LLVM_LTO = YES_THIN;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 0.85;
+				OTHER_CFLAGS = (
+					"-DDISASS_TRACE",
+					"-D_NO_INTERRUPT_CHECK_PER_STEP",
+					"-D_NO_CLK_ABSOLUTE_PRECISE",
+				);
+				OTHER_SWIFT_FLAGS = "-DHIRES -D_NO_METAL -D_NO_HIRESDRAW -DHIRESLOW -DHIRESLOWCOLOR -DDEBUGGER";
+				PRODUCT_BUNDLE_IDENTIFIER = com.trudnai.steveii;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = YES;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1580,7 +2208,9 @@
 		32BFFB7E22EACC660003B53F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -1591,23 +2221,25 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_FAST_MATH = YES;
+				GCC_OPTIMIZATION_LEVEL = g;
 				GCC_UNROLL_LOOPS = NO;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MARKETING_VERSION = 0.85;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 0.86;
 				OTHER_CFLAGS = (
-					"-D_NO_DISASSEMBLER",
+					"-D_NO_DISASS_TRACE",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",
 					"-D_NO_CLK_ABSOLUTE_PRECISE",
 				);
-				OTHER_SWIFT_FLAGS = "-DHIRES -D_NO_METAL -D_NO_HIRESDRAW -DHIRESLOW -DHIRESLOWCOLOR";
+				OTHER_SWIFT_FLAGS = "-DHIRES -D_NO_METAL -D_NO_HIRESDRAW -DHIRESLOW -DHIRESLOWCOLOR -D_NO_SCHEDULER_CVDISPLAYLINK";
 				PRODUCT_BUNDLE_IDENTIFIER = com.trudnai.steveii;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = _NO_DEBUG;
 				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -1617,12 +2249,15 @@
 		32BFFB7F22EACC660003B53F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_OPTIMIZATION = space;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = A2Mac/A2Mac.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = W6TFQTZ4DA;
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
@@ -1630,20 +2265,21 @@
 				GCC_FAST_MATH = YES;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_UNROLL_LOOPS = NO;
+				HEADER_SEARCH_PATHS = src/cpu;
 				INFOPLIST_FILE = A2Mac/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				LLVM_LTO = YES_THIN;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MARKETING_VERSION = 0.85;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 0.86;
 				OTHER_CFLAGS = (
-					"-D_NO_DISASSEMBLER",
+					"-D_NO_DISASS_TRACE",
 					"-D_NO_INTERRUPT_CHECK_PER_STEP",
 					"-D_NO_CLK_ABSOLUTE_PRECISE",
 				);
-				OTHER_SWIFT_FLAGS = "-DHIRES -D_NO_METAL -D_NO_HIRESDRAW -DHIRESLOW -DHIRESLOWCOLOR";
+				OTHER_SWIFT_FLAGS = "-DHIRES -D_NO_METAL -D_NO_HIRESDRAW -DHIRESLOW -DHIRESLOWCOLOR -D_NO_SCHEDULER_CVDISPLAYLINK";
 				PRODUCT_BUNDLE_IDENTIFIER = com.trudnai.steveii;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "A2Mac/A2Mac-Bridging-Header.h";
@@ -1864,6 +2500,15 @@
 			buildConfigurations = (
 				325EB66E23FBBAD100C6B4A4 /* Debug */,
 				325EB66F23FBBAD100C6B4A4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		32799FD7264B1A5700255669 /* Build configuration list for PBXNativeTarget "Steve ][ Debug" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				32799FD8264B1A5700255669 /* Debug */,
+				32799FD9264B1A5700255669 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

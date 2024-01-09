@@ -141,6 +141,13 @@ INSTR void STA( uint16_t addr ) {
     STR(addr, m6502.A);
 #endif
 }
+INSTR void STA_zp( uint8_t addr ) {
+    dbgPrintf("STA ");
+    disPrintf(disassembly.inst, "STA");
+#ifndef DISASSEMBLER
+    STR_zp(addr, m6502.A);
+#endif
+}
 
 /**
  STX  Store Index X in Memory
@@ -159,6 +166,13 @@ INSTR void STX( uint16_t addr ) {
     disPrintf(disassembly.inst, "STX");
 #ifndef DISASSEMBLER
     STR(addr, m6502.X);
+#endif
+}
+INSTR void STX_zp( uint8_t addr ) {
+    dbgPrintf("STX ");
+    disPrintf(disassembly.inst, "STX");
+#ifndef DISASSEMBLER
+    STR_zp(addr, m6502.X);
 #endif
 }
 
@@ -181,6 +195,13 @@ INSTR void STY( uint16_t addr ) {
     STR(addr, m6502.Y);
 #endif
 }
+INSTR void STY_zp( uint18_t addr ) {
+    dbgPrintf("STY ");
+    disPrintf(disassembly.inst, "STY");
+#ifndef DISASSEMBLER
+    STR_zp(addr, m6502.Y);
+#endif
+}
 
 /**
  STZ  Store Zero (0) in Memory
@@ -200,6 +221,13 @@ INSTR void STZ( uint16_t addr ) {
     disPrintf(disassembly.inst, "STZ");
 #ifndef DISASSEMBLER
     STR(addr, 0);
+#endif
+}
+INSTR void STZ_zp( uint8_t addr ) {
+    dbgPrintf("STZ ");
+    disPrintf(disassembly.inst, "STZ");
+#ifndef DISASSEMBLER
+    STR_zp(addr, 0);
 #endif
 }
 

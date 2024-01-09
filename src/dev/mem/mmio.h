@@ -414,6 +414,7 @@ INLINE uint16_t memread16( uint16_t addr );
 INLINE uint8_t _memread( uint16_t addr );
 INLINE uint8_t _memread_dbg( uint16_t addr );
 INLINE uint8_t _memread_dis( uint16_t addr );
+INLINE void _memwrite8_zp( uint16_t addr, uint8_t data );
 INLINE void _memwrite8_low( uint16_t addr, uint8_t data );
 INLINE void _memwrite8_bank( uint16_t addr, uint8_t data );
 INLINE void _memwrite8_high( uint16_t addr, uint8_t data );
@@ -497,6 +498,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define fetch() _fetch_dis()
 #define fetch16() _fetch16_dis()
 #define memread(addr) _memread_dis(addr)
+#define memwrite8_zp(addr,data)     // do not write anything into the memory while disassembling
 #define memwrite8_low(addr,data)    // do not write anything into the memory while disassembling
 #define memwrite8_bank(addr,data)   // do not write anything into the memory while disassembling
 #define memwrite8_high(addr,data)   // do not write anything into the memory while disassembling
@@ -531,6 +533,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define fetch() _fetch()
 #define fetch16() _fetch16()
 #define memread(addr) _memread_dbg(addr)
+#define memwrite8_zp(addr,data) _memwrite8_zp(addr,data)
 #define memwrite8_low(addr,data) _memwrite8_low(addr,data)
 #define memwrite8_bank(addr,data) _memwrite8_bank(addr,data)
 #define memwrite8_high(addr,data) _memwrite8_high(addr,data)
@@ -565,6 +568,7 @@ INLINE uint8_t _src_zp_Y_dis(void);
 #define fetch() _fetch()
 #define fetch16() _fetch16()
 #define memread(addr) _memread(addr)
+#define memwrite8_zp(addr,data) _memwrite8_zp(addr,data)
 #define memwrite8_low(addr,data) _memwrite8_low(addr,data)
 #define memwrite8_bank(addr,data) _memwrite8_bank(addr,data)
 #define memwrite8_high(addr,data) _memwrite8_high(addr,data)

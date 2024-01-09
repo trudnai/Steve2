@@ -77,7 +77,7 @@ MEMcfg_t MEMcfg = INIT_MEMCFG;
 MEMcfg_t newMEMcfg = INIT_MEMCFG;
 
 
-const uint8_t * const shadowZPSTCKMEM = Apple2_64K_MEM;
+uint8_t * shadowZPSTCKMEM = Apple2_64K_MEM;
 const uint8_t * currentZPSTCKMEM = Apple2_64K_RAM;
 const uint8_t * const shadowLowMEM = Apple2_64K_MEM + 0x200;
 const uint8_t * currentLowRDMEM = Apple2_64K_RAM + 0x200;
@@ -1008,6 +1008,9 @@ INLINE uint8_t check_mem_wr_bp(uint16_t addr) {
 /**
  Naive implementation of RAM read from address
  **/
+INLINE uint8_t memread8_zp( uint16_t addr ) {
+    return shadowZPSTCKMEM[addr];
+}
 INLINE uint8_t memread8_low( uint16_t addr ) {
     return Apple2_64K_MEM[addr];
 }
@@ -1018,11 +1021,17 @@ INLINE uint8_t memread8( uint16_t addr ) {
     if (addr >= 0xC000) {
         return memread8_high(addr);
     }
-    return memread8_low(addr);
+    if (addr >= 0x200) {
+        return memread8_low(addr);
+    }
+    return memread8_zp(addr);
 }
 /**
  Naive implementation of RAM read from address
  **/
+INLINE uint16_t memread16_zp( uint16_t addr ) {
+    return * (uint16_t*) ( shadowZPSTCKMEM + addr );
+}
 INLINE uint16_t memread16_low( uint16_t addr ) {
     return * (uint16_t*) ( Apple2_64K_MEM + addr );
 
@@ -1054,12 +1063,15 @@ INLINE uint8_t _memread( uint16_t addr ) {
         if (addr < 0xC100) {
             return ioRead(addr);
         }
-        
 //        return memread8_paged(addr);
         return memread8_high(addr);
     }
+    if (addr >= 0x200) {
+        return memread8_low(addr);
+    }
+
 //    return memread8_paged(addr);
-    return memread8_low(addr);
+    return memread8_zp(addr);
     
 //    return memread8(addr);
 }
@@ -1074,8 +1086,12 @@ INLINE uint8_t _memread_dis( uint16_t addr ) {
 //        return memread8_paged(addr);
         return memread8_high(addr);
     }
+    if (addr >= 0x200) {
+        return memread8_low(addr);
+    }
+
 //    return memread8_paged(addr);
-    return memread8_low(addr);
+    return memread8_zp(addr);
 
 //    return memread8(addr);
 }
@@ -1101,6 +1117,9 @@ INLINE uint8_t _memread_dis( uint16_t addr ) {
  Naive implementation of RAM write to address
  **/
 
+INLINE void _memwrite8_zp( uint16_t addr, uint8_t data ) {
+    shadowZPSTCKMEM[addr] = data;
+}
 INLINE void _memwrite8_low( uint16_t addr, uint8_t data ) {
     if ((addr >= 0x400) && (addr < 0x800)) {
         if ((data == 0x00) || (data == 0xFF)) {
@@ -1133,9 +1152,13 @@ INLINE void _memwrite( uint16_t addr, uint8_t data ) {
             memwrite8_high(addr, data);
         }
     }
-    else {
+    else if (addr >= 0x200) {
         // RAM
         memwrite8_low(addr, data);
+    }
+    else {
+        // RAM
+        memwrite8_zp(addr, data);
     }
 }
 
@@ -1350,13 +1373,13 @@ INLINE uint8_t _addr_zp_dis(void) {
     return _fetch_dis();
 }
 INLINE uint8_t _src_zp(void) {
-    return memread8_low(_addr_zp());
+    return memread8(_addr_zp());
 }
 INLINE uint8_t _src_zp_dbg(void) {
     return _memread_dbg(_addr_zp_dbg());
 }
 INLINE uint8_t _src_zp_dis(void) {
-    return memread8_low(_addr_zp_dis());
+    return memread8(_addr_zp_dis());
 }
 //INLINE uint8_t * dest_zp() {
 //    return WRLOMEM + addr_zp();
@@ -1514,13 +1537,13 @@ INLINE uint8_t _addr_zp_X_dis(void) {
     return _fetch_dis() + m6502.X;
 }
 INLINE uint8_t _src_zp_X(void) {
-    return memread8_low(_addr_zp_X());
+    return memread8(_addr_zp_X());
 }
 INLINE uint8_t _src_zp_X_dbg(void) {
     return _memread_dbg(_addr_zp_X());
 }
 INLINE uint8_t _src_zp_X_dis(void) {
-    return memread8_low(_addr_zp_X_dis());
+    return memread8(_addr_zp_X_dis());
 }
 //INLINE uint8_t * dest_zp_X() {
 //    return WRLOMEM + addr_zp_X();
@@ -1545,13 +1568,13 @@ INLINE uint8_t _addr_zp_Y_dis(void) {
     return _fetch_dis() + m6502.Y;
 }
 INLINE uint8_t _src_zp_Y(void) {
-    return memread8_low(_addr_zp_Y());
+    return memread8(_addr_zp_Y());
 }
 INLINE uint8_t _src_zp_Y_dbg(void) {
     return _memread_dbg(_addr_zp_Y());
 }
 INLINE uint8_t _src_zp_Y_dis(void) {
-    return memread8_low(_addr_zp_Y_dis());
+    return memread8(_addr_zp_Y_dis());
 }
 //INLINE uint8_t * dest_zp_Y() {
 //    return WRLOMEM + addr_zp_Y();
@@ -1563,7 +1586,7 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
     uint8_t * newWriteMEM = currentLowWRMEM;
 
     // TODO: Check if this is supposed to be the opposite
-    if ( newMEMcfg.is_80STORE ) {
+//    if ( newMEMcfg.is_80STORE ) {
         if ( newMEMcfg.RD_AUX_MEM ) {
             newReadMEM = Apple2_64K_AUX + 0x200;
         }
@@ -1577,11 +1600,11 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
         else {
             newWriteMEM = Apple2_64K_RAM;
         }
-    }
-    else {
-        newReadMEM = Apple2_64K_RAM + 0x200;
-        newWriteMEM = Apple2_64K_RAM;
-    }
+//    }
+//    else {
+//        newReadMEM = Apple2_64K_RAM + 0x200;
+//        newWriteMEM = Apple2_64K_RAM;
+//    }
     
     
     // save old content to shadow memory
@@ -1727,10 +1750,10 @@ void CxMemorySelect( MEMcfg_t newMEMcfg ) {
 void resetMemory(void) {
     newMEMcfg = initMEMcfg;
     
-    WRZEROPG= Apple2_64K_MEM;       // for Write $0000 - $0200 (shadow memory)
-    WRLOMEM = Apple2_64K_MEM;       // for Write $0200 - $BFFF (shadow memory)
-    WRD0MEM = Apple2_Dummy_RAM;     // for writing $D000 - $DFFF
-    WRHIMEM = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
+    WRZEROPG = Apple2_64K_MEM;       // for Write $0000 - $0200 (shadow memory)
+    WRLOMEM  = Apple2_64K_MEM;       // for Write $0200 - $BFFF (shadow memory)
+    WRD0MEM  = Apple2_Dummy_RAM;     // for writing $D000 - $DFFF
+    WRHIMEM  = Apple2_Dummy_RAM;     // for writing $E000 - $FFFF
     
     auxMemorySelect(MEMcfg);
     CxMemorySelect(MEMcfg);
@@ -1798,7 +1821,8 @@ void setIO ( uint16_t ioaddr, uint8_t val ) {
 }
 
 uint8_t getMEM ( uint16_t addr ) {
-    return Apple2_64K_MEM[addr];
+    return memread8(addr);
+//    return Apple2_64K_MEM[addr];
 }
 
 uint16_t getMEM16 ( uint16_t addr ) {

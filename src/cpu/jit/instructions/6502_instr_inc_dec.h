@@ -39,6 +39,18 @@
  absolute,X    INC oper,X    FE    3     7
 **/
 #ifndef DISASSEMBLER
+INSTR void _INC_zp( uint16_t addr ) {
+    set_flags_NZ( ++(WRZEROPG[addr]) );
+}
+#endif
+INSTR void INC_zp( uint16_t addr ) {
+    disPrintf(disassembly.inst, "INC");
+
+#ifndef DISASSEMBLER
+    _INC_zp(addr);
+#endif
+}
+#ifndef DISASSEMBLER
 INSTR void _INC( uint16_t addr ) {
     set_flags_NZ( ++(WRLOMEM[addr]) );
 }
@@ -125,10 +137,20 @@ INSTR void INA(void) {
  absolute,X    DEC oper,X    DE    3     7
 **/
 #ifndef DISASSEMBLER
+INSTR void _DEC_zp( uint16_t addr ) {
+    set_flags_NZ( --(WRZEROPG[addr]) );
+}
 INSTR void _DEC( uint16_t addr ) {
     set_flags_NZ( --(WRLOMEM[addr]) );
 }
 #endif
+INSTR void DEC_zp( uint16_t addr ) {
+    disPrintf(disassembly.inst, "DEC");
+
+#ifndef DISASSEMBLER
+    _DEC_zp(addr);
+#endif
+}
 INSTR void DEC( uint16_t addr ) {
     disPrintf(disassembly.inst, "DEC");
 

@@ -1,4 +1,5 @@
 //
+//
 //  6502_std.h
 //  A2Mac
 //
@@ -137,9 +138,9 @@
 
         case 0x81: STA( addr_ind_X() ) ; return 6;                     // STA X,ind
 
-        case 0x84: STY( addr_zp() ); return 3;                         // STY zpg
-        case 0x85: STA( addr_zp() ); return 3;                         // STA zpg
-        case 0x86: STX( addr_zp() ); return 3;                         // STX zpg
+        case 0x84: STY_zp( addr_zp() ); return 3;                         // STY zpg
+        case 0x85: STA_zp( addr_zp() ); return 3;                         // STA zpg
+        case 0x86: STX_zp( addr_zp() ); return 3;                         // STX zpg
 
         case 0x88: DEY(); return 2;                                    // DEY
 
@@ -152,9 +153,9 @@
         case 0x90: BCC( rel_addr() ); return 2;                        // BCC rel
         case 0x91: STA( addr_ind_Y() ); return 6;                      // STA ind,Y
 
-        case 0x94: STY( addr_zp_X() ); return 4;                       // STY zpg,X
-        case 0x95: STA( addr_zp_X() ); return 4;                       // STA zpg,X
-        case 0x96: STX( addr_zp_Y() ); return 4;                       // STX zpg,Y
+        case 0x94: STY_zp( addr_zp_X() ); return 4;                       // STY zpg,X
+        case 0x95: STA_zp( addr_zp_X() ); return 4;                       // STA zpg,X
+        case 0x96: STX_zp( addr_zp_Y() ); return 4;                       // STX zpg,Y
 
         case 0x98: TYA(); return 2;                                    // TYA
         case 0x99: STA( addr_abs_Y() ); return 5;                      // STA abs,Y
@@ -198,7 +199,7 @@
 
         case 0xC4: CPY( src_zp() ); return 3;                          // CPY zpg
         case 0xC5: CMP( src_zp() ); return 3;                          // CMP zpg
-        case 0xC6: DEC( addr_zp() ); return 5;                         // DEC zpg
+        case 0xC6: DEC_zp( addr_zp() ); return 5;                      // DEC zpg
 
         case 0xC8: INY(); return 2;                                    // INY
         case 0xC9: CMP( imm() ); return 2;                             // CMP imm
@@ -212,7 +213,7 @@
         case 0xD1: CMP( src_ind_Y() ); return 5;                       // CMP ind,Y
 
         case 0xD5: CMP( src_zp_X() ); return 4;                        // CMP zpg,X
-        case 0xD6: DEC( addr_zp_X() ); return 6;                       // DEC zpg,X
+        case 0xD6: DEC_zp( addr_zp_X() ); return 6;                    // DEC zpg,X
 
         case 0xD8: CLD(); return 2;                                    // CLD
         case 0xD9: CMP( src_abs_Y() ); return 4;                       // CMP abs,Y
@@ -225,7 +226,7 @@
 
         case 0xE4: CPX( src_zp() ); return 3;                          // CPX zpg
         case 0xE5: SBC( src_zp() ); return 3;                          // SBC zpg
-        case 0xE6: INC( addr_zp() ); return 5;                         // INC zpg
+        case 0xE6: INC_zp( addr_zp() ); return 5;                      // INC zpg
 
         case 0xE8: INX(); return 2;                                    // INX
         case 0xE9: SBC( imm() ); return 2;                             // SBC imm
@@ -239,7 +240,7 @@
         case 0xF1: SBC( src_ind_Y() ); return 5;                       // SBC ind,Y
 
         case 0xF5: SBC( src_zp_X() ); return 4;                        // SBC zpg,X
-        case 0xF6: INC( addr_zp_X() ); return 6;                       // INC zpg,X
+        case 0xF6: INC_zp( addr_zp_X() ); return 6;                    // INC zpg,X
 
         case 0xF8: SED(); return 2;                                    // SED
         case 0xF9: SBC( src_abs_Y() ); return 4+1;                       // SBC abs,Y

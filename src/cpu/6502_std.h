@@ -36,7 +36,7 @@
         case 0x01: ORA( src_X_ind() ); return 6;                       // ORA X,ind
         
         case 0x05: ORA( src_zp() ); return 3;                          // ORA zpg
-        case 0x06: ASL( addr_zp() ); return 5;                         // ASL zpg
+        case 0x06: ASL_zp( addr_zp() ); return 5;                      // ASL zpg
         
         case 0x08: PHP(); return 3;                                    // PHP
         case 0x09: ORA( imm() ); return 2;                             // ORA imm
@@ -49,7 +49,7 @@
         case 0x11: ORA( src_ind_Y() ); return 5;                       // ORA ind,Y
 
         case 0x15: ORA( src_zp_X() ); return 4;                        // ORA zpg,X
-        case 0x16: ASL( addr_zp_X() ); return 6;                       // ASL zpg,X
+        case 0x16: ASL_zp( addr_zp_X() ); return 6;                    // ASL zpg,X
 
         case 0x18: CLC(); return 2;                                    // CLC
         case 0x19: ORA( src_abs_Y() ); return 4+1;                       // ORA abs,Y
@@ -62,7 +62,7 @@
 
         case 0x24: BIT( src_zp() ); return 3;                          // BIT zpg
         case 0x25: AND( src_zp() ); return 3;                          // AND zpg
-        case 0x26: ROL( addr_zp() ); return 5;                         // ROL zpg
+        case 0x26: ROL_zp( addr_zp() ); return 5;                      // ROL zpg
 
         case 0x28: PLP(); return 4;                                    // PLP
         case 0x29: AND( imm() ); return 2;                             // AND imm
@@ -76,7 +76,7 @@
         case 0x31: AND( src_ind_Y() ); return 5;                       // AND ind,Y
 
         case 0x35: AND( src_zp_X() ); return 4;                        // AND zpg,X
-        case 0x36: ROL( addr_zp_X() ); return 6;                       // ROL zpg,X
+        case 0x36: ROL_zp( addr_zp_X() ); return 6;                    // ROL zpg,X
 
         case 0x38: SEC(); return 2;                                    // SEC
         case 0x39: AND( src_abs_Y() ); return 4+1;                     // AND abs,Y
@@ -88,7 +88,7 @@
         case 0x41: EOR( src_X_ind() ); return 6;                       // EOR X,ind
 
         case 0x45: EOR( src_zp() ); return 3;                          // EOR zpg
-        case 0x46: LSR( addr_zp() ); return 5;                         // LSR zpg
+        case 0x46: LSR_zp( addr_zp() ); return 5;                      // LSR zpg
 
         case 0x48: PHA(); return 3;                                    // PHA
         case 0x49: EOR( imm() ); return 2;                             // EOR imm
@@ -102,7 +102,7 @@
         case 0x51: EOR( src_ind_Y() ); return 5;                       // EOR ind,Y
 
         case 0x55: EOR( src_zp_X() ); return 4;                        // AND zpg,X
-        case 0x56: LSR( addr_zp_X() ); return 6;                       // LSR zpg,X
+        case 0x56: LSR_zp( addr_zp_X() ); return 6;                    // LSR zpg,X
 
         case 0x58: CLI(); return 2;                                    // CLI
         case 0x59: EOR( src_abs_Y() ); return 4+1;                     // EOR abs,Y
@@ -114,7 +114,7 @@
         case 0x61: ADC( src_X_ind() ); return 6;                       // ADC X,ind
 
         case 0x65: ADC( src_zp() ); return 3;                          // ADC zpg
-        case 0x66: ROR( addr_zp() ); return 5;                         // ROR zpg
+        case 0x66: ROR_zp( addr_zp() ); return 5;                      // ROR zpg
 
         case 0x68: PLA(); return 4;                                    // PLA
         case 0x69: ADC( imm() ); return 2;                             // ADC imm
@@ -128,7 +128,7 @@
         case 0x71: ADC( src_ind_Y() ); return 5;                       // ADC ind,Y
 
         case 0x75: ADC( src_zp_X() ); return 4;                        // ADC zpg,X
-        case 0x76: ROR( addr_zp_X() ); return 6;                       // ROR zpg,X
+        case 0x76: ROR_zp( addr_zp_X() ); return 6;                    // ROR zpg,X
 
         case 0x78: SEI(); return 2;                                    // SEI
         case 0x79: ADC( src_abs_Y() ); return 4+1;                     // ADC abs,Y

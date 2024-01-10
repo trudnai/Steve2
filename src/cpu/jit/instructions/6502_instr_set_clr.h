@@ -193,7 +193,7 @@ INSTR void SEI(void) {
 #define RMB(n) INSTR void RMB##n( uint8_t zpg ) { \
     dbgPrintf("RMB"#n" "); \
     disPrintf(disassembly.inst, "RMB"#n); \
-    WRLOMEM[zpg] &= ~(1 << n); \
+    WRZEROPG[zpg] &= ~(1 << n); \
 }
 #else
 #define RMB(n) INSTR void RMB##n( uint8_t zpg ) { \
@@ -216,7 +216,7 @@ INSTR void SEI(void) {
 #define SMB(n) INSTR void SMB##n( uint8_t zpg ) { \
     dbgPrintf("SMB"#n" "); \
     disPrintf(disassembly.inst, "SMB"#n); \
-    WRLOMEM[zpg] |= (1 << n); \
+    WRZEROPG[zpg] |= (1 << n); \
 }
 #else
 #define SMB(n) INSTR void SMB##n( uint8_t zpg ) { \

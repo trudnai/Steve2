@@ -44,6 +44,10 @@ INSTR void _ASL( uint16_t addr ) {
     m6502.C = _memread(addr) & 0x80;
     set_flags_NZ( WRLOMEM[addr] <<= 1 );
 }
+INSTR void _ASL_zp( uint16_t addr ) {
+    m6502.C = _memread(addr) & 0x80;
+    set_flags_NZ( WRZEROPG[addr] <<= 1 );
+}
 #endif
 INSTR void ASL( uint16_t addr ) {
     dbgPrintf("ASL ");
@@ -51,6 +55,14 @@ INSTR void ASL( uint16_t addr ) {
 
 #ifndef DISASSEMBLER
     _ASL(addr);
+#endif
+}
+INSTR void ASL_zp( uint16_t addr ) {
+    dbgPrintf("ASL ");
+    disPrintf(disassembly.inst, "ASL");
+
+#ifndef DISASSEMBLER
+    _ASL_zp(addr);
 #endif
 }
 INSTR void ASLA(void) {
@@ -86,6 +98,15 @@ INSTR void LSR( uint16_t addr ) {
     set_flags_NZ( WRLOMEM[addr] >>= 1 );
 #endif
 }
+INSTR void LSR_zp( uint16_t addr ) {
+    dbgPrintf("LSR ");
+    disPrintf(disassembly.inst, "LSR");
+
+#ifndef DISASSEMBLER
+    m6502.C = WRZEROPG[addr] & 1;
+    set_flags_NZ( WRZEROPG[addr] >>= 1 );
+#endif
+}
 INSTR void LSRA(void) {
     dbgPrintf("LSR ");
     disPrintf(disassembly.inst, "LSR");
@@ -117,6 +138,12 @@ INSTR void _ROL( uint16_t addr ) {
     WRLOMEM[addr] <<= 1;
     set_flags_NZ( WRLOMEM[addr] |= C );
 }
+INSTR void _ROL_zp( uint16_t addr ) {
+    uint8_t C = m6502.C != 0;
+    m6502.C = WRZEROPG[addr] & 0x80;
+    WRZEROPG[addr] <<= 1;
+    set_flags_NZ( WRZEROPG[addr] |= C );
+}
 #endif
 INSTR void ROL( uint16_t addr ) {
     dbgPrintf("ROL ");
@@ -124,6 +151,14 @@ INSTR void ROL( uint16_t addr ) {
 
 #ifndef DISASSEMBLER
     _ROL(addr);
+#endif
+}
+INSTR void ROL_zp( uint16_t addr ) {
+    dbgPrintf("ROL ");
+    disPrintf(disassembly.inst, "ROL");
+
+#ifndef DISASSEMBLER
+    _ROL_zp(addr);
 #endif
 }
 INSTR void ROLA(void) {
@@ -159,6 +194,12 @@ INSTR void _ROR( uint16_t addr ) {
     WRLOMEM[addr] >>= 1;
     set_flags_NZ( WRLOMEM[addr] |= C  << 7 );
 }
+INSTR void _ROR_zp( uint16_t addr ) {
+    uint8_t C = m6502.C != 0;
+    m6502.C = WRZEROPG[addr] & 1;
+    WRZEROPG[addr] >>= 1;
+    set_flags_NZ( WRZEROPG[addr] |= C  << 7 );
+}
 #endif
 INSTR void ROR( uint16_t addr ) {
     dbgPrintf("ROR ");
@@ -166,6 +207,14 @@ INSTR void ROR( uint16_t addr ) {
     
 #ifndef DISASSEMBLER
     _ROR(addr);
+#endif
+}
+INSTR void ROR_zp( uint16_t addr ) {
+    dbgPrintf("ROR ");
+    disPrintf(disassembly.inst, "ROR");
+    
+#ifndef DISASSEMBLER
+    _ROR_zp(addr);
 #endif
 }
 INSTR void RORA(void) {

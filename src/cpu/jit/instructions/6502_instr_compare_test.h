@@ -88,6 +88,15 @@ INSTR void TRB( uint16_t addr ) {
     WRLOMEM[addr] &= ~m6502.A;
 #endif
 }
+INSTR void TRB_zp( uint16_t addr ) {
+    dbgPrintf("TRB(%02X) ", src);
+    disPrintf(disassembly.inst, "TRB");
+
+#ifndef DISASSEMBLER
+    set_flags_Z( WRZEROPG[addr] & m6502.A );
+    WRZEROPG[addr] &= ~m6502.A;
+#endif
+}
 
 /**
  TSB - Test and Set Bits
@@ -116,6 +125,15 @@ INSTR void TSB( uint16_t addr ) {
 #ifndef DISASSEMBLER
     set_flags_Z( WRLOMEM[addr] & m6502.A );
     WRLOMEM[addr] |= m6502.A;
+#endif
+}
+INSTR void TSB_zp( uint16_t addr ) {
+    dbgPrintf("TSB(%02X) ", src);
+    disPrintf(disassembly.inst, "TSB");
+
+#ifndef DISASSEMBLER
+    set_flags_Z( WRZEROPG[addr] & m6502.A );
+    WRZEROPG[addr] |= m6502.A;
 #endif
 }
 

@@ -92,15 +92,15 @@ case 0x7C: JMP( addr_ind_ind_X()); return 6; // abs_addr_X() ); return 6;       
         case 0xFA: PLX(); return 4;                                     // PLX
 
     // STZ - STore Zero
-        case 0x64: STZ( addr_zp() ); return 3;                          // STZ zpg
-        case 0x74: STZ( addr_zp_X() ); return 4;                        // STZ zpg,X
+        case 0x64: STZ_zp( addr_zp() ); return 3;                       // STZ zpg
+        case 0x74: STZ_zp( addr_zp_X() ); return 4;                     // STZ zpg,X
         case 0x9C: STZ( addr_abs() ); return 4;                         // STZ abs
         case 0x9E: STZ( addr_abs_X() ); return 5;                       // STZ abs,X
 
     // TRB - Test and Reset Bits
-        case 0x04: TSB( addr_zp() ); return 5;                          // TSB zpg
+        case 0x04: TSB_zp( addr_zp() ); return 5;                       // TSB zpg
         case 0x0C: TSB( addr_abs() ); return 6;                         // TSB abs
-        case 0x14: TRB( addr_zp() ); return 5;                          // TRB zpg
+        case 0x14: TRB_zp( addr_zp() ); return 5;                       // TRB zpg
         case 0x1C: TRB( addr_abs() ); return 6;                         // TRB abs
 
 

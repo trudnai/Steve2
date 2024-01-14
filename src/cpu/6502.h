@@ -246,8 +246,8 @@ extern double mhz;
 //#define GAME_VIDEO_DIV 1U // (GAME_FPS / DEFAULT_FPS)
 //#define GAME_SPKR_DIV 6U // 16U
 #define GAME_FPS  180U // 300U // 240U // 180U // 120U
-#define GAME_VIDEO_DIV 1U // 4U // (GAME_FPS / DEFAULT_FPS)
-#define GAME_SPKR_DIV 1U // 8U // 16U
+#define GAME_VIDEO_DIV 3U // 4U // (GAME_FPS / DEFAULT_FPS)
+#define GAME_SPKR_DIV 3U // 8U // 16U
 
 extern unsigned int video_fps_divider;
 extern unsigned int fps;

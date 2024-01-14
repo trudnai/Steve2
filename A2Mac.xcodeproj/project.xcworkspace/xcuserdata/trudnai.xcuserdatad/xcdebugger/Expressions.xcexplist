@@ -3,10 +3,22 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ViewController.newUpdateTimer(timeInterval:):ViewController.swift">
+         contextName = "HiRes.initMetal():HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "upd">
+               value = "mtlBufferB">
+            </PersistentString>
+            <PersistentString
+               value = "addFunction">
+            </PersistentString>
+            <PersistentString
+               value = "device">
+            </PersistentString>
+            <PersistentString
+               value = "mtlBufferA">
+            </PersistentString>
+            <PersistentString
+               value = "mtlBufferC">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -14,53 +26,30 @@
          contextName = "HiRes.compute():HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "computePipelineState.maxTotalThreadsPerThreadgroup">
+               value = "UnsafeRawBufferPointer(result)">
             </PersistentString>
             <PersistentString
                value = "result[2]">
             </PersistentString>
             <PersistentString
-               value = "UnsafeRawBufferPointer(result)">
+               value = "computePipelineState.maxTotalThreadsPerThreadgroup">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "spkr_toggle:speaker.c">
-         <PersistentStrings>
-            <PersistentString
-               value = "default_MHz_6502 * 1000 * 1000 / spkr_sample_rate">
-            </PersistentString>
-            <PersistentString
-               value = "( (spkr_clk + m6502.clkfrm) / ( 1024000 / spkr_sample_rate ) ) * 2">
-            </PersistentString>
-            <PersistentString
-               value = "(int16_t)28000 + (int16_t)-32768">
-            </PersistentString>
-            <PersistentString
-               value = "spkr_samples[spkr_sample_last_idx]">
-            </PersistentString>
-            <PersistentString
-               value = "(int)spkr_sample_idx_diff">
-            </PersistentString>
-            <PersistentString
-               value = "m6502.clkfrm">
-            </PersistentString>
-            <PersistentString
-               value = "(spkr_clk + m6502.clkfrm)">
-            </PersistentString>
-            <PersistentString
-               value = "( (spkr_clk + m6502.clkfrm) / ( default_MHz_6502 * 1000 * 1000 / spkr_sample_rate)) * 2">
-            </PersistentString>
-         </PersistentStrings>
+         contextName = "AND:6502_instr_logic.h">
       </ContextState>
       <ContextState
-         contextName = "m6502_ColdReset:6502.c">
+         contextName = "specialized closure #1 in DebuggerViewController.DisplayDisassembly():DebuggerViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "m6502">
+               value = "line_number">
             </PersistentString>
             <PersistentString
-               value = "RAM_PG_RD_TBL">
+               value = "currentScrollLine">
+            </PersistentString>
+            <PersistentString
+               value = "current_line_number">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -85,10 +74,16 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "BIT:6502_instr_compare_test.h">
+         contextName = "ViewController.mouseMoved(with:):ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.A">
+               value = "oldLocation">
+            </PersistentString>
+            <PersistentString
+               value = "mouseLocation">
+            </PersistentString>
+            <PersistentString
+               value = "view.bounds">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -107,18 +102,30 @@
                value = "disassLineRange[forLine]">
             </PersistentString>
             <PersistentString
-               value = "disassLineRange">
+               value = "disassLineRange.count">
             </PersistentString>
             <PersistentString
-               value = "disassLineRange.count">
+               value = "disassLineRange">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "_memwrite8_low:mmio.c">
+         contextName = "closure #1 in ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.PC">
+               value = "MEMcfg.is_80STORE">
+            </PersistentString>
+            <PersistentString
+               value = "self.shadowTxt">
+            </PersistentString>
+            <PersistentString
+               value = "txt">
+            </PersistentString>
+            <PersistentString
+               value = "MEMcfg.txt_page_2">
+            </PersistentString>
+            <PersistentString
+               value = "txtArr">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -158,13 +165,16 @@
          contextName = "HiRes.draw(_:):HiRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "linAddr">
+               value = "HiRes.blockCols">
             </PersistentString>
             <PersistentString
-               value = "ctx?.height">
+               value = "ctx?.data">
             </PersistentString>
             <PersistentString
                value = "ctx?.width">
+            </PersistentString>
+            <PersistentString
+               value = "ctx?.bitmapInfo">
             </PersistentString>
             <PersistentString
                value = "ctx?.bytesPerRow">
@@ -176,22 +186,19 @@
                value = "HiResLineAddrTbl">
             </PersistentString>
             <PersistentString
-               value = "ctx?.bitmapInfo">
-            </PersistentString>
-            <PersistentString
                value = "shadowScreen">
             </PersistentString>
             <PersistentString
                value = "(blockH7 | ( block &amp; bitMask ))">
             </PersistentString>
             <PersistentString
+               value = "ctx?.height">
+            </PersistentString>
+            <PersistentString
+               value = "linAddr">
+            </PersistentString>
+            <PersistentString
                value = "ctx?.bitsPerComponent">
-            </PersistentString>
-            <PersistentString
-               value = "HiRes.blockCols">
-            </PersistentString>
-            <PersistentString
-               value = "ctx?.data">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -219,7 +226,7 @@
          contextName = "DebuggerViewController.DisplayDisassembly():DebuggerViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "line_number">
+               value = "disass_addr_min">
             </PersistentString>
             <PersistentString
                value = "disass_addr">
@@ -228,7 +235,7 @@
                value = "m6502.PC">
             </PersistentString>
             <PersistentString
-               value = "disass_addr_min">
+               value = "line_number">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -318,6 +325,9 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "TXS [inlined]:6502_instr_transfer.h">
+      </ContextState>
+      <ContextState
          contextName = "dest_ind_Y:Apple2_mmio.h">
          <PersistentStrings>
             <PersistentString
@@ -354,6 +364,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ViewController.Reset(_:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.pc">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "textPageSelect:mmio.h">
          <PersistentStrings>
             <PersistentString
@@ -369,17 +387,6 @@
                value = "newTextPage">
             </PersistentString>
          </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.Reset(_:):ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "m6502.pc">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "TXS [inlined]:6502_instr_transfer.h">
       </ContextState>
       <ContextState
          contextName = "ViewController.currentContext.getter:ViewController.swift">
@@ -453,10 +460,31 @@
          contextName = "auxMemorySelect:mmio.c">
          <PersistentStrings>
             <PersistentString
+               value = "currentLowWRMEM == Apple2_64K_MEM">
+            </PersistentString>
+            <PersistentString
+               value = "WRLOMEM == Apple2_64K_MEM">
+            </PersistentString>
+            <PersistentString
+               value = "currentLowWRMEM == Apple2_64K_RAM">
+            </PersistentString>
+            <PersistentString
+               value = "WRLOMEM == Apple2_64K_RAM">
+            </PersistentString>
+            <PersistentString
+               value = "currentLowWRMEM == newWriteMEM">
+            </PersistentString>
+            <PersistentString
                value = "newReadMEM == Apple2_64K_RAM + 0x200">
             </PersistentString>
             <PersistentString
                value = "newReadMEM == currentLowRDMEM">
+            </PersistentString>
+            <PersistentString
+               value = "currentLowWRMEM == Apple2_64K_AUX">
+            </PersistentString>
+            <PersistentString
+               value = "WRLOMEM == Apple2_64K_AUX">
             </PersistentString>
             <PersistentString
                value = "newReadMEM == Apple2_64K_MEM + 0x200">
@@ -506,7 +534,7 @@
                value = "m6502_saved.PC">
             </PersistentString>
             <PersistentString
-               value = "scroll_line_number">
+               value = "isCurrentLine">
             </PersistentString>
             <PersistentString
                value = "highlighted_line_number">
@@ -515,7 +543,7 @@
                value = "m6502.PC">
             </PersistentString>
             <PersistentString
-               value = "isCurrentLine">
+               value = "scroll_line_number">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -529,7 +557,7 @@
                value = "textDisplay_height_diff">
             </PersistentString>
             <PersistentString
-               value = "textDisplay.frame">
+               value = "textDisplay_width_diff">
             </PersistentString>
             <PersistentString
                value = "MonitorView.textViewBounds">
@@ -541,7 +569,7 @@
                value = "textDisplay.bounds">
             </PersistentString>
             <PersistentString
-               value = "textDisplay_width_diff">
+               value = "textDisplay.frame">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -607,10 +635,10 @@
          contextName = "set_flags_NZC:common.h">
          <PersistentStrings>
             <PersistentString
-               value = "(unsigned)test ">
+               value = "(unsigned)0xFF">
             </PersistentString>
             <PersistentString
-               value = "(unsigned)0xFF">
+               value = "(unsigned)test ">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -720,10 +748,10 @@
                value = "MEMcfg.int_Cx_ROM">
             </PersistentString>
             <PersistentString
-               value = "(int)IOframe">
+               value = "m6502.clkfrm">
             </PersistentString>
             <PersistentString
-               value = "m6502.clkfrm">
+               value = "(int)IOframe">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -734,10 +762,10 @@
                value = "Apple2_64K_AUX + 0xC600">
             </PersistentString>
             <PersistentString
-               value = "(void*)rom">
+               value = "Apple2_64K_RAM + 0xC600">
             </PersistentString>
             <PersistentString
-               value = "Apple2_64K_RAM + 0xC600">
+               value = "(void*)rom">
             </PersistentString>
             <PersistentString
                value = "strlen(fullPath)">
@@ -841,15 +869,15 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "POP:6502_instr_stack.h">
-      </ContextState>
-      <ContextState
          contextName = "memread8_low [inlined]:mmio.c">
          <PersistentStrings>
             <PersistentString
                value = "m6502.PC">
             </PersistentString>
          </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "POP:6502_instr_stack.h">
       </ContextState>
       <ContextState
          contextName = "ToolBarController.windowWillEnterFullScreen(_:):ToolBarController.swift">
@@ -869,16 +897,16 @@
          contextName = "DisplayScrollView.scrollWheel(with:):DisplayScrollView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "documentView">
+               value = "textView.defaultParagraphStyle?.lineSpacing">
             </PersistentString>
             <PersistentString
                value = "subviews">
             </PersistentString>
             <PersistentString
-               value = "textView.defaultParagraphStyle?.lineSpacing">
+               value = "subviews[1].subviews">
             </PersistentString>
             <PersistentString
-               value = "subviews[1].subviews">
+               value = "documentView">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -978,10 +1006,10 @@
          contextName = "_fetch_dbg:mmio.c">
          <PersistentStrings>
             <PersistentString
-               value = "memread8_low(m6502.PC)">
+               value = "disassembly.pOpcode">
             </PersistentString>
             <PersistentString
-               value = "disassembly.pOpcode">
+               value = "memread8_low(m6502.PC)">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -989,13 +1017,13 @@
          contextName = "m6502_dbg_bp_add:6502_bp.c">
          <PersistentStrings>
             <PersistentString
+               value = "bp">
+            </PersistentString>
+            <PersistentString
                value = "mem_bp_arr">
             </PersistentString>
             <PersistentString
                value = "bp_array">
-            </PersistentString>
-            <PersistentString
-               value = "bp">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1070,7 +1098,7 @@
          contextName = "DebuggerViewController.DisplayDisassembly(scrollY:):DebuggerViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "isCurrentLine">
+               value = "scroll_line_number">
             </PersistentString>
             <PersistentString
                value = "highlighted_line_number">
@@ -1079,7 +1107,7 @@
                value = "m6502.PC">
             </PersistentString>
             <PersistentString
-               value = "scroll_line_number">
+               value = "isCurrentLine">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1195,7 +1223,7 @@
          contextName = "LoRes.Update():LoRes.swift">
          <PersistentStrings>
             <PersistentString
-               value = "blockChanged[ screenIdx ]">
+               value = "UInt8( (block &gt;&gt; 4) &amp; 0x0F )">
             </PersistentString>
             <PersistentString
                value = "UInt8(block)">
@@ -1204,7 +1232,7 @@
                value = "UInt8(block &amp; 4)">
             </PersistentString>
             <PersistentString
-               value = "UInt8( (block &gt;&gt; 4) &amp; 0x0F )">
+               value = "blockChanged[ screenIdx ]">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1261,10 +1289,10 @@
                value = "m6502">
             </PersistentString>
             <PersistentString
-               value = "(void*)Apple2_64K_RAM">
+               value = "m6502.PC">
             </PersistentString>
             <PersistentString
-               value = "Apple2_64K_RAM + 0x3600">
+               value = "m6502.clkfrm">
             </PersistentString>
             <PersistentString
                value = "m6502.ecoSpindown">
@@ -1273,10 +1301,10 @@
                value = "Apple2_64K_AUX + 0x3600">
             </PersistentString>
             <PersistentString
-               value = "m6502.PC">
+               value = "(void*)Apple2_64K_RAM">
             </PersistentString>
             <PersistentString
-               value = "m6502.clkfrm">
+               value = "Apple2_64K_RAM + 0x3600">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1290,7 +1318,7 @@
                value = "pdl_value[pdl]">
             </PersistentString>
             <PersistentString
-               value = "normalized_time &gt;= pdl_value[pdl] ? 255 : 0">
+               value = "normalized_time">
             </PersistentString>
             <PersistentString
                value = "(3300 * 255/3300)">
@@ -1302,7 +1330,7 @@
                value = "1 * 512 * (1  - ( 3300 / 3300.0  ))">
             </PersistentString>
             <PersistentString
-               value = "normalized_time">
+               value = "normalized_time &gt;= pdl_value[pdl] ? 255 : 0">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1321,10 +1349,10 @@
          contextName = "ToolBarController.GamePort(_:):ToolBarController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "ViewController.current?.mouseCursorJoystickEmulation">
+               value = "ViewController.current?.mouseCursorHidden">
             </PersistentString>
             <PersistentString
-               value = "ViewController.current?.mouseCursorHidden">
+               value = "ViewController.current?.mouseCursorJoystickEmulation">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1547,7 +1575,7 @@
                value = "m6502.PC">
             </PersistentString>
             <PersistentString
-               value = "m6502.clkfrm">
+               value = "m6502.debugger.on">
             </PersistentString>
             <PersistentString
                value = "textLines * (textCols+1) + textCols">
@@ -1556,7 +1584,7 @@
                value = "frameCounter">
             </PersistentString>
             <PersistentString
-               value = "m6502.debugger.on">
+               value = "m6502.clkfrm">
             </PersistentString>
             <PersistentString
                value = "spkr_play_disk_motor_time">
@@ -1583,16 +1611,104 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "m6502_ColdReset:6502.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502">
+            </PersistentString>
+            <PersistentString
+               value = "RAM_PG_RD_TBL">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "BIT:6502_instr_compare_test.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "m6502.A">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "spkr_toggle:speaker.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "default_MHz_6502 * 1000 * 1000 / spkr_sample_rate">
+            </PersistentString>
+            <PersistentString
+               value = "( (spkr_clk + m6502.clkfrm) / ( default_MHz_6502 * 1000 * 1000 / spkr_sample_rate)) * 2">
+            </PersistentString>
+            <PersistentString
+               value = "(int16_t)28000 + (int16_t)-32768">
+            </PersistentString>
+            <PersistentString
+               value = "spkr_samples[spkr_sample_last_idx]">
+            </PersistentString>
+            <PersistentString
+               value = "(int)spkr_sample_idx_diff">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.clkfrm">
+            </PersistentString>
+            <PersistentString
+               value = "(spkr_clk + m6502.clkfrm)">
+            </PersistentString>
+            <PersistentString
+               value = "( (spkr_clk + m6502.clkfrm) / ( 1024000 / spkr_sample_rate ) ) * 2">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.newUpdateTimer(timeInterval:):ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "upd">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "_memwrite8_low:mmio.c">
+         <PersistentStrings>
+            <PersistentString
+               value = "MEMcfg">
+            </PersistentString>
+            <PersistentString
+               value = "currentLowWRMEM == Apple2_64K_MEM">
+            </PersistentString>
+            <PersistentString
+               value = "WRLOMEM == currentLowWRMEM">
+            </PersistentString>
+            <PersistentString
+               value = "RDLOMEM == WRLOMEM">
+            </PersistentString>
+            <PersistentString
+               value = "m6502.PC">
+            </PersistentString>
+            <PersistentString
+               value = "currentLowWRMEM == Apple2_64K_RAM">
+            </PersistentString>
+            <PersistentString
+               value = "WRLOMEM == Apple2_64K_MEM">
+            </PersistentString>
+            <PersistentString
+               value = "currentLowWRMEM == Apple2_64K_AUX">
+            </PersistentString>
+            <PersistentString
+               value = "WRLOMEM[0x3F6]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "m6502_Debug:6502.c">
          <PersistentStrings>
             <PersistentString
-               value = "m6502.SP">
+               value = "m6502.debugger.SP">
             </PersistentString>
             <PersistentString
                value = "m6502.debugger.mask.ret">
             </PersistentString>
             <PersistentString
-               value = "m6502.debugger.SP">
+               value = "m6502.SP">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -1617,7 +1733,7 @@
                value = "new">
             </PersistentString>
             <PersistentString
-               value = "WOZwrite.shift16">
+               value = "WOZtmp.shift16">
             </PersistentString>
             <PersistentString
                value = "WOZwrite.shift">
@@ -1629,78 +1745,7 @@
                value = "(1 &lt;&lt; i) - 1">
             </PersistentString>
             <PersistentString
-               value = "WOZtmp.shift16">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HiRes.initMetal():HiRes.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "mtlBufferB">
-            </PersistentString>
-            <PersistentString
-               value = "addFunction">
-            </PersistentString>
-            <PersistentString
-               value = "device">
-            </PersistentString>
-            <PersistentString
-               value = "mtlBufferA">
-            </PersistentString>
-            <PersistentString
-               value = "mtlBufferC">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "AND:6502_instr_logic.h">
-      </ContextState>
-      <ContextState
-         contextName = "specialized closure #1 in DebuggerViewController.DisplayDisassembly():DebuggerViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "line_number">
-            </PersistentString>
-            <PersistentString
-               value = "currentScrollLine">
-            </PersistentString>
-            <PersistentString
-               value = "current_line_number">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.mouseMoved(with:):ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "oldLocation">
-            </PersistentString>
-            <PersistentString
-               value = "mouseLocation">
-            </PersistentString>
-            <PersistentString
-               value = "view.bounds">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "closure #1 in ViewController.Update():ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "txtArr">
-            </PersistentString>
-            <PersistentString
-               value = "self.shadowTxt">
-            </PersistentString>
-            <PersistentString
-               value = "txt">
-            </PersistentString>
-            <PersistentString
-               value = "MEMcfg.txt_page_2">
-            </PersistentString>
-            <PersistentString
-               value = "MEMcfg.is_80STORE">
+               value = "WOZwrite.shift16">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

@@ -1043,11 +1043,14 @@ INLINE uint16_t memread16_high( uint16_t addr ) {
 }
 INLINE uint16_t memread16( uint16_t addr ) {
 
-//    if (addr >= 0xC000) {
-//        return memread16_high(addr);
-//    }
-    
-    return memread16_low(addr);
+    if (addr >= 0xC000) {
+        return memread16_high(addr);
+    }
+    if (addr >= 0x200) {
+        return memread16_low(addr);
+    }
+
+    return memread16_zp(addr);
 }
 INLINE uint16_t _memread16_dbg( uint16_t addr ) {
     check_mem_rd_bp(addr);
@@ -1063,17 +1066,13 @@ INLINE uint8_t _memread( uint16_t addr ) {
         if (addr < 0xC100) {
             return ioRead(addr);
         }
-//        return memread8_paged(addr);
         return memread8_high(addr);
     }
     if (addr >= 0x200) {
         return memread8_low(addr);
     }
 
-//    return memread8_paged(addr);
     return memread8_zp(addr);
-    
-//    return memread8(addr);
 }
 
 INLINE uint8_t _memread_dbg( uint16_t addr ) {
@@ -1083,17 +1082,13 @@ INLINE uint8_t _memread_dbg( uint16_t addr ) {
 
 INLINE uint8_t _memread_dis( uint16_t addr ) {
     if (addr >= 0xC000) {
-//        return memread8_paged(addr);
         return memread8_high(addr);
     }
     if (addr >= 0x200) {
         return memread8_low(addr);
     }
 
-//    return memread8_paged(addr);
     return memread8_zp(addr);
-
-//    return memread8(addr);
 }
 
 
@@ -1121,11 +1116,16 @@ INLINE void _memwrite8_zp( uint16_t addr, uint8_t data ) {
     shadowZPSTCKMEM[addr] = data;
 }
 INLINE void _memwrite8_low( uint16_t addr, uint8_t data ) {
-    if ((addr >= 0x400) && (addr < 0x800)) {
-        if ((data == 0x00) || (data == 0xFF)) {
-            m6502.interrupt = BREAK;
-        }
-    }
+//    if ((addr >= 0x400) && (addr < 0x800)) {
+//        if ((data == 0x00) || (data == 0xFF)) {
+//            m6502.interrupt = BREAK;
+//        }
+//    }
+//    if ((addr >= 0x3F5) && (addr <= 0x3F7)) {
+//        if (data == 0x4C) {
+//            m6502.interrupt = BREAK;
+//        }
+//    }
     WRLOMEM[addr] = data;
 }
 INLINE void _memwrite8_bank( uint16_t addr, uint8_t data ) {
@@ -1173,7 +1173,14 @@ INLINE uint8_t _fetch(void) {
         m6502.clktime++;
     }
 #endif
-    return memread8_low( m6502.PC++ );
+    if (m6502.PC >= 0xC000) {
+        return memread8_high( m6502.PC++ );
+    }
+// TODO: We might want to run code on the ZERO PAGE?
+//    if (m6502.PC >= 0x200) {
+        return memread8_low( m6502.PC++ );
+//    }
+//    return memread8_zp( m6502.PC++ );
 }
 
 INLINE uint8_t _fetch_dis(void) {
@@ -1373,7 +1380,7 @@ INLINE uint8_t _addr_zp_dis(void) {
     return _fetch_dis();
 }
 INLINE uint8_t _src_zp(void) {
-    return memread8(_addr_zp());
+    return memread8_zp(_addr_zp());
 }
 INLINE uint8_t _src_zp_dbg(void) {
     return _memread_dbg(_addr_zp_dbg());
@@ -1401,7 +1408,7 @@ INLINE uint8_t _src_zp_dis(void) {
  effective address is word in (LL, LL + 1), inc. without carry: C.w($00LL)
  **/
 INLINE uint16_t _addr_ind(void) {
-    return memread16( _fetch() );
+    return memread16_zp( _fetch() );
 }
 INLINE uint16_t _addr_ind_dbg(void) {
     uint16_t addr = _memread16_dbg(_fetch());
@@ -1430,7 +1437,7 @@ INLINE uint8_t _src_ind_dis(void) {
  effective address is word in (LL + X, LL + X + 1), inc. without carry: C.w($00LL + X)
  **/
 INLINE uint16_t _addr_ind_X(void) {
-    return memread16( (uint8_t)(_fetch() + m6502.X) );
+    return memread16_zp( (uint8_t)(_fetch() + m6502.X) );
 }
 INLINE uint16_t _addr_ind_X_rd_dbg(void) {
     return _memread16_dbg( (uint8_t)(_fetch() + m6502.X) );
@@ -1444,7 +1451,7 @@ INLINE uint16_t _addr_ind_X_dis(void) {
     _disPrintf(disassembly.oper, sizeof(disassembly.oper), "($%02X,X)", memread8(m6502.PC) );
     _disPrintf(disassembly.comment, sizeof(disassembly.comment), "ind_addr:%04X", memread16( memread8(m6502.PC) + m6502.X) );
 
-    return memread16( (uint8_t)(_fetch_dis() + m6502.X) );
+    return memread16_zp( (uint8_t)(_fetch_dis() + m6502.X) );
 }
 INLINE uint8_t _src_X_ind(void) {
     return _memread( _addr_ind_X() );
@@ -1491,7 +1498,7 @@ INLINE uint16_t _addr_ind_ind_X_dis(void) {
  effective address is word in (LL, LL + 1) incremented by Y with carry: C.w($00LL) + Y
  **/
 INLINE uint16_t _addr_ind_Y(void) {
-    return memread16( _fetch() ) + m6502.Y;
+    return memread16_zp( _fetch() ) + m6502.Y;
 }
 INLINE uint16_t _addr_ind_Y_dbg(void) {
     uint16_t addr = _memread16_dbg( _fetch() ) + m6502.Y;
@@ -1537,13 +1544,13 @@ INLINE uint8_t _addr_zp_X_dis(void) {
     return _fetch_dis() + m6502.X;
 }
 INLINE uint8_t _src_zp_X(void) {
-    return memread8(_addr_zp_X());
+    return memread8_zp(_addr_zp_X());
 }
 INLINE uint8_t _src_zp_X_dbg(void) {
     return _memread_dbg(_addr_zp_X());
 }
 INLINE uint8_t _src_zp_X_dis(void) {
-    return memread8(_addr_zp_X_dis());
+    return memread8_zp(_addr_zp_X_dis());
 }
 //INLINE uint8_t * dest_zp_X() {
 //    return WRLOMEM + addr_zp_X();
@@ -1568,13 +1575,13 @@ INLINE uint8_t _addr_zp_Y_dis(void) {
     return _fetch_dis() + m6502.Y;
 }
 INLINE uint8_t _src_zp_Y(void) {
-    return memread8(_addr_zp_Y());
+    return memread8_zp(_addr_zp_Y());
 }
 INLINE uint8_t _src_zp_Y_dbg(void) {
     return _memread_dbg(_addr_zp_Y());
 }
 INLINE uint8_t _src_zp_Y_dis(void) {
-    return memread8(_addr_zp_Y_dis());
+    return memread8_zp(_addr_zp_Y_dis());
 }
 //INLINE uint8_t * dest_zp_Y() {
 //    return WRLOMEM + addr_zp_Y();
@@ -1608,7 +1615,7 @@ void auxMemorySelect( MEMcfg_t newMEMcfg ) {
     
     
     // save old content to shadow memory
-    if ( ( newWriteMEM != currentLowWRMEM ) && (WRLOMEM == Apple2_64K_MEM) ) {
+    if ( ( newWriteMEM != WRLOMEM ) && (WRLOMEM == Apple2_64K_MEM) ) {
         // save the content of Shadow Memory
         memcpy( (void*) currentLowWRMEM + 0x200, WRLOMEM + 0x200, 0xBE00);
     }

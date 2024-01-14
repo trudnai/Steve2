@@ -987,7 +987,12 @@ class ViewController: NSViewController  {
         // 40 col
         if videoMode.col80 == 0 {
             if MEMcfg.txt_page_2 == 0 {
-                textBufferPointer = ViewController.textPage1Pointer
+                if (MEMcfg.RD_AUX_MEM == 0) {
+                    textBufferPointer = ViewController.textPage1Pointer
+                }
+                else {
+                    textBufferPointer = ViewController.textIntBufferPointer
+                }
             }
             else {
                 textBufferPointer = ViewController.textPage2Pointer
@@ -2018,6 +2023,8 @@ class ViewController: NSViewController  {
     
     
     func openDiskImage( url: URL ) {
+        woz_eject()
+            
         switch url.pathExtension.uppercased() {
             
         case "WOZ":
@@ -2031,8 +2038,6 @@ class ViewController: NSViewController  {
             }
             
         case "DSK", "DO", "PO" :
-            woz_eject()
-            
             let err = dsk2woz( url.path )
             
             if err == WOZ_ERR_OK {

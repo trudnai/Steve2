@@ -52,6 +52,16 @@ INSTR void LDA( uint8_t src ) {
     set_flags_NZ(m6502.A = src);
 #endif
 }
+//INSTR void LDA_imm( uint8_t src ) {
+//    dbgPrintf("LDA(%02X) ", src);
+//    disPrintf(disassembly.inst, "LDA");
+//#ifndef DISASSEMBLER
+//    if (src == 0x4C) {
+//        m6502.interrupt = BREAK;
+//    }
+//    set_flags_NZ(m6502.A = src);
+//#endif
+//}
 
 /**
  LDX  Load Index X with Memory

@@ -39,6 +39,8 @@ class LoRes: NSView {
     static let blockWidth = PixelWidth / blockCols
     static let blockHeight = PixelHeight / blockRows
 
+    let LoResIntBuffer1 = UnsafeRawBufferPointer(start: RAM + Page1Addr, count: PageSize * 2)
+    let LoResIntBuffer2 = UnsafeRawBufferPointer(start: RAM + Page2Addr, count: PageSize * 2)
     let LoResBuffer1 = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
     let LoResBuffer2 = UnsafeRawBufferPointer(start: MEM + Page2Addr, count: PageSize * 2)
     var LoResBufferPointer = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
@@ -350,10 +352,20 @@ class LoRes: NSView {
                 height = LoRes.PixelMixedHeight / 2
             }
             if MEMcfg.txt_page_2 == 1 {
-                LoResBufferPointer = LoResBuffer2
+                if (MEMcfg.RD_AUX_MEM == 0) {
+                    LoResBufferPointer = LoResBuffer2
+                }
+                else {
+                    LoResBufferPointer = LoResIntBuffer2
+                }
             }
             else {
-                LoResBufferPointer = LoResBuffer1
+                if (MEMcfg.RD_AUX_MEM == 0) {
+                    LoResBufferPointer = LoResBuffer1
+                }
+                else {
+                    LoResBufferPointer = LoResIntBuffer1
+                }
             }
         }
         

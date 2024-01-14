@@ -463,7 +463,8 @@ class ViewController: NSViewController  {
     let ramBufferPointer = UnsafeRawBufferPointer(start: MEM, count: 64 * 1024)
     static let textPage1Pointer = UnsafeRawBufferPointer(start: MEM + textPage1Addr, count: textBufferSize)
     static let textPage2Pointer = UnsafeRawBufferPointer(start: MEM + textPage2Addr, count: textBufferSize)
-    static let textIntBufferPointer = UnsafeRawBufferPointer(start: RAM + textPage1Addr, count: textBufferSize)
+    static let textIntPage1BufferPointer = UnsafeRawBufferPointer(start: RAM + textPage1Addr, count: textBufferSize)
+    static let textIntPage2BufferPointer = UnsafeRawBufferPointer(start: RAM + textPage2Addr, count: textBufferSize)
     static let textAuxBufferPointer = UnsafeRawBufferPointer(start: AUX + textPage1Addr, count: textBufferSize)
     
     static let textPageShadowBuffer = UnsafeMutableRawBufferPointer.allocate(byteCount: textBufferSize, alignment: 1)
@@ -991,11 +992,16 @@ class ViewController: NSViewController  {
                     textBufferPointer = ViewController.textPage1Pointer
                 }
                 else {
-                    textBufferPointer = ViewController.textIntBufferPointer
+                    textBufferPointer = ViewController.textIntPage1BufferPointer
                 }
             }
             else {
-                textBufferPointer = ViewController.textPage2Pointer
+                if (MEMcfg.RD_AUX_MEM == 0) {
+                    textBufferPointer = ViewController.textPage2Pointer
+                }
+                else {
+                    textBufferPointer = ViewController.textIntPage2BufferPointer
+                }
             }
             
             if textBufferPointer.elementsEqual(ViewController.textPageShadowBuffer) {
@@ -1024,7 +1030,7 @@ class ViewController: NSViewController  {
         else {
             let auxPage = ( MEMcfg.is_80STORE == 1 ) && ( MEMcfg.txt_page_2 == 1 )
             
-            let textIntBuffer = auxPage ?  ViewController.textIntBufferPointer : ViewController.textPage1Pointer
+            let textIntBuffer = auxPage ?  ViewController.textIntPage1BufferPointer : ViewController.textPage1Pointer
             let textAuxBuffer = auxPage ?  ViewController.textPage1Pointer : ViewController.textAuxBufferPointer
             
             // render the rest of the text screen

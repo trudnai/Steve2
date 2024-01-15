@@ -43,8 +43,9 @@ class LoRes: NSView {
     let LoResIntBuffer2 = UnsafeRawBufferPointer(start: RAM + Page2Addr, count: PageSize * 2)
     let LoResBuffer1 = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
     let LoResBuffer2 = UnsafeRawBufferPointer(start: MEM + Page2Addr, count: PageSize * 2)
-    var LoResBufferPointer = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
-    
+    var LoResBufferPointer1 = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
+    var LoResBufferPointer2 = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
+
     let LoResRawPointer = UnsafeRawPointer(RAM + Page1Addr)
 
     // holds the starting addresses for each lines minus the screen page starting address
@@ -353,18 +354,22 @@ class LoRes: NSView {
             }
             if MEMcfg.txt_page_2 == 1 {
                 if (MEMcfg.RD_AUX_MEM == 0) {
-                    LoResBufferPointer = LoResBuffer2
+                    LoResBufferPointer1 = LoResBuffer2
+                    LoResBufferPointer2 = LoResBuffer2
                 }
                 else {
-                    LoResBufferPointer = LoResIntBuffer2
+                    LoResBufferPointer1 = LoResIntBuffer2
+                    LoResBufferPointer2 = LoResIntBuffer2
                 }
             }
             else {
                 if (MEMcfg.RD_AUX_MEM == 0) {
-                    LoResBufferPointer = LoResBuffer1
+                    LoResBufferPointer1 = LoResBuffer1
+                    LoResBufferPointer2 = LoResBuffer1
                 }
                 else {
-                    LoResBufferPointer = LoResIntBuffer1
+                    LoResBufferPointer1 = LoResIntBuffer1
+                    LoResBufferPointer2 = LoResIntBuffer1
                 }
             }
         }
@@ -388,22 +393,25 @@ class LoRes: NSView {
                 let blockHorIdx = x / 2
 //                print("blockVertIdx:", blockVertIdx, "   blockHorIdx:", blockHorIdx)
                 
-                let block = Int(LoResBufferPointer[ Int(lineAddr + blockHorIdx) ])
+                let block1 = Int(LoResBufferPointer1[ Int(lineAddr + blockHorIdx) ])
+                let block2 = Int(LoResBufferPointer2[ Int(lineAddr + blockHorIdx) ])
 
                 let screenIdx = blockVertIdx + blockHorIdx
                 let blockIdx = screenIdx / 2
                 let pixelHAddr = blockVertIdx * 2 + blockHorIdx * 2
                 let pixelLAddr = pixelHAddr + LoRes.blockCols
 
-                // get all changed blocks
-                blockChanged[ blockIdx ] = blockChanged[ blockIdx ] || shadowScreen[ screenIdx ] != block
-                shadowScreen[ screenIdx ] = block
+                // mark all changed blocks
+                blockChanged[ blockIdx ] = blockChanged[ blockIdx ] || shadowScreen[ screenIdx ] != block1 || shadowScreen[ screenIdx + 1] != block2
                 
-                colorPixel(pixelAddr: pixelHAddr, color: block & 0x0F )
-                colorPixel(pixelAddr: pixelLAddr, color: (block >> 4) & 0x0F )
+                shadowScreen[ screenIdx ] = block1
+                shadowScreen[ screenIdx + 1] = block2
+
+                colorPixel(pixelAddr: pixelHAddr, color: block1 & 0x0F )
+                colorPixel(pixelAddr: pixelLAddr, color: (block1 >> 4) & 0x0F )
                 
-                colorPixel(pixelAddr: pixelHAddr + 1, color: block & 0x0F )
-                colorPixel(pixelAddr: pixelLAddr + 1, color: (block >> 4) & 0x0F )
+                colorPixel(pixelAddr: pixelHAddr + 1, color: block2 & 0x0F )
+                colorPixel(pixelAddr: pixelLAddr + 1, color: (block2 >> 4) & 0x0F )
 
             }
 

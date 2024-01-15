@@ -41,6 +41,8 @@ class LoRes: NSView {
 
     let LoResIntBuffer1 = UnsafeRawBufferPointer(start: RAM + Page1Addr, count: PageSize * 2)
     let LoResIntBuffer2 = UnsafeRawBufferPointer(start: RAM + Page2Addr, count: PageSize * 2)
+    let LoResAuxBuffer1 = UnsafeRawBufferPointer(start: AUX + Page1Addr, count: PageSize * 2)
+    let LoResAuxBuffer2 = UnsafeRawBufferPointer(start: AUX + Page2Addr, count: PageSize * 2)
     let LoResBuffer1 = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
     let LoResBuffer2 = UnsafeRawBufferPointer(start: MEM + Page2Addr, count: PageSize * 2)
     var LoResBufferPointer1 = UnsafeRawBufferPointer(start: MEM + Page1Addr, count: PageSize * 2)
@@ -339,6 +341,11 @@ class LoRes: NSView {
     func colorPixel ( pixelAddr : Int, color : Int ) {
         LoRes.pixelsSRGB[pixelAddr] = colorTable[color]
     }
+    
+    
+    func rot4bit(_ i : Int) -> Int {
+        return ((i << 1) | ((i & 0x08) >> 3)) & 0x0F
+    }
 
     
     func Render() {
@@ -354,21 +361,21 @@ class LoRes: NSView {
             }
             if MEMcfg.txt_page_2 == 1 {
                 if (MEMcfg.RD_AUX_MEM == 0) {
-                    LoResBufferPointer1 = LoResBuffer2
+                    LoResBufferPointer1 = LoResAuxBuffer2
                     LoResBufferPointer2 = LoResBuffer2
                 }
                 else {
-                    LoResBufferPointer1 = LoResIntBuffer2
+                    LoResBufferPointer1 = LoResBuffer2
                     LoResBufferPointer2 = LoResIntBuffer2
                 }
             }
             else {
                 if (MEMcfg.RD_AUX_MEM == 0) {
-                    LoResBufferPointer1 = LoResBuffer1
+                    LoResBufferPointer1 = LoResAuxBuffer1
                     LoResBufferPointer2 = LoResBuffer1
                 }
                 else {
-                    LoResBufferPointer1 = LoResIntBuffer1
+                    LoResBufferPointer1 = LoResAuxBuffer1
                     LoResBufferPointer2 = LoResIntBuffer1
                 }
             }
@@ -407,8 +414,8 @@ class LoRes: NSView {
                 shadowScreen[ screenIdx ] = block1
                 shadowScreen[ screenIdx + 1] = block2
 
-                colorPixel(pixelAddr: pixelHAddr, color: block1 & 0x0F )
-                colorPixel(pixelAddr: pixelLAddr, color: (block1 >> 4) & 0x0F )
+                colorPixel(pixelAddr: pixelHAddr, color: rot4bit(block1))
+                colorPixel(pixelAddr: pixelLAddr, color: rot4bit(block1 >> 4))
                 
                 colorPixel(pixelAddr: pixelHAddr + 1, color: block2 & 0x0F )
                 colorPixel(pixelAddr: pixelLAddr + 1, color: (block2 >> 4) & 0x0F )
@@ -446,7 +453,7 @@ class LoRes: NSView {
             }
         }
         
-//        needsDisplay = true // refresh the entire screen
+        needsDisplay = true // refresh the entire screen
 
     }
     

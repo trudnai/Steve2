@@ -1140,6 +1140,17 @@
          contextName = "CMP:6502_instr_compare_test.h">
       </ContextState>
       <ContextState
+         contextName = "LoRes.Render():LoRes.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "shadowScreen">
+            </PersistentString>
+            <PersistentString
+               value = "blockChanged">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "specialized closure #1 in ViewController.Update():ViewController.swift">
          <PersistentStrings>
             <PersistentString

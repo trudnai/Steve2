@@ -30,12 +30,12 @@ class LoRes: NSView {
     static let Page1Addr = 0x400
     static let Page2Addr = 0x800
     
-    static let PixelWidth  = 40
+    static let PixelWidth  = 80
     static let PixelMixedHeight = 40
     static let PixelHeight = 48
     static let MixedTextHeight = 4
     static let blockRows = 24
-    static let blockCols = 40
+    static let blockCols = 80
     static let blockWidth = PixelWidth / blockCols
     static let blockHeight = PixelHeight / blockRows
 
@@ -270,8 +270,8 @@ class LoRes: NSView {
     let B = 0
     let A = 3
     
-    var blockChanged = [Bool](repeating: false, count: LoRes.blockRows * LoRes.blockCols)
-    var shadowScreen = [Int](repeating: 0, count: PageSize)
+    var blockChanged = [Bool](repeating: false, count: LoRes.blockRows * LoRes.blockCols / 2)
+    var shadowScreen = [Int](repeating: 0, count: LoRes.blockRows * LoRes.blockCols)
 
     var was = 0;
     
@@ -371,7 +371,7 @@ class LoRes: NSView {
         
         var y = 0
         
-        blockChanged = [Bool](repeating: false, count: LoRes.blockRows * LoRes.blockCols)
+        blockChanged = [Bool](repeating: false, count: LoRes.blockRows * LoRes.blockCols / 2)
         
         LoRes.context?.clear( CGRect(x: 0, y: 0, width: frame.width, height: frame.height) )
         
@@ -384,23 +384,29 @@ class LoRes: NSView {
             
             let blockVertIdx = y * LoRes.blockCols
 
-            for blockHorIdx in 0 ..< LoRes.blockCols {
+            for x in stride(from: 0, to: LoRes.blockCols, by: 2) {
+                let blockHorIdx = x / 2
 //                print("blockVertIdx:", blockVertIdx, "   blockHorIdx:", blockHorIdx)
                 
                 let block = Int(LoResBufferPointer[ Int(lineAddr + blockHorIdx) ])
 
                 let screenIdx = blockVertIdx + blockHorIdx
-                let pixelHAddr = blockVertIdx * 2 + blockHorIdx
+                let blockIdx = screenIdx / 2
+                let pixelHAddr = blockVertIdx * 2 + blockHorIdx * 2
                 let pixelLAddr = pixelHAddr + LoRes.blockCols
 
                 // get all changed blocks
-                blockChanged[ screenIdx ] = blockChanged[ screenIdx ] || shadowScreen[ screenIdx ] != block
+                blockChanged[ blockIdx ] = blockChanged[ blockIdx ] || shadowScreen[ screenIdx ] != block
                 shadowScreen[ screenIdx ] = block
                 
                 colorPixel(pixelAddr: pixelHAddr, color: block & 0x0F )
                 colorPixel(pixelAddr: pixelLAddr, color: (block >> 4) & 0x0F )
+                
+                colorPixel(pixelAddr: pixelHAddr + 1, color: block & 0x0F )
+                colorPixel(pixelAddr: pixelLAddr + 1, color: (block >> 4) & 0x0F )
 
             }
+
             y += 1
             
             if ( y >= LoRes.PixelHeight ) {
@@ -417,12 +423,13 @@ class LoRes: NSView {
         let blockScreenHeigth = CGFloat(frame.height) / CGFloat(HiRes.blockRows)
 
         for blockVertIdx in 0 ..< LoRes.blockRows {
-            for blockHorIdx in 0 ..< LoRes.blockCols {
-                if blockChanged[ blockVertIdx * LoRes.blockCols + blockHorIdx ] {
+            for x in stride(from: 0, to: LoRes.blockCols, by: 2) {
+                let blockHorIdx = x / 2
+                if blockChanged[ blockVertIdx * LoRes.blockCols / 2 + blockHorIdx ] {
                     // refresh the entire screen
-                    let x = CGFloat(blockHorIdx) * blockScreenWidth - CGFloat(screenBlockMargin)
+                    let x = CGFloat(blockHorIdx * 2) * blockScreenWidth - CGFloat(screenBlockMargin)
                     let y = frame.height - CGFloat(blockVertIdx) * blockScreenHeigth - blockScreenHeigth - CGFloat(screenBlockMargin)
-                    let w = blockScreenWidth + CGFloat(screenBlockMargin) * 2
+                    let w = blockScreenWidth + CGFloat(screenBlockMargin) * 8
                     let h = blockScreenHeigth + CGFloat(screenBlockMargin) * 2
                     
                     let boundingBox = CGRect(x: x, y: y, width: w, height: h)
